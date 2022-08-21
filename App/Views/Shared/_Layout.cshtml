@@ -1,0 +1,165 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor Accessor
+
+@{ var role = -1;
+    switch (Accessor.HttpContext.Session.GetString("Role"))
+    {
+        case "tasks":
+            role = 1;
+            break;
+        case "cargoes":
+            role = 2;
+            break;
+        case "roads":
+            role = 3;
+            break;
+        case "storages":
+            role = 4;
+            break;
+        case "trucks":
+            role = 5;
+            break;
+        case "expenses":
+            role = 6;
+            break;
+        case "admin":
+            role = 10;
+            break;
+        default:
+            role = 0;
+            break;
+    }
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CargoTruck</title>
+
+    <!-- plugin css for this page -->
+    <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/dataTables.bootstrap4.css">
+    <!-- End plugin css for this page -->
+    <link rel="stylesheet" href="~/css/site.css" />
+
+</head>
+<body class="img-background">
+    <header>
+        <nav class="fixednavbar navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/logo.png" /></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <!--Login menu links -->
+                    <partial name="_LoginPartial" />
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item top-nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Szabályzat</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+
+
+    @if (Accessor.HttpContext.Session.GetString("Id") != null)
+    {
+        <!-- Sidebar -->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+            <ul class="nav">
+                @if (role == 0 || role == 10 || role == 1)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Tasks" asp-action="Tasks_page">
+                            <span class="menu-title">Megbízások</span><span class="arrow">&#8250;</span>
+                        </a>
+                    </li>
+                }
+                @if (role == 0 || role == 10 || role == 2)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Cargoes" asp-action="Cargoes_page">
+                            <span class="menu-title">Rakományok</span><span class="arrow">&#8250;</span>
+                        </a>
+                    </li>
+                }
+                @if (role == 0 || role == 10 || role == 3)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Roads" asp-action="Roads_page">
+                            <span class="menu-title">Utak</span><span class="arrow">&#8250;</span>
+                        </a>
+                    </li>
+                }
+                @if (role == 0 || role == 10 || role == 4)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Storages" asp-action="Storages_page">
+                            <span class="menu-title">Raktár</span><span class="arrow">&#8250;</span>
+                        </a>
+                    </li>
+                }
+                @if (role == 0 || role == 10 || role == 5)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Trucks" asp-action="Trucks_page">
+                            <span class="menu-title">Járművek</span><span class="arrow">&#8250;</span>
+                        </a>
+                    </li>
+                }
+                @if (role == 0 || role == 10 || role == 6)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Expenses" asp-action="Expenses_page">
+                            <span class="menu-title">Havi kiadások</span><span class="arrow">&#8250;</span>
+                        </a>
+                    </li>
+                }
+                @if (role == 10)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="Admin_page">
+                            <span class="menu-title">Admin felület</span><span class="arrow">&#8250;</span>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    }
+
+
+    <div class="container">
+        <main role="main" class="pb-3 margintop">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2022 - CargoTruck - <a asp-area="" asp-controller="Home" asp-action="Privacy">Szabályzat</a>
+        </div>
+    </footer>
+
+    @section scripts{
+        <script src="~/js/Chart.min.js"></script>
+        <script src="~/js/jquery.dataTables.js"></script>
+        <script src="~/js/dataTables.bootstrap4.js"></script>
+        <script src="~/js/off-canvas.js"></script>
+        <script src="~/js/hoverable-collapse.js"></script>
+        <script src="~/js/template.js"></script>
+        <script src="~/js/dashboard.js"></script>
+        <script src="~/js/data-table.js"></script>
+        <script src="~/js/jquery.dataTables.js"></script>
+        <script src="~/js/dataTables.bootstrap4.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    }
+    @RenderSection("scripts", required: false)
+</body>
+</html>

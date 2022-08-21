@@ -1,0 +1,50 @@
+﻿@model App.Models.Users
+
+@{
+    ViewData["Title"] = "Fiók törlése";
+}
+
+<!-- partial -->
+<div class="main-panel main">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-12 grid-margin">
+                <div class="d-flex justify-content-between flex-wrap">
+                    <div class="forms">
+                        <div class="me-md-3 me-xl-5">
+                            <h2>@ViewData["Title"]</h2>
+                        </div>
+                        <hr />
+                        <dl class="row">
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.UserName)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.UserName)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.Email)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.Email)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.PasswordHash)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.PasswordHash)
+                            </dd>
+                        </dl>
+
+                        <form class="delete" asp-action="Delete">
+                            <input type="hidden" asp-for="Id" />
+                            <p>Biztosan törölni szeretnéd?</p>
+                            <input type="submit" value="Törlés" class="btn btn-danger" />
+                            <a class="btn btn-primary" asp-action="Admin_page">Mégse</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

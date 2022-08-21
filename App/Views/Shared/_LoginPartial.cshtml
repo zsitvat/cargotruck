@@ -1,0 +1,30 @@
+﻿@using Microsoft.AspNetCore.Mvc;
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor Accessor
+
+
+
+
+<ul class="navbar-nav login-nav">
+    @{ if (Accessor.HttpContext.Session.GetString("Id") != null)
+        {
+            <li class="nav-item ">
+                <p class="nav-name text-dark">@Accessor.HttpContext.Session.GetString("UserName")</p>
+            </li>
+            <li class="nav-item top-nav-item">
+                <a class="nav-link text-dark" href="@Url.Action("LogOut","Login")">Kijelentkezés</a>
+            </li>
+        }
+        else
+        {
+            /*
+            <li class="nav-item top-nav-item">
+                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Regisztráció</a>
+            </li>
+            */
+            <li class="nav-item top-nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Login_page">Bejelentkezés</a>
+            </li>
+        }
+    }
+</ul>

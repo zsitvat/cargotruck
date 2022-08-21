@@ -1,0 +1,115 @@
+﻿@{
+    ViewData["Title"] = "Megbízás létrehozása";
+}
+
+@model App.Models.Tasks
+
+
+
+<!-- partial -->
+<div class="main-panel main">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-12 grid-margin">
+                <div class="d-flex justify-content-between flex-wrap">
+                    <div class="forms">
+                        <div class="me-md-3 me-xl-5">
+                            <h2>@ViewData["Title"]</h2>
+                        </div>
+                        <form asp-action="Create">
+                            <div>
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="form-group">
+                                    <label asp-for="Partner" class="control-label"></label>
+                                    <input asp-for="Partner" class="form-control" />
+                                    <span asp-validation-for="Partner" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Description" class="control-label"></label>
+                                    <input asp-for="Description" class="form-control" />
+                                    <span asp-validation-for="Description" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Place_of_receipt" class="control-label"></label>
+                                    <input asp-for="Place_of_receipt" class="form-control" />
+                                    <span asp-validation-for="Place_of_receipt" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Time_of_receipt" class="control-label"></label>
+                                    <input asp-for="Time_of_receipt" class="form-control" />
+                                    <span asp-validation-for="Time_of_receipt" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Place_of_delivery" class="control-label"></label>
+                                    <input asp-for="Place_of_delivery" class="form-control" />
+                                    <span asp-validation-for="Place_of_delivery" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Time_of_delivery" class="control-label"></label>
+                                    <input asp-for="Time_of_delivery" class="form-control" />
+                                    <span asp-validation-for="Time_of_delivery" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Other_stops" class="control-label"></label>
+                                    <input asp-for="Other_stops" class="form-control" />
+                                    <span asp-validation-for="Other_stops" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Id_cargo" class="control-label"></label>
+                                    <input asp-for="Id_cargo" class="form-control" />
+                                    <span asp-validation-for="Id_cargo" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form-group">
+                                    <label asp-for="Storage_time" class="control-label"></label>
+                                    <input asp-for="Storage_time" class="form-control" />
+                                    <span asp-validation-for="Storage_time" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="Completion_time" class="control-label"></label>
+                                    <input asp-for="Completion_time" class="form-control" />
+                                    <span asp-validation-for="Completion_time" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Time_of_delay" class="control-label"></label>
+                                    <input asp-for="Time_of_delay" class="form-control" />
+                                    <span asp-validation-for="Time_of_delay" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Payment" class="control-label"></label>
+                                    <input asp-for="Payment" class="form-control" />
+                                    <span asp-validation-for="Payment" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Final_Payment" class="control-label"></label>
+                                    <input asp-for="Final_Payment" class="form-control" />
+                                    <span asp-validation-for="Final_Payment" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Penalty" class="control-label"></label>
+                                    <input asp-for="Penalty" class="form-control" />
+                                    <span asp-validation-for="Penalty" class="text-danger"></span>
+                                </div>
+                                <div class="form-group form-check">
+                                    <label class="form-check-label">
+                                        <input asp-for="Completed" /> @Html.DisplayNameFor(model => model.Completed)
+                                    </label>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="form-group center">
+                                <input type="submit" value="Mentés" class="btn btn-primary" />
+                            </div>
+                        </form>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }

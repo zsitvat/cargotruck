@@ -1,0 +1,177 @@
+﻿@model App.Models.Tasks
+
+@{
+    ViewData["Title"] = "Megbízás törlése";
+}
+
+<!-- partial -->
+<div class="main-panel main">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-12 grid-margin">
+                <div class="d-flex justify-content-between flex-wrap">
+                    <div class="forms">
+                        <div class="me-md-3 me-xl-5">
+                            <h2>@ViewData["Title"]</h2>
+                        </div>
+                        <hr />
+                        <dl class="row delete-margin">
+                            @if (@Model.Partner != "" && @Model.Partner != null)
+                            {
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.Partner)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.Partner)
+                                </dd>
+                            }
+                            @if (@Model.Description != "" && @Model.Description != null)
+                            {
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.Description)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.Description)
+                                </dd>
+                            }
+                            @if (@Model.Place_of_receipt != "" && @Model.Place_of_receipt != null)
+                            {
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.Place_of_receipt)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.Place_of_receipt)
+                                </dd>
+                            }
+                            @if (@Model.Time_of_receipt != null)
+                            {
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.Time_of_receipt)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.Time_of_receipt)
+                                </dd>
+                            }
+                            @if (@Model.Place_of_delivery != "" && @Model.Place_of_delivery != null)
+                            {
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.Place_of_delivery)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.Place_of_delivery)
+                                </dd>
+                            }
+                            @if (@Model.Time_of_delivery != null)
+                            {
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.Time_of_delivery)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.Time_of_delivery)
+                                </dd>
+                            }
+                            @if (@Model.Other_stops != "" && @Model.Other_stops != null)
+                            {
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.Other_stops)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.Other_stops)
+                                </dd>
+                            }
+                            @if (@Model.Id_cargo != "" && @Model.Id_cargo != null)
+                            {
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.Id_cargo)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.Id_cargo)
+                                </dd>
+                            }
+                            @if (@Model.Storage_time != "" && @Model.Storage_time != null)
+                            {
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.Storage_time)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.Storage_time)
+                                </dd>
+                            }
+                            @if (@Model.Partner != "" && @Model.Partner != null)
+                            {
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.Completed)
+                                </dt>
+                                <dd class="col-sm-10">
+                                   Teljesítve
+                                </dd>
+                            }
+                            @if (@Model.Completion_time != null)
+                            {
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.Completion_time)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.Completion_time)
+                                </dd>
+                            }
+                            @if (@Model.Time_of_delay != "" && @Model.Time_of_delay != null)
+                            {
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.Time_of_delay)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.Time_of_delay)
+                                </dd>
+                            }
+                            @if (@Model.Payment != "" && @Model.Payment != null)
+                            {
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.Payment)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.Payment)
+                                </dd>
+                            }
+                            @if (@Model.Final_Payment != "" && @Model.Final_Payment != null)
+                            {
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.Final_Payment)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.Final_Payment)
+                                </dd>
+                            }
+                            @if (@Model.Penalty != "" && @Model.Penalty != null)
+                            {
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.Penalty)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.Penalty)
+                                </dd>
+                            }
+                            @if (@Model.Date != null)
+                            {
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.Date)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.Date)
+                                </dd>
+                            }
+                            </dl>
+                        <form class="delete" asp-action="Delete">
+                            <input type="hidden" asp-for="Id" />
+                            <p>Biztosan törölni szeretnéd?</p>
+                            <input type="submit" value="Törlés" class="btn btn-danger" /> 
+                            <a class="btn btn-primary" asp-action="Tasks_page">Mégse</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

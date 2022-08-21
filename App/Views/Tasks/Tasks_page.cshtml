@@ -1,0 +1,179 @@
+﻿@{
+    ViewData["Title"] = "Megbízások";
+}
+
+@model IEnumerable<App.Models.Tasks>
+
+<!-- partial -->
+<div class="main-panel main">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-12 grid-margin">
+                <div class="d-flex justify-content-between flex-wrap">
+                    <div class="d-flex align-items-end flex-wrap">
+                        <div class="me-md-3 me-xl-5">
+                            <h2>@ViewData["Title"]</h2>
+                        </div>
+                        <div class="d-flex">
+                            <p class="text-muted mb-0 hover-cursor">&nbsp;/&nbsp;Irányítópult&nbsp;/&nbsp;</p>
+                            <p class="text-primary mb-0 hover-cursor">@ViewData["Title"]</p>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-end flex-wrap">
+                        <form asp-controller="Tasks" asp-action="Tasks_page" class="search" id="search" method="get">
+                            <input placeholder="@ViewBag.search" class="input_search" type="search" id="search-input" name="SearchString">
+                            <button type="submit" class="btn btn-primary button_search ">
+                                <i class="i fa fa-search"></i>
+                            </button>
+                        </form>
+
+                        <!--Pop up window-->
+                        <!--Pop up button-->
+                        <form method="post" id="form1">
+                            <button onclick="ShowPopup()" id="hide_content_button" type="button" runat="server" class="btn btn-light bg-white btn-icon me-3 mt-2 mt-xl-0">
+                                <i class="fa fa-cog" aria-hidden="true"></i>
+                            </button>
+                        </form>
+
+                        <button id="download1" type="button" class="btn btn-light bg-white btn-icon me-3 mt-2 mt-xl-0">
+                            <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                        </button>
+                        <button id="download2" type="button" class="btn btn-light bg-white btn-icon me-3 mt-2 mt-xl-0">
+                            <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                        </button>
+                        <a asp-action="create" class="btn btn-primary mt-2 mt-xl-0">Új adat</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-md-12 stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Partner)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Description)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Place_of_receipt)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Time_of_receipt)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Place_of_delivery)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Time_of_delivery)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Other_stops)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Id_cargo)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Storage_time)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Completed)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Completion_time)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Time_of_delay)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Payment)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Final_Payment)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Penalty)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Date)
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Partner)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Description)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Place_of_receipt)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Time_of_receipt)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Place_of_delivery)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Time_of_delivery)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Other_stops)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Id_cargo)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Storage_time)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Completed)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Completion_time)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Time_of_delay)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Payment)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Final_Payment)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Penalty)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Date)
+                                            </td>
+                                            <td class="table-actions">
+                                                <a asp-action="Edit" asp-route-id="@item.Id" class="table-actions-item"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                                <a asp-action="Delete" asp-route-id="@item.Id" class="table-actions-item2"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                                <div class="spacer"></div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

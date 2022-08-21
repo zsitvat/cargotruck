@@ -1,0 +1,98 @@
+﻿@model IEnumerable<App.Models.Tasks>
+
+<div class="forms">
+    <form class="popup" id="Hide_content" runat="server" asp-action="Hide" asp-controller="Tasks">
+        <div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" /> @Html.DisplayNameFor(model => model.Partner)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" /> @Html.DisplayNameFor(model => model.Description)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" /> @Html.DisplayNameFor(model => model.Place_of_receipt)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" /> @Html.DisplayNameFor(model => model.Time_of_receipt)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" /> @Html.DisplayNameFor(model => model.Place_of_delivery)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" /> @Html.DisplayNameFor(model => model.Time_of_delivery)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" /> @Html.DisplayNameFor(model => model.Other_stops)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" /> @Html.DisplayNameFor(model => model.Id_cargo)
+                </label>
+            </div>
+        </div>
+        <div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" /> @Html.DisplayNameFor(model => model.Storage_time)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" /> @Html.DisplayNameFor(model => model.Completion_time)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" /> @Html.DisplayNameFor(model => model.Time_of_delay)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" /> @Html.DisplayNameFor(model => model.Payment)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" /> @Html.DisplayNameFor(model => model.Final_Payment)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" /> @Html.DisplayNameFor(model => model.Penalty)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" /> @Html.DisplayNameFor(model => model.Date)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" /> @Html.DisplayNameFor(model => model.Completed)
+                </label>
+            </div>
+        </div>
+        <br />
+        <div class="form-group center">
+            <input type="submit" value="Mentés" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

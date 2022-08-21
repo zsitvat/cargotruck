@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Főoldal";
+}
+
+
+<div class="main-panel main">
+    <div class="content-wrapper index-opacity">
+        <div class="index-boxes">
+            <div>
+                <a class="nav-link" asp-area="" asp-controller="Tasks" asp-action="Tasks_page">
+                    <span class="menu-title">Megbízások</span>
+                </a>
+            </div>
+            <div>
+                <a class="nav-link" asp-area="" asp-controller="Cargoes" asp-action="Cargoes_page">
+                    <span class="menu-title">Rakományok</span>
+                </a>
+            </div>
+            <div>
+                <a class="nav-link" asp-area="" asp-controller="Roads" asp-action="Roads_page">
+                    <span class="menu-title">Utak</span>
+                </a>
+            </div>
+        </div>
+        <div class="index-boxes">
+            <div>
+                <a class="nav-link" asp-area="" asp-controller="Storages" asp-action="Storages_page">
+                    <span class="menu-title">Raktár</span>
+                </a>
+            </div>
+            <div>
+                <a class="nav-link" asp-area="" asp-controller="Trucks" asp-action="Trucks_page">
+                    <span class="menu-title">Járművek</span>
+                </a>
+            </div>
+            <div>
+                <a class="nav-link" asp-area="" asp-controller="Expenses" asp-action="Expenses_page">
+                    <span class="menu-title">Kiadások</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
