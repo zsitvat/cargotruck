@@ -29,17 +29,18 @@
                         </form>
 
                         <!--Pop up window-->
-                        <!--Pop up button-->
+                        <!--Pop up button
                         <form method="post" id="form1">
                             <button onclick="ShowPopup()" id="hide_content_button" type="button" runat="server" class="btn btn-light bg-white btn-icon me-3 mt-2 mt-xl-0">
                                 <i class="fa fa-cog" aria-hidden="true"></i>
                             </button>
-                        </form>
+                        </form>-->
 
-                        <button id="download1" type="button" class="btn btn-light bg-white btn-icon me-3 mt-2 mt-xl-0">
+                        <button onclick="location.href='@Url.Action("Excel", "Tasks")'" id="download1" type="button" class="btn btn-light bg-white btn-icon me-3 mt-2 mt-xl-0">
                             <i class="fa fa-file-text-o" aria-hidden="true"></i>
                         </button>
-                        <button id="download2" type="button" class="btn btn-light bg-white btn-icon me-3 mt-2 mt-xl-0">
+
+                        <button onclick="location.href='@Url.Action("PDF", "Tasks")'" id="download2" type="button" class="btn btn-light bg-white btn-icon me-3 mt-2 mt-xl-0">
                             <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
                         </button>
                         <a asp-action="create" class="btn btn-primary mt-2 mt-xl-0">Új adat</a>

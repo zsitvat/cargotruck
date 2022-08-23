@@ -1,13 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using App.Data;
 using App.Models;
 using Microsoft.AspNetCore.Http;
+using System.Data;
+using System.IO;
+using ClosedXML.Excel;
+using DocumentFormat.OpenXml.InkML;
+using System.Text;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using Font = iTextSharp.text.Font;
 
 namespace App.Controllers
 {
@@ -146,6 +152,75 @@ namespace App.Controllers
         private bool TasksExists(long id)
         {
             return _context.Tasks.Any(e => e.Id == id);
+        }
+
+
+        //closedXML needed
+        public async Task<IActionResult> Excel()
+        {
+            var tasks = from u in _context.Tasks select u;
+            using (var workbook = new XLWorkbook())
+            {
+                var worksheet = workbook.Worksheets.Add("Tasks");
+                var currentRow = 1;
+                worksheet.Cell(currentRow, 1).Value = "Id";
+                worksheet.Cell(currentRow, 2).Value = "Partner";
+                worksheet.Cell(currentRow, 3).Value = "Leírás";
+                worksheet.Cell(currentRow, 4).Value = "Átvétel helye";
+                worksheet.Cell(currentRow, 5).Value = "Átvétel ideje";
+                worksheet.Cell(currentRow, 6).Value = "Leadás helye";
+                worksheet.Cell(currentRow, 7).Value = "Leadás ideje";
+                worksheet.Cell(currentRow, 8).Value = "Egyéb megállóhelyek";
+                worksheet.Cell(currentRow, 9).Value = "Rakomány ID";
+                worksheet.Cell(currentRow, 10).Value = "Raktározás ideje";
+                worksheet.Cell(currentRow, 11).Value = "Teljesítve";
+                worksheet.Cell(currentRow, 12).Value = "Teljesítés ideje";
+                worksheet.Cell(currentRow, 13).Value = "Késés";
+                worksheet.Cell(currentRow, 14).Value = "Igért összeg";
+                worksheet.Cell(currentRow, 15).Value = "Végleges összeg";
+                worksheet.Cell(currentRow, 16).Value = "Büntetés összege";
+                worksheet.Cell(currentRow, 17).Value = "Dátum";
+                foreach (var task in tasks)
+                {
+                    currentRow++;
+                    worksheet.Cell(currentRow, 1).Value = task.Id;
+                    worksheet.Cell(currentRow, 2).Value = task.Partner;
+                    worksheet.Cell(currentRow, 3).Value = task.Description;
+                    worksheet.Cell(currentRow, 4).Value = task.Place_of_receipt;
+                    worksheet.Cell(currentRow, 5).Value = task.Time_of_receipt;
+                    worksheet.Cell(currentRow, 6).Value = task.Place_of_delivery;
+                    worksheet.Cell(currentRow, 7).Value = task.Time_of_delivery;
+                    worksheet.Cell(currentRow, 8).Value = task.Other_stops;
+                    worksheet.Cell(currentRow, 9).Value = task.Id_cargo;
+                    worksheet.Cell(currentRow, 10).Value = task.Storage_time;
+                    worksheet.Cell(currentRow, 11).Value = task.Completed;
+                    worksheet.Cell(currentRow, 12).Value = task.Completion_time;
+                    worksheet.Cell(currentRow, 13).Value = task.Time_of_delay;
+                    worksheet.Cell(currentRow, 14).Value = task.Payment;
+                    worksheet.Cell(currentRow, 15).Value = task.Final_Payment;
+                    worksheet.Cell(currentRow, 16).Value = task.Penalty;
+                    worksheet.Cell(currentRow, 17).Value = task.Date;
+                }
+
+                await using (var stream = new MemoryStream())
+                {
+          
+                    workbook.SaveAs(stream);
+                    var content = stream.ToArray();
+
+                    return File(
+                        content,
+                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                       "Tasks" + DateTime.Now.ToString("yyyy/MM/dd") + ".xlsx");
+                }
+            }
+        }
+        //iTextSharp needed
+        public Task<IActionResult> PDF()
+        {
+            var dt = from u in _context.Tasks select u;
+
+            return null;
         }
     }
 }

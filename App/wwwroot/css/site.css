@@ -193,6 +193,11 @@ input:focus::-webkit-input-placeholder {
     border: 1px solid #c9c3c3;
 }
 
+.forms select, .forms2 select {
+    border: 1px solid #c9c3c3;
+    color:black;
+}
+
 .forms2 {
     width: 45%;
     margin-left: 2%;
@@ -12929,7 +12934,7 @@ select.form-control, .dataTables_wrapper select {
   padding: .4375rem .75rem;
   border: 0;
   outline: 1px solid #f3f3f3;
-  color: #c9c8c8;
+  max-width:250px;
 }
 
 select.form-control:focus, .dataTables_wrapper select:focus {
