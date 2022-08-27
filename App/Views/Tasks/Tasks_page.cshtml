@@ -37,12 +37,15 @@
                         </form>-->
 
                         <button onclick="location.href='@Url.Action("Excel", "Tasks")'" id="download1" type="button" class="btn btn-light bg-white btn-icon me-3 mt-2 mt-xl-0">
-                            <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                            <i class="fa fa-file-excel-o" aria-hidden="true"></i>
                         </button>
 
-                        <button onclick="location.href='@Url.Action("PDF", "Tasks")'" id="download2" type="button" class="btn btn-light bg-white btn-icon me-3 mt-2 mt-xl-0">
+                        <button method="post" onclick="location.href='@Url.Action("PDF", "Tasks")'" id="ExportPdf" name="Export" type="button" class="btn btn-light bg-white btn-icon me-3 mt-2 mt-xl-0">
                             <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
                         </button>
+
+   
+
                         <a asp-action="create" class="btn btn-primary mt-2 mt-xl-0">Új adat</a>
                     </div>
                 </div>
@@ -50,13 +53,12 @@
         </div>
 
 
-
         <div class="row">
             <div class="col-md-12 stretch-card">
                 <div class="card">
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table">
+                            <table class="table" id="PrintPDF">
                                 <thead>
                                     <tr>
                                         <th>
