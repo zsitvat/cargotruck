@@ -21,6 +21,7 @@ using Azure;
 using static System.Net.WebRequestMethods;
 using System.Security.AccessControl;
 using System.Diagnostics;
+using DocumentFormat.OpenXml.Vml;
 
 namespace App.Controllers
 {
@@ -162,7 +163,7 @@ namespace App.Controllers
         }
 
 
-        //closedXML needed !!!!!
+        //closedXML needed !!!
         public async Task<IActionResult> Excel()
         {
             var tasks = from u in _context.Tasks select u;
@@ -171,22 +172,39 @@ namespace App.Controllers
                 var worksheet = workbook.Worksheets.Add("Tasks");
                 var currentRow = 1;
                 worksheet.Cell(currentRow, 1).Value = "Id";
+                worksheet.Cell(currentRow, 1).Style.Font.SetBold();
                 worksheet.Cell(currentRow, 2).Value = "Partner";
+                worksheet.Cell(currentRow, 2).Style.Font.SetBold();
                 worksheet.Cell(currentRow, 3).Value = "Leírás";
+                worksheet.Cell(currentRow, 3).Style.Font.SetBold();
                 worksheet.Cell(currentRow, 4).Value = "Átvétel helye";
+                worksheet.Cell(currentRow, 4).Style.Font.SetBold();
                 worksheet.Cell(currentRow, 5).Value = "Átvétel ideje";
+                worksheet.Cell(currentRow, 5).Style.Font.SetBold();
                 worksheet.Cell(currentRow, 6).Value = "Leadás helye";
+                worksheet.Cell(currentRow, 6).Style.Font.SetBold();
                 worksheet.Cell(currentRow, 7).Value = "Leadás ideje";
+                worksheet.Cell(currentRow, 7).Style.Font.SetBold();
                 worksheet.Cell(currentRow, 8).Value = "Egyéb megállóhelyek";
+                worksheet.Cell(currentRow, 8).Style.Font.SetBold();
                 worksheet.Cell(currentRow, 9).Value = "Rakomány ID";
+                worksheet.Cell(currentRow, 9).Style.Font.SetBold();
                 worksheet.Cell(currentRow, 10).Value = "Raktározás ideje";
+                worksheet.Cell(currentRow, 10).Style.Font.SetBold();
                 worksheet.Cell(currentRow, 11).Value = "Teljesítve";
+                worksheet.Cell(currentRow, 11).Style.Font.SetBold();
                 worksheet.Cell(currentRow, 12).Value = "Teljesítés ideje";
+                worksheet.Cell(currentRow, 12).Style.Font.SetBold();
                 worksheet.Cell(currentRow, 13).Value = "Késés";
+                worksheet.Cell(currentRow, 13).Style.Font.SetBold();
                 worksheet.Cell(currentRow, 14).Value = "Igért összeg";
+                worksheet.Cell(currentRow, 14).Style.Font.SetBold();
                 worksheet.Cell(currentRow, 15).Value = "Végleges összeg";
+                worksheet.Cell(currentRow, 15).Style.Font.SetBold();
                 worksheet.Cell(currentRow, 16).Value = "Büntetés összege";
+                worksheet.Cell(currentRow, 16).Style.Font.SetBold();
                 worksheet.Cell(currentRow, 17).Value = "Dátum";
+                worksheet.Cell(currentRow, 17).Style.Font.SetBold();
                 foreach (var task in tasks)
                 {
                     currentRow++;
@@ -213,10 +231,12 @@ namespace App.Controllers
                 {
                     workbook.SaveAs(stream);
                     var content = stream.ToArray();
+                    Random rnd = new Random();
+                    int random = rnd.Next(1000000, 9999999);
                     return File(
                         content,
                         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                       "Tasks" + DateTime.Now.ToString("yyyy/MM/dd") + ".xlsx");
+                       "Tasks" + random + "_" + DateTime.Now.ToString("yyyy-MM-dd") + ".xlsx");
                 }
             }
         }
@@ -228,9 +248,10 @@ namespace App.Controllers
 
             if (tasks.Count() > 0)
             {
-                int pdfRowIndex = 1;
-
-                string filename = "Tasks-" + DateTime.Now.ToString("dd-MM-yyyy");
+                int pdfRowIndex = 1; 
+                Random rnd = new Random();
+                int random = rnd.Next(1000000, 9999999);
+                string filename = "Tasks" + random + "_" + DateTime.Now.ToString("dd-MM-yyyy");
                 string filepath = "/" + filename + ".pdf";
 
                 Document document = new Document(PageSize.A4, 5f, 5f, 10f, 10f);
@@ -238,10 +259,14 @@ namespace App.Controllers
                 PdfWriter writer = PdfWriter.GetInstance(document, fs);
                 document.Open();
 
-                Font font1 = FontFactory.GetFont(FontFactory.COURIER_BOLD, 8);
+                Font font1 = FontFactory.GetFont(FontFactory.COURIER_BOLD, 6);
                 Font font2 = FontFactory.GetFont(FontFactory.COURIER, 6);
 
-                float[] columnDefinitionSize = { 1F, 1F, 1F, 1F };
+                Type type = typeof(Tasks);
+                var column_number = type.GetProperties().Length-1;
+                var columnDefinitionSize = new float[column_number];
+                for (int i = 0; i < column_number; i++) columnDefinitionSize[i] = 1F;
+
                 PdfPTable table;
                 PdfPCell cell;
 
@@ -254,8 +279,11 @@ namespace App.Controllers
                 {
                     BackgroundColor = new BaseColor(0xC0, 0xC0, 0xC0)
                 };
+                var title = new Paragraph( 15,"Megbízások");
+                title.Alignment = Element.ALIGN_CENTER;
+                document.Add(title);
+                document.Add( new Paragraph("\n"));
 
-                table.AddCell(new Phrase("Id", font1));
                 table.AddCell(new Phrase("Partner", font1));
                 table.AddCell(new Phrase("Leírás", font1));
                 table.AddCell(new Phrase("Átvétel helye", font1));
@@ -276,11 +304,6 @@ namespace App.Controllers
 
                 foreach (Tasks task in tasks)
                 {
-                     if  (!task.Id.ToString().IsEmpty())
-                    {
-                        table.AddCell(new Phrase(task.Id.ToString(), font2));
-                    }else { table.AddCell(new Phrase("-", font2)); }
-
                     if (!task.Partner.IsEmpty())
                     {
                         table.AddCell(new Phrase(task.Partner.ToString(), font2));
@@ -326,10 +349,10 @@ namespace App.Controllers
                         table.AddCell(new Phrase(task.Storage_time.ToString(), font2));
                     }else { table.AddCell(new Phrase("-", font2)); }
 
-                    if (!task.Completed.ToString().IsEmpty())
+                    if (task.Completed)
                     {
-                        table.AddCell(new Phrase(task.Completed.ToString(), font2));
-                    }else { table.AddCell(new Phrase("-", font2)); }
+                        table.AddCell(new Phrase("Igen", font2));
+                    }else { table.AddCell(new Phrase("Nem", font2)); }
 
                     if (!task.Completion_time.ToString().IsEmpty())
                     {
