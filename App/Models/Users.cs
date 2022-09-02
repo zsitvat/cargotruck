@@ -12,10 +12,13 @@ namespace App.Models
         [Required]
         public int  Id { get; set; } 
         [Required(ErrorMessage = "Felhasználónév megadása kötelező.")]
+        [MaxLength(30)]
         [Display(Name = "Felhasználónév")]
         public string UserName { get; set; }
         [Required(ErrorMessage = "Email megadása kötelező.")]
         [Display(Name = "Email")]
+        [DataType(DataType.EmailAddress)]
+        [RegularExpression(@"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}", ErrorMessage = "Megfelelő emailt adj meg!")]
         public string Email { get; set; }
         [Required(ErrorMessage = "Jelszó megadása kötelező.")]
         [Display(Name = "Jelszó")]

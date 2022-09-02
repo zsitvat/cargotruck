@@ -16,5 +16,7 @@ namespace App.Data
         }
         public DbSet<App.Models.Tasks> Tasks { get; set; }
         public DbSet<App.Models.Users> Users { get; set; }
+       
+
     }
 }

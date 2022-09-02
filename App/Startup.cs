@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -19,7 +20,9 @@ namespace App
     public class Startup
     {
         public Startup(IConfiguration configuration)
-        {
+        {    
+
+
             Configuration = configuration;
         }
 

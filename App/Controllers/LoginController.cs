@@ -9,7 +9,7 @@ using App.Data;
 using App.Models;
 using Microsoft.AspNetCore.Session;
 using Microsoft.AspNetCore.Http;
-
+using Microsoft.Data.SqlClient;
 
 namespace App.Controllers
 {
@@ -18,6 +18,17 @@ namespace App.Controllers
         private readonly ApplicationDbContext _context;
         public LoginController(ApplicationDbContext context)
         {
+            //create admin user if Users table is empty
+            if (!context.Users.Any())
+            {
+                var sql = @"Insert Into Users (UserName,Email,PasswordHash,Role) Values (@UserName,@Email,@PasswordHash,@Role)";
+                int noOfRowInserted = context.Database.ExecuteSqlRaw(sql,
+                    new SqlParameter("@UserName", "admin"),
+                    new SqlParameter("@Email", " "),
+                    new SqlParameter("@PasswordHash", "e64b78fc3bc91bcbc7dc232ba8ec59e0"),
+                    new SqlParameter("@Role", "admin")
+                    );
+            }
             _context = context;
         }
 
