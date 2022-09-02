@@ -162,4 +162,3 @@ E:\1.Tamasegyetem\Tananyagok\Szakdoga\szakdoga_program\App\bin\Debug\net6.0\runt
 E:\1.Tamasegyetem\Tananyagok\Szakdoga\szakdoga_program\App\bin\Debug\net6.0\runtimes\win-x86\native\grpc_csharp_ext.x86.dll
 E:\1.Tamasegyetem\Tananyagok\Szakdoga\szakdoga_program\App\bin\Debug\net6.0\other_files\appsettings - Copy.Development.json
 E:\1.Tamasegyetem\Tananyagok\Szakdoga\szakdoga_program\App\bin\Debug\net6.0\other_files\appsettings - Copy.json
-E:\1.Tamasegyetem\Tananyagok\Szakdoga\szakdoga_program\App\bin\Debug\net6.0\appsettings.json
