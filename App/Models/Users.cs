@@ -26,7 +26,6 @@ namespace App.Models
         public string PasswordHash { get; set; }   
         [Display(Name = "Jogosultság")]    
         public string Role { get; set; }
-        public string LoginErrorMessage { get; set; } = "";
-        
+        public string LoginErrorMessage { get; set; } = "";   
     }
 }

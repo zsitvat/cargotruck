@@ -27,9 +27,43 @@ namespace App.Controllers
         }
 
         // GET: Registration
-        public async Task<IActionResult> Admin_page(string searchString)
+        public async Task<IActionResult> Admin_page(string searchString,string sortOrder)
         {
             var users = from u in _context.Users select u;
+
+            ViewBag.UserNameSortParm = sortOrder == "UserName" ? "UserName_desc" : "UserName";
+            ViewBag.EmailSortParm = sortOrder == "Email" ? "Email_desc" : "Email";
+            ViewBag.PasswordSortParm = sortOrder == "Password" ? "Password_desc" : "Password";
+            ViewBag.RoleSortParm = sortOrder == "Role" ? "Role_desc" : "Role";
+            switch (sortOrder)
+            {
+                case "UserName_desc":
+                    users = users.OrderByDescending(s => s.UserName);
+                    break;
+                case "UserName":
+                    users = users.OrderBy(s => s.UserName);
+                    break;
+                case "Email_desc":
+                    users = users.OrderByDescending(s => s.Email);
+                    break;
+                case "Email":
+                    users = users.OrderBy(s => s.Email);
+                    break;
+                case "Password_desc":
+                    users = users.OrderByDescending(s => s.PasswordHash);
+                    break;
+                case "Password":
+                    users = users.OrderBy(s => s.PasswordHash);
+                    break;
+                case "Role_desc":
+                    users = users.OrderByDescending(s => s.Role);
+                    break;
+                case "Role":
+                    users = users.OrderBy(s => s.Role);
+                    break;
+                default:
+                    break;
+            }
             if (!String.IsNullOrEmpty(searchString))
             {
                 ViewBag.search = searchString;

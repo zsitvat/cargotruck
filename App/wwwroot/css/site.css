@@ -201,7 +201,7 @@ input:focus::-webkit-input-placeholder {
 .forms2 {
     width: 45%;
     margin-left: 2%;
-    margin-top:2%;
+    margin-top: 2%;
 }
 
 
@@ -645,8 +645,16 @@ sup {
 }
 
 a {
-    color: #8f8888;
+    color: black;
     text-decoration: none;
+}
+
+a:hover{
+    color:slategrey;
+}
+
+a:active {
+    color: slategrey;
 }
 
 a:hover {
@@ -1059,12 +1067,6 @@ body {
   .container, .container-sm {
     max-width: 800px;
   }  
-  .input_search {
-        max-width: 60%;
-    }
-    .search {
-        right: -3% !important;
-    }
     .button_search {
         max-width: 50%;
         font-size:20%;
@@ -8281,6 +8283,8 @@ fieldset:disabled .btn {
     --bs-text-opacity: 1;
     color: rgba(var(--bs-danger-rgb), var(--bs-text-opacity)) !important;
     min-height: 5px;
+    display: inline-block;
+    line-height: 15px;
 }
 
 .text-light {
@@ -13688,6 +13692,7 @@ dl li {
     color: red;
     font-size: 0.8rem;
     font-weight: 800;
+
 }
 
 .auth .login-half-bg {

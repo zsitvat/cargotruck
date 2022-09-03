@@ -62,52 +62,52 @@
                                 <thead>
                                     <tr>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.Partner)
+                                            @Html.ActionLink("Partner", "Tasks_page", new { sortOrder = ViewBag.PartnerSortParm })
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.Description)
+                                            @Html.ActionLink("Leírás", "Tasks_page", new { sortOrder = ViewBag.DescriptionSortParm })
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.Place_of_receipt)
+                                            @Html.ActionLink("Átvétel helye", "Tasks_page", new { sortOrder = ViewBag.Place_of_receiptSortParm })
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.Time_of_receipt)
+                                            @Html.ActionLink("Átvétel ideje", "Tasks_page", new { sortOrder = ViewBag.Time_of_receiptSortParm })
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.Place_of_delivery)
+                                            @Html.ActionLink("Leadás helye", "Tasks_page", new { sortOrder = ViewBag.Place_of_deliverySortParm })
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.Time_of_delivery)
+                                            @Html.ActionLink("Leadás ideje", "Tasks_page", new { sortOrder = ViewBag.Time_of_deliverySortParm })
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.Other_stops)
+                                            @Html.ActionLink("Egyéb megállóhelyek", "Tasks_page", new { sortOrder = ViewBag.Other_stopsSortParm })
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.Id_cargo)
+                                            @Html.ActionLink("Rakomány Id", "Tasks_page", new { sortOrder = ViewBag.Id_cargoSortParm })
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.Storage_time)
+                                            @Html.ActionLink("Raktározás ideje", "Tasks_page", new { sortOrder = ViewBag.Storage_timeSortParm })
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.Completed)
+                                            @Html.ActionLink("Teljesítve", "Tasks_page", new { sortOrder = ViewBag.CompletedSortParm })
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.Completion_time)
+                                            @Html.ActionLink("Teljesítés ideje", "Tasks_page", new { sortOrder = ViewBag.Completion_timeSortParm })
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.Time_of_delay)
+                                            @Html.ActionLink("Késés", "Tasks_page", new { sortOrder = ViewBag.Time_of_delaySortParm })
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.Payment)
+                                            @Html.ActionLink("Igért összeg", "Tasks_page", new { sortOrder = ViewBag.PaymentSortParm })
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.Final_Payment)
+                                            @Html.ActionLink("Végleges összeg", "Tasks_page", new { sortOrder = ViewBag.Final_PaymentSortParm })
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.Penalty)
+                                            @Html.ActionLink("Büntetés összege", "Tasks_page", new { sortOrder = ViewBag.PenaltySortParm })
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.Date)
+                                            @Html.ActionLink("Dátum","Tasks_page", new { sortOrder = ViewBag.DateSortParm })
                                         </th>
                                         <th></th>
                                     </tr>

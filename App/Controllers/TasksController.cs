@@ -14,6 +14,9 @@ using System.Text;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System.Web.WebPages;
+using Microsoft.Data.SqlClient;
+using iTextSharp.tool.xml.html;
+using System.ComponentModel;
 
 namespace App.Controllers
 {
@@ -27,7 +30,7 @@ namespace App.Controllers
         }
 
         // GET: Tasks
-        public async Task<IActionResult> Tasks_page(string searchString)
+        public async Task<IActionResult> Tasks_page(string searchString, string sortOrder)
         {
             if (HttpContext.Session.GetString("Id") == null)
             {
@@ -35,7 +38,123 @@ namespace App.Controllers
             }
             else
             {
-                var tasks = from u in _context.Tasks select u;
+                var tasks = from t in _context.Tasks select t;
+
+                ViewBag.PartnerSortParm = sortOrder == "Partner" ? "Partner_desc" : "Partner";
+                ViewBag.DescriptionSortParm = sortOrder == "Description" ? "Description_desc" : "Description";
+                ViewBag.Place_of_receiptSortParm = sortOrder == "Place_of_receipt" ? "Place_of_receipt_desc" : "Place_of_receipt";
+                ViewBag.Time_of_receiptSortParm = sortOrder == "Time_of_receipt" ? "Time_of_receipt_desc" : "Time_of_receipt";
+                ViewBag.Place_of_deliverySortParm = sortOrder == "Place_of_delivery" ? "Place_of_delivery_desc" : "Place_of_delivery";
+                ViewBag.Time_of_deliverySortParm = sortOrder == "Time_of_delivery" ? "Time_of_delivery_desc" : "Time_of_delivery";
+                ViewBag.Other_stopsSortParm = sortOrder == "Other_stops" ? "Other_stops_desc" : "Other_stops";
+                ViewBag.Id_cargoSortParm = sortOrder == "Id_cargo" ? "Id_cargo_desc" : "Id_cargo";
+                ViewBag.Storage_timeSortParm = sortOrder == "Storage_time" ? "Storage_time_desc" : "Storage_time";
+                ViewBag.CompletedSortParm = sortOrder == "Completed" ? "Completed_desc" : "Completed";
+                ViewBag.Completion_timeSortParm = sortOrder == "Completion_time" ? "Completion_time_desc" : "Completion_time";
+                ViewBag.Time_of_delaySortParm = sortOrder == "Time_of_delay" ? "Time_of_delay_desc" : "Time_of_delay";
+                ViewBag.PaymentSortParm = sortOrder == "Payment" ? "Payment_desc" : "Payment";
+                ViewBag.Final_PaymentSortParm = sortOrder == "Final_Payment" ? "Final_Payment_desc" : "Final_Payment";
+                ViewBag.PenaltySortParm = sortOrder == "Penalty" ? "Penalty_desc" : "Penalty";
+                ViewBag.DateSortParm = String.IsNullOrEmpty(sortOrder) ? "Date_desc" : "";
+                switch (sortOrder)
+                {
+                    case "Partner_desc":
+                        tasks = tasks.OrderByDescending(s => s.Partner);
+                        break;
+                    case "Partner":
+                        tasks = tasks.OrderBy(s => s.Partner);
+                        break;
+                    case "Description_desc":
+                        tasks = tasks.OrderByDescending(s => s.Description);
+                        break;
+                    case "Description":
+                        tasks = tasks.OrderBy(s => s.Description);
+                        break;
+                    case "Place_of_receipt_desc":
+                        tasks = tasks.OrderByDescending(s => s.Place_of_receipt);
+                        break;
+                    case "Place_of_receipt":
+                        tasks = tasks.OrderBy(s => s.Place_of_receipt);
+                        break;
+                    case "Time_of_receipt_desc":
+                        tasks = tasks.OrderByDescending(s => s.Time_of_receipt);
+                        break;
+                    case "Time_of_receipt":
+                        tasks = tasks.OrderBy(s => s.Time_of_receipt);
+                        break;
+                    case "Place_of_delivery_desc":
+                        tasks = tasks.OrderByDescending(s => s.Place_of_delivery);
+                        break;
+                    case "Place_of_delivery":
+                        tasks = tasks.OrderBy(s => s.Place_of_delivery);
+                        break;
+                    case "Time_of_delivery_desc":
+                        tasks = tasks.OrderByDescending(s => s.Time_of_delivery);
+                        break;
+                    case "Time_of_delivery":
+                        tasks = tasks.OrderBy(s => s.Time_of_delivery);
+                        break;
+                    case "Other_stops_desc":
+                        tasks = tasks.OrderByDescending(s => s.Other_stops);
+                        break;
+                    case "Other_stops":
+                        tasks = tasks.OrderBy(s => s.Other_stops);
+                        break;
+                    case "Id_cargo_desc":
+                        tasks = tasks.OrderByDescending(s => s.Id_cargo);
+                        break;
+                    case "Id_cargo":
+                        tasks = tasks.OrderBy(s => s.Id_cargo);
+                        break;
+                    case "Storage_time_desc":
+                        tasks = tasks.OrderByDescending(s => s.Storage_time);
+                        break;
+                    case "Storage_time":
+                        tasks = tasks.OrderBy(s => s.Storage_time);
+                        break;
+                    case "Completed_desc":
+                        tasks = tasks.OrderByDescending(s => s.Completed);
+                        break;
+                    case "Completed":
+                        tasks = tasks.OrderBy(s => s.Completed);
+                        break;
+                    case "Completion_time_desc":
+                        tasks = tasks.OrderByDescending(s => s.Completion_time);
+                        break;
+                    case "Completion_time":
+                        tasks = tasks.OrderBy(s => s.Completion_time);
+                        break;
+                    case "Time_of_delay_desc":
+                        tasks = tasks.OrderByDescending(s => s.Time_of_delay);
+                        break;
+                    case "Time_of_delay":
+                        tasks = tasks.OrderBy(s => s.Time_of_delay);
+                        break;
+                    case "Payment_desc":
+                        tasks = tasks.OrderByDescending(s => s.Payment);
+                        break;
+                    case "Payment":
+                        tasks = tasks.OrderBy(s => s.Payment);
+                        break;
+                    case "Final_Payment_desc":
+                        tasks = tasks.OrderByDescending(s => s.Final_Payment);
+                        break;
+                    case "Final_Payment":
+                        tasks = tasks.OrderBy(s => s.Final_Payment);
+                        break;
+                    case "Penalty_desc":
+                        tasks = tasks.OrderByDescending(s => s.Penalty);
+                        break;
+                    case "Penalty":
+                        tasks = tasks.OrderBy(s => s.Penalty);
+                        break;
+                    case "Date_desc":
+                        tasks = tasks.OrderByDescending(s => s.Date);
+                        break;
+                    default:
+                        tasks = tasks.OrderBy(s => s.Date);
+                        break;
+                }
                 if (!String.IsNullOrEmpty(searchString))
                 {
                     ViewBag.search = searchString;

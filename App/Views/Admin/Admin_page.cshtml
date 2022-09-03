@@ -46,15 +46,17 @@
                                 <thead>
                                     <tr>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.UserName)
+                                            @Html.ActionLink("Felhasználónév", "Admin_page", new { sortOrder = ViewBag.UserNameSortParm })
                                         </th>
                                         <th>
-                                            @Html.DisplayNameFor(model => model.Email)
+                                            @Html.ActionLink("Email", "Admin_page", new { sortOrder = ViewBag.EmailSortParm })
                                         </th>
                                         <th>
+                                            @Html.ActionLink("Jelszó", "Admin_page", new { sortOrder = ViewBag.PasswordSortParm })
                                             @Html.DisplayNameFor(model => model.PasswordHash)
                                         </th>
                                         <th>
+                                            @Html.ActionLink("Jogosultság", "Admin_page", new { sortOrder = ViewBag.RoleSortParm })
                                             @Html.DisplayNameFor(model => model.Role)
                                         </th>
                                         <th></th>
