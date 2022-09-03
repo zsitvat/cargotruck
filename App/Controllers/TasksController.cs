@@ -14,14 +14,6 @@ using System.Text;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System.Web.WebPages;
-using Microsoft.Extensions.Hosting.Internal;
-using Microsoft.AspNetCore.Hosting.Internal;
-using Grpc.Core;
-using Azure;
-using static System.Net.WebRequestMethods;
-using System.Security.AccessControl;
-using System.Diagnostics;
-using DocumentFormat.OpenXml.Vml;
 
 namespace App.Controllers
 {

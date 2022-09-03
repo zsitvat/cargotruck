@@ -53,10 +53,6 @@
               "target": "Package",
               "version": "[0.96.0, )"
             },
-            "DinkToPdf": {
-              "target": "Package",
-              "version": "[1.0.8, )"
-            },
             "Grpc.Core": {
               "target": "Package",
               "version": "[2.46.3, )"
@@ -94,10 +90,6 @@
             "Rotativa": {
               "target": "Package",
               "version": "[1.7.3, )"
-            },
-            "Syncfusion.Pdf.AspNet.Mvc5": {
-              "target": "Package",
-              "version": "[20.2.0.45, )"
             },
             "iTextSharp": {
               "target": "Package",

@@ -10,7 +10,6 @@
         "dependencies": {
           "Azure.Core": "1.25.0",
           "ClosedXML": "0.96.0",
-          "DinkToPdf": "1.0.8",
           "Grpc.Core": "2.46.3",
           "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "3.1.26",
           "Microsoft.AspNetCore.Hosting": "2.2.7",
@@ -20,7 +19,6 @@
           "Microsoft.EntityFrameworkCore.Tools": "3.1.25",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "3.1.5",
           "Rotativa": "1.7.3",
-          "Syncfusion.Pdf.AspNet.Mvc5": "20.2.0.45",
           "iTextSharp": "5.5.13.3",
           "itextsharp.xmlworker": "5.5.13.3"
         },
@@ -64,23 +62,6 @@
           "lib/netstandard2.0/ClosedXML.dll": {
             "assemblyVersion": "0.96.0.0",
             "fileVersion": "0.96.0.0"
-          }
-        }
-      },
-      "DinkToPdf/1.0.8": {
-        "dependencies": {
-          "NETStandard.Library": "1.6.1",
-          "System.Collections.Concurrent": "4.3.0",
-          "System.Globalization": "4.3.0",
-          "System.Reflection.TypeExtensions": "4.3.0",
-          "System.Runtime": "4.3.0",
-          "System.Runtime.InteropServices": "4.3.0",
-          "System.Threading.Thread": "4.0.0"
-        },
-        "runtime": {
-          "lib/netstandard1.6/DinkToPdf.dll": {
-            "assemblyVersion": "1.0.8.0",
-            "fileVersion": "1.0.8.0"
           }
         }
       },
@@ -1190,22 +1171,6 @@
           }
         }
       },
-      "Syncfusion.Pdf.AspNet.Mvc5/20.2.0.45": {
-        "runtime": {
-          "lib/net45/Syncfusion.Compression.Base.dll": {
-            "assemblyVersion": "20.2450.0.45",
-            "fileVersion": "20.2450.0.45"
-          },
-          "lib/net45/Syncfusion.Licensing.dll": {
-            "assemblyVersion": "20.2450.0.45",
-            "fileVersion": "20.2450.0.45"
-          },
-          "lib/net45/Syncfusion.Pdf.Base.dll": {
-            "assemblyVersion": "20.2450.0.45",
-            "fileVersion": "20.2450.0.45"
-          }
-        }
-      },
       "System.AppContext/4.3.0": {
         "dependencies": {
           "System.Runtime": "4.3.0"
@@ -2079,11 +2044,6 @@
         }
       },
       "System.Threading.Tasks.Extensions/4.5.4": {},
-      "System.Threading.Thread/4.0.0": {
-        "dependencies": {
-          "System.Runtime": "4.3.0"
-        }
-      },
       "System.Threading.Timer/4.3.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "2.1.2",
@@ -2189,13 +2149,6 @@
       "sha512": "sha512-3VLfl4wCMHDuaV0GwA9MHY6BvKlTH4zaNG/ah6QODCZYMqLS6m0JVZph5kGpbuCCCyKXdO2hiUd/e35Wzd/Zmw==",
       "path": "closedxml/0.96.0",
       "hashPath": "closedxml.0.96.0.nupkg.sha512"
-    },
-    "DinkToPdf/1.0.8": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-wJDlcNXjQ+OnBFwh3LBeAXgrXqlKl0RsgN60XpxEFbyqzdaG9ASb5HTXQjXQPaBguSCOrGZZESPnpcng34TEkw==",
-      "path": "dinktopdf/1.0.8",
-      "hashPath": "dinktopdf.1.0.8.nupkg.sha512"
     },
     "DocumentFormat.OpenXml/2.16.0": {
       "type": "package",
@@ -2960,13 +2913,6 @@
       "path": "runtime.win-x86.runtime.native.system.data.sqlclient.sni/4.4.0",
       "hashPath": "runtime.win-x86.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512"
     },
-    "Syncfusion.Pdf.AspNet.Mvc5/20.2.0.45": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-DqeP8ettj0l25N0IcsgRGgkXdmbCZodhqVWn6lbDi+qis2f/gdnrhgKPfHhfvaLUmbbnjxFE2o68Hx98IT5W0Q==",
-      "path": "syncfusion.pdf.aspnet.mvc5/20.2.0.45",
-      "hashPath": "syncfusion.pdf.aspnet.mvc5.20.2.0.45.nupkg.sha512"
-    },
     "System.AppContext/4.3.0": {
       "type": "package",
       "serviceable": true,
@@ -3568,13 +3514,6 @@
       "sha512": "sha512-zteT+G8xuGu6mS+mzDzYXbzS7rd3K6Fjb9RiZlYlJPam2/hU7JCBZBVEcywNuR+oZ1ncTvc/cq0faRr3P01OVg==",
       "path": "system.threading.tasks.extensions/4.5.4",
       "hashPath": "system.threading.tasks.extensions.4.5.4.nupkg.sha512"
-    },
-    "System.Threading.Thread/4.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-gIdJqDXlOr5W9zeqFErLw3dsOsiShSCYtF9SEHitACycmvNvY8odf9kiKvp6V7aibc8C4HzzNBkWXjyfn7plbQ==",
-      "path": "system.threading.thread/4.0.0",
-      "hashPath": "system.threading.thread.4.0.0.nupkg.sha512"
     },
     "System.Threading.Timer/4.3.0": {
       "type": "package",

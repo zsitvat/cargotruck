@@ -169,7 +169,7 @@ input:focus::-webkit-input-placeholder {
 }
 
 .margintop {
-    margin-top: 40px;
+    margin-top: 3vw;
 }
 
 .navmargintop {
@@ -1057,19 +1057,32 @@ body {
 
 @media (min-width: 576px) {
   .container, .container-sm {
-    max-width: 540px;
-  }
+    max-width: 800px;
+  }  
+  .input_search {
+        max-width: 60%;
+    }
+    .search {
+        right: -3% !important;
+    }
+    .button_search {
+        max-width: 50%;
+        font-size:20%;
+    }
 }
 
 @media (min-width: 768px) {
   .container, .container-sm, .container-md {
     max-width: 720px;
   }
+  
 }
 
 @media (min-width: 992px) {
   .container, .container-sm, .container-md, .container-lg {
-    max-width: 960px;
+    max-width: 980px;
+    margin-left:12%;
+    margin-right:10%;
   }
 }
 
@@ -1081,10 +1094,24 @@ body {
 
 @media (min-width: 1400px) {
   .container, .container-sm, .container-md, .container-lg, .container-xl, .container-xxl {
-    max-width: 1320px;
+    max-width: 1250px;
   }
 }
 
+@media (min-width: 1600px) {
+    .container, .container-sm, .container-md, .container-lg, .container-xl, .container-xxl {
+        max-width: 1500px;
+    }
+
+    .columns {
+        margin: 0% !important;
+        margin-top: 8% !important;
+    }
+
+    h2 {
+        margin: 0;
+    }
+}
 .row {
   --bs-gutter-x: 20px;
   --bs-gutter-y: 0;
@@ -13796,11 +13823,13 @@ dl li {
 
 .content-wrapper {
     background: #f3f3f3;
-    padding: 2.1rem 1.04rem;
+    padding-left: 3%;
+    padding-right: 2.1rem;
+    padding-top: 3%;
+    padding-bottom: 1.04rem;
     width: 100%;
     -webkit-flex-grow: 1;
     flex-grow: 1;
-    padding-left: 8.5%;
 }
 
 @media (max-width: 767px) {
@@ -14058,9 +14087,15 @@ dl li {
         margin-bottom: 0px;
         font-size: 0.8rem;
     }
+
     .margintop {
         margin-top: 40%;
     }
+
+    .content-wrapper {
+        margin-top: 8%;
+    }
+
     .footer {
         padding: 8px 1rem;
     }
@@ -14081,6 +14116,13 @@ dl li {
 
     .main-panel{
         min-height:100%;
+    }
+
+    .search {
+        left:8%;
+    }
+    .input_search{
+        width:60%;
     }
 }
 
