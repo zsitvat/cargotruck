@@ -13,10 +13,7 @@ using DocumentFormat.OpenXml.InkML;
 using System.Text;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
-using System.Web.WebPages;
-using Microsoft.Data.SqlClient;
-using iTextSharp.tool.xml.html;
-using System.ComponentModel;
+using System.Reflection;
 
 namespace App.Controllers
 {
@@ -38,6 +35,8 @@ namespace App.Controllers
             }
             else
             {
+
+                
                 var tasks = from t in _context.Tasks select t;
 
                 ViewBag.PartnerSortParm = sortOrder == "Partner" ? "Partner_desc" : "Partner";
@@ -413,49 +412,50 @@ namespace App.Controllers
                 table.AddCell(new Phrase("Date", font1));
                 table.HeaderRows = 1;
 
+
                 foreach (Tasks task in tasks)
                 {
-                    if (!task.Partner.IsEmpty())
+                    if (!string.IsNullOrEmpty(task.Partner))
                     {
                         table.AddCell(new Phrase(task.Partner.ToString(), font2));
                     }else { table.AddCell(new Phrase("-", font2)); }
 
-                    if (!task.Description.IsEmpty())
+                    if (!string.IsNullOrEmpty(task.Description))
                     {
                         table.AddCell(new Phrase(task.Description.ToString(), font2));
                     }else { table.AddCell(new Phrase("-", font2)); }
 
-                    if (!task.Place_of_receipt.IsEmpty())
+                    if (!string.IsNullOrEmpty(task.Place_of_receipt))
                     {
                         table.AddCell(new Phrase(task.Place_of_receipt.ToString(), font2));
                     }else { table.AddCell(new Phrase("-", font2)); }
 
-                    if (!task.Time_of_receipt.ToString().IsEmpty())
+                    if (!string.IsNullOrEmpty(task.Time_of_receipt.ToString()))
                     {
                         table.AddCell(new Phrase(task.Time_of_receipt.ToString(), font2));
                     }else { table.AddCell(new Phrase("-", font2)); }
 
-                    if (!task.Place_of_delivery.IsEmpty())
+                    if (!string.IsNullOrEmpty(task.Place_of_delivery))
                     {
                         table.AddCell(new Phrase(task.Place_of_delivery.ToString(), font2));
 
                     }else { table.AddCell(new Phrase("-", font2)); }
 
-                    if (!task.Time_of_delivery.ToString().IsEmpty())
+                    if (!string.IsNullOrEmpty(task.Time_of_delivery.ToString()))
                     {
                         table.AddCell(new Phrase(task.Time_of_delivery.ToString(), font2));
                     }else { table.AddCell(new Phrase("-", font2)); }
 
-                    if (!task.Other_stops.IsEmpty()) {  
+                    if (!string.IsNullOrEmpty(task.Other_stops)) {  
                         table.AddCell(new Phrase(task.Other_stops.ToString(), font2)) ;
                     }else { table.AddCell(new Phrase("-", font2)); }
 
-                    if (!task.Id_cargo.IsEmpty())
+                    if (!string.IsNullOrEmpty(task.Id_cargo))
                     {
                         table.AddCell(new Phrase(task.Id_cargo.ToString(), font2));
                     } else { table.AddCell(new Phrase("-", font2)); }
 
-                    if (!task.Storage_time.IsEmpty())
+                    if (!string.IsNullOrEmpty(task.Storage_time))
                     {
                         table.AddCell(new Phrase(task.Storage_time.ToString(), font2));
                     }else { table.AddCell(new Phrase("-", font2)); }
@@ -465,36 +465,35 @@ namespace App.Controllers
                         table.AddCell(new Phrase("Igen", font2));
                     }else { table.AddCell(new Phrase("Nem", font2)); }
 
-                    if (!task.Completion_time.ToString().IsEmpty())
+                    if (!string.IsNullOrEmpty(task.Completion_time.ToString()))
                     {
                         table.AddCell(new Phrase(task.Completion_time.ToString(), font2));
                     } else { table.AddCell(new Phrase("-", font2)); }
 
-                    if (!task.Time_of_delay.IsEmpty())
+                    if (!string.IsNullOrEmpty(task.Time_of_delay))
                     {
                         table.AddCell(new Phrase(task.Time_of_delay.ToString(), font2));
                     }else { table.AddCell(new Phrase("-", font2)); }
 
-                    if (!task.Payment.IsEmpty())
+                    if (!string.IsNullOrEmpty(task.Payment))
                     {
                         table.AddCell(new Phrase(task.Payment.ToString(), font2));
                     }else { table.AddCell(new Phrase("-", font2)); }
 
-                    if (!task.Final_Payment.IsEmpty())
+                    if (!string.IsNullOrEmpty(task.Final_Payment))
                     {
                         table.AddCell(new Phrase(task.Final_Payment.ToString(), font2));
                     }else { table.AddCell(new Phrase("-", font2)); }
 
-                    if (!task.Penalty.IsEmpty())
+                    if (!string.IsNullOrEmpty(task.Penalty))
                     {
                         table.AddCell(new Phrase(task.Penalty.ToString(), font2));
                     }else { table.AddCell(new Phrase("-", font2)); }
 
-                    if (!task.Date.ToString().IsEmpty())
+                    if (!string.IsNullOrEmpty(task.Date.ToString()))
                     {
                         table.AddCell(new Phrase(task.Date.ToString(), font2));
                     }else { table.AddCell(new Phrase("-", font2)); }
-
                     pdfRowIndex++;
                 }
 

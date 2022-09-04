@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.VisualBasic.Syntax;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -47,5 +49,7 @@ namespace App.Models
         public string Penalty { get; set; }
         [Display(Name = "Dátum")]
         public DateTime Date { get; set; } = DateTime.Now;
-    }
+
+    }   
+        
 }
