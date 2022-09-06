@@ -121,12 +121,14 @@
     padding-left: 10px;
 }
 
+
+
 .button_search {
-    max-height:2.7em;
-    margin-right:5px; 
-    border-top-left-radius:0px !important;
-    border-bottom-left-radius:0px !important;
-    margin-bottom:3px;
+    max-height: 2.7em;
+    margin-right: 5px;
+    border-top-left-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
+    margin-bottom: 3px;
 }
 
 .i {
@@ -5245,10 +5247,60 @@ fieldset:disabled .btn {
 }
 
 .pagination {
-  display: flex;
-  padding-left: 0;
-  list-style: none;
+    display: flex;
+    list-style: none;    
+    font-weight: 800;
+    border-radius: 0.6rem;
+    background: rgb(243, 243, 243);
+    box-shadow: 0 0.8rem 2rem rgba(#5a6181, 0.05);
+    justify-content: center;
+    align-items: center;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    display: flex;
+    list-style: none;
 }
+
+.PagedList-skipToPrevious, .PagedList-skipToNext {
+    visibility: hidden;
+}
+
+.PagedList-skipToPrevious:after {
+    visibility: visible;
+    content: '‹';
+    font-size: 28px;
+}
+
+.PagedList-skipToNext:after {
+    visibility: visible;
+    content: '›';
+    font-size: 28px;
+}
+
+.paging {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.pagination li {
+    border-radius: 0.3rem;
+    padding-left: 0.6rem;
+    padding-right: 0.6rem;
+    font-size:15px;
+    line-height:1.5;
+}
+
+.pagination li a:hover {
+    color: #a6a1a1;
+}
+
+.pagination .active {
+    color: #686868;
+    background-color: #c9c3c3;
+    border-color: #d1cfcf;
+}
+
 
 .page-link {
   position: relative;

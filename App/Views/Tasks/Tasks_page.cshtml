@@ -1,8 +1,11 @@
-﻿@{
+﻿@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+
+@{
     ViewData["Title"] = "Megbízások";
 }
 
-@model IEnumerable<App.Models.Tasks>
+@model X.PagedList.IPagedList<App.Models.Tasks>
 
 <!-- partial -->
 <div class="main-panel main">
@@ -22,7 +25,7 @@
 
                     <div class="d-flex justify-content-between align-items-end flex-wrap">
                         <form asp-controller="Tasks" asp-action="Tasks_page" class="search" id="search" method="get">
-                            <input placeholder="@ViewBag.search" class="input_search" type="search" id="search-input" name="SearchString">
+                            <input placeholder="@ViewBag.searchPlaceHolder" class="input_search" type="search" id="search-input" name="SearchString">
                             <button type="submit" class="btn btn-primary button_search ">
                                 <i class="i fa fa-search"></i>
                             </button>
@@ -62,52 +65,52 @@
                                 <thead>
                                     <tr>
                                         <th>
-                                            @Html.ActionLink("Partner", "Tasks_page", new { sortOrder = ViewBag.PartnerSortParm })
+                                            @Html.ActionLink("Partner", "Tasks_page", new { sortOrder = ViewBag.PartnerSortParm, currentFilter=ViewBag.CurrentFilter  })
                                         </th>
                                         <th>
-                                            @Html.ActionLink("Leírás", "Tasks_page", new { sortOrder = ViewBag.DescriptionSortParm })
+                                            @Html.ActionLink("Leírás", "Tasks_page", new { sortOrder = ViewBag.DescriptionSortParm, currentFilter=ViewBag.CurrentFilter  })
                                         </th>
                                         <th>
-                                            @Html.ActionLink("Átvétel helye", "Tasks_page", new { sortOrder = ViewBag.Place_of_receiptSortParm })
+                                            @Html.ActionLink("Átvétel helye", "Tasks_page", new { sortOrder = ViewBag.Place_of_receiptSortParm, currentFilter=ViewBag.CurrentFilter  })
                                         </th>
                                         <th>
-                                            @Html.ActionLink("Átvétel ideje", "Tasks_page", new { sortOrder = ViewBag.Time_of_receiptSortParm })
+                                            @Html.ActionLink("Átvétel ideje", "Tasks_page", new { sortOrder = ViewBag.Time_of_receiptSortParm, currentFilter=ViewBag.CurrentFilter  })
                                         </th>
                                         <th>
-                                            @Html.ActionLink("Leadás helye", "Tasks_page", new { sortOrder = ViewBag.Place_of_deliverySortParm })
+                                            @Html.ActionLink("Leadás helye", "Tasks_page", new { sortOrder = ViewBag.Place_of_deliverySortParm, currentFilter=ViewBag.CurrentFilter  })
                                         </th>
                                         <th>
-                                            @Html.ActionLink("Leadás ideje", "Tasks_page", new { sortOrder = ViewBag.Time_of_deliverySortParm })
+                                            @Html.ActionLink("Leadás ideje", "Tasks_page", new { sortOrder = ViewBag.Time_of_deliverySortParm, currentFilter=ViewBag.CurrentFilter  })
                                         </th>
                                         <th>
-                                            @Html.ActionLink("Egyéb megállóhelyek", "Tasks_page", new { sortOrder = ViewBag.Other_stopsSortParm })
+                                            @Html.ActionLink("Egyéb megállóhelyek", "Tasks_page", new { sortOrder = ViewBag.Other_stopsSortParm, currentFilter=ViewBag.CurrentFilter  })
                                         </th>
                                         <th>
-                                            @Html.ActionLink("Rakomány Id", "Tasks_page", new { sortOrder = ViewBag.Id_cargoSortParm })
+                                            @Html.ActionLink("Rakomány Id", "Tasks_page", new { sortOrder = ViewBag.Id_cargoSortParm, currentFilter=ViewBag.CurrentFilter  })
                                         </th>
                                         <th>
-                                            @Html.ActionLink("Raktározás ideje", "Tasks_page", new { sortOrder = ViewBag.Storage_timeSortParm })
+                                            @Html.ActionLink("Raktározás ideje", "Tasks_page", new { sortOrder = ViewBag.Storage_timeSortParm, currentFilter=ViewBag.CurrentFilter  })
                                         </th>
                                         <th>
-                                            @Html.ActionLink("Teljesítve", "Tasks_page", new { sortOrder = ViewBag.CompletedSortParm })
+                                            @Html.ActionLink("Teljesítve", "Tasks_page", new { sortOrder = ViewBag.CompletedSortParm, currentFilter=ViewBag.CurrentFilter  })
                                         </th>
                                         <th>
-                                            @Html.ActionLink("Teljesítés ideje", "Tasks_page", new { sortOrder = ViewBag.Completion_timeSortParm })
+                                            @Html.ActionLink("Teljesítés ideje", "Tasks_page", new { sortOrder = ViewBag.Completion_timeSortParm, currentFilter=ViewBag.CurrentFilter  })
                                         </th>
                                         <th>
-                                            @Html.ActionLink("Késés", "Tasks_page", new { sortOrder = ViewBag.Time_of_delaySortParm })
+                                            @Html.ActionLink("Késés", "Tasks_page", new { sortOrder = ViewBag.Time_of_delaySortParm, currentFilter=ViewBag.CurrentFilter  })
                                         </th>
                                         <th>
-                                            @Html.ActionLink("Igért összeg", "Tasks_page", new { sortOrder = ViewBag.PaymentSortParm })
+                                            @Html.ActionLink("Igért összeg", "Tasks_page", new { sortOrder = ViewBag.PaymentSortParm , currentFilter=ViewBag.CurrentFilter })
                                         </th>
                                         <th>
-                                            @Html.ActionLink("Végleges összeg", "Tasks_page", new { sortOrder = ViewBag.Final_PaymentSortParm })
+                                            @Html.ActionLink("Végleges összeg", "Tasks_page", new { sortOrder = ViewBag.Final_PaymentSortParm, currentFilter=ViewBag.CurrentFilter  })
                                         </th>
                                         <th>
-                                            @Html.ActionLink("Büntetés összege", "Tasks_page", new { sortOrder = ViewBag.PenaltySortParm })
+                                            @Html.ActionLink("Büntetés összege", "Tasks_page", new { sortOrder = ViewBag.PenaltySortParm, currentFilter=ViewBag.CurrentFilter  })
                                         </th>
                                         <th>
-                                            @Html.ActionLink("Dátum","Tasks_page", new { sortOrder = ViewBag.DateSortParm })
+                                            @Html.ActionLink("Dátum","Tasks_page", new { sortOrder = ViewBag.DateSortParm, currentFilter=ViewBag.CurrentFilter  })
                                         </th>
                                         <th></th>
                                     </tr>
@@ -174,6 +177,9 @@
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+                    <div class="paging">
+                        @Html.PagedListPager(Model, page => Url.Action("Tasks_page",new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
                     </div>
                 </div>
             </div>

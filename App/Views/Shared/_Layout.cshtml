@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Http;
-@inject IHttpContextAccessor Accessor
+@inject IHttpContextAccessor Accessor;
 
 @{ var role = -1;
     switch (Accessor.HttpContext.Session.GetString("Role"))

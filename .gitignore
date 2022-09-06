@@ -5,3 +5,6 @@
 *appsettings.json
 App/appsettings.json
 *.json
+obj
+/obj
+App/obj

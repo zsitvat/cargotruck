@@ -113,3 +113,8 @@ E:\1.Tamasegyetem\Tananyagok\Szakdoga\szakdoga_program\App\obj\Debug\net5.0\refi
 E:\1.Tamasegyetem\Tananyagok\Szakdoga\szakdoga_program\App\obj\Debug\net5.0\App.pdb
 E:\1.Tamasegyetem\Tananyagok\Szakdoga\szakdoga_program\App\obj\Debug\net5.0\App.genruntimeconfig.cache
 E:\1.Tamasegyetem\Tananyagok\Szakdoga\szakdoga_program\App\obj\Debug\net5.0\ref\App.dll
+E:\1.Tamasegyetem\Tananyagok\Szakdoga\szakdoga_program\App\bin\Debug\net5.0\PagedList.dll
+E:\1.Tamasegyetem\Tananyagok\Szakdoga\szakdoga_program\App\bin\Debug\net5.0\PagedList.Mvc.dll
+E:\1.Tamasegyetem\Tananyagok\Szakdoga\szakdoga_program\App\bin\Debug\net5.0\JetBrains.Annotations.dll
+E:\1.Tamasegyetem\Tananyagok\Szakdoga\szakdoga_program\App\bin\Debug\net5.0\X.PagedList.dll
+E:\1.Tamasegyetem\Tananyagok\Szakdoga\szakdoga_program\App\bin\Debug\net5.0\X.PagedList.Mvc.Core.dll

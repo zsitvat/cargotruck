@@ -43,7 +43,7 @@
                                     @Html.DisplayFor(model => model.Place_of_receipt)
                                 </dd>
                             }
-                            @if (@Model.Time_of_receipt != null)
+                            @if (@Model.Time_of_receipt.ToString() != null)
                             {
                                 <dt class="col-sm-2">
                                     @Html.DisplayNameFor(model => model.Time_of_receipt)
@@ -61,7 +61,7 @@
                                     @Html.DisplayFor(model => model.Place_of_delivery)
                                 </dd>
                             }
-                            @if (@Model.Time_of_delivery != null)
+                            @if (@Model.Time_of_delivery.ToString() != null)
                             {
                                 <dt class="col-sm-2">
                                     @Html.DisplayNameFor(model => model.Time_of_delivery)
@@ -106,7 +106,7 @@
                                    Teljesítve
                                 </dd>
                             }
-                            @if (@Model.Completion_time != null)
+                            @if (@Model.Completion_time.ToString() != null)
                             {
                                 <dt class="col-sm-2">
                                     @Html.DisplayNameFor(model => model.Completion_time)
@@ -151,7 +151,7 @@
                                     @Html.DisplayFor(model => model.Penalty)
                                 </dd>
                             }
-                            @if (@Model.Date != null)
+                            @if (@Model.Date.ToString() != null)
                             {
                                 <dt class="col-sm-2">
                                     @Html.DisplayNameFor(model => model.Date)

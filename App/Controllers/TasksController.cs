@@ -14,6 +14,7 @@ using System.Text;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System.Reflection;
+using X.PagedList;
 
 namespace App.Controllers
 {
@@ -27,18 +28,28 @@ namespace App.Controllers
         }
 
         // GET: Tasks
-        public async Task<IActionResult> Tasks_page(string searchString, string sortOrder)
+        public IActionResult Tasks_page(string searchString, string sortOrder, string currentFilter, int? page)
         {
-            if (HttpContext.Session.GetString("Id") == null)
+            if(HttpContext.Session.GetString("Id") == null)
             {
                 return RedirectToAction("Login_page", "Login");
             }
             else
             {
+                ViewBag.CurrentSort = sortOrder;
+                if (searchString != null)
+                {
+                    page = 1;
+                }
+                else
+                {
+                    searchString = currentFilter;
+                }
 
-                
+                ViewBag.CurrentFilter = searchString;
+
                 var tasks = from t in _context.Tasks select t;
-
+                // wich column sort 
                 ViewBag.PartnerSortParm = sortOrder == "Partner" ? "Partner_desc" : "Partner";
                 ViewBag.DescriptionSortParm = sortOrder == "Description" ? "Description_desc" : "Description";
                 ViewBag.Place_of_receiptSortParm = sortOrder == "Place_of_receipt" ? "Place_of_receipt_desc" : "Place_of_receipt";
@@ -55,6 +66,17 @@ namespace App.Controllers
                 ViewBag.Final_PaymentSortParm = sortOrder == "Final_Payment" ? "Final_Payment_desc" : "Final_Payment";
                 ViewBag.PenaltySortParm = sortOrder == "Penalty" ? "Penalty_desc" : "Penalty";
                 ViewBag.DateSortParm = String.IsNullOrEmpty(sortOrder) ? "Date_desc" : "";
+                //search
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    ViewBag.searchPlaceHolder = searchString;
+                    tasks = tasks.Where(s => s.Partner!.Contains(searchString) || s.Place_of_receipt!.Contains(searchString) || s.Place_of_delivery!.Contains(searchString) || s.Time_of_delivery.ToString()!.Contains(searchString) || (s.Id_cargo!.Contains(searchString) || s.Storage_time!.Contains(searchString) || s.Completion_time.ToString()!.Contains(searchString) || s.Payment!.Contains(searchString) || s.Final_Payment!.Contains(searchString) || s.Penalty!.Contains(searchString) || s.Date.ToString()!.Contains(searchString)));
+                }
+                else
+                {
+                    ViewBag.searchPlaceHolder = "Keresés...";
+                }
+                // sort order
                 switch (sortOrder)
                 {
                     case "Partner_desc":
@@ -154,16 +176,10 @@ namespace App.Controllers
                         tasks = tasks.OrderBy(s => s.Date);
                         break;
                 }
-                if (!String.IsNullOrEmpty(searchString))
-                {
-                    ViewBag.search = searchString;
-                    tasks = tasks.Where(s => s.Partner!.Contains(searchString) || s.Place_of_receipt!.Contains(searchString) || s.Place_of_delivery!.Contains(searchString) || s.Time_of_delivery.ToString()!.Contains(searchString) || (s.Id_cargo!.Contains(searchString) || s.Storage_time!.Contains(searchString) || s.Completion_time.ToString()!.Contains(searchString) || s.Payment!.Contains(searchString) || s.Final_Payment!.Contains(searchString) || s.Penalty!.Contains(searchString) || s.Date.ToString()!.Contains(searchString)));
-                }
-                else
-                {
-                    ViewBag.search = "Keresés...";
-                }
-                return View(await tasks.ToListAsync());
+
+                int pageSize = 10; //Show x rows every time
+                int pageNumber = (page ?? 1);
+                return View(tasks.ToPagedList(pageNumber, pageSize));
             }
         }
 
