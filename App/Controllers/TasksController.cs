@@ -26,10 +26,10 @@ namespace App.Controllers
             _context = context;
         }
 
-        // GET: Tasks
+            // GET: Tasks
         public IActionResult Tasks_page(string searchString, string sortOrder, string currentFilter, int? page)
         {
-            if(HttpContext.Session.GetString("Id") == null)
+            if (HttpContext.Session.GetString("Id") == null)
             {
                 return RedirectToAction("Login_page", "Login");
             }
