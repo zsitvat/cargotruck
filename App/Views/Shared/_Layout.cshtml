@@ -1,7 +1,9 @@
-﻿@using Microsoft.AspNetCore.Http;
-@inject IHttpContextAccessor Accessor;
+﻿@inject IHttpContextAccessor Accessor;
 
-@{ var role = -1;
+@using Microsoft.AspNetCore.Http;
+
+@{
+    var role = -1;
     switch (Accessor.HttpContext.Session.GetString("Role"))
     {
         case "tasks":

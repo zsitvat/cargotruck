@@ -13,9 +13,7 @@ using DocumentFormat.OpenXml.InkML;
 using System.Text;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
-using System.Reflection;
 using X.PagedList;
-using DocumentFormat.OpenXml.Office2016.Drawing.Command;
 
 namespace App.Controllers
 {
