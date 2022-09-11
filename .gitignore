@@ -6,6 +6,5 @@
 App/appsettings.json
 *.json
 obj/
-./obj/
-./App/obj/
-./bin/
+App/obj/
+App/bin/
