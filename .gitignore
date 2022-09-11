@@ -1,11 +1,11 @@
 .vscode/
-.vs
+.vs/
 *.code-workspace
 *.o
 *appsettings.json
 App/appsettings.json
 *.json
-obj
-./obj
-./App/obj
-./bin
+obj/
+./obj/
+./App/obj/
+./bin/
