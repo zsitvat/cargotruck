@@ -1,8 +1,11 @@
-﻿@model IEnumerable<App.Models.Users>
+﻿@using X.PagedList.Mvc.Core
+
 
 @{
-    ViewData["Title"] = "Adminisztrátor felület";
+  ViewData["Title"] = "Adminisztrátor felület";
 }   
+
+@model X.PagedList.IPagedList<App.Models.Users>
 
 <!-- partial -->
 <div class="main-panel main">
@@ -22,7 +25,13 @@
 
                     <div class="d-flex justify-content-between align-items-end flex-wrap">
                         <form asp-controller="Admin" asp-action="Admin_page" class="search" id="search" method="get">
-                            <input placeholder="@ViewBag.search" class="input_search" type="search" id="search-input" name="SearchString">
+                            @{
+                                if (ViewBag.searchPlaceHolder != null && ViewBag.searchPlaceHolder != "" && ViewBag.searchPlaceHolder != "Keresés...")
+                                {
+                                    <button type="submit" value="x" class="close btn  delete_search"></button>
+                                }
+                            }
+                            <input placeholder="@ViewBag.searchPlaceHolder" class="input_search" type="search" id="search-input" name="SearchString">
                             <button type="submit" class="btn btn-primary button_search ">
                                 <i class="i fa fa-search"></i>
                             </button>
@@ -44,17 +53,16 @@
                                 <thead>
                                     <tr>
                                         <th>
-                                            @Html.ActionLink("Felhasználónév", "Admin_page", new { sortOrder = ViewBag.UserNameSortParm })
+                                            @Html.ActionLink("Felhasználónév", "Admin_page", new { sortOrder = ViewBag.UserNameSortParm, currentFilter=ViewBag.CurrentFilter  })
                                         </th>
                                         <th>
-                                            @Html.ActionLink("Email", "Admin_page", new { sortOrder = ViewBag.EmailSortParm })
+                                            @Html.ActionLink("Email", "Admin_page", new { sortOrder = ViewBag.EmailSortParm, currentFilter=ViewBag.CurrentFilter  })
                                         </th>
                                         <th>
-                                            @Html.ActionLink("Jelszó", "Admin_page", new { sortOrder = ViewBag.PasswordSortParm })
+                                            @Html.ActionLink("Jelszó", "Admin_page", new { sortOrder = ViewBag.PasswordSortParm, currentFilter=ViewBag.CurrentFilter  })
                                         </th>
                                         <th>
-                                            @Html.ActionLink("Jogosultság", "Admin_page", new { sortOrder = ViewBag.RoleSortParm })
-                                        </th>
+                                            @Html.ActionLink("Jogosultság", "Admin_page", new { sortOrder = ViewBag.RoleSortParm, currentFilter=ViewBag.CurrentFilter  })
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -84,6 +92,9 @@
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+                    <div class="paging">
+                        @Html.PagedListPager(Model, page => Url.Action("Admin_page",new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
                     </div>
                 </div>
             </div>

@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using App.Data;
 using DocumentFormat.OpenXml.InkML;
 using Users = App.Models.Users;
+using Microsoft.AspNetCore.Http;
+using X.PagedList;
 
 namespace App.Controllers
 {
@@ -19,52 +21,77 @@ namespace App.Controllers
         }
 
         // GET: Registration
-        public async Task<IActionResult> Admin_page(string searchString,string sortOrder)
+        public IActionResult Admin_page(string searchString, string sortOrder, string currentFilter, int? page)
         {
-            var users = from u in _context.Users select u;
 
-            ViewBag.UserNameSortParm = sortOrder == "UserName" ? "UserName_desc" : "UserName";
-            ViewBag.EmailSortParm = sortOrder == "Email" ? "Email_desc" : "Email";
-            ViewBag.PasswordSortParm = sortOrder == "Password" ? "Password_desc" : "Password";
-            ViewBag.RoleSortParm = sortOrder == "Role" ? "Role_desc" : "Role";
-            switch (sortOrder)
+            if (HttpContext.Session.GetString("Id") == null)
             {
-                case "UserName_desc":
-                    users = users.OrderByDescending(s => s.UserName);
-                    break;
-                case "UserName":
-                    users = users.OrderBy(s => s.UserName);
-                    break;
-                case "Email_desc":
-                    users = users.OrderByDescending(s => s.Email);
-                    break;
-                case "Email":
-                    users = users.OrderBy(s => s.Email);
-                    break;
-                case "Password_desc":
-                    users = users.OrderByDescending(s => s.PasswordHash);
-                    break;
-                case "Password":
-                    users = users.OrderBy(s => s.PasswordHash);
-                    break;
-                case "Role_desc":
-                    users = users.OrderByDescending(s => s.Role);
-                    break;
-                case "Role":
-                    users = users.OrderBy(s => s.Role);
-                    break;
-                default:
-                    break;
+                return RedirectToAction("Login_page", "Login");
             }
-            if (!String.IsNullOrEmpty(searchString))
+            else
             {
-                ViewBag.search = searchString;
-                users = users.Where(s => s.UserName!.Contains(searchString) || s.Email!.Contains(searchString) || s.Role!.Contains(searchString));
+                ViewBag.CurrentSort = sortOrder;
+                if (searchString != null)
+                {
+                    page = 1;
+                }
+                else
+                {
+                    searchString = currentFilter;
+                }
+
+                ViewBag.CurrentFilter = searchString;
+                var users = from u in _context.Users select u;
+                // which column to sort 
+                ViewBag.UserNameSortParm = sortOrder == "UserName" ? "UserName_desc" : "UserName";
+                ViewBag.EmailSortParm = sortOrder == "Email" ? "Email_desc" : "Email";
+                ViewBag.PasswordSortParm = sortOrder == "Password" ? "Password_desc" : "Password";
+                ViewBag.RoleSortParm = sortOrder == "Role" ? "Role_desc" : "Role";
+                //search
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    ViewBag.searchPlaceHolder = searchString;
+                    users = users.Where(s => s.UserName!.Contains(searchString) || s.Email!.Contains(searchString) || s.Role!.Contains(searchString));
+                }
+                else
+                {
+                    ViewBag.searchPlaceHolder = "Keresés...";
+                }
+
+                switch (sortOrder)
+                {
+                    case "UserName_desc":
+                        users = users.OrderByDescending(s => s.UserName);
+                        break;
+                    case "UserName":
+                        users = users.OrderBy(s => s.UserName);
+                        break;
+                    case "Email_desc":
+                        users = users.OrderByDescending(s => s.Email);
+                        break;
+                    case "Email":
+                        users = users.OrderBy(s => s.Email);
+                        break;
+                    case "Password_desc":
+                        users = users.OrderByDescending(s => s.PasswordHash);
+                        break;
+                    case "Password":
+                        users = users.OrderBy(s => s.PasswordHash);
+                        break;
+                    case "Role_desc":
+                        users = users.OrderByDescending(s => s.Role);
+                        break;
+                    case "Role":
+                        users = users.OrderBy(s => s.Role);
+                        break;
+                    default:
+                        break;
+                }
+
+                int pageSize = 10; //Show x rows every time
+                int pageNumber = (page ?? 1);
+                return View(users.ToPagedList(pageNumber, pageSize));
             }
-            else { 
-                ViewBag.search = "Keresés...";
-            }
-            return View(await users.ToListAsync());
         }
 
         // GET: Registration/Create

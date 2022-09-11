@@ -97,8 +97,12 @@
                                     <span asp-validation-for="Date" class="text-danger"></span>
                                 </div>
                                 <div class="form-group form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input" asp-for="Completed" /> @Html.DisplayNameFor(model => model.Completed)
+                                    <label class="toggler-wrapper style-1">
+                                        <input class="form-check-input" asp-for="Completed" /> 
+                                        <div class="toggler-slider">
+                                            <div class="toggler-knob"></div>
+                                        </div>
+                                        <span>@Html.DisplayNameFor(model => model.Completed)</span>
                                     </label>
                                 </div>
                             </div>

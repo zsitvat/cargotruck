@@ -7,6 +7,8 @@ namespace App.Models
     {
         [Required]
         public long Id { get; set; }
+        [Required]
+        public long User_id { get; set; }
         [Required(ErrorMessage = "Partner megadása kötelező.")]
         [Display(Name = "Partner")]
         public string Partner { get; set; }
@@ -17,13 +19,13 @@ namespace App.Models
         public string Place_of_receipt { get; set; }
         [Required(ErrorMessage = "Az átvétel idejének megadása kötelező.")]
         [Display(Name = "Átvétel ideje")]
-        public DateTime Time_of_receipt { get; set; }
+        public DateTime? Time_of_receipt { get; set; }
         [Required(ErrorMessage = "A leadás helyének megadása kötelező.")]
         [Display(Name = "Leadás helye")]
         public string Place_of_delivery { get; set; }
         [Required(ErrorMessage = "A leadás idejének megadása kötelező.")]
         [Display(Name = "Leadás ideje")]
-        public DateTime Time_of_delivery { get; set; }
+        public DateTime? Time_of_delivery { get; set; }
         [Display(Name = "Egyéb megállóhelyek")]
         public string Other_stops { get; set; }
         [Display(Name = "Rakomány ID")]

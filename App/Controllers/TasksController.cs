@@ -15,6 +15,7 @@ using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System.Reflection;
 using X.PagedList;
+using DocumentFormat.OpenXml.Office2016.Drawing.Command;
 
 namespace App.Controllers
 {
@@ -49,7 +50,7 @@ namespace App.Controllers
                 ViewBag.CurrentFilter = searchString;
 
                 var tasks = from t in _context.Tasks select t;
-                // wich column sort 
+                // which column to sort 
                 ViewBag.PartnerSortParm = sortOrder == "Partner" ? "Partner_desc" : "Partner";
                 ViewBag.DescriptionSortParm = sortOrder == "Description" ? "Description_desc" : "Description";
                 ViewBag.Place_of_receiptSortParm = sortOrder == "Place_of_receipt" ? "Place_of_receipt_desc" : "Place_of_receipt";
@@ -192,10 +193,11 @@ namespace App.Controllers
         // POST: Tasks/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Partner,Description,Place_of_receipt,Time_of_receipt,Place_of_delivery,Time_of_delivery,Other_stops,Id_cargo,Storage_time,Completed,Completion_time,Time_of_delay,Payment,Final_Payment,Penalty,Date")] Tasks tasks)
+        public async Task<IActionResult> Create([Bind("Id,User_id,Partner,Description,Place_of_receipt,Time_of_receipt,Place_of_delivery,Time_of_delivery,Other_stops,Id_cargo,Storage_time,Completed,Completion_time,Time_of_delay,Payment,Final_Payment,Penalty,Date")] Tasks tasks)
         {
             if (ModelState.IsValid)
             {
+                tasks.User_id= (int)HttpContext.Session.GetInt32("Id");
                 _context.Add(tasks);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Tasks_page));
@@ -235,6 +237,7 @@ namespace App.Controllers
             {
                 try
                 {
+                    tasks.User_id = (int)HttpContext.Session.GetInt32("Id");
                     _context.Update(tasks);
                     await _context.SaveChangesAsync();
                 }
@@ -299,58 +302,61 @@ namespace App.Controllers
                 var currentRow = 1;
                 worksheet.Cell(currentRow, 1).Value = "Id";
                 worksheet.Cell(currentRow, 1).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 2).Value = "Partner";
+                worksheet.Cell(currentRow, 2).Value = "User_id";
                 worksheet.Cell(currentRow, 2).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 3).Value = "Leírás";
+                worksheet.Cell(currentRow, 3).Value = "Partner";
                 worksheet.Cell(currentRow, 3).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 4).Value = "Átvétel helye";
+                worksheet.Cell(currentRow, 4).Value = "Leírás";
                 worksheet.Cell(currentRow, 4).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 5).Value = "Átvétel ideje";
+                worksheet.Cell(currentRow, 5).Value = "Átvétel helye";
                 worksheet.Cell(currentRow, 5).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 6).Value = "Leadás helye";
+                worksheet.Cell(currentRow, 6).Value = "Átvétel ideje";
                 worksheet.Cell(currentRow, 6).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 7).Value = "Leadás ideje";
+                worksheet.Cell(currentRow, 7).Value = "Leadás helye";
                 worksheet.Cell(currentRow, 7).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 8).Value = "Egyéb megállóhelyek";
+                worksheet.Cell(currentRow, 8).Value = "Leadás ideje";
                 worksheet.Cell(currentRow, 8).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 9).Value = "Rakomány ID";
+                worksheet.Cell(currentRow, 9).Value = "Egyéb megállóhelyek";
                 worksheet.Cell(currentRow, 9).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 10).Value = "Raktározás ideje";
+                worksheet.Cell(currentRow, 10).Value = "Rakomány ID";
                 worksheet.Cell(currentRow, 10).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 11).Value = "Teljesítve";
+                worksheet.Cell(currentRow, 11).Value = "Raktározás ideje";
                 worksheet.Cell(currentRow, 11).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 12).Value = "Teljesítés ideje";
+                worksheet.Cell(currentRow, 12).Value = "Teljesítve";
                 worksheet.Cell(currentRow, 12).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 13).Value = "Késés";
+                worksheet.Cell(currentRow, 13).Value = "Teljesítés ideje";
                 worksheet.Cell(currentRow, 13).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 14).Value = "Igért összeg";
+                worksheet.Cell(currentRow, 14).Value = "Késés";
                 worksheet.Cell(currentRow, 14).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 15).Value = "Végleges összeg";
+                worksheet.Cell(currentRow, 15).Value = "Igért összeg";
                 worksheet.Cell(currentRow, 15).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 16).Value = "Büntetés összege";
+                worksheet.Cell(currentRow, 16).Value = "Végleges összeg";
                 worksheet.Cell(currentRow, 16).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 17).Value = "Dátum";
+                worksheet.Cell(currentRow, 17).Value = "Büntetés összege";
                 worksheet.Cell(currentRow, 17).Style.Font.SetBold();
+                worksheet.Cell(currentRow, 18).Value = "Dátum";
+                worksheet.Cell(currentRow, 18).Style.Font.SetBold();
                 foreach (var task in tasks)
                 {
                     currentRow++;
                     worksheet.Cell(currentRow, 1).Value = task.Id;
-                    worksheet.Cell(currentRow, 2).Value = task.Partner;
-                    worksheet.Cell(currentRow, 3).Value = task.Description;
-                    worksheet.Cell(currentRow, 4).Value = task.Place_of_receipt;
-                    worksheet.Cell(currentRow, 5).Value = task.Time_of_receipt;
-                    worksheet.Cell(currentRow, 6).Value = task.Place_of_delivery;
-                    worksheet.Cell(currentRow, 7).Value = task.Time_of_delivery;
-                    worksheet.Cell(currentRow, 8).Value = task.Other_stops;
-                    worksheet.Cell(currentRow, 9).Value = task.Id_cargo;
-                    worksheet.Cell(currentRow, 10).Value = task.Storage_time;
-                    worksheet.Cell(currentRow, 11).Value = task.Completed;
-                    worksheet.Cell(currentRow, 12).Value = task.Completion_time;
-                    worksheet.Cell(currentRow, 13).Value = task.Time_of_delay;
-                    worksheet.Cell(currentRow, 14).Value = task.Payment;
-                    worksheet.Cell(currentRow, 15).Value = task.Final_Payment;
-                    worksheet.Cell(currentRow, 16).Value = task.Penalty;
-                    worksheet.Cell(currentRow, 17).Value = task.Date;
+                    worksheet.Cell(currentRow, 2).Value = task.User_id;
+                    worksheet.Cell(currentRow, 3).Value = task.Partner;
+                    worksheet.Cell(currentRow, 4).Value = task.Description;
+                    worksheet.Cell(currentRow, 5).Value = task.Place_of_receipt;
+                    worksheet.Cell(currentRow, 6).Value = task.Time_of_receipt;
+                    worksheet.Cell(currentRow, 7).Value = task.Place_of_delivery;
+                    worksheet.Cell(currentRow, 8).Value = task.Time_of_delivery;
+                    worksheet.Cell(currentRow, 9).Value = task.Other_stops;
+                    worksheet.Cell(currentRow, 10).Value = task.Id_cargo;
+                    worksheet.Cell(currentRow, 11).Value = task.Storage_time;
+                    worksheet.Cell(currentRow, 12).Value = task.Completed;
+                    worksheet.Cell(currentRow, 13).Value = task.Completion_time;
+                    worksheet.Cell(currentRow, 14).Value = task.Time_of_delay;
+                    worksheet.Cell(currentRow, 15).Value = task.Payment;
+                    worksheet.Cell(currentRow, 16).Value = task.Final_Payment;
+                    worksheet.Cell(currentRow, 17).Value = task.Penalty;
+                    worksheet.Cell(currentRow, 18).Value = task.Date;
                 }
 
                 await using (var stream = new MemoryStream())
@@ -384,136 +390,277 @@ namespace App.Controllers
                 FileStream fs = new FileStream(filepath, FileMode.Create);
                 PdfWriter writer = PdfWriter.GetInstance(document, fs);
                 document.Open();
-
-                Font font1 = FontFactory.GetFont(FontFactory.COURIER_BOLD, 6);
-                Font font2 = FontFactory.GetFont(FontFactory.COURIER, 6);
+               
+                Font font1 = FontFactory.GetFont(FontFactory.TIMES_BOLD, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 12);
+                Font font2 = FontFactory.GetFont(FontFactory.TIMES_ROMAN, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 10);
 
                 Type type = typeof(Tasks);
-                var column_number = type.GetProperties().Length-1;
+                var column_number = (type.GetProperties().Length)/2;
                 var columnDefinitionSize = new float[column_number];
                 for (int i = 0; i < column_number; i++) columnDefinitionSize[i] = 1F;
 
-                PdfPTable table;
+                PdfPTable table,table2;
                 PdfPCell cell;
 
                 table = new PdfPTable(columnDefinitionSize)
                 {
-                    WidthPercentage = 100
+                    WidthPercentage = 80
                 };
-
+                table2 = new PdfPTable(columnDefinitionSize)
+                {
+                    WidthPercentage = 80
+                };
                 cell = new PdfPCell
                 {
-                    BackgroundColor = new BaseColor(0xC0, 0xC0, 0xC0)
+                    BackgroundColor = new BaseColor(0xC0, 0xC0, 0xC0),
+                    VerticalAlignment = Element.ALIGN_MIDDLE,
+                    HorizontalAlignment = Element.ALIGN_CENTER
                 };
+
                 var title = new Paragraph( 15,"Megbízások");
                 title.Alignment = Element.ALIGN_CENTER;
+                
+
                 document.Add(title);
                 document.Add( new Paragraph("\n"));
 
-                table.AddCell(new Phrase("Partner", font1));
-                table.AddCell(new Phrase("Leírás", font1));
-                table.AddCell(new Phrase("Átvétel helye", font1));
-                table.AddCell(new Phrase("Átvétel ideje", font1));
-                table.AddCell(new Phrase("Leadás helye", font1));
-                table.AddCell(new Phrase("Leadás ideje", font1));
-                table.AddCell(new Phrase("Egyéb megállóhelyek", font1));
-                table.AddCell(new Phrase("Rakomány ID", font1));
-                table.AddCell(new Phrase("Raktározás ideje", font1));
-                table.AddCell(new Phrase("Teljesítve", font1));
-                table.AddCell(new Phrase("Teljesítés ideje", font1));
-                table.AddCell(new Phrase("Késés", font1));
-                table.AddCell(new Phrase("Igért összeg", font1));
-                table.AddCell(new Phrase("Végleges összeg", font1));
-                table.AddCell(new Phrase("Büntetés összege", font1)); 
-                table.AddCell(new Phrase("Date", font1));
-                table.HeaderRows = 1;
+                table.AddCell(new PdfPCell(new Phrase("Id", font1)) {
+                    HorizontalAlignment = Element.ALIGN_CENTER, VerticalAlignment = Element.ALIGN_MIDDLE 
+                });
+                table.AddCell(new PdfPCell(new Phrase("Partner", font1))
+                {
+                    HorizontalAlignment = Element.ALIGN_CENTER,
+                    VerticalAlignment = Element.ALIGN_MIDDLE
+                });
+                table.AddCell(new PdfPCell(new Phrase("User id", font1))
+                {
+                    HorizontalAlignment = Element.ALIGN_CENTER,
+                    VerticalAlignment = Element.ALIGN_MIDDLE
+                });
+                table.AddCell(new PdfPCell(new Phrase("Leírás", font1))
+                {
+                    HorizontalAlignment = Element.ALIGN_CENTER,
+                    VerticalAlignment = Element.ALIGN_MIDDLE
+                });
+                table.AddCell(new PdfPCell(new Phrase("Átvétel helye", font1))
+                {
+                    HorizontalAlignment = Element.ALIGN_CENTER,
+                    VerticalAlignment = Element.ALIGN_MIDDLE
+                });
+                table.AddCell(new PdfPCell(new Phrase("Átvétel ideje", font1))
+                {
+                    HorizontalAlignment = Element.ALIGN_CENTER,
+                    VerticalAlignment = Element.ALIGN_MIDDLE
+                });
+                table.AddCell(new PdfPCell(new Phrase("Leadás helye", font1))
+                {
+                    HorizontalAlignment = Element.ALIGN_CENTER,
+                    VerticalAlignment = Element.ALIGN_MIDDLE
+                });
+                table.AddCell(new PdfPCell(new Phrase("Leadás ideje", font1))
+                {
+                    HorizontalAlignment = Element.ALIGN_CENTER,
+                    VerticalAlignment = Element.ALIGN_MIDDLE
+                });
+                table.AddCell(new PdfPCell(new Phrase("Egyéb megálló", font1))
+                {
+                    HorizontalAlignment = Element.ALIGN_CENTER,
+                    VerticalAlignment = Element.ALIGN_MIDDLE
+                });
 
 
                 foreach (Tasks task in tasks)
                 {
-                    if (!string.IsNullOrEmpty(task.Partner))
+                    var s="";                  
+                    if (!string.IsNullOrEmpty(task.Id.ToString())){ s = task.Id.ToString(); }
+                    else { s = "-"; }    
+                    table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
-                        table.AddCell(new Phrase(task.Partner.ToString(), font2));
-                    }else { table.AddCell(new Phrase("-", font2)); }
-
-                    if (!string.IsNullOrEmpty(task.Description))
+                        HorizontalAlignment = Element.ALIGN_CENTER,
+                        VerticalAlignment = Element.ALIGN_MIDDLE
+                    });
+                    if (!string.IsNullOrEmpty(task.User_id.ToString())){ s = task.User_id.ToString(); }
+                    else { s = "-"; }    
+                    table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
-                        table.AddCell(new Phrase(task.Description.ToString(), font2));
-                    }else { table.AddCell(new Phrase("-", font2)); }
-
-                    if (!string.IsNullOrEmpty(task.Place_of_receipt))
+                        HorizontalAlignment = Element.ALIGN_CENTER,
+                        VerticalAlignment = Element.ALIGN_MIDDLE
+                    });
+                    if (!string.IsNullOrEmpty(task.Partner.ToString())){ s = task.Partner.ToString(); }
+                    else { s = "-"; }    
+                    table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
-                        table.AddCell(new Phrase(task.Place_of_receipt.ToString(), font2));
-                    }else { table.AddCell(new Phrase("-", font2)); }
-
-                    if (!string.IsNullOrEmpty(task.Time_of_receipt.ToString()))
+                        HorizontalAlignment = Element.ALIGN_CENTER,
+                        VerticalAlignment = Element.ALIGN_MIDDLE
+                    });
+                    if (!string.IsNullOrEmpty(task.Description.ToString())) { s = task.Description.ToString(); }
+                    else { s = "-"; }
+                    table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
-                        table.AddCell(new Phrase(task.Time_of_receipt.ToString(), font2));
-                    }else { table.AddCell(new Phrase("-", font2)); }
-
-                    if (!string.IsNullOrEmpty(task.Place_of_delivery))
+                        HorizontalAlignment = Element.ALIGN_CENTER,
+                        VerticalAlignment = Element.ALIGN_MIDDLE
+                    });
+                    if (!string.IsNullOrEmpty(task.Place_of_receipt.ToString())) { s = task.Place_of_receipt.ToString(); }
+                    else { s = "-"; }
+                    table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
-                        table.AddCell(new Phrase(task.Place_of_delivery.ToString(), font2));
-
-                    }else { table.AddCell(new Phrase("-", font2)); }
-
-                    if (!string.IsNullOrEmpty(task.Time_of_delivery.ToString()))
+                        HorizontalAlignment = Element.ALIGN_CENTER,
+                        VerticalAlignment = Element.ALIGN_MIDDLE
+                    });
+                    if (!string.IsNullOrEmpty(task.Time_of_receipt.ToString())) { s = task.Time_of_receipt.ToString(); }
+                    else { s = "-"; }
+                    table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
-                        table.AddCell(new Phrase(task.Time_of_delivery.ToString(), font2));
-                    }else { table.AddCell(new Phrase("-", font2)); }
-
-                    if (!string.IsNullOrEmpty(task.Other_stops)) {  
-                        table.AddCell(new Phrase(task.Other_stops.ToString(), font2)) ;
-                    }else { table.AddCell(new Phrase("-", font2)); }
-
-                    if (!string.IsNullOrEmpty(task.Id_cargo))
+                        HorizontalAlignment = Element.ALIGN_CENTER,
+                        VerticalAlignment = Element.ALIGN_MIDDLE
+                    });
+                    if (!string.IsNullOrEmpty(task.Place_of_delivery.ToString())) { s = task.Place_of_delivery.ToString(); }
+                    else { s = "-"; }
+                    table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
-                        table.AddCell(new Phrase(task.Id_cargo.ToString(), font2));
-                    } else { table.AddCell(new Phrase("-", font2)); }
-
-                    if (!string.IsNullOrEmpty(task.Storage_time))
+                        HorizontalAlignment = Element.ALIGN_CENTER,
+                        VerticalAlignment = Element.ALIGN_MIDDLE
+                    });
+                    if (!string.IsNullOrEmpty(task.Time_of_delivery.ToString())) { s = task.Time_of_delivery.ToString(); }
+                    else { s = "-"; }
+                    table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
-                        table.AddCell(new Phrase(task.Storage_time.ToString(), font2));
-                    }else { table.AddCell(new Phrase("-", font2)); }
-
-                    if (task.Completed)
+                        HorizontalAlignment = Element.ALIGN_CENTER,
+                        VerticalAlignment = Element.ALIGN_MIDDLE
+                    });
+                    if (!string.IsNullOrEmpty(task.Other_stops)) { s = task.Other_stops.ToString(); }
+                    else { s = "-"; }
+                    table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
-                        table.AddCell(new Phrase("Igen", font2));
-                    }else { table.AddCell(new Phrase("Nem", font2)); }
-
-                    if (!string.IsNullOrEmpty(task.Completion_time.ToString()))
-                    {
-                        table.AddCell(new Phrase(task.Completion_time.ToString(), font2));
-                    } else { table.AddCell(new Phrase("-", font2)); }
-
-                    if (!string.IsNullOrEmpty(task.Time_of_delay))
-                    {
-                        table.AddCell(new Phrase(task.Time_of_delay.ToString(), font2));
-                    }else { table.AddCell(new Phrase("-", font2)); }
-
-                    if (!string.IsNullOrEmpty(task.Payment))
-                    {
-                        table.AddCell(new Phrase(task.Payment.ToString(), font2));
-                    }else { table.AddCell(new Phrase("-", font2)); }
-
-                    if (!string.IsNullOrEmpty(task.Final_Payment))
-                    {
-                        table.AddCell(new Phrase(task.Final_Payment.ToString(), font2));
-                    }else { table.AddCell(new Phrase("-", font2)); }
-
-                    if (!string.IsNullOrEmpty(task.Penalty))
-                    {
-                        table.AddCell(new Phrase(task.Penalty.ToString(), font2));
-                    }else { table.AddCell(new Phrase("-", font2)); }
-
-                    if (!string.IsNullOrEmpty(task.Date.ToString()))
-                    {
-                        table.AddCell(new Phrase(task.Date.ToString(), font2));
-                    }else { table.AddCell(new Phrase("-", font2)); }
+                        HorizontalAlignment = Element.ALIGN_CENTER,
+                        VerticalAlignment = Element.ALIGN_MIDDLE
+                    });
                     pdfRowIndex++;
                 }
 
                 document.Add(table);
+                table=null;
+                document.Add(new Paragraph("\n"));
+
+                table2.AddCell(new PdfPCell(new Phrase("Rakomány Id", font1))
+                {
+                    HorizontalAlignment = Element.ALIGN_CENTER,
+                    VerticalAlignment = Element.ALIGN_MIDDLE
+                });
+                table2.AddCell(new PdfPCell(new Phrase("Raktározás ideje", font1))
+                {
+                    HorizontalAlignment = Element.ALIGN_CENTER,
+                    VerticalAlignment = Element.ALIGN_MIDDLE
+                });
+                table2.AddCell(new PdfPCell(new Phrase("Teljesítve", font1))
+                {
+                    HorizontalAlignment = Element.ALIGN_CENTER,
+                    VerticalAlignment = Element.ALIGN_MIDDLE
+                });
+                table2.AddCell(new PdfPCell(new Phrase("Teljesítés ideje", font1))
+                {
+                    HorizontalAlignment = Element.ALIGN_CENTER,
+                    VerticalAlignment = Element.ALIGN_MIDDLE
+                });
+                table2.AddCell(new PdfPCell(new Phrase("Késés", font1))
+                {
+                    HorizontalAlignment = Element.ALIGN_CENTER,
+                    VerticalAlignment = Element.ALIGN_MIDDLE
+                });
+                table2.AddCell(new PdfPCell(new Phrase("Igért összeg", font1))
+                {
+                    HorizontalAlignment = Element.ALIGN_CENTER,
+                    VerticalAlignment = Element.ALIGN_MIDDLE
+                });
+                table2.AddCell(new PdfPCell(new Phrase("Végleges összeg", font1))
+                {
+                    HorizontalAlignment = Element.ALIGN_CENTER,
+                    VerticalAlignment = Element.ALIGN_MIDDLE
+                });
+                table2.AddCell(new PdfPCell(new Phrase("Büntetés összege", font1))
+                {
+                    HorizontalAlignment = Element.ALIGN_CENTER,
+                    VerticalAlignment = Element.ALIGN_MIDDLE
+                });
+                table2.AddCell(new PdfPCell(new Phrase("Dátum", font1))
+                {
+                    HorizontalAlignment = Element.ALIGN_CENTER,
+                    VerticalAlignment = Element.ALIGN_MIDDLE
+                });
+                table2.HeaderRows = 1;
+
+
+                foreach (Tasks task in tasks)
+                {
+                    var s = "";
+                    if (!string.IsNullOrEmpty(task.Id_cargo)) { s = task.Id_cargo.ToString(); }
+                    else { s = "-"; }
+                    table2.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    {
+                        HorizontalAlignment = Element.ALIGN_CENTER,
+                        VerticalAlignment = Element.ALIGN_MIDDLE
+                    });
+                    if (!string.IsNullOrEmpty(task.Storage_time.ToString())) { s = task.Storage_time.ToString(); }
+                    else { s = "-"; }
+                    table2.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    {
+                        HorizontalAlignment = Element.ALIGN_CENTER,
+                        VerticalAlignment = Element.ALIGN_MIDDLE
+                    });
+                    if (!string.IsNullOrEmpty(task.Completed.ToString())) { s = task.Completed.ToString(); }
+                    else { s = "-"; }
+                    table2.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    {
+                        HorizontalAlignment = Element.ALIGN_CENTER,
+                        VerticalAlignment = Element.ALIGN_MIDDLE
+                    });
+                    if (!string.IsNullOrEmpty(task.Completion_time.ToString())) { s = task.Completion_time.ToString(); }
+                    else { s = "-"; }
+                    table2.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    {
+                        HorizontalAlignment = Element.ALIGN_CENTER,
+                        VerticalAlignment = Element.ALIGN_MIDDLE
+                    });
+                    if (!string.IsNullOrEmpty(task.Time_of_delay)) { s = task.Time_of_delay.ToString(); }
+                    else { s = "-"; }
+                    table2.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    {
+                        HorizontalAlignment = Element.ALIGN_CENTER,
+                        VerticalAlignment = Element.ALIGN_MIDDLE
+                    });
+                    if (!string.IsNullOrEmpty(task.Payment)) { s = task.Payment.ToString(); }
+                    else { s = "-"; }
+                    table2.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    {
+                        HorizontalAlignment = Element.ALIGN_CENTER,
+                        VerticalAlignment = Element.ALIGN_MIDDLE
+                    });
+                    if (!string.IsNullOrEmpty(task.Final_Payment)) { s = task.Final_Payment.ToString(); }
+                    else { s = "-"; }
+                    table2.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    {
+                        HorizontalAlignment = Element.ALIGN_CENTER,
+                        VerticalAlignment = Element.ALIGN_MIDDLE
+                    });
+                    if (!string.IsNullOrEmpty(task.Penalty)) { s = task.Penalty.ToString(); }
+                    else { s = "-"; }
+                    table2.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    {
+                        HorizontalAlignment = Element.ALIGN_CENTER,
+                        VerticalAlignment = Element.ALIGN_MIDDLE
+                    });
+                    if (!string.IsNullOrEmpty(task.Date.ToString())) { s = task.Date.ToString(); }
+                    else { s = "-"; }
+                    table2.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    {
+                        HorizontalAlignment = Element.ALIGN_CENTER,
+                        VerticalAlignment = Element.ALIGN_MIDDLE
+                    });
+
+                    pdfRowIndex++;
+                }
+                document.Add(table2);
+              
                 document.Close();
                 document.CloseDocument();
                 document.Dispose();
