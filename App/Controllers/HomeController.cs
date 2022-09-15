@@ -23,7 +23,8 @@ namespace App.Controllers
         //[Authorize]
         public IActionResult Index()
         {
-            if(HttpContext.Session.GetString("Id") == null)
+            @ViewBag.home = "active";
+            if (HttpContext.Session.GetString("Id") == null)
             {
                 return RedirectToAction("Login_page", "Login");
             }

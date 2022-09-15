@@ -34,6 +34,7 @@ namespace App.Controllers
 
         public ActionResult Login_page()
         {
+            @ViewBag.login = "active";
             return View();
         }
 

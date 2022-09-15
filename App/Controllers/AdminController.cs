@@ -23,7 +23,7 @@ namespace App.Controllers
         // GET: Registration
         public IActionResult Admin_page(string searchString, string sortOrder, string currentFilter, int? page)
         {
-
+            @ViewBag.admin = "active";
             if (HttpContext.Session.GetString("Id") == null)
             {
                 return RedirectToAction("Login_page", "Login");

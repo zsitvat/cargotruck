@@ -41,28 +41,32 @@
 
     <!-- plugin css for this page -->
     <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="~/css/dataTables.bootstrap4.css">
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
     <!-- End plugin css for this page -->
     <link rel="stylesheet" href="~/css/site.css" />
-
 </head>
 <body class="img-background">
     <header>
         <nav class="fixednavbar navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/logo.png" /></a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebar" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <!--Login menu links -->
-                    <partial name="_LoginPartial" />
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item top-nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Szabályzat</a>
+                    <partial name="_LoginPartial" />              
+                    <ul class="navbar-nav flex-grow-1">  
+                        <li class="nav-item top-nav-item @ViewBag.home">
+                            <a class="nav-link text-dark " asp-area="" asp-controller="Home" asp-action="Privacy">Szabályzat</a>
                         </li>
                     </ul>
+                    <!--asp-for="Language"-->
+                    <select class=" nav-language text-dark" id="Language" name="Language">
+                        <option class="" value="hu">HU</option>
+                        <option class="" value="en">EN</option>
+                    </select>
                 </div>
             </div>
         </nav>
@@ -73,60 +77,60 @@
     @if (Accessor.HttpContext.Session.GetString("Id") != null)
     {
         <!-- Sidebar -->
-        <nav class="sidebar sidebar-offcanvas" id="sidebar">
-            <ul class="nav">
+        <nav class="sidebar sidebar-offcanvas navbar-collapse" id="sidebar">
+            <ul id="nav" class="nav">
                 @if (role == 0 || role == 10 || role == 1)
                 {
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Tasks" asp-action="Tasks_page">
+                    <li class="nav-item @ViewBag.tasks">
+                        <a  class="nav-link"  asp-area="" asp-controller="Tasks" asp-action="Tasks_page">
                             <span class="menu-title">Megbízások</span><span class="arrow">&#8250;</span>
                         </a>
                     </li>
                 }
                 @if (role == 0 || role == 10 || role == 2)
                 {
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Cargoes" asp-action="Cargoes_page">
+                    <li class="nav-item @ViewBag.cargoes">
+                        <a class="nav-link " asp-area="" asp-controller="Cargoes" asp-action="Cargoes_page">
                             <span class="menu-title">Rakományok</span><span class="arrow">&#8250;</span>
                         </a>
                     </li>
                 }
                 @if (role == 0 || role == 10 || role == 3)
                 {
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Roads" asp-action="Roads_page">
+                    <li class="nav-item @ViewBag.roads">
+                        <a class="nav-link " asp-area="" asp-controller="Roads" asp-action="Roads_page">
                             <span class="menu-title">Utak</span><span class="arrow">&#8250;</span>
                         </a>
                     </li>
                 }
                 @if (role == 0 || role == 10 || role == 4)
                 {
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Storages" asp-action="Storages_page">
+                    <li class="nav-item @ViewBag.storages">
+                        <a class="nav-link " asp-area="" asp-controller="Storages" asp-action="Storages_page">
                             <span class="menu-title">Raktár</span><span class="arrow">&#8250;</span>
                         </a>
                     </li>
                 }
                 @if (role == 0 || role == 10 || role == 5)
                 {
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Trucks" asp-action="Trucks_page">
+                    <li class="nav-item @ViewBag.trucks">
+                        <a class="nav-link " asp-area="" asp-controller="Trucks" asp-action="Trucks_page">
                             <span class="menu-title">Járművek</span><span class="arrow">&#8250;</span>
                         </a>
                     </li>
                 }
                 @if (role == 0 || role == 10 || role == 6)
                 {
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Expenses" asp-action="Expenses_page">
+                    <li class="nav-item @ViewBag.expenses">
+                        <a class="nav-link " asp-area="" asp-controller="Expenses" asp-action="Expenses_page">
                             <span class="menu-title">Havi kiadások</span><span class="arrow">&#8250;</span>
                         </a>
                     </li>
                 }
                 @if (role == 10)
                 {
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="Admin_page">
+                    <li class="nav-item @ViewBag.admin">
+                        <a class="nav-link " asp-area="" asp-controller="Admin" asp-action="Admin_page">
                             <span class="menu-title">Admin felület</span><span class="arrow">&#8250;</span>
                         </a>
                     </li>
@@ -149,19 +153,12 @@
     </footer>
 
     @section scripts{
-        <script src="~/js/jquery.dataTables.js"></script>
-        <script src="~/js/dataTables.bootstrap4.js"></script>
-        <script src="~/js/off-canvas.js"></script>
-        <script src="~/js/hoverable-collapse.js"></script>
-        <script src="~/js/template.js"></script>
-        <script src="~/js/dashboard.js"></script>
-        <script src="~/js/data-table.js"></script>
-        <script src="~/js/jquery.dataTables.js"></script>
-        <script src="~/js/dataTables.bootstrap4.js"></script>
-        <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="~/js/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="~/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="~/js/bootstrap.js"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
-
-        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script type="text/javascript" src="~/js/site.js"></script> <!--The app's js file-->
     }
     @RenderSection("scripts", required: false)
 </body>

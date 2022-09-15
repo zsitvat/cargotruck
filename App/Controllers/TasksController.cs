@@ -29,6 +29,7 @@ namespace App.Controllers
             // GET: Tasks
         public IActionResult Tasks_page(string searchString, string sortOrder, string currentFilter, int? page)
         {
+            @ViewBag.tasks = "active";
             if (HttpContext.Session.GetString("Id") == null)
             {
                 return RedirectToAction("Login_page", "Login");
@@ -382,7 +383,7 @@ namespace App.Controllers
                 Random rnd = new Random();
                 int random = rnd.Next(1000000, 9999999);
                 string filename = "Tasks" + random + "_" + DateTime.Now.ToString("dd-MM-yyyy");
-                string filepath = "/" + filename + ".pdf";
+                string filepath = "" + filename + ".pdf";
 
                 Document document = new Document(PageSize.A4, 5f, 5f, 10f, 10f);
                 FileStream fs = new FileStream(filepath, FileMode.Create);
@@ -680,6 +681,7 @@ namespace App.Controllers
                 Response.Headers.Add("Content-Length", getContent.Length.ToString());
                 Response.Body.WriteAsync(getContent);
                 Response.Body.Flush();
+                System.IO.File.Delete(filepath); // delete the file in the app folder
             }
         }
 
