@@ -11,7 +11,7 @@ using X.PagedList;
 
 namespace App.Controllers
 {
-    public class AdminController : Controller
+    public class AdminController : BaseController
     {
         private readonly ApplicationDbContext _context;
 
@@ -23,6 +23,8 @@ namespace App.Controllers
         // GET: Registration
         public IActionResult Admin_page(string searchString, string sortOrder, string currentFilter, int? page)
         {
+ 
+
             @ViewBag.admin = "active";
             if (HttpContext.Session.GetString("Id") == null)
             {
@@ -47,11 +49,13 @@ namespace App.Controllers
                 ViewBag.EmailSortParm = sortOrder == "Email" ? "Email_desc" : "Email";
                 ViewBag.PasswordSortParm = sortOrder == "Password" ? "Password_desc" : "Password";
                 ViewBag.RoleSortParm = sortOrder == "Role" ? "Role_desc" : "Role";
+                ViewBag.PhoneNumberSortParm = sortOrder == "PhoneNumber" ? "PhoneNumber_desc" : "PhoneNumber";
+                ViewBag.NameSortParm = sortOrder == "Name" ? "Name_desc" : "Name";
                 //search
                 if (!String.IsNullOrEmpty(searchString))
                 {
                     ViewBag.searchPlaceHolder = searchString;
-                    users = users.Where(s => s.UserName!.Contains(searchString) || s.Email!.Contains(searchString) || s.Role!.Contains(searchString));
+                    users = users.Where(s => s.PhoneNumber.ToString()!.Contains(searchString) ||  s.Name!.Contains(searchString) || s.UserName!.Contains(searchString) || s.Email!.Contains(searchString) || s.Role!.Contains(searchString));
                 }
                 else
                 {
@@ -82,6 +86,18 @@ namespace App.Controllers
                         users = users.OrderByDescending(s => s.Role);
                         break;
                     case "Role":
+                        users = users.OrderBy(s => s.Role);
+                        break;
+                    case "PhoneNumber_desc":
+                        users = users.OrderByDescending(s => s.Role);
+                        break;
+                    case "Phone":
+                        users = users.OrderBy(s => s.Role);
+                        break;
+                    case "Name_desc":
+                        users = users.OrderByDescending(s => s.Role);
+                        break;
+                    case "Name":
                         users = users.OrderBy(s => s.Role);
                         break;
                     default:
@@ -144,7 +160,7 @@ namespace App.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,UserName,Email,PasswordHash,LoginErrorMessage,Role")] Users users)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,UserName,Name,Email,PhoneNumber,PasswordHash,LoginErrorMessage,Role")] Users users)
         {
             if (id != users.Id)
             {

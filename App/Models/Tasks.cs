@@ -28,7 +28,7 @@ namespace App.Models
         public DateTime? Time_of_delivery { get; set; }
         [Display(Name = "Egyéb megállóhelyek")]
         public string Other_stops { get; set; }
-        [Display(Name = "Rakomány ID")]
+        [Display(Name = "Rakomány azonosító")]
         public string Id_cargo { get; set; }
         [Display(Name = "Raktározás ideje")]
         public string Storage_time { get; set; }

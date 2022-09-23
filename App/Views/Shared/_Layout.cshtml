@@ -1,6 +1,24 @@
 ﻿@inject IHttpContextAccessor Accessor;
 
 @using Microsoft.AspNetCore.Http;
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Http.Features
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Options
+
+
+@inject IViewLocalizer Localizer
+@inject IOptions<RequestLocalizationOptions> LocOptions
+@{
+    //language chooser
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    var cultureItems = new List<SelectListItem>();
+    cultureItems.AddRange(LocOptions.Value.SupportedUICultures
+        .Select(c => new SelectListItem { Value = c.Name, Text = c.Name.ToUpper() })
+        .ToList());
+    var returnUrl = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+}
 
 @{
     var role = -1;
@@ -63,10 +81,14 @@
                         </li>
                     </ul>
                     <!--asp-for="Language"-->
-                    <select class=" nav-language text-dark" id="Language" name="Language">
-                        <option class="" value="hu">HU</option>
-                        <option class="" value="en">EN</option>
-                    </select>
+
+                    <div title="@Localizer["Request culture provider:"] @requestCulture?.Provider?.GetType().Name">
+                        <form id="selectLanguage" asp-controller="Base" asp-action="Language" asp-route-returnUrl="@returnUrl" method="post" class="form-horizontal" role="form">
+                            <select class="form-control nav-language selectpicker" name="culture" onchange="this.form.submit();" asp-for="@requestCulture.RequestCulture.UICulture.Name" asp-items="cultureItems">
+                            </select>
+                        </form>
+                    </div>
+
                 </div>
             </div>
         </nav>
@@ -83,7 +105,7 @@
                 {
                     <li class="nav-item @ViewBag.tasks">
                         <a  class="nav-link"  asp-area="" asp-controller="Tasks" asp-action="Tasks_page">
-                            <span class="menu-title">Megbízások</span><span class="arrow">&#8250;</span>
+                            <span class="menu-title">@App.Resources.Resource.Tasks_title</span><span class="arrow">&#8250;</span>
                         </a>
                     </li>
                 }

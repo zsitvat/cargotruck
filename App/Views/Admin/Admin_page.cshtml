@@ -1,10 +1,9 @@
 ﻿@using X.PagedList.Mvc.Core
-
-
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 @{
-  ViewData["Title"] = "Adminisztrátor felület";
-}   
-
+    ViewData["Title"] = @App.Resources.Resource.Admin_title;
+}
 @model X.PagedList.IPagedList<App.Models.Users>
 
 <!-- partial -->

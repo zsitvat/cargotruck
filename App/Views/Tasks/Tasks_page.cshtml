@@ -1,10 +1,11 @@
 ﻿@{
-    ViewData["Title"] = "Megbízások";
+    ViewData["Title"] = App.Resources.Resource.Tasks_title;
 }
 
 @model X.PagedList.IPagedList<App.Models.Tasks>
 @using X.PagedList;
-@using X.PagedList.Mvc.Core;
+@using X.PagedList.Mvc.Core
+@{var returnUrl = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";}
 
 <!-- partial -->
 <div class="main-panel main">
@@ -27,7 +28,7 @@
                             @{
                                 if (ViewBag.searchPlaceHolder != null && ViewBag.searchPlaceHolder != "" && ViewBag.searchPlaceHolder != "Keresés...")
                                 {
-                                    <button type="submit" value="x" class="close btn  delete_search"></button>
+                                        <button type="submit" value="x" class="close btn  delete_search"></button>
                                 }
                             }
                             <input placeholder="@ViewBag.searchPlaceHolder" class="input_search" type="search" id="search-input" name="SearchString">
@@ -48,6 +49,12 @@
                         <button method="post" onclick="location.href='@Url.Action("PDF", "Tasks")'" id="ExportPdf" name="Export" type="button" class="btn btn-light bg-white btn-icon me-3 mt-2 mt-xl-0">
                             <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
                         </button>
+                        <!--Import from excel  -->
+                        <form asp-controller="Tasks" asp-route-returnUrl="@returnUrl" EncType="multipart/form-data" asp-action="Import" id="upload" method="post">
+                            <button type="submit" value="" class="import-button btn btn-light bg-white btn-icon  mt-2 mt-xl-0"><i class="fa fa-upload" aria-hidden="true"></i></button>
+                            <input type="file" id="file" name="file" class="btn import" />
+                        </form>
+                        <p class="import-error">@ViewBag.Message</p>
                         <a asp-action="create" class="btn btn-primary mt-2 mt-xl-0">Új adat</a>
                     </div>
                 </div>

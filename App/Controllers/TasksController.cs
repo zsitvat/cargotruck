@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using App.Data;
-using App.Models;
 using Microsoft.AspNetCore.Http;
 using System.Data;
 using System.IO;
@@ -14,10 +13,23 @@ using System.Text;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using X.PagedList;
+using Tasks = App.Models.Tasks;
+using Document = iTextSharp.text.Document;
+using Font = iTextSharp.text.Font;
+using PageSize = iTextSharp.text.PageSize;
+using Paragraph = iTextSharp.text.Paragraph;
+using System.Web;
+using DocumentFormat.OpenXml.Presentation;
+using System.Collections.Generic;
+using DocumentFormat.OpenXml.Bibliography;
+using Org.BouncyCastle.Math.EC.Multiplier;
+using Microsoft.Data.SqlClient;
+using System.Web.WebPages;
+using Microsoft.CodeAnalysis.CSharp;
 
 namespace App.Controllers
 {
-    public class TasksController : Controller
+    public class TasksController : BaseController
     {
         private readonly ApplicationDbContext _context;
 
@@ -372,8 +384,100 @@ namespace App.Controllers
             }
         }
 
+        public ActionResult Import()
+            {
+                return View();
+            }
+
+        [HttpPost]
+        public async Task<ActionResult> Import(IFormFile file, string returnUrl)
+        {
+            //Checking file content length and Extension must be .xlsx  
+            if (file != null && file.Length > 0 && System.IO.Path.GetExtension(file.FileName).ToLower() == ".xlsx")
+            {
+                string path = Path.Combine("UploadFiles/", Path.GetFileName(file.FileName));
+                //Saving the file  
+                using (var stream = System.IO.File.Create(path))
+                {
+                    await file.CopyToAsync(stream);
+                }
+
+                //Started reading the Excel file.  
+                using (XLWorkbook workbook = new XLWorkbook(path))
+                {
+                    IXLWorksheet worksheet = workbook.Worksheet(1);
+                    //Loop through the Worksheet rows.
+                    DataTable dt = new DataTable();
+                    bool firstRow = true;
+                    foreach (IXLRow row in worksheet.Rows())
+                    {
+                        //Use the first row to add columns to DataTable.
+                        if (firstRow)
+                        {
+                            
+                            foreach (IXLCell cell in row.Cells())
+                            {
+                                dt.Columns.Add(cell.Value.ToString());
+                            }
+                            firstRow = false;
+                            
+                        }
+                        else
+                        {
+                            List<string> list = new List<string>();
+                            //Add rows to DataTable.
+                            dt.Rows.Add();
+                            int i = 0;
+                            foreach (IXLCell cell in row.Cells(1, dt.Columns.Count))
+                            {
+                                if (!string.IsNullOrEmpty(cell.Value.ToString())) { list.Add(cell.Value.ToString()); }
+                                else { list.Add(""); };
+                                i++;   
+                            }
+                        
+                        var sql = @"Insert Into Tasks (User_id,Partner,Description,Place_of_receipt,Time_of_receipt,Place_of_delivery,Time_of_delivery,Other_stops,Id_cargo,Storage_time,Completed,Completion_time,Time_of_delay,Payment,Final_Payment,Penalty,Date ) 
+                                    Values (@User_id,@Partner,@Description,@Place_of_receipt,@Time_of_receipt, @Place_of_delivery,@Time_of_delivery,@Other_stops,@Id_cargo,@Storage_time,@Completed,@Completion_time,@Time_of_delay,@Payment,@Final_Payment,@Penalty,@Date)";
+                            int insert = _context.Database.ExecuteSqlRaw(sql,
+                                new SqlParameter("@User_id", list[1]),
+                                new SqlParameter("@Partner", list[2]),
+                                new SqlParameter("@Description", list[3]),
+                                new SqlParameter("@Place_of_receipt", list[4]),
+                                new SqlParameter("@Time_of_receipt", list[5]=="" ? System.DBNull.Value : DateTime.Parse(list[5])),
+                                new SqlParameter("@Place_of_delivery", list[6]),
+                                new SqlParameter("@Time_of_delivery", list[7] == "" ? System.DBNull.Value : DateTime.Parse(list[7])),
+                                new SqlParameter("@Other_stops", list[8]),
+                                new SqlParameter("@Id_cargo", list[9]),
+                                new SqlParameter("@Storage_time", list[10]),
+                                new SqlParameter("@Completed", list[11]),
+                                new SqlParameter("@Completion_time", list[12] == "" ? System.DBNull.Value : DateTime.Parse(list[12])),
+                                new SqlParameter("@Time_of_delay", list[13]),
+                                new SqlParameter("@Payment", list[14]),
+                                new SqlParameter("@Final_Payment", list[15]),
+                                new SqlParameter("@Penalty", list[16]),
+                                new SqlParameter("@Date", list[17] == "" ? System.DBNull.Value : DateTime.Parse(list[17]))
+                                );
+                        }
+                    }
+                    //If no data in Excel file  
+                    if (firstRow)
+                    {
+                        ViewBag.Message = @App.Resources.Resource.Empty_excel;
+                    }
+                }
+            }
+            else
+            {
+                //If file extension of the uploaded file is different then .xlsx  
+                ViewBag.Message = @App.Resources.Resource.Not_excel;
+            }
+            
+            await _context.SaveChangesAsync();
+            return LocalRedirect(returnUrl);
+        }
+
+
         //iTextSharp needed !!!
-        public void PDF()
+            public void PDF()
         {
             var tasks = from u in _context.Tasks select u;
 

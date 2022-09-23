@@ -1,5 +1,24 @@
-﻿.center input {
-    margin-left:-15%;
+﻿.import-button{
+    margin:0 !important;
+}
+.import{
+    display:inline-block !important;
+    max-width:92px;
+    padding:0 !important;
+    margin-right:30px;
+    margin-left:0;
+}
+
+.import-error{
+    position:absolute;
+    right:8%;
+    top:3rem;
+    font-size:14px;
+    color:red;
+}
+
+.center input {
+    margin-left: -15%;
 }
 
 .center2 input {
@@ -110,7 +129,7 @@ table th{
 .search {
     position:relative;
     top:2px;
-    right:15%;
+    right:0.5%;
 }
 
 .search-string{
@@ -148,6 +167,8 @@ table th{
     height: 20px;
     opacity: 1;
     border-color: red;
+    float:left;
+    margin-top:2%;
 }
 
 .close:hover {
@@ -156,8 +177,7 @@ table th{
 
 .close:before, .close:after {
     position: absolute;
-    left: 11.2px;
-    top:10px;
+    top:8px;
     content: '';
     height: 20px;
     width: 2px;
@@ -2479,6 +2499,8 @@ body {
   color: #6c757d;
 }
 
+
+
 .form-control, .dataTables_wrapper select {
     display: block;
     width: 100%;
@@ -4463,13 +4485,18 @@ fieldset:disabled .btn {
   padding-bottom: 0.5rem;
 }
 .nav-language{
- margin-left:5%;
- margin-right:3.5%;
- border:none;
- font-size:14px;
+     margin-left:30%;
+     margin-right:5%;
+     border:none;
+     font-size:14px;
 }
 
-.nav-language option{
+#selectLanguage select options{
+    border:0px;
+    outline:0px;
+}
+
+.nav-language option {
     border: none;
 }
 
@@ -4500,7 +4527,7 @@ fieldset:disabled .btn {
 .navbar-nav {
     display: flex;
     flex-direction: column;
-    padding-left: 1%;
+    padding-left: 5%;
     margin-bottom: 0;
     list-style: none;
 
@@ -12953,11 +12980,6 @@ code {
   background: initial;
 }
 
-/* Forms */
-.form-group {
-  margin-bottom: 2rem !important;
-}
-
 .input-group-append,
 .input-group-prepend {
   color: #c9c8c8;
@@ -12981,7 +13003,7 @@ code {
 }
 
 select.form-control, .dataTables_wrapper select {
-  padding: .4375rem .75rem;
+  padding: .4375rem .4rem;
   border: 0;
   outline: 1px solid #f3f3f3;
   max-width:250px;
@@ -13524,6 +13546,8 @@ dl li {
 .table td {
     font-size: 0.875rem;
     padding: 0.8rem 0.8375rem;
+    vertical-align:middle !important;
+    min-width:100px !important;
 }
 
 .table td img {

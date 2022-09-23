@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using App.Resources;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -13,13 +14,19 @@ namespace App.Models
         public int  Id { get; set; } 
         [Required(ErrorMessage = "Felhasználónév megadása kötelező.")]
         [MaxLength(30)]
-        [Display(Name = "Felhasználónév")]
+        [Display(Name = "Username", ResourceType = typeof(Resource))]
         public string UserName { get; set; }
+        [Required(ErrorMessage = "Név megadása kötelező.")]
+        [MaxLength(30)]
+        [Display(Name = "Teljes név")]
+        public string Name { get; set; }
         [Required(ErrorMessage = "Email megadása kötelező.")]
         [Display(Name = "Email")]
         [DataType(DataType.EmailAddress)]
         [RegularExpression(@"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}", ErrorMessage = "Megfelelő emailt adj meg!")]
         public string Email { get; set; }
+        [Display(Name = "Telefonszám")]
+        public string PhoneNumber { get; set; }
         [Required(ErrorMessage = "Jelszó megadása kötelező.")]
         [Display(Name = "Jelszó")]
         [DataType(DataType.Password)]

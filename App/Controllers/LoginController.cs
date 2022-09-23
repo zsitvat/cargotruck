@@ -13,7 +13,7 @@ using Microsoft.Data.SqlClient;
 
 namespace App.Controllers
 {
-    public class LoginController : Controller
+    public class LoginController : BaseController
     {
         private readonly ApplicationDbContext _context;
         public LoginController(ApplicationDbContext context)
@@ -21,10 +21,12 @@ namespace App.Controllers
             //create admin user if Users table is empty
             if (!context.Users.Any())
             {
-                var sql = @"Insert Into Users (UserName,Email,PasswordHash,Role) Values (@UserName,@Email,@PasswordHash,@Role)";
+                var sql = @"Insert Into Users (UserName,Name,Email,PhoneNumber,PasswordHash,Role) Values (@UserName,@Name,@Email,@PhoneNumber, @PasswordHash,@Role)";
                 int noOfRowInserted = context.Database.ExecuteSqlRaw(sql,
                     new SqlParameter("@UserName", "admin"),
+                    new SqlParameter("@Name", "admin"),
                     new SqlParameter("@Email", " "),
+                    new SqlParameter("@PhoneNumber", " "),
                     new SqlParameter("@PasswordHash", "e64b78fc3bc91bcbc7dc232ba8ec59e0"),
                     new SqlParameter("@Role", "admin")
                     );
@@ -58,7 +60,6 @@ namespace App.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
-
     
         public ActionResult LogOut()
         {
@@ -66,6 +67,7 @@ namespace App.Controllers
             HttpContext.Session.Clear();
             return RedirectToAction("Login_page", "Login");
         }
+
         [HttpGet]
         public ActionResult Results()
         {

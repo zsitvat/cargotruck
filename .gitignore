@@ -8,3 +8,4 @@ App/appsettings.json
 obj/
 App/obj/
 App/bin/
+*.xlsx
