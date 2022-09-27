@@ -1,6 +1,7 @@
 ﻿using DocumentFormat.OpenXml.Wordprocessing;
 using System;
 using System.ComponentModel.DataAnnotations;
+using App.Resources;
 
 namespace App.Models
 {

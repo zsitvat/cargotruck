@@ -1,7 +1,7 @@
 ﻿@model App.Models.Users
 
 @{
-    ViewData["Title"] = "Fiók módosítása";
+    ViewData["Title"] = App.Resources.Resource.Title_user_edit;
 }
 
 <!-- partial -->
@@ -46,17 +46,17 @@
                             <div class="form-group">
                                 <label asp-for="Role" class="control-label"></label>
                                 <select asp-for="Role" class="form-control" id="Role" name="Role">
-                                    <option value="user">Felhasználó</option>
-                                    <option value="tasks">Task-manager</option>
-                                    <option value="roads">Sofőr</option>
-                                    <option value="cargoes">Rakományos</option>
-                                    <option value="expenses">Pénzügy</option>
-                                    <option value="storages">Raktáros</option>
-                                    <option value="admin">Admin</option>
+                                    <option value="user">@App.Resources.Resource.User</option>
+                                    <option value="tasks">@App.Resources.Resource.Task_manager</option>
+                                    <option value="roads">@App.Resources.Resource.Driver</option>
+                                    <option value="cargoes">@App.Resources.Resource.Cargo_man</option>
+                                    <option value="expenses">@App.Resources.Resource.Finance</option>
+                                    <option value="storages">@App.Resources.Resource.Warehouseman</option>
+                                    <option value="admin">@App.Resources.Resource.Admin</option>
                                 </select>
                             </div>
                             <div class="form-group ">
-                                <input type="submit" value="Mentés" class="btn btn-primary account-create-button" />
+                                <input type="submit" value="@App.Resources.Resource.Save" class="btn btn-primary account-create-button" />
                             </div>
                         </form>
                     </div>

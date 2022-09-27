@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Főoldal";
+    ViewData["Title"] = App.Resources.Resource.Home_title;
 }
 
 
@@ -8,34 +8,34 @@
         <div class="index-boxes">
             <div>
                 <a class="nav-link" asp-area="" asp-controller="Tasks" asp-action="Tasks_page">
-                    <span class="menu-title">Megbízások</span>
+                    <span class="menu-title"> @App.Resources.Resource.Tasks</span>
                 </a>
             </div>
             <div>
                 <a class="nav-link" asp-area="" asp-controller="Cargoes" asp-action="Cargoes_page">
-                    <span class="menu-title">Rakományok</span>
+                    <span class="menu-title"> @App.Resources.Resource.Cargoes</span>
                 </a>
             </div>
             <div>
                 <a class="nav-link" asp-area="" asp-controller="Roads" asp-action="Roads_page">
-                    <span class="menu-title">Utak</span>
+                    <span class="menu-title">@App.Resources.Resource.Roads</span>
                 </a>
             </div>
         </div>
         <div class="index-boxes">
             <div>
                 <a class="nav-link" asp-area="" asp-controller="Storages" asp-action="Storages_page">
-                    <span class="menu-title">Raktár</span>
+                    <span class="menu-title">@App.Resources.Resource.Warehouse</span>
                 </a>
             </div>
             <div>
                 <a class="nav-link" asp-area="" asp-controller="Trucks" asp-action="Trucks_page">
-                    <span class="menu-title">Járművek</span>
+                    <span class="menu-title">@App.Resources.Resource.Trucks</span>
                 </a>
             </div>
             <div>
                 <a class="nav-link" asp-area="" asp-controller="Expenses" asp-action="Expenses_page">
-                    <span class="menu-title">Kiadások</span>
+                    <span class="menu-title">@App.Resources.Resource.Expenses</span>
                 </a>
             </div>
         </div>

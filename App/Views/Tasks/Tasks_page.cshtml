@@ -17,16 +17,12 @@
                         <div class="me-md-3 me-xl-5">
                             <h2>@ViewData["Title"]</h2>
                         </div>
-                        <div class="d-flex">
-                            <p class="text-muted mb-0 hover-cursor">&nbsp;/&nbsp;Irányítópult&nbsp;/&nbsp;</p>
-                            <p class="text-primary mb-0 hover-cursor">@ViewData["Title"]</p>
-                        </div>
                     </div>
 
                     <div class="d-flex justify-content-between align-items-end flex-wrap">
                         <form asp-controller="Tasks" asp-action="Tasks_page" class="search" id="search" method="get">   
                             @{
-                                if (ViewBag.searchPlaceHolder != null && ViewBag.searchPlaceHolder != "" && ViewBag.searchPlaceHolder != "Keresés...")
+                                if (ViewBag.searchPlaceHolder != null && ViewBag.searchPlaceHolder != "" && ViewBag.searchPlaceHolder != App.Resources.Resource.search)
                                 {
                                         <button type="submit" value="x" class="close btn  delete_search"></button>
                                 }
@@ -38,7 +34,7 @@
                         </form>
 
                         <!--Pop up button -->
-                        <button onclick="location.href='@Url.Action("Modal", "Tasks")'" id="btnShowModal" type="button" class="btn btn-light bg-white btn-icon me-3 mt-2 mt-xl-0">
+                        <button onclick="ShowPopup()" data-toogle="ajax-modal" data-target="#addSettings" id="btnShowModal" type="button" class="btn btn-light bg-white btn-icon me-3 mt-2 mt-xl-0">
                                 <i class="fa fa-cog" aria-hidden="true"></i>
                         </button>                
                         <!--Export to excel button -->
@@ -52,19 +48,22 @@
                         <!--Import from excel  -->
                         <form asp-controller="Tasks" asp-route-returnUrl="@returnUrl" EncType="multipart/form-data" asp-action="Import" id="upload" method="post">
                             <button type="submit" value="" class="import-button btn btn-light bg-white btn-icon  mt-2 mt-xl-0"><i class="fa fa-upload" aria-hidden="true"></i></button>
-                            <input type="file" id="file" name="file" class="btn import" />
-                        </form>
-                        <p class="import-error">@ViewBag.Message</p>
-                        <a asp-action="create" class="btn btn-primary mt-2 mt-xl-0">Új adat</a>
+                            <input type="file" id="file" name="file" class="btn import" />   
+                        </form>  <p class="import-error">@TempData["error"]</p>
+                        <a asp-action="create" class="btn btn-primary mt-2 mt-xl-0">@App.Resources.Resource.New_data</a>
                     </div>
                 </div>
             </div>
         </div>
 
-         <!--
-                <partial name="_SettingsModal" />
-        -->
-           
+        <div id='myModal' class='modal'>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div id='myModalContent'></div>
+                </div>
+            </div>
+
+        </div>
 
         <div class="row">
             <div class="col-md-12 stretch-card">
@@ -75,52 +74,52 @@
                                 <thead>
                                     <tr>
                                         <th>
-                                            @Html.ActionLink("Partner", "Tasks_page", new { sortOrder = ViewBag.PartnerSortParm, currentFilter=ViewBag.CurrentFilter  })
+                                            @Html.ActionLink(App.Resources.Resource.Partner, "Tasks_page", new { sortOrder = ViewBag.PartnerSortParm, currentFilter=ViewBag.CurrentFilter  })
                                         </th>
                                         <th>
-                                            @Html.ActionLink("Leírás", "Tasks_page", new { sortOrder = ViewBag.DescriptionSortParm, currentFilter=ViewBag.CurrentFilter  })
+                                            @Html.ActionLink(App.Resources.Resource.Description, "Tasks_page", new { sortOrder = ViewBag.DescriptionSortParm, currentFilter=ViewBag.CurrentFilter  })
                                         </th>
                                         <th>
-                                            @Html.ActionLink("Átvétel helye", "Tasks_page", new { sortOrder = ViewBag.Place_of_receiptSortParm, currentFilter=ViewBag.CurrentFilter  })
+                                            @Html.ActionLink(App.Resources.Resource.Place_of_receipt, "Tasks_page", new { sortOrder = ViewBag.Place_of_receiptSortParm, currentFilter=ViewBag.CurrentFilter  })
                                         </th>
                                         <th>
-                                            @Html.ActionLink("Átvétel ideje", "Tasks_page", new { sortOrder = ViewBag.Time_of_receiptSortParm, currentFilter=ViewBag.CurrentFilter  })
+                                            @Html.ActionLink(App.Resources.Resource.Time_of_receipt, "Tasks_page", new { sortOrder = ViewBag.Time_of_receiptSortParm, currentFilter=ViewBag.CurrentFilter  })
                                         </th>
                                         <th>
-                                            @Html.ActionLink("Leadás helye", "Tasks_page", new { sortOrder = ViewBag.Place_of_deliverySortParm, currentFilter=ViewBag.CurrentFilter  })
+                                            @Html.ActionLink(App.Resources.Resource.Place_of_delivery, "Tasks_page", new { sortOrder = ViewBag.Place_of_deliverySortParm, currentFilter=ViewBag.CurrentFilter  })
                                         </th>
                                         <th>
-                                            @Html.ActionLink("Leadás ideje", "Tasks_page", new { sortOrder = ViewBag.Time_of_deliverySortParm, currentFilter=ViewBag.CurrentFilter  })
+                                            @Html.ActionLink(App.Resources.Resource.Time_of_delivery, "Tasks_page", new { sortOrder = ViewBag.Time_of_deliverySortParm, currentFilter=ViewBag.CurrentFilter  })
                                         </th>
                                         <th>
-                                            @Html.ActionLink("Egyéb megállóhelyek", "Tasks_page", new { sortOrder = ViewBag.Other_stopsSortParm, currentFilter=ViewBag.CurrentFilter  })
+                                            @Html.ActionLink(App.Resources.Resource.Other_stops, "Tasks_page", new { sortOrder = ViewBag.Other_stopsSortParm, currentFilter=ViewBag.CurrentFilter  })
                                         </th>
                                         <th>
-                                            @Html.ActionLink("Rakomány Id", "Tasks_page", new { sortOrder = ViewBag.Id_cargoSortParm, currentFilter=ViewBag.CurrentFilter  })
+                                            @Html.ActionLink(App.Resources.Resource.Id_cargo, "Tasks_page", new { sortOrder = ViewBag.Id_cargoSortParm, currentFilter=ViewBag.CurrentFilter  })
                                         </th>
                                         <th>
-                                            @Html.ActionLink("Raktározás ideje", "Tasks_page", new { sortOrder = ViewBag.Storage_timeSortParm, currentFilter=ViewBag.CurrentFilter  })
+                                            @Html.ActionLink(App.Resources.Resource.Storage_time, "Tasks_page", new { sortOrder = ViewBag.Storage_timeSortParm, currentFilter=ViewBag.CurrentFilter  })
                                         </th>
                                         <th>
-                                            @Html.ActionLink("Teljesítve", "Tasks_page", new { sortOrder = ViewBag.CompletedSortParm, currentFilter=ViewBag.CurrentFilter  })
+                                            @Html.ActionLink(App.Resources.Resource.Completed, "Tasks_page", new { sortOrder = ViewBag.CompletedSortParm, currentFilter=ViewBag.CurrentFilter  })
                                         </th>
                                         <th>
-                                            @Html.ActionLink("Teljesítés ideje", "Tasks_page", new { sortOrder = ViewBag.Completion_timeSortParm, currentFilter=ViewBag.CurrentFilter  })
+                                            @Html.ActionLink(App.Resources.Resource.Completion_time, "Tasks_page", new { sortOrder = ViewBag.Completion_timeSortParm, currentFilter=ViewBag.CurrentFilter  })
                                         </th>
                                         <th>
-                                            @Html.ActionLink("Késés", "Tasks_page", new { sortOrder = ViewBag.Time_of_delaySortParm, currentFilter=ViewBag.CurrentFilter  })
+                                            @Html.ActionLink(App.Resources.Resource.Time_of_delay, "Tasks_page", new { sortOrder = ViewBag.Time_of_delaySortParm, currentFilter=ViewBag.CurrentFilter  })
                                         </th>
                                         <th>
-                                            @Html.ActionLink("Igért összeg", "Tasks_page", new { sortOrder = ViewBag.PaymentSortParm , currentFilter=ViewBag.CurrentFilter })
+                                            @Html.ActionLink(App.Resources.Resource.Payment, "Tasks_page", new { sortOrder = ViewBag.PaymentSortParm , currentFilter=ViewBag.CurrentFilter })
                                         </th>
                                         <th>
-                                            @Html.ActionLink("Végleges összeg", "Tasks_page", new { sortOrder = ViewBag.Final_PaymentSortParm, currentFilter=ViewBag.CurrentFilter  })
+                                            @Html.ActionLink(App.Resources.Resource.Final_Payment, "Tasks_page", new { sortOrder = ViewBag.Final_PaymentSortParm, currentFilter=ViewBag.CurrentFilter  })
                                         </th>
                                         <th>
-                                            @Html.ActionLink("Büntetés összege", "Tasks_page", new { sortOrder = ViewBag.PenaltySortParm, currentFilter=ViewBag.CurrentFilter  })
+                                            @Html.ActionLink(App.Resources.Resource.Penalty, "Tasks_page", new { sortOrder = ViewBag.PenaltySortParm, currentFilter=ViewBag.CurrentFilter  })
                                         </th>
                                         <th>
-                                            @Html.ActionLink("Dátum","Tasks_page", new { sortOrder = ViewBag.DateSortParm, currentFilter=ViewBag.CurrentFilter  })
+                                            @Html.ActionLink(App.Resources.Resource.Date,"Tasks_page", new { sortOrder = ViewBag.DateSortParm, currentFilter=ViewBag.CurrentFilter  })
                                         </th>
                                         <th></th>
                                     </tr>
@@ -196,3 +195,8 @@
         </div>
     </div>
 </div>
+
+@section scripts{
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="~/js/site.js"></script> <!--The app's js file-->
+    }

@@ -117,19 +117,250 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Admin" xml:space="preserve">
+    <value>Adminisztrátor</value>
+  </data>
+  <data name="Admin_page" xml:space="preserve">
+    <value>Adminisztrátor felület</value>
+  </data>
   <data name="Admin_title" xml:space="preserve">
     <value>Adminisztrátor felület</value>
+  </data>
+  <data name="Bad_username" xml:space="preserve">
+    <value>Rossz felhasználónév vagy jelszó.</value>
+  </data>
+  <data name="Brand" xml:space="preserve">
+    <value>Autómárka</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Mégse</value>
+  </data>
+  <data name="Cargoes" xml:space="preserve">
+    <value>Rakományok</value>
+  </data>
+  <data name="Cargo_man" xml:space="preserve">
+    <value>Rakományos</value>
+  </data>
+  <data name="Completed" xml:space="preserve">
+    <value>Teljesítve</value>
+  </data>
+  <data name="Completion_time" xml:space="preserve">
+    <value>Teljesítés ideje</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Létrehozás</value>
+  </data>
+  <data name="Create_tasks" xml:space="preserve">
+    <value>Megbízás létrehozása</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Dátum</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Törlés</value>
+  </data>
+  <data name="Delete?" xml:space="preserve">
+    <value>Biztosan törölni szeretnéd?</value>
+  </data>
+  <data name="Delete_tasks" xml:space="preserve">
+    <value>Megbízás törlése</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Leírás</value>
+  </data>
+  <data name="Driver" xml:space="preserve">
+    <value>Sofőr</value>
+  </data>
+  <data name="Edit_tasks" xml:space="preserve">
+    <value>Megbízás módosítása</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>E-mail</value>
   </data>
   <data name="Empty_excel" xml:space="preserve">
     <value>Üres excel fájl!</value>
   </data>
+  <data name="Error_brand" xml:space="preserve">
+    <value>Az autómárka megadása kötelező!</value>
+  </data>
+  <data name="Error_email" xml:space="preserve">
+    <value>E-mail megadása kötelezõ.</value>
+  </data>
+  <data name="Error_full_name" xml:space="preserve">
+    <value>Név megadása kötelezõ.</value>
+  </data>
+  <data name="Error_max_weight" xml:space="preserve">
+    <value>A jármű teherbírását kötelező megadni!</value>
+  </data>
+  <data name="Error_page_text" xml:space="preserve">
+    <value>Hiba történt, kérlek próbáld meg később.</value>
+  </data>
+  <data name="Error_partner" xml:space="preserve">
+    <value>Partner megadása kötelezõ.</value>
+  </data>
+  <data name="Error_password" xml:space="preserve">
+    <value>Jelszó megadása kötelezõ.</value>
+  </data>
+  <data name="Error_place_of_delivery" xml:space="preserve">
+    <value>A leadás helyének megadása kötelezõ.</value>
+  </data>
+  <data name="Error_place_of_receipt" xml:space="preserve">
+    <value>Az átvétel helyének megadása kötelezõ.</value>
+  </data>
+  <data name="Error_time_of_delivery" xml:space="preserve">
+    <value>A leadás idejének megadása kötelezõ.</value>
+  </data>
+  <data name="Error_time_of_receipt" xml:space="preserve">
+    <value>Az átvétel idejének megadása kötelezõ.</value>
+  </data>
+  <data name="Error_username" xml:space="preserve">
+    <value>Felhasználónév megadása kötelezõ.</value>
+  </data>
+  <data name="Error_vehicle_registration_number" xml:space="preserve">
+    <value>A rendszám megadása kötelező!</value>
+  </data>
+  <data name="Expenses" xml:space="preserve">
+    <value>Havi kiadások</value>
+  </data>
+  <data name="Final_Payment" xml:space="preserve">
+    <value>Végleges összeg</value>
+  </data>
+  <data name="Finance" xml:space="preserve">
+    <value>Pénzügy</value>
+  </data>
+  <data name="Full_name" xml:space="preserve">
+    <value>Teljes név</value>
+  </data>
+  <data name="Home_title" xml:space="preserve">
+    <value>Főoldal</value>
+  </data>
+  <data name="Id_cargo" xml:space="preserve">
+    <value>Rakomány ID</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Bejelentkezés</value>
+  </data>
+  <data name="LoginErrorMessage" xml:space="preserve">
+    <value>Ez a felhasználó már létezik!</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Kijelentkezés</value>
+  </data>
+  <data name="Max_weight" xml:space="preserve">
+    <value>Terhelés max súlya</value>
+  </data>
+  <data name="New_data" xml:space="preserve">
+    <value>Új adat</value>
+  </data>
+  <data name="New_user" xml:space="preserve">
+    <value>Új felhasználó</value>
+  </data>
   <data name="Not_excel" xml:space="preserve">
     <value>Csak .xlsx formátum elfogadott!</value>
+  </data>
+  <data name="No_excel" xml:space="preserve">
+    <value>Fájl nem található!</value>
+  </data>
+  <data name="Other_stops" xml:space="preserve">
+    <value>Egyéb megállóhelyek</value>
+  </data>
+  <data name="Partner" xml:space="preserve">
+    <value>Partner</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Jelszó</value>
+  </data>
+  <data name="Payment" xml:space="preserve">
+    <value>Igért összeg</value>
+  </data>
+  <data name="Penalty" xml:space="preserve">
+    <value>Büntetés összege</value>
+  </data>
+  <data name="Phone_number" xml:space="preserve">
+    <value>Telefonszám</value>
+  </data>
+  <data name="Place_of_delivery" xml:space="preserve">
+    <value>Leadás helye</value>
+  </data>
+  <data name="Place_of_receipt" xml:space="preserve">
+    <value>Átvétel helye</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>Szabályzat</value>
+  </data>
+  <data name="Privacy_text" xml:space="preserve">
+    <value>Az alkalmazás egyetemi szakdolgozat céljából készül!</value>
+  </data>
+  <data name="Roads" xml:space="preserve">
+    <value>Utak</value>
+  </data>
+  <data name="Road_id" xml:space="preserve">
+    <value>Út azonosító</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>Jogosultság</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Mentés</value>
+  </data>
+  <data name="search" xml:space="preserve">
+    <value>Keresés...</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Státusz</value>
+  </data>
+  <data name="Storage_time" xml:space="preserve">
+    <value>Raktározás ideje</value>
+  </data>
+  <data name="Tasks" xml:space="preserve">
+    <value>Megbízások</value>
   </data>
   <data name="Tasks_title" xml:space="preserve">
     <value>Megbízások</value>
   </data>
+  <data name="Task_manager" xml:space="preserve">
+    <value>Task-manager</value>
+  </data>
+  <data name="Time_of_delay" xml:space="preserve">
+    <value>Késés</value>
+  </data>
+  <data name="Time_of_delivery" xml:space="preserve">
+    <value>Leadás ideje</value>
+  </data>
+  <data name="Time_of_receipt" xml:space="preserve">
+    <value>Átvétel ideje</value>
+  </data>
+  <data name="Title_create_user" xml:space="preserve">
+    <value>Fiók létrehozása</value>
+  </data>
+  <data name="Title_login" xml:space="preserve">
+    <value>Bejelentkezés</value>
+  </data>
+  <data name="Title_user_delete" xml:space="preserve">
+    <value>Fiók törlése</value>
+  </data>
+  <data name="Title_user_edit" xml:space="preserve">
+    <value>Fiók módosítása</value>
+  </data>
+  <data name="Trucks" xml:space="preserve">
+    <value>Járművek</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>Felhasználó</value>
+  </data>
   <data name="Username" xml:space="preserve">
     <value>Felhasználónév</value>
+  </data>
+  <data name="User_id" xml:space="preserve">
+    <value>Felhasználó azonosító</value>
+  </data>
+  <data name="Vehicle_registration_number" xml:space="preserve">
+    <value>Rendszám</value>
+  </data>
+  <data name="Warehouse" xml:space="preserve">
+    <value>Raktár</value>
+  </data>
+  <data name="Warehouseman" xml:space="preserve">
+    <value>Raktáros</value>
   </data>
 </root>

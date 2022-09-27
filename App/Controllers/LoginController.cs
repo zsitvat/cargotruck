@@ -47,14 +47,15 @@ namespace App.Controllers
             var userDetails = db.Users.Where(x => x.UserName == userModel.UserName && x.PasswordHash == md5.CreateMD5(userModel.PasswordHash)).FirstOrDefault();
             if (userDetails == null)
             {
-                userModel.LoginErrorMessage = "Rossz felhasználónév vagy jelszó."; 
+                @TempData["LoginErrorMessage"] = App.Resources.Resource.Bad_username;
                 return View("Login_page", userModel);
             }
             else
             {
                 HttpContext.Session.SetInt32("Id", userDetails.Id);
                 HttpContext.Session.SetString("UserName", userDetails.UserName);
-                if (userDetails.Role!=null) {
+                if (userDetails.Role != null)
+                {
                     HttpContext.Session.SetString("Role", userDetails.Role);
                 }
                 return RedirectToAction("Index", "Home");

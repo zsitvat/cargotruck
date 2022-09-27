@@ -120,16 +120,31 @@
   <data name="Admin_title" xml:space="preserve">
     <value>Admin Page</value>
   </data>
+  <data name="Bad_username" xml:space="preserve">
+    <value>Wrong username or password.</value>
+  </data>
   <data name="Empty_excel" xml:space="preserve">
     <value>Empty Excel File!</value>
   </data>
+  <data name="LoginErrorMessage" xml:space="preserve">
+    <value>The user is already exist!</value>
+  </data>
   <data name="Not_excel" xml:space="preserve">
     <value>Please select file with .xlsx extension!</value>
+  </data>
+  <data name="No_excel" xml:space="preserve">
+    <value>No file found!</value>
+  </data>
+  <data name="search" xml:space="preserve">
+    <value>Search...</value>
   </data>
   <data name="Tasks_title" xml:space="preserve">
     <value>Tasks</value>
   </data>
   <data name="Username" xml:space="preserve">
     <value>Username</value>
+  </data>
+  <data name="User_id" xml:space="preserve">
+    <value>User ID</value>
   </data>
 </root>

@@ -17,7 +17,6 @@
                             <h2>@ViewData["Title"]</h2>
                         </div>
                         <div class="d-flex">
-                            <p class="text-muted mb-0 hover-cursor">&nbsp;/&nbsp;Irányítópult&nbsp;/&nbsp;</p>
                             <p class="text-primary mb-0 hover-cursor">@ViewData["Title"]</p>
                         </div>
                     </div>
@@ -25,7 +24,7 @@
                     <div class="d-flex justify-content-between align-items-end flex-wrap">
                         <form asp-controller="Admin" asp-action="Admin_page" class="search" id="search" method="get">
                             @{
-                                if (ViewBag.searchPlaceHolder != null && ViewBag.searchPlaceHolder != "" && ViewBag.searchPlaceHolder != "Keresés...")
+                                if (ViewBag.searchPlaceHolder != null && ViewBag.searchPlaceHolder != "" && ViewBag.searchPlaceHolder != App.Resources.Resource.search)
                                 {
                                     <button type="submit" value="x" class="close btn  delete_search"></button>
                                 }
@@ -35,7 +34,7 @@
                                 <i class="i fa fa-search"></i>
                             </button>
                         </form>
-                        <a asp-action="create" class="btn btn-primary mt-2 mt-xl-0">Új felhasználó</a>
+                        <a asp-action="create" class="btn btn-primary mt-2 mt-xl-0">@App.Resources.Resource.New_user</a>
                     </div>
                 </div>
             </div>
@@ -52,16 +51,16 @@
                                 <thead>
                                     <tr>
                                         <th>
-                                            @Html.ActionLink("Felhasználónév", "Admin_page", new { sortOrder = ViewBag.UserNameSortParm, currentFilter=ViewBag.CurrentFilter  })
+                                            @Html.ActionLink(App.Resources.Resource.Username, "Admin_page", new { sortOrder = ViewBag.UserNameSortParm, currentFilter=ViewBag.CurrentFilter  })
                                         </th>
                                         <th>
-                                            @Html.ActionLink("Email", "Admin_page", new { sortOrder = ViewBag.EmailSortParm, currentFilter=ViewBag.CurrentFilter  })
+                                            @Html.ActionLink("E-mail", "Admin_page", new { sortOrder = ViewBag.EmailSortParm, currentFilter=ViewBag.CurrentFilter  })
                                         </th>
                                         <th>
-                                            @Html.ActionLink("Jelszó", "Admin_page", new { sortOrder = ViewBag.PasswordSortParm, currentFilter=ViewBag.CurrentFilter  })
+                                            @Html.ActionLink(App.Resources.Resource.Password, "Admin_page", new { sortOrder = ViewBag.PasswordSortParm, currentFilter=ViewBag.CurrentFilter  })
                                         </th>
                                         <th>
-                                            @Html.ActionLink("Jogosultság", "Admin_page", new { sortOrder = ViewBag.RoleSortParm, currentFilter=ViewBag.CurrentFilter  })
+                                            @Html.ActionLink(App.Resources.Resource.Role, "Admin_page", new { sortOrder = ViewBag.RoleSortParm, currentFilter=ViewBag.CurrentFilter  })
                                         <th></th>
                                     </tr>
                                 </thead>

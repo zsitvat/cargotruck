@@ -1,7 +1,7 @@
 ﻿@model App.Models.Users
 
 @{
-    ViewData["Title"] = "Fiók törlése";
+    ViewData["Title"] = App.Resources.Resource.Title_user_delete;
 }
 
 <!-- partial -->
@@ -38,9 +38,9 @@
 
                         <form class="delete" asp-action="Delete">
                             <input type="hidden" asp-for="Id" />
-                            <p>Biztosan törölni szeretnéd?</p>
-                            <input type="submit" value="Törlés" class="btn btn-danger" />
-                            <a class="btn btn-primary" asp-action="Admin_page">Mégse</a>
+                            <p>@App.Resources.Resource.Delete?</p>
+                            <input type="submit" value="@App.Resources.Resource.Delete" class="btn btn-danger" />
+                            <a class="btn btn-primary" asp-action="Admin_page">@App.Resources.Resource.Cancel</a>
                         </form>
                     </div>
                 </div>

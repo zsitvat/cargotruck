@@ -1,7 +1,7 @@
 ﻿@model App.Models.Users
 
 @{
-    ViewData["Title"] = "Bejelentkezés";
+    ViewData["Title"] = App.Resources.Resource.Title_login;
 }
 
 <div id="login-div">
@@ -27,13 +27,13 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    <label class="field-validation-error space-for-error2">@Html.DisplayFor(model => model.LoginErrorMessage)</label>
+                    <label class="field-validation-error space-for-error2">@TempData["LoginErrorMessage"]</label>
                 </td>
             </tr>
             <tr>
                 <td></td>
                 <td>
-                    <input class="btn btn-primary" type="submit" name="name" value="Login" />
+                    <input class="btn btn-primary" type="submit" name="name" value="@App.Resources.Resource.Login" />
                 </td>
             </tr>
         </table>

@@ -86,7 +86,7 @@ namespace App.Controllers
                 }
                 else
                 {
-                    ViewBag.searchPlaceHolder = "Keresés...";
+                    ViewBag.searchPlaceHolder = App.Resources.Resource.search;
                 }
                 // sort order
                 switch (sortOrder)
@@ -313,39 +313,39 @@ namespace App.Controllers
                 var currentRow = 1;
                 worksheet.Cell(currentRow, 1).Value = "Id";
                 worksheet.Cell(currentRow, 1).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 2).Value = "User_id";
+                worksheet.Cell(currentRow, 2).Value = App.Resources.Resource.User_id;
                 worksheet.Cell(currentRow, 2).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 3).Value = "Partner";
+                worksheet.Cell(currentRow, 3).Value = App.Resources.Resource.Partner;
                 worksheet.Cell(currentRow, 3).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 4).Value = "Leírás";
+                worksheet.Cell(currentRow, 4).Value = App.Resources.Resource.Description;
                 worksheet.Cell(currentRow, 4).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 5).Value = "Átvétel helye";
+                worksheet.Cell(currentRow, 5).Value = App.Resources.Resource.Place_of_receipt;
                 worksheet.Cell(currentRow, 5).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 6).Value = "Átvétel ideje";
+                worksheet.Cell(currentRow, 6).Value = App.Resources.Resource.Time_of_receipt;
                 worksheet.Cell(currentRow, 6).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 7).Value = "Leadás helye";
+                worksheet.Cell(currentRow, 7).Value = App.Resources.Resource.Place_of_delivery;
                 worksheet.Cell(currentRow, 7).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 8).Value = "Leadás ideje";
+                worksheet.Cell(currentRow, 8).Value = App.Resources.Resource.Time_of_delivery;
                 worksheet.Cell(currentRow, 8).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 9).Value = "Egyéb megállóhelyek";
+                worksheet.Cell(currentRow, 9).Value = App.Resources.Resource.Other_stops;
                 worksheet.Cell(currentRow, 9).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 10).Value = "Rakomány ID";
+                worksheet.Cell(currentRow, 10).Value = App.Resources.Resource.Id_cargo;
                 worksheet.Cell(currentRow, 10).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 11).Value = "Raktározás ideje";
+                worksheet.Cell(currentRow, 11).Value = App.Resources.Resource.Storage_time;
                 worksheet.Cell(currentRow, 11).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 12).Value = "Teljesítve";
+                worksheet.Cell(currentRow, 12).Value = App.Resources.Resource.Completed;
                 worksheet.Cell(currentRow, 12).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 13).Value = "Teljesítés ideje";
+                worksheet.Cell(currentRow, 13).Value = App.Resources.Resource.Completion_time;
                 worksheet.Cell(currentRow, 13).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 14).Value = "Késés";
+                worksheet.Cell(currentRow, 14).Value = App.Resources.Resource.Time_of_delay;
                 worksheet.Cell(currentRow, 14).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 15).Value = "Igért összeg";
+                worksheet.Cell(currentRow, 15).Value = App.Resources.Resource.Payment;
                 worksheet.Cell(currentRow, 15).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 16).Value = "Végleges összeg";
+                worksheet.Cell(currentRow, 16).Value = App.Resources.Resource.Final_Payment;
                 worksheet.Cell(currentRow, 16).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 17).Value = "Büntetés összege";
+                worksheet.Cell(currentRow, 17).Value = App.Resources.Resource.Penalty;
                 worksheet.Cell(currentRow, 17).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 18).Value = "Dátum";
+                worksheet.Cell(currentRow, 18).Value = App.Resources.Resource.Date;
                 worksheet.Cell(currentRow, 18).Style.Font.SetBold();
                 foreach (var task in tasks)
                 {
@@ -392,88 +392,95 @@ namespace App.Controllers
         [HttpPost]
         public async Task<ActionResult> Import(IFormFile file, string returnUrl)
         {
-            //Checking file content length and Extension must be .xlsx  
-            if (file != null && file.Length > 0 && System.IO.Path.GetExtension(file.FileName).ToLower() == ".xlsx")
-            {
-                string path = Path.Combine("UploadFiles/", Path.GetFileName(file.FileName));
-                //Saving the file  
-                using (var stream = System.IO.File.Create(path))
+            if (file != null) { 
+                //Checking file content length and Extension must be .xlsx  
+                if (file != null && file.Length > 0 && System.IO.Path.GetExtension(file.FileName).ToLower() == ".xlsx")
                 {
-                    await file.CopyToAsync(stream);
-                }
-
-                //Started reading the Excel file.  
-                using (XLWorkbook workbook = new XLWorkbook(path))
-                {
-                    IXLWorksheet worksheet = workbook.Worksheet(1);
-                    //Loop through the Worksheet rows.
-                    DataTable dt = new DataTable();
-                    bool firstRow = true;
-                    foreach (IXLRow row in worksheet.Rows())
+                    string path = Path.Combine("UploadFiles/", Path.GetFileName(file.FileName));
+                    //Saving the file  
+                    using (var stream = System.IO.File.Create(path))
                     {
-                        //Use the first row to add columns to DataTable.
+                        await file.CopyToAsync(stream);
+                    }
+
+                    //Started reading the Excel file.  
+                    using (XLWorkbook workbook = new XLWorkbook(path))
+                    {
+                        IXLWorksheet worksheet = workbook.Worksheet(1);
+                        //Loop through the Worksheet rows.
+                        DataTable dt = new DataTable();
+                        bool firstRow = true;
+                        foreach (IXLRow row in worksheet.Rows())
+                        {
+                            //Use the first row to add columns to DataTable.
+                            if (firstRow)
+                            {
+                            
+                                foreach (IXLCell cell in row.Cells())
+                                {
+                                    dt.Columns.Add(cell.Value.ToString());
+                                }
+                                firstRow = false;
+                            
+                            }
+                            else
+                            {
+                                List<string> list = new List<string>();
+                                //Add rows to DataTable.
+                                dt.Rows.Add();
+                                int i = 0;
+                                foreach (IXLCell cell in row.Cells(1, dt.Columns.Count))
+                                {
+                                    if (!string.IsNullOrEmpty(cell.Value.ToString())) { list.Add(cell.Value.ToString()); }
+                                    else { list.Add(""); };
+                                    i++;   
+                                }
+                        
+                            var sql = @"Insert Into Tasks (User_id,Partner,Description,Place_of_receipt,Time_of_receipt,Place_of_delivery,Time_of_delivery,Other_stops,Id_cargo,Storage_time,Completed,Completion_time,Time_of_delay,Payment,Final_Payment,Penalty,Date ) 
+                                        Values (@User_id,@Partner,@Description,@Place_of_receipt,@Time_of_receipt, @Place_of_delivery,@Time_of_delivery,@Other_stops,@Id_cargo,@Storage_time,@Completed,@Completion_time,@Time_of_delay,@Payment,@Final_Payment,@Penalty,@Date)";
+                                int insert = _context.Database.ExecuteSqlRaw(sql,
+                                    new SqlParameter("@User_id", list[1]),
+                                    new SqlParameter("@Partner", list[2]),
+                                    new SqlParameter("@Description", list[3]),
+                                    new SqlParameter("@Place_of_receipt", list[4]),
+                                    new SqlParameter("@Time_of_receipt", list[5]=="" ? System.DBNull.Value : DateTime.Parse(list[5])),
+                                    new SqlParameter("@Place_of_delivery", list[6]),
+                                    new SqlParameter("@Time_of_delivery", list[7] == "" ? System.DBNull.Value : DateTime.Parse(list[7])),
+                                    new SqlParameter("@Other_stops", list[8]),
+                                    new SqlParameter("@Id_cargo", list[9]),
+                                    new SqlParameter("@Storage_time", list[10]),
+                                    new SqlParameter("@Completed", list[11]),
+                                    new SqlParameter("@Completion_time", list[12] == "" ? System.DBNull.Value : DateTime.Parse(list[12])),
+                                    new SqlParameter("@Time_of_delay", list[13]),
+                                    new SqlParameter("@Payment", list[14]),
+                                    new SqlParameter("@Final_Payment", list[15]),
+                                    new SqlParameter("@Penalty", list[16]),
+                                    new SqlParameter("@Date", list[17] == "" ? System.DBNull.Value : DateTime.Parse(list[17]))
+                                    );
+                            }
+                        }
+                        //If no data in Excel file  
                         if (firstRow)
                         {
-                            
-                            foreach (IXLCell cell in row.Cells())
-                            {
-                                dt.Columns.Add(cell.Value.ToString());
-                            }
-                            firstRow = false;
-                            
-                        }
-                        else
-                        {
-                            List<string> list = new List<string>();
-                            //Add rows to DataTable.
-                            dt.Rows.Add();
-                            int i = 0;
-                            foreach (IXLCell cell in row.Cells(1, dt.Columns.Count))
-                            {
-                                if (!string.IsNullOrEmpty(cell.Value.ToString())) { list.Add(cell.Value.ToString()); }
-                                else { list.Add(""); };
-                                i++;   
-                            }
-                        
-                        var sql = @"Insert Into Tasks (User_id,Partner,Description,Place_of_receipt,Time_of_receipt,Place_of_delivery,Time_of_delivery,Other_stops,Id_cargo,Storage_time,Completed,Completion_time,Time_of_delay,Payment,Final_Payment,Penalty,Date ) 
-                                    Values (@User_id,@Partner,@Description,@Place_of_receipt,@Time_of_receipt, @Place_of_delivery,@Time_of_delivery,@Other_stops,@Id_cargo,@Storage_time,@Completed,@Completion_time,@Time_of_delay,@Payment,@Final_Payment,@Penalty,@Date)";
-                            int insert = _context.Database.ExecuteSqlRaw(sql,
-                                new SqlParameter("@User_id", list[1]),
-                                new SqlParameter("@Partner", list[2]),
-                                new SqlParameter("@Description", list[3]),
-                                new SqlParameter("@Place_of_receipt", list[4]),
-                                new SqlParameter("@Time_of_receipt", list[5]=="" ? System.DBNull.Value : DateTime.Parse(list[5])),
-                                new SqlParameter("@Place_of_delivery", list[6]),
-                                new SqlParameter("@Time_of_delivery", list[7] == "" ? System.DBNull.Value : DateTime.Parse(list[7])),
-                                new SqlParameter("@Other_stops", list[8]),
-                                new SqlParameter("@Id_cargo", list[9]),
-                                new SqlParameter("@Storage_time", list[10]),
-                                new SqlParameter("@Completed", list[11]),
-                                new SqlParameter("@Completion_time", list[12] == "" ? System.DBNull.Value : DateTime.Parse(list[12])),
-                                new SqlParameter("@Time_of_delay", list[13]),
-                                new SqlParameter("@Payment", list[14]),
-                                new SqlParameter("@Final_Payment", list[15]),
-                                new SqlParameter("@Penalty", list[16]),
-                                new SqlParameter("@Date", list[17] == "" ? System.DBNull.Value : DateTime.Parse(list[17]))
-                                );
+                            TempData["error"] = @App.Resources.Resource.Empty_excel;
                         }
                     }
-                    //If no data in Excel file  
-                    if (firstRow)
-                    {
-                        ViewBag.Message = @App.Resources.Resource.Empty_excel;
-                    }
+                    await _context.SaveChangesAsync(); 
+                }
+                else
+                {
+                    //If file extension of the uploaded file is different then .xlsx  
+                    TempData["error"] = @App.Resources.Resource.Not_excel;
                 }
             }
             else
             {
-                //If file extension of the uploaded file is different then .xlsx  
-                ViewBag.Message = @App.Resources.Resource.Not_excel;
+                TempData["error"] = @App.Resources.Resource.No_excel;
             }
-            
-            await _context.SaveChangesAsync();
             return LocalRedirect(returnUrl);
-        }
+        }          
+       
+        
 
 
         //iTextSharp needed !!!
@@ -520,7 +527,7 @@ namespace App.Controllers
                     HorizontalAlignment = Element.ALIGN_CENTER
                 };
 
-                var title = new Paragraph( 15,"Megbízások");
+                var title = new Paragraph( 15,App.Resources.Resource.Tasks);
                 title.Alignment = Element.ALIGN_CENTER;
                 
 
@@ -530,42 +537,42 @@ namespace App.Controllers
                 table.AddCell(new PdfPCell(new Phrase("Id", font1)) {
                     HorizontalAlignment = Element.ALIGN_CENTER, VerticalAlignment = Element.ALIGN_MIDDLE 
                 });
-                table.AddCell(new PdfPCell(new Phrase("Partner", font1))
+                table.AddCell(new PdfPCell(new Phrase(App.Resources.Resource.User_id, font1))
                 {
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 });
-                table.AddCell(new PdfPCell(new Phrase("User id", font1))
+                table.AddCell(new PdfPCell(new Phrase(App.Resources.Resource.Partner, font1))
                 {
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 });
-                table.AddCell(new PdfPCell(new Phrase("Leírás", font1))
+                table.AddCell(new PdfPCell(new Phrase(App.Resources.Resource.Description, font1))
                 {
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 });
-                table.AddCell(new PdfPCell(new Phrase("Átvétel helye", font1))
+                table.AddCell(new PdfPCell(new Phrase(App.Resources.Resource.Place_of_receipt, font1))
                 {
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 });
-                table.AddCell(new PdfPCell(new Phrase("Átvétel ideje", font1))
+                table.AddCell(new PdfPCell(new Phrase(App.Resources.Resource.Time_of_receipt, font1))
                 {
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 });
-                table.AddCell(new PdfPCell(new Phrase("Leadás helye", font1))
+                table.AddCell(new PdfPCell(new Phrase(App.Resources.Resource.Place_of_delivery, font1))
                 {
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 });
-                table.AddCell(new PdfPCell(new Phrase("Leadás ideje", font1))
+                table.AddCell(new PdfPCell(new Phrase(App.Resources.Resource.Time_of_delivery, font1))
                 {
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 });
-                table.AddCell(new PdfPCell(new Phrase("Egyéb megálló", font1))
+                table.AddCell(new PdfPCell(new Phrase(App.Resources.Resource.Other_stops, font1))
                 {
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
@@ -645,47 +652,47 @@ namespace App.Controllers
                 table=null;
                 document.Add(new Paragraph("\n"));
 
-                table2.AddCell(new PdfPCell(new Phrase("Rakomány Id", font1))
+                table2.AddCell(new PdfPCell(new Phrase(App.Resources.Resource.Id_cargo, font1))
                 {
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 });
-                table2.AddCell(new PdfPCell(new Phrase("Raktározás ideje", font1))
+                table2.AddCell(new PdfPCell(new Phrase(App.Resources.Resource.Storage_time, font1))
                 {
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 });
-                table2.AddCell(new PdfPCell(new Phrase("Teljesítve", font1))
+                table2.AddCell(new PdfPCell(new Phrase(App.Resources.Resource.Completed, font1))
                 {
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 });
-                table2.AddCell(new PdfPCell(new Phrase("Teljesítés ideje", font1))
+                table2.AddCell(new PdfPCell(new Phrase(App.Resources.Resource.Completion_time, font1))
                 {
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 });
-                table2.AddCell(new PdfPCell(new Phrase("Késés", font1))
+                table2.AddCell(new PdfPCell(new Phrase(App.Resources.Resource.Time_of_delay, font1))
                 {
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 });
-                table2.AddCell(new PdfPCell(new Phrase("Igért összeg", font1))
+                table2.AddCell(new PdfPCell(new Phrase(App.Resources.Resource.Payment, font1))
                 {
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 });
-                table2.AddCell(new PdfPCell(new Phrase("Végleges összeg", font1))
+                table2.AddCell(new PdfPCell(new Phrase(App.Resources.Resource.Final_Payment, font1))
                 {
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 });
-                table2.AddCell(new PdfPCell(new Phrase("Büntetés összege", font1))
+                table2.AddCell(new PdfPCell(new Phrase(App.Resources.Resource.Penalty, font1))
                 {
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 });
-                table2.AddCell(new PdfPCell(new Phrase("Dátum", font1))
+                table2.AddCell(new PdfPCell(new Phrase(App.Resources.Resource.Date, font1))
                 {
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
@@ -787,6 +794,11 @@ namespace App.Controllers
                 Response.Body.Flush();
                 System.IO.File.Delete(filepath); // delete the file in the app folder
             }
+        }
+
+        public IActionResult Modal()
+        {
+            return PartialView("_Settings");
         }
 
     }

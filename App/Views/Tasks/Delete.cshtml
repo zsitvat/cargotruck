@@ -1,7 +1,7 @@
 ﻿@model App.Models.Tasks
 
 @{
-    ViewData["Title"] = "Megbízás törlése";
+    ViewData["Title"] = App.Resources.Resource.Delete_tasks;
 }
 
 <!-- partial -->
@@ -163,9 +163,9 @@
                             </dl>
                         <form class="delete" asp-action="Delete">
                             <input type="hidden" asp-for="Id" />
-                            <p>Biztosan törölni szeretnéd?</p>
-                            <input type="submit" value="Törlés" class="btn btn-danger" /> 
-                            <a class="btn btn-primary" asp-action="Tasks_page">Mégse</a>
+                            <p>@App.Resources.Resource.Delete?</p>
+                            <input type="submit" value="@App.Resources.Resource.Delete" class="btn btn-danger" /> 
+                            <a class="btn btn-primary" asp-action="Tasks_page">@App.Resources.Resource.Cancel</a>
                         </form>
                     </div>
                 </div>

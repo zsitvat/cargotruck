@@ -1,38 +1,32 @@
 ﻿using App.Resources;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace App.Models
 {
     public class Users
     {
         [Required]
-        public int  Id { get; set; } 
-        [Required(ErrorMessage = "Felhasználónév megadása kötelező.")]
+        public int  Id { get; set; }
+       
         [MaxLength(30)]
         [Display(Name = "Username", ResourceType = typeof(Resource))]
         public string UserName { get; set; }
-        [Required(ErrorMessage = "Név megadása kötelező.")]
+        [Required(ErrorMessageResourceName = "Error_full_name", ErrorMessageResourceType = typeof(Resource))]
         [MaxLength(30)]
-        [Display(Name = "Teljes név")]
+        [Display(Name = "Full_name", ResourceType = typeof(Resource))]
         public string Name { get; set; }
-        [Required(ErrorMessage = "Email megadása kötelező.")]
-        [Display(Name = "Email")]
+        [Required(ErrorMessageResourceName = "Error_email", ErrorMessageResourceType = typeof(Resource))]
+        [Display(Name = "Email", ResourceType = typeof(Resource))]
         [DataType(DataType.EmailAddress)]
         [RegularExpression(@"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}", ErrorMessage = "Megfelelő emailt adj meg!")]
         public string Email { get; set; }
-        [Display(Name = "Telefonszám")]
+        [Display(Name = "Phone_number", ResourceType = typeof(Resource))]
         public string PhoneNumber { get; set; }
-        [Required(ErrorMessage = "Jelszó megadása kötelező.")]
-        [Display(Name = "Jelszó")]
+        [Required(ErrorMessageResourceName = "Error_password", ErrorMessageResourceType = typeof(Resource))]
+        [Display(Name = "Password", ResourceType = typeof(Resource))]
         [DataType(DataType.Password)]
         public string PasswordHash { get; set; }   
-        [Display(Name = "Jogosultság")]    
+        [Display(Name = "Role", ResourceType = typeof(Resource))]
         public string Role { get; set; }
-        public string LoginErrorMessage { get; set; } = "";   
     }
 }

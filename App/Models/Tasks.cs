@@ -1,5 +1,8 @@
-﻿using System;
+﻿using App.Resources;
+using System;
 using System.ComponentModel.DataAnnotations;
+
+
 
 namespace App.Models
 {
@@ -9,42 +12,42 @@ namespace App.Models
         public long Id { get; set; }
         [Required]
         public long User_id { get; set; }
-        [Required(ErrorMessage = "Partner megadása kötelező.")]
-        [Display(Name = "Partner")]
+        [Required(ErrorMessageResourceName = "Error_partner", ErrorMessageResourceType = typeof(Resource))]
+        [Display(Name = "Partner", ResourceType = typeof(Resource))]
         public string Partner { get; set; }
-        [Display(Name = "Leírás")]
+        [Display(Name = "Description", ResourceType = typeof(Resource))]
         public string Description { get; set; }
-        [Required(ErrorMessage = "Az átvétel helyének megadása kötelező.")]
-        [Display(Name = "Átvétel helye")]
+        [Required(ErrorMessageResourceName = "Error_place_of_receipt", ErrorMessageResourceType = typeof(Resource))]
+        [Display(Name = "Place_of_receipt", ResourceType = typeof(Resource))]
         public string Place_of_receipt { get; set; }
-        [Required(ErrorMessage = "Az átvétel idejének megadása kötelező.")]
-        [Display(Name = "Átvétel ideje")]
+        [Required(ErrorMessageResourceName = "Error_time_of_receipt", ErrorMessageResourceType = typeof(Resource))]
+        [Display(Name = "Time_of_receipt", ResourceType = typeof(Resource))]
         public DateTime? Time_of_receipt { get; set; }
-        [Required(ErrorMessage = "A leadás helyének megadása kötelező.")]
-        [Display(Name = "Leadás helye")]
+        [Required(ErrorMessageResourceName = "Error_place_of_delivery", ErrorMessageResourceType = typeof(Resource))]
+        [Display(Name = "Place_of_delivery", ResourceType = typeof(Resource))]
         public string Place_of_delivery { get; set; }
-        [Required(ErrorMessage = "A leadás idejének megadása kötelező.")]
-        [Display(Name = "Leadás ideje")]
+        [Required(ErrorMessageResourceName = "Error_time_of_delivery", ErrorMessageResourceType = typeof(Resource))]
+        [Display(Name = "Time_of_delivery", ResourceType = typeof(Resource))]
         public DateTime? Time_of_delivery { get; set; }
-        [Display(Name = "Egyéb megállóhelyek")]
+        [Display(Name = "Other_stops", ResourceType = typeof(Resource))]
         public string Other_stops { get; set; }
-        [Display(Name = "Rakomány azonosító")]
+        [Display(Name = "Id_cargo", ResourceType = typeof(Resource))]
         public string Id_cargo { get; set; }
-        [Display(Name = "Raktározás ideje")]
+        [Display(Name = "Storage_time", ResourceType = typeof(Resource))]
         public string Storage_time { get; set; }
-        [Display(Name = "Teljesítve")]
+        [Display(Name = "Completed", ResourceType = typeof(Resource))]
         public bool Completed { get; set; }
-        [Display(Name = "Teljesítés ideje")]
+        [Display(Name = "Completion_time", ResourceType = typeof(Resource))]
         public DateTime? Completion_time { get; set; }
-        [Display(Name = "Késés")]
+        [Display(Name = "Time_of_delay", ResourceType = typeof(Resource))]
         public string Time_of_delay { get; set; }
-        [Display(Name = "Igért összeg")]
+        [Display(Name = "Payment", ResourceType = typeof(Resource))]
         public string Payment { get; set; }
-        [Display(Name = "Végleges összeg")]
+        [Display(Name = "Final_Payment", ResourceType = typeof(Resource))]
         public string Final_Payment { get; set; }
-        [Display(Name = "Büntetés összege")]
+        [Display(Name = "Penalty", ResourceType = typeof(Resource))]
         public string Penalty { get; set; }
-        [Display(Name = "Dátum")]
+        [Display(Name = "Date", ResourceType = typeof(Resource))]
         public DateTime Date { get; set; } = DateTime.Now;
 
     }   

@@ -59,7 +59,7 @@ namespace App.Controllers
                 }
                 else
                 {
-                    ViewBag.searchPlaceHolder = "Keresés...";
+                    ViewBag.searchPlaceHolder = App.Resources.Resource.search;
                 }
 
                 switch (sortOrder)
@@ -121,11 +121,11 @@ namespace App.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,UserName,Email,PasswordHash,LoginErrorMessage,Role")] Users users)
+        public async Task<IActionResult> Create([Bind("Id,UserName,Name,Email,PhoneNumber,PasswordHash,Role")] Users users)
         {
             if (UserNameExists(users.UserName))
             {
-                users.LoginErrorMessage = "Ez a felhasználó már létezik.";
+                TempData["LoginErrorMessage"] = App.Resources.Resource.LoginErrorMessage;
                 return View(users);
             }
             else
