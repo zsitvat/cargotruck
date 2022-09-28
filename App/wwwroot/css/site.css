@@ -315,7 +315,22 @@ input:focus::-webkit-input-placeholder {
 .account form input, hr {
     margin-left: 10%;
     margin-right: 10%;
-    width:100% !important;
+    width:80%;
+}
+
+.login-title {
+    padding-left: 30%;
+}
+.en-title {
+    padding-left: 3%;
+
+}
+.en-title hr {
+    width: 400%;
+}
+
+.en-title h1 {
+    width: 400%;
 }
 
 .img-background {
@@ -333,25 +348,6 @@ html {
   }
 }
 
-/* width */
-::-webkit-scrollbar {
-    height: 12px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-    background: #f1f1f1;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-    background: #888;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-    background: #555;
-}
 
 img {
     max-height:5.2em;
@@ -375,4 +371,11 @@ button.accept-policy {
 
 h2{
     margin-left:2rem;
+}
+
+.paging {
+    margin-left: auto;
+    margin-right: auto;
+    max-height: 3rem;
+    margin-bottom: 2rem;
 }

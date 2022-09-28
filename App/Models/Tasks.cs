@@ -49,7 +49,6 @@ namespace App.Models
         public string Penalty { get; set; }
         [Display(Name = "Date", ResourceType = typeof(Resource))]
         public DateTime Date { get; set; } = DateTime.Now;
-
     }   
         
 }

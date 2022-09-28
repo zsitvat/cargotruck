@@ -2,9 +2,48 @@
     ViewData["Title"] = App.Resources.Resource.Privacy;
 }
 
+@model X.PagedList.IPagedList<App.Models.Tasks>
+@using X.PagedList;
+@using X.PagedList.Mvc.Core
+@{
+    var returnUrl = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+}
 
-<div class="main-panel privacy">
-        <h1>@ViewData["Title"]</h1>
+<!-- partial -->
+<div class="main-panel main">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-12 grid-margin">
+                <div class="d-flex justify-content-between flex-wrap">
+                    <div class="d-flex align-items-end flex-wrap">
+                        <div class="me-md-3 me-xl-5">
+                            <h2>@ViewData["Title"]</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <p>@App.Resources.Resource.Privacy_text</p>
+        <div id='myModal' class='modal'>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div id='myModalContent'></div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 stretch-card">
+                <div style="padding-left:2%;" class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <p>@App.Resources.Resource.Privacy_text</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+

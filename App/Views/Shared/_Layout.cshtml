@@ -81,7 +81,6 @@
                         </li>
                     </ul>
                     <!--asp-for="Language"-->
-
                     <div title="@Localizer["Request culture provider:"] @requestCulture?.Provider?.GetType().Name">
                         <form id="selectLanguage" asp-controller="Base" asp-action="Language" asp-route-returnUrl="@returnUrl" method="post" class="form-horizontal" role="form">
                             <select class="form-control nav-language selectpicker" name="culture" onchange="this.form.submit();" asp-for="@requestCulture.RequestCulture.UICulture.Name" asp-items="cultureItems">

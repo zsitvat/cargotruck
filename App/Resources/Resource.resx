@@ -147,6 +147,9 @@
   <data name="Completion_time" xml:space="preserve">
     <value>Teljesítés ideje</value>
   </data>
+  <data name="Cost_of_storage" xml:space="preserve">
+    <value>Raktározás költsége</value>
+  </data>
   <data name="Create" xml:space="preserve">
     <value>Létrehozás</value>
   </data>
@@ -168,8 +171,20 @@
   <data name="Description" xml:space="preserve">
     <value>Leírás</value>
   </data>
+  <data name="Direction" xml:space="preserve">
+    <value>Irány</value>
+  </data>
   <data name="Driver" xml:space="preserve">
     <value>Sofőr</value>
+  </data>
+  <data name="Driver_salary" xml:space="preserve">
+    <value>Sofőr fizetése</value>
+  </data>
+  <data name="Driver_spending" xml:space="preserve">
+    <value>Sofőr költése</value>
+  </data>
+  <data name="Earning" xml:space="preserve">
+    <value>Kereset</value>
   </data>
   <data name="Edit_tasks" xml:space="preserve">
     <value>Megbízás módosítása</value>
@@ -179,6 +194,12 @@
   </data>
   <data name="Empty_excel" xml:space="preserve">
     <value>Üres excel fájl!</value>
+  </data>
+  <data name="Ending_date" xml:space="preserve">
+    <value>Befejezés dátum</value>
+  </data>
+  <data name="Ending_place" xml:space="preserve">
+    <value>Befejezés helye</value>
   </data>
   <data name="Error_brand" xml:space="preserve">
     <value>Az autómárka megadása kötelező!</value>
@@ -207,11 +228,29 @@
   <data name="Error_place_of_receipt" xml:space="preserve">
     <value>Az átvétel helyének megadása kötelezõ.</value>
   </data>
+  <data name="Error_purpose_of_the_trip" xml:space="preserve">
+    <value>Az utazás célját kötelező megadni!</value>
+  </data>
+  <data name="Error_starting_date" xml:space="preserve">
+    <value>Kezdeti dátumot kötelező megadni!</value>
+  </data>
+  <data name="Error_starting_place" xml:space="preserve">
+    <value>Kezdő helyet kötelező megadni!</value>
+  </data>
+  <data name="Error_task_id" xml:space="preserve">
+    <value>A megbízás azonosítót kötelező megadni.</value>
+  </data>
   <data name="Error_time_of_delivery" xml:space="preserve">
     <value>A leadás idejének megadása kötelezõ.</value>
   </data>
   <data name="Error_time_of_receipt" xml:space="preserve">
     <value>Az átvétel idejének megadása kötelezõ.</value>
+  </data>
+  <data name="Error_type" xml:space="preserve">
+    <value>A kiadás típusának megadása kötelező.</value>
+  </data>
+  <data name="Error_type_id" xml:space="preserve">
+    <value>Az azonosító megadása kötelező!</value>
   </data>
   <data name="Error_username" xml:space="preserve">
     <value>Felhasználónév megadása kötelezõ.</value>
@@ -219,14 +258,29 @@
   <data name="Error_vehicle_registration_number" xml:space="preserve">
     <value>A rendszám megadása kötelező!</value>
   </data>
+  <data name="Error_Warehouse_address" xml:space="preserve">
+    <value>A raktár címét meg kell adnod!</value>
+  </data>
+  <data name="Error_Warehouse_owner" xml:space="preserve">
+    <value>A raktár tulajdonosát meg kell adnod!</value>
+  </data>
+  <data name="Error_weight" xml:space="preserve">
+    <value>A súlyt kötelező megadni!</value>
+  </data>
   <data name="Expenses" xml:space="preserve">
     <value>Havi kiadások</value>
+  </data>
+  <data name="Expenses_id" xml:space="preserve">
+    <value>Kiadás azonosító</value>
   </data>
   <data name="Final_Payment" xml:space="preserve">
     <value>Végleges összeg</value>
   </data>
   <data name="Finance" xml:space="preserve">
     <value>Pénzügy</value>
+  </data>
+  <data name="Fuel" xml:space="preserve">
+    <value>Üzemanyag</value>
   </data>
   <data name="Full_name" xml:space="preserve">
     <value>Teljes név</value>
@@ -261,6 +315,9 @@
   <data name="No_excel" xml:space="preserve">
     <value>Fájl nem található!</value>
   </data>
+  <data name="Other" xml:space="preserve">
+    <value>Egyéb</value>
+  </data>
   <data name="Other_stops" xml:space="preserve">
     <value>Egyéb megállóhelyek</value>
   </data>
@@ -275,6 +332,9 @@
   </data>
   <data name="Penalty" xml:space="preserve">
     <value>Büntetés összege</value>
+  </data>
+  <data name="Penalty_expenses" xml:space="preserve">
+    <value>Büntetés</value>
   </data>
   <data name="Phone_number" xml:space="preserve">
     <value>Telefonszám</value>
@@ -291,8 +351,23 @@
   <data name="Privacy_text" xml:space="preserve">
     <value>Az alkalmazás egyetemi szakdolgozat céljából készül!</value>
   </data>
+  <data name="Profit" xml:space="preserve">
+    <value>Profit</value>
+  </data>
+  <data name="Purpose_of_the_trip" xml:space="preserve">
+    <value>Az út célja</value>
+  </data>
+  <data name="Repair_cost" xml:space="preserve">
+    <value>Javítás</value>
+  </data>
+  <data name="Repair_description" xml:space="preserve">
+    <value>Leírás a javításról</value>
+  </data>
   <data name="Roads" xml:space="preserve">
     <value>Utak</value>
+  </data>
+  <data name="Road_fees" xml:space="preserve">
+    <value>Útdíjak</value>
   </data>
   <data name="Road_id" xml:space="preserve">
     <value>Út azonosító</value>
@@ -306,8 +381,23 @@
   <data name="search" xml:space="preserve">
     <value>Keresés...</value>
   </data>
+  <data name="Section" xml:space="preserve">
+    <value>Raktár szekció</value>
+  </data>
+  <data name="Shipping_requirements" xml:space="preserve">
+    <value>Szállítási követelmények</value>
+  </data>
+  <data name="Starting_date" xml:space="preserve">
+    <value>Kezdő dátum</value>
+  </data>
+  <data name="Starting_place" xml:space="preserve">
+    <value>Kezdő hely</value>
+  </data>
   <data name="Status" xml:space="preserve">
     <value>Státusz</value>
+  </data>
+  <data name="Storage_starting_time" xml:space="preserve">
+    <value>Raktározás kezdete</value>
   </data>
   <data name="Storage_time" xml:space="preserve">
     <value>Raktározás ideje</value>
@@ -317,6 +407,9 @@
   </data>
   <data name="Tasks_title" xml:space="preserve">
     <value>Megbízások</value>
+  </data>
+  <data name="Task_id" xml:space="preserve">
+    <value>Megbízás azonosító</value>
   </data>
   <data name="Task_manager" xml:space="preserve">
     <value>Task-manager</value>
@@ -345,6 +438,12 @@
   <data name="Trucks" xml:space="preserve">
     <value>Járművek</value>
   </data>
+  <data name="Type" xml:space="preserve">
+    <value>Típus</value>
+  </data>
+  <data name="Type_id" xml:space="preserve">
+    <value>Típus azonosító</value>
+  </data>
   <data name="User" xml:space="preserve">
     <value>Felhasználó</value>
   </data>
@@ -355,12 +454,24 @@
     <value>Felhasználó azonosító</value>
   </data>
   <data name="Vehicle_registration_number" xml:space="preserve">
-    <value>Rendszám</value>
+    <value>Jármû Rendszáma</value>
   </data>
   <data name="Warehouse" xml:space="preserve">
     <value>Raktár</value>
   </data>
   <data name="Warehouseman" xml:space="preserve">
     <value>Raktáros</value>
+  </data>
+  <data name="Warehouse_address" xml:space="preserve">
+    <value>Raktár címe</value>
+  </data>
+  <data name="Warehouse_id" xml:space="preserve">
+    <value>Raktár azonosító</value>
+  </data>
+  <data name="Warehouse_owner" xml:space="preserve">
+    <value>Tulajdonos</value>
+  </data>
+  <data name="Weight" xml:space="preserve">
+    <value>Súly</value>
   </data>
 </root>

@@ -4988,6 +4988,7 @@ fieldset:disabled .btn {
     background-clip: border-box;
     border: 1px solid #e7eaed;
     border-radius: 0;
+    margin-bottom:2rem;
 }
 
     .card > hr {
@@ -5325,14 +5326,6 @@ fieldset:disabled .btn {
         .PagedList-skipToPrevious a:hover::after, PagedList-skipToNext a:hover::after {
             color: rgb(243, 243, 243) !important;
         }
-
-.paging {
-    margin-left: auto;
-    margin-right: auto;
-    max-height: 3rem;
-    margin-bottom: 4rem;
-}
-
 
 .pagination li {
     border-radius: 0.3rem !important;
@@ -12994,10 +12987,10 @@ code {
     max-width: 100%;
 }
 
-    .documentation .content-wrapper {
-        padding-top: 0;
-        min-height: calc(100vh - 75px);
-    }
+.documentation .content-wrapper {
+    padding-top: 0;
+    min-height: calc(100vh - 75px);
+}
 
 .doc-header {
     position: fixed;
@@ -13605,7 +13598,7 @@ code {
 
     .card .card-body {
         padding-top: 1.4rem;
-        padding-bottom: 1.4rem;
+        padding-bottom: 0.1rem;
         padding-left: 0.5rem;
         padding-right: 2rem;
     }
@@ -14533,10 +14526,6 @@ dl {
         text-align: center;
         display: inline-block;
     }
-
-.login-title {
-    padding-left: 30%;
-}
 
     .login-title hr {
         width: calc(100% + 2000%);
@@ -15615,3 +15604,22 @@ dl {
     outline: 1px solid slategrey;
 }
 
+/* width */
+::-webkit-scrollbar {
+    height: 12px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}

@@ -151,6 +151,15 @@ namespace App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Raktározás költsége.
+        /// </summary>
+        public static string Cost_of_storage {
+            get {
+                return ResourceManager.GetString("Cost_of_storage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Létrehozás.
         /// </summary>
         public static string Create {
@@ -214,11 +223,47 @@ namespace App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Irány.
+        /// </summary>
+        public static string Direction {
+            get {
+                return ResourceManager.GetString("Direction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sofőr.
         /// </summary>
         public static string Driver {
             get {
                 return ResourceManager.GetString("Driver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sofőr fizetése.
+        /// </summary>
+        public static string Driver_salary {
+            get {
+                return ResourceManager.GetString("Driver_salary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sofőr költése.
+        /// </summary>
+        public static string Driver_spending {
+            get {
+                return ResourceManager.GetString("Driver_spending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kereset.
+        /// </summary>
+        public static string Earning {
+            get {
+                return ResourceManager.GetString("Earning", resourceCulture);
             }
         }
         
@@ -246,6 +291,24 @@ namespace App.Resources {
         public static string Empty_excel {
             get {
                 return ResourceManager.GetString("Empty_excel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Befejezés dátum.
+        /// </summary>
+        public static string Ending_date {
+            get {
+                return ResourceManager.GetString("Ending_date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Befejezés helye.
+        /// </summary>
+        public static string Ending_place {
+            get {
+                return ResourceManager.GetString("Ending_place", resourceCulture);
             }
         }
         
@@ -331,6 +394,42 @@ namespace App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Az utazás célját kötelező megadni!.
+        /// </summary>
+        public static string Error_purpose_of_the_trip {
+            get {
+                return ResourceManager.GetString("Error_purpose_of_the_trip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kezdeti dátumot kötelező megadni!.
+        /// </summary>
+        public static string Error_starting_date {
+            get {
+                return ResourceManager.GetString("Error_starting_date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kezdő helyet kötelező megadni!.
+        /// </summary>
+        public static string Error_starting_place {
+            get {
+                return ResourceManager.GetString("Error_starting_place", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A megbízás azonosítót kötelező megadni..
+        /// </summary>
+        public static string Error_task_id {
+            get {
+                return ResourceManager.GetString("Error_task_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A leadás idejének megadása kötelezõ..
         /// </summary>
         public static string Error_time_of_delivery {
@@ -345,6 +444,24 @@ namespace App.Resources {
         public static string Error_time_of_receipt {
             get {
                 return ResourceManager.GetString("Error_time_of_receipt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A kiadás típusának megadása kötelező..
+        /// </summary>
+        public static string Error_type {
+            get {
+                return ResourceManager.GetString("Error_type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Az azonosító megadása kötelező!.
+        /// </summary>
+        public static string Error_type_id {
+            get {
+                return ResourceManager.GetString("Error_type_id", resourceCulture);
             }
         }
         
@@ -367,11 +484,47 @@ namespace App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A raktár címét meg kell adnod!.
+        /// </summary>
+        public static string Error_Warehouse_address {
+            get {
+                return ResourceManager.GetString("Error_Warehouse_address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A raktár tulajdonosát meg kell adnod!.
+        /// </summary>
+        public static string Error_Warehouse_owner {
+            get {
+                return ResourceManager.GetString("Error_Warehouse_owner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A súlyt kötelező megadni!.
+        /// </summary>
+        public static string Error_weight {
+            get {
+                return ResourceManager.GetString("Error_weight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Havi kiadások.
         /// </summary>
         public static string Expenses {
             get {
                 return ResourceManager.GetString("Expenses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kiadás azonosító.
+        /// </summary>
+        public static string Expenses_id {
+            get {
+                return ResourceManager.GetString("Expenses_id", resourceCulture);
             }
         }
         
@@ -390,6 +543,15 @@ namespace App.Resources {
         public static string Finance {
             get {
                 return ResourceManager.GetString("Finance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Üzemanyag.
+        /// </summary>
+        public static string Fuel {
+            get {
+                return ResourceManager.GetString("Fuel", resourceCulture);
             }
         }
         
@@ -493,6 +655,15 @@ namespace App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Egyéb.
+        /// </summary>
+        public static string Other {
+            get {
+                return ResourceManager.GetString("Other", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Egyéb megállóhelyek.
         /// </summary>
         public static string Other_stops {
@@ -534,6 +705,15 @@ namespace App.Resources {
         public static string Penalty {
             get {
                 return ResourceManager.GetString("Penalty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Büntetés.
+        /// </summary>
+        public static string Penalty_expenses {
+            get {
+                return ResourceManager.GetString("Penalty_expenses", resourceCulture);
             }
         }
         
@@ -583,6 +763,51 @@ namespace App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Profit.
+        /// </summary>
+        public static string Profit {
+            get {
+                return ResourceManager.GetString("Profit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Az út célja.
+        /// </summary>
+        public static string Purpose_of_the_trip {
+            get {
+                return ResourceManager.GetString("Purpose_of_the_trip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Javítás.
+        /// </summary>
+        public static string Repair_cost {
+            get {
+                return ResourceManager.GetString("Repair_cost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Leírás a javításról.
+        /// </summary>
+        public static string Repair_description {
+            get {
+                return ResourceManager.GetString("Repair_description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Útdíjak.
+        /// </summary>
+        public static string Road_fees {
+            get {
+                return ResourceManager.GetString("Road_fees", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Út azonosító.
         /// </summary>
         public static string Road_id {
@@ -628,6 +853,42 @@ namespace App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Raktár szekció.
+        /// </summary>
+        public static string Section {
+            get {
+                return ResourceManager.GetString("Section", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Szállítási követelmények.
+        /// </summary>
+        public static string Shipping_requirements {
+            get {
+                return ResourceManager.GetString("Shipping_requirements", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kezdő dátum.
+        /// </summary>
+        public static string Starting_date {
+            get {
+                return ResourceManager.GetString("Starting_date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kezdő hely.
+        /// </summary>
+        public static string Starting_place {
+            get {
+                return ResourceManager.GetString("Starting_place", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Státusz.
         /// </summary>
         public static string Status {
@@ -637,11 +898,29 @@ namespace App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Raktározás kezdete.
+        /// </summary>
+        public static string Storage_starting_time {
+            get {
+                return ResourceManager.GetString("Storage_starting_time", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Raktározás ideje.
         /// </summary>
         public static string Storage_time {
             get {
                 return ResourceManager.GetString("Storage_time", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Megbízás azonosító.
+        /// </summary>
+        public static string Task_id {
+            get {
+                return ResourceManager.GetString("Task_id", resourceCulture);
             }
         }
         
@@ -745,6 +1024,24 @@ namespace App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Típus.
+        /// </summary>
+        public static string Type {
+            get {
+                return ResourceManager.GetString("Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Típus azonosító.
+        /// </summary>
+        public static string Type_id {
+            get {
+                return ResourceManager.GetString("Type_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Felhasználó.
         /// </summary>
         public static string User {
@@ -772,7 +1069,7 @@ namespace App.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rendszám.
+        ///   Looks up a localized string similar to Jármû Rendszáma.
         /// </summary>
         public static string Vehicle_registration_number {
             get {
@@ -790,11 +1087,47 @@ namespace App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Raktár címe.
+        /// </summary>
+        public static string Warehouse_address {
+            get {
+                return ResourceManager.GetString("Warehouse_address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Raktár azonosító.
+        /// </summary>
+        public static string Warehouse_id {
+            get {
+                return ResourceManager.GetString("Warehouse_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tulajdonos.
+        /// </summary>
+        public static string Warehouse_owner {
+            get {
+                return ResourceManager.GetString("Warehouse_owner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Raktáros.
         /// </summary>
         public static string Warehouseman {
             get {
                 return ResourceManager.GetString("Warehouseman", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Súly.
+        /// </summary>
+        public static string Weight {
+            get {
+                return ResourceManager.GetString("Weight", resourceCulture);
             }
         }
     }
