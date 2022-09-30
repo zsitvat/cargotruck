@@ -129,7 +129,7 @@ table th{
 .search {
     position:relative;
     top:2px;
-    right:10%;
+    right:1vw;
 }
 
 .search-string{
@@ -231,9 +231,42 @@ input:focus::-webkit-input-placeholder {
     width: 80%;
 }
 
-.margintop {
-    margin-top: 3vw;
+
+@media only screen and (min-width: 100px) {
+    .margintop {
+        margin-top: 10rem;
+        margin-left: 0vw;
+    }
 }
+
+@media only screen and (min-width: 800px) {
+    .margintop {
+        margin-top: 7vw;
+        margin-left:3rem;
+    }
+}
+
+@media only screen and (min-width: 850px) {
+    .margintop {
+        margin-top: 6vw;
+        margin-left: 5vw;
+    }
+}
+
+@media only screen and (min-width: 930px) {
+    .margintop {
+        margin-top: 5vw;
+        margin-left: 1vw;
+    }
+}
+
+@media only screen and (min-width: 1000px) {
+    .margintop {
+        margin-top: 3.8vw;
+        margin-left: 0.5vw;
+    }
+}
+
 
 .navmargintop {
     margin-top: 58px;
@@ -318,6 +351,48 @@ input:focus::-webkit-input-placeholder {
     width:80%;
 }
 
+.nav-name {
+    display: block;
+    color: #0d6efd;
+    text-decoration: none;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+    position: absolute;
+    margin-right: 27%;
+    top: 1rem;
+}
+
+.navbar{
+    border-radius:0px;
+}
+@media (min-width: 576px) {
+
+    .nav-name {
+        display: block;
+        color: #0d6efd;
+        text-decoration: none;
+        transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+        position: absolute;
+        right: 1%;
+        top: 1rem;
+    }
+    .navbar img{
+        max-height:40px;
+    }
+}
+
+
+@media only screen and (min-width: 200px) {
+    header .container {
+        margin-top: -10%;
+    }
+}
+
+@media only screen and (min-width: 600px) {
+    header .container {
+        margin-top: 0%;
+    }
+}
+
 .login-title {
     padding-left: 30%;
 }
@@ -378,4 +453,24 @@ h2{
     margin-right: auto;
     max-height: 3rem;
     margin-bottom: 2rem;
+}
+
+.nav-language {
+    margin-left: 30%;
+    margin-right: 5%;
+    border: none;
+    font-size: 14px;
+}
+
+#selectLanguage{
+    margin-top:15%;
+}
+
+#selectLanguage select options {
+    border: 0px;
+    outline: 0px;
+}
+
+.nav-language option {
+    border: none;
 }
