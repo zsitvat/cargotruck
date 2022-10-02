@@ -10,14 +10,14 @@
         {
                 @if (Accessor.HttpContext.Session.GetString("Role") == "admin")
             {
-                    <li class="nav-item">
-                        <a class="nav-name text-dark" asp-area="" asp-controller="Admin" asp-action="Admin_page">
+                <li class="nav-name nav-item">
+                        <a class="text-dark" asp-area="" asp-controller="Admin" asp-action="Admin_page">
                             @Accessor.HttpContext.Session.GetString("UserName")
                         </a>
                     </li>
             }else{
-                    <li class="nav-item">
-                        <a class="nav-name text-dark" asp-route-id='@Accessor.HttpContext.Session.GetInt32("Id")' asp-controller="Admin"  asp-action="Edit">
+                    <li class="nav-name nav-item">
+                        <a class="text-dark" asp-route-id='@Accessor.HttpContext.Session.GetInt32("Id")' asp-controller="Admin"  asp-action="Edit">
                         @Accessor.HttpContext.Session.GetString("UserName")
                         </a>
                     </li>

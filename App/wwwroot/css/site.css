@@ -126,11 +126,7 @@ table th{
     width: 200px;
 }
 
-.search {
-    position:relative;
-    top:2px;
-    right:1vw;
-}
+
 
 .search-string{
     font-size:1rem;
@@ -154,21 +150,25 @@ table th{
     margin-bottom: 3px;
 }
 
+.button-new{
+   position:relative;
+   left:10vw;
+}
 
 .close {
     min-height: 1.5rem;
-    min-width:1.5rem;
+    min-width: 1.5rem;
     margin-right: 3px;
     background-color: red !important;
     border: none;
     border-color: red;
-    padding:0px !important;
+    padding: 0px !important;
     width: 20px;
     height: 20px;
     opacity: 1;
     border-color: red;
-    float:left;
-    margin-top:2%;
+    float: left;
+    margin-top: 2%;
 }
 
 .close:hover {
@@ -234,8 +234,36 @@ input:focus::-webkit-input-placeholder {
 
 @media only screen and (min-width: 100px) {
     .margintop {
-        margin-top: 10rem;
+        margin-top: 13rem;
         margin-left: 0vw;
+    }
+    .search {
+        left: 0%;
+    }
+    .input_search{
+        height:2.3rem;
+        width:160px;
+    }
+    .button-new {
+        position: relative;
+        left: 0%;
+    }
+
+    .float-middle {
+        justify-content: center
+    }
+
+
+}
+
+@media only screen and (min-width: 600px) {
+    .nav-name{
+        position:relative;
+        bottom:1rem;
+    }
+    #selectLanguage {
+        position: relative;
+        bottom: 1rem;
     }
 }
 
@@ -244,12 +272,34 @@ input:focus::-webkit-input-placeholder {
         margin-top: 7vw;
         margin-left:3rem;
     }
+
+    .search {
+        left: 0%;
+    }
+
+    .button-new {
+        position: relative;
+        left: 0%;
+    }
+
+    #btnShowModal {
+        margin-left: 0%;
+    }
+
 }
 
 @media only screen and (min-width: 850px) {
     .margintop {
         margin-top: 6vw;
         margin-left: 5vw;
+    }
+    .nav-name {
+        position: initial;
+    }
+
+    #selectLanguage {
+        position: relative;
+        bottom: 0.3rem;
     }
 }
 
@@ -258,11 +308,22 @@ input:focus::-webkit-input-placeholder {
         margin-top: 5vw;
         margin-left: 1vw;
     }
+    .button-new {
+        position: relative;
+        left: 10%;
+    }
+}
+
+@media only screen and (min-width: 980px) {
+    .margintop {
+        margin-top: 5vw;
+        margin-left: 1vw;
+    }
 }
 
 @media only screen and (min-width: 1000px) {
     .margintop {
-        margin-top: 3.8vw;
+        margin-top: 3vw;
         margin-left: 0.5vw;
     }
 }
@@ -273,12 +334,15 @@ input:focus::-webkit-input-placeholder {
     width:10%;
 }
 
+.margin-left{
+    margin-left:2%;
+}
 
 
 .forms div {
     float: left;
     width: 45%;
-    margin:2%;
+    margin: 2%;
 }
 
 .forms input, .forms2 input {
@@ -356,9 +420,7 @@ input:focus::-webkit-input-placeholder {
     color: #0d6efd;
     text-decoration: none;
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
-    position: absolute;
-    margin-right: 27%;
-    top: 1rem;
+    margin-right:3rem;
 }
 
 .navbar{
@@ -368,12 +430,6 @@ input:focus::-webkit-input-placeholder {
 
     .nav-name {
         display: block;
-        color: #0d6efd;
-        text-decoration: none;
-        transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
-        position: absolute;
-        right: 1%;
-        top: 1rem;
     }
     .navbar img{
         max-height:40px;
