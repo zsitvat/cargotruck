@@ -1,4 +1,12 @@
-﻿.import-button {
+﻿.main{
+    margin-left:2.8rem;
+}
+
+.container {
+    margin-left: 2.8rem;
+}
+
+.import-button {
     margin: 0 !important;
 }
 .import {
@@ -197,10 +205,6 @@ table th{
     font-size: 15px !important; 
 }
 
-.main {
-    margin-left: 0%;
-}
-
 .privacy {
     background-color: #f3f3f3;
     padding: 5%;
@@ -235,7 +239,6 @@ input:focus::-webkit-input-placeholder {
 @media only screen and (min-width: 100px) {
     .margintop {
         margin-top: 13rem;
-        margin-left: 0vw;
     }
     .search {
         left: 0%;
@@ -253,8 +256,15 @@ input:focus::-webkit-input-placeholder {
         justify-content: center
     }
 
-
+    .container,.main {
+        margin-left: 5px;
+        margin-right: 1rem;
+    }
+    .navbar-brand {
+        left: 0.2rem;
+    }
 }
+
 
 @media only screen and (min-width: 600px) {
     .nav-name{
@@ -265,12 +275,14 @@ input:focus::-webkit-input-placeholder {
         position: relative;
         bottom: 1rem;
     }
+    .navbar-brand {
+        left: 1.2rem;
+    }
 }
 
 @media only screen and (min-width: 800px) {
     .margintop {
-        margin-top: 7vw;
-        margin-left:3rem;
+        margin-top: 11vw;
     }
 
     .search {
@@ -286,12 +298,20 @@ input:focus::-webkit-input-placeholder {
         margin-left: 0%;
     }
 
+    .container, .container-sm, .container-md {
+        margin-left:10rem;
+    }
+    .navbar-brand {
+        margin-left: 3rem;
+    }
+    .navbar-brand {
+        left: 5.2rem;
+    }
 }
 
 @media only screen and (min-width: 850px) {
     .margintop {
         margin-top: 6vw;
-        margin-left: 5vw;
     }
     .nav-name {
         position: initial;
@@ -301,12 +321,17 @@ input:focus::-webkit-input-placeholder {
         position: relative;
         bottom: 0.3rem;
     }
+    .navbar-brand {
+        margin-left: 0rem;
+    }
+    .navbar-brand {
+        left: 5.2rem;
+    }
 }
 
 @media only screen and (min-width: 930px) {
     .margintop {
         margin-top: 5vw;
-        margin-left: 1vw;
     }
     .button-new {
         position: relative;
@@ -316,18 +341,19 @@ input:focus::-webkit-input-placeholder {
 
 @media only screen and (min-width: 980px) {
     .margintop {
-        margin-top: 5vw;
-        margin-left: 1vw;
+        margin-top: 3rem;
+    }
+    .main{
+        margin-left:2.8rem;
+    }
+    .container, .container-sm, .container-md {
+        margin-left: 8rem;
+    }
+
+    .navbar-brand {
+        margin-left: 1.1rem !important;
     }
 }
-
-@media only screen and (min-width: 1000px) {
-    .margintop {
-        margin-top: 3vw;
-        margin-left: 0.5vw;
-    }
-}
-
 
 .navmargintop {
     margin-top: 58px;
@@ -425,6 +451,19 @@ input:focus::-webkit-input-placeholder {
 
 .navbar{
     border-radius:0px;
+}
+
+.navbar-margin{
+   margin-left:12rem !important;
+}
+
+
+.fixednavbar {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+    height: 8%;
 }
 @media (min-width: 576px) {
 
