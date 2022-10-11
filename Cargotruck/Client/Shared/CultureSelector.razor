@@ -1,0 +1,35 @@
+﻿@using System.Globalization
+@using Microsoft.JSInterop
+@inject IJSRuntime JS
+@inject NavigationManager Navigation
+
+<select class="form-control culture-selector" @bind="Culture">
+    @foreach (var culture in supportedCultures)
+    {
+        <option value="@culture">@culture.DisplayName.ToUpper()</option>
+    }
+</select>
+
+@code
+{
+    private CultureInfo[] supportedCultures = new[]
+    {
+        new CultureInfo("hu"),
+        new CultureInfo("en"),
+    };
+
+    private CultureInfo Culture
+    {
+        get => CultureInfo.CurrentCulture;
+        set
+        {
+            if (CultureInfo.CurrentCulture != value)
+            {
+                var js = (IJSInProcessRuntime)JS;
+                js.InvokeVoid("blazorCulture.set", value.Name);
+
+                Navigation.NavigateTo(Navigation.Uri, forceLoad: true);
+            }
+        }
+    }
+}
