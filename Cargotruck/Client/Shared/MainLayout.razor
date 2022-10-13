@@ -1,4 +1,6 @@
-﻿@inherits LayoutComponentBase
+﻿@using Cargotruck.Shared.Resources
+@using Microsoft.Extensions.Localization
+@inherits LayoutComponentBase
 @inject IStringLocalizer<Resource> localizer
 
 <div class="page">
@@ -8,9 +10,12 @@
 
     <main>
         <div class="top-row px-4">
-            <NavLink  href="Privacy" Match="NavLinkMatch.All">
+            <NavLink href="Privacy" Match="NavLinkMatch.All">
                 <span class="about" aria-hidden="true">@localizer["Privacy"]</span>
             </NavLink>
+                    <form method="post" action="">
+                        <button type="submit" class="nav-link btn btn-link">Log out</button>
+                    </form>
             <CultureSelector />
         </div>
 
@@ -19,10 +24,12 @@
         </article>
         <footer>
             <div class="bottom-row px-4">
-
             </div>
         </footer>
     </main>
 </div>
 
+
+@code {
   
+}

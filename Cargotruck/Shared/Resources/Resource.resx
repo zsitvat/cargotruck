@@ -285,6 +285,9 @@
   <data name="Full_name" xml:space="preserve">
     <value>Teljes név</value>
   </data>
+  <data name="Home" xml:space="preserve">
+    <value>Főoldal</value>
+  </data>
   <data name="Home_title" xml:space="preserve">
     <value>Főoldal</value>
   </data>

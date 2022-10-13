@@ -285,6 +285,9 @@
   <data name="Full_name" xml:space="preserve">
     <value>Full name</value>
   </data>
+  <data name="Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
   <data name="Home_title" xml:space="preserve">
     <value>Homepage</value>
   </data>

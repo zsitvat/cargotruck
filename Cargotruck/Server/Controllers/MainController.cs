@@ -1,18 +1,18 @@
-﻿using Cargotruck.Shared;
-using Microsoft.AspNetCore.Mvc;
-using Cargotruck.Data;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Cargotruck.Server.Controllers
-{
+{  
     [Route("api/[controller]")]
-    [ApiController]
-    public class MainController : ControllerBase
-    {
-        private readonly ApplicationDbContext _context;
-        public MainController(ApplicationDbContext context)
-        {
-            _context = context;
-        }
-    }
+        [ApiController]
+    public class MainController : Controller
+    {   
+        /*
+            private readonly ILogger<MainController> _logger;
 
+            public MainController(ILogger<MainController> logger)
+            {
+                _logger = logger;
+            }    
+        */ 
+    }
 }

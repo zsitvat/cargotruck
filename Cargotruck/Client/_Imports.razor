@@ -14,4 +14,8 @@
 @using Microsoft.Extensions.DependencyInjection;
 @using System.Globalization;
 @using System.Threading.Tasks;
-@inject IStringLocalizer<Resource> localizer
+@using Microsoft.AspNetCore.Components.Authorization;
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
+@using Microsoft.AspNetCore.Authorization;
+
+@inject IStringLocalizer<Resource> localizer;
