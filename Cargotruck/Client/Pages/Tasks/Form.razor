@@ -1,0 +1,49 @@
+﻿<EditForm Model="@tasks" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label>First Name :</label>
+        <div>
+            <InputText @bind-Value="@tasks.Partner" />
+            <ValidationMessage For="@(() => tasks.Partner)" />
+        </div>
+    </div>
+    <div class="form-group ">
+        <div>
+            <label>Last Name :</label>
+            <div>
+                <InputText @bind-Value="@tasks.Description" />
+                <ValidationMessage For="@(() => tasks.Description)" />
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div>
+            <label>Email :</label>
+            <div>
+                <InputText @bind-Value="@tasks.Place_of_delivery" />
+                <ValidationMessage For="@(() => tasks.Place_of_delivery)" />
+            </div>
+        </div>
+    </div>
+    <div class="form-group ">
+        <div>
+            <label>Experience :</label>
+            <div>
+                <InputDate @bind-Value="@tasks.Time_of_delivery" />
+                <ValidationMessage For="@(() => tasks.Time_of_delivery)" />
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-success">
+        @ButtonText
+    </button>
+
+</EditForm>
+
+
+@code {
+    [Parameter] public Tasks tasks { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+}

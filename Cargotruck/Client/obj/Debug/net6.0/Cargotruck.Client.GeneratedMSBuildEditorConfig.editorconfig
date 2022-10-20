@@ -26,6 +26,22 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[F:/Szakdoga app/Cargotruck/Client/Pages/Tasks/Create.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGFza3NcQ3JlYXRlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/Szakdoga app/Cargotruck/Client/Pages/Tasks/Edit.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGFza3NcRWRpdC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/Szakdoga app/Cargotruck/Client/Pages/Tasks/FetchData.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGFza3NcRmV0Y2hEYXRhLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/Szakdoga app/Cargotruck/Client/Pages/Tasks/Form.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGFza3NcRm9ybS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [F:/Szakdoga app/Cargotruck/Client/Shared/CultureSelector.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXEN1bHR1cmVTZWxlY3Rvci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 

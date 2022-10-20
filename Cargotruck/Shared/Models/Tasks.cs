@@ -5,12 +5,12 @@ using Cargotruck.Shared.Resources;
 
 
 
-namespace Cargotruck.Server.Model
+namespace Cargotruck.Shared.Models
 {
     public class Tasks
     {
         [Required]
-        public long Id { get; set; }
+        public int Id { get; set; }
         [Required]
         public long User_id { get; set; }
         [Required(ErrorMessageResourceName = "Error_partner", ErrorMessageResourceType = typeof(Resource))]

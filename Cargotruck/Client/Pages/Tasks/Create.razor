@@ -1,0 +1,17 @@
+﻿@page "/Tasks/create"
+@inject HttpClient http
+@inject NavigationManager uriHelper
+@inject IJSRuntime js
+
+<h3>Create</h3>
+
+<Form ButtonText="Create" tasks="@tasks" OnValidSubmit="@CreateTasks" />
+
+@code {
+    Tasks tasks = new Tasks();
+    async Task CreateTasks()
+    {
+        await http.PostAsJsonAsync("api/tasks", tasks);
+        uriHelper.NavigateTo("/Tasks");
+    }
+}
