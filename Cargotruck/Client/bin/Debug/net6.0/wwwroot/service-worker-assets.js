@@ -1,7 +1,7 @@
 ﻿self.assetsManifest = {
   "assets": [
     {
-      "hash": "sha256-DdCf+oMPxptF8kSDdl1kHaFQlj9b2kOdqFmI59wElZc=",
+      "hash": "sha256-J7Vy5dHIidS0k+dcKuDNx5c7R4CB174tKO6h\/L+cLUg=",
       "url": "css\/app.css"
     },
     {
@@ -61,7 +61,7 @@
       "url": "icon-512.png"
     },
     {
-      "hash": "sha256-lBYNL6+HwXDBLncDgkdtnQdpCYe\/00qK3F1fIgywCx8=",
+      "hash": "sha256-\/AUer9vs7Ml1zKy8cE3mnThkRcsHTIDL7ufxoni0D8Q=",
       "url": "index.html"
     },
     {
@@ -873,23 +873,23 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-htVX0Y51WwWiaKtoSoaQILNDQFFusT4ZrmtjZDIo9L4=",
+      "hash": "sha256-syGrZ616Q8tIWUqM0TIHcLA\/jxRp2SVGdEGXDdKXeZY=",
       "url": "_framework\/Cargotruck.Shared.dll"
     },
     {
-      "hash": "sha256-yvKovANxWw1FKE7mJmNvrYmGlyUsOxc9tA7yM7Y2tCI=",
+      "hash": "sha256-B5pJg3YnC8IlprtCp5bNuWX6IIxGsfWAWTHi2M0L5eQ=",
       "url": "_framework\/Cargotruck.Shared.pdb"
     },
     {
-      "hash": "sha256-keerd9DYZi0UTUywjhTpNLS2dLcF\/G4MMf\/dLBU8UwQ=",
+      "hash": "sha256-Ut3AizVNuzrtH9IELH4qqPzGcMgRO109XmYVj\/tyStU=",
       "url": "_framework\/en\/Cargotruck.Shared.resources.dll"
     },
     {
-      "hash": "sha256-kcMNHYcOW+MuM2Sqgd\/yxxA6dJLu70oAcZXEV64Be2c=",
+      "hash": "sha256-LMfTO8DI+ZPxMCukC7UHt8x8skHUhw8v\/ObQEn+6ukQ=",
       "url": "_framework\/Cargotruck.Client.dll"
     },
     {
-      "hash": "sha256-3eBsz9KgBVgMvw\/1mZqqWz3BKRkQGxYppqGVstbjbPI=",
+      "hash": "sha256-nVcbTF754IpZeANCFAVhP+ADgZohG+GL4WmYJjR+7sc=",
       "url": "_framework\/Cargotruck.Client.pdb"
     },
     {
@@ -897,7 +897,7 @@
       "url": "_framework\/blazor.webassembly.js"
     },
     {
-      "hash": "sha256-Vl\/cwF1GqsazhpVcLucRje\/WaipDlfuT6Ta9zsAVA8s=",
+      "hash": "sha256-ufBJ9soXUNdRuReWpg6x\/3WmbppurDzsdXyDTbRzdug=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -905,5 +905,5 @@
       "url": "_content\/Microsoft.AspNetCore.Components.WebAssembly.Authentication\/AuthenticationService.js"
     }
   ],
-  "version": "O9+8M44G"
+  "version": "kShOP6p5"
 };

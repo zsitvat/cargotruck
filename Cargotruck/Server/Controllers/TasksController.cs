@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Cargotruck.Server.Controllers
 {
-    [Route("api/Tasks")]
+    [Route("api/[controller]")]
     [ApiController]
-    public class TasksController : Controller
+    public class TasksController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
         public TasksController(ApplicationDbContext context)
@@ -30,17 +30,17 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(Tasks Task)
+        public async Task<IActionResult> Post(Tasks t)
         {
-            _context.Add(Task);
+            _context.Add(t);
             await _context.SaveChangesAsync();
-            return Ok(Task.Id);
+            return Ok(t.Id);
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put(Tasks Task)
+        public async Task<IActionResult> Put(Tasks t)
         {
-            _context.Entry(Task).State = EntityState.Modified;
+            _context.Entry(t).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return NoContent();
         }

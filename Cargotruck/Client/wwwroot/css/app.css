@@ -88,3 +88,61 @@ a, .btn-link {
     height:20px;
     margin-right:12px;
 }
+
+table{
+    text-align:center;
+    font-size:14px;
+}
+
+td{
+    padding:0px !important;
+    vertical-align:middle;
+}
+
+th{
+    min-width:5.2rem;
+}
+
+.fixed {
+    position: absolute;
+    right: -3px;
+    margin-top: -1.8rem;
+    font-size:14px;
+}
+
+.fixed2 {
+    position: absolute;
+    right: -3px;
+    margin-top: -0.5rem;
+    font-size: 14px;
+}
+
+.card-body {
+    margin-right: 1%;
+}
+
+.forms-margin {
+    margin-left: 20%;
+}
+
+.forms-margin .form-group {
+    margin-top: 8%;
+}
+
+.form-group label{
+    margin-bottom:2px;
+}
+
+.completed {
+    margin-top:2%;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+.middle div,button {
+    margin-top: 1rem;
+}
+
+.validation-message {
+    font-size: 13px;
+    position:absolute;
+}

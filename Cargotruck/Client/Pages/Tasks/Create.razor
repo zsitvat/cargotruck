@@ -5,13 +5,13 @@
 
 <h3>Create</h3>
 
-<Form ButtonText="Create" tasks="@tasks" OnValidSubmit="@CreateTasks" />
+ <Form ButtonText="Create" tasks="@task" OnValidSubmit="@CreateTasks" />
 
 @code {
-    Tasks tasks = new Tasks();
+    Tasks task = new Tasks();
     async Task CreateTasks()
     {
-        await http.PostAsJsonAsync("api/tasks", tasks);
+        await http.PostAsJsonAsync("api/tasks", task);
         uriHelper.NavigateTo("/Tasks");
     }
 }

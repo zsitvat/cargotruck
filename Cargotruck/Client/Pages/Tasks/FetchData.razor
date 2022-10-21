@@ -3,7 +3,6 @@
 @inject IJSRuntime js
 
 <h3>Tasks</h3>
-<small>Add as many developers as you wish.</small>
 <div class="form-group">
     <a class="btn btn-success" href="/Tasks/create"><i class="oi oi-plus"></i> Create New</a>
 </div>
@@ -19,38 +18,72 @@ else if (tasks.Length == 0)
 }
 else
 {
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email</th>
-                <th>Experience (Years)</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (Tasks item in tasks)
-            {
-                <tr>
-                    <td>@item.Id</td>
-                    <td>@item.Partner</td>
-                    <td>@item.Description</td>
-                    <td>@item.Place_of_receipt</td>
-                    <td>@item.Time_of_receipt</td>
-                    <td>
-                        <a class="btn btn-success" href="Tasks/edit/@item.Id">Edit</a>
-                        <button class="btn btn-danger" @onclick="@(() => Delete(item.Id))">Delete</button>
-                    </td>
-                </tr>
-            }
+    <div class="col-md-12 stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive fixed-table-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Partner</th>
+                                <th>Description</th>
+                                <th>Place_of_receipt</th>
+                                <th>Time_of_receipt</th>
+                                <th>Place_of_delivery</th>
+                                <th>Time_of_delivery</th>
+                                <th>Other_stops</th>
+                                <th>Id_cargo</th>
+                                <th>Storage_time</th>
+                                <th>Completed</th>
+                                <th>Completion_time</th>
+                                <th>Time_of_delay</th>
+                                <th>Payment</th>
+                                <th>Final_Payment</th>
+                                <th>Penalty</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (Tasks item in tasks)
+                                {
+                                    i += 1;
+                                    <tr>
+                                    <td>@i</td>
+                                    <td>@item.Partner</td>
+                                    <td>@item.Description</td>
+                                    <td>@item.Place_of_receipt</td>
+                                    <td>@item.Time_of_receipt</td>
+                                    <td>@item.Place_of_delivery</td>
+                                    <td>@item.Time_of_delivery</td>
+                                    <td>@item.Other_stops</td>
+                                    <td>@item.Id_cargo</td>
+                                    <td>@item.Storage_time</td>
+                                    <td>@item.Completed</td>
+                                    <td>@item.Completion_time</td>
+                                    <td>@item.Time_of_delay</td>
+                                    <td>@item.Payment</td>
+                                    <td>@item.Final_Payment</td>
+                                    <td>@item.Penalty</td>
+                                    <td>@item.Date</td>
+                                    <td>
+                                        <a class="btn  fixed" href="Tasks/edit/@item.Id"> <span class="oi oi-pencil" aria-hidden="true"></span></a>
+                                        <button class="btn fixed2" @onclick="@(() => Delete(item.Id))"> <span class="oi oi-trash" aria-hidden="true"></span></button>
+                                    </td>
+                                </tr>
+                            }
 
-        </tbody>
-    </table>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
 }
 @code {
     Tasks[] tasks { get; set; }
+    int i = 0;
     protected override async Task OnInitializedAsync()
     {
         tasks = await client.GetFromJsonAsync<Tasks[]>("api/tasks");

@@ -1,24 +1,24 @@
-﻿page "/Tasks/edit/{Id:int}"
+﻿@page "/Tasks/edit/{Id:int}"
 @inject HttpClient http
 @inject NavigationManager uriHelper
 @inject IJSRuntime js
 
 <h3>Edit</h3>
 
-<Form ButtonText="Update" t="t" OnValidSubmit="@EditTasks" />
+<Form ButtonText="Update" tasks="@task" OnValidSubmit="@EditTasks" />
 
 @code {
     [Parameter] public int Id { get; set; }
-    Tasks t = new Tasks();
+    Tasks task = new Tasks();
 
     protected async override Task OnParametersSetAsync()
     {
-        t = await http.GetFromJsonAsync<Tasks>($"api/tasks/{Id}");
+        task = await http.GetFromJsonAsync<Tasks>($"api/tasks/{Id}");
     }
 
     async Task EditTasks()
     {
-        await http.PutAsJsonAsync("api/tasks", t);
+        await http.PutAsJsonAsync("api/tasks", task);
         await js.InvokeVoidAsync("alert", $"Updated Successfully!");
         uriHelper.NavigateTo("/Tasks");
 

@@ -1,44 +1,154 @@
 ﻿<EditForm Model="@tasks" OnValidSubmit="@OnValidSubmit">
     <DataAnnotationsValidator />
     <div class="form-group">
-        <label>First Name :</label>
-        <div>
-            <InputText @bind-Value="@tasks.Partner" />
-            <ValidationMessage For="@(() => tasks.Partner)" />
-        </div>
+        <button type="submit" class="btn btn-success">
+            <i class="oi oi-circle-check"></i> @ButtonText
+        </button>
     </div>
-    <div class="form-group ">
-        <div>
-            <label>Last Name :</label>
-            <div>
-                <InputText @bind-Value="@tasks.Description" />
-                <ValidationMessage For="@(() => tasks.Description)" />
-            </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <div>
-            <label>Email :</label>
-            <div>
-                <InputText @bind-Value="@tasks.Place_of_delivery" />
-                <ValidationMessage For="@(() => tasks.Place_of_delivery)" />
-            </div>
-        </div>
-    </div>
-    <div class="form-group ">
-        <div>
-            <label>Experience :</label>
-            <div>
-                <InputDate @bind-Value="@tasks.Time_of_delivery" />
-                <ValidationMessage For="@(() => tasks.Time_of_delivery)" />
-            </div>
-        </div>
-    </div>
+    <br>
 
-    <button type="submit" class="btn btn-success">
-        @ButtonText
-    </button>
+@*<div class="col-md-12 stretch-card mb-2">*@
+    <div class="card">
+        <div class="card-body">
+            <div class="d-inline-block forms-margin">
+                <div class="form-group">
+                    <label>Partner:</label>
+                    <div>
+                        <InputText @bind-Value="@tasks.Partner" />
+                        <ValidationMessage For="@(() => tasks.Partner)" />
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <div>
+                        <label>Description :</label>
+                        <div>
+                            <InputText @bind-Value="@tasks.Description" />
+                            <ValidationMessage For="@(() => tasks.Description)" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <label>Place_of_receipt :</label>
+                        <div>
+                            <InputText @bind-Value="@tasks.Place_of_receipt" />
+                            <ValidationMessage For="@(() => tasks.Place_of_receipt)" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <div>
+                        <label>Time_of_receipt:</label>
+                        <div>
+                            <InputDateTime @bind-Value="@tasks.Time_of_receipt" />
+                            <ValidationMessage For="@(() => tasks.Time_of_receipt)" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <div>
+                        <label>Place_of_delivery :</label>
+                        <div>
+                            <InputText @bind-Value="@tasks.Place_of_delivery" />
+                            <ValidationMessage For="@(() => tasks.Place_of_delivery)" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <div>
+                        <label>Time_of_deliver :</label>
+                        <div>
+                            <InputDateTime @bind-Value="@tasks.Time_of_delivery" />
+                            <ValidationMessage For="@(() => tasks.Time_of_delivery)" />
+                        </div>
+                    </div>
+                </div>
+                  <div class="form-group ">
+                    <div>
+                        <label>Other_stops :</label>
+                        <div>
+                            <InputText @bind-Value="@tasks.Other_stops" />
+                            <ValidationMessage For="@(() => tasks.Other_stops)" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="d-inline-block forms-margin">
+                  <div class="form-group ">
+                    <div>
+                        <label>Id_cargo:</label>
+                        <div>
+                            <InputText @bind-Value="@tasks.Id_cargo" />
+                            <ValidationMessage For="@(() => tasks.Id_cargo)" />
+                        </div>
+                    </div>
+                </div>
+                  <div class="form-group ">
+                    <div>
+                        <label>Storage_time:</label>
+                        <div>
+                            <InputText @bind-Value="@tasks.Storage_time" />
+                            <ValidationMessage For="@(() => tasks.Storage_time)" />
+                        </div>
+                    </div>
+                </div>
+                  <div class="form-group ">
+                    <div>
+                        <label>Completion_time:</label>
+                        <div>
+                            <InputDateTime @bind-Value="@tasks.Completion_time" />
+                            <ValidationMessage For="@(() => tasks.Completion_time)" />
+                        </div>
+                    </div>
+                </div>
+                  <div class="form-group ">
+                    <div>
+                        <label>Time_of_delay:</label>
+                        <div>
+                            <InputText @bind-Value="@tasks.Time_of_delay" />
+                            <ValidationMessage For="@(() => tasks.Time_of_delay)" />
+                        </div>
+                    </div>
+                </div>
+                  <div class="form-group ">
+                    <div>
+                        <label>Place_of_delivery :</label>
+                        <div>
+                            <InputText @bind-Value="@tasks.Payment" />
+                            <ValidationMessage For="@(() => tasks.Payment)" />
+                        </div>
+                    </div>
+                </div>
+                  <div class="form-group ">
+                    <div>
+                        <label>Final_Payment:</label>
+                        <div>
+                            <InputText @bind-Value="@tasks.Final_Payment" />
+                            <ValidationMessage For="@(() => tasks.Final_Payment)" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <label> Penalty:</label>
+                        <div>
+                            <InputText @bind-Value="@tasks.Penalty" />
+                            <ValidationMessage For="@(() => tasks.Penalty)" />
+                        </div>
+                    </div>
+                </div>      
+            </div>
 
+            <div class="form-group completed">
+                <div>
+                    <label>Completed:</label>
+                    <InputCheckbox @bind-Value="@tasks.Completed" />
+                    <ValidationMessage For="@(() => tasks.Completed)" />
+                </div>
+            </div>
+    </div>
+</div>
 </EditForm>
 
 
