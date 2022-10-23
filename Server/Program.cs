@@ -1,4 +1,8 @@
 using Cargotruck.Data;
+using Cargotruck.Server.Models;
+using Cargotruck.Shared.Models;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 // create appsettings.json if not exist
@@ -28,7 +32,6 @@ static string GetRandomString()
 }
 
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -36,8 +39,22 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 //localization service
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = false;
+    options.Events.OnRedirectToLogin = context =>
+    {  
+        context.Response.StatusCode = 401;
+        return Task.CompletedTask;
+    };
+});
+builder.Services.AddControllers().AddNewtonsoftJson();
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+
 
 var app = builder.Build();
 
@@ -64,6 +81,9 @@ app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 
 app.MapRazorPages();

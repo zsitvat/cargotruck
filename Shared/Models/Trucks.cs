@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Cargotruck.Shared.Resources;
 
 
-namespace Cargotruck.Server.Model
+namespace Cargotruck.Shared.Models
 {
     public enum status
     {

@@ -2,6 +2,8 @@
 @using Microsoft.Extensions.Localization
 @inherits LayoutComponentBase
 @inject IStringLocalizer<Resource> localizer
+@inject NavigationManager navigationManager
+@inject CustomStateProvider authStateProvider
 
 <div class="page">
     <div class="sidebar">
@@ -13,7 +15,13 @@
             <NavLink href="Privacy" Match="NavLinkMatch.All">
                 <span class="about" aria-hidden="true">@localizer["Privacy"]</span>
             </NavLink>
-               
+            <AuthorizeView>
+                <Authorized>
+                    <h1>@context.User.Identity.Name</h1>
+                    <button type="button" class="btn btn-link ml-md-auto" @onclick="@LogoutClick">Logout</button>
+                </Authorized>
+
+            </AuthorizeView>
             <CultureSelector />
         </div>
 
@@ -27,7 +35,22 @@
     </main>
 </div>
 
-
-@code {
-  
+@code{
+    [CascadingParameter]
+    Task<AuthenticationState> AuthenticationState { get; set; }
+    protected override async Task OnParametersSetAsync()
+    {
+        if (!(await AuthenticationState).User.Identity.IsAuthenticated)
+        {
+            if (!navigationManager.Uri.ToString().Contains("login") && !navigationManager.Uri.ToString().Contains("Privacy"))
+            {
+                navigationManager.NavigateTo("/login");
+            }
+        }
+    }
+    async Task LogoutClick()
+    {
+        await authStateProvider.Logout();
+        navigationManager.NavigateTo("/login");
+    }
 }

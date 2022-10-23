@@ -40,7 +40,7 @@
                     <div>
                         <label>Time_of_receipt:</label>
                         <div>
-                            <InputDateTime @bind-Value="@tasks.Time_of_receipt" />
+                            <InputDate @bind-Value="@tasks.Time_of_receipt" />
                             <ValidationMessage For="@(() => tasks.Time_of_receipt)" />
                         </div>
                     </div>
@@ -58,7 +58,7 @@
                     <div>
                         <label>Time_of_deliver :</label>
                         <div>
-                            <InputDateTime @bind-Value="@tasks.Time_of_delivery" />
+                            <InputDate @bind-Value="@tasks.Time_of_delivery" />
                             <ValidationMessage For="@(() => tasks.Time_of_delivery)" />
                         </div>
                     </div>
@@ -97,7 +97,7 @@
                     <div>
                         <label>Completion_time:</label>
                         <div>
-                            <InputDateTime @bind-Value="@tasks.Completion_time" />
+                            <InputDate @bind-Value="@tasks.Completion_time" />
                             <ValidationMessage For="@(() => tasks.Completion_time)" />
                         </div>
                     </div>
@@ -113,7 +113,7 @@
                 </div>
                   <div class="form-group ">
                     <div>
-                        <label>Place_of_delivery :</label>
+                        <label>Payment:</label>
                         <div>
                             <InputText @bind-Value="@tasks.Payment" />
                             <ValidationMessage For="@(() => tasks.Payment)" />

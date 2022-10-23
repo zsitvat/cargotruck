@@ -2,7 +2,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Cargotruck.Server.Model
+namespace Cargotruck.Shared.Models
 {
     public class Cargoes
     {

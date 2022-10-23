@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "zoljtIOj5SakdO5hJTZNUYmLMjCWejc8BQBl5TTuKOY=",
+  "Hash": "YFQz1uXQpx+HIlQIGyEmWvSZJMH3MMVf7Rr43YEOc/0=",
   "Source": "Cargotruck.Client",
   "BasePath": "/",
   "Mode": "Root",
@@ -65,7 +65,7 @@
       "AssetTraitValue": "boot",
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.aspnetcore.components.webassembly\\6.0.9\\build\\net6.0\\blazor.webassembly.js"
+      "OriginalItemSpec": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.aspnetcore.components.webassembly\\6.0.10\\build\\net6.0\\blazor.webassembly.js"
     },
     {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Cargotruck.Client.dll",
@@ -202,6 +202,40 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Shared\\bin\\Debug\\net6.0\\en\\Cargotruck.Shared.resources.dll"
+    },
+    {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\EntityFramework.dll",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/EntityFramework.dll",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "BlazorWebAssemblyResource",
+      "AssetTraitValue": "runtime",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\entityframework\\6.4.4\\lib\\netstandard2.1\\EntityFramework.dll"
+    },
+    {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\EntityFramework.SqlServer.dll",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/EntityFramework.SqlServer.dll",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "BlazorWebAssemblyResource",
+      "AssetTraitValue": "runtime",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\entityframework\\6.4.4\\lib\\netstandard2.1\\EntityFramework.SqlServer.dll"
     },
     {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\icudt.dat",
@@ -388,7 +422,58 @@
       "AssetTraitValue": "runtime",
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
-      "OriginalItemSpec": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.aspnetcore.components.webassembly\\6.0.9\\lib\\net6.0\\Microsoft.AspNetCore.Components.WebAssembly.dll"
+      "OriginalItemSpec": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.aspnetcore.components.webassembly\\6.0.10\\lib\\net6.0\\Microsoft.AspNetCore.Components.WebAssembly.dll"
+    },
+    {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.AspNetCore.Cryptography.Internal.dll",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.AspNetCore.Cryptography.Internal.dll",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "BlazorWebAssemblyResource",
+      "AssetTraitValue": "runtime",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\6.0.10\\lib\\net6.0\\Microsoft.AspNetCore.Cryptography.Internal.dll"
+    },
+    {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "BlazorWebAssemblyResource",
+      "AssetTraitValue": "runtime",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\6.0.10\\lib\\net6.0\\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll"
+    },
+    {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "BlazorWebAssemblyResource",
+      "AssetTraitValue": "runtime",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.aspnetcore.identity.entityframeworkcore\\6.0.10\\lib\\net6.0\\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll"
     },
     {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.AspNetCore.Metadata.dll",
@@ -423,6 +508,91 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.netcore.app.runtime.mono.browser-wasm\\6.0.10\\runtimes\\browser-wasm\\lib\\net6.0\\Microsoft.CSharp.dll"
+    },
+    {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.EntityFrameworkCore.Abstractions.dll",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.EntityFrameworkCore.Abstractions.dll",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "BlazorWebAssemblyResource",
+      "AssetTraitValue": "runtime",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\6.0.10\\lib\\net6.0\\Microsoft.EntityFrameworkCore.Abstractions.dll"
+    },
+    {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.EntityFrameworkCore.dll",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.EntityFrameworkCore.dll",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "BlazorWebAssemblyResource",
+      "AssetTraitValue": "runtime",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.entityframeworkcore\\6.0.10\\lib\\net6.0\\Microsoft.EntityFrameworkCore.dll"
+    },
+    {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.EntityFrameworkCore.Relational.dll",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.EntityFrameworkCore.Relational.dll",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "BlazorWebAssemblyResource",
+      "AssetTraitValue": "runtime",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\6.0.10\\lib\\net6.0\\Microsoft.EntityFrameworkCore.Relational.dll"
+    },
+    {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.Extensions.Caching.Abstractions.dll",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.Extensions.Caching.Abstractions.dll",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "BlazorWebAssemblyResource",
+      "AssetTraitValue": "runtime",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\6.0.0\\lib\\netstandard2.0\\Microsoft.Extensions.Caching.Abstractions.dll"
+    },
+    {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.Extensions.Caching.Memory.dll",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.Extensions.Caching.Memory.dll",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "BlazorWebAssemblyResource",
+      "AssetTraitValue": "runtime",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.extensions.caching.memory\\6.0.1\\lib\\netstandard2.0\\Microsoft.Extensions.Caching.Memory.dll"
     },
     {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.Extensions.Configuration.Abstractions.dll",
@@ -595,6 +765,40 @@
       "OriginalItemSpec": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.extensions.filesystemglobbing\\6.0.0\\lib\\net6.0\\Microsoft.Extensions.FileSystemGlobbing.dll"
     },
     {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.Extensions.Identity.Core.dll",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.Extensions.Identity.Core.dll",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "BlazorWebAssemblyResource",
+      "AssetTraitValue": "runtime",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.extensions.identity.core\\6.0.10\\lib\\net6.0\\Microsoft.Extensions.Identity.Core.dll"
+    },
+    {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.Extensions.Identity.Stores.dll",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.Extensions.Identity.Stores.dll",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "BlazorWebAssemblyResource",
+      "AssetTraitValue": "runtime",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.extensions.identity.stores\\6.0.10\\lib\\net6.0\\Microsoft.Extensions.Identity.Stores.dll"
+    },
+    {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.Extensions.Localization.Abstractions.dll",
       "SourceId": "Cargotruck.Client",
       "SourceType": "Computed",
@@ -728,7 +932,7 @@
       "AssetTraitValue": "runtime",
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
-      "OriginalItemSpec": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.jsinterop.webassembly\\6.0.9\\lib\\net6.0\\Microsoft.JSInterop.WebAssembly.dll"
+      "OriginalItemSpec": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.jsinterop.webassembly\\6.0.10\\lib\\net6.0\\Microsoft.JSInterop.WebAssembly.dll"
     },
     {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.VisualBasic.Core.dll",
@@ -799,6 +1003,23 @@
       "OriginalItemSpec": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.netcore.app.runtime.mono.browser-wasm\\6.0.10\\runtimes\\browser-wasm\\lib\\net6.0\\Microsoft.Win32.Registry.dll"
     },
     {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.Win32.SystemEvents.dll",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.Win32.SystemEvents.dll",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "BlazorWebAssemblyResource",
+      "AssetTraitValue": "runtime",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\lib\\netstandard2.0\\Microsoft.Win32.SystemEvents.dll"
+    },
+    {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\mscorlib.dll",
       "SourceId": "Cargotruck.Client",
       "SourceType": "Computed",
@@ -865,6 +1086,23 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.netcore.app.runtime.mono.browser-wasm\\6.0.10\\runtimes\\browser-wasm\\lib\\net6.0\\System.Buffers.dll"
+    },
+    {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.CodeDom.dll",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/System.CodeDom.dll",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "BlazorWebAssemblyResource",
+      "AssetTraitValue": "runtime",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\system.codedom\\4.7.0\\lib\\netstandard2.0\\System.CodeDom.dll"
     },
     {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Collections.Concurrent.dll",
@@ -1054,6 +1292,23 @@
       "OriginalItemSpec": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.netcore.app.runtime.mono.browser-wasm\\6.0.10\\runtimes\\browser-wasm\\lib\\net6.0\\System.ComponentModel.TypeConverter.dll"
     },
     {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Configuration.ConfigurationManager.dll",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/System.Configuration.ConfigurationManager.dll",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "BlazorWebAssemblyResource",
+      "AssetTraitValue": "runtime",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\system.configuration.configurationmanager\\4.7.0\\lib\\netstandard2.0\\System.Configuration.ConfigurationManager.dll"
+    },
+    {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Configuration.dll",
       "SourceId": "Cargotruck.Client",
       "SourceType": "Computed",
@@ -1154,6 +1409,23 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.netcore.app.runtime.mono.browser-wasm\\6.0.10\\runtimes\\browser-wasm\\lib\\net6.0\\System.Data.dll"
+    },
+    {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Data.SqlClient.dll",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/System.Data.SqlClient.dll",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "BlazorWebAssemblyResource",
+      "AssetTraitValue": "runtime",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\system.data.sqlclient\\4.8.1\\lib\\netcoreapp2.1\\System.Data.SqlClient.dll"
     },
     {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Diagnostics.Contracts.dll",
@@ -1341,6 +1613,23 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.netcore.app.runtime.mono.browser-wasm\\6.0.10\\runtimes\\browser-wasm\\lib\\net6.0\\System.dll"
+    },
+    {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Drawing.Common.dll",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/System.Drawing.Common.dll",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "BlazorWebAssemblyResource",
+      "AssetTraitValue": "runtime",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\system.drawing.common\\4.7.0\\lib\\netstandard2.0\\System.Drawing.Common.dll"
     },
     {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Drawing.dll",
@@ -2890,6 +3179,23 @@
       "OriginalItemSpec": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.netcore.app.runtime.mono.browser-wasm\\6.0.10\\runtimes\\browser-wasm\\lib\\net6.0\\System.Security.Cryptography.Primitives.dll"
     },
     {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Security.Cryptography.ProtectedData.dll",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/System.Security.Cryptography.ProtectedData.dll",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "BlazorWebAssemblyResource",
+      "AssetTraitValue": "runtime",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\system.security.cryptography.protecteddata\\4.7.0\\lib\\netstandard2.0\\System.Security.Cryptography.ProtectedData.dll"
+    },
+    {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Security.Cryptography.X509Certificates.dll",
       "SourceId": "Cargotruck.Client",
       "SourceType": "Computed",
@@ -2922,6 +3228,23 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.netcore.app.runtime.mono.browser-wasm\\6.0.10\\runtimes\\browser-wasm\\lib\\net6.0\\System.Security.dll"
+    },
+    {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Security.Permissions.dll",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/System.Security.Permissions.dll",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "BlazorWebAssemblyResource",
+      "AssetTraitValue": "runtime",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\system.security.permissions\\4.7.0\\lib\\netcoreapp3.0\\System.Security.Permissions.dll"
     },
     {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Security.Principal.dll",
@@ -3383,6 +3706,23 @@
       "OriginalItemSpec": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.netcore.app.runtime.mono.browser-wasm\\6.0.10\\runtimes\\browser-wasm\\lib\\net6.0\\System.Windows.dll"
     },
     {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Windows.Extensions.dll",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/System.Windows.Extensions.dll",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "BlazorWebAssemblyResource",
+      "AssetTraitValue": "runtime",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\system.windows.extensions\\4.7.0\\lib\\netcoreapp3.0\\System.Windows.Extensions.dll"
+    },
+    {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Xml.dll",
       "SourceId": "Cargotruck.Client",
       "SourceType": "Computed",
@@ -3570,6 +3910,23 @@
       "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Runtime.Serialization.Formatters.dll"
     },
     {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\+1l3tufW.gz",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.AspNetCore.Components.WebAssembly.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "RelatedAsset": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.AspNetCore.Components.WebAssembly.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.AspNetCore.Components.WebAssembly.dll"
+    },
+    {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\+DVYGcwm.gz",
       "SourceId": "Cargotruck.Client",
       "SourceType": "Computed",
@@ -3740,6 +4097,23 @@
       "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Runtime.InteropServices.dll"
     },
     {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\13Wry52I.gz",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.AspNetCore.Cryptography.Internal.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "RelatedAsset": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.AspNetCore.Cryptography.Internal.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.AspNetCore.Cryptography.Internal.dll"
+    },
+    {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\1f7Byvrj.gz",
       "SourceId": "Cargotruck.Client",
       "SourceType": "Computed",
@@ -3823,6 +4197,23 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Threading.Tasks.Dataflow.dll"
+    },
+    {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\2xv17fai.gz",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.EntityFrameworkCore.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "RelatedAsset": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.EntityFrameworkCore.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.EntityFrameworkCore.dll"
     },
     {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\31klv2e1.gz",
@@ -3995,6 +4386,23 @@
       "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Xml.XDocument.dll"
     },
     {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\4vJLNRUE.gz",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/System.Drawing.Common.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "RelatedAsset": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Drawing.Common.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Drawing.Common.dll"
+    },
+    {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\5+sOSGyY.gz",
       "SourceId": "Cargotruck.Client",
       "SourceType": "Computed",
@@ -4131,6 +4539,23 @@
       "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Xml.XPath.XDocument.dll"
     },
     {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\6t6rHWaK.gz",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/System.Security.Cryptography.ProtectedData.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "RelatedAsset": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Security.Cryptography.ProtectedData.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Security.Cryptography.ProtectedData.dll"
+    },
+    {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\7+CEfbrl.gz",
       "SourceId": "Cargotruck.Client",
       "SourceType": "Computed",
@@ -4163,6 +4588,23 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.Extensions.Logging.dll"
+    },
+    {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\74kXzZ+g.gz",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "RelatedAsset": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll"
     },
     {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\7dUpGud+.gz",
@@ -4316,6 +4758,23 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Private.Runtime.InteropServices.JavaScript.dll"
+    },
+    {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\9wZfjKQK.gz",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/System.Configuration.ConfigurationManager.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "RelatedAsset": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Configuration.ConfigurationManager.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Configuration.ConfigurationManager.dll"
     },
     {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\9Y20OGKe.gz",
@@ -4879,6 +5338,23 @@
       "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.Extensions.Localization.dll"
     },
     {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\fx9FCW7t.gz",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/EntityFramework.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "RelatedAsset": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\EntityFramework.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\EntityFramework.dll"
+    },
+    {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\g07uoAHe.gz",
       "SourceId": "Cargotruck.Client",
       "SourceType": "Computed",
@@ -4928,6 +5404,23 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.Win32.Primitives.dll"
+    },
+    {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\Gv3sSxVh.gz",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.Extensions.Identity.Core.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "RelatedAsset": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.Extensions.Identity.Core.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.Extensions.Identity.Core.dll"
     },
     {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\HJuJ1m3R.gz",
@@ -5047,23 +5540,6 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.Extensions.FileProviders.Abstractions.dll"
-    },
-    {
-      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\i9+z556k.gz",
-      "SourceId": "Cargotruck.Client",
-      "SourceType": "Computed",
-      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
-      "BasePath": "/",
-      "RelativePath": "_framework/Microsoft.JSInterop.WebAssembly.dll.gz",
-      "AssetKind": "Build",
-      "AssetMode": "All",
-      "AssetRole": "Alternative",
-      "RelatedAsset": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.JSInterop.WebAssembly.dll",
-      "AssetTraitName": "Content-Encoding",
-      "AssetTraitValue": "gzip",
-      "CopyToOutputDirectory": "PreserveNewest",
-      "CopyToPublishDirectory": "Never",
-      "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.JSInterop.WebAssembly.dll"
     },
     {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\Ibqtmz8B.gz",
@@ -5202,6 +5678,23 @@
       "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\icudt_no_CJK.dat"
     },
     {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\J3mpcoPf.gz",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.Extensions.Caching.Abstractions.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "RelatedAsset": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.Extensions.Caching.Abstractions.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.Extensions.Caching.Abstractions.dll"
+    },
+    {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\JbCawbRZ.gz",
       "SourceId": "Cargotruck.Client",
       "SourceType": "Computed",
@@ -5234,6 +5727,23 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Security.Cryptography.Algorithms.dll"
+    },
+    {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\JDBJjWiF.gz",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.Extensions.Caching.Memory.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "RelatedAsset": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.Extensions.Caching.Memory.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.Extensions.Caching.Memory.dll"
     },
     {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\Je0rqCqC.gz",
@@ -5336,6 +5846,23 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Security.Principal.Windows.dll"
+    },
+    {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\k89k0YP7.gz",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.EntityFrameworkCore.Abstractions.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "RelatedAsset": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.EntityFrameworkCore.Abstractions.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.EntityFrameworkCore.Abstractions.dll"
     },
     {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\KKQF31E0.gz",
@@ -5455,6 +5982,23 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.Extensions.Primitives.dll"
+    },
+    {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\lNA8eIZm.gz",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/blazor.webassembly.js.gz",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "RelatedAsset": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\blazor.webassembly.js",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\blazor.webassembly.js"
     },
     {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\lNIc5UvD.gz",
@@ -5678,6 +6222,23 @@
       "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Runtime.Serialization.Json.dll"
     },
     {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\nIPtLUzB.gz",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "RelatedAsset": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll"
+    },
+    {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\nlITOD46.gz",
       "SourceId": "Cargotruck.Client",
       "SourceType": "Computed",
@@ -5710,23 +6271,6 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Transactions.dll"
-    },
-    {
-      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\nWpXAJEB.gz",
-      "SourceId": "Cargotruck.Client",
-      "SourceType": "Computed",
-      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
-      "BasePath": "/",
-      "RelativePath": "_framework/Microsoft.AspNetCore.Components.WebAssembly.dll.gz",
-      "AssetKind": "Build",
-      "AssetMode": "All",
-      "AssetRole": "Alternative",
-      "RelatedAsset": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.AspNetCore.Components.WebAssembly.dll",
-      "AssetTraitName": "Content-Encoding",
-      "AssetTraitValue": "gzip",
-      "CopyToOutputDirectory": "PreserveNewest",
-      "CopyToPublishDirectory": "Never",
-      "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.AspNetCore.Components.WebAssembly.dll"
     },
     {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\nXpFWJ1v.gz",
@@ -5778,6 +6322,23 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Collections.Concurrent.dll"
+    },
+    {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\oj4LZwki.gz",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.EntityFrameworkCore.Relational.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "RelatedAsset": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.EntityFrameworkCore.Relational.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.EntityFrameworkCore.Relational.dll"
     },
     {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\OjdZX67c.gz",
@@ -6188,23 +6749,6 @@
       "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.IO.Compression.dll"
     },
     {
-      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\RIPrW8eB.gz",
-      "SourceId": "Cargotruck.Client",
-      "SourceType": "Computed",
-      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
-      "BasePath": "/",
-      "RelativePath": "_framework/blazor.webassembly.js.gz",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Alternative",
-      "RelatedAsset": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\blazor.webassembly.js",
-      "AssetTraitName": "Content-Encoding",
-      "AssetTraitValue": "gzip",
-      "CopyToOutputDirectory": "PreserveNewest",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\blazor.webassembly.js"
-    },
-    {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\rKdADM+k.gz",
       "SourceId": "Cargotruck.Client",
       "SourceType": "Computed",
@@ -6322,6 +6866,23 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Security.Cryptography.Cng.dll"
+    },
+    {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\SqQpA83B.gz",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/System.Data.SqlClient.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "RelatedAsset": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Data.SqlClient.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Data.SqlClient.dll"
     },
     {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\SquNykGk.gz",
@@ -6443,6 +7004,23 @@
       "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Net.WebClient.dll"
     },
     {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\tNN7LIfa.gz",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.Win32.SystemEvents.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "RelatedAsset": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.Win32.SystemEvents.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.Win32.SystemEvents.dll"
+    },
+    {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\TPvAiEgx.gz",
       "SourceId": "Cargotruck.Client",
       "SourceType": "Computed",
@@ -6562,6 +7140,23 @@
       "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Data.Common.dll"
     },
     {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\UG03B5hh.gz",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.JSInterop.WebAssembly.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "RelatedAsset": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.JSInterop.WebAssembly.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.JSInterop.WebAssembly.dll"
+    },
+    {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\uSnlgHBI.gz",
       "SourceId": "Cargotruck.Client",
       "SourceType": "Computed",
@@ -6611,6 +7206,23 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.VisualBasic.Core.dll"
+    },
+    {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\VcL0ePfb.gz",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/EntityFramework.SqlServer.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "RelatedAsset": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\EntityFramework.SqlServer.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\EntityFramework.SqlServer.dll"
     },
     {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\vgdTgPdz.gz",
@@ -6885,6 +7497,23 @@
       "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.ComponentModel.Primitives.dll"
     },
     {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\ybGWBR8X.gz",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/System.Windows.Extensions.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "RelatedAsset": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Windows.Extensions.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Windows.Extensions.dll"
+    },
+    {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\YJabXzsH.gz",
       "SourceId": "Cargotruck.Client",
       "SourceType": "Computed",
@@ -6900,6 +7529,23 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.IO.FileSystem.Watcher.dll"
+    },
+    {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\YK2uXKCq.gz",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/System.CodeDom.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "RelatedAsset": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.CodeDom.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.CodeDom.dll"
     },
     {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\yn0UL7Y5.gz",
@@ -6934,6 +7580,23 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Net.Primitives.dll"
+    },
+    {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\yXzlNenL.gz",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.Extensions.Identity.Stores.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "RelatedAsset": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.Extensions.Identity.Stores.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.Extensions.Identity.Stores.dll"
     },
     {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\yXzVGSNR.gz",
@@ -7019,6 +7682,23 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.IO.Pipes.dll"
+    },
+    {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\zUJGMYXU.gz",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/System.Security.Permissions.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "RelatedAsset": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Security.Permissions.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Security.Permissions.dll"
     },
     {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\ZWGRrHR1.gz",

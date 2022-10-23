@@ -22,6 +22,14 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[F:/Szakdoga app/Cargotruck/Client/Pages/Authentication/Login.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aGVudGljYXRpb25cTG9naW4ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/Szakdoga app/Cargotruck/Client/Pages/Authentication/Register.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aGVudGljYXRpb25cUmVnaXN0ZXIucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
 [F:/Szakdoga app/Cargotruck/Client/Pages/Index.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
@@ -40,6 +48,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [F:/Szakdoga app/Cargotruck/Client/Pages/Tasks/Form.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGFza3NcRm9ybS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/Szakdoga app/Cargotruck/Client/Shared/AuthLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXEF1dGhMYXlvdXQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [F:/Szakdoga app/Cargotruck/Client/Shared/CultureSelector.razor]
