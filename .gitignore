@@ -1,0 +1,13 @@
+.vscode/
+.vs/
+*.code-workspace
+*.o
+*appsettings.json
+App/appsettings.json
+*.json
+obj/
+*obj/
+App/obj/
+App/bin/
+Cargotruck/obj
+*.xlsx
