@@ -1,0 +1,41 @@
+﻿@page "/"
+@using Cargotruck.Shared.Resources
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<Resource> localizer
+
+@attribute [Authorize]
+
+<div>
+    <div>
+        <a class="nav-link" asp-area="" asp-controller="Tasks" asp-action="Tasks_page">
+            <span class="menu-title"> @localizer["Tasks"]</span>
+        </a>
+    </div>
+    <div>
+        <a class="nav-link" asp-area="" asp-controller="Cargoes" asp-action="Cargoes_page">
+            <span class="menu-title"> @localizer["Cargoes"]</span>
+        </a>
+    </div>
+    <div>
+        <a class="nav-link" asp-area="" asp-controller="Roads" asp-action="Roads_page">
+            <span class="menu-title">@localizer["Roads"]</span>
+        </a>
+    </div>
+</div>
+<div class="index-boxes">
+    <div>
+        <a class="nav-link" asp-area="" asp-controller="Storages" asp-action="Storages_page">
+            <span class="menu-title">@localizer["Warehouse"]</span>
+        </a>
+    </div>
+    <div>
+        <a class="nav-link" asp-area="" asp-controller="Trucks" asp-action="Trucks_page">
+            <span class="menu-title">@localizer["Trucks"]</span>
+        </a>
+    </div>
+    <div>
+        <a class="nav-link" asp-area="" asp-controller="Expenses" asp-action="Expenses_page">
+            <span class="menu-title">@localizer["Expenses"]</span>
+        </a>
+    </div>
+</div>

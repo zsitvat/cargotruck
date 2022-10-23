@@ -1,0 +1,480 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Admin" xml:space="preserve">
+    <value>Adminisztrátor</value>
+  </data>
+  <data name="Admin_page" xml:space="preserve">
+    <value>Adminisztrátor felület</value>
+  </data>
+  <data name="Admin_title" xml:space="preserve">
+    <value>Adminisztrátor felület</value>
+  </data>
+  <data name="Bad_username" xml:space="preserve">
+    <value>Rossz felhasználónév vagy jelszó.</value>
+  </data>
+  <data name="Brand" xml:space="preserve">
+    <value>Autómárka</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Mégse</value>
+  </data>
+  <data name="Cargoes" xml:space="preserve">
+    <value>Rakományok</value>
+  </data>
+  <data name="Cargo_man" xml:space="preserve">
+    <value>Rakományos</value>
+  </data>
+  <data name="Completed" xml:space="preserve">
+    <value>Teljesítve</value>
+  </data>
+  <data name="Completion_time" xml:space="preserve">
+    <value>Teljesítés ideje</value>
+  </data>
+  <data name="Cost_of_storage" xml:space="preserve">
+    <value>Raktározás költsége</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Létrehozás</value>
+  </data>
+  <data name="Create_tasks" xml:space="preserve">
+    <value>Megbízás létrehozása</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Dátum</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Törlés</value>
+  </data>
+  <data name="Delete?" xml:space="preserve">
+    <value>Biztosan törölni szeretnéd?</value>
+  </data>
+  <data name="Delete_tasks" xml:space="preserve">
+    <value>Megbízás törlése</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Leírás</value>
+  </data>
+  <data name="Direction" xml:space="preserve">
+    <value>Irány</value>
+  </data>
+  <data name="Driver" xml:space="preserve">
+    <value>Sofőr</value>
+  </data>
+  <data name="Driver_salary" xml:space="preserve">
+    <value>Sofőr fizetése</value>
+  </data>
+  <data name="Driver_spending" xml:space="preserve">
+    <value>Sofőr költése</value>
+  </data>
+  <data name="Earning" xml:space="preserve">
+    <value>Kereset</value>
+  </data>
+  <data name="Edit_tasks" xml:space="preserve">
+    <value>Megbízás módosítása</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>E-mail</value>
+  </data>
+  <data name="Empty_excel" xml:space="preserve">
+    <value>Üres excel fájl!</value>
+  </data>
+  <data name="Ending_date" xml:space="preserve">
+    <value>Befejezés dátum</value>
+  </data>
+  <data name="Ending_place" xml:space="preserve">
+    <value>Befejezés helye</value>
+  </data>
+  <data name="Error_brand" xml:space="preserve">
+    <value>Az autómárka megadása kötelező!</value>
+  </data>
+  <data name="Error_email" xml:space="preserve">
+    <value>E-mail megadása kötelezõ.</value>
+  </data>
+  <data name="Error_full_name" xml:space="preserve">
+    <value>Név megadása kötelezõ.</value>
+  </data>
+  <data name="Error_max_weight" xml:space="preserve">
+    <value>A jármű teherbírását kötelező megadni!</value>
+  </data>
+  <data name="Error_page_text" xml:space="preserve">
+    <value>Hiba történt, kérlek próbáld meg később.</value>
+  </data>
+  <data name="Error_partner" xml:space="preserve">
+    <value>Partner megadása kötelezõ.</value>
+  </data>
+  <data name="Error_password" xml:space="preserve">
+    <value>Jelszó megadása kötelezõ.</value>
+  </data>
+  <data name="Error_place_of_delivery" xml:space="preserve">
+    <value>A leadás helyének megadása kötelezõ.</value>
+  </data>
+  <data name="Error_place_of_receipt" xml:space="preserve">
+    <value>Az átvétel helyének megadása kötelezõ.</value>
+  </data>
+  <data name="Error_purpose_of_the_trip" xml:space="preserve">
+    <value>Az utazás célját kötelező megadni!</value>
+  </data>
+  <data name="Error_starting_date" xml:space="preserve">
+    <value>Kezdeti dátumot kötelező megadni!</value>
+  </data>
+  <data name="Error_starting_place" xml:space="preserve">
+    <value>Kezdő helyet kötelező megadni!</value>
+  </data>
+  <data name="Error_task_id" xml:space="preserve">
+    <value>A megbízás azonosítót kötelező megadni.</value>
+  </data>
+  <data name="Error_time_of_delivery" xml:space="preserve">
+    <value>A leadás idejének megadása kötelezõ.</value>
+  </data>
+  <data name="Error_time_of_receipt" xml:space="preserve">
+    <value>Az átvétel idejének megadása kötelezõ.</value>
+  </data>
+  <data name="Error_type" xml:space="preserve">
+    <value>A kiadás típusának megadása kötelező.</value>
+  </data>
+  <data name="Error_type_id" xml:space="preserve">
+    <value>Az azonosító megadása kötelező!</value>
+  </data>
+  <data name="Error_username" xml:space="preserve">
+    <value>Felhasználónév megadása kötelezõ.</value>
+  </data>
+  <data name="Error_vehicle_registration_number" xml:space="preserve">
+    <value>A rendszám megadása kötelező!</value>
+  </data>
+  <data name="Error_Warehouse_address" xml:space="preserve">
+    <value>A raktár címét meg kell adnod!</value>
+  </data>
+  <data name="Error_Warehouse_owner" xml:space="preserve">
+    <value>A raktár tulajdonosát meg kell adnod!</value>
+  </data>
+  <data name="Error_weight" xml:space="preserve">
+    <value>A súlyt kötelező megadni!</value>
+  </data>
+  <data name="Expenses" xml:space="preserve">
+    <value>Havi kiadások</value>
+  </data>
+  <data name="Expenses_id" xml:space="preserve">
+    <value>Kiadás azonosító</value>
+  </data>
+  <data name="Final_Payment" xml:space="preserve">
+    <value>Végleges összeg</value>
+  </data>
+  <data name="Finance" xml:space="preserve">
+    <value>Pénzügy</value>
+  </data>
+  <data name="Fuel" xml:space="preserve">
+    <value>Üzemanyag</value>
+  </data>
+  <data name="Full_name" xml:space="preserve">
+    <value>Teljes név</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Főoldal</value>
+  </data>
+  <data name="Home_title" xml:space="preserve">
+    <value>Főoldal</value>
+  </data>
+  <data name="Id_cargo" xml:space="preserve">
+    <value>Rakomány ID</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Bejelentkezés</value>
+  </data>
+  <data name="LoginErrorMessage" xml:space="preserve">
+    <value>Ez a felhasználó már létezik!</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Kijelentkezés</value>
+  </data>
+  <data name="Max_weight" xml:space="preserve">
+    <value>Terhelés max súlya</value>
+  </data>
+  <data name="New_data" xml:space="preserve">
+    <value>Új adat</value>
+  </data>
+  <data name="New_user" xml:space="preserve">
+    <value>Új felhasználó</value>
+  </data>
+  <data name="Not_excel" xml:space="preserve">
+    <value>Csak .xlsx formátum elfogadott!</value>
+  </data>
+  <data name="No_excel" xml:space="preserve">
+    <value>Fájl nem található!</value>
+  </data>
+  <data name="Other" xml:space="preserve">
+    <value>Egyéb</value>
+  </data>
+  <data name="Other_stops" xml:space="preserve">
+    <value>Egyéb megállóhelyek</value>
+  </data>
+  <data name="Partner" xml:space="preserve">
+    <value>Partner</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Jelszó</value>
+  </data>
+  <data name="Payment" xml:space="preserve">
+    <value>Igért összeg</value>
+  </data>
+  <data name="Penalty" xml:space="preserve">
+    <value>Büntetés összege</value>
+  </data>
+  <data name="Penalty_expenses" xml:space="preserve">
+    <value>Büntetés</value>
+  </data>
+  <data name="Phone_number" xml:space="preserve">
+    <value>Telefonszám</value>
+  </data>
+  <data name="Place_of_delivery" xml:space="preserve">
+    <value>Leadás helye</value>
+  </data>
+  <data name="Place_of_receipt" xml:space="preserve">
+    <value>Átvétel helye</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>Szabályzat</value>
+  </data>
+  <data name="Privacy_text" xml:space="preserve">
+    <value>Az alkalmazás egyetemi szakdolgozat céljából készül! így minden ehhez kapcsolódó szabály érvényes rá.</value>
+  </data>
+  <data name="Profit" xml:space="preserve">
+    <value>Profit</value>
+  </data>
+  <data name="Purpose_of_the_trip" xml:space="preserve">
+    <value>Az út célja</value>
+  </data>
+  <data name="Repair_cost" xml:space="preserve">
+    <value>Javítás</value>
+  </data>
+  <data name="Repair_description" xml:space="preserve">
+    <value>Leírás a javításról</value>
+  </data>
+  <data name="Roads" xml:space="preserve">
+    <value>Utak</value>
+  </data>
+  <data name="Road_fees" xml:space="preserve">
+    <value>Útdíjak</value>
+  </data>
+  <data name="Road_id" xml:space="preserve">
+    <value>Út azonosító</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>Jogosultság</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Mentés</value>
+  </data>
+  <data name="search" xml:space="preserve">
+    <value>Keresés...</value>
+  </data>
+  <data name="Section" xml:space="preserve">
+    <value>Raktár szekció</value>
+  </data>
+  <data name="Shipping_requirements" xml:space="preserve">
+    <value>Szállítási követelmények</value>
+  </data>
+  <data name="Starting_date" xml:space="preserve">
+    <value>Kezdő dátum</value>
+  </data>
+  <data name="Starting_place" xml:space="preserve">
+    <value>Kezdő hely</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Státusz</value>
+  </data>
+  <data name="Storage_starting_time" xml:space="preserve">
+    <value>Raktározás kezdete</value>
+  </data>
+  <data name="Storage_time" xml:space="preserve">
+    <value>Raktározás ideje</value>
+  </data>
+  <data name="Tasks" xml:space="preserve">
+    <value>Megbízások</value>
+  </data>
+  <data name="Tasks_title" xml:space="preserve">
+    <value>Megbízások</value>
+  </data>
+  <data name="Task_id" xml:space="preserve">
+    <value>Megbízás azonosító</value>
+  </data>
+  <data name="Task_manager" xml:space="preserve">
+    <value>Task-manager</value>
+  </data>
+  <data name="Time_of_delay" xml:space="preserve">
+    <value>Késés</value>
+  </data>
+  <data name="Time_of_delivery" xml:space="preserve">
+    <value>Leadás ideje</value>
+  </data>
+  <data name="Time_of_receipt" xml:space="preserve">
+    <value>Átvétel ideje</value>
+  </data>
+  <data name="Title_create_user" xml:space="preserve">
+    <value>Fiók létrehozása</value>
+  </data>
+  <data name="Title_login" xml:space="preserve">
+    <value>Bejelentkezés</value>
+  </data>
+  <data name="Title_user_delete" xml:space="preserve">
+    <value>Fiók törlése</value>
+  </data>
+  <data name="Title_user_edit" xml:space="preserve">
+    <value>Fiók módosítása</value>
+  </data>
+  <data name="Trucks" xml:space="preserve">
+    <value>Járművek</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Típus</value>
+  </data>
+  <data name="Type_id" xml:space="preserve">
+    <value>Típus azonosító</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>Felhasználó</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Felhasználónév</value>
+  </data>
+  <data name="User_id" xml:space="preserve">
+    <value>Felhasználó azonosító</value>
+  </data>
+  <data name="Vehicle_registration_number" xml:space="preserve">
+    <value>Jármû Rendszáma</value>
+  </data>
+  <data name="Warehouse" xml:space="preserve">
+    <value>Raktár</value>
+  </data>
+  <data name="Warehouseman" xml:space="preserve">
+    <value>Raktáros</value>
+  </data>
+  <data name="Warehouse_address" xml:space="preserve">
+    <value>Raktár címe</value>
+  </data>
+  <data name="Warehouse_id" xml:space="preserve">
+    <value>Raktár azonosító</value>
+  </data>
+  <data name="Warehouse_owner" xml:space="preserve">
+    <value>Tulajdonos</value>
+  </data>
+  <data name="Weight" xml:space="preserve">
+    <value>Súly</value>
+  </data>
+</root>

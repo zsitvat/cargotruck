@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "dgSpecHash": "7y8fltNiXoFBSPl73UtKyRGROoTPyv+hrgji0iW33PvcbSOtZ5kfjINFOMgmiFo3A9OckAvwTdRS6uo8MPjzvA==",
+  "success": true,
+  "projectFilePath": "F:\\Szakdoga app\\Cargotruck\\Shared\\Cargotruck.Shared.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\6.0.0\\microsoft.extensions.dependencyinjection.abstractions.6.0.0.nupkg.sha512",
+    "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.extensions.localization\\6.0.10\\microsoft.extensions.localization.6.0.10.nupkg.sha512",
+    "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.extensions.localization.abstractions\\6.0.10\\microsoft.extensions.localization.abstractions.6.0.10.nupkg.sha512",
+    "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\6.0.2\\microsoft.extensions.logging.abstractions.6.0.2.nupkg.sha512",
+    "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.extensions.options\\6.0.0\\microsoft.extensions.options.6.0.0.nupkg.sha512",
+    "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.extensions.primitives\\6.0.0\\microsoft.extensions.primitives.6.0.0.nupkg.sha512",
+    "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
