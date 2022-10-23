@@ -1,6 +1,6 @@
 .vscode/
-Cargotruck.vs/
-*.vs
+Cargotruck/.vs
+.vs/
 *.code-workspace
 *.o
 *appsettings.json
