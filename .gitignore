@@ -1,5 +1,5 @@
 .vscode/
-*.vs/
+Cargotruck.vs/
 *.vs
 *.code-workspace
 *.o
