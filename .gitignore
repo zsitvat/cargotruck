@@ -1,6 +1,6 @@
 .vscode/
-.vs/
-.vs
+*.vs/
+*.vs
 *.code-workspace
 *.o
 *appsettings.json
