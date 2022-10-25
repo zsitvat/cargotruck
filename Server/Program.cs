@@ -3,7 +3,12 @@ using Cargotruck.Server.Models;
 using Cargotruck.Shared.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Microsoft.JSInterop;
+using System.Globalization;
+using Microsoft.AspNetCore.Mvc.Localization;
 
 // create appsettings.json if not exist
 const string File_name = "appsettings.json";
@@ -37,7 +42,27 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 //localization service
-builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+builder.Services.AddLocalization(options => options.ResourcesPath = "");
+
+
+    CultureInfo[] supportedCultures = new[]
+    {
+        new CultureInfo("hu"),
+        new CultureInfo("en")
+    };
+
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+    {
+        options.DefaultRequestCulture = new RequestCulture("hu");
+        options.SupportedCultures = supportedCultures;
+        options.SupportedUICultures = supportedCultures;
+        options.RequestCultureProviders = new List<IRequestCultureProvider>
+        {
+            new QueryStringRequestCultureProvider(),
+            new CookieRequestCultureProvider()
+        };
+    });
+
 
 builder.Services.AddIdentity<Users, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.ConfigureApplicationCookie(options =>
@@ -54,6 +79,8 @@ builder.Services.AddControllers().AddNewtonsoftJson();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+
+
 
 
 var app = builder.Build();

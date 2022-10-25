@@ -285,6 +285,9 @@
   <data name="Full_name" xml:space="preserve">
     <value>Full name</value>
   </data>
+  <data name="Hello" xml:space="preserve">
+    <value>Succesful login</value>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>Home</value>
   </data>
@@ -312,6 +315,9 @@
   <data name="New_user" xml:space="preserve">
     <value>New user</value>
   </data>
+  <data name="Notfound" xml:space="preserve">
+    <value>Sorry, there's nothing at this address.</value>
+  </data>
   <data name="Not_excel" xml:space="preserve">
     <value>Please select file with .xlsx extension!</value>
   </data>
@@ -329,6 +335,9 @@
   </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
+  </data>
+  <data name="Password_error" xml:space="preserve">
+    <value>Invalid password!</value>
   </data>
   <data name="Payment" xml:space="preserve">
     <value>Payment</value>
@@ -353,6 +362,9 @@
   </data>
   <data name="Privacy_text" xml:space="preserve">
     <value>The application is made for the purpose of a university thesis, so all related rules apply to it.</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Profile</value>
   </data>
   <data name="Profit" xml:space="preserve">
     <value>Profit</value>

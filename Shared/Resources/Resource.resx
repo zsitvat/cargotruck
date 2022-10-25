@@ -285,6 +285,9 @@
   <data name="Full_name" xml:space="preserve">
     <value>Teljes név</value>
   </data>
+  <data name="Hello" xml:space="preserve">
+    <value>Sikeresen bejelentkeztél</value>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>Főoldal</value>
   </data>
@@ -312,6 +315,9 @@
   <data name="New_user" xml:space="preserve">
     <value>Új felhasználó</value>
   </data>
+  <data name="Notfound" xml:space="preserve">
+    <value />
+  </data>
   <data name="Not_excel" xml:space="preserve">
     <value>Csak .xlsx formátum elfogadott!</value>
   </data>
@@ -329,6 +335,9 @@
   </data>
   <data name="Password" xml:space="preserve">
     <value>Jelszó</value>
+  </data>
+  <data name="Password_error" xml:space="preserve">
+    <value>Helytelen jelszó.</value>
   </data>
   <data name="Payment" xml:space="preserve">
     <value>Igért összeg</value>
@@ -353,6 +362,9 @@
   </data>
   <data name="Privacy_text" xml:space="preserve">
     <value>Az alkalmazás egyetemi szakdolgozat céljából készül! így minden ehhez kapcsolódó szabály érvényes rá.</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Profil</value>
   </data>
   <data name="Profit" xml:space="preserve">
     <value>Profit</value>

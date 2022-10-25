@@ -16,11 +16,26 @@
                 <span class="about" aria-hidden="true">@localizer["Privacy"]</span>
             </NavLink>
             <AuthorizeView>
-                <Authorized>
-                    <h1>@context.User.Identity.Name</h1>
-                    <button type="button" class="btn btn-link ml-md-auto" @onclick="@LogoutClick">Logout</button>
+                <Authorized>      
+                    <li class="username" @onclick="()=>expandSubMenu= !expandSubMenu">
+                            @context.User.Identity.Name
+                        @if (expandSubMenu)
+                        {
+                            <ul class="nav flex-column username-dropdown">
+                                <li class="nav-item px-3">
+                                    <NavLink  href="Profile">
+                                        <span class="iconify" data-icon="akar-icons:person"></span>@localizer["Profile"]
+                                    </NavLink>
+                                </li>
+                                <li class="nav-item px-3">
+                                    <NavLink  @onclick="@LogoutClick">
+                                        <span class="iconify" data-icon="ic:twotone-logout"></span>@localizer["Logout"]
+                                    </NavLink>
+                                </li>
+                            </ul>
+                        }
+                    </li>
                 </Authorized>
-
             </AuthorizeView>
             <CultureSelector />
         </div>
@@ -36,6 +51,8 @@
 </div>
 
 @code{
+    private bool expandSubMenu;
+
     [CascadingParameter]
     Task<AuthenticationState> AuthenticationState { get; set; }
     protected override async Task OnParametersSetAsync()

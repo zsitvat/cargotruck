@@ -7,11 +7,10 @@
 <div>
 <AuthorizeView>
     <Authorized>
-        <h1>Hello @context.User.Identity.Name !!</h1>
-
+        <h1>@localizer["Hello"] @context.User.Identity.Name !</h1>
     </Authorized>
     <Authorizing>
-        <h1>Loading ...</h1>
+        <img src="~/css/img/loading.gif" alt="loading" width="500" height="600">
     </Authorizing>
 </AuthorizeView>
 </div>

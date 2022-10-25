@@ -565,6 +565,24 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sikeresen bejelentkeztél.
+        /// </summary>
+        public static string Hello {
+            get {
+                return ResourceManager.GetString("Hello", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Főoldal.
+        /// </summary>
+        public static string Home {
+            get {
+                return ResourceManager.GetString("Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Főoldal.
         /// </summary>
         public static string Home_title {
@@ -655,6 +673,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string Notfound {
+            get {
+                return ResourceManager.GetString("Notfound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Egyéb.
         /// </summary>
         public static string Other {
@@ -687,6 +714,15 @@ namespace Cargotruck.Shared.Resources {
         public static string Password {
             get {
                 return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Helytelen jelszó..
+        /// </summary>
+        public static string Password_error {
+            get {
+                return ResourceManager.GetString("Password_error", resourceCulture);
             }
         }
         
@@ -759,6 +795,15 @@ namespace Cargotruck.Shared.Resources {
         public static string Privacy_text {
             get {
                 return ResourceManager.GetString("Privacy_text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profil.
+        /// </summary>
+        public static string Profile {
+            get {
+                return ResourceManager.GetString("Profile", resourceCulture);
             }
         }
         
