@@ -39,7 +39,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 //localization service
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddIdentity<Users, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.ExpireTimeSpan = TimeSpan.FromMinutes(30);

@@ -42,7 +42,7 @@
     {
         if (!(await AuthenticationState).User.Identity.IsAuthenticated)
         {
-            if (!navigationManager.Uri.ToString().Contains("login") && !navigationManager.Uri.ToString().Contains("Privacy"))
+            if (!navigationManager.Uri.ToString().Contains("login") && !navigationManager.Uri.ToString().Contains("Privacy") && !navigationManager.Uri.ToString().Contains("register"))
             {
                 navigationManager.NavigateTo("/login");
             }

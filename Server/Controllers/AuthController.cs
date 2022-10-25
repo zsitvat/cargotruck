@@ -3,6 +3,8 @@ using Cargotruck.Shared.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using System.Runtime.ConstrainedExecution;
 
 namespace Cargotruck.Server.Controllers
 {
@@ -10,9 +12,11 @@ namespace Cargotruck.Server.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
-        public AuthController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        private readonly UserManager<Users> _userManager;
+        private readonly SignInManager<Users> _signInManager;
+
+
+        public AuthController(UserManager<Users> userManager, SignInManager<Users> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -21,6 +25,13 @@ namespace Cargotruck.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginRequest request)
         {
+            if (!_userManager.Users.Any())
+            {
+                var admin = new Users();
+                admin.UserName = "admin";
+                var result = await _userManager.CreateAsync(admin, "Admin123*");
+            }
+
             var user = await _userManager.FindByNameAsync(request.UserName);
             if (user == null) return BadRequest("User does not exist");
             var singInResult = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
@@ -32,7 +43,7 @@ namespace Cargotruck.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterRequest parameters)
         {
-            var user = new ApplicationUser();
+            var user = new Users();
             user.UserName = parameters.UserName;
             var result = await _userManager.CreateAsync(user, parameters.Password);
             if (!result.Succeeded) return BadRequest(result.Errors.FirstOrDefault()?.Description);

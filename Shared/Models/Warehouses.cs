@@ -18,8 +18,11 @@ namespace Cargotruck.Shared.Models
         [Required(ErrorMessageResourceName = "Error_Warehouse_owner", ErrorMessageResourceType = typeof(Resource))]
         public string Owner { get; set; }
         [Display(Name = "Id_cargo", ResourceType = typeof(Resource))]
-        public List<int>? Cargo_id { get; set; }
+        public List<Cargoes>? Cargo_id { get; set; }
         [Display(Name = "Date", ResourceType = typeof(Resource))]
         public DateTime Date { get; set; } = DateTime.Now;
+    
     }
+
+
 }

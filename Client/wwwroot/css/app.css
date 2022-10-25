@@ -99,6 +99,11 @@ td{
     vertical-align:middle;
 }
 
+th:first-child {
+    min-width: 0.2rem;
+}
+
+
 th{
     min-width:5.2rem;
 }
@@ -145,4 +150,12 @@ th{
 .validation-message {
     font-size: 13px;
     position:absolute;
+}
+
+.card-body{
+    padding: 0.5rem 0.5rem;
+}
+
+.card {
+    margin-right: 5%;
 }

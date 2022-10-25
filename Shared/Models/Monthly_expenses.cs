@@ -12,9 +12,9 @@ namespace Cargotruck.Shared.Models
         [Required]
         public int User_id { get; set; }
         [Display(Name = "Task_id", ResourceType = typeof(Resource))]
-        public List<int>? Task_id { get; set; }
+        public List<Tasks>? Task_id { get; set; }
         [Display(Name = "Expenses_id", ResourceType = typeof(Resource))]
-        public List<int>? Expenses { get; set; }
+        public List<Expenses>? Expenses { get; set; }
         [Display(Name = "Earning", ResourceType = typeof(Resource))]
         public int Earning { get; set; }
         [Display(Name = "Profit", ResourceType = typeof(Resource))]
@@ -22,4 +22,6 @@ namespace Cargotruck.Shared.Models
         [Display(Name = "Date", ResourceType = typeof(Resource))]
         public DateTime Date { get; set; } = DateTime.Now;
     }
+   
+ 
 }
