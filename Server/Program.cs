@@ -9,6 +9,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.JSInterop;
 using System.Globalization;
 using Microsoft.AspNetCore.Mvc.Localization;
+using System.Reflection;
 
 // create appsettings.json if not exist
 const string File_name = "appsettings.json";
@@ -45,14 +46,15 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 builder.Services.AddLocalization(options => options.ResourcesPath = "");
 
 
-    CultureInfo[] supportedCultures = new[]
-    {
-        new CultureInfo("hu"),
-        new CultureInfo("en")
-    };
+CultureInfo[] supportedCultures = new[]
+{
+    new CultureInfo("hu"),
+    new CultureInfo("en-US")
+};
 
 builder.Services.Configure<RequestLocalizationOptions>(options =>
     {
+        options.SetDefaultCulture("hu");
         options.DefaultRequestCulture = new RequestCulture("hu");
         options.SupportedCultures = supportedCultures;
         options.SupportedUICultures = supportedCultures;
@@ -61,8 +63,11 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
             new QueryStringRequestCultureProvider(),
             new CookieRequestCultureProvider()
         };
+        options.FallBackToParentUICultures = true;
+        options.RequestCultureProviders.Clear();
     });
-
+CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("hu");
+CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("hu");
 
 builder.Services.AddIdentity<Users, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.ConfigureApplicationCookie(options =>
@@ -102,7 +107,10 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-
+app.UseRequestLocalization(new RequestLocalizationOptions
+{
+    ApplyCurrentCultureToResponseHeaders = true
+});
 app.UseHttpsRedirection();
 app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();

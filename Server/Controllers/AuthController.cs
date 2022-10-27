@@ -3,10 +3,13 @@ using Cargotruck.Server.Models;
 using Cargotruck.Shared.Models;
 using Cargotruck.Shared.Resources;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
+using Microsoft.JSInterop;
 using System.Globalization;
+using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
 namespace Cargotruck.Server.Controllers
 {
@@ -16,7 +19,7 @@ namespace Cargotruck.Server.Controllers
     {
         private readonly UserManager<Users> _userManager;
         private readonly SignInManager<Users> _signInManager;
-        private readonly IStringLocalizer<Resource> _localizer;
+        IStringLocalizer<Resource> _localizer { get; set; }
 
         public AuthController(IStringLocalizer<Resource> localizer,UserManager<Users> userManager, SignInManager<Users> signInManager)
         {
@@ -34,11 +37,10 @@ namespace Cargotruck.Server.Controllers
                 admin.UserName = "admin";
                 var result = await _userManager.CreateAsync(admin, "Admin123*");
             }
-
             var user = await _userManager.FindByNameAsync(request.UserName);
-            if (user == null) return BadRequest();
+            if (user == null) return BadRequest("Not found");
             var singInResult = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
-            if (!singInResult.Succeeded) return BadRequest(_localizer["Password_error"]);
+            if (!singInResult.Succeeded) return BadRequest(_localizer["Password_error"].Value);
             await _signInManager.SignInAsync(user, request.RememberMe);
             return Ok();
         }
