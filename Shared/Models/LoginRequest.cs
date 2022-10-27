@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cargotruck.Shared.Resources;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -9,9 +10,11 @@ namespace Cargotruck.Shared.Models
 {
     public class LoginRequest
     {
-        [Required]
+        [Required(ErrorMessageResourceName = "Error_username", ErrorMessageResourceType = typeof(Resource))]
+        [Display(Name = "Username", ResourceType = typeof(Resource))]
         public string UserName { get; set; }
-        [Required]
+        [Required(ErrorMessageResourceName = "Error_password", ErrorMessageResourceType = typeof(Resource))]
+        [Display(Name = "Password", ResourceType = typeof(Resource))]
         public string Password { get; set; }
         public bool RememberMe { get; set; }
     }

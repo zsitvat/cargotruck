@@ -781,6 +781,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kérlek jelentkezz be!.
+        /// </summary>
+        public static string Please_Login {
+            get {
+                return ResourceManager.GetString("Please_Login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Szabályzat.
         /// </summary>
         public static string Privacy {
@@ -822,6 +831,15 @@ namespace Cargotruck.Shared.Resources {
         public static string Purpose_of_the_trip {
             get {
                 return ResourceManager.GetString("Purpose_of_the_trip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Emlékezz rám.
+        /// </summary>
+        public static string Remember_me {
+            get {
+                return ResourceManager.GetString("Remember_me", resourceCulture);
             }
         }
         

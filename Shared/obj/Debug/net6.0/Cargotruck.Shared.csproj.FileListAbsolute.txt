@@ -11,8 +11,6 @@ F:\Szakdoga app\Cargotruck\Shared\obj\Debug\net6.0\refint\Cargotruck.Shared.dll
 F:\Szakdoga app\Cargotruck\Shared\obj\Debug\net6.0\Cargotruck.Shared.pdb
 F:\Szakdoga app\Cargotruck\Shared\obj\Debug\net6.0\ref\Cargotruck.Shared.dll
 F:\Szakdoga app\Cargotruck\Shared\bin\Debug\net6.0\en\Cargotruck.Shared.resources.dll
-F:\Szakdoga app\Cargotruck\Shared\obj\Debug\net6.0\Cargotruck.Shared.Resources.Resource.resources
-F:\Szakdoga app\Cargotruck\Shared\obj\Debug\net6.0\Cargotruck.Shared.Resources.Resource.en.resources
 F:\Szakdoga app\Cargotruck\Shared\obj\Debug\net6.0\Cargotruck.Shared.csproj.GenerateResource.cache
 F:\Szakdoga app\Cargotruck\Shared\obj\Debug\net6.0\en\Cargotruck.Shared.resources.dll
 F:\Szakdoga app\Cargotruck\Shared\bin\Debug\net6.0\Cargotruck.Shared.runtimeconfig.json
@@ -36,3 +34,5 @@ C:\Users\Zsitva Tamás\OneDrive\Desktop\Cargotruck\Shared\obj\Debug\net6.0\refin
 C:\Users\Zsitva Tamás\OneDrive\Desktop\Cargotruck\Shared\obj\Debug\net6.0\Cargotruck.Shared.pdb
 C:\Users\Zsitva Tamás\OneDrive\Desktop\Cargotruck\Shared\obj\Debug\net6.0\Cargotruck.Shared.genruntimeconfig.cache
 C:\Users\Zsitva Tamás\OneDrive\Desktop\Cargotruck\Shared\obj\Debug\net6.0\ref\Cargotruck.Shared.dll
+F:\Szakdoga app\Cargotruck\Shared\obj\Debug\net6.0\Cargotruck.Shared.Resources.Resource.resources
+F:\Szakdoga app\Cargotruck\Shared\obj\Debug\net6.0\Cargotruck.Shared.Resources.Resource.en.resources

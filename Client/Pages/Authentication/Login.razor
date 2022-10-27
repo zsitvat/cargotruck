@@ -4,27 +4,28 @@
 @inject CustomStateProvider authStateProvider
 @inject IStringLocalizer<Resource> localizer
 
-<h1 class="h2 font-weight-normal login-title">
-    Login
+<h1 class="h4 font-weight-normal login-title ">
+    @localizer["Please_Login"]
 </h1>
 
 <EditForm class="form-signin" OnValidSubmit="OnSubmit" Model="loginRequest">
+
     <DataAnnotationsValidator />
 
-    <label for="inputUsername" class="sr-only">User Name</label>
-    <InputText id="inputUsername" class="form-control" @bind-Value="loginRequest.UserName" autofocus placeholder="Username" />
+    <label for="inputUsername" class="input-only">@localizer["Username"]</label>
+    <InputText id="inputUsername" class="form-control inputs" @bind-Value="loginRequest.UserName" autofocus placeholder="@localizer["Username"]" />
     <ValidationMessage For="@(() => loginRequest.UserName)" />
 
-    <label for="inputPassword" class="sr-only">Password</label>
-    <InputText type="password" id="inputPassword" class="form-control" placeholder="Password" @bind-Value="loginRequest.Password" />
+    <label for="inputPassword" class="input-only">@localizer["Password"]</label>
+    <InputText type="password" id="inputPassword" class="form-control inputs" placeholder="@localizer["Password"]" @bind-Value="loginRequest.Password" />
     <ValidationMessage For="@(() => loginRequest.Password)" />
 
     <div class="form-check m-3">
         <InputCheckbox id="inputRememberMe" class="form-check-input" @bind-Value="@loginRequest.RememberMe" />
-        <label class="form-check-label" for="inputRememberMe">Remember Me</label>
+        <label class="form-check-label" for="inputRememberMe">@localizer["Remember_me"]</label>
     </div>
 
-    <button class="btn btn-lg btn-primary btn-block" type="submit">@localizer["Login"]</button>
+    <button class="btn btn-sm btn-primary btn-block" type="submit">@localizer["Login"]</button>
 
     <label class="text-danger">@error</label>
 

@@ -357,6 +357,9 @@
   <data name="Place_of_receipt" xml:space="preserve">
     <value>Place of receipt</value>
   </data>
+  <data name="Please_Login" xml:space="preserve">
+    <value>Please log in!</value>
+  </data>
   <data name="Privacy" xml:space="preserve">
     <value>Privacy</value>
   </data>
@@ -371,6 +374,9 @@
   </data>
   <data name="Purpose_of_the_trip" xml:space="preserve">
     <value>Purpose of the trip</value>
+  </data>
+  <data name="Remember_me" xml:space="preserve">
+    <value>Remember me</value>
   </data>
   <data name="Repair_cost" xml:space="preserve">
     <value>Cost of repair</value>

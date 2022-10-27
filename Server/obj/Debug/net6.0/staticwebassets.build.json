@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "3bVwnomlzo22iRBXfL7H7SidHoAZbafkF4pJTtoGrLA=",
+  "Hash": "hFn1xAhXj5wngFdTrpJtpguDcBteFB8MCOn1NTBIvLg=",
   "Source": "Cargotruck.Server",
   "BasePath": "_content/Cargotruck.Server",
   "Mode": "Default",
@@ -8051,23 +8051,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
-    },
-    {
-      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\icon-512.png",
-      "SourceId": "Cargotruck.Client",
-      "SourceType": "Project",
-      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\",
-      "BasePath": "/",
-      "RelativePath": "icon-512.png",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\icon-512.png"
     },
     {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\img\\loading.gif",

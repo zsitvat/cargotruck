@@ -1,4 +1,7 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿
+
+
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href=""><span class="iconify iconify2" data-icon="noto:delivery-truck"></span>Cargotruck</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -6,16 +9,15 @@
         </button>
     </div>
 </div>
-
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span>@localizer["Home"]
-            </NavLink>
-        </div>
-        <AuthorizeView>
-            <Authorized>
+<AuthorizeView>
+    <Authorized>  
+        <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+            <nav class="flex-column">
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                        <span class="oi oi-home" aria-hidden="true"></span>@localizer["Home"]
+                    </NavLink>
+                </div>
                 <div class="nav-item px-3">
                     <NavLink class="nav-link" href="Tasks">
                         <span class="oi oi-task" aria-hidden="true"></span>@localizer["Tasks"]
@@ -46,17 +48,20 @@
                         <span class="iconify" data-icon="arcticons:money-manager"></span>@localizer["Expenses"]
                     </NavLink>
                 </div>
+                @if (true)
+                {
                 <div class="nav-item px-3">
                     <NavLink class="nav-link" href="Admin">
                         <span class="iconify" data-icon="bi:person-square"></span>@localizer["Account"]
                     </NavLink>
-                </div>
-            </Authorized>
-        </AuthorizeView>
-    </nav>
-</div>
-
+            </div>
+                }
+            </nav>
+        </div>
+    </Authorized>
+</AuthorizeView>
 @code {
+
     private bool collapseNavMenu = true;
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;

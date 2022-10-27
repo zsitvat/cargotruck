@@ -19,5 +19,7 @@
 @using Microsoft.AspNetCore.Authorization;
 @using Cargotruck.Shared.Models
 @using Cargotruck.Client.Services
+@inject NavigationManager navigationManager
+@inject CustomStateProvider authStateProvider
 
 @inject IStringLocalizer<Resource> localizer;

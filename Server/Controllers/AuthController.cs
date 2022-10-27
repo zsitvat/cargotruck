@@ -19,9 +19,10 @@ namespace Cargotruck.Server.Controllers
     {
         private readonly UserManager<Users> _userManager;
         private readonly SignInManager<Users> _signInManager;
-        IStringLocalizer<Resource> _localizer { get; set; }
+        private readonly IStringLocalizer<Resource> _localizer;
 
-        public AuthController(IStringLocalizer<Resource> localizer,UserManager<Users> userManager, SignInManager<Users> signInManager)
+
+        public AuthController(IStringLocalizer<Resource> localizer, UserManager<Users> userManager, SignInManager<Users> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -37,10 +38,11 @@ namespace Cargotruck.Server.Controllers
                 admin.UserName = "admin";
                 var result = await _userManager.CreateAsync(admin, "Admin123*");
             }
+            var password_error = _localizer["Password_error"];
             var user = await _userManager.FindByNameAsync(request.UserName);
             if (user == null) return BadRequest("Not found");
             var singInResult = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
-            if (!singInResult.Succeeded) return BadRequest(_localizer["Password_error"].Value);
+            if (!singInResult.Succeeded) return BadRequest(password_error);
             await _signInManager.SignInAsync(user, request.RememberMe);
             return Ok();
         }

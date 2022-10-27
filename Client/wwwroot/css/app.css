@@ -210,6 +210,11 @@ th{
 .form-control {
     width: fit-content;
     font-size:0.9rem;
+
+}
+
+.inputs {
+    width: 20rem;
 }
 
 .username {
@@ -269,3 +274,12 @@ ul, li {
     text-decoration: none;
     color: #212529;
 }
+
+.form-signin {
+    margin-left: 2%;
+}
+
+.input-only {
+    margin-top: 0.8rem;
+}
+

@@ -14,7 +14,7 @@
                 <div class="form-group">
                     <label>Partner:</label>
                     <div>
-                        <InputText @bind-Value="@tasks.Partner" />
+                        <InputText class="form-control inputs" @bind-Value="@tasks.Partner" />
                         <ValidationMessage For="@(() => tasks.Partner)" />
                     </div>
                 </div>
@@ -22,7 +22,7 @@
                     <div>
                         <label>Description :</label>
                         <div>
-                            <InputText @bind-Value="@tasks.Description" />
+                            <InputText class="form-control inputs" @bind-Value="@tasks.Description" />
                             <ValidationMessage For="@(() => tasks.Description)" />
                         </div>
                     </div>
@@ -31,7 +31,7 @@
                     <div>
                         <label>Place_of_receipt :</label>
                         <div>
-                            <InputText @bind-Value="@tasks.Place_of_receipt" />
+                            <InputText class="form-control inputs" @bind-Value="@tasks.Place_of_receipt" />
                             <ValidationMessage For="@(() => tasks.Place_of_receipt)" />
                         </div>
                     </div>
@@ -40,7 +40,7 @@
                     <div>
                         <label>Time_of_receipt:</label>
                         <div>
-                            <InputDate @bind-Value="@tasks.Time_of_receipt" />
+                            <InputDate class="form-control inputs" @bind-Value="@tasks.Time_of_receipt" />
                             <ValidationMessage For="@(() => tasks.Time_of_receipt)" />
                         </div>
                     </div>
@@ -49,7 +49,7 @@
                     <div>
                         <label>Place_of_delivery :</label>
                         <div>
-                            <InputText @bind-Value="@tasks.Place_of_delivery" />
+                            <InputText class="form-control inputs"  @bind-Value="@tasks.Place_of_delivery" />
                             <ValidationMessage For="@(() => tasks.Place_of_delivery)" />
                         </div>
                     </div>
@@ -58,7 +58,7 @@
                     <div>
                         <label>Time_of_deliver :</label>
                         <div>
-                            <InputDate @bind-Value="@tasks.Time_of_delivery" />
+                            <InputDate class="form-control inputs" @bind-Value="@tasks.Time_of_delivery" />
                             <ValidationMessage For="@(() => tasks.Time_of_delivery)" />
                         </div>
                     </div>
@@ -67,7 +67,7 @@
                     <div>
                         <label>Other_stops :</label>
                         <div>
-                            <InputText @bind-Value="@tasks.Other_stops" />
+                            <InputText class="form-control inputs" @bind-Value="@tasks.Other_stops" />
                             <ValidationMessage For="@(() => tasks.Other_stops)" />
                         </div>
                     </div>
@@ -79,7 +79,7 @@
                     <div>
                         <label>Id_cargo:</label>
                         <div>
-                            <InputText @bind-Value="@tasks.Id_cargo" />
+                            <InputText class="form-control inputs" @bind-Value="@tasks.Id_cargo" />
                             <ValidationMessage For="@(() => tasks.Id_cargo)" />
                         </div>
                     </div>
@@ -88,7 +88,7 @@
                     <div>
                         <label>Storage_time:</label>
                         <div>
-                            <InputText @bind-Value="@tasks.Storage_time" />
+                            <InputText class="form-control inputs" @bind-Value="@tasks.Storage_time" />
                             <ValidationMessage For="@(() => tasks.Storage_time)" />
                         </div>
                     </div>
@@ -97,7 +97,7 @@
                     <div>
                         <label>Completion_time:</label>
                         <div>
-                            <InputDate @bind-Value="@tasks.Completion_time" />
+                            <InputDate class="form-control inputs" @bind-Value="@tasks.Completion_time" />
                             <ValidationMessage For="@(() => tasks.Completion_time)" />
                         </div>
                     </div>
@@ -106,7 +106,7 @@
                     <div>
                         <label>Time_of_delay:</label>
                         <div>
-                            <InputText @bind-Value="@tasks.Time_of_delay" />
+                            <InputText class="form-control inputs" @bind-Value="@tasks.Time_of_delay" />
                             <ValidationMessage For="@(() => tasks.Time_of_delay)" />
                         </div>
                     </div>
@@ -115,7 +115,7 @@
                     <div>
                         <label>Payment:</label>
                         <div>
-                            <InputText @bind-Value="@tasks.Payment" />
+                            <InputText class="form-control inputs" @bind-Value="@tasks.Payment" />
                             <ValidationMessage For="@(() => tasks.Payment)" />
                         </div>
                     </div>
@@ -124,7 +124,7 @@
                     <div>
                         <label>Final_Payment:</label>
                         <div>
-                            <InputText @bind-Value="@tasks.Final_Payment" />
+                            <InputText class="form-control inputs" @bind-Value="@tasks.Final_Payment" />
                             <ValidationMessage For="@(() => tasks.Final_Payment)" />
                         </div>
                     </div>
@@ -133,7 +133,7 @@
                     <div>
                         <label> Penalty:</label>
                         <div>
-                            <InputText @bind-Value="@tasks.Penalty" />
+                            <InputText class="form-control inputs" @bind-Value="@tasks.Penalty" />
                             <ValidationMessage For="@(() => tasks.Penalty)" />
                         </div>
                     </div>
@@ -143,7 +143,7 @@
             <div class="form-group completed">
                 <div>
                     <label>Completed:</label>
-                    <InputCheckbox @bind-Value="@tasks.Completed" />
+                    <InputCheckbox class="form-check-input" @bind-Value="@tasks.Completed" />
                     <ValidationMessage For="@(() => tasks.Completed)" />
                 </div>
             </div>
