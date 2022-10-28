@@ -38,7 +38,7 @@ namespace Cargotruck.Server.Controllers
                 admin.UserName = "admin";
                 var result = await _userManager.CreateAsync(admin, "Admin123*");
             }
-            var password_error = _localizer["Password_error"];
+            var password_error = _localizer["Password_error"].Value;
             var user = await _userManager.FindByNameAsync(request.UserName);
             if (user == null) return BadRequest("Not found");
             var singInResult = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
@@ -48,11 +48,13 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Register(RegisterRequest parameters)
         {
             var user = new Users();
             user.UserName = parameters.UserName;
             var result = await _userManager.CreateAsync(user, parameters.Password);
+            await _userManager.AddToRoleAsync(user, "Visitor");
             if (!result.Succeeded) return BadRequest(result.Errors.FirstOrDefault()?.Description);
             return await Login(new LoginRequest
             {

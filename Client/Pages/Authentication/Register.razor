@@ -2,7 +2,7 @@
 @layout MainLayout
 @inject NavigationManager navigationManager
 @inject CustomStateProvider authStateProvider
-
+@attribute [Authorize(Roles = "Admin")]
 <h1 class="h2 font-weight-normal login-title">
     Register
 </h1>

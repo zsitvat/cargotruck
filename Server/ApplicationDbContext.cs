@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Cargotruck.Shared.Models;
 using Cargotruck.Server.Models;
+using Cargotruck.Server.Data;
 
 namespace Cargotruck.Data
 {
@@ -12,7 +13,7 @@ namespace Cargotruck.Data
         {
             //create the database for mainly testing in local
             Database.EnsureCreated();
-            Database.Migrate();
+            //Database.Migrate();
         } 
         
         public DbSet<Tasks> Tasks { get; set; }
@@ -22,5 +23,12 @@ namespace Cargotruck.Data
         public DbSet<Roads> Roads { get; set; }
         public DbSet<Trucks> Trucks { get; set; }
         public DbSet<Warehouses> Warehouses { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.ApplyConfiguration(new RoleConfiguration());
+        }
     }
 }
