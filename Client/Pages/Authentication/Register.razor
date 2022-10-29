@@ -10,24 +10,30 @@
 <EditForm class="form-signin" OnValidSubmit="OnSubmit" Model="registerRequest">
     <DataAnnotationsValidator />
 
-    <label for="inputUsername" class="sr-only">User Name</label>
-    <InputText id="inputUsername" class="form-control" placeholder="Username" autofocus @bind-Value="@registerRequest.UserName" />
+    <label for="inputUsername" class="sr-only">@localizer["Username"]</label>
+    <InputText id="inputUsername" class="form-control" autofocus @bind-Value="@registerRequest.UserName" />
     <ValidationMessage For="@(() => registerRequest.UserName)" />
 
-    <label for="inputPassword" class="sr-only">Password</label>
-    <InputText type="password" id="inputPassword" class="form-control" placeholder="Password" @bind-Value="@registerRequest.Password" />
+    <label for="inputPassword" class="sr-only">@localizer["Password"]</label>
+    <InputText type="password" id="inputPassword" class="form-control"  @bind-Value="@registerRequest.Password" />
     <ValidationMessage For="@(() => registerRequest.Password)" />
 
-    <label for="inputPasswordConfirm" class="sr-only">Password Confirmation</label>
-    <InputText type="password" id="inputPasswordConfirm" class="form-control" placeholder="Password Confirmation" @bind-Value="@registerRequest.PasswordConfirm" />
+    <label for="inputPasswordConfirm" class="sr-only">@localizer["PasswordConfirm"]</label>
+    <InputText type="password" id="inputPasswordConfirm" class="form-control"  @bind-Value="@registerRequest.PasswordConfirm" />
     <ValidationMessage For="@(() => registerRequest.PasswordConfirm)" />
 
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Create account</button>
+    <label for="inputRole" class="sr-only">@localizer["Role"]</label>
+    <select for="inputRole" class="form-control" name="role" id="role" @bind="@registerRequest.Role">
+        <option value="User">@localizer["User"]</option>
+        <option value="Admin">@localizer["Admin"]</option>
+        <option value="Driver">@localizer["Driver"]</option>
+        <option value="Manager">@localizer["Manager"]</option>
+        <option value="Storageman">@localizer["Storageman"]</option>
+    </select>
+
+    <button class="btn btn-lg btn-primary btn-block" type="submit">@localizer["Register"]</button>
 
     <label class="text-danger">@error</label>
-    <NavLink href="login">
-        <h6 class="font-weight-normal text-center">Already have an account? Click here to login</h6>
-    </NavLink>
 </EditForm>
 
 @functions {

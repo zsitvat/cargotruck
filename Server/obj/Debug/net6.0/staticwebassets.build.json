@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "hFn1xAhXj5wngFdTrpJtpguDcBteFB8MCOn1NTBIvLg=",
+  "Hash": "SKlFmQ2LGkGGue+Ypv/IczJqfcpJ0rDT8guVpgoD9T4=",
   "Source": "Cargotruck.Server",
   "BasePath": "_content/Cargotruck.Server",
   "Mode": "Default",
@@ -8102,6 +8102,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\logo.png"
+    },
+    {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\img\\profile.png",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Project",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "img/profile.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\profile.png"
     },
     {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\index.html",

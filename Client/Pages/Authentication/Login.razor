@@ -13,11 +13,11 @@
     <DataAnnotationsValidator />
 
     <label for="inputUsername" class="input-only">@localizer["Username"]</label>
-    <InputText id="inputUsername" class="form-control inputs" @bind-Value="loginRequest.UserName" autofocus placeholder="@localizer["Username"]" />
+    <InputText id="inputUsername" class="form-control inputs" @bind-Value="loginRequest.UserName" autofocus />
     <ValidationMessage For="@(() => loginRequest.UserName)" />
 
     <label for="inputPassword" class="input-only">@localizer["Password"]</label>
-    <InputText type="password" id="inputPassword" class="form-control inputs" placeholder="@localizer["Password"]" @bind-Value="loginRequest.Password" />
+    <InputText type="password" id="inputPassword" class="form-control inputs"  @bind-Value="loginRequest.Password" />
     <ValidationMessage For="@(() => loginRequest.Password)" />
 
     <div class="form-check m-3">

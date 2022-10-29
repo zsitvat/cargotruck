@@ -2,8 +2,7 @@
 @using Microsoft.Extensions.Localization
 @inherits LayoutComponentBase
 @inject IStringLocalizer<Resource> localizer
-@inject NavigationManager navigationManager
-@inject CustomStateProvider authStateProvider
+
 
 <div class="page">
     <div class="sidebar">
@@ -23,7 +22,7 @@
                         {
                             <ul class="nav flex-column username-dropdown">
                                 <li class="nav-item px-3">
-                                    <NavLink  href="Profile">
+                                    <NavLink  href="profile">
                                         <span class="iconify" data-icon="akar-icons:person"></span>@localizer["Profile"]
                                     </NavLink>
                                 </li>
@@ -40,7 +39,7 @@
             <CultureSelector />
         </div>
 
-        <article class="content px-4 container" style="margin-right:3%;">
+        <article class="content px-4 container" >
             @Body
         </article>
         <footer>
@@ -59,7 +58,7 @@
     {
         if (!(await AuthenticationState).User.Identity.IsAuthenticated)
         {
-            if (!navigationManager.Uri.ToString().Contains("login") && !navigationManager.Uri.ToString().Contains("Privacy") && !navigationManager.Uri.ToString().Contains("register"))
+            if (!navigationManager.Uri.ToString().Contains("login") && !navigationManager.Uri.ToString().Contains("Privacy"))
             {
                 navigationManager.NavigateTo("/login");
             }

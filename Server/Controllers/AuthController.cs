@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Microsoft.JSInterop;
 using System.Globalization;
+using System.Security.Claims;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
 namespace Cargotruck.Server.Controllers
@@ -48,19 +49,16 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Register(RegisterRequest parameters)
         {
             var user = new Users();
             user.UserName = parameters.UserName;
             var result = await _userManager.CreateAsync(user, parameters.Password);
-            await _userManager.AddToRoleAsync(user, "Visitor");
+            await _userManager.AddToRoleAsync(user, parameters.Role);
+            await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("img", parameters.Img));
             if (!result.Succeeded) return BadRequest(result.Errors.FirstOrDefault()?.Description);
-            return await Login(new LoginRequest
-            {
-                UserName = parameters.UserName,
-                Password = parameters.Password
-            });
+            return LocalRedirect("/Admin");
         }
 
         [Authorize]
@@ -74,12 +72,13 @@ namespace Cargotruck.Server.Controllers
         [HttpGet]
         public CurrentUser CurrentUserInfo()
         {
+
             return new CurrentUser
             {
                 IsAuthenticated = User.Identity.IsAuthenticated,
                 UserName = User.Identity.Name,
                 Claims = User.Claims
-                .ToDictionary(c => c.Type, c => c.Value)
+                    .ToDictionary(c => c.Type, c => c.Value),
             };
         }
     }

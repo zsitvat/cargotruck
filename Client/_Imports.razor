@@ -21,5 +21,6 @@
 @using Cargotruck.Client.Services
 @inject NavigationManager navigationManager
 @inject CustomStateProvider authStateProvider
-
+@inject HttpClient client
+@inject IJSRuntime js
 @inject IStringLocalizer<Resource> localizer;

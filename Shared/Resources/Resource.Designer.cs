@@ -268,6 +268,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit profile.
+        /// </summary>
+        public static string Edit {
+            get {
+                return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Megbízás módosítása.
         /// </summary>
         public static string Edit_tasks {
@@ -628,6 +637,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Manager.
+        /// </summary>
+        public static string Manager {
+            get {
+                return ResourceManager.GetString("Manager", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Terhelés max súlya.
         /// </summary>
         public static string Max_weight {
@@ -723,6 +741,24 @@ namespace Cargotruck.Shared.Resources {
         public static string Password_error {
             get {
                 return ResourceManager.GetString("Password_error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jelszó újra.
+        /// </summary>
+        public static string PasswordConfirm {
+            get {
+                return ResourceManager.GetString("PasswordConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A jelszavak nem egyeznek!.
+        /// </summary>
+        public static string PasswordConfirm_error {
+            get {
+                return ResourceManager.GetString("PasswordConfirm_error", resourceCulture);
             }
         }
         
@@ -979,20 +1015,20 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Raktáros.
+        /// </summary>
+        public static string Storageman {
+            get {
+                return ResourceManager.GetString("Storageman", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Megbízás azonosító.
         /// </summary>
         public static string Task_id {
             get {
                 return ResourceManager.GetString("Task_id", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Task-manager.
-        /// </summary>
-        public static string Task_manager {
-            get {
-                return ResourceManager.GetString("Task_manager", resourceCulture);
             }
         }
         

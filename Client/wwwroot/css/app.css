@@ -57,6 +57,18 @@ a:active {
     color: red;
 }
 
+.align-left{
+    text-align:left;
+}
+
+.align-center {
+    text-align:center;
+}
+
+.align-right {
+    text-align: right;
+}
+
 #blazor-error-ui {
     background: lightyellow;
     bottom: 0;
@@ -283,3 +295,18 @@ ul, li {
     margin-top: 0.8rem;
 }
 
+@media (min-width: 1400px) {
+    .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+        max-width: 1520px !important;
+    }
+}
+
+
+.profile_picture {
+    min-width: 200px;
+    min-height: 150px;
+    max-width: 300px;
+    max-height: 220px;
+    margin-bottom: 2%;
+    border-radius:52px;
+}

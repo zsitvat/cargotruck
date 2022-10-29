@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cargotruck.Shared.Resources;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -13,8 +14,12 @@ namespace Cargotruck.Shared.Models
         public string UserName { get; set; }
         [Required]
         public string Password { get; set; }
-        [Required]
-        [Compare(nameof(Password), ErrorMessage = "Passwords do not match!")]
+        public string Role { get; set; } = "User";
+
+        public string Img { get; set; } = "/img/profile.png";
+
+        [Required(ErrorMessageResourceName = "Error_password", ErrorMessageResourceType = typeof(Resource))]
+        [Compare(nameof(Password), ErrorMessageResourceName = "PasswordConfirm_error", ErrorMessageResourceType = typeof(Resource))]
         public string PasswordConfirm { get; set; }
     }
 }

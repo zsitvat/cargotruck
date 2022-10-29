@@ -10,6 +10,7 @@ using Microsoft.JSInterop;
 using System.Globalization;
 using Microsoft.AspNetCore.Mvc.Localization;
 using System.Reflection;
+using System.IdentityModel.Tokens.Jwt;
 
 // create appsettings.json if not exist
 const string File_name = "appsettings.json";
@@ -70,6 +71,8 @@ CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("hu");
 CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("hu");
 
 builder.Services.AddIdentity<Users, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+
+
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.ExpireTimeSpan = TimeSpan.FromMinutes(30);

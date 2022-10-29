@@ -186,6 +186,9 @@
   <data name="Earning" xml:space="preserve">
     <value>Earnings</value>
   </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Profil szerkesztése</value>
+  </data>
   <data name="Edit_tasks" xml:space="preserve">
     <value>Megbízások módosítása</value>
   </data>
@@ -306,6 +309,9 @@
   <data name="Logout" xml:space="preserve">
     <value>Logout</value>
   </data>
+  <data name="Manager" xml:space="preserve">
+    <value>Manager</value>
+  </data>
   <data name="Max_weight" xml:space="preserve">
     <value>Max weight of the cargo</value>
   </data>
@@ -335,6 +341,12 @@
   </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
+  </data>
+  <data name="PasswordConfirm" xml:space="preserve">
+    <value>Password Confirmation</value>
+  </data>
+  <data name="PasswordConfirm_error" xml:space="preserve">
+    <value>Passwords do not match!</value>
   </data>
   <data name="Password_error" xml:space="preserve">
     <value>Invalid password!</value>
@@ -417,6 +429,9 @@
   <data name="Status" xml:space="preserve">
     <value>Status</value>
   </data>
+  <data name="Storageman" xml:space="preserve">
+    <value>Storageman</value>
+  </data>
   <data name="Storage_starting_time" xml:space="preserve">
     <value>Storage starting time</value>
   </data>
@@ -431,9 +446,6 @@
   </data>
   <data name="Task_id" xml:space="preserve">
     <value>Task ID</value>
-  </data>
-  <data name="Task_manager" xml:space="preserve">
-    <value>Task-manager</value>
   </data>
   <data name="Time_of_delay" xml:space="preserve">
     <value>Time of delay</value>

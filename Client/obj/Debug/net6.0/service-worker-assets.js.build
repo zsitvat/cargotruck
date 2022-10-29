@@ -1,7 +1,7 @@
 ﻿self.assetsManifest = {
   "assets": [
     {
-      "hash": "sha256-w9Jra14\/UnKTwQMITkKU6FGe5lRdyq7LOCiPl+C8Vio=",
+      "hash": "sha256-Z\/t4kWggoFj8UeSIbjXo7bO\/SWZocStXLNP0T\/b+HMg=",
       "url": "css\/app.css"
     },
     {
@@ -71,6 +71,10 @@
     {
       "hash": "sha256-lt0EgGZm7\/8CbtCCKUv1VGoKwi1QdBH+AnyVMAxoOfE=",
       "url": "img\/logo.png"
+    },
+    {
+      "hash": "sha256-YzG86jpyeaHNmuVndLAkAMR3UHIyqoM11OjsOQ9b3Rk=",
+      "url": "img\/profile.png"
     },
     {
       "hash": "sha256-pYF8qhAyssqDbZZnTGRknQE8mPYfBbTeToh\/cz2Hx00=",
@@ -965,23 +969,23 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-YRBHiGIJs57kXns94UerOGY0RzVsQDVlqZ6tHa2yqmc=",
+      "hash": "sha256-0z\/VxiH58wI\/o\/Wtnl1cm4cZXQiw\/rIXfNU1D21i4BY=",
       "url": "_framework\/Cargotruck.Shared.dll"
     },
     {
-      "hash": "sha256-DAZTfz\/2kxQ2Zw\/GZ+Lb8OChr6ViVJjSZYg6ESxxGHk=",
+      "hash": "sha256-MbsVv01xhKqO8vsg2ld8v63zNZyQd2hfnWC3gtv2PWA=",
       "url": "_framework\/Cargotruck.Shared.pdb"
     },
     {
-      "hash": "sha256-XXoqVbSLmql6Gas+f0TKtKZSu6ymV2n6WUkRfQ63CKk=",
+      "hash": "sha256-ELJLC9x7oBLgNOuxwZVS8ZxzLb9XDLToVCyYDQyivYM=",
       "url": "_framework\/en\/Cargotruck.Shared.resources.dll"
     },
     {
-      "hash": "sha256-rrMfi+7a9YN\/AR4yISgRAPRaFLO7nG6lYY7qw4uLNvE=",
+      "hash": "sha256-nKz+rHTnn+IVaKchgnpsVz9uUjojvn4zJba1pf5GrgY=",
       "url": "_framework\/Cargotruck.Client.dll"
     },
     {
-      "hash": "sha256-uRlRlbDfgGja5T58mhcQiKNUGEFjtHlSrNxr+WWnpgk=",
+      "hash": "sha256-Lv3QypPvGHWmPnb\/77D0Nbj7HEqG7eXWZ4mbKp4Nfs8=",
       "url": "_framework\/Cargotruck.Client.pdb"
     },
     {
@@ -989,7 +993,7 @@
       "url": "_framework\/blazor.webassembly.js"
     },
     {
-      "hash": "sha256-q9JZXUV3zYVyrUhW3VfKxrHIfXnH8CuGzooC5aytTus=",
+      "hash": "sha256-KXH2Wf09HEzo93jK\/hMEWXCTv7cYdeF62XmA2tl9OMg=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -997,5 +1001,5 @@
       "url": "_content\/Microsoft.AspNetCore.Components.WebAssembly.Authentication\/AuthenticationService.js"
     }
   ],
-  "version": "LCzxIV\/r"
+  "version": "vaBJQ87u"
 };
