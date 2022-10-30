@@ -21,16 +21,16 @@
                         @if (expandSubMenu)
                         {
                             <ul class="nav flex-column username-dropdown">
-                                <li class="nav-item px-3">
-                                    <NavLink  href="profile">
-                                        <span class="iconify" data-icon="akar-icons:person"></span>@localizer["Profile"]
-                                    </NavLink>
-                                </li>
-                                <li class="nav-item px-3">
-                                    <NavLink  @onclick="@LogoutClick">
-                                        <span class="iconify" data-icon="ic:twotone-logout"></span>@localizer["Logout"]
-                                    </NavLink>
-                                </li>
+                                <NavLink href="profile">
+                                    <li class="nav-item px-3">
+                                        <span class="iconify" data-icon="akar-icons:person"></span>@localizer["Profile"] 
+                                     </li>
+                                </NavLink>
+                                <NavLink  @onclick="@LogoutClick">
+                                    <li class="nav-item px-3">
+                                         <span class="iconify" data-icon="ic:twotone-logout"></span>@localizer["Logout"]
+                                    </li>
+                                </NavLink>
                             </ul>
                         }
                     </li>

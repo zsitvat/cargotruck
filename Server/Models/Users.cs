@@ -5,4 +5,5 @@ namespace Cargotruck.Server.Models
     public class Users : IdentityUser
     {
     }
+
 }

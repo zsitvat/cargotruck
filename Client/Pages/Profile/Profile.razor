@@ -4,7 +4,6 @@
 @using Microsoft.Extensions.Localization
 @inject IStringLocalizer<Resource> localizer
 
-
 <h1 class="h4 font-weight-normal login-title ">
     @localizer["Profile"]
 </h1>
@@ -15,44 +14,41 @@
             <AuthorizeView>
                 <Authorized>
                     <ul >
-
-                        @foreach (var claim in context.User.Claims){
-                            //<li>@claim.Type: @claim.Value</li>
-
-                            @if (@claim.Type.Contains("img"))
-                            {
-                                <img src="@claim.Value" class="profile_picture" alt="profile">
-                            }
-                            <table class="table d-inline-block align-left" style="margin-left:6%;">
+                        <table class="table d-inline-block align-left" style="margin-left:6%;">
                            
-                            @if(@claim.Type.Contains("role")){
-                                <tr>
-                                    <td><b>@localizer["Username"]:</b></td>
-                                    <td>@context.User.Identity.Name</td>
-                                </tr>
-                                <tr>
-                                    <td><b>@localizer["Role"]:</b></td>
-                                    <td>@claim.Value</td>
-                                </tr>
+                            @foreach (var claim in context.User.Claims){
+                                //<li>@claim.Type: @claim.Value</li>
+
+                                @if (@claim.Type.Contains("img"))
+                                {
+                                    <img src="@claim.Value" class="profile_picture" alt="profile">
+                                }
+                                @if(@claim.Type.Contains("role")){
+                                  
+                                    <tr>
+                                        <td><b>@localizer["Role"]:</b></td>
+                                        <td>@claim.Value</td>
+                                    </tr>
                               
+                                } 
                             }
-                            @if (@claim.Type.Contains("phonenumber")){
+                            <tr>
+                                <td><b>@localizer["Username"]:</b></td>
+                                <td>@context.User.Identity.Name</td>
+                            </tr>
                                 <tr>      
                                     <td><b>@localizer["Phone_number"]:</b></td>
-                                     <td>@claim.Value</td>
+                                        <td>@currentUserPhone</td>
                                 </tr>
                               
-                            }
-                            @if ()
-                            {
+                         
                                 <tr>
                                     <td><b>@localizer["Email"]:</b></td>
-                                    <td>@claim.Value</td>
+                                    <td>@currentUserEmail</td>
                                 </tr>
-
-                            }
+                            
                         </table>
-                        }
+                       
                     <tr>
                         <td><a class="btn btn-sm btn-primary btn-block m-4" href="Admin/edit/@context.User.Identity.Name"> <span class="oi oi-pencil" aria-hidden="true"></span> @localizer["Edit"]</a></td>
                     </tr>
@@ -67,24 +63,13 @@
 </div>
 
 @code {
-        [CascadingParameter]
-        private Task<AuthenticationState> authenticationStateTask { get; set; }
-
-        [Inject]
-        UserManager<IdentityUser> userManager { get; set; }
-
+    public string currentUserPhone { get; set; }
+    public string currentUserEmail { get; set; }
     protected override async Task OnInitializedAsync()
     {
-        var user = (await authenticationStateTask).User;
-
-        if (user.Identity.IsAuthenticated)
-        {
-            var currentUser = await userManager.GetUserAsync(user);
-            var currentUserId = currentUser.Id;
-            var currentUserEmail = currentUser.Email;
-            var currentUserPhone = currentUser.PhoneNumber;
-        }
+        var user = await authStateProvider.GetCurrentUser();
+        currentUserPhone = user.PhoneNumber;
+        currentUserEmail = user.Email;
     }
-
 }
    

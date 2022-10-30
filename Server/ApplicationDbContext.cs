@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Cargotruck.Shared.Models;
 using Cargotruck.Server.Models;
 using Cargotruck.Server.Data;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Cargotruck.Data
 {
@@ -14,8 +15,8 @@ namespace Cargotruck.Data
             //create the database for mainly testing in local
             Database.EnsureCreated();
             //Database.Migrate();
-        } 
-        
+        }
+        public DbSet<Users>  Users { get; set; }
         public DbSet<Tasks> Tasks { get; set; }
         public DbSet<Cargoes> Cargoes { get; set; }
         public DbSet<Expenses> Expenses { get; set; }
