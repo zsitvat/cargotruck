@@ -70,7 +70,7 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("hu");
 CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("hu");
 
-builder.Services.AddIdentity<Users, IdentityRole>(options => options.SignIn.RequireConfirmedPhoneNumber= false).AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddIdentity<Users, IdentityRole>(options => options.SignIn.RequireConfirmedPhoneNumber = false).AddEntityFrameworkStores<ApplicationDbContext>();
 
 
 builder.Services.ConfigureApplicationCookie(options =>

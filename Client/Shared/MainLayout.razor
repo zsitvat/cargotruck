@@ -4,20 +4,31 @@
 @inject IStringLocalizer<Resource> localizer
 
 
-<div class="page">
-    <div class="sidebar">
+<div class="page" >
+    <div class="sidebar" @onclick="()=>expandSubMenu= false">
         <NavMenu />
     </div>
 
-    <main>
+    <main >
         <div class="top-row px-4">
             <NavLink href="Privacy" Match="NavLinkMatch.All">
                 <span class="about" aria-hidden="true">@localizer["Privacy"]</span>
             </NavLink> 
             <AuthorizeView>
-                <Authorized>      
+                <Authorized>    
                     <li class="username" @onclick="()=>expandSubMenu= !expandSubMenu">
-                            @context.User.Identity.Name
+                        <div class="top-nav-profile">
+                            @foreach (var claim in context.User.Claims)
+                            {
+                                //<li>@claim.Type: @claim.Value</li>
+
+                                @if (@claim.Type.Contains("img"))
+                                {
+                                    <img src="@claim.Value" class="small_profile_picture" alt="profile">
+                                }
+                           }
+                      <span class="btn btn-sm">@context.User.Identity.Name</span>
+                    </div>
                         @if (expandSubMenu)
                         {
                             <ul class="nav flex-column username-dropdown">
@@ -39,7 +50,7 @@
             <CultureSelector />
         </div>
 
-        <article class="content px-4 container" >
+        <article class="content px-4 container" @onclick="()=>expandSubMenu= false">
             @Body
         </article>
         <footer>

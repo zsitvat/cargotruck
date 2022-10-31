@@ -187,7 +187,10 @@
     <value>Kereset</value>
   </data>
   <data name="Edit" xml:space="preserve">
-    <value>Edit profile</value>
+    <value>Módosít</value>
+  </data>
+  <data name="Edit_profile" xml:space="preserve">
+    <value>Profil szerkesztése</value>
   </data>
   <data name="Edit_tasks" xml:space="preserve">
     <value>Megbízás módosítása</value>

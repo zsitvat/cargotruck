@@ -68,6 +68,18 @@ namespace Cargotruck.Server.Controllers
             return LocalRedirect("/Admin");
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Update(RegisterRequest parameters)
+        {
+            var user = _context.Users.FirstOrDefault(a => a.UserName == User.Identity.Name);
+            user.UserName = parameters.UserName;
+            var result = await _userManager.UpdateAsync(user);
+            await _userManager.AddToRoleAsync(user, parameters.Role);
+            await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("img", parameters.Img));
+            if (!result.Succeeded) return BadRequest(result.Errors.FirstOrDefault()?.Description);
+            return LocalRedirect("/Admin");
+        }
+
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> Logout()

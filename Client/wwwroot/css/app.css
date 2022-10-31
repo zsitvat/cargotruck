@@ -12,6 +12,10 @@ h1{
     font-size:16px;
 }
 
+ul{
+    padding:0.5rem;
+}
+
 a, .btn-link {
     color: black;
 }
@@ -97,13 +101,6 @@ a:active {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
-
-.culture-selector {
-    width: 50px;
-    margin-left: 10px;
-    margin-right: 5%;
-    float: left;
-}
 
 .about {
     position: absolute;
@@ -192,9 +189,6 @@ th{
     padding: 0.5rem 0.5rem;
 }
 
-.card {
-    margin-right: 5%;
-}
 
 .top-row[b-ffa6apske8] {
     height: 3.5rem;
@@ -229,6 +223,20 @@ th{
     width: 20rem;
 }
 
+.form-signin {
+    margin-left: 2%;
+}
+
+.input-only {
+    margin-top: 0.8rem;
+}
+
+@media (min-width: 1400px) {
+    .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+        max-width: 1520px !important;
+    }
+}
+
 .username {
     margin-right: 5rem;
     text-decoration: none;
@@ -243,12 +251,13 @@ ul, li {
 
 .username-dropdown {
     position: absolute;
-    top: 3.5rem;
-    right: 8.5rem;
+    top: 3rem;
+    right: 10.85rem;
     background-color: white;
-    border: 1px solid grey;
-    border-radius:2px;
-    max-width:10rem;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: 4px;
+    max-width: 10rem;
+    padding: 0;
 }
 
 
@@ -279,7 +288,7 @@ ul, li {
 }
 
 .username-dropdown li a {
-    margin:0px !important;
+    margin: 0px !important;
 }
 
 .username-dropdown li a:hover, a:link {
@@ -287,31 +296,42 @@ ul, li {
     color: #212529;
 }
 
-.form-signin {
-    margin-left: 2%;
-}
-
-.input-only {
-    margin-top: 0.8rem;
-}
-
-@media (min-width: 1400px) {
-    .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
-        max-width: 1520px !important;
-    }
-}
-
 
 .profile_picture {
-    min-width: 200px;
-    min-height: 150px;
+    min-width: 150px;
+    min-height: 100px;
     max-width: 300px;
     max-height: 220px;
     margin-bottom: 2%;
-    border-radius:52px;
+    border-radius:60px;
+}
+
+.small_profile_picture {
+    max-width: 50px;
+    max-height: 50px;
+    margin-bottom: 2%;
+    border-radius: 100px;
+}
+
+.top-nav-profile {
+    border: 1px solid rgba(0,0,0,.125);
+    padding: 0.1rem;
+    cursor: pointer;
+    border-radius:4px;
 }
 
 
-.top-row[b-afudbecg3u] a{
-    margin-left:0rem !important;
+.top-row[b-afudbecg3u] a {
+    margin-left: 0rem !important;
+}
+
+.col-md-4{
+    width:fit-content !important;
+}
+
+.culture-selector {
+    width: 50px;
+    margin-left: 10px;
+    margin-right: 5%;
+    float: left;
 }

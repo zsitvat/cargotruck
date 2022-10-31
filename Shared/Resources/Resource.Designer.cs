@@ -268,11 +268,20 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit profile.
+        ///   Looks up a localized string similar to Módosít.
         /// </summary>
         public static string Edit {
             get {
                 return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profil szerkesztése.
+        /// </summary>
+        public static string Edit_profile {
+            get {
+                return ResourceManager.GetString("Edit_profile", resourceCulture);
             }
         }
         

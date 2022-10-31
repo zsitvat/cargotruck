@@ -1,0 +1,56 @@
+﻿<div class="col-md-4 stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <EditForm class="form-signin" OnValidSubmit="OnSubmit" Model="registerRequest">
+                <DataAnnotationsValidator />
+
+                <label for="inputUsername" class="sr-only">@localizer["Username"]</label>
+                <InputText id="inputUsername" class="form-control" autofocus @bind-Value="@registerRequest.UserName" />
+                <ValidationMessage For="@(() => registerRequest.UserName)" />
+
+                <label for="inputPassword" class="sr-only">@localizer["Password"]</label>
+                <InputText type="password" id="inputPassword" class="form-control" @bind-Value="@registerRequest.Password" />
+                <ValidationMessage For="@(() => registerRequest.Password)" />
+
+                <label for="inputPasswordConfirm" class="sr-only">@localizer["PasswordConfirm"]</label>
+                <InputText type="password" id="inputPasswordConfirm" class="form-control" @bind-Value="@registerRequest.PasswordConfirm" />
+                <ValidationMessage For="@(() => registerRequest.PasswordConfirm)" />
+
+                <label for="inputRole" class="sr-only">@localizer["Role"]</label>
+                <select for="inputRole" class="form-control" name="role" id="role" @bind="@registerRequest.Role">
+                    <option value="User">@localizer["User"]</option>
+                    <option value="Admin">@localizer["Admin"]</option>
+                    <option value="Driver">@localizer["Driver"]</option>
+                    <option value="Manager">@localizer["Manager"]</option>
+                    <option value="Storageman">@localizer["Storageman"]</option>
+                </select>
+
+                <button class="btn btn-lg btn-primary btn-block" type="submit">@localizer["Edit"]</button>
+
+                <label class="text-danger">@error</label>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+@code {
+    @functions {
+
+        RegisterRequest registerRequest { get; set; } = new RegisterRequest();
+        string error { get; set; }
+
+        async Task OnSubmit()
+        {
+            error = null;
+            try
+            {
+                await authStateProvider.Update();
+                navigationManager.NavigateTo("/profile");
+            }
+            catch (Exception ex)
+            {
+                error = ex.Message;
+            }
+        }
+    }
+}
