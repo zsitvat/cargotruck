@@ -54,5 +54,10 @@ namespace Cargotruck.Client.Services
             await api.Register(registerParameters);
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
         }
+        public async Task Update(RegisterRequest updateParameters)
+        {
+            await api.Register(updateParameters);
+            NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
+        }
     }
 }

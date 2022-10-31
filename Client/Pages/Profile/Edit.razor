@@ -44,7 +44,7 @@
             error = null;
             try
             {
-                await authStateProvider.Update();
+                await authStateProvider.Update(registerRequest);
                 navigationManager.NavigateTo("/profile");
             }
             catch (Exception ex)

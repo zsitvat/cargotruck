@@ -73,7 +73,9 @@ namespace Cargotruck.Server.Controllers
         {
             var user = _context.Users.FirstOrDefault(a => a.UserName == User.Identity.Name);
             user.UserName = parameters.UserName;
+            await _userManager.ReplaceClaimAsync()
             var result = await _userManager.UpdateAsync(user);
+
             await _userManager.AddToRoleAsync(user, parameters.Role);
             await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("img", parameters.Img));
             if (!result.Succeeded) return BadRequest(result.Errors.FirstOrDefault()?.Description);
