@@ -4,13 +4,14 @@
 @using Microsoft.Extensions.Localization
 @inject IStringLocalizer<Resource> localizer
 
-<h1 class="h4 font-weight-normal login-title ">
-    @localizer["Profile"]
-</h1>
 
-<div class="col-md-4 stretch-card d-inline-block">
+
+<div class="col-md-4 stretch-card d-inline-block align-center">
     <div class="card" >
-        <div class="card-body" >
+        <div class="card-body">
+            <h1 class="h4 font-weight-normal login-title ">
+                @localizer["Profile"]
+            </h1>
             <AuthorizeView>
                 <Authorized>
                     <ul>
@@ -65,7 +66,7 @@
 
 
 @if(edit){
-    <Edit/>
+    <Edit />
 }
 
 @code {

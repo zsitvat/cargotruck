@@ -2,6 +2,16 @@
 
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: rgba(243, 246, 249, 0.5);
+}
+
+
+.btn-primary {
+    opacity: 0.9;
+}
+
+.btn-primary:hover {
+    opacity:1;
 }
 
 h1:focus {
@@ -325,8 +335,21 @@ ul, li {
     margin-left: 0rem !important;
 }
 
-.col-md-4{
-    width:fit-content !important;
+.col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8 {
+    width: fit-content !important;
+    margin-right:2rem;
+}
+
+.card {
+    min-height: 38rem;
+    min-width: 24rem;
+    box-shadow: 0 0 1px rgb(0 0 0 / 15%);
+}
+
+.card2{
+    min-height: 1rem;
+    min-width:18rem;
+    box-shadow: 0 0 1px rgb(0 0 0 / 15%);
 }
 
 .culture-selector {
@@ -334,4 +357,14 @@ ul, li {
     margin-left: 10px;
     margin-right: 5%;
     float: left;
+}
+
+.profile-form input{
+    width:20rem;
+    margin-top:1%;
+}
+
+
+.culture-selector:hover {
+    background-color: #d6d5d5;
 }

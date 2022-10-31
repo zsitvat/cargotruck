@@ -7,7 +7,13 @@
 <div>
 <AuthorizeView>
     <Authorized>
-        <h1>@localizer["Hello"] @context.User.Identity.Name !</h1>
+        <div class="col-md-1 stretch-card">
+            <div class="card card2  ps-2">
+                <div class="card-body">
+                    <h1>@localizer["Hello"] @context.User.Identity.Name !</h1>
+                </div>
+            </div>
+        </div>
     </Authorized>
     <Authorizing>
         <img src="~/css/img/loading.gif" alt="loading" width="500" height="600">

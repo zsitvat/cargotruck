@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Microsoft.JSInterop;
+using Newtonsoft.Json.Linq;
 using System.Data.Entity;
 using System.Globalization;
 using System.Security.Claims;
@@ -36,6 +37,7 @@ namespace Cargotruck.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginRequest request)
         {
+            //if no user, create admin
             if (!_userManager.Users.Any())
             {
                 var admin = new Users();
@@ -46,6 +48,7 @@ namespace Cargotruck.Server.Controllers
                 await _userManager.AddToRoleAsync(admin, "Admin");
                 await _userManager.AddClaimAsync(admin, new System.Security.Claims.Claim("img", "/img/profile.png"));
             }
+
             var password_error = _localizer["Password_error"].Value;
             var user = await _userManager.FindByNameAsync(request.UserName);
             if (user == null) return BadRequest("Not found");
@@ -63,23 +66,30 @@ namespace Cargotruck.Server.Controllers
             user.UserName = parameters.UserName;
             var result = await _userManager.CreateAsync(user, parameters.Password);
             await _userManager.AddToRoleAsync(user, parameters.Role);
-            await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("img", parameters.Img));
+            await _userManager.AddClaimAsync(user, new Claim("img", parameters.Img));
             if (!result.Succeeded) return BadRequest(result.Errors.FirstOrDefault()?.Description);
             return LocalRedirect("/Admin");
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(RegisterRequest parameters)
+        public async Task<IActionResult> Update(UpdateRequest parameters)
         {
+            var Claims = User.Claims.ToDictionary(c => c.Type, c => c.Value);
             var user = _context.Users.FirstOrDefault(a => a.UserName == User.Identity.Name);
+           
+            if (user == null) return BadRequest();
             user.UserName = parameters.UserName;
-            await _userManager.ReplaceClaimAsync()
+            user.PhoneNumber = parameters.PhoneNumber;
+            user.Email = parameters.Email;
+            var role = Claims["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+            System.Diagnostics.Debug.WriteLine(role);
             var result = await _userManager.UpdateAsync(user);
-
+          
+            await _userManager.ReplaceClaimAsync(user, new Claim("img", Claims["img"]), new Claim("img", parameters.Img));
+            await _userManager.RemoveFromRoleAsync(user, role);
             await _userManager.AddToRoleAsync(user, parameters.Role);
-            await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("img", parameters.Img));
             if (!result.Succeeded) return BadRequest(result.Errors.FirstOrDefault()?.Description);
-            return LocalRedirect("/Admin");
+            return Ok();
         }
 
         [Authorize]
