@@ -260,7 +260,7 @@ ul, li {
     top: 3.55rem;
     right: 12rem;
     background-color: white;
-    outline: 2px solid rgba(0,0,0,.125);
+    outline: 2px solid rgba(0,0,0,.075);
     border-radius: 2px;
     padding: 0;
     z-index:250;
@@ -299,7 +299,7 @@ ul, li {
 }
 
 .username-dropdown li:hover {
-    background-color: #d6d5d5;
+    background-color: rgba(0,0,0,.075);
 }
 
 .username-dropdown li a {
@@ -308,7 +308,7 @@ ul, li {
 
 .username-dropdown li a:hover, a:link {
     text-decoration: none;
-    color: #212529;
+    color: rgba(0,0,0,.075);
 }
 
 
@@ -329,11 +329,16 @@ ul, li {
 }
 
 .top-nav-profile {
-    border: 0px solid rgba(0,0,0,.125);
+    border: 0px solid rgba(0,0,0,.075);
     padding: 0.1rem;
     cursor: pointer;
     border-radius:4px;
 }
+
+.top-nav-profile:hover {
+    background-color: rgba(0,0,0,.075);
+}
+
 
 
 .top-row[b-afudbecg3u] a {
@@ -350,9 +355,8 @@ ul, li {
 }
 
 .culture-selector:hover {
-    background-color: #d6d5d5;
+    background-color: rgba(0,0,0,.075);
 }
-
 
 
 @media (min-width: 1024px) {

@@ -309,6 +309,9 @@
   <data name="Id_cargo" xml:space="preserve">
     <value>Cargo ID</value>
   </data>
+  <data name="Image" xml:space="preserve">
+    <value>Profile image</value>
+  </data>
   <data name="Login" xml:space="preserve">
     <value>Login</value>
   </data>

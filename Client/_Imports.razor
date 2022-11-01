@@ -19,6 +19,17 @@
 @using Microsoft.AspNetCore.Authorization;
 @using Cargotruck.Shared.Models
 @using Cargotruck.Client.Services
+@using System.Linq
+@using System.Net.Http.Headers
+@using Microsoft.Extensions.Logging
+
+
+
+
+
+
+
+@inject HttpClient Http
 @inject NavigationManager navigationManager
 @inject CustomStateProvider authStateProvider
 @inject HttpClient client
