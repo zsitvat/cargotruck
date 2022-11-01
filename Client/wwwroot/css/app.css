@@ -164,10 +164,6 @@ th{
     font-size: 14px;
 }
 
-.card-body {
-    margin-right: 1%;
-}
-
 .forms-margin {
     margin-left: 20%;
 }
@@ -248,7 +244,7 @@ th{
 }
 
 .username {
-    margin-right: 5rem;
+    margin-right: 3rem;
     text-decoration: none;
     list-style-type: none;
 }
@@ -260,14 +256,14 @@ ul, li {
 }
 
 .username-dropdown {
-    position: absolute;
-    top: 3rem;
-    right: 10.85rem;
+    position: fixed;
+    top: 3.55rem;
+    right: 12rem;
     background-color: white;
-    border: 1px solid rgba(0,0,0,.125);
-    border-radius: 4px;
-    max-width: 10rem;
+    outline: 2px solid rgba(0,0,0,.125);
+    border-radius: 2px;
     padding: 0;
+    z-index:250;
 }
 
 
@@ -288,9 +284,18 @@ ul, li {
     background-color: white;
     padding: 0.375rem 0rem;
     font-size: 1rem;
-    border-radius: 0;
     transition: color 0.15s ease-in-out 0s, background-color 0.15s ease-in-out 0s, border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
     text-align: left;
+}
+
+.username-dropdown li:first-child {
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+}
+
+.username-dropdown li:last-child{
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
 }
 
 .username-dropdown li:hover {
@@ -324,7 +329,7 @@ ul, li {
 }
 
 .top-nav-profile {
-    border: 1px solid rgba(0,0,0,.125);
+    border: 0px solid rgba(0,0,0,.125);
     padding: 0.1rem;
     cursor: pointer;
     border-radius:4px;
@@ -335,36 +340,154 @@ ul, li {
     margin-left: 0rem !important;
 }
 
-.col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8 {
-    width: fit-content !important;
-    margin-right:2rem;
-}
-
-.card {
-    min-height: 38rem;
-    min-width: 24rem;
-    box-shadow: 0 0 1px rgb(0 0 0 / 15%);
-}
-
-.card2{
-    min-height: 1rem;
-    min-width:18rem;
-    box-shadow: 0 0 1px rgb(0 0 0 / 15%);
-}
 
 .culture-selector {
-    width: 50px;
-    margin-left: 10px;
-    margin-right: 5%;
+    width: fit-content;
+    margin-left: 1px;
+    margin-right: 10%;
     float: left;
+    padding:5px 8px;
 }
-
-.profile-form input{
-    width:20rem;
-    margin-top:1%;
-}
-
 
 .culture-selector:hover {
     background-color: #d6d5d5;
+}
+
+
+
+@media (min-width: 1024px) {
+    .card {
+        padding-top:1rem;
+        min-height: 34rem;
+        min-width: 23rem;
+        box-shadow: 0 0 1px rgb(0 0 0 / 15%);
+    }
+
+    .card2 {
+        padding-top: 0.5rem;
+        min-height: 1rem;
+        min-width: 18rem;
+        box-shadow: 0 0 1px rgb(0 0 0 / 15%);
+        padding-left: 8%;
+    }
+
+    .card table {
+        padding-left: 4%;
+    }
+
+    .profile-form {
+        padding-left: 4%;
+    }
+
+    .profile-form input {
+        width: 18rem;
+        margin-top: 1%;
+    }
+
+    .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8 {
+        width: fit-content !important;
+        margin-right: 0.2%;
+    }
+}
+@media (min-width: 1230px) {
+    .card table {
+        padding-left: 8%;
+    }
+}
+@media (max-width: 1920px) {
+    .hide {
+        display: none;
+    }
+}
+
+@media (max-width: 1220px) {
+    .card {
+        min-width: 110%;
+        padding-left: 1%;
+    }
+
+    .profile-form input {
+        width: 17.9rem;
+        margin-top: 1%;
+    }
+
+    .card2 {
+        padding-top:0.5rem;
+        min-width: 18rem;
+        min-height: fit-content;
+    }
+
+    .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8 {
+        width: fit-content !important;
+        margin-right: 5%;
+    }
+}
+
+
+@media (max-width: 1024px) {
+    .profile-form {
+        margin-left: 10%;
+    }
+    .card {
+        min-width: 125%;
+        min-height: fit-content;
+        padding-left: 12%;
+    }
+
+
+    .profile-form input {
+        width: 17.9rem;
+        margin-top: 1%;
+    }
+
+    .card2 {
+        min-width: 18rem;
+        min-height: fit-content;
+    }
+
+    .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8 {
+        width: fit-content !important;
+        margin-right: 5.5%;
+    }
+}
+
+@media (max-width: 640px) {
+    .hide {
+        display: block;
+    }
+    .profile-form {
+        margin-left: 10%;
+    }
+
+    .card {
+        margin-top: 2%;
+    }
+}
+
+@media (max-width: 430px) {
+
+    .profile-form {
+        margin-left: 0%;
+    }
+
+    .card {
+        min-width: 105%;
+        min-height: fit-content;
+        padding-left: 2%;
+    }
+
+    .card2 {
+        min-width: 105%;
+        min-height: fit-content;
+    }
+
+    .profile-form input {
+        width: 17.9rem;
+        margin-top: 1%;
+    }
+}
+
+tr td:first-child {
+    padding-right: 15px !important;
+    padding-left: 20px !important;
 }

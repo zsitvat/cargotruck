@@ -12,7 +12,7 @@ namespace Cargotruck.Shared.Models
     {
         [Required]
         public string UserName { get; set; }
-        [Required]
+        [Required(ErrorMessageResourceName = "Error_password", ErrorMessageResourceType = typeof(Resource))]
         public string Password { get; set; }
         public string Role { get; set; } = "User";
 

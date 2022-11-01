@@ -59,5 +59,10 @@ namespace Cargotruck.Client.Services
             await api.Update(updateParameters);
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
         }
+        public async Task ChangePassword(ChangePasswordRequest updateParameters)
+        {
+            await api.ChangePassword(updateParameters);
+            NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
+        }
     }
 }

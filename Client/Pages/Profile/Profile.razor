@@ -48,12 +48,10 @@
                                     <td><b>@localizer["Email"]:</b></td>
                                     <td>@currentUserEmail</td>
                                 </tr>
-                            
-                        </table>
-                       
-                    <tr>
-                        <td><a class="btn btn-sm btn-primary btn-block m-4" @onclick="@(() => edit=!edit)"> <span class="oi oi-pencil" aria-hidden="true"></span> @localizer["Edit_profile"]</a></td>
-                    </tr>
+                            <a class="btn btn-sm btn-primary mt-4" @onclick="@(() => edit=!edit)"> <span class="oi oi-pencil" aria-hidden="true"></span> @localizer["Edit_profile"]</a>
+                            <br />
+                            <a class="btn btn-sm btn-primary mt-2" @onclick="@(() => changePassword=!changePassword)"> <span class="iconify" style="margin-right:2px;" data-icon="carbon:password" aria-hidden="true"></span>@localizer["Change_password"]</a>
+                        </table>                 
                     </ul>
                 </Authorized>
                 <Authorizing>
@@ -65,15 +63,22 @@
 </div>
 
 
+
 @if(edit){
     <Edit />
 }
+@if (changePassword)
+{
+    <ChangePassword />
+}
 
 @code {
-    private bool edit=false;
+    private bool edit = false;
+    private bool changePassword = false;
 
     public string currentUserPhone { get; set; }
     public string currentUserEmail { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
         var user = await authStateProvider.GetCurrentUser();

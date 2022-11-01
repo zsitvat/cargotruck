@@ -1,23 +1,15 @@
 ﻿<div class="col-md-6 stretch-card d-inline-block ">
     <div class="card ps-2">
-        <div class="card-body ">
-            <h1 class="h4 font-weight-normal login-title">
+        <div class="card-body">
+            <h1 class="h4 font-weight-normal login-title align-center">
                 @localizer["Edit_profile"]
             </h1>
-            <EditForm class="form-signin profile-form" OnValidSubmit="OnSubmit" Model="updateRequest">
+            <EditForm class="profile-form" OnValidSubmit="OnSubmit" Model="updateRequest">
                 <DataAnnotationsValidator />
 
                 <label for="inputUsername" class="input-only">@localizer["Username"]</label>
                 <InputText id="inputUsername" class="form-control" autofocus @bind-Value="@updateRequest.UserName" />
                 <ValidationMessage For="@(() => updateRequest.UserName)" />
-
-                <label for="inputPassword" class="input-only">@localizer["Password"]</label>
-                <InputText type="password" id="inputPassword" class="form-control" @bind-Value="@updateRequest.Password" />
-                <ValidationMessage For="@(() => updateRequest.Password)" />
-
-                <label for="inputPasswordConfirm" class="input-only">@localizer["PasswordConfirm"]</label>
-                <InputText type="password" id="inputPasswordConfirm" class="form-control" @bind-Value="@updateRequest.PasswordConfirm" />
-                <ValidationMessage For="@(() => updateRequest.PasswordConfirm)" />
 
                 <label for="inputEmail" class="input-only">@localizer["Email"]</label>
                 <InputText type="text" id="inputEmail" class="form-control" @bind-Value="@updateRequest.Email" />
@@ -26,22 +18,27 @@
                 <label for="inputPhoneNumber" class="input-only">@localizer["Phone_number"]</label>
                 <InputText type="text" id="inputPhoneNumber" class="form-control" @bind-Value="@updateRequest.PhoneNumber" />
                 <ValidationMessage For="@(() => updateRequest.PhoneNumber)" />
-
-                <label for="inputRole" class="input-only">@localizer["Role"]</label>
-                <select for="inputRole" class="form-control" name="role" id="role" @bind="@updateRequest.Role">
-                    <option value="User">@localizer["User"]</option>
-                    <option value="Admin">@localizer["Admin"]</option>
-                    <option value="Driver">@localizer["Driver"]</option>
-                    <option value="Manager">@localizer["Manager"]</option>
-                    <option value="Storageman">@localizer["Storageman"]</option>
-                </select>
-                <button class="btn btn-sm btn-primary btn-block mt-3" type="submit">@localizer["Edit"]</button>
-
+                <AuthorizeView Roles="Admin" Context="admin">
+                    <label for="inputRole" class="input-only">@localizer["Role"]</label>
+                    <select for="inputRole" class="form-control" name="role" id="role" @bind="@updateRequest.Role">
+                        <option value="User">@localizer["User"]</option>
+                        <option value="Admin">@localizer["Admin"]</option>
+                        <option value="Driver">@localizer["Driver"]</option>
+                        <option value="Manager">@localizer["Manager"]</option>
+                        <option value="Storageman">@localizer["Storageman"]</option>
+                    </select>
+                </AuthorizeView>
+                 <div class="container">
+                    <div class="col-md-12 text-center">
+                        <button class="btn btn-primary btn-block mt-4  center-button" type="submit">@localizer["Edit"]</button>
+                    </div>
+                </div>
                 <label class="text-danger">@error</label>
             </EditForm>
         </div>
     </div>
 </div>
+
 
 @code {
     @functions {

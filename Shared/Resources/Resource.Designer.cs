@@ -61,6 +61,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fiók.
+        /// </summary>
+        public static string Account {
+            get {
+                return ResourceManager.GetString("Account", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Adminisztrátor.
         /// </summary>
         public static string Admin {
@@ -129,6 +138,15 @@ namespace Cargotruck.Shared.Resources {
         public static string Cargoes {
             get {
                 return ResourceManager.GetString("Cargoes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jelszó megváltoztatása.
+        /// </summary>
+        public static string Change_password {
+            get {
+                return ResourceManager.GetString("Change_password", resourceCulture);
             }
         }
         
@@ -741,6 +759,15 @@ namespace Cargotruck.Shared.Resources {
         public static string Password {
             get {
                 return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jelenlegi jelszó.
+        /// </summary>
+        public static string Password_current {
+            get {
+                return ResourceManager.GetString("Password_current", resourceCulture);
             }
         }
         

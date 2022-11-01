@@ -83,9 +83,24 @@
     <Authorized>
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="Admin">
-                <span class="iconify" data-icon="bi:person-square"></span>@localizer["Account"]
+                <span class="iconify" data-icon="bi:person-square"></span>@localizer["Admin"]
             </NavLink>
         </div>
+    </Authorized>
+</AuthorizeView>
+
+<AuthorizeView>
+    <Authorized>
+     <div class="nav-item px-3 hide">
+        <NavLink class="nav-link" href="profile">
+            <span class="iconify" data-icon="akar-icons:person"></span>@localizer["Profile"]
+        </NavLink>
+    </div>
+     <div class="nav-item px-3 hide">
+        <NavLink class="nav-link" @onclick="@LogoutClick">
+            <span class="iconify" data-icon="ic:twotone-logout"></span>@localizer["Logout"]
+        </NavLink>
+    </div>
     </Authorized>
 </AuthorizeView>
 
@@ -102,4 +117,11 @@
     {
         collapseNavMenu = !collapseNavMenu;
     }
+
+    async Task LogoutClick()
+    {
+        await authStateProvider.Logout();
+        navigationManager.NavigateTo("/login");
+    }
+
 }

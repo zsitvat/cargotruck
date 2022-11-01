@@ -43,5 +43,12 @@ namespace Cargotruck.Client.Services
             if (result.StatusCode == System.Net.HttpStatusCode.BadRequest) throw new Exception(await result.Content.ReadAsStringAsync());
             result.EnsureSuccessStatusCode();
         }
+
+        public async Task ChangePassword(ChangePasswordRequest changePassword)
+        {
+            var result = await _httpClient.PostAsJsonAsync("api/auth/changepassword", changePassword);
+            if (result.StatusCode == System.Net.HttpStatusCode.BadRequest) throw new Exception(await result.Content.ReadAsStringAsync());
+            result.EnsureSuccessStatusCode();
+        }
     }
 }

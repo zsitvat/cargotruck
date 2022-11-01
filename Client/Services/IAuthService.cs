@@ -7,6 +7,7 @@ namespace Cargotruck.Client.Services
         Task Login(LoginRequest loginRequest);
         Task Register(RegisterRequest registerRequest);
         Task Update(UpdateRequest UpdateRequest);
+        Task ChangePassword(ChangePasswordRequest changePassword);
         Task Logout();
         Task<CurrentUser> CurrentUserInfo();
     }

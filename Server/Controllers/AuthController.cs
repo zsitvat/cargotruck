@@ -78,16 +78,24 @@ namespace Cargotruck.Server.Controllers
             var user = _context.Users.FirstOrDefault(a => a.UserName == User.Identity.Name);
            
             if (user == null) return BadRequest();
-            user.UserName = parameters.UserName;
-            user.PhoneNumber = parameters.PhoneNumber;
-            user.Email = parameters.Email;
+            user.UserName = parameters.UserName !=null ? parameters.UserName : user.UserName;
+            user.PhoneNumber = parameters.PhoneNumber != null ? parameters.PhoneNumber : user.PhoneNumber; 
+            user.Email = parameters.Email != null ? parameters.Email : user.Email;
             var role = Claims["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
             System.Diagnostics.Debug.WriteLine(role);
             var result = await _userManager.UpdateAsync(user);
-          
             await _userManager.ReplaceClaimAsync(user, new Claim("img", Claims["img"]), new Claim("img", parameters.Img));
             await _userManager.RemoveFromRoleAsync(user, role);
             await _userManager.AddToRoleAsync(user, parameters.Role);
+            if (!result.Succeeded) return BadRequest(result.Errors.FirstOrDefault()?.Description);
+            return Ok();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordRequest parameters)
+        {
+            var user = _context.Users.FirstOrDefault(a => a.UserName == User.Identity.Name);
+            var result = await _userManager.ChangePasswordAsync(user, parameters.PasswordCurrent, parameters.Password);
             if (!result.Succeeded) return BadRequest(result.Errors.FirstOrDefault()?.Description);
             return Ok();
         }
