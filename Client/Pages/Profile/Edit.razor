@@ -20,17 +20,15 @@
                 <ValidationMessage For="@(() => updateRequest.PhoneNumber)" />
                 <AuthorizeView Roles="Admin" Context="admin">
                     <label for="inputRole" class="input-only">@localizer["Role"]</label>
-                    <select for="inputRole" class="form-control" name="role" id="role" @bind="@updateRequest.Role">
-                        <option value="User">@localizer["User"]</option>
+                    <select selectedValue="" for="inputRole" class="form-control" name="role" id="role" @bind="@updateRequest.Role">
+                        <option value="" disabled >@localizer["Select_placeholder"]</option>
                         <option value="Admin">@localizer["Admin"]</option>
+                        <option value="User">@localizer["User"]</option>
                         <option value="Driver">@localizer["Driver"]</option>
                         <option value="Manager">@localizer["Manager"]</option>
                         <option value="Storageman">@localizer["Storageman"]</option>
                     </select>
                 </AuthorizeView>
-                <label for="inputimg" class="input-only">@localizer["Image"]</label>
-                <InputFile type="text" id="inputimg" class="form-control" OnChange="@OnInputFileChange" @bind-Value="@updateRequest.Img" />
-                <ValidationMessage For="@(() => updateRequest.Img)" />
                  <div class="container">
                     <div class="col-md-12 text-center">
                         <button class="btn btn-primary btn-block mt-4  center-button" type="submit">@localizer["Edit"]</button>
@@ -38,14 +36,15 @@
                 </div>
                 <label class="text-danger">@error</label>
             </EditForm>
-        </div>
+
+            <ChangeProfilePicture />
+       </div>
     </div>
 </div>
 
 
 
 @functions {
-
     UpdateRequest updateRequest { get; set; } = new UpdateRequest();
     string error { get; set; }
 
@@ -61,91 +60,6 @@
         {
             error = ex.Message;
         }
-    }
-
-    private List<File> files = new();
-    private List<UploadResult> uploadResults = new();
-    private int maxAllowedFiles = 3;
-    private bool shouldRender;
-
-    protected override bool ShouldRender() => shouldRender;
-
-    private async Task OnInputFileChange(InputFileChangeEventArgs e)
-    {
-        shouldRender = false;
-        long maxFileSize = 1024 * 3000;
-        var upload = false;
-
-        using var content = new MultipartFormDataContent();
-
-        foreach (var file in e.GetMultipleFiles(maxAllowedFiles))
-        {
-            if (uploadResults.SingleOrDefault(
-                f => f.FileName == file.Name) is null)
-            {
-                try
-                {
-                    var fileContent =
-                        new StreamContent(file.OpenReadStream(maxFileSize));
-
-                    fileContent.Headers.ContentType =
-                        new MediaTypeHeaderValue(file.ContentType);
-
-                    files.Add(new() { Name = file.Name });
-
-                    content.Add(
-                        content: fileContent,
-                        name: "\"img\"",
-                        fileName: file.Name);
-
-                    upload = true;
-                }
-                catch (Exception ex)
-                {
-                    error = "{FileName} not uploaded (Err: 6): {Message}" + file.Name +  ex.Message;
-
-                    uploadResults.Add(
-                        new()
-                            {
-                                FileName = file.Name,
-                                ErrorCode = 6,
-                                Uploaded = false
-                            });
-                }
-            }
-        }
-
-        if (upload)
-        {
-            var response = await Http.PostAsync("/Filesave", content);
-
-            var newUploadResults = await response.Content
-                .ReadFromJsonAsync<IList<UploadResult>>();
-
-            if (newUploadResults is not null)
-            {
-                uploadResults = uploadResults.Concat(newUploadResults).ToList();
-            }
-        }
-
-        shouldRender = true;
-    }
-
-    private static bool FileUpload(IList<UploadResult> uploadResults, string? fileName,  out UploadResult result, string error)
-    {
-        result = uploadResults.SingleOrDefault(f => f.FileName == fileName) ?? new();
-
-        if (!result.Uploaded)
-        {
-            error = fileName + " not uploaded!";
-        }
-
-        return result.Uploaded;
-    }
-
-    private class File
-    {
-        public string? Name { get; set; }
     }
 }
 

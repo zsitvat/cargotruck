@@ -84,7 +84,7 @@ namespace Cargotruck.Server.Controllers
             var role = Claims["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
             System.Diagnostics.Debug.WriteLine(role);
             var result = await _userManager.UpdateAsync(user);
-            await _userManager.ReplaceClaimAsync(user, new Claim("img", Claims["img"]), new Claim("img", parameters.Img));
+
             await _userManager.RemoveFromRoleAsync(user, role);
             await _userManager.AddToRoleAsync(user, parameters.Role);
             if (!result.Succeeded) return BadRequest(result.Errors.FirstOrDefault()?.Description);

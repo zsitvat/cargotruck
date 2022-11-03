@@ -1006,6 +1006,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Válaszd ki....
+        /// </summary>
+        public static string Select_placeholder {
+            get {
+                return ResourceManager.GetString("Select_placeholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Szállítási követelmények.
         /// </summary>
         public static string Shipping_requirements {

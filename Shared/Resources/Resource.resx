@@ -432,6 +432,9 @@
   <data name="Section" xml:space="preserve">
     <value>Raktár szekció</value>
   </data>
+  <data name="Select_placeholder" xml:space="preserve">
+    <value>Válaszd ki...</value>
+  </data>
   <data name="Shipping_requirements" xml:space="preserve">
     <value>Szállítási követelmények</value>
   </data>

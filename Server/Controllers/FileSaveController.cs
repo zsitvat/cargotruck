@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
-using Cargotruck.Shared.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Cargotruck.Shared.Models;
+using Cargotruck.Server.Models;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
+using Cargotruck.Data;
 
 [ApiController]
 [Route("[controller]")]
@@ -15,12 +19,14 @@ public class FilesaveController : ControllerBase
 {
     private readonly IWebHostEnvironment env;
     private readonly ILogger<FilesaveController> logger;
-
-    public FilesaveController(IWebHostEnvironment env,
-        ILogger<FilesaveController> logger)
+    private readonly UserManager<Users> _userManager;
+    private readonly ApplicationDbContext _context;
+    public FilesaveController(IWebHostEnvironment env,ILogger<FilesaveController> logger, UserManager<Users> userManager, ApplicationDbContext context)
     {
+        _userManager = userManager;
         this.env = env;
         this.logger = logger;
+        _context = context;
     }
 
     [HttpPost]
@@ -62,8 +68,7 @@ public class FilesaveController : ControllerBase
                     try
                     {
                         trustedFileNameForFileStorage = Path.GetRandomFileName();
-                        var path = Path.Combine(env.ContentRootPath,
-                            env.EnvironmentName, "img/",
+                        var path = Path.Combine(env.ContentRootPath, "Images",
                             trustedFileNameForFileStorage);
 
                         await using FileStream fs = new(path, FileMode.Create);
@@ -73,6 +78,10 @@ public class FilesaveController : ControllerBase
                             trustedFileNameForDisplay, path);
                         uploadResult.Uploaded = true;
                         uploadResult.StoredFileName = trustedFileNameForFileStorage;
+
+                        var user = _context.Users.FirstOrDefault(a => a.UserName == User.Identity.Name);
+                        var Claims = User.Claims.ToDictionary(c => c.Type, c => c.Value);
+                        await _userManager.ReplaceClaimAsync(user, new Claim("img", Claims["img"]), new Claim("img", path));
                     }
                     catch (IOException ex)
                     {

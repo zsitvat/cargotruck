@@ -432,6 +432,9 @@
   <data name="Section" xml:space="preserve">
     <value>Warehouse section</value>
   </data>
+  <data name="Select_placeholder" xml:space="preserve">
+    <value>Select something...</value>
+  </data>
   <data name="Shipping_requirements" xml:space="preserve">
     <value>Shipping requirements</value>
   </data>

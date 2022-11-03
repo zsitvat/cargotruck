@@ -30,22 +30,6 @@ namespace Cargotruck.Server.Controllers
             return Ok(u);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Post(Users u)
-        {
-            _context.Add(u);
-            await _context.SaveChangesAsync();
-            return Ok(u.Id);
-        }
-
-        [HttpPut]
-        public async Task<IActionResult> Put(Users u)
-        {
-            _context.Entry(u).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-            return NoContent();
-        }
-
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
