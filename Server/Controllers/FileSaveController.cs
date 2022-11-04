@@ -12,6 +12,7 @@ using Cargotruck.Server.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using Cargotruck.Data;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 [ApiController]
 [Route("[controller]")]
@@ -67,10 +68,12 @@ public class FilesaveController : ControllerBase
                 {
                     try
                     {
+                        var rootpath = env.ContentRootPath.Replace("\\Server", "\\Client\\") + "wwwroot";
                         trustedFileNameForFileStorage = Path.GetRandomFileName();
-                        var path = Path.Combine(env.ContentRootPath, "Images",
+                        trustedFileNameForFileStorage = Path.ChangeExtension(trustedFileNameForFileStorage, ".jpg");
+                        var path = Path.Combine(rootpath, "img/profiles",
                             trustedFileNameForFileStorage);
-
+                      
                         await using FileStream fs = new(path, FileMode.Create);
                         await file.CopyToAsync(fs);
 
@@ -78,10 +81,12 @@ public class FilesaveController : ControllerBase
                             trustedFileNameForDisplay, path);
                         uploadResult.Uploaded = true;
                         uploadResult.StoredFileName = trustedFileNameForFileStorage;
-
-                        var user = _context.Users.FirstOrDefault(a => a.UserName == User.Identity.Name);
-                        var Claims = User.Claims.ToDictionary(c => c.Type, c => c.Value);
-                        await _userManager.ReplaceClaimAsync(user, new Claim("img", Claims["img"]), new Claim("img", path));
+                        if (uploadResult.Uploaded) { 
+                            var user = _context.Users.FirstOrDefault(a => a.UserName == User.Identity.Name);
+                            var Claims = User.Claims.ToDictionary(c => c.Type, c => c.Value);
+                            var image = "/img/profiles/" + trustedFileNameForFileStorage;
+                            await _userManager.ReplaceClaimAsync(user, new Claim("img", Claims["img"]), new Claim("img",image ));
+                        }
                     }
                     catch (IOException ex)
                     {
@@ -106,4 +111,6 @@ public class FilesaveController : ControllerBase
 
         return new CreatedResult(resourcePath, uploadResults);
     }
+
+
 }

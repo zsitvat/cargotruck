@@ -15,15 +15,15 @@
             <AuthorizeView>
                 <Authorized>
                     <ul>
-                        <table class="table d-inline-block align-left">
-                           
+                        <table class=" d-inline-block align-left"> 
                             @foreach (var claim in context.User.Claims){
-                                //<li>@claim.Type: @claim.Value</li>
 
+                                //<li>@claim.Type: @claim.Value</li>
                                 @if (@claim.Type.Contains("img"))
                                 {
                                     <img src="@claim.Value" class="profile_picture" alt="profile">
                                     <br><br>
+                                 
                                 }
                                 @if(@claim.Type.Contains("role")){
                                   
@@ -78,12 +78,21 @@
 
     public string currentUserPhone { get; set; }
     public string currentUserEmail { get; set; }
-
     protected override async Task OnInitializedAsync()
     {
         var user = await authStateProvider.GetCurrentUser();
         currentUserPhone = user.PhoneNumber;
         currentUserEmail = user.Email;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await authStateProvider.GetAuthenticationStateAsync();
+            InvokeAsync(() => StateHasChanged());
+
+        }
     }
 }
    

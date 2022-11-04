@@ -5,39 +5,8 @@
 @inject HttpClient Http
 @inject ILogger<ChangeProfilePicture> Logger
 
- <label for="inputimg" class="input-only">@localizer["Image"]</label>
+ <label for="inputimg" class="input-only">@localizer["Image"]</label><br>
 <InputFile id="inputimg" class="form-control"  OnChange="@OnInputFileChange" />
-
-@if (files.Count > 0)
-{
-    <div class="card">
-        <div class="card-body">
-            <ul>
-                @foreach (var file in files)
-                {
-                    <li>
-                        File: @file.Name
-                        <br>
-                        @if (FileUpload(uploadResults, file.Name, Logger,
-                           out var result))
-                        {
-                            <span>
-                                Stored File Name: @result.StoredFileName
-                            </span>
-                        }
-                        else
-                        {
-                            <span>
-                                There was an error uploading the file
-                                (Error: @result.ErrorCode).
-                            </span>
-                        }
-                    </li>
-                }
-            </ul>
-        </div>
-    </div>
-}
 
 @code {
     UpdateRequest updateRequest { get; set; } = new UpdateRequest();
@@ -105,9 +74,10 @@
             if (newUploadResults is not null)
             {
                 uploadResults = uploadResults.Concat(newUploadResults).ToList();
-            }
+            } 
+            navigationManager.NavigateTo("/profile", true);
         }
-
+       
         shouldRender = true;
     }
 
@@ -129,4 +99,6 @@
     {
         public string? Name { get; set; }
     }
+
+
 }

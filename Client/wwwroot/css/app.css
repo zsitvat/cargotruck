@@ -395,19 +395,28 @@ ul, li {
 }
 @media (min-width: 1230px) {
     .card table {
-        padding-left: 8%;
+        padding-left: 10%;
     }
+
 }
 @media (max-width: 1920px) {
     .hide {
         display: none;
+    }
+    table img {
+        margin-left:6%;
+        border: 2px solid rgba(0,0,0,.075);
     }
 }
 
 @media (max-width: 1220px) {
     .card {
         min-width: 110%;
-        padding-left: 1%;
+    }
+
+    table img {
+        margin-left: 10%;
+        border: 2px solid rgba(0,0,0,.075);
     }
 
     .profile-form input {
@@ -435,7 +444,6 @@ ul, li {
     .card {
         min-width: 125%;
         min-height: fit-content;
-        padding-left: 6%;
     }
 
 
@@ -469,7 +477,13 @@ ul, li {
 }
 
 @media (max-width: 430px) {
+    .card table {
+        padding-left: 10%;
+    }
 
+    table img{
+        margin-left:5%;
+    }
     .profile-form {
         margin-left: 0%;
     }
@@ -477,7 +491,6 @@ ul, li {
     .card {
         min-width: 105%;
         min-height: fit-content;
-        padding-left: 2%;
     }
 
     .card2 {
