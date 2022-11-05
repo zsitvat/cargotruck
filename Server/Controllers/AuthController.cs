@@ -112,7 +112,7 @@ namespace Cargotruck.Server.Controllers
         public CurrentUser CurrentUserInfo()
         {
             var u = _context.Users.FirstOrDefault(a => a.UserName == User.Identity.Name);
-            if (User.Identity.IsAuthenticated && u != null) { 
+            if (User.Identity.IsAuthenticated && u != null) {
                 return new CurrentUser
                 {
                     IsAuthenticated = User.Identity.IsAuthenticated,
@@ -123,6 +123,7 @@ namespace Cargotruck.Server.Controllers
                     Claims = User.Claims
                         .ToDictionary(c => c.Type, c => c.Value),
                 };
+                 
             }
             else
             {

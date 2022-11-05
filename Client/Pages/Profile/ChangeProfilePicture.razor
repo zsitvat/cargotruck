@@ -10,6 +10,7 @@
 
 @code {
     UpdateRequest updateRequest { get; set; } = new UpdateRequest();
+    LoginRequest loginRequest { get; set; } = new LoginRequest();
     private List<File> files = new();
     private List<UploadResult> uploadResults = new();
     private int maxAllowedFiles = 1;
@@ -73,12 +74,18 @@
 
             if (newUploadResults is not null)
             {
-                uploadResults = uploadResults.Concat(newUploadResults).ToList();
+                uploadResults = uploadResults.Concat(newUploadResults).ToList();  
+        
+
             } 
-            navigationManager.NavigateTo("/profile", true);
+
+          
         }
        
-        shouldRender = true;
+       shouldRender = true;   
+       await authStateProvider.GetCurrentUser();           
+       navigationManager.NavigateTo("/profile", true);       
+     
     }
 
     private static bool FileUpload(IList<UploadResult> uploadResults,

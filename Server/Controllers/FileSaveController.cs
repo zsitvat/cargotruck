@@ -22,9 +22,11 @@ public class FilesaveController : ControllerBase
     private readonly ILogger<FilesaveController> logger;
     private readonly UserManager<Users> _userManager;
     private readonly ApplicationDbContext _context;
-    public FilesaveController(IWebHostEnvironment env,ILogger<FilesaveController> logger, UserManager<Users> userManager, ApplicationDbContext context)
+    private readonly SignInManager<Users> _signInManager;
+    public FilesaveController(IWebHostEnvironment env,ILogger<FilesaveController> logger, UserManager<Users> userManager, ApplicationDbContext context, SignInManager<Users> signInManager)
     {
         _userManager = userManager;
+        _signInManager = signInManager;
         this.env = env;
         this.logger = logger;
         _context = context;
@@ -86,6 +88,14 @@ public class FilesaveController : ControllerBase
                             var Claims = User.Claims.ToDictionary(c => c.Type, c => c.Value);
                             var image = "/img/profiles/" + trustedFileNameForFileStorage;
                             await _userManager.ReplaceClaimAsync(user, new Claim("img", Claims["img"]), new Claim("img",image ));
+                            await _signInManager.RefreshSignInAsync(user);
+                            var deleteold = rootpath + Claims["img"];
+                            if (System.IO.File.Exists(deleteold))
+                            {
+
+                                System.IO.File.Delete(deleteold);
+
+                            }
                         }
                     }
                     catch (IOException ex)
