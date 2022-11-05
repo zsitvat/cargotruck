@@ -15,4 +15,9 @@ Cargotruck/obj
 Client/obj
 Server/obj
 Shared/obj
+Cargotruck/bin
+Client/bin
+Server/bin
+Shared/bin
 *.xlsx
+Client/wwwroot/img/profiles/

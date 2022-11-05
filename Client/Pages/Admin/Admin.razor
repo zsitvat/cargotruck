@@ -1,8 +1,95 @@
 ﻿@page "/Admin"
+@using Cargotruck.Server.Models
+@using Cargotruck.Shared.Models
 @using Cargotruck.Shared.Resources
+@using Microsoft.AspNetCore.Identity
 @using Microsoft.Extensions.Localization
-@inject IStringLocalizer<Resource> localizer
 
-<NavLink href="register">
-    <h6 class="font-weight-normal text-center">Create account</h6>
-</NavLink>
+<h3>@localizer["Admin"]</h3>
+<div class="form-group">
+    <a class="btn btn-success" href="/Register"><i class="oi oi-plus"></i> @localizer["Create_new"]</a>
+</div>
+<br>
+
+@if (users == null)
+{
+    <text>Loading...</text>
+}
+else if (users.Length == 0)
+{
+    <text>No Records Found.</text>
+}
+else
+{
+    <AuthorizeView>
+        <Authorized>
+            <div class="col-md-10 stretch-card">
+                <div class="card-table">
+                    <div class="card-body me-4">
+                        <div class="table-responsive fixed-table-body">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>@localizer["Profile"]</th>
+                                        <th>@localizer["Role"]</th>
+                                        <th>@localizer["Id"]</th>
+                                        <th>@localizer["Username"]</th>
+                                        <th>@localizer["Email"]</th>
+                                        <th>@localizer["Phone_number"]</th>
+                                     
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (Users item in users)
+                                    {
+                                        i += 1;
+                                        <tr>
+                                            <td>@i</td>
+                                            @foreach (var claim in claims)
+                                            {
+                                                if (claim.Key == "img" || claim.Key == "role")
+                                                {
+                                                    <td><img class="table-img" src="@claim.Value" /></td>
+                                                }
+                                            }
+                                            <td>@item.Id</td>
+                                            <td>@item.UserName</td>
+                                            <td>@item.Email</td>
+                                            <td>@item.PhoneNumber</td>
+                                            <td>
+                                                <a class="btn  fixed" href="/profile/Edit/@item.Id"> <span class="oi oi-pencil" aria-hidden="true"></span></a>
+                                                <button class="btn fixed2" @onclick="@(() => Delete(item.Id))"> <span class="oi oi-trash" aria-hidden="true"></span></button>
+                                            </td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </Authorized>   
+    </AuthorizeView>
+}
+@code {
+    Users[] users { get; set; }
+    Dictionary<string,string> claims { get; set; }
+    int i = 0;
+    protected override async Task OnInitializedAsync()
+    {
+        users = await client.GetFromJsonAsync<Users[]>("api/admin");
+        claims = await client.GetFromJsonAsync<Dictionary<string, string>>($"api/admin/claims");
+    }
+
+    async Task Delete(string Id)
+    {
+        var u = users.First(x =>  x.Id == Id);
+        if (await js.InvokeAsync<bool>("confirm", $"{@localizer["delete?"]} {u.UserName} ({u.Id})"))
+        {
+            await client.DeleteAsync($"api/admin/{Id}");
+            await OnInitializedAsync();
+        }
+    }
+}

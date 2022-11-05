@@ -1,4 +1,9 @@
-﻿<div class="col-md-6 stretch-card d-inline-block ">
+﻿@page "/profile/Edit/{Id}"
+@inject HttpClient http
+@inject NavigationManager uriHelper
+@inject IJSRuntime js
+
+<div class="col-md-6 stretch-card d-inline-block ">
     <div class="card ps-2">
         <div class="card-body">
             <h1 class="h4 font-weight-normal login-title align-center">
@@ -45,6 +50,7 @@
 
 
 @functions {
+    [Parameter] public string Id { get; set; }
     UpdateRequest updateRequest { get; set; } = new UpdateRequest();
     string error { get; set; }
 
@@ -52,9 +58,16 @@
     {
         error = null;
         try
-        {
-            await authStateProvider.Update(updateRequest);
-            navigationManager.NavigateTo("/profile", true);
+        { 
+            if(Id != null){
+                updateRequest.Id = Id;
+                await authStateProvider.Update(updateRequest);
+                navigationManager.NavigateTo("/Admin",true);
+            }
+            else{
+                await authStateProvider.Update(updateRequest);
+                navigationManager.NavigateTo("/Profile", true);
+            }
         }
         catch (Exception ex)
         {

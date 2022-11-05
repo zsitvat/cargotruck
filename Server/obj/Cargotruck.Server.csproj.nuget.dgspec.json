@@ -156,6 +156,10 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "BlazorPolyfill.Server": {
+              "target": "Package",
+              "version": "[6.0.100.2, )"
+            },
             "EntityFramework": {
               "target": "Package",
               "version": "[6.4.4, )"

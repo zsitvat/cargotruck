@@ -120,6 +120,9 @@
   <data name="Account" xml:space="preserve">
     <value>Fiók</value>
   </data>
+  <data name="Add" xml:space="preserve">
+    <value>Létrehozás</value>
+  </data>
   <data name="Admin" xml:space="preserve">
     <value>Adminisztrátor</value>
   </data>
@@ -158,6 +161,9 @@
   </data>
   <data name="Create" xml:space="preserve">
     <value>Létrehozás</value>
+  </data>
+  <data name="Create_new" xml:space="preserve">
+    <value>Új fiók</value>
   </data>
   <data name="Create_tasks" xml:space="preserve">
     <value>Megbízás létrehozása</value>
@@ -305,6 +311,9 @@
   </data>
   <data name="Home_title" xml:space="preserve">
     <value>Főoldal</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>Azonosító</value>
   </data>
   <data name="Id_cargo" xml:space="preserve">
     <value>Rakomány ID</value>

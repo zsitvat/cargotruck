@@ -120,6 +120,9 @@
   <data name="Account" xml:space="preserve">
     <value>Account</value>
   </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add new</value>
+  </data>
   <data name="Admin" xml:space="preserve">
     <value>Administrator</value>
   </data>
@@ -158,6 +161,9 @@
   </data>
   <data name="Create" xml:space="preserve">
     <value>Create</value>
+  </data>
+  <data name="Create_new" xml:space="preserve">
+    <value>Create new</value>
   </data>
   <data name="Create_tasks" xml:space="preserve">
     <value>Create tasks</value>
@@ -305,6 +311,9 @@
   </data>
   <data name="Home_title" xml:space="preserve">
     <value>Homepage</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>Identification number</value>
   </data>
   <data name="Id_cargo" xml:space="preserve">
     <value>Cargo ID</value>

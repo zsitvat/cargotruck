@@ -70,6 +70,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Létrehozás.
+        /// </summary>
+        public static string Add {
+            get {
+                return ResourceManager.GetString("Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Adminisztrátor.
         /// </summary>
         public static string Admin {
@@ -183,6 +192,15 @@ namespace Cargotruck.Shared.Resources {
         public static string Create {
             get {
                 return ResourceManager.GetString("Create", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Új fiók.
+        /// </summary>
+        public static string Create_new {
+            get {
+                return ResourceManager.GetString("Create_new", resourceCulture);
             }
         }
         
@@ -624,6 +642,15 @@ namespace Cargotruck.Shared.Resources {
         public static string Home_title {
             get {
                 return ResourceManager.GetString("Home_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Azonosító.
+        /// </summary>
+        public static string Id {
+            get {
+                return ResourceManager.GetString("Id", resourceCulture);
             }
         }
         

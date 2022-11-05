@@ -1,9 +1,9 @@
 ﻿@page "/Tasks"
 
 
-<h3>Tasks</h3>
+<h3>@localizer["Tasks"]</h3>
 <div class="form-group">
-    <a class="btn btn-success" href="/Tasks/create"><i class="oi oi-plus"></i> Create New</a>
+    <a class="btn btn-success" href="/Tasks/create"><i class="oi oi-plus"></i> @localizer["Add"]</a>
 </div>
 <br>
 
@@ -25,22 +25,22 @@ else
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Partner</th>
-                                <th>Description</th>
-                                <th>Place_of_receipt</th>
-                                <th>Time_of_receipt</th>
-                                <th>Place_of_delivery</th>
-                                <th>Time_of_delivery</th>
-                                <th>Other_stops</th>
-                                <th>Id_cargo</th>
-                                <th>Storage_time</th>
-                                <th>Completed</th>
-                                <th>Completion_time</th>
-                                <th>Time_of_delay</th>
-                                <th>Payment</th>
-                                <th>Final_Payment</th>
-                                <th>Penalty</th>
-                                <th>Date</th>
+                                <th>@localizer["Partner"]</th>
+                                <th>@localizer["Description"]</th>
+                                <th>@localizer["Place_of_receipt"]</th>
+                                <th>@localizer["Time_of_receipt"]</th>
+                                <th>@localizer["Place_of_delivery"]</th>
+                                <th>@localizer["Time_of_delivery"]</th>
+                                <th>@localizer["Other_stops"]</th>
+                                <th>@localizer["Id_cargo"]</th>
+                                <th>@localizer["Storage_time"]</th>
+                                <th>@localizer["Completed"]</th>
+                                <th>@localizer["Completion_time"]</th>
+                                <th>@localizer["Time_of_delay"]</th>
+                                <th>@localizer["Payment"]</th>
+                                <th>@localizer["Final_Payment"]</th>
+                                <th>@localizer["Penalty"]</th>
+                                <th>@localizer["Date"]</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -91,7 +91,7 @@ else
     async Task Delete(int Id)
     {
         var t = tasks.First(x => x.Id == Id);
-        if (await js.InvokeAsync<bool>("confirm", $"Do you want to delete {t.Partner}'s ({t.Id}) Record?"))
+        if (await js.InvokeAsync<bool>("confirm", $"{@localizer["delete?"]} {t.Partner} ({t.Id})"))
         {
             await client.DeleteAsync($"api/tasks/{Id}");
             await OnInitializedAsync();

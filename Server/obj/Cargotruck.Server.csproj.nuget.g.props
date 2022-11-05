@@ -21,7 +21,14 @@
   </ImportGroup>
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <PkgMicrosoft_EntityFrameworkCore_Tools Condition=" '$(PkgMicrosoft_EntityFrameworkCore_Tools)' == '' ">C:\Users\Zsitva Tamás\.nuget\packages\microsoft.entityframeworkcore.tools\6.0.10</PkgMicrosoft_EntityFrameworkCore_Tools>
+    <PkgMicrosoft_ClearScript_V8_Native_win-x86 Condition=" '$(PkgMicrosoft_ClearScript_V8_Native_win-x86)' == '' ">C:\Users\Zsitva Tamás\.nuget\packages\microsoft.clearscript.v8.native.win-x86\7.1.0</PkgMicrosoft_ClearScript_V8_Native_win-x86>
+    <PkgMicrosoft_ClearScript_V8_Native_win-x64 Condition=" '$(PkgMicrosoft_ClearScript_V8_Native_win-x64)' == '' ">C:\Users\Zsitva Tamás\.nuget\packages\microsoft.clearscript.v8.native.win-x64\7.1.0</PkgMicrosoft_ClearScript_V8_Native_win-x64>
+    <PkgMicrosoft_ClearScript_V8_Native_win-arm64 Condition=" '$(PkgMicrosoft_ClearScript_V8_Native_win-arm64)' == '' ">C:\Users\Zsitva Tamás\.nuget\packages\microsoft.clearscript.v8.native.win-arm64\7.1.0</PkgMicrosoft_ClearScript_V8_Native_win-arm64>
     <PkgMicrosoft_AspNetCore_Components_WebAssembly_Server Condition=" '$(PkgMicrosoft_AspNetCore_Components_WebAssembly_Server)' == '' ">C:\Users\Zsitva Tamás\.nuget\packages\microsoft.aspnetcore.components.webassembly.server\6.0.10</PkgMicrosoft_AspNetCore_Components_WebAssembly_Server>
+    <PkgJavaScriptEngineSwitcher_ChakraCore_Native_win-x86 Condition=" '$(PkgJavaScriptEngineSwitcher_ChakraCore_Native_win-x86)' == '' ">C:\Users\Zsitva Tamás\.nuget\packages\javascriptengineswitcher.chakracore.native.win-x86\3.9.1</PkgJavaScriptEngineSwitcher_ChakraCore_Native_win-x86>
+    <PkgJavaScriptEngineSwitcher_ChakraCore_Native_win-x64 Condition=" '$(PkgJavaScriptEngineSwitcher_ChakraCore_Native_win-x64)' == '' ">C:\Users\Zsitva Tamás\.nuget\packages\javascriptengineswitcher.chakracore.native.win-x64\3.9.1</PkgJavaScriptEngineSwitcher_ChakraCore_Native_win-x64>
+    <PkgJavaScriptEngineSwitcher_ChakraCore_Native_win-arm64 Condition=" '$(PkgJavaScriptEngineSwitcher_ChakraCore_Native_win-arm64)' == '' ">C:\Users\Zsitva Tamás\.nuget\packages\javascriptengineswitcher.chakracore.native.win-arm64\3.9.1</PkgJavaScriptEngineSwitcher_ChakraCore_Native_win-arm64>
+    <PkgJavaScriptEngineSwitcher_ChakraCore_Native_win-arm Condition=" '$(PkgJavaScriptEngineSwitcher_ChakraCore_Native_win-arm)' == '' ">C:\Users\Zsitva Tamás\.nuget\packages\javascriptengineswitcher.chakracore.native.win-arm\3.9.1</PkgJavaScriptEngineSwitcher_ChakraCore_Native_win-arm>
     <PkgEntityFramework Condition=" '$(PkgEntityFramework)' == '' ">C:\Users\Zsitva Tamás\.nuget\packages\entityframework\6.4.4</PkgEntityFramework>
   </PropertyGroup>
 </Project>

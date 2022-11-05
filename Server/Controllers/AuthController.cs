@@ -64,6 +64,8 @@ namespace Cargotruck.Server.Controllers
         {
             var user = new Users();
             user.UserName = parameters.UserName;
+            user.PhoneNumber = parameters.PhoneNumber != null ? parameters.PhoneNumber : user.PhoneNumber;
+            user.Email = parameters.Email != null ? parameters.Email : user.Email;
             var result = await _userManager.CreateAsync(user, parameters.Password);
             await _userManager.AddToRoleAsync(user, parameters.Role);
             await _userManager.AddClaimAsync(user, new Claim("img", parameters.Img));
@@ -74,9 +76,14 @@ namespace Cargotruck.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(UpdateRequest parameters)
         {
+            var user = new Users();
+            if (parameters.Id != null) {
+                user = _context.Users.FirstOrDefault(a => a.Id == parameters.Id);
+            }
+            else { 
+                user = _context.Users.FirstOrDefault(a => a.UserName == User.Identity.Name);
+            }
             var Claims = User.Claims.ToDictionary(c => c.Type, c => c.Value);
-            var user = _context.Users.FirstOrDefault(a => a.UserName == User.Identity.Name);
-           
             if (user == null) return BadRequest();
             user.UserName = parameters.UserName !=null ? parameters.UserName : user.UserName;
             user.PhoneNumber = parameters.PhoneNumber != null ? parameters.PhoneNumber : user.PhoneNumber; 

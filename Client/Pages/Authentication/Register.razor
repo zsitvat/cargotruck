@@ -1,4 +1,4 @@
-﻿@page "/register"
+﻿@page "/Register"
 @layout MainLayout
 @inject NavigationManager navigationManager
 @inject CustomStateProvider authStateProvider
@@ -13,6 +13,15 @@
     <label for="inputUsername" class="input-only">@localizer["Username"]</label>
     <InputText id="inputUsername" class="form-control" autofocus @bind-Value="@registerRequest.UserName" />
     <ValidationMessage For="@(() => registerRequest.UserName)" />
+
+    <label for="inputEmail" class="input-only">@localizer["Email"]</label>
+    <InputText type="text" id="inputEmail" class="form-control" @bind-Value="@registerRequest.Email" />
+    <ValidationMessage For="@(() => registerRequest.Email)" />
+
+
+    <label for="inputPhoneNumber" class="input-only">@localizer["Phone_number"]</label>
+    <InputText type="text" id="inputPhoneNumber" class="form-control" @bind-Value="@registerRequest.PhoneNumber" />
+    <ValidationMessage For="@(() => registerRequest.PhoneNumber)" />
 
     <label for="inputPassword" class="input-only">@localizer["Password"]</label>
     <InputText type="password" id="inputPassword" class="form-control"  @bind-Value="@registerRequest.Password" />
@@ -31,7 +40,7 @@
         <option value="Storageman">@localizer["Storageman"]</option>
     </select>
 
-    <button class="btn btn-sm btn-primary btn-block" type="submit">@localizer["Register"]</button>
+    <button class="btn btn-primary btn-block mt-4" type="submit">@localizer["Register"]</button>
 
     <label class="text-danger">@error</label>
 </EditForm>
@@ -47,7 +56,7 @@
         try
         {
             await authStateProvider.Register(registerRequest);
-            navigationManager.NavigateTo("");
+            navigationManager.NavigateTo("/Admin");
         }
         catch (Exception ex)
         {
