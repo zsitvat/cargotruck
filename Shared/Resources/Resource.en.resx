@@ -312,6 +312,9 @@
   <data name="Image" xml:space="preserve">
     <value>Profile image</value>
   </data>
+  <data name="Image_change" xml:space="preserve">
+    <value>Change profile picture</value>
+  </data>
   <data name="Login" xml:space="preserve">
     <value>Login</value>
   </data>
@@ -392,6 +395,9 @@
   </data>
   <data name="Privacy_text" xml:space="preserve">
     <value>The application is made for the purpose of a university thesis, so all related rules apply to it.</value>
+  </data>
+  <data name="Privacy_text2" xml:space="preserve">
+    <value>During the development the application contains only non-real data.</value>
   </data>
   <data name="Profile" xml:space="preserve">
     <value>Profile</value>

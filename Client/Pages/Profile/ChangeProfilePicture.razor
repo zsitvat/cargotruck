@@ -5,7 +5,7 @@
 @inject HttpClient Http
 @inject ILogger<ChangeProfilePicture> Logger
 
- <label for="inputimg" class="input-only">@localizer["Image"]</label><br>
+<label for="inputimg" class="input-only imginput-label">@localizer["Image_change"]</label>
 <InputFile id="inputimg" class="form-control"  OnChange="@OnInputFileChange" />
 
 @code {

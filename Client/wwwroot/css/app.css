@@ -319,6 +319,10 @@ ul, li {
     border-radius:60px;
 }
 
+.imginput-label{
+    margin-bottom:1rem;
+}
+
 .small_profile_picture {
     max-width: 50px;
     max-height: 50px;

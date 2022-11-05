@@ -646,6 +646,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Profilkép megváltoztatása.
+        /// </summary>
+        public static string Image_change {
+            get {
+                return ResourceManager.GetString("Image_change", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bejelentkezés.
         /// </summary>
         public static string Login {
@@ -885,6 +894,15 @@ namespace Cargotruck.Shared.Resources {
         public static string Privacy_text {
             get {
                 return ResourceManager.GetString("Privacy_text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Az alkalmazás a fejlesztés során valós adatokat nem tartalmaz..
+        /// </summary>
+        public static string Privacy_text2 {
+            get {
+                return ResourceManager.GetString("Privacy_text2", resourceCulture);
             }
         }
         

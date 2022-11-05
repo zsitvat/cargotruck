@@ -312,6 +312,9 @@
   <data name="Image" xml:space="preserve">
     <value>Profilkép</value>
   </data>
+  <data name="Image_change" xml:space="preserve">
+    <value>Profilkép megváltoztatása</value>
+  </data>
   <data name="Login" xml:space="preserve">
     <value>Bejelentkezés</value>
   </data>
@@ -392,6 +395,9 @@
   </data>
   <data name="Privacy_text" xml:space="preserve">
     <value>Az alkalmazás egyetemi szakdolgozat céljából készül! így minden ehhez kapcsolódó szabály érvényes rá.</value>
+  </data>
+  <data name="Privacy_text2" xml:space="preserve">
+    <value>Az alkalmazás a fejlesztés során valós adatokat nem tartalmaz.</value>
   </data>
   <data name="Profile" xml:space="preserve">
     <value>Profil</value>

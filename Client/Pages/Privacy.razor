@@ -1,0 +1,27 @@
+﻿@page "/privacy"
+@using Cargotruck.Shared.Resources
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<Resource> localizer
+
+
+<div>
+<AuthorizeView>
+    <Authorized>
+        <div class="col-md-6 stretch-card">
+            <div class="card card2  ps-2">
+                <div class="card-body">
+                    <h1>@localizer["Privacy_text"]</h1>
+                </div>
+            </div>
+            <div class="card card2  ps-2 mt-3">
+                <div class="card-body">
+                    <h1>@localizer["Privacy_text2"]</h1>
+                </div>
+            </div>
+        </div>
+    </Authorized>
+    <Authorizing>
+        <img src="~/css/img/loading.gif" alt="loading" width="500" height="600">
+    </Authorizing>
+</AuthorizeView>
+</div>
