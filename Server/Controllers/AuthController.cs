@@ -77,19 +77,27 @@ namespace Cargotruck.Server.Controllers
         public async Task<IActionResult> Update(UpdateRequest parameters)
         {
             var user = new Users();
+            Dictionary<string, string> claims = new Dictionary<string, string>();
+            Dictionary<string, string> userRoles = new Dictionary<string, string>();
+            Dictionary<string, string> roles = new Dictionary<string, string>();
+            string role = "";
+
             if (parameters.Id != null) {
                 user = _context.Users.FirstOrDefault(a => a.Id == parameters.Id);
+                roles = _context.Roles.ToDictionary(r => r.Id, r => r.Name);
+                userRoles = _context.UserRoles.ToDictionary(r => r.UserId, r => roles[r.RoleId]);
+                role = userRoles[parameters.Id];
             }
             else { 
                 user = _context.Users.FirstOrDefault(a => a.UserName == User.Identity.Name);
+                claims = User.Claims.ToDictionary(c => c.Type, c => c.Value);
+                role = claims["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
             }
-            var Claims = User.Claims.ToDictionary(c => c.Type, c => c.Value);
+            
             if (user == null) return BadRequest();
             user.UserName = parameters.UserName !=null ? parameters.UserName : user.UserName;
             user.PhoneNumber = parameters.PhoneNumber != null ? parameters.PhoneNumber : user.PhoneNumber; 
             user.Email = parameters.Email != null ? parameters.Email : user.Email;
-            var role = Claims["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
-            System.Diagnostics.Debug.WriteLine(role);
             var result = await _userManager.UpdateAsync(user);
 
             await _userManager.RemoveFromRoleAsync(user, role);

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "z2kXV+Xt88QXLKmB1ZoyhQxYi2JuR3IPIEwpfsWK080=",
+  "Hash": "o30l5gGRyXBp9azJpkd0/9oD7Pi5BilufOZakdcspRQ=",
   "Source": "Cargotruck.Client",
   "BasePath": "/",
   "Mode": "Root",
@@ -8194,12 +8194,12 @@
       "OriginalItemSpec": "wwwroot\\img\\profile.png"
     },
     {
-      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\img\\profiles\\hdybe0tj.jpg",
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\img\\profiles\\1eikfoo3.jpg",
       "SourceId": "Cargotruck.Client",
       "SourceType": "Discovered",
       "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\",
       "BasePath": "/",
-      "RelativePath": "img/profiles/hdybe0tj.jpg",
+      "RelativePath": "img/profiles/1eikfoo3.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -8208,15 +8208,15 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\img\\profiles\\hdybe0tj.jpg"
+      "OriginalItemSpec": "wwwroot\\img\\profiles\\1eikfoo3.jpg"
     },
     {
-      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\img\\profiles\\vevcxlvh.jpg",
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\img\\profiles\\mdc0krog.jpg",
       "SourceId": "Cargotruck.Client",
       "SourceType": "Discovered",
       "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\",
       "BasePath": "/",
-      "RelativePath": "img/profiles/vevcxlvh.jpg",
+      "RelativePath": "img/profiles/mdc0krog.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -8225,7 +8225,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\img\\profiles\\vevcxlvh.jpg"
+      "OriginalItemSpec": "wwwroot\\img\\profiles\\mdc0krog.jpg"
     },
     {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\index.html",

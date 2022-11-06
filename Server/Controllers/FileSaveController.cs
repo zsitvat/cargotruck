@@ -15,7 +15,7 @@ using Cargotruck.Data;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class FilesaveController : ControllerBase
 {
     private readonly IWebHostEnvironment env;
@@ -32,9 +32,8 @@ public class FilesaveController : ControllerBase
         _context = context;
     }
 
-    [HttpPost]
-    public async Task<ActionResult<IList<UploadResult>>> PostFile(
-        [FromForm] IEnumerable<IFormFile> files)
+    [HttpPost("{id}"), HttpPost]
+    public async Task<ActionResult<IList<UploadResult>>> PostFile([FromForm] IEnumerable<IFormFile> files, string id)
     {
         var maxAllowedFiles = 1;
         long maxFileSize = 1024 * 3000;
@@ -83,19 +82,42 @@ public class FilesaveController : ControllerBase
                             trustedFileNameForDisplay, path);
                         uploadResult.Uploaded = true;
                         uploadResult.StoredFileName = trustedFileNameForFileStorage;
-                        if (uploadResult.Uploaded) { 
-                            var user = _context.Users.FirstOrDefault(a => a.UserName == User.Identity.Name);
-                            var Claims = User.Claims.ToDictionary(c => c.Type, c => c.Value);
-                            var image = "/img/profiles/" + trustedFileNameForFileStorage;
-                            await _userManager.ReplaceClaimAsync(user, new Claim("img", Claims["img"]), new Claim("img",image ));
-                            await _signInManager.RefreshSignInAsync(user);
-                            var deleteold = rootpath + Claims["img"];
+                        var image = "/img/profiles/" + trustedFileNameForFileStorage;
+
+                        Dictionary<string, string> claims = new Dictionary<string, string>();
+                        var user = new Users();
+                        string img = "";
+
+                        //change the image
+                        if (uploadResult.Uploaded) {
+                            if (id == "NoId") {
+                                user = _context.Users.FirstOrDefault(a => a.UserName == User.Identity.Name);
+                                claims = User.Claims.ToDictionary(c => c.Type, c => c.Value);
+                                img = claims["img"];
+                            }
+                            else
+                            {
+                                user = _context.Users.FirstOrDefault(a => a.Id == id);
+                                claims = _context.UserClaims.ToDictionary(c => c.UserId, c => c.ClaimValue);
+                                img = claims[id];
+                            }
+                            await _userManager.ReplaceClaimAsync(user, new Claim("img", img), new Claim("img",image ));
+
+                            var deleteold = rootpath + img;
+
+                            //delete the old one
                             if (System.IO.File.Exists(deleteold))
                             {
-
                                 System.IO.File.Delete(deleteold);
-
                             }
+                            if (id == "NoId")
+                            {
+                                await _signInManager.RefreshSignInAsync(user);
+                            }
+
+    
+
+    
                         }
                     }
                     catch (IOException ex)

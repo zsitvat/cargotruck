@@ -9,8 +9,8 @@
 <InputFile id="inputimg" class="form-control"  OnChange="@OnInputFileChange" />
 
 @code {
-    UpdateRequest updateRequest { get; set; } = new UpdateRequest();
-    LoginRequest loginRequest { get; set; } = new LoginRequest();
+    [Parameter] public string Id { get; set; }
+
     private List<File> files = new();
     private List<UploadResult> uploadResults = new();
     private int maxAllowedFiles = 1;
@@ -65,9 +65,11 @@
             }
         }
 
+        if (Id == null) { Id = "NoId"; }
+
         if (upload)
         {
-            var response = await Http.PostAsync("/FileSave", content);
+            HttpResponseMessage response = await Http.PostAsync($"api/filesave/{Id}", content);
 
             var newUploadResults = await response.Content
                 .ReadFromJsonAsync<IList<UploadResult>>();
@@ -75,17 +77,15 @@
             if (newUploadResults is not null)
             {
                 uploadResults = uploadResults.Concat(newUploadResults).ToList();  
-        
-
-            } 
-
-          
+            }  
         }
-       
-       shouldRender = true;   
-       await authStateProvider.GetCurrentUser();           
-       navigationManager.NavigateTo("/Profile", true);       
-     
+
+        shouldRender = true;   
+        await authStateProvider.GetCurrentUser();
+        if (Id == "NoId") { 
+            navigationManager.NavigateTo("/Profile", true); 
+        }
+        else { navigationManager.NavigateTo("/Admin", true); }
     }
 
     private static bool FileUpload(IList<UploadResult> uploadResults,

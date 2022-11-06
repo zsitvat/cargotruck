@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "sYqYR6usS0ozbehtoHu0ixAk7QDGqSzYEwgiQk5xRXc=",
+  "Hash": "xC+fuoZjuF5VVC5iNgNmQ8ssmX8q5rRo6RYKHCkzhDs=",
   "Source": "Cargotruck.Server",
   "BasePath": "_content/Cargotruck.Server",
   "Mode": "Default",
@@ -8155,12 +8155,12 @@
       "OriginalItemSpec": "wwwroot\\img\\profile.png"
     },
     {
-      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\img\\profiles\\hdybe0tj.jpg",
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\img\\profiles\\1eikfoo3.jpg",
       "SourceId": "Cargotruck.Client",
       "SourceType": "Project",
       "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\",
       "BasePath": "/",
-      "RelativePath": "img/profiles/hdybe0tj.jpg",
+      "RelativePath": "img/profiles/1eikfoo3.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -8169,15 +8169,15 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\img\\profiles\\hdybe0tj.jpg"
+      "OriginalItemSpec": "wwwroot\\img\\profiles\\1eikfoo3.jpg"
     },
     {
-      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\img\\profiles\\vevcxlvh.jpg",
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\img\\profiles\\mdc0krog.jpg",
       "SourceId": "Cargotruck.Client",
       "SourceType": "Project",
       "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\",
       "BasePath": "/",
-      "RelativePath": "img/profiles/vevcxlvh.jpg",
+      "RelativePath": "img/profiles/mdc0krog.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -8186,7 +8186,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\img\\profiles\\vevcxlvh.jpg"
+      "OriginalItemSpec": "wwwroot\\img\\profiles\\mdc0krog.jpg"
     },
     {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\index.html",

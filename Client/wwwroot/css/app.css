@@ -152,16 +152,21 @@ th{
 
 .fixed {
     position: absolute;
-    right: -3px;
-    margin-top: -1.8rem;
+    right: 7px;
+    margin-top: -1.5rem;
     font-size:14px;
 }
 
 .fixed2 {
     position: absolute;
-    right: -3px;
-    margin-top: -0.5rem;
+    right: 1px;
+    margin-top: 0rem;
     font-size: 14px;
+}
+
+.icon{
+    border:none;
+    background:transparent;
 }
 
 .forms-margin {

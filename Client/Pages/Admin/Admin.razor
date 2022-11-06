@@ -46,14 +46,18 @@ else
                                         <tr>
                                             <td>@i</td>
                                             <td><img class="table-img" src="@claims[$"img/{@item.Id}"]" /></td>
-                                            <td>@item.Id</td>
+                                            <td style="min-width:8rem;">@item.Id</td>
                                             <td>@item.UserName</td>
                                             <td>@item.Email</td>
                                             <td>@item.PhoneNumber</td>
                                             <td>@roles[item.Id]</td>
                                             <td>
-                                                <a class="btn  fixed" href="/profile/Edit/@item.Id"> <span class="oi oi-pencil" aria-hidden="true"></span></a>
-                                                <button class="btn fixed2" @onclick="@(() => Delete(item.Id))"> <span class="oi oi-trash" aria-hidden="true"></span></button>
+                                                @if(item.UserName == context.User.Identity.Name){
+                                                    <a title="@localizer["Edit"]" class="icon fixed" href="/profile"><span class="oi oi-pencil" aria-hidden="true"></span></a>
+                                                }else{
+                                                    <a title="@localizer["Edit"]" class="icon fixed" href="/profile/Edit/@item.Id"><span class="oi oi-pencil" aria-hidden="true"></span></a>
+                                                }
+                                                <button title="@localizer["Delete"]" class="icon fixed2" @onclick="@(() => Delete(item.Id))"><span class="oi oi-trash" aria-hidden="true"></span></button>
                                             </td>
                                         </tr>
                                     }
