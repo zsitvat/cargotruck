@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Cargotruck.Server.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class AdminController : ControllerBase
     {
@@ -31,8 +31,15 @@ namespace Cargotruck.Server.Controllers
         }
         public async Task<IActionResult> Claims()
         {
-            var Claims = User.Claims.ToDictionary(c => c.Type, c => c.Value);
-             return Ok(Claims);
+            var Claims = await  _context.UserClaims.ToDictionaryAsync(c => c.ClaimType + "/" + c.UserId, c => c.ClaimValue);
+            return Ok(Claims);
+        }
+
+        public async Task<IActionResult> Roles()
+        {
+            var Roles = await _context.Roles.ToDictionaryAsync(r => r.Id, r => r.Name);
+            var UsersRoles = await _context.UserRoles.ToDictionaryAsync(r => r.UserId, r => Roles[r.RoleId]);
+            return Ok(UsersRoles);
         }
 
         [HttpDelete("{id}")]

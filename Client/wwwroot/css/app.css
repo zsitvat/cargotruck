@@ -378,6 +378,9 @@ ul, li {
     background-color: rgba(0,0,0,.075);
 }
 
+tbody td, tbody th{
+    height:3rem;
+}
 
 @media (min-width: 1024px) {
     .card {

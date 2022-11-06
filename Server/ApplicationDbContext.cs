@@ -2,9 +2,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Cargotruck.Shared.Models;
-using Cargotruck.Server.Models;
 using Cargotruck.Server.Data;
 using System.Security.Cryptography.X509Certificates;
+using Cargotruck.Server.Models;
 
 namespace Cargotruck.Data
 {

@@ -115,6 +115,8 @@ namespace Cargotruck.Server.Controllers
             return Ok();
         }
 
+
+
         [HttpGet]
         public CurrentUser CurrentUserInfo()
         {
