@@ -9,7 +9,7 @@
 <InputFile id="inputimg" class="form-control"  OnChange="@OnInputFileChange" />
 
 @code {
-    [Parameter] public string Id { get; set; }
+    [Parameter] public string? Id { get; set; }
 
     private List<File> files = new();
     private List<UploadResult> uploadResults = new();

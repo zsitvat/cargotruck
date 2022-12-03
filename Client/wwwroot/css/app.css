@@ -1,7 +1,7 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
 html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: "Roboto",sans-serif !important;
     background-color: rgba(243, 246, 249, 0.5);
 }
 
@@ -10,8 +10,12 @@ html, body {
     opacity: 0.9;
 }
 
+.font-weight-bold {
+    font-weight: bold !important;
+}
+
 .btn-primary:hover {
-    opacity:1;
+    opacity: 1;
 }
 
 h1:focus {
@@ -208,6 +212,28 @@ th{
     padding: 0.5rem 0.5rem;
 }
 
+.login-card {
+    border: none;
+    border-radius: 0.75em;
+    padding: 8px 20px 8px 20px;
+    box-shadow: 0 0 0 1px rgb(89 105 129 / 10%), 0 3px 20px 0 rgb(89 105 129 / 10%), 0 1px 2px 0 rgb(0 0 0 / 5%);
+    height: fit-content;
+    width: 25rem;
+    background-color: white;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.login-title{
+    text-align:center;
+}
+
+
+.login-btn {
+    font-weight: 400;
+    font-size: 18px;
+    width: 100%;
+}
 
 .top-row[b-ffa6apske8] {
     height: 3.5rem;
@@ -239,7 +265,14 @@ th{
 }
 
 .inputs {
-    width: 20rem;
+    margin-bottom: 2px;
+}
+
+.login-input-group-text {
+    top:0px;
+    padding: 0.55rem;
+    border-bottom-right-radius: unset;
+    border-top-right-radius: unset;
 }
 
 .form-signin {
