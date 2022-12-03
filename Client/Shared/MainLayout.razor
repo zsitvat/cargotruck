@@ -55,6 +55,9 @@
         </article>
         <footer>
             <div class="bottom-row px-4">
+                <NavLink href="/privacy">
+                    <span class="footer-text" aria-hidden="true">© 2022 - Cargotruck - All rights reserved</span>
+                </NavLink> 
             </div>
         </footer>
     </main>
@@ -69,7 +72,7 @@
     {
         if (!(await AuthenticationState).User.Identity.IsAuthenticated)
         {
-            if (!navigationManager.Uri.ToString().Contains("login") && !navigationManager.Uri.ToString().Contains("Privacy"))
+            if (!navigationManager.Uri.ToString().Contains("login") && !navigationManager.Uri.ToString().Contains("privacy"))
             {
                 navigationManager.NavigateTo("/login");
             }

@@ -208,7 +208,21 @@ th{
     position:absolute;
 }
 
-.card-body{
+.bottom-row {
+    position: fixed;
+    bottom: 0px;
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+    width: 100%;
+    background-color: white;
+    border-top: 1px solid #d6d5d5;
+}
+
+.footer-text{
+    font-size:12px;
+}
+
+.card-body {
     padding: 0.5rem 0.5rem;
 }
 
@@ -218,7 +232,6 @@ th{
     padding: 8px 20px 8px 20px;
     box-shadow: 0 0 0 1px rgb(89 105 129 / 10%), 0 3px 20px 0 rgb(89 105 129 / 10%), 0 1px 2px 0 rgb(0 0 0 / 5%);
     height: fit-content;
-    width: 25rem;
     background-color: white;
     margin-left: auto;
     margin-right: auto;
@@ -459,7 +472,19 @@ tbody td, tbody th{
         padding-left: 10%;
     }
 
+    .login-card {
+        width: 25rem;
+    }
+
 }
+
+@media (min-width: 768px) {
+
+    .login-card {
+        width: 25rem;
+    }
+}
+
 @media (max-width: 1920px) {
     .hide {
         display: none;
@@ -538,6 +563,7 @@ tbody td, tbody th{
         width: fit-content !important;
         margin-right: 5.5%;
     }
+
 }
 
 @media (max-width: 640px) {
@@ -555,6 +581,7 @@ tbody td, tbody th{
         min-width: 400px;
         margin-bottom:5rem;
     }
+
 }
 
 @media (max-width: 430px) {
