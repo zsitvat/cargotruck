@@ -339,6 +339,9 @@
   <data name="Max_weight" xml:space="preserve">
     <value>Terhelés max súlya</value>
   </data>
+  <data name="NewAccount" xml:space="preserve">
+    <value>Új felhasználó létrehozása</value>
+  </data>
   <data name="New_data" xml:space="preserve">
     <value>Új adat</value>
   </data>
@@ -416,6 +419,9 @@
   </data>
   <data name="Purpose_of_the_trip" xml:space="preserve">
     <value>Az út célja</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Létrehozás</value>
   </data>
   <data name="Remember_me" xml:space="preserve">
     <value>Emlékezz rám</value>

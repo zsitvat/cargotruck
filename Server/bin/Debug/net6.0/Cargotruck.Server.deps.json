@@ -104,7 +104,7 @@
         },
         "resources": {
           "lib/netcoreapp2.1/ru-ru/JavaScriptEngineSwitcher.ChakraCore.resources.dll": {
-            "locale": "ru-ru"
+            "locale": "ru-RU"
           }
         }
       },
@@ -174,7 +174,7 @@
         },
         "resources": {
           "lib/netstandard2.0/ru-ru/JavaScriptEngineSwitcher.Core.resources.dll": {
-            "locale": "ru-ru"
+            "locale": "ru-RU"
           }
         }
       },
@@ -204,7 +204,7 @@
         },
         "resources": {
           "lib/net5.0/ru-ru/JavaScriptEngineSwitcher.V8.resources.dll": {
-            "locale": "ru-ru"
+            "locale": "ru-RU"
           }
         }
       },

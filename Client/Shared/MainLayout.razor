@@ -11,7 +11,7 @@
 
     <main >
         <div class="top-row px-4">
-            <NavLink href="/privacy">
+            <NavLink href="/Privacy">
                 <span class="about ms-5" aria-hidden="true">@localizer["Privacy"]</span>
             </NavLink> 
             <AuthorizeView>
@@ -53,10 +53,10 @@
         <article class="content px-4" @onclick="()=>expandSubMenu= false">
             @Body
         </article>
-        <footer>
+        <footer class="mt-3">
             <div class="bottom-row px-4">
-                <NavLink href="/privacy">
-                    <span class="footer-text" aria-hidden="true">© 2022 - Cargotruck - All rights reserved</span>
+                <NavLink href="/Privacy">
+                    <span class="footer-text" aria-hidden="true">© 2022 Cargotruck - All rights reserved</span>
                 </NavLink> 
             </div>
         </footer>
@@ -72,7 +72,7 @@
     {
         if (!(await AuthenticationState).User.Identity.IsAuthenticated)
         {
-            if (!navigationManager.Uri.ToString().Contains("login") && !navigationManager.Uri.ToString().Contains("privacy"))
+            if (!navigationManager.Uri.ToString().Contains("login") && !navigationManager.Uri.ToString().Contains("Privacy"))
             {
                 navigationManager.NavigateTo("/login");
             }

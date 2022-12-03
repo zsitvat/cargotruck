@@ -9,7 +9,7 @@
 
 @code {
     [Parameter] public int Id { get; set; }
-    Tasks task = new Tasks();
+    Tasks? task = new Tasks();
 
     protected async override Task OnParametersSetAsync()
     {

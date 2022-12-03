@@ -1,16 +1,18 @@
 ﻿<EditForm Model="@tasks" OnValidSubmit="@OnValidSubmit">
+
     <DataAnnotationsValidator />
     <div class="form-group">
         <button type="submit" class="btn btn-success">
-            <i class="oi oi-circle-check"></i> @ButtonText
+            <i class="oi oi-circle-check"></i> @localizer[ButtonText]
         </button>
     </div>
     <br>
 
-@*<div class="col-md-12 stretch-card mb-2">*@
-    <div class="card">
-        <div class="card-body">
-            <div class="d-inline-block forms-margin">
+
+    <div class="card mb-6">
+        <div class="card-body ">
+            <div class="d-inline-block forms-margin ">
+         
                 <div class="form-group">
                     <label>Partner:</label>
                     <div>
@@ -140,20 +142,15 @@
                 </div>      
             </div>
 
-            <div class="form-group completed">
-                <div>
-                    <label>Completed:</label>
-                    <InputCheckbox class="form-check-input" @bind-Value="@tasks.Completed" />
-                    <ValidationMessage For="@(() => tasks.Completed)" />
-                </div>
-            </div>
+         
     </div>
 </div>
+
 </EditForm>
 
 
 @code {
-    [Parameter] public Tasks tasks { get; set; }
+    [Parameter] public Tasks? tasks { get; set; }
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public EventCallback OnValidSubmit { get; set; }
 }

@@ -133,3 +133,8 @@ F:\Szakdoga app\Cargotruck\Server\bin\Debug\net6.0\runtimes\win-arm64\native\Cle
 F:\Szakdoga app\Cargotruck\Server\bin\Debug\net6.0\runtimes\win-x64\native\ClearScriptV8.win-x64.dll
 F:\Szakdoga app\Cargotruck\Server\bin\Debug\net6.0\runtimes\win-x86\native\ClearScriptV8.win-x86.dll
 F:\Szakdoga app\Cargotruck\Server\obj\Debug\net6.0\Cargotruck.Server.MvcApplicationPartsAssemblyInfo.cs
+F:\Szakdoga app\Cargotruck\Server\obj\Debug\net6.0\staticwebassets\msbuild.Cargotruck.Server.Microsoft.AspNetCore.StaticWebAssets.props
+F:\Szakdoga app\Cargotruck\Server\obj\Debug\net6.0\staticwebassets\msbuild.build.Cargotruck.Server.props
+F:\Szakdoga app\Cargotruck\Server\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.Cargotruck.Server.props
+F:\Szakdoga app\Cargotruck\Server\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.Cargotruck.Server.props
+F:\Szakdoga app\Cargotruck\Server\obj\Debug\net6.0\staticwebassets.pack.json

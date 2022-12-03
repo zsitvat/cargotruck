@@ -339,6 +339,9 @@
   <data name="Max_weight" xml:space="preserve">
     <value>Max weight of the cargo</value>
   </data>
+  <data name="NewAccount" xml:space="preserve">
+    <value>Create new user</value>
+  </data>
   <data name="New_data" xml:space="preserve">
     <value>New data</value>
   </data>
@@ -416,6 +419,9 @@
   </data>
   <data name="Purpose_of_the_trip" xml:space="preserve">
     <value>Purpose of the trip</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Create new</value>
   </data>
   <data name="Remember_me" xml:space="preserve">
     <value>Remember me</value>

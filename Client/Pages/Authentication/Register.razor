@@ -3,52 +3,55 @@
 @inject NavigationManager navigationManager
 @inject CustomStateProvider authStateProvider
 @attribute [Authorize(Roles = "Admin")]
-<h1 class="h2 font-weight-normal login-title">
-    Register
-</h1>
 
-<EditForm class="form-signin" OnValidSubmit="OnSubmit" Model="registerRequest">
-    <DataAnnotationsValidator />
+<div class="login-card col-lg-8">
+    <EditForm class="form-signin register" OnValidSubmit="OnSubmit" Model="registerRequest">
+        <h1 class="h4 font-weight-normal align-center">
+            @localizer["NewAccount"]
+        </h1>
+    
+        <DataAnnotationsValidator />
 
-    <label for="inputUsername" class="input-only">@localizer["Username"]</label>
-    <InputText id="inputUsername" class="form-control" autofocus @bind-Value="@registerRequest.UserName" />
-    <ValidationMessage For="@(() => registerRequest.UserName)" />
+        <label for="inputUsername" class="input-only">@localizer["Username"]</label>
+        <InputText id="inputUsername" class="form-control" autofocus @bind-Value="@registerRequest.UserName" />
+        <ValidationMessage For="@(() => registerRequest.UserName)" />
 
-    <label for="inputEmail" class="input-only">@localizer["Email"]</label>
-    <InputText type="text" id="inputEmail" class="form-control" @bind-Value="@registerRequest.Email" />
-    <ValidationMessage For="@(() => registerRequest.Email)" />
+        <label for="inputEmail" class="input-only">@localizer["Email"]</label>
+        <InputText type="text" id="inputEmail" class="form-control" @bind-Value="@registerRequest.Email" />
+        <ValidationMessage For="@(() => registerRequest.Email)" />
 
 
-    <label for="inputPhoneNumber" class="input-only">@localizer["Phone_number"]</label>
-    <InputText type="text" id="inputPhoneNumber" class="form-control" @bind-Value="@registerRequest.PhoneNumber" />
-    <ValidationMessage For="@(() => registerRequest.PhoneNumber)" />
+        <label for="inputPhoneNumber" class="input-only">@localizer["Phone_number"]</label>
+        <InputText type="text" id="inputPhoneNumber" class="form-control" @bind-Value="@registerRequest.PhoneNumber" />
+        <ValidationMessage For="@(() => registerRequest.PhoneNumber)" />
 
-    <label for="inputPassword" class="input-only">@localizer["Password"]</label>
-    <InputText type="password" id="inputPassword" class="form-control"  @bind-Value="@registerRequest.Password" />
-    <ValidationMessage For="@(() => registerRequest.Password)" />
+        <label for="inputPassword" class="input-only">@localizer["Password"]</label>
+        <InputText type="password" id="inputPassword" class="form-control"  @bind-Value="@registerRequest.Password" />
+        <ValidationMessage For="@(() => registerRequest.Password)" />
 
-    <label for="inputPasswordConfirm" class="input-only">@localizer["PasswordConfirm"]</label>
-    <InputText type="password" id="inputPasswordConfirm" class="form-control"  @bind-Value="@registerRequest.PasswordConfirm" />
-    <ValidationMessage For="@(() => registerRequest.PasswordConfirm)" />
+        <label for="inputPasswordConfirm" class="input-only">@localizer["PasswordConfirm"]</label>
+        <InputText type="password" id="inputPasswordConfirm" class="form-control"  @bind-Value="@registerRequest.PasswordConfirm" />
+        <ValidationMessage For="@(() => registerRequest.PasswordConfirm)" />
 
-    <label for="inputRole" class="input-only">@localizer["Role"]</label>
-    <select for="inputRole" class="form-control" name="role" id="role" @bind="@registerRequest.Role">
-        <option value="User">@localizer["User"]</option>
-        <option value="Admin">@localizer["Admin"]</option>
-        <option value="Driver">@localizer["Driver"]</option>
-        <option value="Manager">@localizer["Manager"]</option>
-        <option value="Storageman">@localizer["Storageman"]</option>
-    </select>
+        <label for="inputRole" class="input-only">@localizer["Role"]</label>
+        <select for="inputRole" class="form-control" name="role" id="role" @bind="@registerRequest.Role">
+            <option value="User">@localizer["User"]</option>
+            <option value="Admin">@localizer["Admin"]</option>
+            <option value="Driver">@localizer["Driver"]</option>
+            <option value="Manager">@localizer["Manager"]</option>
+            <option value="Storageman">@localizer["Storageman"]</option>
+        </select>
 
-    <button class="btn btn-primary btn-block mt-4" type="submit">@localizer["Register"]</button>
+        <button class="btn btn-primary btn-block mt-4" type="submit">@localizer["Register"]</button>
 
-    <label class="text-danger">@error</label>
-</EditForm>
+        <label class="text-danger">@error</label>
+    </EditForm>
+</div>
 
 @functions {
 
     RegisterRequest registerRequest { get; set; } = new RegisterRequest();
-    string error { get; set; }
+    string? error { get; set; }
 
     async Task OnSubmit()
     {

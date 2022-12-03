@@ -5,6 +5,17 @@ html, body {
     background-color: rgba(243, 246, 249, 0.5);
 }
 
+.mb-8{
+    margin-bottom:8rem;
+}
+
+.mb-7 {
+    margin-bottom: 7rem;
+}
+
+.mb-6 {
+    margin-bottom: 6rem;
+}
 
 .btn-primary {
     opacity: 0.9;
@@ -224,6 +235,11 @@ th{
 
 .card-body {
     padding: 0.5rem 0.5rem;
+}
+
+.register input, .register select {
+    width: 18rem;
+    margin-left: 5px;
 }
 
 .login-card {

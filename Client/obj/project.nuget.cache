@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "sZr/r+v/Gi12vNh5ONE4pZjh9PQxcXAuXSMMYelw1d0QjYcHagdkYZgl8+YsShaWg7jK0GuFyI1oHBaOlcxs0g==",
+  "dgSpecHash": "yU6Wgf1QFlunyC7sLTJESYg7qooc7XWx4XIUnvjMS4ZyCBEVStv4dtKXPPY5xALDsf5WgGFhtFGplo3hF1hSnQ==",
   "success": true,
   "projectFilePath": "F:\\Szakdoga app\\Cargotruck\\Client\\Cargotruck.Client.csproj",
   "expectedPackageFiles": [
@@ -68,7 +68,7 @@
     "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\system.text.encodings.web\\6.0.0\\system.text.encodings.web.6.0.0.nupkg.sha512",
     "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\system.text.json\\6.0.0\\system.text.json.6.0.0.nupkg.sha512",
     "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\system.windows.extensions\\4.7.0\\system.windows.extensions.4.7.0.nupkg.sha512",
-    "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.netcore.app.runtime.mono.browser-wasm\\6.0.10\\microsoft.netcore.app.runtime.mono.browser-wasm.6.0.10.nupkg.sha512"
+    "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.netcore.app.runtime.mono.browser-wasm\\6.0.11\\microsoft.netcore.app.runtime.mono.browser-wasm.6.0.11.nupkg.sha512"
   ],
   "logs": []
 }
