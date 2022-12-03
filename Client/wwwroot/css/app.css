@@ -5,6 +5,10 @@ html, body {
     background-color: rgba(243, 246, 249, 0.5);
 }
 
+.page {
+    min-height: 100vh;
+}
+
 .mb-8{
     margin-bottom:8rem;
 }
@@ -224,7 +228,7 @@ th{
     bottom: 0px;
     padding-top: 0.8rem;
     padding-bottom: 0.8rem;
-    width: 100%;
+    width:100%;
     background-color: white;
     border-top: 1px solid #d6d5d5;
 }
@@ -253,8 +257,47 @@ th{
     margin-right: auto;
 }
 
-.login-title{
-    text-align:center;
+.top-buttons-card {
+    box-shadow: 0 0 1px rgb(0 0 0 / 15%);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+}
+
+.top-buttons-card .card-body {
+       margin-left:5%;
+}
+
+.top-buttons-card .card-body button, .top-buttons-card .card-body {
+    text-align:right;
+    position:relative;
+    right:5%;
+}
+
+.form-card {
+    box-shadow: 0 0 1px rgb(0 0 0 / 15%);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+}
+
+
+.login-icon {
+    width: 2rem;
+}
+
+.login-title {
+    text-align: center;
 }
 
 

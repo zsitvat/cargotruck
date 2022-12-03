@@ -1,16 +1,21 @@
-﻿<EditForm Model="@tasks" OnValidSubmit="@OnValidSubmit">
+﻿
 
+<EditForm Model="@tasks" OnValidSubmit="@OnValidSubmit">
     <DataAnnotationsValidator />
-    <div class="form-group">
-        <button type="submit" class="btn btn-success">
-            <i class="oi oi-circle-check"></i> @localizer[ButtonText]
-        </button>
+     <div class="top-buttons-card">
+        <div class="card-body">
+            <div class="d-inline-block">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">
+                        <i class="oi oi-circle-check"></i> @localizer[ButtonText]
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
-    <br>
 
-
-    <div class="card mb-6">
-        <div class="card-body ">
+    <div class="form-card mb-6" style="border-top-left-radius:unset;border-top-right-radius:unset;">
+        <div class="card-body mb-3">
             <div class="d-inline-block forms-margin ">
          
                 <div class="form-group">
@@ -22,7 +27,7 @@
                 </div>
                 <div class="form-group ">
                     <div>
-                        <label>Description :</label>
+                        <label>Description:</label>
                         <div>
                             <InputText class="form-control inputs" @bind-Value="@tasks.Description" />
                             <ValidationMessage For="@(() => tasks.Description)" />
@@ -31,7 +36,7 @@
                 </div>
                 <div class="form-group">
                     <div>
-                        <label>Place_of_receipt :</label>
+                        <label>Place_of_receipt:</label>
                         <div>
                             <InputText class="form-control inputs" @bind-Value="@tasks.Place_of_receipt" />
                             <ValidationMessage For="@(() => tasks.Place_of_receipt)" />
@@ -49,7 +54,7 @@
                 </div>
                 <div class="form-group ">
                     <div>
-                        <label>Place_of_delivery :</label>
+                        <label>Place_of_delivery:</label>
                         <div>
                             <InputText class="form-control inputs"  @bind-Value="@tasks.Place_of_delivery" />
                             <ValidationMessage For="@(() => tasks.Place_of_delivery)" />
@@ -58,7 +63,7 @@
                 </div>
                 <div class="form-group ">
                     <div>
-                        <label>Time_of_deliver :</label>
+                        <label>Time_of_deliver:</label>
                         <div>
                             <InputDate class="form-control inputs" @bind-Value="@tasks.Time_of_delivery" />
                             <ValidationMessage For="@(() => tasks.Time_of_delivery)" />
@@ -67,7 +72,7 @@
                 </div>
                   <div class="form-group ">
                     <div>
-                        <label>Other_stops :</label>
+                        <label>Other_stops:</label>
                         <div>
                             <InputText class="form-control inputs" @bind-Value="@tasks.Other_stops" />
                             <ValidationMessage For="@(() => tasks.Other_stops)" />
@@ -140,6 +145,14 @@
                         </div>
                     </div>
                 </div>      
+            </div>
+
+            <div class="form-group completed">
+                <div>
+                    <label>Completed:</label>
+                    <InputCheckbox class="form-check-input" @bind-Value="@tasks.Completed" />
+                    <ValidationMessage For="@(() => tasks.Completed)" />
+                </div>
             </div>
 
          
