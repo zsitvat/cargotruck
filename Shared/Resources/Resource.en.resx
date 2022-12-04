@@ -291,6 +291,9 @@
   <data name="Expenses_id" xml:space="preserve">
     <value>Expenses ID</value>
   </data>
+  <data name="False" xml:space="preserve">
+    <value>False</value>
+  </data>
   <data name="Final_Payment" xml:space="preserve">
     <value>Final payment</value>
   </data>
@@ -509,6 +512,9 @@
   </data>
   <data name="Trucks" xml:space="preserve">
     <value>Trucks</value>
+  </data>
+  <data name="True" xml:space="preserve">
+    <value>True</value>
   </data>
   <data name="Type" xml:space="preserve">
     <value>Type</value>

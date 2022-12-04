@@ -291,6 +291,9 @@
   <data name="Expenses_id" xml:space="preserve">
     <value>Kiadás azonosító</value>
   </data>
+  <data name="False" xml:space="preserve">
+    <value>Nem</value>
+  </data>
   <data name="Final_Payment" xml:space="preserve">
     <value>Végleges összeg</value>
   </data>
@@ -509,6 +512,9 @@
   </data>
   <data name="Trucks" xml:space="preserve">
     <value>Járművek</value>
+  </data>
+  <data name="True" xml:space="preserve">
+    <value>Igen</value>
   </data>
   <data name="Type" xml:space="preserve">
     <value>Típus</value>

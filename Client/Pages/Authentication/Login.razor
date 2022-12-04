@@ -25,11 +25,11 @@
             <ValidationMessage For="@(() => loginRequest.Password)" />
         </div>
 
-        <div class="form-check m-3">
+        <div class="form-check mt-1 ms-3">
             <InputCheckbox id="inputRememberMe" class="form-check-input" @bind-Value="@loginRequest.RememberMe" />
             <label class="form-check-label" for="inputRememberMe">@localizer["Remember_me"]</label>
         </div>
-        <div class="row"><div class="col"><button type="submit" class="login-btn btn btn-primary btn-block mt-4">@localizer["Login"]</button></div></div>
+        <div class="row"><div class="col"><button type="submit" class="login-btn btn btn-primary btn-block mt-3">@localizer["Login"]</button></div></div>
         <label class="text-danger">@error</label>
 
 

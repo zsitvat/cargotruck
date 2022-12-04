@@ -155,6 +155,11 @@ table{
     font-size:14px;
 }
 
+.table-width {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
 td{
     padding:0px !important;
     vertical-align:middle;
@@ -171,16 +176,20 @@ th{
 
 .fixed {
     position: absolute;
-    right: 7px;
+    right: -8px;
     margin-top: -1.5rem;
     font-size:14px;
 }
 
 .fixed2 {
     position: absolute;
-    right: 1px;
+    right: -8px;
     margin-top: 0rem;
     font-size: 14px;
+}
+
+.fixed:focus,.fixed2:focus{
+    box-shadow:none !important;
 }
 
 .icon{
@@ -231,7 +240,11 @@ th{
     width:100%;
     background-color: white;
     border-top: 1px solid #d6d5d5;
+    z-index:0;
+
 }
+
+
 
 .footer-text{
     font-size:12px;
@@ -263,21 +276,36 @@ th{
     display: flex;
     flex-direction: column;
     min-width: 0;
-    background-color: #fff;
+    background-color: rgba(30, 40, 53,0.9);
     background-clip: border-box;
     border: 1px solid rgba(0,0,0,.125);
     border-top-left-radius: 0.25rem;
     border-top-right-radius: 0.25rem;
+    min-height: 3.5rem;
 }
 
 .top-buttons-card .card-body {
        margin-left:5%;
 }
 
-.top-buttons-card .card-body button, .top-buttons-card .card-body {
+.top-buttons-card .card-body .form-group button {
     text-align:right;
-    position:relative;
+    position:absolute;
     right:5%;
+}
+
+.top-buttons-card .card-body a {
+    position: absolute;
+    left: 1%;
+    margin-top:5px;
+}
+
+.top-buttons-card .card-body span {
+    position: absolute;
+    left: 1%;
+    margin-top: 1px;
+    font-size: 30px;
+    color: #F5F7FA;
 }
 
 .form-card {
@@ -291,6 +319,27 @@ th{
     border: 1px solid rgba(0,0,0,.125);
 }
 
+.settings-card {
+    box-shadow: 0 0 1px rgb(0 0 0 / 15%);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    width:fit-content;
+    padding-top:3rem;
+    padding-right:3rem;
+}
+
+.x{
+    position: absolute;
+    right: 0.5rem;
+    top:0.5rem;
+    font-size:15px;
+    padding:2px 8px;
+}
 
 .login-icon {
     width: 2rem;
@@ -307,6 +356,18 @@ th{
     width: 100%;
 }
 
+.btn-light {
+    background-color: white;
+    border: 1px solid #d6d5d5;
+    padding: 0.5rem 0.7rem 0.4rem 0.7rem;
+}
+
+.btn-light:hover {
+    background-color: white;
+    border: 1px solid #d6d5d5;
+    opacity:0.6;
+}
+
 .top-row[b-ffa6apske8] {
     height: 3.5rem;
     background-color: #19222d !important;
@@ -318,6 +379,7 @@ th{
 
 .sidebar[b-afudbecg3u] {
     background-image: linear-gradient(180deg, #1e2835 0%, #1e2835 70%) !important;
+    z-index:100;
 }
 
 .nav-item[b-ffa6apske8] a.active {
@@ -358,6 +420,8 @@ th{
 .card-table td, .card-table th {
     min-height: 2rem;
 }
+
+
 
 .table-img {
     width: 50px;
@@ -525,6 +589,10 @@ tbody td, tbody th{
         width: fit-content !important;
         margin-right: 0.2%;
     }
+
+    .bottom-row a {
+        padding-left: 25%;
+    }
 }
 @media (min-width: 1230px) {
     .card table {
@@ -533,6 +601,10 @@ tbody td, tbody th{
 
     .login-card {
         width: 25rem;
+    }
+
+    .bottom-row a {
+        padding-left: 20%;
     }
 
 }
@@ -568,6 +640,10 @@ tbody td, tbody th{
         max-height: 200px;
         max-width: 1200px;
     }
+
+    .table-width {
+        max-width:79vw;
+    }
 }
 
 @media (max-width: 1220px) {
@@ -594,6 +670,10 @@ tbody td, tbody th{
     .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8 {
         width: fit-content !important;
         margin-right: 5%;
+    }
+
+    .table-width {
+        max-width: 75vw;
     }
 }
 
@@ -623,6 +703,24 @@ tbody td, tbody th{
         margin-right: 5.5%;
     }
 
+    .bottom-row a {
+        padding-left: 30%;
+    }
+
+    .table-width {
+        max-width: 70vw;
+    }
+
+}
+
+@media (max-width: 868px)  {
+    .bottom-row a {
+        padding-left: 40%;
+    }
+
+    .table-width {
+        max-width: 68vw;
+    }
 }
 
 @media (max-width: 640px) {
@@ -641,6 +739,12 @@ tbody td, tbody th{
         margin-bottom:5rem;
     }
 
+    .bottom-row a {
+        padding-left: 2%;
+    }
+    .table-width {
+        max-width: 90vw;
+    }
 }
 
 @media (max-width: 430px) {
@@ -668,6 +772,9 @@ tbody td, tbody th{
     .profile-form input {
         width: 17.9rem;
         margin-top: 1%;
+    }
+    .table-width {
+        max-width: 85vw;
     }
 }
 

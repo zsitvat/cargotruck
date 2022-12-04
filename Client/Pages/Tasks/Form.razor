@@ -2,14 +2,18 @@
 
 <EditForm Model="@tasks" OnValidSubmit="@OnValidSubmit">
     <DataAnnotationsValidator />
-     <div class="top-buttons-card">
+    <div class="top-buttons-card">
         <div class="card-body">
-            <div class="d-inline-block">
+                <div class="form-group">
+                    @if (PageHistoryState.CanGoBack())
+                {
+                    <a href="@PageHistoryState.GetGoBackPage()"><span class="oi oi-arrow-circle-left" aria-hidden="true" b-ffa6apske8=""></span></a>
+                }
+            </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-success">
                         <i class="oi oi-circle-check"></i> @localizer[ButtonText]
                     </button>
-                </div>
             </div>
         </div>
     </div>
@@ -19,7 +23,7 @@
             <div class="d-inline-block forms-margin ">
          
                 <div class="form-group">
-                    <label>Partner:</label>
+                    <label>@localizer["Partner"]:</label>
                     <div>
                         <InputText class="form-control inputs" @bind-Value="@tasks.Partner" />
                         <ValidationMessage For="@(() => tasks.Partner)" />
@@ -27,7 +31,7 @@
                 </div>
                 <div class="form-group ">
                     <div>
-                        <label>Description:</label>
+                        <label>@localizer["Description"]:</label>
                         <div>
                             <InputText class="form-control inputs" @bind-Value="@tasks.Description" />
                             <ValidationMessage For="@(() => tasks.Description)" />
@@ -36,7 +40,7 @@
                 </div>
                 <div class="form-group">
                     <div>
-                        <label>Place_of_receipt:</label>
+                        <label>@localizer["Place_of_receipt"]:</label>
                         <div>
                             <InputText class="form-control inputs" @bind-Value="@tasks.Place_of_receipt" />
                             <ValidationMessage For="@(() => tasks.Place_of_receipt)" />
@@ -45,7 +49,7 @@
                 </div>
                 <div class="form-group ">
                     <div>
-                        <label>Time_of_receipt:</label>
+                        <label>@localizer["Time_of_receipt"]:</label>
                         <div>
                             <InputDate class="form-control inputs" @bind-Value="@tasks.Time_of_receipt" />
                             <ValidationMessage For="@(() => tasks.Time_of_receipt)" />
@@ -54,7 +58,7 @@
                 </div>
                 <div class="form-group ">
                     <div>
-                        <label>Place_of_delivery:</label>
+                        <label>@localizer["Place_of_delivery"]:</label>
                         <div>
                             <InputText class="form-control inputs"  @bind-Value="@tasks.Place_of_delivery" />
                             <ValidationMessage For="@(() => tasks.Place_of_delivery)" />
@@ -63,7 +67,7 @@
                 </div>
                 <div class="form-group ">
                     <div>
-                        <label>Time_of_deliver:</label>
+                        <label>@localizer["Time_of_deliver"]:</label>
                         <div>
                             <InputDate class="form-control inputs" @bind-Value="@tasks.Time_of_delivery" />
                             <ValidationMessage For="@(() => tasks.Time_of_delivery)" />
@@ -72,7 +76,7 @@
                 </div>
                   <div class="form-group ">
                     <div>
-                        <label>Other_stops:</label>
+                        <label>@localizer["Other_stops"]:</label>
                         <div>
                             <InputText class="form-control inputs" @bind-Value="@tasks.Other_stops" />
                             <ValidationMessage For="@(() => tasks.Other_stops)" />
@@ -84,7 +88,7 @@
             <div class="d-inline-block forms-margin">
                   <div class="form-group ">
                     <div>
-                        <label>Id_cargo:</label>
+                        <label>@localizer["Id_cargo"]:</label>
                         <div>
                             <InputText class="form-control inputs" @bind-Value="@tasks.Id_cargo" />
                             <ValidationMessage For="@(() => tasks.Id_cargo)" />
@@ -93,7 +97,7 @@
                 </div>
                   <div class="form-group ">
                     <div>
-                        <label>Storage_time:</label>
+                        <label>@localizer["Storage_time"]:</label>
                         <div>
                             <InputText class="form-control inputs" @bind-Value="@tasks.Storage_time" />
                             <ValidationMessage For="@(() => tasks.Storage_time)" />
@@ -102,7 +106,7 @@
                 </div>
                   <div class="form-group ">
                     <div>
-                        <label>Completion_time:</label>
+                        <label>@localizer["Completion_time"]:</label>
                         <div>
                             <InputDate class="form-control inputs" @bind-Value="@tasks.Completion_time" />
                             <ValidationMessage For="@(() => tasks.Completion_time)" />
@@ -111,7 +115,7 @@
                 </div>
                   <div class="form-group ">
                     <div>
-                        <label>Time_of_delay:</label>
+                        <label>@localizer["Time_of_delay"]:</label>
                         <div>
                             <InputText class="form-control inputs" @bind-Value="@tasks.Time_of_delay" />
                             <ValidationMessage For="@(() => tasks.Time_of_delay)" />
@@ -120,7 +124,7 @@
                 </div>
                   <div class="form-group ">
                     <div>
-                        <label>Payment:</label>
+                        <label>@localizer["Payment"]:</label>
                         <div>
                             <InputText class="form-control inputs" @bind-Value="@tasks.Payment" />
                             <ValidationMessage For="@(() => tasks.Payment)" />
@@ -129,7 +133,7 @@
                 </div>
                   <div class="form-group ">
                     <div>
-                        <label>Final_Payment:</label>
+                        <label>@localizer["Final_Payment"]:</label>
                         <div>
                             <InputText class="form-control inputs" @bind-Value="@tasks.Final_Payment" />
                             <ValidationMessage For="@(() => tasks.Final_Payment)" />
@@ -138,7 +142,7 @@
                 </div>
                 <div class="form-group">
                     <div>
-                        <label> Penalty:</label>
+                        <label>@localizer["Penalty"]:</label>
                         <div>
                             <InputText class="form-control inputs" @bind-Value="@tasks.Penalty" />
                             <ValidationMessage For="@(() => tasks.Penalty)" />
@@ -149,7 +153,7 @@
 
             <div class="form-group completed">
                 <div>
-                    <label>Completed:</label>
+                    <label>@localizer["Completed"]:</label>
                     <InputCheckbox class="form-check-input" @bind-Value="@tasks.Completed" />
                     <ValidationMessage For="@(() => tasks.Completed)" />
                 </div>

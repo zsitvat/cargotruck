@@ -12,4 +12,10 @@
         await http.PostAsJsonAsync("api/tasks", task);
         uriHelper.NavigateTo("/Tasks");
     }
+
+    protected override void OnInitialized()
+    {
+        PageHistoryState.AddPageToHistory("/Tasks/create");
+        base.OnInitialized();
+    }
 }
