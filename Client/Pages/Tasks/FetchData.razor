@@ -234,7 +234,6 @@ else
         PageHistoryState.AddPageToHistory("/Tasks");
         base.OnInitialized();
         dataRows = await client.GetFromJsonAsync<int>("api/tasks/pagecount");
-        maxPage = (int)Math.Ceiling(dataRows / pageSize);
         await ShowPage();
     }
 
@@ -259,6 +258,7 @@ else
     public void InputChanged(int ChangedPageSize )
     {
         pageSize = ChangedPageSize;
+        currentPage = 1;
         ShowPage();
     }
 
@@ -287,6 +287,7 @@ else
     {
         if (pageSize < 1 || pageSize==null ){ pageSize = 10; }
         else if (pageSize >= dataRows) { pageSize = (int)dataRows; }
+        maxPage = (int)Math.Ceiling(dataRows / pageSize);
         tasks = await client.GetFromJsonAsync<Tasks[]>($"api/tasks/get?page={currentPage}&pageSize={pageSize}");
         StateHasChanged();
     }
