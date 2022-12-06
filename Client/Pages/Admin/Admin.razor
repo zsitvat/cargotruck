@@ -53,11 +53,11 @@ else
                                             <td>@roles[item.Id]</td>
                                             <td>
                                                 @if(item.UserName == context.User.Identity.Name){
-                                                    <a title="@localizer["Edit"]" class="icon fixed" href="/profile"><span class="oi oi-pencil" aria-hidden="true"></span></a>
+                                                    <a title="@localizer["Edit"]" class="btn fixed" href="/profile"><span class="oi oi-pencil" aria-hidden="true"></span></a>
                                                 }else{
-                                                    <a title="@localizer["Edit"]" class="icon fixed" href="/profile/Edit/@item.Id"><span class="oi oi-pencil" aria-hidden="true"></span></a>
+                                                    <a title="@localizer["Edit"]" class="btn fixed" href="/profile/Edit/@item.Id"><span class="oi oi-pencil" aria-hidden="true"></span></a>
                                                 }
-                                                <button title="@localizer["Delete"]" class="icon fixed2" @onclick="@(() => Delete(item.Id))"><span class="oi oi-trash" aria-hidden="true"></span></button>
+                                                <button title="@localizer["Delete"]" class="btn fixed2" @onclick="@(() => Delete(item.Id))"><span class="oi oi-trash" aria-hidden="true"></span></button>
                                             </td>
                                         </tr>
                                     }

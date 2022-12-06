@@ -9,8 +9,12 @@ html, body {
     min-height: 100vh;
 }
 
-.mb-8{
-    margin-bottom:8rem;
+.pe-25{
+    padding-right:0.78rem;
+}
+
+.mb-8 {
+    margin-bottom: 8rem;
 }
 
 .mb-7 {
@@ -178,15 +182,15 @@ th {
 .fixed {
     position: absolute;
     right: -8px;
-    margin-top: -1.5rem;
-    font-size:14px;
+    margin-top: -1.6rem;
+    font-size:13px;
 }
 
 .fixed2 {
     position: absolute;
     right: -8px;
-    margin-top: 0rem;
-    font-size: 14px;
+    margin-top: -0.2rem;
+    font-size: 13px;
 }
 
 .fixed:focus,.fixed2:focus{
@@ -281,14 +285,14 @@ th {
 }
 
 .register input, .register select {
-    width: 18rem;
-    margin-left: 5px;
+    width: 100%;
+    margin-top:2px;
 }
 
 .login-card {
     border: none;
     border-radius: 0.75em;
-    padding: 8px 20px 8px 20px;
+    padding: 8px 25px 8px 20px;
     box-shadow: 0 0 0 1px rgb(89 105 129 / 10%), 0 3px 20px 0 rgb(89 105 129 / 10%), 0 1px 2px 0 rgb(0 0 0 / 5%);
     height: fit-content;
     background-color: white;

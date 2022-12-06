@@ -285,7 +285,7 @@ else
 
     protected async Task ShowPage()
     {
-        if (pageSize < 1 || pageSize==null ){ pageSize = 10; }
+        if (pageSize < 1 || pageSize == null ){ pageSize = 10; }
         else if (pageSize >= dataRows) { pageSize = (int)dataRows; }
         maxPage = (int)Math.Ceiling(dataRows / pageSize);
         tasks = await client.GetFromJsonAsync<Tasks[]>($"api/tasks/get?page={currentPage}&pageSize={pageSize}");

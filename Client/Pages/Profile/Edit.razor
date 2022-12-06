@@ -25,8 +25,8 @@
                 <ValidationMessage For="@(() => updateRequest.PhoneNumber)" />
                 <AuthorizeView Roles="Admin" Context="admin">
                     <label for="inputRole" class="input-only">@localizer["Role"]</label>
-                    <select selectedValue="" for="inputRole" class="form-control" name="role" id="role" @bind="@updateRequest.Role">
-                        <option value="" disabled >@localizer["Select_placeholder"]</option>
+                    <select data-placeholder="" for="@updateRequest.Role" class="form-control" name="role" id="role" @bind="@updateRequest.Role">
+                        <option value="" selected disabled>@localizer["Select_placeholder"]</option>
                         <option value="Admin">@localizer["Admin"]</option>
                         <option value="User">@localizer["User"]</option>
                         <option value="Driver">@localizer["Driver"]</option>

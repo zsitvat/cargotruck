@@ -4,11 +4,12 @@
 @inject CustomStateProvider authStateProvider
 @attribute [Authorize(Roles = "Admin")]
 
-<div class="login-card col-lg-8">
-    <EditForm class="form-signin register" OnValidSubmit="OnSubmit" Model="registerRequest">
-        <h1 class="h4 font-weight-normal align-center">
-            @localizer["NewAccount"]
-        </h1>
+<div class="login-card col-lg-8" style="width:22rem;">
+    <h1 class="h4 font-weight-bold login-title mb-3">
+        @localizer["NewAccount"]
+    </h1>
+
+    <EditForm class="form-signin register" OnValidSubmit="OnSubmit" Model="registerRequest">   
     
         <DataAnnotationsValidator />
 
@@ -42,8 +43,8 @@
             <option value="Storageman">@localizer["Storageman"]</option>
         </select>
 
-        <button class="btn btn-primary btn-block mt-4" type="submit">@localizer["Register"]</button>
 
+        <div class="row"><div class="col"><button type="submit" class="login-btn btn btn-primary btn-block mt-3">@localizer["Register"]</button></div></div>
         <label class="text-danger">@error</label>
     </EditForm>
 </div>
