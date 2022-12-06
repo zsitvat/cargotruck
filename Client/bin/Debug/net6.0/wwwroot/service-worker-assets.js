@@ -1,7 +1,7 @@
 ﻿self.assetsManifest = {
   "assets": [
     {
-      "hash": "sha256-OlD48jQhR324slpxn5aTDnRo3Nrmtl+RVTe4Hk0lvEc=",
+      "hash": "sha256-6GVrgZG7ZiTb3rgO2P8oMgE\/TJ6W1FgAcbF8CeYMFGs=",
       "url": "css\/app.css"
     },
     {
@@ -1005,11 +1005,11 @@
       "url": "_framework\/en\/Cargotruck.Shared.resources.dll"
     },
     {
-      "hash": "sha256-zFUCn0L3gEsbYGpcYVSN+eSmoIhgf9zAEitjFE8XQdw=",
+      "hash": "sha256-i0MWjv7+oDtYIToKq2rc1pVioLOjF9WwDRwvESWBsLw=",
       "url": "_framework\/Cargotruck.Client.dll"
     },
     {
-      "hash": "sha256-umM4Iv9k0GLhttBT1mezm0wPiTYjMPG0Y8iH3Sruzv0=",
+      "hash": "sha256-OLe2r9+oFfbPtpMshLBEtDRh7ekFaIayLr61cruTdjQ=",
       "url": "_framework\/Cargotruck.Client.pdb"
     },
     {
@@ -1017,7 +1017,7 @@
       "url": "_framework\/blazor.webassembly.js"
     },
     {
-      "hash": "sha256-ddX1E+3A20KmIX2Lc7NoBV1GakNxFPL5zJnN+gMr4qk=",
+      "hash": "sha256-sYzlJAwotTV8+0dGO51OnuRwwlkO2YEhpcOkb\/wBZds=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -1025,5 +1025,5 @@
       "url": "_content\/Microsoft.AspNetCore.Components.WebAssembly.Authentication\/AuthenticationService.js"
     }
   ],
-  "version": "Q0NBeZQl"
+  "version": "LGIlDTM5"
 };

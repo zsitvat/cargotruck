@@ -240,6 +240,11 @@ th {
     cursor: pointer
 }
 
+.number-input{
+    width:80px;
+    text-align:center;
+}
+
 .currentpage {
     font-weight: bold;
     background-color: rgb(211, 211, 211);
@@ -266,8 +271,6 @@ th {
     z-index:0;
 
 }
-
-
 
 .footer-text{
     font-size:12px;

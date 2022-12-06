@@ -242,7 +242,7 @@ else
         var t = tasks.First(x => x.Id == Id);
         if (await js.InvokeAsync<bool>("confirm", $"{@localizer["delete?"]} {t.Partner} ({t.Id})"))
         {
-            await client.DeleteAsync($"api/tasks/getbyid/{Id}");
+            await client.DeleteAsync($"api/tasks/delete/{Id}");
             await OnInitializedAsync();
         }
     }

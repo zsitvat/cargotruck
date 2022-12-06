@@ -13,12 +13,12 @@
 
     protected async override Task OnParametersSetAsync()
     {
-        task = await http.GetFromJsonAsync<Tasks>($"api/tasks/{Id}");
+        task = await http.GetFromJsonAsync<Tasks>($"api/tasks/getById/{Id}");
     }
 
     async Task EditTasks()
     {
-        await http.PutAsJsonAsync("api/tasks", task);
+        await http.PutAsJsonAsync("api/tasks/edit", task);
         await js.InvokeVoidAsync("alert", $"Updated Successfully!");
         uriHelper.NavigateTo("/Tasks");
 
