@@ -8,7 +8,7 @@
     ".NETCoreApp,Version=v6.0": {
       "Cargotruck.Server/1.0.0": {
         "dependencies": {
-          "BlazorPolyfill.Server": "6.0.100.2",
+          "BlazorPolyfill.Server": "6.0.200",
           "Cargotruck.Client": "1.0.0",
           "Cargotruck.Shared": "1.0.0",
           "EntityFramework": "6.4.4",
@@ -20,7 +20,7 @@
           "Microsoft.EntityFrameworkCore.Design": "6.0.10",
           "Microsoft.EntityFrameworkCore.SqlServer": "6.0.10",
           "Microsoft.EntityFrameworkCore.Tools": "6.0.10",
-          "Microsoft.Extensions.Localization": "6.0.10",
+          "Microsoft.Extensions.Localization": "6.0.11",
           "System.ComponentModel.Annotations": "5.0.0"
         },
         "runtime": {
@@ -35,7 +35,7 @@
           }
         }
       },
-      "BlazorPolyfill.Server/6.0.100.2": {
+      "BlazorPolyfill.Server/6.0.200": {
         "dependencies": {
           "JavaScriptEngineSwitcher.ChakraCore": "3.9.1",
           "JavaScriptEngineSwitcher.ChakraCore.Native.linux-x64": "3.9.1",
@@ -59,8 +59,8 @@
         },
         "runtime": {
           "lib/net6.0/Blazor.Polyfill.Server.dll": {
-            "assemblyVersion": "6.0.100.2",
-            "fileVersion": "6.0.100.2"
+            "assemblyVersion": "6.0.200.0",
+            "fileVersion": "6.0.200.0"
           }
         }
       },
@@ -222,7 +222,7 @@
       "Microsoft.AspNetCore.Authorization/6.0.10": {
         "dependencies": {
           "Microsoft.AspNetCore.Metadata": "6.0.10",
-          "Microsoft.Extensions.Logging.Abstractions": "6.0.2",
+          "Microsoft.Extensions.Logging.Abstractions": "6.0.3",
           "Microsoft.Extensions.Options": "6.0.0"
         },
         "runtime": {
@@ -419,7 +419,7 @@
           "Microsoft.AspNetCore.Hosting.Abstractions": "2.2.0",
           "Microsoft.AspNetCore.Http.Extensions": "2.2.0",
           "Microsoft.Extensions.FileProviders.Abstractions": "6.0.0",
-          "Microsoft.Extensions.Logging.Abstractions": "6.0.2",
+          "Microsoft.Extensions.Logging.Abstractions": "6.0.3",
           "Microsoft.Extensions.WebEncoders": "2.2.0"
         }
       },
@@ -649,7 +649,7 @@
         "dependencies": {
           "Microsoft.Extensions.Caching.Abstractions": "6.0.0",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0",
-          "Microsoft.Extensions.Logging.Abstractions": "6.0.2",
+          "Microsoft.Extensions.Logging.Abstractions": "6.0.3",
           "Microsoft.Extensions.Options": "6.0.0",
           "Microsoft.Extensions.Primitives": "6.0.0"
         },
@@ -740,7 +740,7 @@
           "Microsoft.Extensions.Configuration.Abstractions": "6.0.0",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0",
           "Microsoft.Extensions.FileProviders.Abstractions": "6.0.0",
-          "Microsoft.Extensions.Logging.Abstractions": "6.0.2"
+          "Microsoft.Extensions.Logging.Abstractions": "6.0.3"
         }
       },
       "Microsoft.Extensions.Identity.Core/6.0.10": {
@@ -769,25 +769,25 @@
           }
         }
       },
-      "Microsoft.Extensions.Localization/6.0.10": {
+      "Microsoft.Extensions.Localization/6.0.11": {
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0",
-          "Microsoft.Extensions.Localization.Abstractions": "6.0.10",
-          "Microsoft.Extensions.Logging.Abstractions": "6.0.2",
+          "Microsoft.Extensions.Localization.Abstractions": "6.0.11",
+          "Microsoft.Extensions.Logging.Abstractions": "6.0.3",
           "Microsoft.Extensions.Options": "6.0.0"
         },
         "runtime": {
           "lib/net6.0/Microsoft.Extensions.Localization.dll": {
             "assemblyVersion": "6.0.0.0",
-            "fileVersion": "6.0.1022.47617"
+            "fileVersion": "6.0.1122.52304"
           }
         }
       },
-      "Microsoft.Extensions.Localization.Abstractions/6.0.10": {
+      "Microsoft.Extensions.Localization.Abstractions/6.0.11": {
         "runtime": {
           "lib/net6.0/Microsoft.Extensions.Localization.Abstractions.dll": {
             "assemblyVersion": "6.0.0.0",
-            "fileVersion": "6.0.1022.47617"
+            "fileVersion": "6.0.1122.52304"
           }
         }
       },
@@ -795,16 +795,16 @@
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection": "6.0.1",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0",
-          "Microsoft.Extensions.Logging.Abstractions": "6.0.2",
+          "Microsoft.Extensions.Logging.Abstractions": "6.0.3",
           "Microsoft.Extensions.Options": "6.0.0",
           "System.Diagnostics.DiagnosticSource": "6.0.0"
         }
       },
-      "Microsoft.Extensions.Logging.Abstractions/6.0.2": {
+      "Microsoft.Extensions.Logging.Abstractions/6.0.3": {
         "runtime": {
           "lib/net6.0/Microsoft.Extensions.Logging.Abstractions.dll": {
             "assemblyVersion": "6.0.0.0",
-            "fileVersion": "6.0.922.41905"
+            "fileVersion": "6.0.1122.52304"
           }
         }
       },
@@ -1484,7 +1484,8 @@
           "Microsoft.AspNetCore.Components.WebAssembly": "6.0.10",
           "Microsoft.AspNetCore.Components.WebAssembly.Authentication": "6.0.10",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.10",
-          "Microsoft.Extensions.Localization": "6.0.10"
+          "Microsoft.Extensions.Localization": "6.0.11",
+          "System.ComponentModel.Annotations": "5.0.0"
         },
         "runtime": {
           "Cargotruck.Client.dll": {}
@@ -1494,7 +1495,8 @@
         "dependencies": {
           "EntityFramework": "6.4.4",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.10",
-          "Microsoft.Extensions.Localization": "6.0.10"
+          "Microsoft.Extensions.Localization": "6.0.11",
+          "System.ComponentModel.Annotations": "5.0.0"
         },
         "runtime": {
           "Cargotruck.Shared.dll": {}
@@ -1520,12 +1522,12 @@
       "path": "advancedstringbuilder/0.1.0",
       "hashPath": "advancedstringbuilder.0.1.0.nupkg.sha512"
     },
-    "BlazorPolyfill.Server/6.0.100.2": {
+    "BlazorPolyfill.Server/6.0.200": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-tmgjCIADEW+nJb1zvuNZ8gdvaJKdnVcN7esYGlJQOU5bp4akBoe6EfqVA4IALuHAatr533xu482/u7VPLgEgUg==",
-      "path": "blazorpolyfill.server/6.0.100.2",
-      "hashPath": "blazorpolyfill.server.6.0.100.2.nupkg.sha512"
+      "sha512": "sha512-ASwy0avQdysYhQMqgtBzWyHMce0FNJOGhJHWaIXeu/CkG+3sHlMaan0iwKV0mTIa3PYSRDDG0VzLWA6v1BhGng==",
+      "path": "blazorpolyfill.server/6.0.200",
+      "hashPath": "blazorpolyfill.server.6.0.200.nupkg.sha512"
     },
     "EntityFramework/6.4.4": {
       "type": "package",
@@ -2010,19 +2012,19 @@
       "path": "microsoft.extensions.identity.stores/6.0.10",
       "hashPath": "microsoft.extensions.identity.stores.6.0.10.nupkg.sha512"
     },
-    "Microsoft.Extensions.Localization/6.0.10": {
+    "Microsoft.Extensions.Localization/6.0.11": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-J4U11frrtnHhO6vcz7K9csMVzl/goebyKpKHLFek1dxSiYY1V03QwgJR3sbJG7LGY4HxptvjtZi5BVhbE0CnqQ==",
-      "path": "microsoft.extensions.localization/6.0.10",
-      "hashPath": "microsoft.extensions.localization.6.0.10.nupkg.sha512"
+      "sha512": "sha512-UorCpTt8gUlUgVuDU+kqyk0BcP7WWZZOHdE0aLwrTSD41k1aazC4af9xIxOA9EP0PQkmlMbwdbJdruk4M+ExQg==",
+      "path": "microsoft.extensions.localization/6.0.11",
+      "hashPath": "microsoft.extensions.localization.6.0.11.nupkg.sha512"
     },
-    "Microsoft.Extensions.Localization.Abstractions/6.0.10": {
+    "Microsoft.Extensions.Localization.Abstractions/6.0.11": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-vUZSszQsK4mhniiLH28f2fj38tSPlEcDwX0PJQcmsqNIbyZ2F0+XyhQswJ36bPPpQYDWB2yO4S5Sk5/sBZndlA==",
-      "path": "microsoft.extensions.localization.abstractions/6.0.10",
-      "hashPath": "microsoft.extensions.localization.abstractions.6.0.10.nupkg.sha512"
+      "sha512": "sha512-Vu6Q7J0PKzPZFBMM3TjWvfPfrcWQqqYPwLtLeSQ7hzE0NOG44gj8WhIcZxU5jowXH8Uz5XCH6S1x0Unl8A/AWA==",
+      "path": "microsoft.extensions.localization.abstractions/6.0.11",
+      "hashPath": "microsoft.extensions.localization.abstractions.6.0.11.nupkg.sha512"
     },
     "Microsoft.Extensions.Logging/6.0.0": {
       "type": "package",
@@ -2031,12 +2033,12 @@
       "path": "microsoft.extensions.logging/6.0.0",
       "hashPath": "microsoft.extensions.logging.6.0.0.nupkg.sha512"
     },
-    "Microsoft.Extensions.Logging.Abstractions/6.0.2": {
+    "Microsoft.Extensions.Logging.Abstractions/6.0.3": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-pwXCZKaA7m5wgmCj49dW+H1RPSY7U62SKLTQYCcavf/k3Nyt/WnBgAjG4jMGnwy9rElfAZ2KvxvM5CJzJWG0hg==",
-      "path": "microsoft.extensions.logging.abstractions/6.0.2",
-      "hashPath": "microsoft.extensions.logging.abstractions.6.0.2.nupkg.sha512"
+      "sha512": "sha512-SUpStcdjeBbdKjPKe53hVVLkFjylX0yIXY8K+xWa47+o1d+REDyOMZjHZa+chsQI1K9qZeiHWk9jos0TFU7vGg==",
+      "path": "microsoft.extensions.logging.abstractions/6.0.3",
+      "hashPath": "microsoft.extensions.logging.abstractions.6.0.3.nupkg.sha512"
     },
     "Microsoft.Extensions.Options/6.0.0": {
       "type": "package",

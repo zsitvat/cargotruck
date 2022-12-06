@@ -366,6 +366,9 @@
   <data name="Other_stops" xml:space="preserve">
     <value>Egyéb megállóhelyek</value>
   </data>
+  <data name="PageSize" xml:space="preserve">
+    <value>Sorok száma</value>
+  </data>
   <data name="Partner" xml:space="preserve">
     <value>Partner</value>
   </data>

@@ -15,7 +15,7 @@
           }
         }
       },
-      "BlazorPolyfill.Server/6.0.100.2": {
+      "BlazorPolyfill.Server/6.0.200": {
         "type": "package",
         "dependencies": {
           "JavaScriptEngineSwitcher.ChakraCore": "3.9.1",
@@ -1200,12 +1200,12 @@
           }
         }
       },
-      "Microsoft.Extensions.Localization/6.0.10": {
+      "Microsoft.Extensions.Localization/6.0.11": {
         "type": "package",
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0",
-          "Microsoft.Extensions.Localization.Abstractions": "6.0.10",
-          "Microsoft.Extensions.Logging.Abstractions": "6.0.2",
+          "Microsoft.Extensions.Localization.Abstractions": "6.0.11",
+          "Microsoft.Extensions.Logging.Abstractions": "6.0.3",
           "Microsoft.Extensions.Options": "6.0.0"
         },
         "compile": {
@@ -1219,7 +1219,7 @@
           }
         }
       },
-      "Microsoft.Extensions.Localization.Abstractions/6.0.10": {
+      "Microsoft.Extensions.Localization.Abstractions/6.0.11": {
         "type": "package",
         "compile": {
           "lib/net6.0/Microsoft.Extensions.Localization.Abstractions.dll": {
@@ -1252,7 +1252,7 @@
           }
         }
       },
-      "Microsoft.Extensions.Logging.Abstractions/6.0.2": {
+      "Microsoft.Extensions.Logging.Abstractions/6.0.3": {
         "type": "package",
         "compile": {
           "lib/net6.0/Microsoft.Extensions.Logging.Abstractions.dll": {
@@ -1265,7 +1265,7 @@
           }
         },
         "build": {
-          "buildTransitive/netcoreapp3.1/_._": {}
+          "buildTransitive/netcoreapp3.1/Microsoft.Extensions.Logging.Abstractions.targets": {}
         }
       },
       "Microsoft.Extensions.Options/6.0.0": {
@@ -2526,7 +2526,8 @@
           "Microsoft.AspNetCore.Components.WebAssembly": "6.0.10",
           "Microsoft.AspNetCore.Components.WebAssembly.Authentication": "6.0.10",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.10",
-          "Microsoft.Extensions.Localization": "6.0.10"
+          "Microsoft.Extensions.Localization": "6.0.11",
+          "System.ComponentModel.Annotations": "5.0.0"
         },
         "compile": {
           "bin/placeholder/Cargotruck.Client.dll": {}
@@ -2541,7 +2542,8 @@
         "dependencies": {
           "EntityFramework": "6.4.4",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.10",
-          "Microsoft.Extensions.Localization": "6.0.10"
+          "Microsoft.Extensions.Localization": "6.0.11",
+          "System.ComponentModel.Annotations": "5.0.0"
         },
         "compile": {
           "bin/placeholder/Cargotruck.Shared.dll": {}
@@ -2572,14 +2574,14 @@
         "lib/netstandard2.0/AdvancedStringBuilder.xml"
       ]
     },
-    "BlazorPolyfill.Server/6.0.100.2": {
-      "sha512": "tmgjCIADEW+nJb1zvuNZ8gdvaJKdnVcN7esYGlJQOU5bp4akBoe6EfqVA4IALuHAatr533xu482/u7VPLgEgUg==",
+    "BlazorPolyfill.Server/6.0.200": {
+      "sha512": "ASwy0avQdysYhQMqgtBzWyHMce0FNJOGhJHWaIXeu/CkG+3sHlMaan0iwKV0mTIa3PYSRDDG0VzLWA6v1BhGng==",
       "type": "package",
-      "path": "blazorpolyfill.server/6.0.100.2",
+      "path": "blazorpolyfill.server/6.0.200",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "blazorpolyfill.server.6.0.100.2.nupkg.sha512",
+        "blazorpolyfill.server.6.0.200.nupkg.sha512",
         "blazorpolyfill.server.nuspec",
         "lib/net6.0/Blazor.Polyfill.Server.dll",
         "lib/net6.0/Blazor.Polyfill.Server.xml",
@@ -4029,10 +4031,10 @@
         "microsoft.extensions.identity.stores.nuspec"
       ]
     },
-    "Microsoft.Extensions.Localization/6.0.10": {
-      "sha512": "J4U11frrtnHhO6vcz7K9csMVzl/goebyKpKHLFek1dxSiYY1V03QwgJR3sbJG7LGY4HxptvjtZi5BVhbE0CnqQ==",
+    "Microsoft.Extensions.Localization/6.0.11": {
+      "sha512": "UorCpTt8gUlUgVuDU+kqyk0BcP7WWZZOHdE0aLwrTSD41k1aazC4af9xIxOA9EP0PQkmlMbwdbJdruk4M+ExQg==",
       "type": "package",
-      "path": "microsoft.extensions.localization/6.0.10",
+      "path": "microsoft.extensions.localization/6.0.11",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -4044,14 +4046,14 @@
         "lib/net6.0/Microsoft.Extensions.Localization.xml",
         "lib/netstandard2.0/Microsoft.Extensions.Localization.dll",
         "lib/netstandard2.0/Microsoft.Extensions.Localization.xml",
-        "microsoft.extensions.localization.6.0.10.nupkg.sha512",
+        "microsoft.extensions.localization.6.0.11.nupkg.sha512",
         "microsoft.extensions.localization.nuspec"
       ]
     },
-    "Microsoft.Extensions.Localization.Abstractions/6.0.10": {
-      "sha512": "vUZSszQsK4mhniiLH28f2fj38tSPlEcDwX0PJQcmsqNIbyZ2F0+XyhQswJ36bPPpQYDWB2yO4S5Sk5/sBZndlA==",
+    "Microsoft.Extensions.Localization.Abstractions/6.0.11": {
+      "sha512": "Vu6Q7J0PKzPZFBMM3TjWvfPfrcWQqqYPwLtLeSQ7hzE0NOG44gj8WhIcZxU5jowXH8Uz5XCH6S1x0Unl8A/AWA==",
       "type": "package",
-      "path": "microsoft.extensions.localization.abstractions/6.0.10",
+      "path": "microsoft.extensions.localization.abstractions/6.0.11",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -4063,7 +4065,7 @@
         "lib/net6.0/Microsoft.Extensions.Localization.Abstractions.xml",
         "lib/netstandard2.0/Microsoft.Extensions.Localization.Abstractions.dll",
         "lib/netstandard2.0/Microsoft.Extensions.Localization.Abstractions.xml",
-        "microsoft.extensions.localization.abstractions.6.0.10.nupkg.sha512",
+        "microsoft.extensions.localization.abstractions.6.0.11.nupkg.sha512",
         "microsoft.extensions.localization.abstractions.nuspec"
       ]
     },
@@ -4088,10 +4090,10 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "Microsoft.Extensions.Logging.Abstractions/6.0.2": {
-      "sha512": "pwXCZKaA7m5wgmCj49dW+H1RPSY7U62SKLTQYCcavf/k3Nyt/WnBgAjG4jMGnwy9rElfAZ2KvxvM5CJzJWG0hg==",
+    "Microsoft.Extensions.Logging.Abstractions/6.0.3": {
+      "sha512": "SUpStcdjeBbdKjPKe53hVVLkFjylX0yIXY8K+xWa47+o1d+REDyOMZjHZa+chsQI1K9qZeiHWk9jos0TFU7vGg==",
       "type": "package",
-      "path": "microsoft.extensions.logging.abstractions/6.0.2",
+      "path": "microsoft.extensions.logging.abstractions/6.0.3",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -4126,16 +4128,16 @@
         "analyzers/dotnet/roslyn4.0/cs/tr/Microsoft.Extensions.Logging.Generators.resources.dll",
         "analyzers/dotnet/roslyn4.0/cs/zh-Hans/Microsoft.Extensions.Logging.Generators.resources.dll",
         "analyzers/dotnet/roslyn4.0/cs/zh-Hant/Microsoft.Extensions.Logging.Generators.resources.dll",
-        "build/Microsoft.Extensions.Logging.Abstractions.targets",
         "buildTransitive/netcoreapp2.0/Microsoft.Extensions.Logging.Abstractions.targets",
-        "buildTransitive/netcoreapp3.1/_._",
+        "buildTransitive/netcoreapp3.1/Microsoft.Extensions.Logging.Abstractions.targets",
+        "buildTransitive/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.targets",
         "lib/net461/Microsoft.Extensions.Logging.Abstractions.dll",
         "lib/net461/Microsoft.Extensions.Logging.Abstractions.xml",
         "lib/net6.0/Microsoft.Extensions.Logging.Abstractions.dll",
         "lib/net6.0/Microsoft.Extensions.Logging.Abstractions.xml",
         "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll",
         "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.xml",
-        "microsoft.extensions.logging.abstractions.6.0.2.nupkg.sha512",
+        "microsoft.extensions.logging.abstractions.6.0.3.nupkg.sha512",
         "microsoft.extensions.logging.abstractions.nuspec",
         "useSharedDesignerContext.txt"
       ]
@@ -7146,7 +7148,7 @@
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "BlazorPolyfill.Server >= 6.0.100.2",
+      "BlazorPolyfill.Server >= 6.0.200",
       "Cargotruck.Client >= 1.0.0",
       "Cargotruck.Shared >= 1.0.0",
       "EntityFramework >= 6.4.4",
@@ -7158,7 +7160,7 @@
       "Microsoft.EntityFrameworkCore.Design >= 6.0.10",
       "Microsoft.EntityFrameworkCore.SqlServer >= 6.0.10",
       "Microsoft.EntityFrameworkCore.Tools >= 6.0.10",
-      "Microsoft.Extensions.Localization >= 6.0.10",
+      "Microsoft.Extensions.Localization >= 6.0.11",
       "System.ComponentModel.Annotations >= 5.0.0"
     ]
   },
@@ -7215,7 +7217,7 @@
         "dependencies": {
           "BlazorPolyfill.Server": {
             "target": "Package",
-            "version": "[6.0.100.2, )"
+            "version": "[6.0.200, )"
           },
           "EntityFramework": {
             "target": "Package",
@@ -7259,7 +7261,7 @@
           },
           "Microsoft.Extensions.Localization": {
             "target": "Package",
-            "version": "[6.0.10, )"
+            "version": "[6.0.11, )"
           },
           "System.ComponentModel.Annotations": {
             "target": "Package",

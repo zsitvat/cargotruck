@@ -170,8 +170,9 @@ th:first-child {
 }
 
 
-th{
-    min-width:5.2rem;
+th {
+    min-width: 5.2rem;
+    vertical-align: middle;
 }
 
 .fixed {
@@ -227,9 +228,31 @@ th{
     opacity: 0.8 !important;  
 }
 
+.pagination-style {
+}
+
+.btn-pagination {
+    padding: 2px 10px;
+    border-radius: 0.25rem;
+    margin: 2px;
+    background-color: white;
+    border: 1px solid #d6d5d5;
+    cursor: pointer
+}
+
+.currentpage {
+    font-weight: bold;
+    background-color: rgb(211, 211, 211);
+}
+
+.oi-media-skip-forward, .oi-media-skip-backward {
+    border: none;
+    font-size: 25px;
+}
+
 .validation-message {
     font-size: 13px;
-    position:absolute;
+    position: absolute;
 }
 
 .bottom-row {
@@ -781,4 +804,27 @@ tbody td, tbody th{
 tr td:first-child {
     padding-right: 15px !important;
     padding-left: 20px !important;
+}
+
+/*Scroll bar css*/
+
+/* width */
+::-webkit-scrollbar {
+    width: 12px;
+    height:12px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }

@@ -10,7 +10,8 @@
         "dependencies": {
           "EntityFramework": "6.4.4",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.10",
-          "Microsoft.Extensions.Localization": "6.0.10"
+          "Microsoft.Extensions.Localization": "6.0.11",
+          "System.ComponentModel.Annotations": "5.0.0"
         },
         "runtime": {
           "Cargotruck.Shared.dll": {}
@@ -25,7 +26,7 @@
         "dependencies": {
           "Microsoft.CSharp": "4.7.0",
           "System.CodeDom": "4.7.0",
-          "System.ComponentModel.Annotations": "4.7.0",
+          "System.ComponentModel.Annotations": "5.0.0",
           "System.Configuration.ConfigurationManager": "4.7.0",
           "System.Data.SqlClient": "4.8.1"
         },
@@ -125,7 +126,7 @@
         "dependencies": {
           "Microsoft.Extensions.Caching.Abstractions": "6.0.0",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0",
-          "Microsoft.Extensions.Logging.Abstractions": "6.0.2",
+          "Microsoft.Extensions.Logging.Abstractions": "6.0.3",
           "Microsoft.Extensions.Options": "6.0.0",
           "Microsoft.Extensions.Primitives": "6.0.0"
         },
@@ -193,25 +194,25 @@
           }
         }
       },
-      "Microsoft.Extensions.Localization/6.0.10": {
+      "Microsoft.Extensions.Localization/6.0.11": {
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0",
-          "Microsoft.Extensions.Localization.Abstractions": "6.0.10",
-          "Microsoft.Extensions.Logging.Abstractions": "6.0.2",
+          "Microsoft.Extensions.Localization.Abstractions": "6.0.11",
+          "Microsoft.Extensions.Logging.Abstractions": "6.0.3",
           "Microsoft.Extensions.Options": "6.0.0"
         },
         "runtime": {
           "lib/net6.0/Microsoft.Extensions.Localization.dll": {
             "assemblyVersion": "6.0.0.0",
-            "fileVersion": "6.0.1022.47617"
+            "fileVersion": "6.0.1122.52304"
           }
         }
       },
-      "Microsoft.Extensions.Localization.Abstractions/6.0.10": {
+      "Microsoft.Extensions.Localization.Abstractions/6.0.11": {
         "runtime": {
           "lib/net6.0/Microsoft.Extensions.Localization.Abstractions.dll": {
             "assemblyVersion": "6.0.0.0",
-            "fileVersion": "6.0.1022.47617"
+            "fileVersion": "6.0.1122.52304"
           }
         }
       },
@@ -219,7 +220,7 @@
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection": "6.0.1",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0",
-          "Microsoft.Extensions.Logging.Abstractions": "6.0.2",
+          "Microsoft.Extensions.Logging.Abstractions": "6.0.3",
           "Microsoft.Extensions.Options": "6.0.0",
           "System.Diagnostics.DiagnosticSource": "6.0.0"
         },
@@ -230,11 +231,11 @@
           }
         }
       },
-      "Microsoft.Extensions.Logging.Abstractions/6.0.2": {
+      "Microsoft.Extensions.Logging.Abstractions/6.0.3": {
         "runtime": {
           "lib/net6.0/Microsoft.Extensions.Logging.Abstractions.dll": {
             "assemblyVersion": "6.0.0.0",
-            "fileVersion": "6.0.922.41905"
+            "fileVersion": "6.0.1122.52304"
           }
         }
       },
@@ -334,7 +335,7 @@
           "System.Runtime.CompilerServices.Unsafe": "6.0.0"
         }
       },
-      "System.ComponentModel.Annotations/4.7.0": {},
+      "System.ComponentModel.Annotations/5.0.0": {},
       "System.Configuration.ConfigurationManager/4.7.0": {
         "dependencies": {
           "System.Security.Cryptography.ProtectedData": "4.7.0",
@@ -580,19 +581,19 @@
       "path": "microsoft.extensions.identity.stores/6.0.10",
       "hashPath": "microsoft.extensions.identity.stores.6.0.10.nupkg.sha512"
     },
-    "Microsoft.Extensions.Localization/6.0.10": {
+    "Microsoft.Extensions.Localization/6.0.11": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-J4U11frrtnHhO6vcz7K9csMVzl/goebyKpKHLFek1dxSiYY1V03QwgJR3sbJG7LGY4HxptvjtZi5BVhbE0CnqQ==",
-      "path": "microsoft.extensions.localization/6.0.10",
-      "hashPath": "microsoft.extensions.localization.6.0.10.nupkg.sha512"
+      "sha512": "sha512-UorCpTt8gUlUgVuDU+kqyk0BcP7WWZZOHdE0aLwrTSD41k1aazC4af9xIxOA9EP0PQkmlMbwdbJdruk4M+ExQg==",
+      "path": "microsoft.extensions.localization/6.0.11",
+      "hashPath": "microsoft.extensions.localization.6.0.11.nupkg.sha512"
     },
-    "Microsoft.Extensions.Localization.Abstractions/6.0.10": {
+    "Microsoft.Extensions.Localization.Abstractions/6.0.11": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-vUZSszQsK4mhniiLH28f2fj38tSPlEcDwX0PJQcmsqNIbyZ2F0+XyhQswJ36bPPpQYDWB2yO4S5Sk5/sBZndlA==",
-      "path": "microsoft.extensions.localization.abstractions/6.0.10",
-      "hashPath": "microsoft.extensions.localization.abstractions.6.0.10.nupkg.sha512"
+      "sha512": "sha512-Vu6Q7J0PKzPZFBMM3TjWvfPfrcWQqqYPwLtLeSQ7hzE0NOG44gj8WhIcZxU5jowXH8Uz5XCH6S1x0Unl8A/AWA==",
+      "path": "microsoft.extensions.localization.abstractions/6.0.11",
+      "hashPath": "microsoft.extensions.localization.abstractions.6.0.11.nupkg.sha512"
     },
     "Microsoft.Extensions.Logging/6.0.0": {
       "type": "package",
@@ -601,12 +602,12 @@
       "path": "microsoft.extensions.logging/6.0.0",
       "hashPath": "microsoft.extensions.logging.6.0.0.nupkg.sha512"
     },
-    "Microsoft.Extensions.Logging.Abstractions/6.0.2": {
+    "Microsoft.Extensions.Logging.Abstractions/6.0.3": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-pwXCZKaA7m5wgmCj49dW+H1RPSY7U62SKLTQYCcavf/k3Nyt/WnBgAjG4jMGnwy9rElfAZ2KvxvM5CJzJWG0hg==",
-      "path": "microsoft.extensions.logging.abstractions/6.0.2",
-      "hashPath": "microsoft.extensions.logging.abstractions.6.0.2.nupkg.sha512"
+      "sha512": "sha512-SUpStcdjeBbdKjPKe53hVVLkFjylX0yIXY8K+xWa47+o1d+REDyOMZjHZa+chsQI1K9qZeiHWk9jos0TFU7vGg==",
+      "path": "microsoft.extensions.logging.abstractions/6.0.3",
+      "hashPath": "microsoft.extensions.logging.abstractions.6.0.3.nupkg.sha512"
     },
     "Microsoft.Extensions.Options/6.0.0": {
       "type": "package",
@@ -685,12 +686,12 @@
       "path": "system.collections.immutable/6.0.0",
       "hashPath": "system.collections.immutable.6.0.0.nupkg.sha512"
     },
-    "System.ComponentModel.Annotations/4.7.0": {
+    "System.ComponentModel.Annotations/5.0.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-0YFqjhp/mYkDGpU0Ye1GjE53HMp9UVfGN7seGpAMttAC0C40v5gw598jCgpbBLMmCo0E5YRLBv5Z2doypO49ZQ==",
-      "path": "system.componentmodel.annotations/4.7.0",
-      "hashPath": "system.componentmodel.annotations.4.7.0.nupkg.sha512"
+      "sha512": "sha512-dMkqfy2el8A8/I76n2Hi1oBFEbG1SfxD2l5nhwXV3XjlnOmwxJlQbYpJH4W51odnU9sARCSAgv7S3CyAFMkpYg==",
+      "path": "system.componentmodel.annotations/5.0.0",
+      "hashPath": "system.componentmodel.annotations.5.0.0.nupkg.sha512"
     },
     "System.Configuration.ConfigurationManager/4.7.0": {
       "type": "package",

@@ -1,7 +1,7 @@
 ﻿self.assetsManifest = {
   "assets": [
     {
-      "hash": "sha256-bttBIZi7ILsdlyGvggE0H4VL2VtK+1DkYkoscN115Og=",
+      "hash": "sha256-OlD48jQhR324slpxn5aTDnRo3Nrmtl+RVTe4Hk0lvEc=",
       "url": "css\/app.css"
     },
     {
@@ -83,6 +83,10 @@
     {
       "hash": "sha256-yq0LpicODc55Yv8asrQdSG+d04nTPKSyOtxh6Q9f7Uc=",
       "url": "img\/profiles\/1eikfoo3.jpg"
+    },
+    {
+      "hash": "sha256-IZzcXDYuJRrC1cDQUu4c4AnD0DnrYVBFNUO8WNAIlhg=",
+      "url": "img\/profiles\/1ntlddrz.jpg"
     },
     {
       "hash": "sha256-yq0LpicODc55Yv8asrQdSG+d04nTPKSyOtxh6Q9f7Uc=",
@@ -205,7 +209,7 @@
       "url": "_framework\/Microsoft.Extensions.DependencyInjection.dll"
     },
     {
-      "hash": "sha256-nM2DA1GqKLxoPU+NHO\/Z5yQWH5ctJb+2Tu5b9VxIxeM=",
+      "hash": "sha256-CHgTsvk1C4wtMeW8mlQQ+rGY+trIe7Emn0HebmrX7mI=",
       "url": "_framework\/Microsoft.Extensions.DependencyInjection.Abstractions.dll"
     },
     {
@@ -229,11 +233,11 @@
       "url": "_framework\/Microsoft.Extensions.Identity.Stores.dll"
     },
     {
-      "hash": "sha256-N6JexZ\/MOCA94\/AK1gOA5Gs5K4zd9R3ZcMMe7QW8\/c4=",
+      "hash": "sha256-GYRscSuhfavMo08sZ0v+bdeAAhb7j0+dB2bIC9Dg904=",
       "url": "_framework\/Microsoft.Extensions.Localization.dll"
     },
     {
-      "hash": "sha256-WnZhR\/Ab\/7VdXa1E021wND+g4hma3i3UBIDUcvNVEWc=",
+      "hash": "sha256-8kBQ1j2Vxwb\/RW+zNhT+mUi1V3EKc4YbtMh\/nqnt7vM=",
       "url": "_framework\/Microsoft.Extensions.Localization.Abstractions.dll"
     },
     {
@@ -241,15 +245,15 @@
       "url": "_framework\/Microsoft.Extensions.Logging.dll"
     },
     {
-      "hash": "sha256-ecZkn3RPZPEwxamP17ECOmKEAvX+KJUgvdYQFderb0U=",
+      "hash": "sha256-TeK78LW1mefI\/Ao7uFcK6TBhgjx9HUMSm3nqBsUC6pI=",
       "url": "_framework\/Microsoft.Extensions.Logging.Abstractions.dll"
     },
     {
-      "hash": "sha256-eGESyy9mRu8RcCGajAu4E8nxSmeB5nxiZkFPVaZ5Vl0=",
+      "hash": "sha256-eSdlox4SJgv3qnYw0Q5A3Z8uFA\/7VngjeiBVJmtHgRI=",
       "url": "_framework\/Microsoft.Extensions.Options.dll"
     },
     {
-      "hash": "sha256-jOmoWSfsdQexH\/6QCA56gR1RMEqeix2iDDUBWbpAOQI=",
+      "hash": "sha256-hXhFRImkOdXevYqMqYRLOzgHZWPq8ZXMXtS9J6jFTqM=",
       "url": "_framework\/Microsoft.Extensions.Primitives.dll"
     },
     {
@@ -989,23 +993,23 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-KaH0K2uAX2yWU+FGFoNrjwyFy03XEL2z02FON8jNFQw=",
+      "hash": "sha256-z6czZivImztpg8PRCRuw\/KKYaTbmPfW3V7SC\/NrE8x0=",
       "url": "_framework\/Cargotruck.Shared.dll"
     },
     {
-      "hash": "sha256-Ld1H0O1Upiw0uvYmPSDNIZSqgUYAlYxWuVMuq3hCaTI=",
+      "hash": "sha256-gx9tMpke4qIq2Juf6ymF2PQ6Qvs2oCzb9m2xUdxkrQE=",
       "url": "_framework\/Cargotruck.Shared.pdb"
     },
     {
-      "hash": "sha256-ihz773+VSb+ErJWDhAxYizebnpzlfaNGAGXXg3Rd1Po=",
+      "hash": "sha256-k9s\/+BW64yJWlDPpVzrmy6jUNgqPV9f46Xs+g3S9yZI=",
       "url": "_framework\/en\/Cargotruck.Shared.resources.dll"
     },
     {
-      "hash": "sha256-qrcGNIvwBRep2\/kVx\/rvwlu8qxRNdKnh7rf2TKNWlzc=",
+      "hash": "sha256-zFUCn0L3gEsbYGpcYVSN+eSmoIhgf9zAEitjFE8XQdw=",
       "url": "_framework\/Cargotruck.Client.dll"
     },
     {
-      "hash": "sha256-sMmpw6qvlZy5P3xfZxMMJdvPc33II6ine9nWQ8gZksg=",
+      "hash": "sha256-umM4Iv9k0GLhttBT1mezm0wPiTYjMPG0Y8iH3Sruzv0=",
       "url": "_framework\/Cargotruck.Client.pdb"
     },
     {
@@ -1013,7 +1017,7 @@
       "url": "_framework\/blazor.webassembly.js"
     },
     {
-      "hash": "sha256-hc9MtV8KtxiwAEwxiyYAqp3PfHmXoCqIXATFOEZN3wk=",
+      "hash": "sha256-ddX1E+3A20KmIX2Lc7NoBV1GakNxFPL5zJnN+gMr4qk=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -1021,5 +1025,5 @@
       "url": "_content\/Microsoft.AspNetCore.Components.WebAssembly.Authentication\/AuthenticationService.js"
     }
   ],
-  "version": "4QOYz2dD"
+  "version": "Q0NBeZQl"
 };

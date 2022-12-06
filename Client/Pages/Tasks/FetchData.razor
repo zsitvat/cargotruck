@@ -17,8 +17,8 @@ else if (tasks.Length == 0)
 }
 else
 {
-    <div class="col-md-8 stretch-card">
-        <div class="form-card mb-3 table-width">
+    <div class="col-md-8 stretch-card mb-2">
+        <div class="form-card mb-1 table-width">
             <div class="card-body mb-3">
                 <div class="table-responsive fixed-table-body">
                     <table class="table table-striped">
@@ -36,7 +36,7 @@ else
                                 @if (showColumns[2])
                                 {
                                     <th>@localizer["Place_of_receipt"]</th>
-                                } 
+                                }
                                 @if (showColumns[3])
                                 {
                                     <th>@localizer["Time_of_receipt"]</th>
@@ -92,11 +92,13 @@ else
                             </tr>
                         </thead>
                         <tbody>
-                            @{int rowCounter = 0;}
+                            @{
+                                int rowCounter = 0 + pageSize * (currentPage-1);
+                            }
                             @foreach (Tasks item in tasks)
-                                {
+                            {
                                 rowCounter += 1;
-                                    <tr>
+                                <tr>
                                     <td>@rowCounter</td>
                                     @if (showColumns[0])
                                     {
@@ -144,7 +146,7 @@ else
                                         {
                                             <td>@localizer["False"]</td>
                                         }
-                                       
+
                                     }
                                     @if (showColumns[10])
                                     {
@@ -158,9 +160,9 @@ else
                                     {
                                         <td>@item.Payment</td>
                                     }
-                                     @if (showColumns[13])
+                                    @if (showColumns[13])
                                     {
-                                    <td>@item.Final_Payment</td>
+                                        <td>@item.Final_Payment</td>
                                     }
                                     @if (showColumns[14])
                                     {
@@ -179,26 +181,61 @@ else
                         </tbody>
                     </table>
                 </div>
+                <div class="align-center pagination-style mt-2"> 
+                    @if (currentPage != 1)
+                    {
+                        <i class="oi oi-media-skip-backward btn btn-pagination" id="prev" @onclick="PrevPage"></i>
+                    }
+                    @for (int i = currentPage - 2; i <= currentPage + 2; i++)
+                    {
+                        int j = i;
+                        @if (i > 0 && i <= maxPage)
+                        {
+                            if (i == currentPage)
+                            {
+                                <span class="btn btn-pagination currentpage"  @onclick="() => ShowPage(j)">@i</span>
+                            }
+                            else
+                            {
+                                <span class="btn  btn-pagination"  @onclick="() => ShowPage(j)">@i</span>
+                            }
+                        }
+
+                    }
+                    @if(currentPage < maxPage)
+                    {
+                        <i class="oi oi-media-skip-forward btn btn-pagination" id="next" @onclick="NextPage"></i>
+                    }
+                </div>
             </div>
         </div>
     </div>
 
     @if (settings)
     {
-        <Settings OnSettingsClosed="SettingsClosed" OnSettingsChanged="SettingsChanged" showColumns="@showColumns" settings="@settings" />
+        <Settings OnSettingsClosed="SettingsClosed" OnInputChanged="InputChanged" OnSettingsChanged="SettingsChanged" showColumns="@showColumns" settings="@settings" pageSize="@pageSize" />
+    }
+    else
+    {
+        <div class="mb-6"></div>
     }
 }
 @code {
     public bool settings = false;
     Tasks[] tasks { get; set; }
     List<bool> showColumns = Enumerable.Repeat(true, 16).ToList();
-
+    private int currentPage = 1;
+    int pageSize = 10;
+    float dataRows;
+    float maxPage = 1;
 
     protected override async Task OnInitializedAsync()
     {
         PageHistoryState.AddPageToHistory("/Tasks");
         base.OnInitialized();
-        tasks = await client.GetFromJsonAsync<Tasks[]>("api/tasks");
+        dataRows = await client.GetFromJsonAsync<int>("api/tasks/pagecount");
+        maxPage = (int)Math.Ceiling(dataRows / pageSize);
+        await ShowPage();
     }
 
     async Task Delete(int Id)
@@ -206,7 +243,7 @@ else
         var t = tasks.First(x => x.Id == Id);
         if (await js.InvokeAsync<bool>("confirm", $"{@localizer["delete?"]} {t.Partner} ({t.Id})"))
         {
-            await client.DeleteAsync($"api/tasks/{Id}");
+            await client.DeleteAsync($"api/tasks/getbyid/{Id}");
             await OnInitializedAsync();
         }
     }
@@ -216,9 +253,41 @@ else
         settings = !settings;
     }
 
-    public void SettingsChanged()
+
+    public void SettingsChanged(){}
+
+    public void InputChanged(int ChangedPageSize )
     {
-        
+        pageSize = ChangedPageSize;
+        ShowPage();
     }
-   
+
+    protected async Task NextPage()
+    {
+        currentPage++;
+        await ShowPage();
+    }
+
+    protected async Task ShowPage(int i)
+    {
+        currentPage = i;
+        await ShowPage();
+    }
+
+    protected async Task PrevPage()
+    {
+        if (currentPage > 1)
+        {
+            currentPage--;
+            await ShowPage();
+        }
+    }
+
+    protected async Task ShowPage()
+    {
+        if (pageSize < 1 || pageSize==null ){ pageSize = 10; }
+        else if (pageSize >= dataRows) { pageSize = (int)dataRows; }
+        tasks = await client.GetFromJsonAsync<Tasks[]>($"api/tasks/get?page={currentPage}&pageSize={pageSize}");
+        StateHasChanged();
+    }
 }

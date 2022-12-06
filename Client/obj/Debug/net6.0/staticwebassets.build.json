@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "TkeGhpaql7V4PTiA1wvb9AdqCFiiCrSf66OmsQlEDoQ=",
+  "Hash": "36zqwsgX3N6xfxhg1IlwxmLZWGPw8vYPv0gADCbkvgo=",
   "Source": "Cargotruck.Client",
   "BasePath": "/",
   "Mode": "Root",
@@ -813,7 +813,7 @@
       "AssetTraitValue": "runtime",
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
-      "OriginalItemSpec": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.extensions.localization.abstractions\\6.0.10\\lib\\net6.0\\Microsoft.Extensions.Localization.Abstractions.dll"
+      "OriginalItemSpec": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.extensions.localization.abstractions\\6.0.11\\lib\\net6.0\\Microsoft.Extensions.Localization.Abstractions.dll"
     },
     {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.Extensions.Localization.dll",
@@ -830,7 +830,7 @@
       "AssetTraitValue": "runtime",
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
-      "OriginalItemSpec": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.extensions.localization\\6.0.10\\lib\\net6.0\\Microsoft.Extensions.Localization.dll"
+      "OriginalItemSpec": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.extensions.localization\\6.0.11\\lib\\net6.0\\Microsoft.Extensions.Localization.dll"
     },
     {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.Extensions.Logging.Abstractions.dll",
@@ -847,7 +847,7 @@
       "AssetTraitValue": "runtime",
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
-      "OriginalItemSpec": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\6.0.2\\lib\\net6.0\\Microsoft.Extensions.Logging.Abstractions.dll"
+      "OriginalItemSpec": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\6.0.3\\lib\\net6.0\\Microsoft.Extensions.Logging.Abstractions.dll"
     },
     {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.Extensions.Logging.dll",
@@ -4573,23 +4573,6 @@
       "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.Win32.Primitives.dll"
     },
     {
-      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\8+sUD4Q8.gz",
-      "SourceId": "Cargotruck.Client",
-      "SourceType": "Computed",
-      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
-      "BasePath": "/",
-      "RelativePath": "_framework/Microsoft.Extensions.Logging.Abstractions.dll.gz",
-      "AssetKind": "Build",
-      "AssetMode": "All",
-      "AssetRole": "Alternative",
-      "RelatedAsset": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.Extensions.Logging.Abstractions.dll",
-      "AssetTraitName": "Content-Encoding",
-      "AssetTraitValue": "gzip",
-      "CopyToOutputDirectory": "PreserveNewest",
-      "CopyToPublishDirectory": "Never",
-      "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.Extensions.Logging.Abstractions.dll"
-    },
-    {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\81af9FbY.gz",
       "SourceId": "Cargotruck.Client",
       "SourceType": "Computed",
@@ -5049,6 +5032,23 @@
       "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.IO.Pipes.AccessControl.dll"
     },
     {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\dPGZjRr9.gz",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.Extensions.Localization.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "RelatedAsset": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.Extensions.Localization.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.Extensions.Localization.dll"
+    },
+    {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\Dtak8goe.gz",
       "SourceId": "Cargotruck.Client",
       "SourceType": "Computed",
@@ -5183,23 +5183,6 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Security.Claims.dll"
-    },
-    {
-      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\fPeUvrHq.gz",
-      "SourceId": "Cargotruck.Client",
-      "SourceType": "Computed",
-      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
-      "BasePath": "/",
-      "RelativePath": "_framework/Microsoft.Extensions.Localization.dll.gz",
-      "AssetKind": "Build",
-      "AssetMode": "All",
-      "AssetRole": "Alternative",
-      "RelatedAsset": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.Extensions.Localization.dll",
-      "AssetTraitName": "Content-Encoding",
-      "AssetTraitValue": "gzip",
-      "CopyToOutputDirectory": "PreserveNewest",
-      "CopyToPublishDirectory": "Never",
-      "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.Extensions.Localization.dll"
     },
     {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\fq4kXehL.gz",
@@ -5812,6 +5795,23 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Diagnostics.Debug.dll"
+    },
+    {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\KIg8w2aS.gz",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.Extensions.Localization.Abstractions.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "RelatedAsset": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.Extensions.Localization.Abstractions.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.Extensions.Localization.Abstractions.dll"
     },
     {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\KKQF31E0.gz",
@@ -6460,6 +6460,23 @@
       "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Security.Principal.dll"
     },
     {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\nNVHTfZ3.gz",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.Extensions.Logging.Abstractions.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "RelatedAsset": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.Extensions.Logging.Abstractions.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.Extensions.Logging.Abstractions.dll"
+    },
+    {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\nqYRWidw.gz",
       "SourceId": "Cargotruck.Client",
       "SourceType": "Computed",
@@ -7036,23 +7053,6 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.Net.Requests.dll"
-    },
-    {
-      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\szIWLe7u.gz",
-      "SourceId": "Cargotruck.Client",
-      "SourceType": "Computed",
-      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
-      "BasePath": "/",
-      "RelativePath": "_framework/Microsoft.Extensions.Localization.Abstractions.dll.gz",
-      "AssetKind": "Build",
-      "AssetMode": "All",
-      "AssetRole": "Alternative",
-      "RelatedAsset": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.Extensions.Localization.Abstractions.dll",
-      "AssetTraitName": "Content-Encoding",
-      "AssetTraitValue": "gzip",
-      "CopyToOutputDirectory": "PreserveNewest",
-      "CopyToPublishDirectory": "Never",
-      "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.Extensions.Localization.Abstractions.dll"
     },
     {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\tjAFT4wv.gz",
@@ -8192,6 +8192,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\profiles\\1eikfoo3.jpg"
+    },
+    {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\img\\profiles\\1ntlddrz.jpg",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "img/profiles/1ntlddrz.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\profiles\\1ntlddrz.jpg"
     },
     {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\img\\profiles\\crd4x5po.jpg",

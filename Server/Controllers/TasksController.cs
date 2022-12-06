@@ -1,11 +1,12 @@
 ﻿using Cargotruck.Data;
 using Cargotruck.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cargotruck.Server.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class TasksController : ControllerBase
     {
@@ -16,14 +17,22 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get(int page, int pageSize)
         {
-            var t = await _context.Tasks.ToListAsync();
+            var t = await _context.Tasks.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
             return Ok(t);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> PageCount()
+        {
+            var t = await _context.Tasks.ToListAsync();
+            var PageCount = t.Count();
+            return Ok(PageCount);
+        }
+
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> GetById(int id)
         {
             var t = await _context.Tasks.FirstOrDefaultAsync(a => a.Id == id);
             return Ok(t);
