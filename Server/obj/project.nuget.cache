@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "I2lW+6h0OUVRAQ9GttVZl+w1YNKDmqMlGa0AvW74d/grZw+hq/f15k62vnt3d3ypgz1osB14Hb6S7wqyva0EbQ==",
+  "dgSpecHash": "FE9XBv93cK+Sd5t0HGc5+iSDIeajB3ww3XFmeHPNvHHHaUqfKaAwm7bWj0nvCMTMrkX8bnKTBBmP8ITdQAF8HQ==",
   "success": true,
   "projectFilePath": "F:\\Szakdoga app\\Cargotruck\\Server\\Cargotruck.Server.csproj",
   "expectedPackageFiles": [
@@ -125,6 +125,7 @@
     "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\system.io.filesystem.primitives\\4.0.1\\system.io.filesystem.primitives.4.0.1.nupkg.sha512",
     "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\system.io.pipelines\\6.0.3\\system.io.pipelines.6.0.3.nupkg.sha512",
     "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\system.linq\\4.1.0\\system.linq.4.1.0.nupkg.sha512",
+    "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\system.linq.dynamic.core\\1.2.23\\system.linq.dynamic.core.1.2.23.nupkg.sha512",
     "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\system.linq.expressions\\4.1.0\\system.linq.expressions.4.1.0.nupkg.sha512",
     "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\system.objectmodel\\4.0.12\\system.objectmodel.4.0.12.nupkg.sha512",
     "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\system.reflection\\4.1.0\\system.reflection.4.1.0.nupkg.sha512",

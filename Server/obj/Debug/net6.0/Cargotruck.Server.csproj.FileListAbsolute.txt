@@ -138,3 +138,4 @@ F:\Szakdoga app\Cargotruck\Server\obj\Debug\net6.0\Cargotruck.Server.pdb
 F:\Szakdoga app\Cargotruck\Server\obj\Debug\net6.0\Cargotruck.Server.genruntimeconfig.cache
 F:\Szakdoga app\Cargotruck\Server\obj\Debug\net6.0\ref\Cargotruck.Server.dll
 F:\Szakdoga app\Cargotruck\Server\obj\Debug\net6.0\Cargotruck.Server.MvcApplicationPartsAssemblyInfo.cs
+F:\Szakdoga app\Cargotruck\Server\bin\Debug\net6.0\System.Linq.Dynamic.Core.dll

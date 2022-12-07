@@ -175,15 +175,54 @@ th:first-child {
 
 
 th {
-    min-width: 5.2rem;
+    min-width: fit-content;
     vertical-align: middle;
+    white-space: nowrap;
+}
+
+table th button{
+    border:none;
+    background:none;
+}
+
+.arrow-up::after {
+    content: "";
+    border: solid #656665;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+    margin-left: 7px;
+}
+
+.arrow-down::after {
+    content: "";
+    border: solid #656665;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    margin-left: 7px;
+}
+
+.arrow-no-sorting {
+    background: url('https://cdn3.iconfinder.com/data/icons/trico-arrows-1/24/ExpandUpDownSmall-512.png') no-repeat right ;
+    background-position: 98%;
+    padding-right: 22px;
+    background-size: 22px;
+}
+
+.table > :not(caption) > * > * {
+    padding: 0.5rem 0.2rem;
 }
 
 .fixed {
     position: absolute;
     right: -8px;
     margin-top: -1.6rem;
-    font-size:13px;
+    font-size: 13px;
 }
 
 .fixed2 {

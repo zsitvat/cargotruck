@@ -18,7 +18,7 @@
 
     async Task EditTasks()
     {
-        await http.PutAsJsonAsync("api/tasks/edit", task);
+        await http.PutAsJsonAsync("api/tasks/put", task);
         await js.InvokeVoidAsync("alert", $"Updated Successfully!");
         uriHelper.NavigateTo("/Tasks");
 

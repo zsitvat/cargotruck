@@ -9,7 +9,7 @@
     Tasks task = new Tasks();
     async Task CreateTasks()
     {
-        await http.PostAsJsonAsync("api/tasks", task);
+        await http.PostAsJsonAsync("api/tasks/post", task);
         uriHelper.NavigateTo("/Tasks");
     }
 
