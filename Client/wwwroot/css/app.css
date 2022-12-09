@@ -76,6 +76,11 @@ a:active {
     color: #fff;
     background-color: #1b6ec2;
     border-color: #1861ac;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+ input {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
 .content {
@@ -218,6 +223,7 @@ table th button{
     padding: 0.5rem 0.2rem;
 }
 
+
 .fixed {
     position: absolute;
     right: -8px;
@@ -265,6 +271,7 @@ table th button{
 
 .btn-success {
     opacity: 1 !important;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
 .btn-success:hover {
@@ -429,6 +436,7 @@ table th button{
     background-color: white;
     border: 1px solid #d6d5d5;
     padding: 0.5rem 0.7rem 0.4rem 0.7rem;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
 .btn-light:hover {
@@ -676,12 +684,18 @@ tbody td, tbody th{
         padding-left: 20%;
     }
 
+  
+
 }
 
 @media (min-width: 768px) {
 
     .login-card {
         width: 25rem;
+    }
+    .input_search {
+        display: inline;
+        margin-left: 5rem;
     }
 }
 
@@ -713,6 +727,7 @@ tbody td, tbody th{
     .table-width {
         max-width:79vw;
     }
+
 }
 
 @media (max-width: 1220px) {
@@ -813,6 +828,15 @@ tbody td, tbody th{
     }
     .table-width {
         max-width: 90vw;
+    }
+
+    .input_search {
+        margin-top: 0.4rem;
+        width:100%;
+    }
+
+    .buttons{
+        text-align:center;
     }
 }
 

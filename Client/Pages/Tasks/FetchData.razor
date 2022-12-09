@@ -1,9 +1,10 @@
 ﻿@page "/Tasks"
 
 <h3>@localizer["Tasks"]</h3>
-<div class="form-group">
+<div class="form-group buttons">
     <a class="btn btn-success" href="/Tasks/create"><i class="oi oi-plus"></i> @localizer["Add"]</a>
-    <a class="btn btn-light" @onclick="@(() => settings=!settings)"><i class="oi oi-cog"></i></a>
+    <a class="btn btn-light" @onclick="@(() => settings=!settings)"><i class="oi oi-cog"></i></a> 
+    <input value="@searchString" @oninput="@Search" placeholder="@(searchString == null ? searchString : "Search...")" class="form-control inputs input_search" type="search" id="search-input" name="SearchString">
 </div>
 <br>
 
@@ -183,6 +184,9 @@ else
                     @if (currentPage != 1)
                     {
                         <i class="oi oi-media-skip-backward btn btn-pagination" id="prev" @onclick="PrevPage"></i>
+                    }else
+                    {
+                         <i style="opacity:0;" class=" oi oi-media-skip-backward btn btn-pagination"></i>
                     }
                     @for (int i = currentPage - 2; i <= currentPage + 2; i++)
                     {
@@ -203,6 +207,10 @@ else
                     @if(currentPage < maxPage)
                     {
                         <i class="oi oi-media-skip-forward btn btn-pagination" id="next" @onclick="NextPage"></i>
+                    }
+                    else
+                    {
+                        <i style="opacity:0;" class="oi oi-media-skip-forward btn btn-pagination"></i>
                     }
                 </div>
             </div>
@@ -228,6 +236,7 @@ else
     float maxPage = 1;
     private string sortOrder = "Date";
     private bool desc = false;
+    private string? searchString = "";
 
     protected override async Task OnInitializedAsync()
     {
@@ -296,6 +305,12 @@ else
         await ShowPage();
     }
 
+    protected async Task Search(ChangeEventArgs args)
+    {
+        searchString = args.Value.ToString();
+        await ShowPage();
+    }
+
 
     protected async Task ShowPage()
     {
@@ -303,7 +318,7 @@ else
         else if (pageSize >= dataRows) { pageSize = (int)dataRows; }
         maxPage = (int)Math.Ceiling(dataRows / pageSize);
 
-        tasks = await client.GetFromJsonAsync<Tasks[]>($"api/tasks/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}");
+        tasks = await client.GetFromJsonAsync<Tasks[]>($"api/tasks/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}");
 
         StateHasChanged();
     }
