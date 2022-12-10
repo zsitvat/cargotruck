@@ -44,7 +44,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 //localization service
-builder.Services.AddLocalization(options => options.ResourcesPath = "");
+builder.Services.AddLocalization();
 
 
 CultureInfo[] supportedCultures = new[]

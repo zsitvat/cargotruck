@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using ClosedXML.Excel;
 using Document = iTextSharp.text.Document;
 using System;
+using Microsoft.Extensions.Localization;
+using System.Globalization;
 
 namespace Cargotruck.Server.Controllers
 {
@@ -20,9 +22,9 @@ namespace Cargotruck.Server.Controllers
     public class TasksController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
-        public TasksController(ApplicationDbContext context)
+        public TasksController(ApplicationDbContext context )
         {
-            this._context = context;
+            _context = context;
         }
 
         [HttpGet]
@@ -271,10 +273,9 @@ namespace Cargotruck.Server.Controllers
 
         //iTextSharp needed !!!
         [HttpGet]
-        public async Task<string> PDF()
+        public async Task<string> PDF(string lang)
         {
             var tasks = from t in _context.Tasks select t;
-
             if (tasks.Count() > 0)
             {
                 int pdfRowIndex = 1;
@@ -314,24 +315,24 @@ namespace Cargotruck.Server.Controllers
                     HorizontalAlignment = Element.ALIGN_CENTER
                 };
 
-                var title = new Paragraph(15, Cargotruck.Shared.Resources.Resource.Tasks);
+                var title = new Paragraph(15, lang == "hu" ? Cargotruck.Shared.Resources.Resource.Tasks : "Tasks");
                 title.Alignment = Element.ALIGN_CENTER;
 
 
                 document.Add(title);
                 document.Add(new Paragraph("\n"));
-
+                 
                 table.AddCell(new PdfPCell(new Phrase("Id", font1))
                 {
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 });
-                table.AddCell(new PdfPCell(new Phrase(Cargotruck.Shared.Resources.Resource.Partner, font1))
+                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ?  Cargotruck.Shared.Resources.Resource.Partner : "Partner", font1))
                 {
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 });
-                table.AddCell(new PdfPCell(new Phrase(Cargotruck.Shared.Resources.Resource.Description, font1))
+                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ?  Cargotruck.Shared.Resources.Resource.Description : "Description", font1))
                 {
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE

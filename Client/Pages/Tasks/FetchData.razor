@@ -331,7 +331,7 @@ else
     private async Task ExportToPdf ()
     {
         //get base64 string from web api call
-        var httpResponseMessage = await client.GetAsync("api/tasks/pdf");
+        var httpResponseMessage = await client.GetAsync($"api/tasks/pdf?lang={CultureInfo.CurrentCulture.Name.ToString()}");
 
         if(httpResponseMessage.IsSuccessStatusCode){
             var base64String = await httpResponseMessage.Content.ReadAsStringAsync();
