@@ -164,6 +164,10 @@
               "target": "Package",
               "version": "[6.0.200, )"
             },
+            "ClosedXML": {
+              "target": "Package",
+              "version": "[0.97.0, )"
+            },
             "EntityFramework": {
               "target": "Package",
               "version": "[6.4.4, )"
@@ -215,6 +219,10 @@
             "System.Linq.Dynamic.Core": {
               "target": "Package",
               "version": "[1.2.23, )"
+            },
+            "iTextSharp.LGPLv2.Core": {
+              "target": "Package",
+              "version": "[1.9.4, )"
             }
           },
           "imports": [

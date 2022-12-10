@@ -20,6 +20,7 @@ builder.Services.AddScoped<CustomStateProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider>(s => s.GetRequiredService<CustomStateProvider>());
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddSingleton<PageHistoryState>(); //back to prievouse page
+
 var host = builder.Build();
 
 CultureInfo culture;

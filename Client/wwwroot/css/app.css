@@ -692,6 +692,7 @@ tbody td, tbody th{
 
     .login-card {
         width: 25rem;
+        margin-top:2rem;
     }
     .input_search {
         display: inline;

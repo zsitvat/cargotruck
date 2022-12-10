@@ -4,9 +4,14 @@
 <div class="form-group buttons">
     <a class="btn btn-success" href="/Tasks/create"><i class="oi oi-plus"></i> @localizer["Add"]</a>
     <a class="btn btn-light" @onclick="@(() => settings=!settings)"><i class="oi oi-cog"></i></a> 
+
+    <button class="btn btn-light" @onclick="@ExportToPdf"><i class="oi oi-document"></i></button>
+    <button class="btn btn-light" @onclick="@ExportToExcel"><i class="oi oi-spreadsheet"></i></button>
+
     <input value="@searchString" @oninput="@Search" placeholder="@(searchString == null ? searchString : "Search...")" class="form-control inputs input_search" type="search" id="search-input" name="SearchString">
 </div>
 <br>
+
 
 @if (tasks == null)
 {
@@ -322,4 +327,48 @@ else
 
         StateHasChanged();
     }
+
+    private async Task ExportToPdf ()
+    {
+        //get base64 string from web api call
+        var httpResponseMessage = await client.GetAsync("api/tasks/pdf");
+
+        if(httpResponseMessage.IsSuccessStatusCode){
+            var base64String = await httpResponseMessage.Content.ReadAsStringAsync();
+
+            Random rnd = new Random();
+            int random = rnd.Next(1000000, 9999999);
+            string filename = "Tasks" + random + "_" + DateTime.Now.ToString("dd-MM-yyyy")+ ".pdf";
+
+            //call javascript function to download the file
+            await  js.InvokeVoidAsync(
+                "downloadFile",
+                "application/pdf",
+                base64String,
+                filename);
+        }
+    }
+
+    private async Task ExportToExcel()
+    {
+        //get base64 string from web api call
+        var httpResponseMessage = await client.GetAsync("api/tasks/excel");
+
+        if (httpResponseMessage.IsSuccessStatusCode)
+        {
+            var base64String = await httpResponseMessage.Content.ReadAsStringAsync();
+
+            Random rnd = new Random();
+            int random = rnd.Next(1000000, 9999999);
+            string filename = "Tasks" + random + "_" + DateTime.Now.ToString("dd-MM-yyyy") + ".xlsx";
+
+            //call javascript function to download the file
+            await js.InvokeVoidAsync(
+                "downloadFile",
+                "application/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                base64String,
+                filename);
+        }
+    }
+
 }

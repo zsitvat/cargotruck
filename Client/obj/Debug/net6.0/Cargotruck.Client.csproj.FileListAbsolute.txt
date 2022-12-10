@@ -1,9 +1,3 @@
-F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\Cargotruck.Client.csproj.AssemblyReference.cache
-F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\Cargotruck.Client.GeneratedMSBuildEditorConfig.editorconfig
-F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\Cargotruck.Client.AssemblyInfoInputs.cache
-F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\Cargotruck.Client.AssemblyInfo.cs
-F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\Cargotruck.Client.csproj.CoreCompileInputs.cache
-F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\Cargotruck.Client.MvcApplicationPartsAssemblyInfo.cache
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\blazor.boot.json
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\blazor.webassembly.js
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\Cargotruck.Client.dll
@@ -266,7 +260,6 @@ F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.IO.
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\Microsoft.Extensions.DependencyInjection.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Private.Uri.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Net.Security.dll.gz
-F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\Microsoft.Extensions.DependencyInjection.Abstractions.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Security.Cryptography.ProtectedData.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\Microsoft.Extensions.Logging.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll.gz
@@ -277,7 +270,6 @@ F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Sec
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Drawing.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Private.CoreLib.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Security.AccessControl.dll.gz
-F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\Microsoft.Extensions.Localization.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Xml.XPath.XDocument.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\Microsoft.VisualBasic.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Net.Quic.dll.gz
@@ -285,8 +277,8 @@ F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Con
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Transactions.Local.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Xml.XmlSerializer.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Runtime.Extensions.dll.gz
-F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\Microsoft.Extensions.Primitives.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Configuration.dll.gz
+F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\Microsoft.Extensions.Options.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Net.NameResolution.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Reflection.Primitives.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Linq.Expressions.dll.gz
@@ -300,6 +292,7 @@ F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Com
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Security.Cryptography.X509Certificates.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\netstandard.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.IO.Pipes.AccessControl.dll.gz
+F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\Microsoft.Extensions.Localization.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\Microsoft.Win32.Registry.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\Cargotruck.Shared.pdb.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\Microsoft.JSInterop.dll.gz
@@ -319,7 +312,6 @@ F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Dat
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Runtime.Serialization.Primitives.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\Microsoft.Extensions.Identity.Core.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Reflection.DispatchProxy.dll.gz
-F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\Microsoft.Extensions.Logging.Abstractions.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.IO.Compression.ZipFile.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\dotnet.wasm.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Private.Xml.dll.gz
@@ -345,6 +337,7 @@ F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Net
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\Microsoft.EntityFrameworkCore.Abstractions.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Text.Encoding.Extensions.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Diagnostics.Debug.dll.gz
+F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\Microsoft.Extensions.Localization.Abstractions.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\Microsoft.AspNetCore.Components.Forms.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Text.Encoding.CodePages.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Resources.Reader.dll.gz
@@ -354,6 +347,7 @@ F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.IO.
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Net.Sockets.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\WindowsBase.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Net.WebSockets.dll.gz
+F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\Microsoft.Extensions.Primitives.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Xml.Linq.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Xml.XmlDocument.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\blazor.webassembly.js.gz
@@ -382,6 +376,7 @@ F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Run
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Data.DataSetExtensions.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Security.Principal.dll.gz
+F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\Microsoft.Extensions.Logging.Abstractions.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Reflection.Extensions.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Text.Encoding.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Diagnostics.Contracts.dll.gz
@@ -391,7 +386,6 @@ F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Ref
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\Microsoft.EntityFrameworkCore.Relational.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\Microsoft.AspNetCore.Components.WebAssembly.Authentication.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Runtime.CompilerServices.VisualC.dll.gz
-F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\Microsoft.Extensions.Localization.Abstractions.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Security.Cryptography.OpenSsl.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Runtime.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Runtime.InteropServices.RuntimeInformation.dll.gz
@@ -409,7 +403,6 @@ F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Net
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Runtime.InteropServices.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.IO.FileSystem.Watcher.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Xml.Serialization.dll.gz
-F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\Microsoft.Extensions.Options.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Net.Ping.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Security.Cryptography.Primitives.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Security.Principal.Windows.dll.gz
@@ -434,6 +427,7 @@ F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Val
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Net.NetworkInformation.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\icudt.dat.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.Security.Cryptography.Encoding.dll.gz
+F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\Microsoft.Extensions.DependencyInjection.Abstractions.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\Microsoft.AspNetCore.Components.Authorization.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\Microsoft.AspNetCore.Authorization.dll.gz
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\System.IO.Compression.Brotli.dll.gz
@@ -685,6 +679,12 @@ F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\icudt_no_CJK.dat
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\Cargotruck.Shared.dll
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\Cargotruck.Shared.pdb
 F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\en\Cargotruck.Shared.resources.dll
+F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\Cargotruck.Client.csproj.AssemblyReference.cache
+F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\Cargotruck.Client.GeneratedMSBuildEditorConfig.editorconfig
+F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\Cargotruck.Client.AssemblyInfoInputs.cache
+F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\Cargotruck.Client.AssemblyInfo.cs
+F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\Cargotruck.Client.csproj.CoreCompileInputs.cache
+F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\Cargotruck.Client.MvcApplicationPartsAssemblyInfo.cache
 F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\build-gz\VcL0ePfb.gz
 F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\build-gz\fx9FCW7t.gz
 F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\build-gz\X3qHroxz.gz
@@ -709,12 +709,18 @@ F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\build-gz\yXzVGSNR.gz
 F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\build-gz\lYWKkieR.gz
 F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\build-gz\5+sOSGyY.gz
 F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\build-gz\6AL4+i1Y.gz
+F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\build-gz\W8rw+6cQ.gz
 F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\build-gz\I6tldFmt.gz
 F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\build-gz\HuZzDvWZ.gz
 F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\build-gz\Eplm54PW.gz
 F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\build-gz\Gv3sSxVh.gz
 F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\build-gz\yXzlNenL.gz
+F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\build-gz\dPGZjRr9.gz
+F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\build-gz\KIg8w2aS.gz
 F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\build-gz\71vwP3Iz.gz
+F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\build-gz\nNVHTfZ3.gz
+F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\build-gz\bAvC+Zim.gz
+F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\build-gz\lg4w01Bn.gz
 F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\build-gz\eMbnbMB+.gz
 F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\build-gz\UG03B5hh.gz
 F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\build-gz\tNN7LIfa.gz
@@ -924,9 +930,3 @@ F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\Cargotruck.Client.dll
 F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\refint\Cargotruck.Client.dll
 F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\Cargotruck.Client.pdb
 F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\ref\Cargotruck.Client.dll
-F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\build-gz\W8rw+6cQ.gz
-F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\build-gz\dPGZjRr9.gz
-F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\build-gz\KIg8w2aS.gz
-F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\build-gz\nNVHTfZ3.gz
-F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\build-gz\bAvC+Zim.gz
-F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\build-gz\lg4w01Bn.gz
