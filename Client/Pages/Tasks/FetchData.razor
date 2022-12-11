@@ -3,12 +3,13 @@
 <h3>@localizer["Tasks"]</h3>
 <div class="form-group buttons">
     <a class="btn btn-success" href="/Tasks/create"><i class="oi oi-plus"></i> @localizer["Add"]</a>
-    <a class="btn btn-light" @onclick="@(() => settings=!settings)"><i class="oi oi-cog"></i></a> 
-
-    <button class="btn btn-light" @onclick="@ExportToPdf"><i class="oi oi-document"></i></button>
-    <button class="btn btn-light" @onclick="@ExportToExcel"><i class="oi oi-spreadsheet"></i></button>
-
-    <input value="@searchString" @oninput="@Search" placeholder="@(searchString == null ? searchString : "Search...")" class="form-control inputs input_search" type="search" id="search-input" name="SearchString">
+    <a data-title="@localizer["Settings"]" class="btn btn-light" @onclick="@(() => settings=!settings)"><i class="oi oi-cog"></i></a>
+    <button data-title="@localizer["pdf"]" class="btn btn-light" @onclick="@ExportToPdf"><i class="oi oi-document"></i></button>
+    <button data-title="@localizer["excel"]" class="btn btn-light" @onclick="@ExportToExcel"><i class="oi oi-spreadsheet"></i></button>
+    <button data-title="@localizer["txt"]" class="btn btn-light" @onclick="@(() => ExportToCSV(".txt"))"><span class="icon iconify" style="margin:0;" data-icon="material-symbols:text-snippet-outline"></span></button>
+    <button data-title="@localizer["csv"]" class="btn btn-light" @onclick="@(() => ExportToCSV(".csv"))"><span class="icon iconify" style="margin:0;" data-icon="bi:filetype-csv"></span></button>
+    <button data-title="@localizer["Import"]" class="btn btn-light" @onclick="@Import"><span class="icon iconify" style="margin:0;" data-icon="material-symbols:upload-file"></span></button>
+    <input value="@searchString" @oninput="@Search" placeholder="@(searchString == null ? searchString : localizer["Search"])" class="form-control inputs input_search" type="search" id="search-input" name="SearchString">
 </div>
 <br>
 
@@ -237,12 +238,12 @@ else
     List<bool> showColumns = Enumerable.Repeat(true, 16).ToList();
     private int currentPage = 1;
     int pageSize = 10;
-    float dataRows;
-    float maxPage = 1;
+    int dataRows;
+    int maxPage = 1;
     private string sortOrder = "Date";
     private bool desc = false;
     private string? searchString = "";
-
+    string? document_error;
     protected override async Task OnInitializedAsync()
     {
         PageHistoryState.AddPageToHistory("/Tasks");
@@ -320,8 +321,8 @@ else
     protected async Task ShowPage()
     {
         if (pageSize < 1 || pageSize == null ){ pageSize = 10; }
-        else if (pageSize >= dataRows) { pageSize = (int)dataRows; }
-        maxPage = (int)Math.Ceiling(dataRows / pageSize);
+        else if (pageSize >= dataRows) { pageSize = (int)dataRows != 0 ? (int)dataRows : 1 ; }
+        maxPage = (int)Math.Ceiling((decimal)( dataRows / pageSize));
 
         tasks = await client.GetFromJsonAsync<Tasks[]>($"api/tasks/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}");
 
@@ -331,14 +332,15 @@ else
     private async Task ExportToPdf ()
     {
         //get base64 string from web api call
-        var httpResponseMessage = await client.GetAsync($"api/tasks/pdf?lang={CultureInfo.CurrentCulture.Name.ToString()}");
+        var Response = await client.GetAsync($"api/tasks/pdf?lang={CultureInfo.CurrentCulture.Name.ToString()}");
 
-        if(httpResponseMessage.IsSuccessStatusCode){
-            var base64String = await httpResponseMessage.Content.ReadAsStringAsync();
+        if (Response.IsSuccessStatusCode)
+        {
+            var base64String = await Response.Content.ReadAsStringAsync();
 
             Random rnd = new Random();
             int random = rnd.Next(1000000, 9999999);
-            string filename = "Tasks" + random + "_" + DateTime.Now.ToString("dd-MM-yyyy")+ ".pdf";
+            string filename = "Tasks" + random + "_" + DateTime.Now.ToString("dd-MM-yyyy") + ".pdf";
 
             //call javascript function to download the file
             await  js.InvokeVoidAsync(
@@ -352,11 +354,11 @@ else
     private async Task ExportToExcel()
     {
         //get base64 string from web api call
-        var httpResponseMessage = await client.GetAsync("api/tasks/excel");
+        var Response = await client.GetAsync($"api/tasks/excel?lang={CultureInfo.CurrentCulture.Name.ToString()}");
 
-        if (httpResponseMessage.IsSuccessStatusCode)
+        if (Response.IsSuccessStatusCode)
         {
-            var base64String = await httpResponseMessage.Content.ReadAsStringAsync();
+            var base64String = await Response.Content.ReadAsStringAsync();
 
             Random rnd = new Random();
             int random = rnd.Next(1000000, 9999999);
@@ -365,10 +367,35 @@ else
             //call javascript function to download the file
             await js.InvokeVoidAsync(
                 "downloadFile",
-                "application/application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                 base64String,
                 filename);
         }
     }
 
+    private async Task ExportToCSV(string format)
+    {
+        //get base64 string from web api call
+        var Response = await client.GetAsync($"api/tasks/csv?lang={CultureInfo.CurrentCulture.Name.ToString()}");
+
+        if (Response.IsSuccessStatusCode)
+        {
+            var base64String = await Response.Content.ReadAsStringAsync();
+
+            Random rnd = new Random();
+            int random = rnd.Next(1000000, 9999999);
+            string filename = "Tasks" + random + "_" + DateTime.Now.ToString("dd-MM-yyyy") + format;
+
+            //call javascript function to download the file
+            await js.InvokeVoidAsync(
+                "downloadFile",
+                "application/" + format,
+                base64String,
+                filename);
+        }
+    }
+
+    private async Task Import()
+    {
+    }
 }

@@ -159,9 +159,29 @@ a:active {
     margin-right:12px;
 }
 
-table{
-    text-align:center;
-    font-size:14px;
+.icon{
+    position: relative;
+    top: -1px;
+    display: inline-block;
+    speak: none;
+    font-family: Icons;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.tooltip-wrapper {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+    cursor: help;
+}
+
+table {
+    text-align: center;
+    font-size: 14px;
 }
 
 .table-width {
@@ -442,7 +462,10 @@ table th button{
 .btn-light:hover {
     background-color: white;
     border: 1px solid #d6d5d5;
-    opacity:0.6;
+}
+
+.btn-light:hover i, .btn-light:hover span {
+    opacity: 0.6;
 }
 
 .top-row[b-ffa6apske8] {
@@ -469,10 +492,39 @@ table th button{
     width:30px;
 }
 
+[data-title]:hover:after {
+    opacity: 1;
+    transition: all 0.5s ease 0.8s;
+    visibility: visible;
+    z-index: 1000;
+}
+
+[data-title]:after {
+    content: attr(data-title);
+    background-color: #1E2835;
+    color: #fff;
+    font-size: 14px;
+    position: absolute;
+    padding: 1px 5px 2px 5px;
+    top:-1.8rem;
+    left: -50%;
+    white-space: nowrap;
+    box-shadow: 1px 1px 3px #222222;
+    opacity: 0;
+    border: 1px solid #111111;
+    z-index: 1000;
+    visibility: hidden;
+    border-radius:0.25rem;
+}
+
+[data-title] {
+    position: relative;
+    z-index: 99999;
+}
+
 .form-control {
     width: fit-content;
     font-size:0.9rem;
-
 }
 
 .inputs {

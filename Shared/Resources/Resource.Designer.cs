@@ -214,6 +214,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Letöltés CSV-ként.
+        /// </summary>
+        public static string csv {
+            get {
+                return ResourceManager.GetString("csv", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dátum.
         /// </summary>
         public static string Date {
@@ -565,6 +574,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Letöltés Excel-ként.
+        /// </summary>
+        public static string excel {
+            get {
+                return ResourceManager.GetString("excel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Havi kiadások.
         /// </summary>
         public static string Expenses {
@@ -691,6 +709,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Feltöltés Excel-ből.
+        /// </summary>
+        public static string Import {
+            get {
+                return ResourceManager.GetString("Import", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bejelentkezés.
         /// </summary>
         public static string Login {
@@ -759,6 +786,15 @@ namespace Cargotruck.Shared.Resources {
         public static string NewAccount {
             get {
                 return ResourceManager.GetString("NewAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nincs adat!.
+        /// </summary>
+        public static string No_content {
+            get {
+                return ResourceManager.GetString("No_content", resourceCulture);
             }
         }
         
@@ -876,6 +912,15 @@ namespace Cargotruck.Shared.Resources {
         public static string Payment {
             get {
                 return ResourceManager.GetString("Payment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Letöltés pdf-ként.
+        /// </summary>
+        public static string pdf {
+            get {
+                return ResourceManager.GetString("pdf", resourceCulture);
             }
         }
         
@@ -1096,6 +1141,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Beállítások.
+        /// </summary>
+        public static string Settings {
+            get {
+                return ResourceManager.GetString("Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Szállítási követelmények.
         /// </summary>
         public static string Shipping_requirements {
@@ -1263,6 +1317,15 @@ namespace Cargotruck.Shared.Resources {
         public static string True {
             get {
                 return ResourceManager.GetString("True", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Letöltés szöveg dokumentumként.
+        /// </summary>
+        public static string txt {
+            get {
+                return ResourceManager.GetString("txt", resourceCulture);
             }
         }
         

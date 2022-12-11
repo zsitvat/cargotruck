@@ -168,6 +168,9 @@
   <data name="Create_tasks" xml:space="preserve">
     <value>Create tasks</value>
   </data>
+  <data name="csv" xml:space="preserve">
+    <value>Export to CSV</value>
+  </data>
   <data name="Date" xml:space="preserve">
     <value>Date</value>
   </data>
@@ -285,6 +288,9 @@
   <data name="Error_weight" xml:space="preserve">
     <value>The weight is required!</value>
   </data>
+  <data name="excel" xml:space="preserve">
+    <value>Export to Excel</value>
+  </data>
   <data name="Expenses" xml:space="preserve">
     <value>Expenses</value>
   </data>
@@ -327,6 +333,9 @@
   <data name="Image_change" xml:space="preserve">
     <value>Change profile picture</value>
   </data>
+  <data name="Import" xml:space="preserve">
+    <value>Import from Excel</value>
+  </data>
   <data name="Login" xml:space="preserve">
     <value>Login</value>
   </data>
@@ -356,6 +365,9 @@
   </data>
   <data name="Not_excel" xml:space="preserve">
     <value>Please select file with .xlsx extension!</value>
+  </data>
+  <data name="No_content" xml:space="preserve">
+    <value>No content!</value>
   </data>
   <data name="No_excel" xml:space="preserve">
     <value>No file found!</value>
@@ -389,6 +401,9 @@
   </data>
   <data name="Payment" xml:space="preserve">
     <value>Payment</value>
+  </data>
+  <data name="pdf" xml:space="preserve">
+    <value>Export to PDF</value>
   </data>
   <data name="Penalty" xml:space="preserve">
     <value>Penalty</value>
@@ -462,6 +477,9 @@
   <data name="Select_placeholder" xml:space="preserve">
     <value>Select something...</value>
   </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
   <data name="Shipping_requirements" xml:space="preserve">
     <value>Shipping requirements</value>
   </data>
@@ -518,6 +536,9 @@
   </data>
   <data name="True" xml:space="preserve">
     <value>True</value>
+  </data>
+  <data name="txt" xml:space="preserve">
+    <value>Export to text document</value>
   </data>
   <data name="Type" xml:space="preserve">
     <value>Type</value>

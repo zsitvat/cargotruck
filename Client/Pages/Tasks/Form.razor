@@ -126,7 +126,7 @@
                     <div>
                         <label>@localizer["Payment"]:</label>
                         <div>
-                            <InputText class="form-control inputs" @bind-Value="@tasks.Payment" />
+                            <InputNumber class="form-control inputs" @bind-Value="@tasks.Payment" />
                             <ValidationMessage For="@(() => tasks.Payment)" />
                         </div>
                     </div>
@@ -135,7 +135,7 @@
                     <div>
                         <label>@localizer["Final_Payment"]:</label>
                         <div>
-                            <InputText class="form-control inputs" @bind-Value="@tasks.Final_Payment" />
+                            <InputNumber class="form-control inputs" @bind-Value="@tasks.Final_Payment" />
                             <ValidationMessage For="@(() => tasks.Final_Payment)" />
                         </div>
                     </div>
@@ -144,7 +144,7 @@
                     <div>
                         <label>@localizer["Penalty"]:</label>
                         <div>
-                            <InputText class="form-control inputs" @bind-Value="@tasks.Penalty" />
+                            <InputNumber class="form-control inputs" @bind-Value="@tasks.Penalty" />
                             <ValidationMessage For="@(() => tasks.Penalty)" />
                         </div>
                     </div>

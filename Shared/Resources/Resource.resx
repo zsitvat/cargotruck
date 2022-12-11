@@ -168,6 +168,9 @@
   <data name="Create_tasks" xml:space="preserve">
     <value>Megbízás létrehozása</value>
   </data>
+  <data name="csv" xml:space="preserve">
+    <value>Letöltés CSV-ként</value>
+  </data>
   <data name="Date" xml:space="preserve">
     <value>Dátum</value>
   </data>
@@ -285,6 +288,9 @@
   <data name="Error_weight" xml:space="preserve">
     <value>A súlyt kötelező megadni!</value>
   </data>
+  <data name="excel" xml:space="preserve">
+    <value>Letöltés Excel-ként</value>
+  </data>
   <data name="Expenses" xml:space="preserve">
     <value>Havi kiadások</value>
   </data>
@@ -327,6 +333,9 @@
   <data name="Image_change" xml:space="preserve">
     <value>Profilkép megváltoztatása</value>
   </data>
+  <data name="Import" xml:space="preserve">
+    <value>Feltöltés Excel-ből</value>
+  </data>
   <data name="Login" xml:space="preserve">
     <value>Bejelentkezés</value>
   </data>
@@ -356,6 +365,9 @@
   </data>
   <data name="Not_excel" xml:space="preserve">
     <value>Csak .xlsx formátum elfogadott!</value>
+  </data>
+  <data name="No_content" xml:space="preserve">
+    <value>Nincs adat!</value>
   </data>
   <data name="No_excel" xml:space="preserve">
     <value>Fájl nem található!</value>
@@ -389,6 +401,9 @@
   </data>
   <data name="Payment" xml:space="preserve">
     <value>Igért összeg</value>
+  </data>
+  <data name="pdf" xml:space="preserve">
+    <value>Letöltés pdf-ként</value>
   </data>
   <data name="Penalty" xml:space="preserve">
     <value>Büntetés összege</value>
@@ -462,6 +477,9 @@
   <data name="Select_placeholder" xml:space="preserve">
     <value>Válaszd ki...</value>
   </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Beállítások</value>
+  </data>
   <data name="Shipping_requirements" xml:space="preserve">
     <value>Szállítási követelmények</value>
   </data>
@@ -518,6 +536,9 @@
   </data>
   <data name="True" xml:space="preserve">
     <value>Igen</value>
+  </data>
+  <data name="txt" xml:space="preserve">
+    <value>Letöltés szöveg dokumentumként</value>
   </data>
   <data name="Type" xml:space="preserve">
     <value>Típus</value>
