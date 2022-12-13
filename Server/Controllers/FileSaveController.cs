@@ -13,6 +13,8 @@ using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using Cargotruck.Data;
 using Microsoft.EntityFrameworkCore.Migrations;
+using System.Globalization;
+using Cargotruck.Server.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -35,6 +37,7 @@ public class FilesaveController : ControllerBase
     [HttpPost("{id}"), HttpPost]
     public async Task<ActionResult<IList<UploadResult>>> PostFile([FromForm] IEnumerable<IFormFile> files, string id)
     {
+        string? path = null;
         var maxAllowedFiles = 1;
         long maxFileSize = 1024 * 3000;
         var filesProcessed = 0;
@@ -69,56 +72,73 @@ public class FilesaveController : ControllerBase
                 {
                     try
                     {
-                        var rootpath = env.ContentRootPath.Replace("\\Server", "\\Client\\") + "wwwroot";
-                        trustedFileNameForFileStorage = Path.GetRandomFileName();
-                        trustedFileNameForFileStorage = Path.ChangeExtension(trustedFileNameForFileStorage, ".jpg");
-                        var path = Path.Combine(rootpath, "img/profiles",
-                            trustedFileNameForFileStorage);
-                      
+                        string rootpath,folder;
+
+                        //data upload part
+                        if ( id=="page") 
+                        { 
+                            rootpath = env.ContentRootPath + "";
+                            trustedFileNameForFileStorage = Path.GetRandomFileName();
+                            trustedFileNameForFileStorage = Path.ChangeExtension(trustedFileNameForFileStorage, ".xlsx");
+                            folder = "Files/";
+                        }
+                        // image upload part
+                        else
+                        {
+                            rootpath = env.ContentRootPath.Replace("\\Server", "\\Client\\") + "wwwroot"; 
+                            trustedFileNameForFileStorage = Path.GetRandomFileName();
+                            trustedFileNameForFileStorage = Path.ChangeExtension(trustedFileNameForFileStorage, ".jpg");
+                            folder = "img/profiles";
+                           
+                        }
+                        var image = folder + "/" + trustedFileNameForFileStorage;
+                        path = Path.Combine(rootpath, folder ,trustedFileNameForFileStorage);
                         await using FileStream fs = new(path, FileMode.Create);
                         await file.CopyToAsync(fs);
 
-                        logger.LogInformation("{FileName} saved at {Path}",
-                            trustedFileNameForDisplay, path);
+                        logger.LogInformation("{FileName} saved at {Path}",trustedFileNameForDisplay, path);
                         uploadResult.Uploaded = true;
                         uploadResult.StoredFileName = trustedFileNameForFileStorage;
-                        var image = "/img/profiles/" + trustedFileNameForFileStorage;
 
-                        Dictionary<string, string> claims = new Dictionary<string, string>();
-                        var user = new Users();
-                        string img = "";
+                        //data upload part
+                        if (id != "page")
+                        {
+                            Dictionary<string, string> claims = new Dictionary<string, string>();
+                            var user = new Users();
+                            string img = "";
 
-                        //change the image
-                        if (uploadResult.Uploaded) {
-                            if (id == "NoId") {
-                                user = _context.Users.FirstOrDefault(a => a.UserName == User.Identity.Name);
-                                claims = User.Claims.ToDictionary(c => c.Type, c => c.Value);
-                                img = claims["img"];
-                            }
-                            else
+                            //change the image
+                            if (uploadResult.Uploaded)
                             {
-                                user = _context.Users.FirstOrDefault(a => a.Id == id);
-                                claims = _context.UserClaims.ToDictionary(c => c.UserId, c => c.ClaimValue);
-                                img = claims[id];
+                                if (id == "NoId")
+                                {
+                                    user = _context.Users.FirstOrDefault(a => a.UserName == User.Identity.Name);
+                                    claims = User.Claims.ToDictionary(c => c.Type, c => c.Value);
+                                    img = claims["img"];
+                                }
+                                else
+                                {
+                                    user = _context.Users.FirstOrDefault(a => a.Id == id);
+                                    claims = _context.UserClaims.ToDictionary(c => c.UserId, c => c.ClaimValue);
+                                    img = claims[id];
+                                }
+
+                                await _userManager.ReplaceClaimAsync(user, new Claim("img", img), new Claim("img", image));
+
+                                var deleteold = rootpath + img;
+
+                                //delete the old one
+                                if (System.IO.File.Exists(deleteold))
+                                {
+                                    System.IO.File.Delete(deleteold);
+                                }
+                                if (id == "NoId")
+                                {
+                                    await _signInManager.RefreshSignInAsync(user);
+                                }
                             }
-                            await _userManager.ReplaceClaimAsync(user, new Claim("img", img), new Claim("img",image ));
-
-                            var deleteold = rootpath + img;
-
-                            //delete the old one
-                            if (System.IO.File.Exists(deleteold))
-                            {
-                                System.IO.File.Delete(deleteold);
-                            }
-                            if (id == "NoId")
-                            {
-                                await _signInManager.RefreshSignInAsync(user);
-                            }
-
-    
-
-    
                         }
+                       
                     }
                     catch (IOException ex)
                     {
@@ -127,7 +147,6 @@ public class FilesaveController : ControllerBase
                         uploadResult.ErrorCode = 3;
                     }
                 }
-
                 filesProcessed++;
             }
             else

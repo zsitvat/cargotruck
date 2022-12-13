@@ -20,4 +20,10 @@ Client/bin
 Server/bin
 Shared/bin
 *.xlsx
+*.pdf
+*.docx
+*.csv
+Server/Files
+Server/Files/
+Server/Files/*
 Client/wwwroot/img/profiles/

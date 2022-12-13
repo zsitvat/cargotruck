@@ -171,6 +171,9 @@
   <data name="csv" xml:space="preserve">
     <value>Export to CSV</value>
   </data>
+  <data name="Data_import" xml:space="preserve">
+    <value>Import data</value>
+  </data>
   <data name="Date" xml:space="preserve">
     <value>Date</value>
   </data>
@@ -299,6 +302,9 @@
   </data>
   <data name="False" xml:space="preserve">
     <value>False</value>
+  </data>
+  <data name="File_input" xml:space="preserve">
+    <value>Import data</value>
   </data>
   <data name="Final_Payment" xml:space="preserve">
     <value>Final payment</value>
@@ -500,6 +506,9 @@
   </data>
   <data name="Storage_time" xml:space="preserve">
     <value>Storage time</value>
+  </data>
+  <data name="Success_upload" xml:space="preserve">
+    <value>The upload is successful!</value>
   </data>
   <data name="Tasks" xml:space="preserve">
     <value>Tasks</value>

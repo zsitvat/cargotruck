@@ -171,6 +171,9 @@
   <data name="csv" xml:space="preserve">
     <value>Letöltés CSV-ként</value>
   </data>
+  <data name="Data_import" xml:space="preserve">
+    <value>Adatok feltöltése</value>
+  </data>
   <data name="Date" xml:space="preserve">
     <value>Dátum</value>
   </data>
@@ -299,6 +302,9 @@
   </data>
   <data name="False" xml:space="preserve">
     <value>Nem</value>
+  </data>
+  <data name="File_input" xml:space="preserve">
+    <value>Adatok feltöltése</value>
   </data>
   <data name="Final_Payment" xml:space="preserve">
     <value>Végleges összeg</value>
@@ -500,6 +506,9 @@
   </data>
   <data name="Storage_time" xml:space="preserve">
     <value>Raktározás ideje</value>
+  </data>
+  <data name="Success_upload" xml:space="preserve">
+    <value>Feltöltés sikeres!</value>
   </data>
   <data name="Tasks" xml:space="preserve">
     <value>Megbízások</value>

@@ -40,7 +40,7 @@ static string GetRandomString()
 
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Services.AddMvc().AddControllersAsServices();
 // Add services to the container.
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 //localization service

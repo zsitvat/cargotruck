@@ -223,6 +223,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Adatok feltöltése.
+        /// </summary>
+        public static string Data_import {
+            get {
+                return ResourceManager.GetString("Data_import", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dátum.
         /// </summary>
         public static string Date {
@@ -606,6 +615,15 @@ namespace Cargotruck.Shared.Resources {
         public static string False {
             get {
                 return ResourceManager.GetString("False", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adatok feltöltése.
+        /// </summary>
+        public static string File_input {
+            get {
+                return ResourceManager.GetString("File_input", resourceCulture);
             }
         }
         
@@ -1209,6 +1227,15 @@ namespace Cargotruck.Shared.Resources {
         public static string Storageman {
             get {
                 return ResourceManager.GetString("Storageman", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feltöltés sikeres!.
+        /// </summary>
+        public static string Success_upload {
+            get {
+                return ResourceManager.GetString("Success_upload", resourceCulture);
             }
         }
         

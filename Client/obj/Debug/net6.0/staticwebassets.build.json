@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "UtpfehWKo0/94KrsSiB8vadJ/kRgYioTPLD1NsgWH28=",
+  "Hash": "BN92NKq5L+Y3bH53fDOSjCV/f+b9IBguQb8e+/NZMr0=",
   "Source": "Cargotruck.Client",
   "BasePath": "/",
   "Mode": "Root",
@@ -8175,6 +8175,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\logo.png"
+    },
+    {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\img\\profiles\\efbvblrc.jpg",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "img/profiles/efbvblrc.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\profiles\\efbvblrc.jpg"
+    },
+    {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\img\\profiles\\jytd53qi.jpg",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "img/profiles/jytd53qi.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\profiles\\jytd53qi.jpg"
     },
     {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\img\\profiles\\profile.jpg",

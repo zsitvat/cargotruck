@@ -84,6 +84,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXEN1bHR1cmVTZWxlY3Rvci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[F:/Szakdoga app/Cargotruck/Client/Shared/UploadFiles.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFVwbG9hZEZpbGVzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [F:/Szakdoga app/Cargotruck/Client/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
