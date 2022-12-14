@@ -42,6 +42,7 @@ else
                                 <tbody>
                                     @foreach (Users item in users)
                                     {
+                                        int i = 0;
                                         i += 1;
                                         <tr>
                                             <td>@i</td>
@@ -75,7 +76,6 @@ else
     Users[] users { get; set; }
     Dictionary<string, string>? claims { get; set; }
     Dictionary<string, string>? roles { get; set; }
-    int i = 0;
     protected override async Task OnInitializedAsync()
     {
         users = await client.GetFromJsonAsync<Users[]>("api/admin/get");

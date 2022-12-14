@@ -668,14 +668,7 @@ namespace Cargotruck.Server.Controllers
                 string path = Path.Combine("Files/", file);
                 //Checking file content length and Extension must be .xlsx  
                 if (file != null && System.IO.File.Exists(path) && file.ToLower().Contains(".xlsx"))
-                {
-                  
-
-                    /*//Saving the file  
-                    using (var stream = System.IO.File.Create(path))
-                    {
-                        await file.CopyToAsync(stream);
-                    }*/
+                {             
 
                     //Started reading the Excel file.  
                     XLWorkbook workbook = new XLWorkbook(path);
@@ -711,7 +704,7 @@ namespace Cargotruck.Server.Controllers
                             }
                             var sql = @"Insert Into Tasks (User_id,Partner,Description,Place_of_receipt,Time_of_receipt,Place_of_delivery,Time_of_delivery,Other_stops,Id_cargo,Storage_time,Completed,Completion_time,Time_of_delay,Payment,Final_Payment,Penalty,Date ) 
                                     Values (@User_id,@Partner,@Description,@Place_of_receipt,@Time_of_receipt, @Place_of_delivery,@Time_of_delivery,@Other_stops,@Id_cargo,@Storage_time,@Completed,@Completion_time,@Time_of_delay,@Payment,@Final_Payment,@Penalty,@Date)";
-                            var insert = _context.Database.ExecuteSqlRawAsync(sql,
+                            var insert =  await _context.Database.ExecuteSqlRawAsync(sql,
                                 new SqlParameter("@User_id", list[1]),
                                 new SqlParameter("@Partner", list[2]),
                                 new SqlParameter("@Description", list[3]),
@@ -731,12 +724,12 @@ namespace Cargotruck.Server.Controllers
                                 new SqlParameter("@Date", list[17] == "" ? System.DBNull.Value : list[17])
                                 );
 
-                            if (insert.IsCompleted)
+                            if (insert > 0)
                             {
                                 error = lang == "hu" ? @Cargotruck.Shared.Resources.Resource.Success_upload : "The upload is successful!";
                                 await _context.SaveChangesAsync();
                             }
-                            else
+                            else if(insert <=0)
                             {
                                 System.IO.File.Delete(path); // delete the file
                             }
