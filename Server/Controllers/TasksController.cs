@@ -1,27 +1,13 @@
-﻿using Cargotruck.Client;
-using Cargotruck.Data;
-using Cargotruck.Shared.Models;
+﻿using Cargotruck.Data;
 using Tasks = Cargotruck.Shared.Models.Tasks;
-using iTextSharp.text.html.simpleparser;
 using iTextSharp.text.pdf;
 using iTextSharp.text;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
-using System.Threading.Tasks;
 using ClosedXML.Excel;
 using Document = iTextSharp.text.Document;
-using System;
-using Microsoft.Extensions.Localization;
-using System.Globalization;
-using System.Text;
-using DocumentFormat.OpenXml.Bibliography;
-using DocumentFormat.OpenXml.Office2021.DocumentTasks;
 using Microsoft.Data.SqlClient;
-using Irony.Parsing;
-using System;
-using System.IO;
 
 namespace Cargotruck.Server.Controllers
 {
@@ -39,7 +25,7 @@ namespace Cargotruck.Server.Controllers
         public async Task<IActionResult> Get(int page, int pageSize, string sortOrder, bool desc, string? searchString)
         {
             var t = await _context.Tasks.ToListAsync();
-            if(searchString != null && searchString != "") { t = t.Where(s => s.Partner!.Contains(searchString) || s.Place_of_receipt!.Contains(searchString) || s.Place_of_delivery!.Contains(searchString) || s.Time_of_delivery.ToString()!.Contains(searchString) || (s.Id_cargo!.Contains(searchString) || s.Storage_time!.Contains(searchString) || s.Completion_time.ToString()!.Contains(searchString) || s.Payment.ToString()!.Contains(searchString) || s.Final_Payment.ToString()!.Contains(searchString) || s.Penalty.ToString().ToString()!.Contains(searchString) || s.Date.ToString()!.Contains(searchString))).ToList(); }
+            if(searchString != null && searchString != "") { t = t.Where(s => s.Partner!.Contains(searchString) || s.Place_of_receipt!.Contains(searchString) || s.Place_of_delivery!.Contains(searchString) || s.Time_of_delivery.ToString()!.Contains(searchString) || (s.Id_cargo!.Contains(searchString) || s.Storage_time!.Contains(searchString) || s.Completion_time.ToString()!.Contains(searchString) || s.Payment.ToString()!.Contains(searchString) || s.Final_Payment.ToString()!.Contains(searchString) || s.Penalty.ToString()!.Contains(searchString) || s.Date.ToString()!.Contains(searchString))).ToList(); }
             
             sortOrder = sortOrder == "Partner" ? ( desc ? "Partner_desc" : "Partner" ) : (sortOrder);
             sortOrder = sortOrder == "Description " ? (desc ? "Description_desc" : "Description") : (sortOrder);
@@ -607,6 +593,7 @@ namespace Cargotruck.Server.Controllers
 
             StreamWriter txt = new StreamWriter(filepath);
             txt.Write("Id" + ";");
+            txt.Write(lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID" + ";");
             txt.Write(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Partner : "Partner" + ";");
             txt.Write(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Description : "Description" + "; ");
             txt.Write(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Place_of_receipt : "Place of receipt" + "; ");
@@ -663,6 +650,7 @@ namespace Cargotruck.Server.Controllers
         public async Task<IActionResult> Import(string file, string lang)
         {
             var error = "";
+            var haveColumns = false;
             if (file != null)
             {
                 string path = Path.Combine("Files/", file);
@@ -677,100 +665,124 @@ namespace Cargotruck.Server.Controllers
                     //Loop through the Worksheet rows.
                     DataTable? dt = new DataTable();
                     bool firstRow = true;
-                    foreach (IXLRow row in worksheet.Rows())
-                    {
-                        //Use the first row to add columns to DataTable.
-                        if (firstRow)
+                    if (worksheet.Row(2).CellsUsed().Count() > 1 && worksheet.Row(2).Cell(worksheet.Row(1).CellsUsed().Count()) !=null) {
+                        int l = 0;
+                        foreach (IXLRow row in worksheet.Rows())
                         {
-                            List<string?> titles = new List<string?>() {
-                                 "Id",
-                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Description : "Description",
-                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Place_of_receipt : "Place of receipt",
-                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_receipt : "Time of receipt",
-                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Place_of_delivery : "Place of delivery",
-                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_delivery : "Time of delivery",
-                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Other_stops : "Other stops",
-                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Id_cargo : "Id cargo",
-                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Storage_time : "Storage time",
-                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Completed : "Completed",
-                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Partner : "Partner",
-                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Completion_time : "Completion time",
-                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_delay : "Time of delay",
-                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Payment : "Payment",
-                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Final_Payment : "Final Payment",
-                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Penalty : "Penalty",
-                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date"
-                             };
 
-
-                            foreach (IXLCell cell in row.Cells())
+                        
+                        
+                            //Use the first row to add columns to DataTable with column names check.
+                            if (firstRow)
                             {
-                                if (titles.Contains(cell.Value.ToString())) 
+                                List<string?> titles = new List<string?>() {
+                                     "Id",
+                                    lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID",
+                                    lang == "hu" ? Cargotruck.Shared.Resources.Resource.Description : "Description",
+                                    lang == "hu" ? Cargotruck.Shared.Resources.Resource.Place_of_receipt : "Place of receipt",
+                                    lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_receipt : "Time of receipt",
+                                    lang == "hu" ? Cargotruck.Shared.Resources.Resource.Place_of_delivery : "Place of delivery",
+                                    lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_delivery : "Time of delivery",
+                                    lang == "hu" ? Cargotruck.Shared.Resources.Resource.Other_stops : "Other stops",
+                                    lang == "hu" ? Cargotruck.Shared.Resources.Resource.Id_cargo : "Id cargo",
+                                    lang == "hu" ? Cargotruck.Shared.Resources.Resource.Storage_time : "Storage time",
+                                    lang == "hu" ? Cargotruck.Shared.Resources.Resource.Completed : "Completed",
+                                    lang == "hu" ? Cargotruck.Shared.Resources.Resource.Partner : "Partner",
+                                    lang == "hu" ? Cargotruck.Shared.Resources.Resource.Completion_time : "Completion time",
+                                    lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_delay : "Time of delay",
+                                    lang == "hu" ? Cargotruck.Shared.Resources.Resource.Payment : "Payment",
+                                    lang == "hu" ? Cargotruck.Shared.Resources.Resource.Final_Payment : "Final Payment",
+                                    lang == "hu" ? Cargotruck.Shared.Resources.Resource.Penalty : "Penalty",
+                                    lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date"
+                                 };
+
+                                foreach (IXLCell cell in row.Cells())
                                 {
-                                    titles.Remove(cell.Value.ToString());
-                                    dt.Columns.Add(cell.Value.ToString()); 
-                                }
-                                else 
-                                {
-                                    error = lang == "hu" ? @Cargotruck.Shared.Resources.Resource.Not_match_col : "Wrong column names!";
-                                    return BadRequest(error);
-                                }
+                                    if (titles.Contains(cell.Value.ToString())) 
+                                    {
+                                        titles.Remove(cell.Value.ToString());
+                                        dt.Columns.Add(cell.Value.ToString()); 
+                                    }
+                                    else 
+                                    {
+                                        error = lang == "hu" ? @Cargotruck.Shared.Resources.Resource.Not_match_col : "Wrong column names!";
+                                        System.IO.File.Delete(path); // delete the file
+                                        return BadRequest(error);
+                                    }
                                
+                                }
+                                firstRow = false;
+                                if (titles.Count() == 0) 
+                                { 
+                                    haveColumns = true;
+                                    l += 1;
+                                }
+                                else if (titles.Count() == 1 &&  titles.Contains("Id")) 
+                                {
+                                    haveColumns = true; 
+                                }
                             }
-                            firstRow = false;
+                            else if(haveColumns)
+                            {
+                                List<object?> list = new List<object?>();
+                                //Add rows to DataTable.
+                                dt.Rows.Add();
+                                foreach (IXLCell cell in row.Cells(1, dt.Columns.Count))
+                                {
+                                    if (cell.Value!=null && cell.Value.ToString()!="") { list.Add(cell.Value); }
+                                    else { list.Add(System.DBNull.Value); }
+                                }
+                                var sql = @"Insert Into Tasks (User_id,Partner,Description,Place_of_receipt,Time_of_receipt,Place_of_delivery,Time_of_delivery,Other_stops,Id_cargo,Storage_time,Completed,Completion_time,Time_of_delay,Payment,Final_Payment,Penalty,Date ) 
+                                        Values (@User_id,@Partner,@Description,@Place_of_receipt,@Time_of_receipt, @Place_of_delivery,@Time_of_delivery,@Other_stops,@Id_cargo,@Storage_time,@Completed,@Completion_time,@Time_of_delay,@Payment,@Final_Payment,@Penalty,@Date)";
+                                var insert =  await _context.Database.ExecuteSqlRawAsync(sql,
+                                    new SqlParameter("@User_id", list[l]),
+                                    new SqlParameter("@Partner", list[l+1]),
+                                    new SqlParameter("@Description", list[l + 2]),
+                                    new SqlParameter("@Place_of_receipt", list[l + 3]),
+                                    new SqlParameter("@Time_of_receipt", list[l + 4] == System.DBNull.Value ? System.DBNull.Value : DateTime.Parse(list[l + 4].ToString())),
+                                    new SqlParameter("@Place_of_delivery", list[l + 5]),
+                                    new SqlParameter("@Time_of_delivery", list[l + 6] == System.DBNull.Value ? System.DBNull.Value : DateTime.Parse(list[l + 6].ToString())),
+                                    new SqlParameter("@Other_stops", list[l + 7]),
+                                    new SqlParameter("@Id_cargo", list[l + 8]),
+                                    new SqlParameter("@Storage_time", list[l + 9]),
+                                    new SqlParameter("@Completed", list[l + 10]),
+                                    new SqlParameter("@Completion_time", list[l + 11]),
+                                    new SqlParameter("@Time_of_delay", list[l + 12]),
+                                    new SqlParameter("@Payment", list[l + 13]),
+                                    new SqlParameter("@Final_Payment", list[l + 14]),
+                                    new SqlParameter("@Penalty", list[l + 15]),
+                                    new SqlParameter("@Date", list[l + 16] == System.DBNull.Value ? System.DBNull.Value : DateTime.Parse(list[l + 16].ToString()))
+                                    );
 
-                        }
-                        else
-                        {
-                            List<object?> list = new List<object?>();
-                            //Add rows to DataTable.
-                            dt.Rows.Add();
-                            int i = 0;
-                            foreach (IXLCell cell in row.Cells(1, dt.Columns.Count))
-                            {
-                                if (cell.Value!=null && cell.Value!="") { list.Add(cell.Value); }
-                                else { list.Add(System.DBNull.Value); }
-                                i++;
+                                if (insert > 0)
+                                {
+                                    error = "";
+                                    await _context.SaveChangesAsync();
+                                }
+                                else if(insert <=0)
+                                {
+                                    System.IO.File.Delete(path); // delete the file
+                                }
                             }
-                            var sql = @"Insert Into Tasks (User_id,Partner,Description,Place_of_receipt,Time_of_receipt,Place_of_delivery,Time_of_delivery,Other_stops,Id_cargo,Storage_time,Completed,Completion_time,Time_of_delay,Payment,Final_Payment,Penalty,Date ) 
-                                    Values (@User_id,@Partner,@Description,@Place_of_receipt,@Time_of_receipt, @Place_of_delivery,@Time_of_delivery,@Other_stops,@Id_cargo,@Storage_time,@Completed,@Completion_time,@Time_of_delay,@Payment,@Final_Payment,@Penalty,@Date)";
-                            var insert =  await _context.Database.ExecuteSqlRawAsync(sql,
-                                new SqlParameter("@User_id", list[1]),
-                                new SqlParameter("@Partner", list[2]),
-                                new SqlParameter("@Description", list[3]),
-                                new SqlParameter("@Place_of_receipt", list[4]),
-                                new SqlParameter("@Time_of_receipt", list[5] == "" ? System.DBNull.Value : list[5]),
-                                new SqlParameter("@Place_of_delivery", list[6]),
-                                new SqlParameter("@Time_of_delivery", list[7] == "" ? System.DBNull.Value : list[7]),
-                                new SqlParameter("@Other_stops", list[8]),
-                                new SqlParameter("@Id_cargo", list[9]),
-                                new SqlParameter("@Storage_time", list[10]),
-                                new SqlParameter("@Completed", list[11]),
-                                new SqlParameter("@Completion_time", list[12] == "" ? System.DBNull.Value : list[12]),
-                                new SqlParameter("@Time_of_delay", list[13]),
-                                new SqlParameter("@Payment", list[14]),
-                                new SqlParameter("@Final_Payment", list[15]),
-                                new SqlParameter("@Penalty", list[16]),
-                                new SqlParameter("@Date", list[17] == "" ? System.DBNull.Value : list[17])
-                                );
-
-                            if (insert > 0)
+                            else
                             {
-                                error = lang == "hu" ? @Cargotruck.Shared.Resources.Resource.Success_upload : "The upload is successful!";
-                                await _context.SaveChangesAsync();
+                                error = lang == "hu" ? @Cargotruck.Shared.Resources.Resource.Not_match_col_count : "Missing columns in the datatable";
+                                return BadRequest(error);
                             }
-                            else if(insert <=0)
+                            //If no data in Excel file  
+                            if (firstRow)
                             {
+                                error = lang == "hu" ? @Cargotruck.Shared.Resources.Resource.Empty_excel : "Empty excel file!";
                                 System.IO.File.Delete(path); // delete the file
+                                return BadRequest(error);
                             }
                         }
-                        //If no data in Excel file  
-                        if (firstRow)
-                        {
-                            error = lang == "hu" ? @Cargotruck.Shared.Resources.Resource.Empty_excel : "Empty excel file!";
-                            System.IO.File.Delete(path); // delete the file
-                            return BadRequest(error);
-                        }
+                    }
+                    else
+                    {
+                        error = lang == "hu" ? @Cargotruck.Shared.Resources.Resource.Missing_data_rows : "No datarows in the file!";
+                        System.IO.File.Delete(path); // delete the file
+                        return BadRequest(error);
                     }
                 }
                 else

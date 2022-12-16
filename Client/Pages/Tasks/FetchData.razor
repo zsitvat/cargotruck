@@ -8,11 +8,11 @@
     <button data-title="@localizer["excel"]" class="btn btn-light" @onclick="@ExportToExcel"><i class="oi oi-spreadsheet"></i></button>
     <button data-title="@localizer["txt"]" class="btn btn-light" @onclick="@(() => ExportToCSV(".txt"))"><span class="icon iconify" style="margin:0;" data-icon="material-symbols:text-snippet-outline"></span></button>
     <button data-title="@localizer["csv"]" class="btn btn-light" @onclick="@(() => ExportToCSV(".csv"))"><span class="icon iconify" style="margin:0;" data-icon="bi:filetype-csv"></span></button>
-    <span class="file-upload-title" import-data-title="@localizer["File_input"]"><UploadFiles page="page" /></span>
+    <span class="file-upload-title" import-data-title="@localizer["File_input"]"><UploadFiles page="page" StateChanged="StateChanged" /></span>
     <input value="@searchString" @oninput="@Search" placeholder="@(searchString == null ? searchString : localizer["Search"])" class="form-control inputs input_search" type="search" id="search-input" name="SearchString">
 </div>
 <br>
-
+@document_error
 
 @if (tasks == null)
 {
@@ -178,8 +178,8 @@ else
                                         <td>@item.Date</td>
                                     }
                                     <td>
-                                        <a data-title="@localizer["Edit"]" class="btn  fixed" href="Tasks/edit/@item.Id"> <span class="oi oi-pencil" aria-hidden="true"></span></a>
-                                        <button data-title="@localizer["Delete"]" class="btn fixed2" @onclick="@(() => Delete(item.Id))"> <span class="oi oi-trash" aria-hidden="true"></span></button>
+                                        <a class="btn  fixed" href="Tasks/edit/@item.Id"> <span data-title="@localizer["Edit"]" class="oi oi-pencil" aria-hidden="true"></span></a>
+                                        <button class="btn fixed2" @onclick="@(() => Delete(item.Id))"> <span data-title="@localizer["Delete"]" class="oi oi-trash" aria-hidden="true"></span></button>
                                     </td>
                                 </tr>
                             }
@@ -234,7 +234,7 @@ else
 }
 @code {
     public bool settings = false;
-    Tasks[] tasks { get; set; }
+    Tasks[]? tasks { get; set; }
     List<bool> showColumns = Enumerable.Repeat(true, 16).ToList();
     private int currentPage = 1;
     int pageSize = 10;
@@ -259,7 +259,8 @@ else
         if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {t.Partner} ({t.Id})"))
         {
             await client.DeleteAsync($"api/tasks/delete/{Id}");
-            if (dataRows % maxPage == 1 ) { navigationManager.NavigateTo("/Tasks", true); }
+            var shouldreload = dataRows % ((currentPage == 1 ? currentPage : currentPage - 1) * pageSize);
+            if (shouldreload == 1 && dataRows > 0) { navigationManager.NavigateTo("/Tasks", true); }
             await OnInitializedAsync();
         }
     }
@@ -327,7 +328,6 @@ else
         maxPage = (int)Math.Ceiling((decimal)((float)dataRows / (float)pageSize));
 
         tasks = await client.GetFromJsonAsync<Tasks[]>($"api/tasks/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}");
-
         StateHasChanged();
     }
 
@@ -351,6 +351,10 @@ else
                 base64String,
                 filename);
         }
+        else
+        {
+            document_error = localizer["Document_failder_to_create"];
+        }
     }
 
     private async Task ExportToExcel()
@@ -372,6 +376,10 @@ else
                 "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                 base64String,
                 filename);
+        }
+        else
+        {
+            document_error = localizer["Document_failder_to_create"];
         }
     }
 
@@ -395,5 +403,15 @@ else
                 base64String,
                 filename);
         }
+        else
+        {
+            document_error = localizer["Document_failder_to_create"];
+        }
     }
+
+    private async void StateChanged()
+    {
+        await OnInitializedAsync();
+    }
+
 }

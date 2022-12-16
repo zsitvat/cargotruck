@@ -357,6 +357,9 @@
   <data name="Max_weight" xml:space="preserve">
     <value>Max weight of the cargo</value>
   </data>
+  <data name="Missing_data_rows" xml:space="preserve">
+    <value>No datarows in the file! </value>
+  </data>
   <data name="NewAccount" xml:space="preserve">
     <value>Create new user</value>
   </data>
@@ -374,6 +377,9 @@
   </data>
   <data name="Not_match_col" xml:space="preserve">
     <value>Wrong column names</value>
+  </data>
+  <data name="Not_match_col_count" xml:space="preserve">
+    <value>Missing columns!</value>
   </data>
   <data name="No_content" xml:space="preserve">
     <value>No content!</value>

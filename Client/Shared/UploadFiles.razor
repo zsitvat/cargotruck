@@ -11,10 +11,12 @@
 
 @code {
     [Parameter] public string? page { get; set; }
+    [Parameter] public EventCallback StateChanged { get; set; }
     string? error;
     private List<File> files = new();
     private List<UploadResult> uploadResults = new();
     private int maxAllowedFiles = 1;
+
 
     private async Task OnInputFileChange(InputFileChangeEventArgs e)
     {
@@ -75,13 +77,15 @@
                 foreach (var file in uploadResults)
                 {
                     var datasaved = await Http.GetAsync($"api/tasks/import?file={file.StoredFileName}&lang={CultureInfo.CurrentCulture.Name.ToString()}");
-                    error = datasaved.Content.ToString();
+                    error = await datasaved.Content.ReadAsStringAsync();
+                    if (datasaved.IsSuccessStatusCode) { navigationManager.NavigateTo("/Tasks", true); }
+                    else {
+                        await OnInitializedAsync();
+                        await StateChanged.InvokeAsync();
+                    }
                 }
-
             }  
         }
-      
-       navigationManager.NavigateTo("/Tasks", true);
     }
 
     private static bool FileUpload(IList<UploadResult> uploadResults, string? fileName, ILogger<UploadFiles> logger, out UploadResult result)

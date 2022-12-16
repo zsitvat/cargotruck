@@ -286,6 +286,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nem sikerült előállítani a fájlt!.
+        /// </summary>
+        public static string Document_failder_to_create {
+            get {
+                return ResourceManager.GetString("Document_failder_to_create", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sofőr.
         /// </summary>
         public static string Driver {
@@ -781,6 +790,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nincsenek adatsorok a fájlban!.
+        /// </summary>
+        public static string Missing_data_rows {
+            get {
+                return ResourceManager.GetString("Missing_data_rows", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Új adat.
         /// </summary>
         public static string New_data {
@@ -840,6 +858,15 @@ namespace Cargotruck.Shared.Resources {
         public static string Not_match_col {
             get {
                 return ResourceManager.GetString("Not_match_col", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hiányzó oszlopok az adattáblában!.
+        /// </summary>
+        public static string Not_match_col_count {
+            get {
+                return ResourceManager.GetString("Not_match_col_count", resourceCulture);
             }
         }
         

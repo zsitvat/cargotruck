@@ -192,6 +192,9 @@
   <data name="Direction" xml:space="preserve">
     <value>Irány</value>
   </data>
+  <data name="Document_failder_to_create" xml:space="preserve">
+    <value>Nem sikerült előállítani a fájlt!</value>
+  </data>
   <data name="Driver" xml:space="preserve">
     <value>Sofőr</value>
   </data>
@@ -357,6 +360,9 @@
   <data name="Max_weight" xml:space="preserve">
     <value>Terhelés max súlya</value>
   </data>
+  <data name="Missing_data_rows" xml:space="preserve">
+    <value>Nincsenek adatsorok a fájlban!</value>
+  </data>
   <data name="NewAccount" xml:space="preserve">
     <value>Új felhasználó létrehozása</value>
   </data>
@@ -374,6 +380,9 @@
   </data>
   <data name="Not_match_col" xml:space="preserve">
     <value>Nem egyeznek az oszlopok!</value>
+  </data>
+  <data name="Not_match_col_count" xml:space="preserve">
+    <value>Hiányzó oszlopok az adattáblában!</value>
   </data>
   <data name="No_content" xml:space="preserve">
     <value>Nincs adat!</value>
