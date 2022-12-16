@@ -660,7 +660,7 @@ namespace Cargotruck.Server.Controllers
             return file;
         }
 
-        public async Task<string> Import(string file, string lang)
+        public async Task<IActionResult> Import(string file, string lang)
         {
             var error = "";
             if (file != null)
@@ -682,10 +682,40 @@ namespace Cargotruck.Server.Controllers
                         //Use the first row to add columns to DataTable.
                         if (firstRow)
                         {
+                            List<string?> titles = new List<string?>() {
+                                 "Id",
+                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Description : "Description",
+                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Place_of_receipt : "Place of receipt",
+                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_receipt : "Time of receipt",
+                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Place_of_delivery : "Place of delivery",
+                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_delivery : "Time of delivery",
+                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Other_stops : "Other stops",
+                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Id_cargo : "Id cargo",
+                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Storage_time : "Storage time",
+                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Completed : "Completed",
+                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Partner : "Partner",
+                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Completion_time : "Completion time",
+                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_delay : "Time of delay",
+                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Payment : "Payment",
+                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Final_Payment : "Final Payment",
+                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Penalty : "Penalty",
+                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date"
+                             };
+
 
                             foreach (IXLCell cell in row.Cells())
                             {
-                                dt.Columns.Add(cell.Value.ToString());
+                                if (titles.Contains(cell.Value.ToString())) 
+                                {
+                                    titles.Remove(cell.Value.ToString());
+                                    dt.Columns.Add(cell.Value.ToString()); 
+                                }
+                                else 
+                                {
+                                    error = lang == "hu" ? @Cargotruck.Shared.Resources.Resource.Not_match_col : "Wrong column names!";
+                                    return BadRequest(error);
+                                }
+                               
                             }
                             firstRow = false;
 
@@ -739,6 +769,7 @@ namespace Cargotruck.Server.Controllers
                         {
                             error = lang == "hu" ? @Cargotruck.Shared.Resources.Resource.Empty_excel : "Empty excel file!";
                             System.IO.File.Delete(path); // delete the file
+                            return BadRequest(error);
                         }
                     }
                 }
@@ -747,13 +778,15 @@ namespace Cargotruck.Server.Controllers
                     //If file extension of the uploaded file is different then .xlsx  
                     error = lang == "hu" ?  @Cargotruck.Shared.Resources.Resource.Not_excel : "Bad format! The file is not an excel.";
                     System.IO.File.Delete(path); // delete the file
+                    return BadRequest(error);
                 }
             }
             else
             {
                 error = lang == "hu" ?  @Cargotruck.Shared.Resources.Resource.No_excel : "File not found!";
+                return BadRequest(error);
             }
-            return error;
+            return NoContent();
         }
     }
 }

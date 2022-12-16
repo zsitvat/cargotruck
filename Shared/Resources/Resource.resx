@@ -372,6 +372,9 @@
   <data name="Not_excel" xml:space="preserve">
     <value>Csak .xlsx formátum elfogadott!</value>
   </data>
+  <data name="Not_match_col" xml:space="preserve">
+    <value>Nem egyeznek az oszlopok!</value>
+  </data>
   <data name="No_content" xml:space="preserve">
     <value>Nincs adat!</value>
   </data>

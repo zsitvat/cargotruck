@@ -372,6 +372,9 @@
   <data name="Not_excel" xml:space="preserve">
     <value>Please select file with .xlsx extension!</value>
   </data>
+  <data name="Not_match_col" xml:space="preserve">
+    <value>Wrong column names</value>
+  </data>
   <data name="No_content" xml:space="preserve">
     <value>No content!</value>
   </data>

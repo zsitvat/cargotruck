@@ -178,8 +178,8 @@ else
                                         <td>@item.Date</td>
                                     }
                                     <td>
-                                        <a class="btn  fixed" href="Tasks/edit/@item.Id"> <span class="oi oi-pencil" aria-hidden="true"></span></a>
-                                        <button class="btn fixed2" @onclick="@(() => Delete(item.Id))"> <span class="oi oi-trash" aria-hidden="true"></span></button>
+                                        <a data-title="@localizer["Edit"]" class="btn  fixed" href="Tasks/edit/@item.Id"> <span class="oi oi-pencil" aria-hidden="true"></span></a>
+                                        <button data-title="@localizer["Delete"]" class="btn fixed2" @onclick="@(() => Delete(item.Id))"> <span class="oi oi-trash" aria-hidden="true"></span></button>
                                     </td>
                                 </tr>
                             }
@@ -239,11 +239,12 @@ else
     private int currentPage = 1;
     int pageSize = 10;
     int dataRows;
-    int maxPage = 1;
+    float maxPage;
     private string sortOrder = "Date";
     private bool desc = false;
     private string? searchString = "";
     string? document_error;
+
     protected override async Task OnInitializedAsync()
     {
         PageHistoryState.AddPageToHistory("/Tasks");
@@ -255,9 +256,10 @@ else
     async Task Delete(int Id)
     {
         var t = tasks.First(x => x.Id == Id);
-        if (await js.InvokeAsync<bool>("confirm", $"{@localizer["delete?"]} {t.Partner} ({t.Id})"))
+        if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {t.Partner} ({t.Id})"))
         {
             await client.DeleteAsync($"api/tasks/delete/{Id}");
+            if (dataRows % maxPage == 1 ) { navigationManager.NavigateTo("/Tasks", true); }
             await OnInitializedAsync();
         }
     }
@@ -321,8 +323,8 @@ else
     protected async Task ShowPage()
     {
         if (pageSize < 1 || pageSize == null ){ pageSize = 10; }
-        else if (pageSize >= dataRows) { pageSize = (int)dataRows != 0 ? (int)dataRows : 1 ; }
-        maxPage = (int)Math.Ceiling((decimal)( dataRows / pageSize));
+        else if (pageSize >= dataRows) { pageSize = dataRows != 0 ? dataRows : 1 ; }
+        maxPage = (int)Math.Ceiling((decimal)((float)dataRows / (float)pageSize));
 
         tasks = await client.GetFromJsonAsync<Tasks[]>($"api/tasks/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}");
 

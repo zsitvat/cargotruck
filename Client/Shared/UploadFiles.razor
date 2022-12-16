@@ -15,13 +15,9 @@
     private List<File> files = new();
     private List<UploadResult> uploadResults = new();
     private int maxAllowedFiles = 1;
-    private bool shouldRender;
-
-    protected override bool ShouldRender() => shouldRender;
 
     private async Task OnInputFileChange(InputFileChangeEventArgs e)
     {
-        shouldRender = false;
         long maxFileSize = 1024 * 3000;
         var upload = false;
 
@@ -84,9 +80,8 @@
 
             }  
         }
-
-        shouldRender = true;   
-        navigationManager.NavigateTo("/Tasks", true);
+      
+       navigationManager.NavigateTo("/Tasks", true);
     }
 
     private static bool FileUpload(IList<UploadResult> uploadResults, string? fileName, ILogger<UploadFiles> logger, out UploadResult result)

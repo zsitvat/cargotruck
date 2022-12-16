@@ -835,6 +835,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nem egyeznek az oszlopok!.
+        /// </summary>
+        public static string Not_match_col {
+            get {
+                return ResourceManager.GetString("Not_match_col", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
         public static string Notfound {
