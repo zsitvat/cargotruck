@@ -18,8 +18,9 @@
 
     async Task EditTasks()
     {
+        var text = localizer["Succesfull_update"];
         await http.PutAsJsonAsync("api/tasks/put", task);
-        await js.InvokeVoidAsync("alert", $"Updated Successfully!");
+        await js.InvokeVoidAsync("alert", text);
         uriHelper.NavigateTo("/Tasks");
 
     }

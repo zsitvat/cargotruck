@@ -519,6 +519,9 @@
   <data name="Storage_time" xml:space="preserve">
     <value>Raktározás ideje</value>
   </data>
+  <data name="Succesfull_update" xml:space="preserve">
+    <value>Sikeresen frissítve!</value>
+  </data>
   <data name="Success_upload" xml:space="preserve">
     <value>Feltöltés sikeres!</value>
   </data>

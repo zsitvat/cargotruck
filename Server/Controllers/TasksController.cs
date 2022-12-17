@@ -25,7 +25,25 @@ namespace Cargotruck.Server.Controllers
         public async Task<IActionResult> Get(int page, int pageSize, string sortOrder, bool desc, string? searchString)
         {
             var t = await _context.Tasks.ToListAsync();
-            if(searchString != null && searchString != "") { t = t.Where(s => s.Partner!.Contains(searchString) || s.Place_of_receipt!.Contains(searchString) || s.Place_of_delivery!.Contains(searchString) || s.Time_of_delivery.ToString()!.Contains(searchString) || (s.Id_cargo!.Contains(searchString) || s.Storage_time!.Contains(searchString) || s.Completion_time.ToString()!.Contains(searchString) || s.Payment.ToString()!.Contains(searchString) || s.Final_Payment.ToString()!.Contains(searchString) || s.Penalty.ToString()!.Contains(searchString) || s.Date.ToString()!.Contains(searchString))).ToList(); }
+            searchString = searchString == null ? null : searchString.ToLower();
+
+            if (searchString != null && searchString != "") 
+            { 
+                    t = t.Where(s => (
+                    s.Partner == null ? false : s.Partner.ToLower()!.Contains(searchString))
+                || (s.Description == null ? false : s.Description.ToLower()!.Contains(searchString))
+                || (s.Place_of_receipt == null ? false :  s.Place_of_receipt.ToLower()!.Contains(searchString))
+                || (s.Place_of_delivery == null ? false : s.Place_of_delivery.ToLower()!.Contains(searchString))
+                || (s.Time_of_delivery.ToString()!.Contains(searchString))
+                || (s.Id_cargo == null ? false : s.Id_cargo.ToLower()!.Contains(searchString))
+                || (s.Storage_time == null ? false : s.Storage_time.ToLower()!.Contains(searchString))
+                || (s.Completion_time == null ? false : s.Completion_time.ToString()!.Contains(searchString))
+                || (s.Payment == null ? false : s.Payment.ToString()!.Contains(searchString))
+                || (s.Final_Payment == null ? false : s.Final_Payment.ToString()!.Contains(searchString))
+                || (s.Penalty == null ? false : s.Penalty.ToString()!.Contains(searchString))
+                || (s.Date.ToString()!.Contains(searchString))
+                ).ToList(); 
+            }
             
             sortOrder = sortOrder == "Partner" ? ( desc ? "Partner_desc" : "Partner" ) : (sortOrder);
             sortOrder = sortOrder == "Description " ? (desc ? "Description_desc" : "Description") : (sortOrder);

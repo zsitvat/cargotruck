@@ -51,7 +51,7 @@
                     <div>
                         <label>@localizer["Time_of_receipt"]:</label>
                         <div>
-                            <InputDate class="form-control inputs" @bind-Value="@tasks.Time_of_receipt" />
+                            <InputDate Type="InputDateType.DateTimeLocal" @bind-Value:format="yyyy.MM.dd. hh:mm" class="form-control inputs" @bind-Value="@tasks.Time_of_receipt" ValueFormat="{0:yyyy/MM/dd}" />
                             <ValidationMessage For="@(() => tasks.Time_of_receipt)" />
                         </div>
                     </div>
@@ -67,9 +67,9 @@
                 </div>
                 <div class="form-group ">
                     <div>
-                        <label>@localizer["Time_of_deliver"]:</label>
+                        <label>@localizer["Time_of_delivery"]:</label>
                         <div>
-                            <InputDate class="form-control inputs" @bind-Value="@tasks.Time_of_delivery" />
+                            <InputDate Type="InputDateType.DateTimeLocal" @bind-Value:format="yyyy.MM.dd. hh:mm" class="form-control inputs" @bind-Value="@tasks.Time_of_delivery" />
                             <ValidationMessage For="@(() => tasks.Time_of_delivery)" />
                         </div>
                     </div>
@@ -86,7 +86,7 @@
             </div>
     
             <div class="d-inline-block forms-margin">
-                  <div class="form-group ">
+                  <div class="form-group">
                     <div>
                         <label>@localizer["Id_cargo"]:</label>
                         <div>
@@ -95,7 +95,7 @@
                         </div>
                     </div>
                 </div>
-                  <div class="form-group ">
+                  <div class="form-group">
                     <div>
                         <label>@localizer["Storage_time"]:</label>
                         <div>
@@ -104,16 +104,16 @@
                         </div>
                     </div>
                 </div>
-                  <div class="form-group ">
+                  <div class="form-group">
                     <div>
                         <label>@localizer["Completion_time"]:</label>
                         <div>
-                            <InputDate class="form-control inputs" @bind-Value="@tasks.Completion_time" />
+                            <InputDate Type="InputDateType.DateTimeLocal" @bind-Value:format="yyyy.MM.dd. hh:mm" class="form-control inputs" @bind-Value="@tasks.Completion_time" />
                             <ValidationMessage For="@(() => tasks.Completion_time)" />
                         </div>
                     </div>
                 </div>
-                  <div class="form-group ">
+                  <div class="form-group">
                     <div>
                         <label>@localizer["Time_of_delay"]:</label>
                         <div>
@@ -122,7 +122,7 @@
                         </div>
                     </div>
                 </div>
-                  <div class="form-group ">
+                  <div class="form-group">
                     <div>
                         <label>@localizer["Payment"]:</label>
                         <div>

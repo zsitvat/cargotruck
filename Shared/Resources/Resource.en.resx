@@ -516,6 +516,9 @@
   <data name="Storage_time" xml:space="preserve">
     <value>Storage time</value>
   </data>
+  <data name="Succesfull_update" xml:space="preserve">
+    <value>Update successful!</value>
+  </data>
   <data name="Success_upload" xml:space="preserve">
     <value>The upload is successful!</value>
   </data>

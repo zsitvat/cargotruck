@@ -112,7 +112,13 @@ else
 }
 app.UseRequestLocalization(new RequestLocalizationOptions
 {
-    ApplyCurrentCultureToResponseHeaders = true
+    DefaultRequestCulture = new RequestCulture("hu"),
+    SupportedCultures = new[] { new CultureInfo("en-US"), new CultureInfo("hu") },
+    SupportedUICultures = new[] { new CultureInfo("en-US"), new CultureInfo("hu") },
+    RequestCultureProviders = new[]
+    {
+        new QueryStringRequestCultureProvider(),
+    }
 });
 app.UseHttpsRedirection();
 app.UseBlazorFrameworkFiles();

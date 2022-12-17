@@ -1267,6 +1267,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sikeresen frissítve!.
+        /// </summary>
+        public static string Succesfull_update {
+            get {
+                return ResourceManager.GetString("Succesfull_update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Feltöltés sikeres!.
         /// </summary>
         public static string Success_upload {
