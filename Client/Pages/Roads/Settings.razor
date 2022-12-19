@@ -1,0 +1,158 @@
+﻿
+    <div class="settings-card mb-6">
+        <div class="card-body mb-3">
+            <div class="d-inline-block ms-5">
+            <a class="btn btn-danger x" @onclick="@SettingsClosed"><i class="oi oi-x"></i></a>
+                <div class="form-group">
+                    <label>@localizer["Partner"]:
+                    <input type="checkbox" @onchange="@(async () => {showColumns[0]=!showColumns[0]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[0]" />
+                    </label>
+                </div>
+                <div class="form-group ">
+                    <div>
+                        <label>@localizer["Description"]:
+                        <input type="checkbox" @onchange="@(async () =>{showColumns[1]=!showColumns[1]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[1]" />
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <label>@localizer["Place_of_receipt"]:
+                        <input type="checkbox" @onchange="@(async () =>{ showColumns[2]=!showColumns[2]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[2]" />
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <div>
+                        <label>@localizer["Time_of_receipt"]:
+                        <input type="checkbox" @onchange="@(async () =>{ showColumns[3]=!showColumns[3]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[3]" />
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <div>
+                        <label>@localizer["Place_of_delivery"]:
+                        <input type="checkbox" @onchange="@(async () =>{ showColumns[4]=!showColumns[4]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[4]" />
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <div>
+                        <label>@localizer["Time_of_deliver"]:
+                        <input type="checkbox" @onchange="@(async () =>{ showColumns[5]=!showColumns[5]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[5]" />
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <div>
+                        <label>@localizer["Other_stops"]:
+                        <input type="checkbox" @onchange="@(async () =>{ showColumns[6]=!showColumns[6]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[6]" />
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <div>
+                        <label>
+                            @localizer["Id_cargo"]:
+                        <input type="checkbox" @onchange="@(async () =>{ showColumns[7]=!showColumns[7]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[7]" />
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-inline-block ms-5">
+                <div class="form-group ">
+                    <div>
+                        <label>@localizer["Storage_time"]:
+                        <input type="checkbox" @onchange="@(async () =>{ showColumns[8]=!showColumns[8]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[8]" />
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <label>@localizer["Completed"]:
+                        <input type="checkbox" @onchange="@(async () =>{ showColumns[9]=!showColumns[9]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[9]" />
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <div>
+                        <label>@localizer["Completion_time"]:
+                        <input type="checkbox" @onchange="@(async () =>{ showColumns[10]=!showColumns[10]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[10]" />
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <div>
+                        <label>@localizer["Time_of_delay"]:
+                        <input type="checkbox" @onchange="@(async () =>{ showColumns[11]=!showColumns[11]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[11]" />
+                    </label>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <div>
+                        <label>@localizer["Payment"]:
+                        <input type="checkbox" @onchange="@(async () =>{ showColumns[12]=!showColumns[12]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[12]" />
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <div>
+                        <label>@localizer["Final_Payment"]:
+                        <input type="checkbox" @onchange="@(async () =>{ showColumns[13]=!showColumns[13]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[13]" />
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <label>@localizer["Penalty"]:
+                        <input type="checkbox" @onchange="@(async () =>{ showColumns[14]=!showColumns[14]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[14]" />
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <label>
+                            @localizer["Date"]:
+                        <input type="checkbox" @onchange="@(async () =>  { showColumns[15]=!showColumns[15];await SettingsChanged();})" class="form-check-input" checked="@showColumns[15]" />
+                        </label>
+                    </div>
+                </div>
+             </div>   
+            <div class="form-group mt-2">
+                <div>
+                    <label class="ms-5">
+                        @localizer["PageSize"]:
+                        <input class="number-input" value="@pageSize" @oninput="@InputChange" type="number" />   
+                    </label>
+                </div>
+            </div>
+           </div>
+        </div>
+
+   
+
+
+@code {
+    [Parameter] public List<bool> showColumns { get; set; }
+    [Parameter] public bool settings { get; set; }
+    [Parameter] public int pageSize { get; set; }
+    [Parameter] public  EventCallback  OnSettingsChanged { get; set; }
+    [Parameter] public  EventCallback  OnSettingsClosed { get; set; }
+    [Parameter] public EventCallback<int> OnInputChanged { get; set; }
+    protected async Task SettingsChanged()
+    {
+        await OnSettingsChanged.InvokeAsync();
+    }
+
+    protected async Task SettingsClosed()
+    {
+        await OnSettingsClosed.InvokeAsync();
+    }
+
+    private async Task InputChange(ChangeEventArgs args)
+    {
+        pageSize = string.IsNullOrEmpty(args.Value.ToString()) ? pageSize : Int32.Parse(args.Value.ToString());
+        await OnInputChanged.InvokeAsync(pageSize);
+    }
+}

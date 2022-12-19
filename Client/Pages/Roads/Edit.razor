@@ -1,0 +1,33 @@
+﻿@page "/Roads/edit/{Id:int}"
+@inject HttpClient http
+@inject NavigationManager uriHelper
+@inject IJSRuntime js
+
+<h3>@localizer["Edit_roads"]</h3>
+
+<Form ButtonText="Update" roads="@road" OnValidSubmit="@EditRoad" />
+
+@code {
+    [Parameter] public int Id { get; set; }
+    Roads? road = new Roads();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        road = await http.GetFromJsonAsync<Roads>($"api/roads/getById/{Id}");
+    }
+
+    async Task EditRoad()
+    {
+        var text = localizer["Succesfull_update"];
+        await http.PutAsJsonAsync("api/roads/put", road);
+        await js.InvokeVoidAsync("alert", text);
+        uriHelper.NavigateTo("/roads");
+
+    }
+
+    protected override void OnInitialized()
+    {
+        PageHistoryState.AddPageToHistory("/roads/edit/{Id:int}");
+        base.OnInitialized();
+    }
+}

@@ -11,9 +11,9 @@ namespace Cargotruck.Shared.Models
         [Required]
         public int User_id { get; set; }
         [Display(Name = "Task_id", ResourceType = typeof(Resource))]
-        public int Task_id { get; set; }
+        public int? Task_id { get; set; }
         [Display(Name = "Id_cargo", ResourceType = typeof(Resource))]
-        public int Id_cargo { get; set; }
+        public int? Id_cargo { get; set; }
         [Required(ErrorMessageResourceName = "Error_purpose_of_the_trip", ErrorMessageResourceType = typeof(Resource))]
         [Display(Name = "Purpose_of_the_trip", ResourceType = typeof(Resource))]
         public string Purpose_of_the_trip { get; set; }
@@ -30,7 +30,7 @@ namespace Cargotruck.Shared.Models
         [Display(Name = "Direction", ResourceType = typeof(Resource))]
         public string Direction { get; set; }
         [Display(Name = "Expenses_id", ResourceType = typeof(Resource))]
-        public int Expenses_id { get; set; }
+        public int? Expenses_id { get; set; }
         [Display(Name = "Date", ResourceType = typeof(Resource))]
         public DateTime Date { get; set; } = DateTime.Now;
 

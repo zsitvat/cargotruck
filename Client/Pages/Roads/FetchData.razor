@@ -1,0 +1,417 @@
+﻿@page "/Roads"
+
+<h3>@localizer["Roads"]</h3>
+<div class="form-group buttons">
+    <a class="btn btn-success me-4" href="/Roads/create"><i class="oi oi-plus"></i> @localizer["Add"]</a>
+    <a data-title="@localizer["Settings"]" class="btn btn-light" @onclick="@(() => settings=!settings)"><i class="oi oi-cog"></i></a>
+    <button data-title="@localizer["pdf"]" class="btn btn-light" @onclick="@ExportToPdf"><i class="oi oi-document"></i></button>
+    <button data-title="@localizer["excel"]" class="btn btn-light" @onclick="@ExportToExcel"><i class="oi oi-spreadsheet"></i></button>
+    <button data-title="@localizer["txt"]" class="btn btn-light" @onclick="@(() => ExportToCSV(".txt"))"><span class="icon iconify" style="margin:0;" data-icon="material-symbols:text-snippet-outline"></span></button>
+    <button data-title="@localizer["csv"]" class="btn btn-light" @onclick="@(() => ExportToCSV(".csv"))"><span class="icon iconify" style="margin:0;" data-icon="bi:filetype-csv"></span></button>
+    <span class="file-upload-title" import-data-title="@localizer["File_input"]"><UploadFiles page="page" StateChanged="StateChanged" /></span>
+    <input value="@searchString" @oninput="@Search" placeholder="@(searchString == null ? searchString : localizer["Search"])" class="form-control inputs input_search" type="search" id="search-input" name="SearchString">
+</div>
+<br>
+@document_error
+
+@if (tasks == null)
+{
+    <text>Loading...</text>
+}
+else if (tasks.Length == 0)
+{
+    <text>No Records Found.</text>
+}
+else
+{
+    <div class="col-md-8 stretch-card mb-2">
+        <div class="form-card mb-1 table-width">
+            <div class="card-body mb-3">
+                <div class="table-responsive fixed-table-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th> </th>
+                                @if (showColumns[0])
+                                {
+                                    <th><button class="@(sortOrder=="Partner" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Partner"))">@localizer["Partner"]</button></th>
+                                }
+                                @if (showColumns[1])
+                                {
+                                    <th><button class="@(sortOrder=="Description" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Description"))">@localizer["Description"]</button></th>
+                                }
+                                @if (showColumns[2])
+                                {
+                                    <th><button class="@(sortOrder=="Place_of_receipt" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Place_of_receipt"))">@localizer["Place_of_receipt"]</button></th>
+                                }
+                                @if (showColumns[3])
+                                {
+                                    <th><button class="@(sortOrder=="Time_of_receipt" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Time_of_receipt"))">@localizer["Time_of_receipt"]</button></th>
+                                }
+                                @if (showColumns[4])
+                                {
+                                    <th><button class="@(sortOrder=="Place_of_delivery" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Place_of_delivery"))">@localizer["Place_of_delivery"]</button></th>
+                                }
+                                @if (showColumns[5])
+                                {
+                                    <th><button class="@(sortOrder=="Time_of_delivery" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Time_of_delivery"))">@localizer["Time_of_delivery"]</button></th>
+                                }
+                                @if (showColumns[6])
+                                {
+                                    <th><button class="@(sortOrder=="Other_stops" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Other_stops"))">@localizer["Other_stops"]</button></th>
+                                }
+                                @if (showColumns[7])
+                                {
+                                    <th><button class="@(sortOrder=="Id_cargo" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Id_cargo"))">@localizer["Id_cargo"]</button></th>
+                                }
+                                @if (showColumns[8])
+                                {
+                                    <th><button class="@(sortOrder=="Storage_time" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Storage_time"))">@localizer["Storage_time"]</button></th>
+                                }
+                                @if (showColumns[9])
+                                {
+                                    <th><button class="@(sortOrder=="Completed" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Completed"))">@localizer["Completed"]</button></th>
+                                }
+                                @if (showColumns[10])
+                                {
+                                    <th><button class="@(sortOrder=="Completion_time" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Completion_time"))">@localizer["Completion_time"]</button></th>
+                                }
+                                @if (showColumns[11])
+                                {
+                                    <th><button class="@(sortOrder=="Time_of_delay" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Time_of_delay"))">@localizer["Time_of_delay"]</button></th>
+                                }
+                                @if (showColumns[12])
+                                {
+                                    <th><button class="@(sortOrder=="Payment" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Payment"))">@localizer["Payment"]</button></th>
+                                }
+                                @if (showColumns[13])
+                                {
+                                    <th><button class="@(sortOrder=="Final_Payment" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Final_Payment"))">@localizer["Final_Payment"]</button></th>
+                                }
+                                @if (showColumns[14])
+                                {
+                                    <th><button class="@(sortOrder=="Penalty" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Penalty"))">@localizer["Penalty"]</button></th>
+                                }
+                                @if (showColumns[15])
+                                {
+                                    <th><button style="min-width:5rem;" class="@(sortOrder=="Date" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Date"))">@localizer["Date"]</button></th>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{int rowCounter = 0 + pageSize * (currentPage-1);}
+                            @foreach (Tasks item in tasks)
+                            {
+                                rowCounter += 1;
+                                <tr>
+                                    <td>@rowCounter</td>
+                                    @if (showColumns[0])
+                                    {
+                                        <td>@item.Partner</td>
+                                    }
+                                    @if (showColumns[1])
+                                    {
+                                        <td>@item.Description</td>
+                                    }
+                                    @if (showColumns[2])
+                                    {
+                                        <td>@item.Place_of_receipt</td>
+                                    }
+                                    @if (showColumns[3])
+                                    {
+                                        <td>@(item.Time_of_receipt.HasValue ? @item.Time_of_receipt.Value.ToString("MM/dd/yyyy HH:mm") :  "")</td>
+                                    }
+                                    @if (showColumns[4])
+                                    {
+                                        <td>@item.Place_of_delivery</td>
+                                    }
+                                    @if (showColumns[5])
+                                    {
+                                        <td>@(item.Time_of_delivery.HasValue ? @item.Time_of_delivery.Value.ToString("MM/dd/yyyy HH:mm") :  "")</td>
+                                    }
+                                    @if (showColumns[6])
+                                    {
+                                        <td>@item.Other_stops</td>
+                                    }
+                                    @if (showColumns[7])
+                                    {
+                                        <td>@item.Id_cargo</td>
+                                    }
+                                    @if (showColumns[8])
+                                    {
+                                        <td>@item.Storage_time</td>
+                                    }
+                                    @if (showColumns[9])
+                                    {
+                                        if (item.Completed == true)
+                                        {
+                                            <td>@localizer["True"]</td>
+                                        }
+                                        else
+                                        {
+                                            <td>@localizer["False"]</td>
+                                        }
+
+                                    }
+                                    @if (showColumns[10])
+                                    {
+                                        <td>@(item.Completion_time.HasValue ? @item.Completion_time.Value.ToString("MM/dd/yyyy HH:mm") :  "")</td>
+                                    }
+                                    @if (showColumns[11])
+                                    {
+                                        <td>@item.Time_of_delay</td>
+                                    }
+                                    @if (showColumns[12])
+                                    {
+                                        <td>@item.Payment</td>
+                                    }
+                                    @if (showColumns[13])
+                                    {
+                                        <td>@item.Final_Payment</td>
+                                    }
+                                    @if (showColumns[14])
+                                    {
+                                        <td>@item.Penalty</td>
+                                    }
+                                    @if (showColumns[15])
+                                    {
+                                        <td>@item.Date</td>
+                                    }
+                                    <td>
+                                        <a class="btn  fixed" href="Tasks/edit/@item.Id"> <span data-title="@localizer["Edit"]" class="oi oi-pencil" aria-hidden="true"></span></a>
+                                        <button class="btn fixed2" @onclick="@(() => Delete(item.Id))"> <span data-title="@localizer["Delete"]" class="oi oi-trash" aria-hidden="true"></span></button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="align-center pagination-style mt-2"> 
+                    @if (currentPage != 1)
+                    {
+                        <i class="oi oi-media-skip-backward btn btn-pagination" id="prev" @onclick="PrevPage"></i>
+                    }else
+                    {
+                         <i style="opacity:0;" class=" oi oi-media-skip-backward btn btn-pagination"></i>
+                    }
+                    @for (int i = currentPage - 2; i <= currentPage + 2; i++)
+                    {
+                        int j = i;
+                        @if (i > 0 && i <= maxPage)
+                        {
+                            if (i == currentPage)
+                            {
+                                <span class="btn btn-pagination currentpage"  @onclick="() => ShowPage(j)">@i</span>
+                            }
+                            else
+                            {
+                                <span class="btn  btn-pagination"  @onclick="() => ShowPage(j)">@i</span>
+                            }
+                        }
+
+                    }
+                    @if(currentPage < maxPage)
+                    {
+                        <i class="oi oi-media-skip-forward btn btn-pagination" id="next" @onclick="NextPage"></i>
+                    }
+                    else
+                    {
+                        <i style="opacity:0;" class="oi oi-media-skip-forward btn btn-pagination"></i>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (settings)
+    {
+        <Settings OnSettingsClosed="SettingsClosed" OnInputChanged="InputChanged" OnSettingsChanged="SettingsChanged" showColumns="@showColumns" settings="@settings" pageSize="@pageSize" />
+    }
+    else
+    {
+        <div class="mb-6"></div>
+    }
+}
+@code {
+    public bool settings = false;
+    Roads[]? roads { get; set; }
+    List<bool> showColumns = Enumerable.Repeat(true, 16).ToList();
+    private int currentPage = 1;
+    int pageSize = 10;
+    int dataRows;
+    float maxPage;
+    private string sortOrder = "Date";
+    private bool desc = false;
+    private string? searchString = "";
+    string? document_error;
+
+    protected override async Task OnInitializedAsync()
+    {
+        PageHistoryState.AddPageToHistory("/Roads");
+        base.OnInitialized();
+        dataRows = await client.GetFromJsonAsync<int>("api/roads/pagecount");
+        await ShowPage();
+    }
+
+    async Task Delete(int Id)
+    {
+        var r = roads.First(x => x.Id == Id);
+        if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {r.Purpose_of_the_trip} - {r.Direction} ({r.Id})"))
+        {
+            await client.DeleteAsync($"api/roads/delete/{Id}");
+            var shouldreload = dataRows % ((currentPage == 1 ? currentPage : currentPage - 1) * pageSize);
+            if (shouldreload == 1 && dataRows > 0) { navigationManager.NavigateTo("/Roads", true); }
+            await OnInitializedAsync();
+        }
+    }
+
+    public void SettingsClosed()
+    {
+        settings = !settings;
+    }
+
+
+    public void SettingsChanged(){}
+
+    public async void InputChanged(int ChangedPageSize )
+    {
+        pageSize = ChangedPageSize;
+        currentPage = 1;
+        await ShowPage();
+    }
+
+    protected async Task NextPage()
+    {
+        currentPage++;
+        await ShowPage();
+    }
+
+    protected async Task ShowPage(int i)
+    {
+        currentPage = i;
+        await ShowPage();
+    }
+
+    protected async Task PrevPage()
+    {
+        if (currentPage > 1)
+        {
+            currentPage--;
+            await ShowPage();
+        }
+    }
+
+    protected async void Sorting(string column)
+    {
+        if (sortOrder == column)
+        {
+            desc = !desc;
+        }
+        else
+        {
+            sortOrder = column;
+        }
+        await ShowPage();
+    }
+
+    protected async Task Search(ChangeEventArgs args)
+    {
+        searchString = args.Value.ToString();
+        await ShowPage();
+    }
+
+
+    protected async Task ShowPage()
+    {
+        if (pageSize < 1 || pageSize == null ){ pageSize = 10; }
+        else if (pageSize >= dataRows) { pageSize = dataRows != 0 ? dataRows : 1 ; }
+        maxPage = (int)Math.Ceiling((decimal)((float)dataRows / (float)pageSize));
+
+        roads = await client.GetFromJsonAsync<Tasks[]>($"api/roads/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}");
+        StateHasChanged();
+    }
+
+    private async Task ExportToPdf ()
+    {
+        //get base64 string from web api call
+        var Response = await client.GetAsync($"api/roads/pdf?lang={CultureInfo.CurrentCulture.Name.ToString()}");
+
+        if (Response.IsSuccessStatusCode)
+        {
+            var base64String = await Response.Content.ReadAsStringAsync();
+
+            Random rnd = new Random();
+            int random = rnd.Next(1000000, 9999999);
+            string filename = "Roads" + random + "_" + DateTime.Now.ToString("dd-MM-yyyy") + ".pdf";
+
+            //call javascript function to download the file
+            await  js.InvokeVoidAsync(
+                "downloadFile",
+                "application/pdf",
+                base64String,
+                filename);
+        }
+        else
+        {
+            document_error = localizer["Document_failder_to_create"];
+        }
+    }
+
+    private async Task ExportToExcel()
+    {
+        //get base64 string from web api call
+        var Response = await client.GetAsync($"api/roads/excel?lang={CultureInfo.CurrentCulture.Name.ToString()}");
+
+        if (Response.IsSuccessStatusCode)
+        {
+            var base64String = await Response.Content.ReadAsStringAsync();
+
+            Random rnd = new Random();
+            int random = rnd.Next(1000000, 9999999);
+            string filename = "Roads" + random + "_" + DateTime.Now.ToString("dd-MM-yyyy") + ".xlsx";
+
+            //call javascript function to download the file
+            await js.InvokeVoidAsync(
+                "downloadFile",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                base64String,
+                filename);
+        }
+        else
+        {
+            document_error = localizer["Document_failder_to_create"];
+        }
+    }
+
+    private async Task ExportToCSV(string format)
+    {
+        //get base64 string from web api call
+        var Response = await client.GetAsync($"api/roads/csv?lang={CultureInfo.CurrentCulture.Name.ToString()}");
+
+        if (Response.IsSuccessStatusCode)
+        {
+            var base64String = await Response.Content.ReadAsStringAsync();
+
+            Random rnd = new Random();
+            int random = rnd.Next(1000000, 9999999);
+            string filename = "Roads" + random + "_" + DateTime.Now.ToString("dd-MM-yyyy") + format;
+
+            //call javascript function to download the file
+            await js.InvokeVoidAsync(
+                "downloadFile",
+                "application/" + format,
+                base64String,
+                filename);
+        }
+        else
+        {
+            document_error = localizer["Document_failder_to_create"];
+        }
+    }
+
+    private async void StateChanged()
+    {
+        await OnInitializedAsync();
+    }
+
+}
