@@ -320,14 +320,14 @@ else
         await ShowPage();
     }
 
-
+     
     protected async Task ShowPage()
     {
         if (pageSize < 1 || pageSize == null ){ pageSize = 10; }
         else if (pageSize >= dataRows) { pageSize = dataRows != 0 ? dataRows : 1 ; }
         maxPage = (int)Math.Ceiling((decimal)((float)dataRows / (float)pageSize));
 
-        roads = await client.GetFromJsonAsync<Tasks[]>($"api/roads/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}");
+        roads = await client.GetFromJsonAsync<Roads[]>($"api/roads/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}");
         StateHasChanged();
     }
 
