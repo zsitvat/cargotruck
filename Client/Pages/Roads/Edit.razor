@@ -18,16 +18,16 @@
 
     async Task EditRoad()
     {
-        var text = localizer["Succesfull_update"];
+        var text = @localizer["Succesfull_update"];
         await http.PutAsJsonAsync("api/roads/put", road);
-        await js.InvokeVoidAsync("alert", text);
-        uriHelper.NavigateTo("/roads");
+        await js.InvokeVoidAsync("alert", $"{text}");
+        uriHelper.NavigateTo("/Roads");
 
     }
 
     protected override void OnInitialized()
     {
-        PageHistoryState.AddPageToHistory("/roads/edit/{Id:int}");
+        PageHistoryState.AddPageToHistory("/Roads/edit/{Id:int}");
         base.OnInitialized();
     }
 }

@@ -46,7 +46,7 @@ namespace Cargotruck.Server.Controllers
                 admin.PhoneNumber = "+421123456789";
                 var result = await _userManager.CreateAsync(admin, "Admin123*");
                 await _userManager.AddToRoleAsync(admin, "Admin");
-                await _userManager.AddClaimAsync(admin, new System.Security.Claims.Claim("img", "/img/profile.png"));
+                await _userManager.AddClaimAsync(admin, new System.Security.Claims.Claim("img", "img/profile.jpg"));
             }
 
             var password_error = _localizer["Password_error"].Value;

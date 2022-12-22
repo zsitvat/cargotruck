@@ -95,21 +95,19 @@ namespace Cargotruck.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("Cost_of_storage")
+                    b.Property<int?>("Cost_of_storage")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Delivery_requirements")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Storage_starting_time")
+                    b.Property<DateTime?>("Storage_starting_time")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Task_id")
@@ -119,14 +117,12 @@ namespace Cargotruck.Server.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Vehicle_registration_number")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Warehouse_id")
+                    b.Property<int?>("Warehouse_id")
                         .HasColumnType("int");
 
                     b.Property<string>("Warehouse_section")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("WarehousesId")
@@ -242,31 +238,32 @@ namespace Cargotruck.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Ending_date")
+                    b.Property<DateTime?>("Ending_date")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Ending_place")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Expenses_id")
+                    b.Property<int?>("Expenses_id")
                         .HasColumnType("int");
 
-                    b.Property<int>("Id_cargo")
+                    b.Property<int?>("Id_cargo")
                         .HasColumnType("int");
 
                     b.Property<string>("Purpose_of_the_trip")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Starting_date")
+                    b.Property<DateTime?>("Starting_date")
+                        .IsRequired()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Starting_place")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Task_id")
+                    b.Property<int?>("Task_id")
                         .HasColumnType("int");
 
                     b.Property<int>("User_id")
@@ -444,36 +441,36 @@ namespace Cargotruck.Server.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "e4d39407-9c32-42dc-9227-99d6b5544c77",
-                            ConcurrencyStamp = "efbff01f-e770-4c9d-8283-3549f2fbe637",
+                            Id = "72e25072-ad65-4311-8bb7-3d5ae76a51b0",
+                            ConcurrencyStamp = "40b1346f-2cf9-486a-9b15-794d2a5728a5",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "2d213b5b-cfbf-4d09-9ad7-dbc90da4f6d2",
-                            ConcurrencyStamp = "b6b1b03d-8c07-4a3d-9089-0b1accaf020d",
+                            Id = "b50ef9ba-8574-45d0-8b13-a040052d233f",
+                            ConcurrencyStamp = "2868cee8-1b66-4553-9126-57b2207ec69c",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "c185ebb1-b5a4-403b-9054-bde5a35f3873",
-                            ConcurrencyStamp = "6959df92-b49f-4f27-9979-004511d6d641",
+                            Id = "2cac01b0-13a3-4866-901e-7bd21ac2f44f",
+                            ConcurrencyStamp = "be7d4311-1194-47c3-b97a-90aa8e5fe228",
                             Name = "Driver",
                             NormalizedName = "DRIVER"
                         },
                         new
                         {
-                            Id = "4d7a2ece-325f-42bd-b022-c98be1185037",
-                            ConcurrencyStamp = "267ab11c-7c6f-4e5d-b102-9ee16a3a10af",
+                            Id = "472cc336-cfab-462c-a642-c0d86019b3c7",
+                            ConcurrencyStamp = "fc610824-2d5c-4eca-8bb9-fe0eb928ec14",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
-                            Id = "f16f2c6d-600b-4bd6-a0c4-ef62e9cf3dc5",
-                            ConcurrencyStamp = "bb4863a1-f81d-4f3f-b2ae-f415364cc6c1",
+                            Id = "d881e315-7fa9-43f4-9a3b-ff1ab1a86d6b",
+                            ConcurrencyStamp = "a6d79333-bfa2-439d-9c66-730e6719675c",
                             Name = "Storageman",
                             NormalizedName = "STORAGEMAN"
                         });

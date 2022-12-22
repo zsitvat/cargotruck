@@ -2,6 +2,8 @@
 Cargotruck/.vs
 .vs/
 ./vs
+../.vs
+../.vs/
 *.code-workspace
 *.o
 *appsettings.json

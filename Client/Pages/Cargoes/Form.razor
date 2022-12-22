@@ -1,0 +1,158 @@
+﻿
+
+<EditForm Model="@cargoes" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <div class="top-buttons-card">
+        <div class="card-body">
+                <div class="form-group">
+                    @if (PageHistoryState.CanGoBack())
+                {
+                    <a href="@PageHistoryState.GetGoBackPage()"><span class="oi oi-arrow-circle-left" aria-hidden="true" ></span></a>
+                }
+            </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">
+                        <i class="oi oi-circle-check"></i> @localizer[ButtonText]
+                    </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-card mb-6" style="border-top-left-radius:unset;border-top-right-radius:unset;">
+        <div class="card-body mb-3">
+                <div class="d-inline-block forms-margin ">
+                    <div class="form-group ">
+                        <div>
+                            <label>@localizer["Weight"]:</label>
+                            <div>
+                                <InputText class="form-control inputs" @bind-Value="@cargoes.Weight" />
+                                <ValidationMessage For="@(() => cargoes.Weight)" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <div>
+                            <label>@localizer["Description"]:</label>
+                            <div>
+                                <InputText Type="InputDateType.DateTimeLocal" class="form-control inputs" @bind-Value="@cargoes.Description" />
+                                <ValidationMessage For="@(() => cargoes.Description)" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <div>
+                        <label>@localizer["Delivery_requirements"]:</label>
+                            <div>
+                                <InputText Type="InputDateType.DateTimeLocal" @bind-Value:format="yyyy.MM.dd. HH:mm" class="form-control inputs" @bind-Value="@cargoes.Delivery_requirements" />
+                                <ValidationMessage For="@(() => cargoes.Delivery_requirements)" />
+                            </div>
+                        </div>
+                    </div>
+                     <div class="form-group">
+                        <div>
+                        <label>@localizer["Vehicle_registration_number"]:</label>
+                            <div>
+                            <select class="form-control" @bind="@cargoes.Vehicle_registration_number">
+                                    <option value="" selected disabled>@localizer["Select_placeholder"]</option>
+                                    @if (trucks != null)
+                                    {
+                                    @foreach (var truck in trucks)
+                                        {
+                                        <option value="@truck.Id">@truck.Id - @truck.Vehicle_registration_number</option>
+                                        }
+                                    }
+                                </select>
+                            <ValidationMessage For="@(() => cargoes.Vehicle_registration_number)" />
+                            </div>
+                        </div>
+                    </div>
+                     <div class="form-group">
+                        <div>
+                            <label>@localizer["Task_id"]:</label>
+                            <div>
+                                <select  class="form-control" @bind="@cargoes.Task_id">
+                                    <option value="" selected disabled>@localizer["Select_placeholder"]</option>
+                                    @if (tasks != null)
+                                    {
+                                        @foreach (var task in tasks)
+                                        {
+                                            if(!task.Completed){
+                                                <option value="@task.Id">@task.Id - @task.Date - @task.Description.Substring(0, task.Description.Length >= 50 ? 50 : task.Description.Length)</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                                <ValidationMessage For="@(() => cargoes.Task_id)" />
+                            </div>
+                        </div>
+                    </div>
+            </div>
+                <div class="d-inline-block forms-margin second-col mt-3" >
+                    <div class="form-group">
+                        <div>
+                            <label>@localizer["Warehouse_id"]:</label>
+                            <div>
+                                <select class="form-control" @bind="@cargoes.Warehouse_id">
+                                    <option value="" selected disabled>@localizer["Select_placeholder"]</option>
+                                    @if (warehouses != null)
+                                    {
+                                        @foreach (var warehouse in warehouses)
+                                        {
+                                            <option value="@warehouse.Id">@warehouse.Id - @warehouse.Owner</option>
+                                        }
+                                    }
+                                </select>
+                                <ValidationMessage For="@(() => cargoes.Warehouse_id)" />
+                            </div>
+                        </div>
+                    </div>
+                <div class="form-group ">
+                    <div>
+                        <label>@localizer["Warehouse_section"]:</label>
+                        <div>
+                            <InputText class="form-control inputs" @bind-Value="@cargoes.Warehouse_section" />
+                            <ValidationMessage For="@(() => cargoes.Warehouse_section)" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <div>
+                        <label>@localizer["Storage_starting_time"]:</label>
+                        <div>
+                            <InputDate Type="InputDateType.DateTimeLocal" class="form-control inputs" @bind-Value="@cargoes.Storage_starting_time" />
+                            <ValidationMessage For="@(() => cargoes.Storage_starting_time)" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <div>
+                        <label>@localizer["Cost_of_storage"]:</label>
+                        <div>
+                            <InputNumber class="form-control inputs" @bind-Value="@cargoes.Cost_of_storage" />
+                            <ValidationMessage For="@(() => cargoes.Cost_of_storage)" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</EditForm>
+
+
+@code {
+    [Parameter] public Cargoes? cargoes { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+    Warehouses[]? warehouses { get; set; }
+    Tasks[]? tasks { get; set; }
+    Trucks[]? trucks { get; set; }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        warehouses = await client.GetFromJsonAsync<Warehouses[]?>("api/warehouses/getwarehouses");
+        tasks = await client.GetFromJsonAsync<Tasks[]?>("api/tasks/gettasks");
+        trucks = await client.GetFromJsonAsync<Trucks[]?>("api/trucks/gettrucks");
+    }
+}

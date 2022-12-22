@@ -6,19 +6,19 @@
     <a data-title="@localizer["Settings"]" class="btn btn-light" @onclick="@(() => settings=!settings)"><i class="oi oi-cog"></i></a>
     <button data-title="@localizer["pdf"]" class="btn btn-light" @onclick="@ExportToPdf"><i class="oi oi-document"></i></button>
     <button data-title="@localizer["excel"]" class="btn btn-light" @onclick="@ExportToExcel"><i class="oi oi-spreadsheet"></i></button>
-    <button data-title="@localizer["txt"]" class="btn btn-light" @onclick="@(() => ExportToCSV(".txt"))"><span class="icon iconify" style="margin:0;" data-icon="material-symbols:text-snippet-outline"></span></button>
-    <button data-title="@localizer["csv"]" class="btn btn-light" @onclick="@(() => ExportToCSV(".csv"))"><span class="icon iconify" style="margin:0;" data-icon="bi:filetype-csv"></span></button>
-    <span class="file-upload-title" import-data-title="@localizer["File_input"]"><UploadFiles page="page" StateChanged="StateChanged" /></span>
+    <button data-title="@localizer["txt"]" class="btn btn-light" @onclick="@(() => ExportToCSV("txt"))"><span class="icon iconify" style="margin:0;" data-icon="material-symbols:text-snippet-outline"></span></button>
+    <button data-title="@localizer["csv"]" class="btn btn-light" @onclick="@(() => ExportToCSV("csv"))"><span class="icon iconify" style="margin:0;" data-icon="bi:filetype-csv"></span></button>
+    <span class="file-upload-title" import-data-title="@localizer["File_input"]"><UploadFiles page="roads" StateChanged="StateChanged" /></span>
     <input value="@searchString" @oninput="@Search" placeholder="@(searchString == null ? searchString : localizer["Search"])" class="form-control inputs input_search" type="search" id="search-input" name="SearchString">
 </div>
 <br>
 @document_error
 
-@if (tasks == null)
+@if (roads == null)
 {
     <text>Loading...</text>
 }
-else if (tasks.Length == 0)
+else if (roads.Length == 0)
 {
     <text>No Records Found.</text>
 }
@@ -31,34 +31,34 @@ else
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th> </th>
+                                <th class="counter-col"> </th>
                                 @if (showColumns[0])
                                 {
-                                    <th><button class="@(sortOrder=="Partner" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Partner"))">@localizer["Partner"]</button></th>
+                                    <th><button class="@(sortOrder=="Purpose_of_the_trip" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Purpose_of_the_trip"))">@localizer["Purpose_of_the_trip"]</button></th>
                                 }
                                 @if (showColumns[1])
                                 {
-                                    <th><button class="@(sortOrder=="Description" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Description"))">@localizer["Description"]</button></th>
+                                    <th><button class="@(sortOrder=="Starting_date" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Starting_date"))">@localizer["Starting_date"]</button></th>
                                 }
                                 @if (showColumns[2])
                                 {
-                                    <th><button class="@(sortOrder=="Place_of_receipt" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Place_of_receipt"))">@localizer["Place_of_receipt"]</button></th>
+                                    <th><button class="@(sortOrder=="Ending_date" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Ending_date"))">@localizer["Ending_date"]</button></th>
                                 }
                                 @if (showColumns[3])
                                 {
-                                    <th><button class="@(sortOrder=="Time_of_receipt" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Time_of_receipt"))">@localizer["Time_of_receipt"]</button></th>
+                                    <th><button class="@(sortOrder=="Starting_place" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Starting_place"))">@localizer["Starting_place"]</button></th>
                                 }
                                 @if (showColumns[4])
                                 {
-                                    <th><button class="@(sortOrder=="Place_of_delivery" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Place_of_delivery"))">@localizer["Place_of_delivery"]</button></th>
+                                    <th><button class="@(sortOrder=="Ending_place" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Ending_place"))">@localizer["Ending_place"]</button></th>
                                 }
                                 @if (showColumns[5])
                                 {
-                                    <th><button class="@(sortOrder=="Time_of_delivery" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Time_of_delivery"))">@localizer["Time_of_delivery"]</button></th>
+                                    <th><button class="@(sortOrder=="Direction" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Direction"))">@localizer["Direction"]</button></th>
                                 }
                                 @if (showColumns[6])
                                 {
-                                    <th><button class="@(sortOrder=="Other_stops" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Other_stops"))">@localizer["Other_stops"]</button></th>
+                                    <th><button class="@(sortOrder=="Task_id" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Task_id"))">@localizer["Task_id"]</button></th>
                                 }
                                 @if (showColumns[7])
                                 {
@@ -66,33 +66,9 @@ else
                                 }
                                 @if (showColumns[8])
                                 {
-                                    <th><button class="@(sortOrder=="Storage_time" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Storage_time"))">@localizer["Storage_time"]</button></th>
+                                    <th><button class="@(sortOrder=="Expenses_id" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Expenses_id"))">@localizer["Expenses_id"]</button></th>
                                 }
                                 @if (showColumns[9])
-                                {
-                                    <th><button class="@(sortOrder=="Completed" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Completed"))">@localizer["Completed"]</button></th>
-                                }
-                                @if (showColumns[10])
-                                {
-                                    <th><button class="@(sortOrder=="Completion_time" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Completion_time"))">@localizer["Completion_time"]</button></th>
-                                }
-                                @if (showColumns[11])
-                                {
-                                    <th><button class="@(sortOrder=="Time_of_delay" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Time_of_delay"))">@localizer["Time_of_delay"]</button></th>
-                                }
-                                @if (showColumns[12])
-                                {
-                                    <th><button class="@(sortOrder=="Payment" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Payment"))">@localizer["Payment"]</button></th>
-                                }
-                                @if (showColumns[13])
-                                {
-                                    <th><button class="@(sortOrder=="Final_Payment" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Final_Payment"))">@localizer["Final_Payment"]</button></th>
-                                }
-                                @if (showColumns[14])
-                                {
-                                    <th><button class="@(sortOrder=="Penalty" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Penalty"))">@localizer["Penalty"]</button></th>
-                                }
-                                @if (showColumns[15])
                                 {
                                     <th><button style="min-width:5rem;" class="@(sortOrder=="Date" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Date"))">@localizer["Date"]</button></th>
                                 }
@@ -100,38 +76,39 @@ else
                         </thead>
                         <tbody>
                             @{int rowCounter = 0 + pageSize * (currentPage-1);}
-                            @foreach (Tasks item in tasks)
+                            @foreach (Roads item in roads)
                             {
                                 rowCounter += 1;
                                 <tr>
                                     <td>@rowCounter</td>
+                                  
                                     @if (showColumns[0])
                                     {
-                                        <td>@item.Partner</td>
+                                        <td>@item.Purpose_of_the_trip</td>
                                     }
                                     @if (showColumns[1])
                                     {
-                                        <td>@item.Description</td>
+                                        <td> @item.Starting_date </td>
                                     }
                                     @if (showColumns[2])
                                     {
-                                        <td>@item.Place_of_receipt</td>
+                                        <td>@item.Ending_date</td>
                                     }
                                     @if (showColumns[3])
                                     {
-                                        <td>@(item.Time_of_receipt.HasValue ? @item.Time_of_receipt.Value.ToString("MM/dd/yyyy HH:mm") :  "")</td>
+                                        <td>@item.Starting_place</td>
                                     }
                                     @if (showColumns[4])
                                     {
-                                        <td>@item.Place_of_delivery</td>
+                                        <td>@item.Ending_place</td>
                                     }
                                     @if (showColumns[5])
                                     {
-                                        <td>@(item.Time_of_delivery.HasValue ? @item.Time_of_delivery.Value.ToString("MM/dd/yyyy HH:mm") :  "")</td>
+                                        <td>@(item.Direction == "TO" ? @localizer["to"] : @localizer["from"])</td>
                                     }
                                     @if (showColumns[6])
                                     {
-                                        <td>@item.Other_stops</td>
+                                        <td>@item.Task_id</td>
                                     }
                                     @if (showColumns[7])
                                     {
@@ -139,46 +116,14 @@ else
                                     }
                                     @if (showColumns[8])
                                     {
-                                        <td>@item.Storage_time</td>
+                                        <td>@item.Expenses_id</td>
                                     }
                                     @if (showColumns[9])
-                                    {
-                                        if (item.Completed == true)
-                                        {
-                                            <td>@localizer["True"]</td>
-                                        }
-                                        else
-                                        {
-                                            <td>@localizer["False"]</td>
-                                        }
-
-                                    }
-                                    @if (showColumns[10])
-                                    {
-                                        <td>@(item.Completion_time.HasValue ? @item.Completion_time.Value.ToString("MM/dd/yyyy HH:mm") :  "")</td>
-                                    }
-                                    @if (showColumns[11])
-                                    {
-                                        <td>@item.Time_of_delay</td>
-                                    }
-                                    @if (showColumns[12])
-                                    {
-                                        <td>@item.Payment</td>
-                                    }
-                                    @if (showColumns[13])
-                                    {
-                                        <td>@item.Final_Payment</td>
-                                    }
-                                    @if (showColumns[14])
-                                    {
-                                        <td>@item.Penalty</td>
-                                    }
-                                    @if (showColumns[15])
                                     {
                                         <td>@item.Date</td>
                                     }
                                     <td>
-                                        <a class="btn  fixed" href="Tasks/edit/@item.Id"> <span data-title="@localizer["Edit"]" class="oi oi-pencil" aria-hidden="true"></span></a>
+                                        <a class="btn  fixed" href="Roads/edit/@item.Id"> <span data-title="@localizer["Edit"]" class="oi oi-pencil" aria-hidden="true"></span></a>
                                         <button class="btn fixed2" @onclick="@(() => Delete(item.Id))"> <span data-title="@localizer["Delete"]" class="oi oi-trash" aria-hidden="true"></span></button>
                                     </td>
                                 </tr>
@@ -320,7 +265,7 @@ else
         await ShowPage();
     }
 
-     
+
     protected async Task ShowPage()
     {
         if (pageSize < 1 || pageSize == null ){ pageSize = 10; }
@@ -394,12 +339,11 @@ else
 
             Random rnd = new Random();
             int random = rnd.Next(1000000, 9999999);
-            string filename = "Roads" + random + "_" + DateTime.Now.ToString("dd-MM-yyyy") + format;
-
+            string filename = "Roads" + random + "_" + DateTime.Now.ToString("dd-MM-yyyy") +"."+ format;
             //call javascript function to download the file
             await js.InvokeVoidAsync(
                 "downloadFile",
-                "application/" + format,
+                "text/" + format + ";charset=utf-8",
                 base64String,
                 filename);
         }

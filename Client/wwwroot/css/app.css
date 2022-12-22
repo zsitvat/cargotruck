@@ -285,11 +285,13 @@ table th button{
     margin-bottom:2px;
 }
 
+
 .completed {
-    margin-top:2%;
+    margin-top: 2%;
     margin-left: 20%;
     margin-right: 20%;
 }
+
 
 .middle div, .middle button {
     margin-top: 1rem;
@@ -787,6 +789,11 @@ tbody td, tbody th{
     .bottom-row a {
         padding-left: 25%;
     }
+
+    .second-col {
+        position: relative;
+        top: -5.65rem;
+    }
 }
 @media (min-width: 1230px) {
     .card table {
@@ -800,8 +807,6 @@ tbody td, tbody th{
     .bottom-row a {
         padding-left: 20%;
     }
-
-  
 
 }
 
@@ -1001,8 +1006,8 @@ tbody td, tbody th{
 }
 
 tr td:first-child {
-    padding-right: 15px !important;
-    padding-left: 20px !important;
+    padding-right: 10px !important;
+    padding-left: 12px !important;
 }
 
 /*Scroll bar css*/

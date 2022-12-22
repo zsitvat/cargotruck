@@ -19,14 +19,15 @@ namespace Cargotruck.Shared.Models
         public string Purpose_of_the_trip { get; set; }
         [Required(ErrorMessageResourceName = "Error_starting_date", ErrorMessageResourceType = typeof(Resource))]
         [Display(Name = "Starting_date", ResourceType = typeof(Resource))]
-        public DateTime Starting_date { get; set; }
+        public DateTime? Starting_date { get; set; }
         [Display(Name = "Ending_date", ResourceType = typeof(Resource))]
-        public DateTime Ending_date { get; set; }
+        public DateTime? Ending_date { get; set; }
         [Required(ErrorMessageResourceName = "Error_starting_place", ErrorMessageResourceType = typeof(Resource))]
         [Display(Name = "Starting_place", ResourceType = typeof(Resource))]
         public string Starting_place { get; set; }
         [Display(Name = "Ending_place", ResourceType = typeof(Resource))]
         public string Ending_place { get; set; }
+        [Required(ErrorMessageResourceName = "Error_direction", ErrorMessageResourceType = typeof(Resource))]
         [Display(Name = "Direction", ResourceType = typeof(Resource))]
         public string Direction { get; set; }
         [Display(Name = "Expenses_id", ResourceType = typeof(Resource))]

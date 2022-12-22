@@ -90,7 +90,7 @@
                     <div>
                         <label>@localizer["Id_cargo"]:</label>
                         <div> 
-                            <select  class="" @bind="@tasks.Id_cargo">
+                            <select class="form-control" @bind="@tasks.Id_cargo">
                                 @if (tasks.Id_cargo != null)
                                 {
                                     @foreach (var cargo in cargoes)

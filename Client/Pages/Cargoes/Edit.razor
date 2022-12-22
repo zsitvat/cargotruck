@@ -1,0 +1,33 @@
+﻿@page "/Cargoes/edit/{Id:int}"
+@inject HttpClient http
+@inject NavigationManager uriHelper
+@inject IJSRuntime js
+
+<h3>@localizer["Edit_cargoes"]</h3>
+
+<Form ButtonText="Update" cargoes="@cargo" OnValidSubmit="@EditCargo" />
+
+@code {
+    [Parameter] public int Id { get; set; }
+    Cargoes? cargo = new Cargoes();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        cargo = await http.GetFromJsonAsync<Cargoes>($"api/cargoes/getById/{Id}");
+    }
+
+    async Task EditCargo()
+    {
+        var text = @localizer["Succesfull_update"];
+        await http.PutAsJsonAsync("api/cargoes/put", cargo);
+        await js.InvokeVoidAsync("alert", $"{text}");
+        uriHelper.NavigateTo("/Cargoes");
+
+    }
+
+    protected override void OnInitialized()
+    {
+        PageHistoryState.AddPageToHistory("/Cargoes/edit/{Id:int}");
+        base.OnInitialized();
+    }
+}

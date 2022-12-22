@@ -166,6 +166,13 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> GetTasks()
+        {
+            var t = await _context.Tasks.ToListAsync();
+            return Ok(t);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> PageCount()
         {
             var t = await _context.Tasks.ToListAsync();
@@ -611,24 +618,24 @@ namespace Cargotruck.Server.Controllers
 
             StreamWriter txt = new StreamWriter(filepath);
             txt.Write("Id" + ";");
-            txt.Write(lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID" + ";");
-            txt.Write(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Partner : "Partner" + ";");
-            txt.Write(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Description : "Description" + "; ");
-            txt.Write(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Place_of_receipt : "Place of receipt" + "; ");
-            txt.Write(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_receipt : "Time of receipt" + "; ");
-            txt.Write(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Place_of_delivery : "Place of delivery" + "; ");
-            txt.Write(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_delivery : "Time of delivery" + "; ");
-            txt.Write(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Other_stops : "Other stops" + "; ");
-            txt.Write(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Id_cargo : "Id cargo" + "; ");
-            txt.Write(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Storage_time : "Storage time" + "; ");
-            txt.Write(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Completed : "Completed" + "; ");
-            txt.Write(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Completion_time : "Completion time" + "; ");
-            txt.Write(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_delay : "Time of delay" + "; ");
-            txt.Write(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Payment : "Payment" + "; ");
-            txt.Write(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Final_Payment : "Final Payment" + "; ");
-            txt.Write(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Penalty : "Penalty" + "; ");
-            txt.Write(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date" + "; ");
-
+            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID") + ";");
+            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Partner : "Partner") + ";");
+            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Description : "Description") + "; ");
+            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Place_of_receipt : "Place of receipt") + "; ");
+            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_receipt : "Time of receipt") + "; ");
+            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Place_of_delivery : "Place of delivery") + "; ");
+            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_delivery : "Time of delivery") + "; ");
+            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Other_stops : "Other stops") + "; ");
+            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Id_cargo : "Id cargo") + "; ");
+            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Storage_time : "Storage time") + "; ");
+            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Completed : "Completed") + "; ");
+            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Completion_time : "Completion time") + "; ");
+            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_delay : "Time of delay") + "; ");
+            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Payment : "Payment") + "; ");
+            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Final_Payment : "Final Payment") + "; ");
+            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Penalty : "Penalty") + "; ");
+            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date") + "; ");
+            txt.Write("\n");
             foreach (var task in tasks) 
             {       
                 txt.Write(task.Id + ";");
@@ -732,12 +739,13 @@ namespace Cargotruck.Server.Controllers
                                 firstRow = false;
                                 if (titles.Count() == 0) 
                                 { 
-                                    haveColumns = true;
-                                    l += 1;
+                                    haveColumns = true; 
+                                        l += 1;
                                 }
                                 else if (titles.Count() == 1 &&  titles.Contains("Id")) 
                                 {
-                                    haveColumns = true; 
+                                    haveColumns = true;
+                                
                                 }
                             }
                             else if(haveColumns)

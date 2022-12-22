@@ -186,6 +186,9 @@
   <data name="Delete_tasks" xml:space="preserve">
     <value>Delete the task</value>
   </data>
+  <data name="Delivery_requirements" xml:space="preserve">
+    <value>Delivery requirements</value>
+  </data>
   <data name="Description" xml:space="preserve">
     <value>Description</value>
   </data>
@@ -227,6 +230,9 @@
   </data>
   <data name="Error_brand" xml:space="preserve">
     <value>The brand is required!</value>
+  </data>
+  <data name="Error_direction" xml:space="preserve">
+    <value>The direction is empty!</value>
   </data>
   <data name="Error_email" xml:space="preserve">
     <value>The e-mail is required!</value>
@@ -311,6 +317,9 @@
   </data>
   <data name="Finance" xml:space="preserve">
     <value>Finances</value>
+  </data>
+  <data name="from" xml:space="preserve">
+    <value>Back from the destination</value>
   </data>
   <data name="Fuel" xml:space="preserve">
     <value>Fuel</value>
@@ -552,6 +561,9 @@
   <data name="Title_user_edit" xml:space="preserve">
     <value>Edit the account</value>
   </data>
+  <data name="to" xml:space="preserve">
+    <value>Road to the destination</value>
+  </data>
   <data name="Trucks" xml:space="preserve">
     <value>Trucks</value>
   </data>
@@ -593,6 +605,9 @@
   </data>
   <data name="Warehouse_owner" xml:space="preserve">
     <value>Owner</value>
+  </data>
+  <data name="Warehouse_section" xml:space="preserve">
+    <value>Warehouse section</value>
   </data>
   <data name="Weight" xml:space="preserve">
     <value>Weight</value>

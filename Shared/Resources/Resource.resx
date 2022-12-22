@@ -186,6 +186,9 @@
   <data name="Delete_tasks" xml:space="preserve">
     <value>Megbízás törlése</value>
   </data>
+  <data name="Delivery_requirements" xml:space="preserve">
+    <value>Szállítás követelményei</value>
+  </data>
   <data name="Description" xml:space="preserve">
     <value>Leírás</value>
   </data>
@@ -230,6 +233,9 @@
   </data>
   <data name="Error_brand" xml:space="preserve">
     <value>Az autómárka megadása kötelező!</value>
+  </data>
+  <data name="Error_direction" xml:space="preserve">
+    <value>Az irány megadása kötelező</value>
   </data>
   <data name="Error_email" xml:space="preserve">
     <value>E-mail megadása kötelezõ.</value>
@@ -314,6 +320,9 @@
   </data>
   <data name="Finance" xml:space="preserve">
     <value>Pénzügy</value>
+  </data>
+  <data name="from" xml:space="preserve">
+    <value>Visszaút</value>
   </data>
   <data name="Fuel" xml:space="preserve">
     <value>Üzemanyag</value>
@@ -555,6 +564,9 @@
   <data name="Title_user_edit" xml:space="preserve">
     <value>Fiók módosítása</value>
   </data>
+  <data name="to" xml:space="preserve">
+    <value>Odaút</value>
+  </data>
   <data name="Trucks" xml:space="preserve">
     <value>Járművek</value>
   </data>
@@ -580,7 +592,7 @@
     <value>Felhasználó azonosító</value>
   </data>
   <data name="Vehicle_registration_number" xml:space="preserve">
-    <value>Jármû Rendszáma</value>
+    <value>Jármű rendszáma</value>
   </data>
   <data name="Warehouse" xml:space="preserve">
     <value>Raktár</value>
@@ -596,6 +608,9 @@
   </data>
   <data name="Warehouse_owner" xml:space="preserve">
     <value>Tulajdonos</value>
+  </data>
+  <data name="Warehouse_section" xml:space="preserve">
+    <value>Raktár részleg</value>
   </data>
   <data name="Weight" xml:space="preserve">
     <value>Súly</value>

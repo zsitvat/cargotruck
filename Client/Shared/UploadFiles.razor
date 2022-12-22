@@ -66,7 +66,7 @@
 
         if (upload)
         {
-            HttpResponseMessage response = await Http.PostAsync($"api/filesave/{page}", content);
+            HttpResponseMessage response = await Http.PostAsync($"api/filesave/page", content);
 
             var newUploadResults = await response.Content
                 .ReadFromJsonAsync<IList<UploadResult>>();
@@ -76,9 +76,9 @@
                 uploadResults = uploadResults.Concat(newUploadResults).ToList();
                 foreach (var file in uploadResults)
                 {
-                    var datasaved = await Http.GetAsync($"api/tasks/import?file={file.StoredFileName}&lang={CultureInfo.CurrentCulture.Name.ToString()}");
+                    var datasaved = await Http.GetAsync($"api/{page}/import?file={file.StoredFileName}&lang={CultureInfo.CurrentCulture.Name.ToString()}");
                     error = await datasaved.Content.ReadAsStringAsync();
-                    if (datasaved.IsSuccessStatusCode) { navigationManager.NavigateTo("/Tasks", true); }
+                    if (datasaved.IsSuccessStatusCode) { navigationManager.NavigateTo($"/{page}", true); }
                     else {
                         await OnInitializedAsync();
                         await StateChanged.InvokeAsync();

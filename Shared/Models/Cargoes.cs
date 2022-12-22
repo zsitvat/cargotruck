@@ -17,19 +17,19 @@ namespace Cargotruck.Shared.Models
         [Display(Name = "Weight", ResourceType = typeof(Resource))]
         public string Weight { get; set; }
         [Display(Name = "Description", ResourceType = typeof(Resource))]
-        public string Description { get; set; }
+        public string? Description { get; set; }
         [Display(Name = "Shipping_requirements", ResourceType = typeof(Resource))]
-        public string Delivery_requirements { get; set; }
+        public string? Delivery_requirements { get; set; }
         [Display(Name = "Vehicle_registration_number", ResourceType = typeof(Resource))]
-        public string Vehicle_registration_number { get; set; }
+        public string? Vehicle_registration_number { get; set; }
         [Display(Name = "Warehouse_id", ResourceType = typeof(Resource))]
-        public int Warehouse_id { get; set; }
+        public int? Warehouse_id { get; set; }
         [Display(Name = "Section", ResourceType = typeof(Resource))]
-        public string Warehouse_section { get; set; }
+        public string? Warehouse_section { get; set; }
         [Display(Name = "Storage_starting_time", ResourceType = typeof(Resource))]
-        public DateTime Storage_starting_time { get; set; }
+        public DateTime? Storage_starting_time { get; set; }
         [Display(Name = "Cost_of_storage", ResourceType = typeof(Resource))]
-        public int Cost_of_storage { get; set; }
+        public int? Cost_of_storage { get; set; }
         [Display(Name = "Date", ResourceType = typeof(Resource))]
         public DateTime Date { get; set; } = DateTime.Now;
 
