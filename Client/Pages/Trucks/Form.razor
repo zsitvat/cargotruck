@@ -73,7 +73,7 @@
                         <label>@localizer["Road_id"]:</label>
                         <div>
                             <InputSelect @bind-Value="@trucks.Status">
-                                @foreach (var value in Enum.GetValues<status>())
+                                @foreach (var value in Enum.GetValues<Status>())
                                 {
                                     <option value="@value">@localizer[value.ToString()]</option>
                                 }

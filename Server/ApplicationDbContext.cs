@@ -32,4 +32,5 @@ namespace Cargotruck.Data
 
             builder.ApplyConfiguration(new RoleConfiguration());
         }
+    }
 }

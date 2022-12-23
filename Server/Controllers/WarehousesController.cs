@@ -34,7 +34,7 @@ namespace Cargotruck.Server.Controllers
                 data = data.Where(s =>
                (s.Address.ToString().ToLower()!.Contains(searchString))
             || (s.Owner == null ? false : s.Owner.ToString().ToLower()!.Contains(searchString))
-            || (s.Cargo_id.ToString()!.Contains(searchString))
+            || (s.Cargo_ids.ToString()!.Contains(searchString))
             || s.Date.ToString()!.Contains(searchString)
             ).ToList();
             }
@@ -59,10 +59,10 @@ namespace Cargotruck.Server.Controllers
                     data = data.OrderBy(s => s.Owner).ToList();
                     break;
                 case "Cargo_id_desc":
-                    data = data.OrderByDescending(s => s.Cargo_id).ToList();
+                    data = data.OrderByDescending(s => s.Cargo_ids).ToList();
                     break;
                 case "Cargo_id":
-                    data = data.OrderBy(s => s.Cargo_id).ToList();
+                    data = data.OrderBy(s => s.Cargo_ids).ToList();
                     break;
                 case "Date_desc":
                     data = data.OrderByDescending(s => s.Date).ToList();
@@ -152,7 +152,7 @@ namespace Cargotruck.Server.Controllers
                     worksheet.Cell(currentRow, 2).Value = warehouse.User_id;
                     worksheet.Cell(currentRow, 3).Value = warehouse.Address;
                     worksheet.Cell(currentRow, 4).Value = warehouse.Owner;
-                    worksheet.Cell(currentRow, 5).Value = warehouse.Cargo_id;
+                    worksheet.Cell(currentRow, 5).Value = warehouse.Cargo_ids;
                     worksheet.Cell(currentRow, 6).Value = warehouse.Date;
                 }
 
@@ -186,20 +186,16 @@ namespace Cargotruck.Server.Controllers
             Font font2 = FontFactory.GetFont(FontFactory.TIMES_ROMAN, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 10);
 
             System.Type type = typeof(Warehouses);
-            var column_number = (type.GetProperties().Length) / 2;
+            var column_number = (type.GetProperties().Length)-1; 
             var columnDefinitionSize = new float[column_number];
             for (int i = 0; i < column_number; i++) columnDefinitionSize[i] = 1F;
 
-            PdfPTable table, table2;
+            PdfPTable table;
             PdfPCell cell;
 
             table = new PdfPTable(columnDefinitionSize)
             {
-                WidthPercentage = 90
-            };
-            table2 = new PdfPTable(columnDefinitionSize)
-            {
-                WidthPercentage = 90
+                WidthPercentage = 80
             };
             cell = new PdfPCell
             {
@@ -267,7 +263,7 @@ namespace Cargotruck.Server.Controllers
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(warehouse.Cargo_id.ToString())) { s = warehouse.Cargo_id.ToString(); }
+                    if (!string.IsNullOrEmpty(warehouse.Cargo_ids.ToString())) { s = warehouse.Cargo_ids.ToString(); }
                     else { s = "-"; }
                     table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
@@ -276,7 +272,7 @@ namespace Cargotruck.Server.Controllers
                     });
                     if (!string.IsNullOrEmpty(warehouse.Date.ToString())) { s = warehouse.Date.ToString(); }
                     else { s = "-"; }
-                    table2.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
@@ -334,7 +330,7 @@ namespace Cargotruck.Server.Controllers
                 txt.Write(warehouse.User_id + ";");
                 txt.Write(warehouse.Address + ";");
                 txt.Write(warehouse.Owner + ";");
-                txt.Write(warehouse.Cargo_id + ";");
+                txt.Write(warehouse.Cargo_ids + ";");
                 txt.Write(warehouse.Date + ";");
                 txt.Write("\n");
             }

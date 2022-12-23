@@ -54,7 +54,7 @@ else
                                 }
                                 @if (showColumns[5])
                                 {
-                                    <th><button style="min-width:5rem;" class="@(sortOrder=="Date" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Date"))">@localizer["Date"]</button></th>
+                                    <th><button  class="@(sortOrder=="Date" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Date"))">@localizer["Date"]</button></th>
                                 }
                             </tr>
                         </thead>
@@ -84,7 +84,7 @@ else
                                     }
                                     @if (showColumns[4])
                                     {
-                                        <td>@item.Vehicle_registration_number</td>
+                                        <td>@item.Max_weight</td>
                                     }
                                     @if (showColumns[5])
                                     {

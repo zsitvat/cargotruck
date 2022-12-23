@@ -673,6 +673,29 @@ namespace Cargotruck.Server.Controllers
                                     }
                                     else { list.Add(System.DBNull.Value); }
                                 }
+
+                                switch (list[l + 1])
+                                {
+                                    case "task":
+                                        list[l + 1] = 0;
+                                        break;
+                                    case "repair":
+                                        list[l + 1] = 1;
+                                        break;
+                                    case "storage":
+                                        list[l + 1] = 2;
+                                        break;
+                                    case "salary":
+                                        list[l + 1] = 3;
+                                        break;
+                                    case "other":
+                                        list[l + 1] = 4;
+                                        break;
+                                    default:
+                                        list[l + 1] = System.DBNull.Value;
+                                        break;
+                                }
+
                                 var sql = @"Insert Into Expenses (User_id,Type,Type_id,Fuel,Road_fees,Penalty,Driver_spending,Driver_salary,Repair_cost,Repair_description,Cost_of_storage,Other,Date) 
                                 Values (@User_id,@Type,@Type_id,@Fuel,@Road_fees,@Penalty,@Driver_spending,@Driver_salary,@Repair_cost,@Repair_description,@Cost_of_storage,@Other,@Date)";
                                 var insert = await _context.Database.ExecuteSqlRawAsync(sql,

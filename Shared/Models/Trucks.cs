@@ -5,10 +5,16 @@ using Cargotruck.Shared.Resources;
 
 namespace Cargotruck.Shared.Models
 {
-    public enum status
+    public enum Status
     {
-        delivering, on_road, garage, under_repair, loaned, rented
-    }
+        delivering, 
+        on_road, 
+        garage, 
+        under_repair, 
+        loaned, 
+        rented
+    };
+
     public class Trucks
     {
         [Required]
@@ -22,7 +28,7 @@ namespace Cargotruck.Shared.Models
         [Required(ErrorMessageResourceName = "Error_brand", ErrorMessageResourceType = typeof(Resource))]
         public string Brand { get; set; }
         [Display(Name = "Status", ResourceType = typeof(Resource))]
-        public status Status { get; set; }
+        public Status Status { get; set; }
         [Display(Name = "Road_id", ResourceType = typeof(Resource))]
         public int? Road_id { get; set; }
         [Display(Name = "Max_weight", ResourceType = typeof(Resource))]

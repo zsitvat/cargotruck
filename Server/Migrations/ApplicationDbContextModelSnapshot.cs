@@ -437,36 +437,36 @@ namespace Cargotruck.Server.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "dd4727a2-cd39-4fd1-8e6a-e9f25fbafa87",
-                            ConcurrencyStamp = "805cef27-f602-4528-b775-50afe82aa918",
+                            Id = "8a917ccb-8ba8-400a-a816-0d49ef1900cb",
+                            ConcurrencyStamp = "26aa68da-80f7-48c8-9b6f-69ee15dfa2d5",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "55c6009e-8864-42a3-b1de-744eed65311a",
-                            ConcurrencyStamp = "1280ff5b-cae3-425a-9e8d-285d3c8d0b57",
+                            Id = "51120a95-a118-41d4-901c-97a035be568f",
+                            ConcurrencyStamp = "60cfedcc-914c-4fa2-add0-50ec7c962a09",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "d8b117a2-c5e0-414d-87db-3ca1e03dde0f",
-                            ConcurrencyStamp = "11de5b65-c2bc-4d8c-997f-c1b5b5fd65d2",
+                            Id = "b07245d8-8a3d-41ab-b589-c59516dd45b9",
+                            ConcurrencyStamp = "9c211020-5447-4af0-a311-d95bdd3fcc5e",
                             Name = "Driver",
                             NormalizedName = "DRIVER"
                         },
                         new
                         {
-                            Id = "68761aea-f564-4208-bb52-fa05a9108639",
-                            ConcurrencyStamp = "d3e78156-115c-4182-a814-30fce75fe4ea",
+                            Id = "0e44b775-ac1f-4689-a444-760161780ceb",
+                            ConcurrencyStamp = "1ad788f3-e77d-40b5-814a-88d12d5f563f",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
-                            Id = "0f680424-3a6b-4af3-83ea-c51c9ce7cfd1",
-                            ConcurrencyStamp = "fe9950f4-f2d0-4179-994e-58c8b6661a99",
+                            Id = "21ab7070-eedf-48e2-8532-68bb5f93c20d",
+                            ConcurrencyStamp = "218b7161-88dc-4b59-8fe0-e0275f933778",
                             Name = "Storageman",
                             NormalizedName = "STORAGEMAN"
                         });
@@ -581,7 +581,7 @@ namespace Cargotruck.Server.Migrations
             modelBuilder.Entity("Cargotruck.Shared.Models.Cargoes", b =>
                 {
                     b.HasOne("Cargotruck.Shared.Models.Warehouses", null)
-                        .WithMany("Cargo_id")
+                        .WithMany("Cargo_ids")
                         .HasForeignKey("WarehousesId");
                 });
 
@@ -659,7 +659,7 @@ namespace Cargotruck.Server.Migrations
 
             modelBuilder.Entity("Cargotruck.Shared.Models.Warehouses", b =>
                 {
-                    b.Navigation("Cargo_id");
+                    b.Navigation("Cargo_ids");
                 });
 #pragma warning restore 612, 618
         }

@@ -178,7 +178,7 @@ namespace Cargotruck.Server.Controllers
                     worksheet.Cell(currentRow, 5).Value = truck.Status;
                     worksheet.Cell(currentRow, 6).Value = truck.Road_id;
                     worksheet.Cell(currentRow, 7).Value = truck.Max_weight;
-                    worksheet.Cell(currentRow, 12).Value = truck.Date;
+                    worksheet.Cell(currentRow, 8).Value = truck.Date;
                 }
 
                 using (var stream = new MemoryStream())
@@ -211,21 +211,19 @@ namespace Cargotruck.Server.Controllers
             Font font2 = FontFactory.GetFont(FontFactory.TIMES_ROMAN, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 10);
 
             System.Type type = typeof(Trucks);
-            var column_number = (type.GetProperties().Length) / 2;
+            var column_number = (type.GetProperties().Length)-1;
             var columnDefinitionSize = new float[column_number];
             for (int i = 0; i < column_number; i++) columnDefinitionSize[i] = 1F;
 
-            PdfPTable table, table2;
+            PdfPTable table;
             PdfPCell cell;
 
             table = new PdfPTable(columnDefinitionSize)
             {
                 WidthPercentage = 90
             };
-            table2 = new PdfPTable(columnDefinitionSize)
-            {
-                WidthPercentage = 90
-            };
+
+
             cell = new PdfPCell
             {
                 BackgroundColor = new BaseColor(0xC0, 0xC0, 0xC0),
@@ -316,7 +314,7 @@ namespace Cargotruck.Server.Controllers
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(truck.Max_weight)) { s = truck.Max_weight.ToString(); }
+                    if (!string.IsNullOrEmpty(truck.Max_weight.ToString())) { s = truck.Max_weight.ToString(); }
                     else { s = "-"; }
                     table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
@@ -325,7 +323,7 @@ namespace Cargotruck.Server.Controllers
                     });
                     if (!string.IsNullOrEmpty(truck.Date.ToString())) { s = truck.Date.ToString(); }
                     else { s = "-"; }
-                    table2.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
@@ -333,7 +331,6 @@ namespace Cargotruck.Server.Controllers
                     pdfRowIndex++;
                 }
                 document.Add(table);
-                document.Add(new Paragraph("\n"));
             }
             else
             {
@@ -493,6 +490,32 @@ namespace Cargotruck.Server.Controllers
                                     }
                                     else { list.Add(System.DBNull.Value); }
                                 }
+
+                                switch (list[l + 3])
+                                {
+                                    case "delivering":
+                                        list[l + 3] = 0;
+                                        break;
+                                    case "on_road":
+                                        list[l + 3] = 1;
+                                        break;
+                                    case "garage":
+                                        list[l + 3] = 2;
+                                        break;
+                                    case "under_repair":
+                                        list[l + 3] = 3;
+                                        break;
+                                    case "loaned":
+                                        list[l + 3] = 4;
+                                        break;
+                                   case "rented":
+                                        list[l + 3] = 5;
+                                        break;
+                                    default:
+                                        list[l + 3] = System.DBNull.Value;
+                                        break;
+                                }
+
                                 var sql = @"Insert Into Trucks (User_id,Vehicle_registration_number,Brand,Status,Road_id,Max_weight,Date) 
                                 Values (@User_id,@Vehicle_registration_number,@Brand,@Status,@Road_id,@Max_weight,@Date)";
                                 var insert = await _context.Database.ExecuteSqlRawAsync(sql,
