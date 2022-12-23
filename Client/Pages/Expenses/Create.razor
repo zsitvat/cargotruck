@@ -1,0 +1,21 @@
+﻿@page "/Expenses/create"
+@inject HttpClient http
+@inject NavigationManager uriHelper
+@inject IJSRuntime js
+
+<Form ButtonText="Create" expenses="@expense" OnValidSubmit="@CreateExpense" />
+
+@code {
+    Expenses expense = new Expenses();
+    async Task CreateExpense()
+    {
+        await http.PostAsJsonAsync("api/expenses/post", expense);
+        uriHelper.NavigateTo("/Expenses");
+    }
+
+    protected override void OnInitialized()
+    {
+        PageHistoryState.AddPageToHistory("/Expenses/create");
+        base.OnInitialized();
+    }
+}

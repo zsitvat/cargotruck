@@ -43,7 +43,6 @@ namespace Cargotruck.Server.Controllers
                 || (s.Warehouse_id == null ? false : s.Warehouse_id.ToString()!.Contains(searchString))
                 || (s.Warehouse_section == null ? false : s.Warehouse_section.ToLower()!.Contains(searchString))
                 || (s.Storage_starting_time == null ? false : s.Storage_starting_time.ToString()!.Contains(searchString))
-                || (s.Cost_of_storage == null ? false : s.Cost_of_storage.ToString()!.Contains(searchString))
                 || s.Date.ToString()!.Contains(searchString)
                 ).ToList();
             }
@@ -56,7 +55,6 @@ namespace Cargotruck.Server.Controllers
             sortOrder = sortOrder == "Warehouse_id" ? (desc ? "Warehouse_id_desc" : "Warehouse_id") : (sortOrder);
             sortOrder = sortOrder == "Warehouse_section" ? (desc ? "Warehouse_section_desc" : "Warehouse_section") : (sortOrder);
             sortOrder = sortOrder == "Storage_starting_time" ? (desc ? "Storage_starting_time_desc" : "Storage_starting_time") : (sortOrder);
-            sortOrder = sortOrder == "Cost_of_storage" ? (desc ? "Cost_of_storage_desc" : "Cost_of_storage") : (sortOrder);
             sortOrder = sortOrder == "Date" || String.IsNullOrEmpty(sortOrder) ? (desc ? "Date_desc" : "") : (sortOrder);
 
             switch (sortOrder)
@@ -108,12 +106,6 @@ namespace Cargotruck.Server.Controllers
                     break;
                 case "Storage_starting_time":
                     data= data.OrderBy(s => s.Storage_starting_time).ToList();
-                    break;
-                case "Cost_of_storage_desc":
-                    data= data.OrderByDescending(s => s.Cost_of_storage).ToList();
-                    break;
-                case "Cost_of_storage":
-                    data= data.OrderBy(s => s.Cost_of_storage).ToList();
                     break;
                 case "Date_desc":
                     data= data.OrderByDescending(s => s.Date).ToList();
@@ -189,24 +181,22 @@ namespace Cargotruck.Server.Controllers
                 worksheet.Cell(currentRow, 2).Style.Font.SetBold();
                 worksheet.Cell(currentRow, 3).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Task_id : "Task ID";
                 worksheet.Cell(currentRow, 3).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 4).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Weight : "Cargo ID";
+                worksheet.Cell(currentRow, 4).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Weight : "Weight";
                 worksheet.Cell(currentRow, 4).Style.Font.SetBold();
                 worksheet.Cell(currentRow, 5).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Description : "Description";
                 worksheet.Cell(currentRow, 5).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 6).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Delivery_requirements : "Delivery_requirements";
+                worksheet.Cell(currentRow, 6).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Delivery_requirements : "Delivery requirements";
                 worksheet.Cell(currentRow, 6).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 7).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Vehicle_registration_number : "Vehicle_registration_number";
+                worksheet.Cell(currentRow, 7).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Vehicle_registration_number : "Vehicle registration number";
                 worksheet.Cell(currentRow, 7).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 8).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Warehouse_id : "Warehouse_id";
+                worksheet.Cell(currentRow, 8).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Warehouse_id : "Warehouse ID";
                 worksheet.Cell(currentRow, 8).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 9).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Warehouse_section : "Warehouse_section";
+                worksheet.Cell(currentRow, 9).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Warehouse_section : "Warehouse section";
                 worksheet.Cell(currentRow, 9).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 10).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Storage_starting_time : "Storage_starting_time";
+                worksheet.Cell(currentRow, 10).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Storage_starting_time : "Storage starting time";
                 worksheet.Cell(currentRow, 10).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 11).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Cost_of_storage : "Cost_of_storage";
+                worksheet.Cell(currentRow, 11).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date";
                 worksheet.Cell(currentRow, 11).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 12).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date";
-                worksheet.Cell(currentRow, 12).Style.Font.SetBold();
 
                 foreach (var cargo in cargoes)
                 {
@@ -221,8 +211,7 @@ namespace Cargotruck.Server.Controllers
                     worksheet.Cell(currentRow, 8).Value = cargo.Warehouse_id;
                     worksheet.Cell(currentRow, 9).Value = cargo.Warehouse_section;
                     worksheet.Cell(currentRow, 10).Value = cargo.Storage_starting_time;
-                    worksheet.Cell(currentRow, 11).Value = cargo.Cost_of_storage;
-                    worksheet.Cell(currentRow, 12).Value = cargo.Date;
+                    worksheet.Cell(currentRow, 11).Value = cargo.Date;
                 }
 
                 using (var stream = new MemoryStream())
@@ -254,7 +243,7 @@ namespace Cargotruck.Server.Controllers
             Font font1 = FontFactory.GetFont(FontFactory.TIMES_BOLD, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 12);
             Font font2 = FontFactory.GetFont(FontFactory.TIMES_ROMAN, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 10);
 
-            Type type = typeof(Cargoes);
+            System.Type type = typeof(Cargoes);
             var column_number = (type.GetProperties().Length) / 2;
             var columnDefinitionSize = new float[column_number];
             for (int i = 0; i < column_number; i++) columnDefinitionSize[i] = 1F;
@@ -296,22 +285,22 @@ namespace Cargotruck.Server.Controllers
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 });
-                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Weight : "Cargo ID", font1))
+                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Weight : "Weight", font1))
                 {
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 });
-                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Description : "Purpose of the trip", font1))
+                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Description : "Description", font1))
                 {
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 });
-                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Delivery_requirements : "Starting date", font1))
+                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Delivery_requirements : "Delivery requirements", font1))
                 {
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 });
-                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Vehicle_registration_number : "Ending date", font1))
+                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Vehicle_registration_number : "Vehicle registration number", font1))
                 {
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
@@ -374,22 +363,17 @@ namespace Cargotruck.Server.Controllers
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 });
-                table2.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Warehouse_id : "Starting place", font1))
+                table2.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Warehouse_id : "Warehouse ID", font1))
                 {
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 });
-                table2.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Warehouse_section : "Ending place", font1))
+                table2.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Warehouse_section : "Warehouse section", font1))
                 {
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 });
-                table2.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Storage_starting_time : "Storage_starting_time", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-                table2.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Cost_of_storage : "Expenses ID", font1))
+                table2.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Storage_starting_time : "Storage starting time", font1))
                 {
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
@@ -429,13 +413,6 @@ namespace Cargotruck.Server.Controllers
                     if (!string.IsNullOrEmpty(cargo.Storage_starting_time.ToString())) { s = cargo.Storage_starting_time.ToString(); }
                     else { s = "-"; }
                     table2.AddCell(new PdfPCell(new Phrase(s.ToString() == "TO" ? lang == "hu" ? Cargotruck.Shared.Resources.Resource.to : "Go to the direction" : lang == "hu" ? Cargotruck.Shared.Resources.Resource.from : "Go from the direction", font2))
-                    {
-                        HorizontalAlignment = Element.ALIGN_CENTER,
-                        VerticalAlignment = Element.ALIGN_MIDDLE
-                    });
-                    if (!string.IsNullOrEmpty(cargo.Cost_of_storage.ToString())) { s = cargo.Cost_of_storage.ToString(); }
-                    else { s = "-"; }
-                    table2.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
@@ -490,14 +467,13 @@ namespace Cargotruck.Server.Controllers
             txt.Write("Id" + ";");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID") + ";");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Task_id : "Task ID") + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Weight : "Cargo ID") + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Description : "Purpose of the trip") + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Delivery_requirements : "Starting date") + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Vehicle_registration_number : "Vehicle_registration_number") + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Warehouse_id : "Starting place") + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Warehouse_section : "Warehouse_section") + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Storage_starting_time : "Storage_starting_time") + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Cost_of_storage : "Cost_of_storage") + ";");
+            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Weight : "Weight") + ";");
+            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Description : "Description") + ";");
+            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Delivery_requirements : "Delivery requirements") + ";");
+            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Vehicle_registration_number : "Vehicle registration number") + ";");
+            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Warehouse_id : "Warehouse ID") + ";");
+            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Warehouse_section : "Warehouse section") + ";");
+            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Storage_starting_time : "Storage starting time") + ";");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date") + ";");
             txt.Write("\n");
 
@@ -513,7 +489,6 @@ namespace Cargotruck.Server.Controllers
                 txt.Write(cargo.Warehouse_id + ";");
                 txt.Write(cargo.Warehouse_section + ";");
                 txt.Write(cargo.Storage_starting_time + ";");
-                txt.Write(cargo.Cost_of_storage + ";");
                 txt.Write(cargo.Date + ";");
                 txt.Write("\n");
             }
@@ -570,14 +545,13 @@ namespace Cargotruck.Server.Controllers
                                 "Id",
                                 lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID",
                                 lang == "hu" ? Cargotruck.Shared.Resources.Resource.Task_id : "Task ID",
-                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Weight : "Cargo ID",
-                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Description : "Purpose of the trip",
-                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Delivery_requirements : "Starting date",
+                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Weight : "Weight",
+                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Description : "Description",
+                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Delivery_requirements : "Delivery requirements",
                                 lang == "hu" ? Cargotruck.Shared.Resources.Resource.Vehicle_registration_number : "Vehicle_registration_number",
-                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Warehouse_id : "Starting place",
-                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Warehouse_section : "Warehouse_section",
-                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Storage_starting_time : "Storage_starting_time",
-                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Cost_of_storage : "Cost_of_storage",
+                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Warehouse_id : "Warehouse ID",
+                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Warehouse_section : "Warehouse Section",
+                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Storage_starting_time : "Storage starting time",
                                 lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date"
                             };
 
@@ -621,8 +595,8 @@ namespace Cargotruck.Server.Controllers
                                     }
                                     else { list.Add(System.DBNull.Value); }
                                 }
-                                var sql = @"Insert Into Cargoes (User_id,Task_id,Weight,Description,Delivery_requirements,Vehicle_registration_number,Warehouse_id,Warehouse_section,Storage_starting_time,Cost_of_storage,Date) 
-                                Values (@User_id,@Task_id,@Weight,@Description,@Delivery_requirements,@Vehicle_registration_number,@Warehouse_id,@Warehouse_section,@Storage_starting_time,@Cost_of_storage,@Date)";
+                                var sql = @"Insert Into Cargoes (User_id,Task_id,Weight,Description,Delivery_requirements,Vehicle_registration_number,Warehouse_id,Warehouse_section,Storage_starting_time,Date) 
+                                Values (@User_id,@Task_id,@Weight,@Description,@Delivery_requirements,@Vehicle_registration_number,@Warehouse_id,@Warehouse_section,@Storage_starting_time,@Date)";
                                 var insert = await _context.Database.ExecuteSqlRawAsync(sql,
                                     new SqlParameter("@User_id", list[l]),
                                     new SqlParameter("@Task_id", list[l + 1]),
@@ -633,8 +607,7 @@ namespace Cargotruck.Server.Controllers
                                     new SqlParameter("@Warehouse_id", list[l + 6]),
                                     new SqlParameter("@Warehouse_section", list[l + 7]),
                                     new SqlParameter("@Storage_starting_time", list[l + 8] == System.DBNull.Value ? System.DBNull.Value : DateTime.Parse(list[l + 8].ToString())),
-                                    new SqlParameter("@Cost_of_storage", list[l + 9]),
-                                    new SqlParameter("@Date", list[l + 10] == System.DBNull.Value ? System.DBNull.Value : DateTime.Parse(list[l + 10].ToString()))
+                                    new SqlParameter("@Date", list[l + 9] == System.DBNull.Value ? System.DBNull.Value : DateTime.Parse(list[l + 9].ToString()))
                                     );
 
                                 if (insert > 0)

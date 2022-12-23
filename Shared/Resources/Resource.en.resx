@@ -123,6 +123,9 @@
   <data name="Add" xml:space="preserve">
     <value>Add new</value>
   </data>
+  <data name="Address" xml:space="preserve">
+    <value>Address</value>
+  </data>
   <data name="Admin" xml:space="preserve">
     <value>Administrator</value>
   </data>
@@ -143,6 +146,9 @@
   </data>
   <data name="Cargoes" xml:space="preserve">
     <value>Cargoes</value>
+  </data>
+  <data name="Cargo_id" xml:space="preserve">
+    <value>Cargo ID</value>
   </data>
   <data name="Cargo_man" xml:space="preserve">
     <value>Cargo_man</value>
@@ -185,6 +191,9 @@
   </data>
   <data name="Delete_tasks" xml:space="preserve">
     <value>Delete the task</value>
+  </data>
+  <data name="delivering" xml:space="preserve">
+    <value>Delivering</value>
   </data>
   <data name="Delivery_requirements" xml:space="preserve">
     <value>Delivery requirements</value>
@@ -306,6 +315,9 @@
   <data name="Expenses_id" xml:space="preserve">
     <value>Expenses ID</value>
   </data>
+  <data name="Expenses_menu" xml:space="preserve">
+    <value>Financial menu</value>
+  </data>
   <data name="False" xml:space="preserve">
     <value>False</value>
   </data>
@@ -326,6 +338,9 @@
   </data>
   <data name="Full_name" xml:space="preserve">
     <value>Full name</value>
+  </data>
+  <data name="garage" xml:space="preserve">
+    <value>Garage</value>
   </data>
   <data name="Hello" xml:space="preserve">
     <value>Succesful login</value>
@@ -351,6 +366,9 @@
   <data name="Import" xml:space="preserve">
     <value>Import from Excel</value>
   </data>
+  <data name="loaned" xml:space="preserve">
+    <value>Loaned</value>
+  </data>
   <data name="Login" xml:space="preserve">
     <value>Login</value>
   </data>
@@ -368,6 +386,9 @@
   </data>
   <data name="Missing_data_rows" xml:space="preserve">
     <value>No datarows in the file! </value>
+  </data>
+  <data name="Monthly_Expenses" xml:space="preserve">
+    <value>Monthly expenses</value>
   </data>
   <data name="NewAccount" xml:space="preserve">
     <value>Create new user</value>
@@ -396,11 +417,17 @@
   <data name="No_excel" xml:space="preserve">
     <value>No file found!</value>
   </data>
+  <data name="on_road" xml:space="preserve">
+    <value>On road</value>
+  </data>
   <data name="Other" xml:space="preserve">
     <value>Other</value>
   </data>
   <data name="Other_stops" xml:space="preserve">
     <value>Other stops</value>
+  </data>
+  <data name="Owner" xml:space="preserve">
+    <value>Owner</value>
   </data>
   <data name="PageSize" xml:space="preserve">
     <value>Number of rows</value>
@@ -470,6 +497,9 @@
   </data>
   <data name="Remember_me" xml:space="preserve">
     <value>Remember me</value>
+  </data>
+  <data name="rented" xml:space="preserve">
+    <value>Rented</value>
   </data>
   <data name="Repair_cost" xml:space="preserve">
     <value>Cost of repair</value>
@@ -579,6 +609,9 @@
   <data name="Type_id" xml:space="preserve">
     <value>Type ID</value>
   </data>
+  <data name="under_repair" xml:space="preserve">
+    <value>Under repair</value>
+  </data>
   <data name="User" xml:space="preserve">
     <value>User</value>
   </data>
@@ -596,6 +629,9 @@
   </data>
   <data name="Warehouseman" xml:space="preserve">
     <value>Warehouseman</value>
+  </data>
+  <data name="Warehouses" xml:space="preserve">
+    <value>Warehouses</value>
   </data>
   <data name="Warehouse_address" xml:space="preserve">
     <value>Address of the warehouse</value>

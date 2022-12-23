@@ -1,0 +1,33 @@
+﻿@page "/Expenses/edit/{Id:int}"
+@inject HttpClient http
+@inject NavigationManager uriHelper
+@inject IJSRuntime js
+
+<h3>@localizer["Edit_expenses"]</h3>
+
+<Form ButtonText="Update" expenses="@expense" OnValidSubmit="@EditExpense" />
+
+@code {
+    [Parameter] public int Id { get; set; }
+    Expenses? expense = new Expenses();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        expense = await http.GetFromJsonAsync<Expenses>($"api/expenses/getById/{Id}");
+    }
+
+    async Task EditExpense()
+    {
+        var text = @localizer["Succesfull_update"];
+        await http.PutAsJsonAsync("api/expenses/put", expense);
+        await js.InvokeVoidAsync("alert", $"{text}");
+        uriHelper.NavigateTo("/Expenses");
+
+    }
+
+    protected override void OnInitialized()
+    {
+        PageHistoryState.AddPageToHistory("/Expenses/edit/{Id:int}");
+        base.OnInitialized();
+    }
+}

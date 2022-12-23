@@ -95,9 +95,6 @@ namespace Cargotruck.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("Cost_of_storage")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
@@ -141,51 +138,50 @@ namespace Cargotruck.Server.Migrations
 
             modelBuilder.Entity("Cargotruck.Shared.Models.Expenses", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("Cost_of_storage")
+                    b.Property<int?>("Cost_of_storage")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Driver_salary")
+                    b.Property<int?>("Driver_salary")
                         .HasColumnType("int");
 
-                    b.Property<int>("Driver_spending")
+                    b.Property<int?>("Driver_spending")
                         .HasColumnType("int");
 
-                    b.Property<int>("Fuel")
+                    b.Property<int?>("Fuel")
                         .HasColumnType("int");
 
                     b.Property<int?>("Monthly_expensesId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Other")
+                    b.Property<int?>("Other")
                         .HasColumnType("int");
 
-                    b.Property<int>("Penalty")
+                    b.Property<int?>("Penalty")
                         .HasColumnType("int");
 
-                    b.Property<int>("Repair_cost")
+                    b.Property<int?>("Repair_cost")
                         .HasColumnType("int");
 
                     b.Property<string>("Repair_description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Road_fees")
+                    b.Property<int?>("Road_fees")
                         .HasColumnType("int");
 
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
-                    b.Property<int>("Type_id")
+                    b.Property<int?>("Type_id")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<long>("User_id")
@@ -367,18 +363,18 @@ namespace Cargotruck.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Road_id")
+                    b.Property<int?>("Road_id")
                         .HasColumnType("int");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<int>("User_id")
                         .HasColumnType("int");
 
-                    b.Property<int>("Vehicle_registration_number")
-                        .HasColumnType("int");
+                    b.Property<string>("Vehicle_registration_number")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -441,36 +437,36 @@ namespace Cargotruck.Server.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "72e25072-ad65-4311-8bb7-3d5ae76a51b0",
-                            ConcurrencyStamp = "40b1346f-2cf9-486a-9b15-794d2a5728a5",
+                            Id = "dd4727a2-cd39-4fd1-8e6a-e9f25fbafa87",
+                            ConcurrencyStamp = "805cef27-f602-4528-b775-50afe82aa918",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "b50ef9ba-8574-45d0-8b13-a040052d233f",
-                            ConcurrencyStamp = "2868cee8-1b66-4553-9126-57b2207ec69c",
+                            Id = "55c6009e-8864-42a3-b1de-744eed65311a",
+                            ConcurrencyStamp = "1280ff5b-cae3-425a-9e8d-285d3c8d0b57",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "2cac01b0-13a3-4866-901e-7bd21ac2f44f",
-                            ConcurrencyStamp = "be7d4311-1194-47c3-b97a-90aa8e5fe228",
+                            Id = "d8b117a2-c5e0-414d-87db-3ca1e03dde0f",
+                            ConcurrencyStamp = "11de5b65-c2bc-4d8c-997f-c1b5b5fd65d2",
                             Name = "Driver",
                             NormalizedName = "DRIVER"
                         },
                         new
                         {
-                            Id = "472cc336-cfab-462c-a642-c0d86019b3c7",
-                            ConcurrencyStamp = "fc610824-2d5c-4eca-8bb9-fe0eb928ec14",
+                            Id = "68761aea-f564-4208-bb52-fa05a9108639",
+                            ConcurrencyStamp = "d3e78156-115c-4182-a814-30fce75fe4ea",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
-                            Id = "d881e315-7fa9-43f4-9a3b-ff1ab1a86d6b",
-                            ConcurrencyStamp = "a6d79333-bfa2-439d-9c66-730e6719675c",
+                            Id = "0f680424-3a6b-4af3-83ea-c51c9ce7cfd1",
+                            ConcurrencyStamp = "fe9950f4-f2d0-4179-994e-58c8b6661a99",
                             Name = "Storageman",
                             NormalizedName = "STORAGEMAN"
                         });

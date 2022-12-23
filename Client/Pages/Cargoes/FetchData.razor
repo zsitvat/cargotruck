@@ -66,10 +66,6 @@ else
                                 }
                                 @if (showColumns[8])
                                 {
-                                    <th><button class="@(sortOrder=="Cost_of_storage" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Cost_of_storage"))">@localizer["Cost_of_storage"]</button></th>
-                                }
-                                @if (showColumns[9])
-                                {
                                     <th><button style="min-width:5rem;" class="@(sortOrder=="Date" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Date"))">@localizer["Date"]</button></th>
                                 }
                             </tr>
@@ -115,10 +111,6 @@ else
                                         <td>@item.Storage_starting_time</td>
                                     }
                                     @if (showColumns[8])
-                                    {
-                                        <td>@item.Cost_of_storage</td>
-                                    }
-                                    @if (showColumns[9])
                                     {
                                         <td>@item.Date</td>
                                     }

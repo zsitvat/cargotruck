@@ -1,0 +1,77 @@
+﻿
+
+<EditForm Model="@warehouses" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <div class="top-buttons-card">
+        <div class="card-body">
+                <div class="form-group">
+                    @if (PageHistoryState.CanGoBack())
+                {
+                    <a href="@PageHistoryState.GetGoBackPage()"><span class="oi oi-arrow-circle-left" aria-hidden="true" ></span></a>
+                }
+            </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">
+                        <i class="oi oi-circle-check"></i> @localizer[ButtonText]
+                    </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-card mb-6" style="border-top-left-radius:unset;border-top-right-radius:unset;">
+        <div class="card-body mb-3">
+                <div class="d-inline-block forms-margin ">
+                    <div class="form-group ">
+                        <div>
+                        <label>@localizer["Address"]:</label>
+                            <div>
+                                <InputText class="form-control inputs" @bind-Value="@warehouses.Address" />
+                            <ValidationMessage For="@(() => warehouses.Address)" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <div>
+                        <label>@localizer["Owner"]:</label>
+                            <div>
+                            <InputText class="form-control inputs" @bind-Value="@warehouses.Owner" />
+                                <ValidationMessage For="@(() => warehouses.Owner)" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div>
+                        <label>@localizer["Cargo_id"]:</label>
+                            <div>
+                            <select class="form-control" @bind="warehouses.Cargo_ids" multiple>
+                                    <option value="" selected disabled>@localizer["Select_placeholder"]</option>
+                                    @if (cargoes != null)
+                                    {
+                                        @foreach (var cargo in cargoes)
+                                        {
+                                        <option value="@cargo.Id">@cargo.Id  - @cargo.Task_id - @cargo.Description </option>
+                                        }
+                                    }
+                            </select>
+                            <ValidationMessage For="@(() => warehouses.Cargo_ids)" />
+                            </div>
+                        </div>
+                    </div>
+              </div>
+        </div>
+    </div>
+
+</EditForm>
+
+
+@code {
+    [Parameter] public Warehouses? warehouses { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+    Cargoes[]? cargoes { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        cargoes = await client.GetFromJsonAsync<Cargoes[]?>("api/cargoes/getcargoes");
+    }
+}

@@ -5,6 +5,7 @@ using Cargotruck.Shared.Models;
 using Cargotruck.Server.Data;
 using System.Security.Cryptography.X509Certificates;
 using Cargotruck.Server.Models;
+using System.Reflection.Metadata;
 
 namespace Cargotruck.Data
 {
@@ -31,5 +32,4 @@ namespace Cargotruck.Data
 
             builder.ApplyConfiguration(new RoleConfiguration());
         }
-    }
 }

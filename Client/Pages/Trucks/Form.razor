@@ -1,0 +1,103 @@
+﻿
+
+<EditForm Model="@trucks" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <div class="top-buttons-card">
+        <div class="card-body">
+                <div class="form-group">
+                    @if (PageHistoryState.CanGoBack())
+                {
+                    <a href="@PageHistoryState.GetGoBackPage()"><span class="oi oi-arrow-circle-left" aria-hidden="true" ></span></a>
+                }
+            </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">
+                        <i class="oi oi-circle-check"></i> @localizer[ButtonText]
+                    </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-card mb-6" style="border-top-left-radius:unset;border-top-right-radius:unset;">
+        <div class="card-body mb-3">
+                <div class="d-inline-block forms-margin ">
+                    <div class="form-group ">
+                        <div>
+                        <label>@localizer["Brand"]:</label>
+                            <div>
+                                <InputText class="form-control inputs" @bind-Value="@trucks.Brand" />
+                                <ValidationMessage For="@(() => trucks.Brand)" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <div>
+                        <label>@localizer["Vehicle_registration_number"]:</label>
+                            <div>
+                                <InputText class="form-control inputs" @bind-Value="@trucks.Vehicle_registration_number" />
+                                <ValidationMessage For="@(() => trucks.Vehicle_registration_number)" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <div>
+                            <label>@localizer["Max_weight"]:</label>
+                            <div>
+                                <InputText class="form-control inputs" @bind-Value="@trucks.Max_weight" />
+                                <ValidationMessage For="@(() => trucks.Max_weight)" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-inline-block forms-margin second-col mt-3" >
+                    <div class="form-group">
+                        <div>
+                            <label>@localizer["Road_id"]:</label>
+                            <div>
+                                <select class="form-control" @bind="@trucks.Road_id">
+                                    <option value="" selected disabled>@localizer["Select_placeholder"]</option>
+                                    @if (roads != null)
+                                    {
+                                        @foreach (var road in roads)
+                                        {
+                                        <option value="@road.Id">@road.Id  - @road.Task_id - @road.Purpose_of_the_trip </option>
+                                        }
+                                    }
+                                </select>
+                            <ValidationMessage For="@(() => trucks.Road_id)" />
+                            </div>
+                        </div>
+                    </div>
+                <div class="form-group">
+                    <div>
+                        <label>@localizer["Road_id"]:</label>
+                        <div>
+                            <InputSelect @bind-Value="@trucks.Status">
+                                @foreach (var value in Enum.GetValues<status>())
+                                {
+                                    <option value="@value">@localizer[value.ToString()]</option>
+                                }
+                            </InputSelect>
+                            <ValidationMessage For="@(() => trucks.Road_id)" />
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+
+</EditForm>
+
+
+@code {
+    [Parameter] public Trucks? trucks { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+    Roads[]? roads { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        roads = await client.GetFromJsonAsync<Roads[]?>("api/roads/getroads");
+    }
+}

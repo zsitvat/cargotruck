@@ -8,6 +8,7 @@ using System.Data;
 using ClosedXML.Excel;
 using Document = iTextSharp.text.Document;
 using Microsoft.Data.SqlClient;
+using System.Text;
 
 namespace Cargotruck.Server.Controllers
 {
@@ -659,6 +660,14 @@ namespace Cargotruck.Server.Controllers
             }
             txt.Close();
             txt.Dispose();
+
+            //change the encoding of the file content
+            string csvFileContents = System.IO.File.ReadAllText(filepath);
+            Encoding utf8Encoding = Encoding.UTF8;
+            byte[] csvFileContentsAsBytes = Encoding.Default.GetBytes(csvFileContents);
+            byte[] convertedCsvFileContents = Encoding.Convert(Encoding.Default, utf8Encoding, csvFileContentsAsBytes);
+            string convertedCsvFileContentsAsString = utf8Encoding.GetString(convertedCsvFileContents);
+            System.IO.File.WriteAllText(filepath, convertedCsvFileContentsAsString, utf8Encoding);
 
 
             FileStream sourceFile = new FileStream(filepath, FileMode.Open);

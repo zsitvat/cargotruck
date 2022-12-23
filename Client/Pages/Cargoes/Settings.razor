@@ -67,17 +67,9 @@
             </div>
                 <div class="form-group ">
                     <div>
-                    <label>
-                        @localizer["Cost_of_storage"]:
-                        <input type="checkbox" @onchange="@(async () =>{ showColumns[8]=!showColumns[8]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[8]" />
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group ">
-                    <div>
                         <label>
                         @localizer["Date"]:
-                        <input type="checkbox" @onchange="@(async () =>{ showColumns[9]=!showColumns[9]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[9]" />
+                        <input type="checkbox" @onchange="@(async () =>{ showColumns[8]=!showColumns[8]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[8]" />
                         </label>
                     </div>
                 </div>

@@ -1,0 +1,21 @@
+﻿@page "/Warehouses/create"
+@inject HttpClient http
+@inject NavigationManager uriHelper
+@inject IJSRuntime js
+
+<Form ButtonText="Create" warehouses="@warehouse" OnValidSubmit="@CreateCargo" />
+
+@code {
+    Warehouses warehouse = new Warehouses();
+    async Task CreateCargo()
+    {
+        await http.PostAsJsonAsync("api/warehouses/post", warehouse);
+        uriHelper.NavigateTo("/Warehouses");
+    }
+
+    protected override void OnInitialized()
+    {
+        PageHistoryState.AddPageToHistory("/Warehouses/create");
+        base.OnInitialized();
+    }
+}

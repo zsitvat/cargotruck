@@ -16,12 +16,11 @@ namespace Cargotruck.Shared.Models
         [Display(Name = "Expenses_id", ResourceType = typeof(Resource))]
         public List<Expenses>? Expenses { get; set; }
         [Display(Name = "Earning", ResourceType = typeof(Resource))]
-        public int Earning { get; set; }
+        public int Earning { get; set; } = 0;
         [Display(Name = "Profit", ResourceType = typeof(Resource))]
-        public int Profit { get; set; }
+        public int Profit { get; set; } = 0;
         [Display(Name = "Date", ResourceType = typeof(Resource))]
-        public DateTime Date { get; set; } = DateTime.Now;
-    }
-   
- 
+        public DateTime Date { get; set; } = DateTime.Now;      
+    }   
 }
+

@@ -29,8 +29,6 @@ namespace Cargotruck.Shared.Models
         [Display(Name = "Storage_starting_time", ResourceType = typeof(Resource))]
         public DateTime? Storage_starting_time { get; set; }
         [Display(Name = "Cost_of_storage", ResourceType = typeof(Resource))]
-        public int? Cost_of_storage { get; set; }
-        [Display(Name = "Date", ResourceType = typeof(Resource))]
         public DateTime Date { get; set; } = DateTime.Now;
 
     }

@@ -1,0 +1,206 @@
+﻿
+
+<EditForm Model="@expenses" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <div class="top-buttons-card">
+        <div class="card-body">
+                <div class="form-group">
+                    @if (PageHistoryState.CanGoBack())
+                {
+                    <a href="@PageHistoryState.GetGoBackPage()"><span class="oi oi-arrow-circle-left" aria-hidden="true" ></span></a>
+                }
+            </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">
+                        <i class="oi oi-circle-check"></i> @localizer[ButtonText]
+                    </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-card mb-6" style="border-top-left-radius:unset;border-top-right-radius:unset;">
+        <div class="card-body mb-3">
+            <div class="d-inline-block forms-margin ">
+                <div class="form-group">
+                    <div>
+                        <label>@localizer["Type"]:</label>
+                        <div>
+                            <InputSelect @onchange="@((e)=>onChangeGetType(e))" @bind-Value="@expenses.Type">
+                                @foreach (var value in Enum.GetValues<Cargotruck.Shared.Models.Type>())
+                                {
+                                    <option value="@value">@localizer[value.ToString()]</option>
+                                }
+                            </InputSelect>
+                            <ValidationMessage For="@(() => expenses.Type)" />
+                        </div>
+                    </div>
+                </div>
+                if(type != "salary" && type != "other" && type != null){
+                     <div class="form-group">
+                        <div>
+                        <label>@localizer["Type_id"]:</label>
+                            <div>
+                                <select class="form-control" @bind="@expenses.Type_id">
+                                    <option value="" selected disabled>@localizer["Select_placeholder"]</option>
+                                    switch(type) 
+                                        {
+                                        case "task":
+                                            @if (tasks != null)
+                                            {
+                                                @foreach (var task in tasks)
+                                                {
+                                                    <option value="@task.Id">@task.Id - @task.Date - @task.Description.Substring(0, task.Description.Length >= 50 ? 50 : task.Description.Length)</option>
+                                                }
+                                            }
+                                        break;
+                                        case "repair":
+                                            @if (roads != null)
+                                            {
+                                                @foreach (var road in roads)
+                                                {
+                                                    <option value="@road.Id">@road.Id  - @road.Purpose_of_the_trip - @road.Date </option>
+                                                }
+                                            }
+                                        break;
+                                        case "storage":
+                                             @if (cargoes != null)
+                                            {
+                                                @foreach (var cargo in cargoes)
+                                                {
+                                                    <option value="@cargo.Id">@cargo.Id  - @cargo.Task_id - @cargo.Description </option>
+                                                }
+                                            }
+                                        break;
+                                        }
+                                </select>
+                                <ValidationMessage For="@(() => expenses.Type_id)" />
+                            </div>
+                        </div>
+                     </div>
+                 }
+                 if(type == "task" || type="other" ){
+                    <div class="form-group ">
+                        <div>
+                            <label>@localizer["Fuel"]:</label>
+                            <div>
+                                <InputNumber class="form-control inputs" @bind-Value="@expenses.Fuel" />
+                                <ValidationMessage For="@(() => expenses.Fuel)" />
+                            </div>
+                        </div>
+                    </div>
+                 }
+                 if(type == "task" || type="other" ){
+                    <div class="form-group ">
+                        <div>
+                            <label>@localizer["Road_fees"]:</label>
+                            <div>
+                                <InputNumber class="form-control inputs" @bind-Value="@expenses.Road_fees" />
+                                <ValidationMessage For="@(() => expenses.Road_fees)" />
+                            </div>
+                        </div>
+                    </div>
+                 }
+                 if(type == "task" || type="other" ){
+                     <div class="form-group ">
+                        <div>
+                            <label>@localizer["Penalty"]:</label>
+                            <div>
+                                <InputNumber class="form-control inputs" @bind-Value="@expenses.Penalty" />
+                                <ValidationMessage For="@(() => expenses.Penalty)" />
+                            </div>
+                        </div>
+                    </div>
+                 }
+                 if(type == "task" || type="other"){
+                     <div class="form-group ">
+                        <div>
+                            <label>@localizer["Driver_spending"]:</label>
+                            <div>
+                                <InputNumber class="form-control inputs" @bind-Value="@expenses.Driver_spending" />
+                                <ValidationMessage For="@(() => expenses.Driver_spending)" />
+                            </div>
+                        </div>
+                    </div>
+                 }
+            </div>
+         </div>
+             <div class="d-inline-block forms-margin second-col mt-3" >
+                if(type == "salary"){
+                     <div class="form-group ">
+                        <div>
+                        <label>@localizer["Driver_salary"]:</label>
+                            <div>
+                                <InputNumber class="form-control inputs" @bind-Value="@expenses.Driver_salary" />
+                                <ValidationMessage For="@(() => expenses.Driver_salary)" />
+                            </div>
+                        </div>
+                    </div>
+                }
+                if(type == "repair"){
+                    <div class="form-group ">
+                        <div>
+                        <label>@localizer["Repair_cost"]:</label>
+                            <div>
+                            <InputNumber class="form-control inputs" @bind-Value="@expenses.Repair_cost" />
+                            <ValidationMessage For="@(() => expenses.Repair_cost)" />
+                            </div>
+                        </div>
+                    </div>
+                     <div class="form-group ">
+                        <div>
+                        <label>@localizer["Repair_description"]:</label>
+                            <div>
+                            <InputText class="form-control inputs" @bind-Value="@expenses.Repair_description" />
+                            <ValidationMessage For="@(() => expenses.Repair_description)" />
+                            </div>
+                        </div>
+                    </div>
+                }
+                if(type == "storage"){
+                     <div class="form-group ">
+                        <div>
+                        <label>@localizer["Cost_of_storage"]:</label>
+                            <div>
+                            <InputNumber class="form-control inputs" @bind-Value="@expenses.Cost_of_storage" />
+                            <ValidationMessage For="@(() => expenses.Cost_of_storage)" />
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="form-group ">
+                    <div>
+                    <label>@localizer["Other"]:</label>
+                        <div>
+                        <InputNumber class="form-control inputs" @bind-Value="@expenses.Other" />
+                        <ValidationMessage For="@(() => expenses.Other)" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</EditForm>
+
+
+@code {
+    [Parameter] public Expenses? expenses { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+    Cargoes[]? cargoes { get; set; }
+    Tasks[]? tasks { get; set; }
+    Roads[]? roads { get; set; }
+    string? type;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        cargoes = await client.GetFromJsonAsync<Cargoes[]?>("api/cargoes/getwarehouses");
+        tasks = await client.GetFromJsonAsync<Tasks[]?>("api/tasks/gettasks");
+        roads = await client.GetFromJsonAsync<Roads[]?>("api/roads/gettrucks");
+    }
+
+    void onChangeGetType(ChangeEventArgs e)
+    {
+        type = e.Value.ToString();
+    }
+}
