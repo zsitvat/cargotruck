@@ -8,8 +8,8 @@
     <button data-title="@localizer["excel"]" class="btn btn-light" @onclick="@ExportToExcel"><i class="oi oi-spreadsheet"></i></button>
     <button data-title="@localizer["txt"]" class="btn btn-light" @onclick="@(() => ExportToCSV(".txt"))"><span class="icon iconify" style="margin:0;" data-icon="material-symbols:text-snippet-outline"></span></button>
     <button data-title="@localizer["csv"]" class="btn btn-light" @onclick="@(() => ExportToCSV(".csv"))"><span class="icon iconify" style="margin:0;" data-icon="bi:filetype-csv"></span></button>
-    <span class="file-upload-title" import-data-title="@localizer["File_input"]"><UploadFiles page="roads" StateChanged="StateChanged" /></span>
-    <input value="@searchString" @oninput="@Search" placeholder="@(searchString == null ? searchString : localizer["Search"])" class="form-control inputs input_search" type="search" id="search-input" name="SearchString">
+    <span class="file-upload-title" import-data-title="@localizer["File_input"]"><UploadFiles page="tasks" StateChanged="StateChanged" /></span>
+    <input value="@searchString" @oninput="@Search" placeholder="@(searchString != null ? searchString : localizer["Search"])" class="form-control inputs input_search" type="search" id="search-input" name="SearchString">
 </div>
 <br>
 @document_error
@@ -58,7 +58,7 @@ else
                                 }
                                 @if (showColumns[6])
                                 {
-                                    <th><button class="@(sortOrder=="Other_stops" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Other_stops"))">@localizer["Other_stops"]</button></th>
+                                    <th><button class="@(sortOrder=="other_stops" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("other_stops"))">@localizer["other_stops"]</button></th>
                                 }
                                 @if (showColumns[7])
                                 {
@@ -131,7 +131,7 @@ else
                                     }
                                     @if (showColumns[6])
                                     {
-                                        <td>@item.Other_stops</td>
+                                        <td>@item.other_stops</td>
                                     }
                                     @if (showColumns[7])
                                     {

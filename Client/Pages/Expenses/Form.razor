@@ -25,20 +25,13 @@
                     <div>
                         <label>@localizer["Type"]:</label>
                         <div>
-                            <InputSelect class="form-control" @oninput="@((e)=>onChangeGetType(e))" @bind-Value="@expenses.Type">
-                                <option  value="" disabled>@localizer["Select_placeholder"]</option>
+                            <select id="Type" class="form-control" @oninput="@((e)=>onChangeGetType(e))" @bind="@expenses.Type">
+                                <option value="" selected disabled>@localizer["Select_placeholder"]</option>
                                 @foreach (var value in Enum.GetValues<Cargotruck.Shared.Models.Type>())
                                 {
-                                    if ()
-                                    {
-                                        <option value="@value">@localizer[value.ToString()]</option>
-                                    }
-                                    else
-                                    {
-                                        <option value="@value">@localizer[value.ToString()]</option>
-                                    }   
+                                    <option value="@value">@localizer[value.ToString()]</option> 
                                 }
-                            </InputSelect>
+                            </select>
                             <ValidationMessage For="@(() => expenses.Type)" />
                         </div>
                     </div>
@@ -177,10 +170,10 @@
                 {
                     <div class="form-group ">
                         <div>
-                            <label>@localizer["Other"]:</label>
+                            <label>@localizer["other"]:</label>
                             <div>
-                            <InputNumber class="form-control inputs" @bind-Value="@expenses.Other" />
-                            <ValidationMessage For="@(() => expenses.Other)" />
+                            <InputNumber class="form-control inputs" @bind-Value="@expenses.other" />
+                            <ValidationMessage For="@(() => expenses.other)" />
                             </div>
                         </div>
                     </div>

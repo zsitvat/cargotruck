@@ -45,7 +45,7 @@ namespace Cargotruck.Server.Controllers
             || (s.Repair_cost == null ? false : s.Repair_cost.ToString()!.Contains(searchString))
             || (s.Repair_description == null ? false : s.Repair_description.ToString()!.Contains(searchString))
             || (s.Cost_of_storage == null ? false : s.Cost_of_storage.ToString()!.Contains(searchString))
-            || (s.Other == null ? false : s.Other.ToString()!.Contains(searchString))
+            || (s.other == null ? false : s.other.ToString()!.Contains(searchString))
             || s.Date.ToString()!.Contains(searchString)
             ).ToList();
             }
@@ -60,7 +60,7 @@ namespace Cargotruck.Server.Controllers
             sortOrder = sortOrder == "Repair_cost" ? (desc ? "Repair_cost_desc" : "Repair_cost") : (sortOrder);
             sortOrder = sortOrder == "Repair_description" ? (desc ? "Repair_description_desc" : "Repair_description") : (sortOrder);
             sortOrder = sortOrder == "Cost_of_storage" ? (desc ? "Cost_of_storage_desc" : "Cost_of_storage") : (sortOrder);
-            sortOrder = sortOrder == "Other" ? (desc ? "Other_desc" : "Other") : (sortOrder);
+            sortOrder = sortOrder == "other" ? (desc ? "other_desc" : "other") : (sortOrder);
             sortOrder = sortOrder == "Date" || String.IsNullOrEmpty(sortOrder) ? (desc ? "Date_desc" : "") : (sortOrder);
 
             switch (sortOrder)
@@ -125,10 +125,10 @@ namespace Cargotruck.Server.Controllers
                 case "Cost_of_storage":
                     r = r.OrderBy(s => s.Repair_description).ToList();
                     break;
-                case "Other_desc":
+                case "other_desc":
                     r = r.OrderByDescending(s => s.Repair_description).ToList();
                     break;
-                case "Other":
+                case "other":
                     r = r.OrderBy(s => s.Repair_description).ToList();
                     break;
                 case "Date_desc":
@@ -223,7 +223,7 @@ namespace Cargotruck.Server.Controllers
                 worksheet.Cell(currentRow, 11).Style.Font.SetBold();
                 worksheet.Cell(currentRow, 12).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Cost_of_storage : "Cost of storage";
                 worksheet.Cell(currentRow, 12).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 13).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Other : "Other";
+                worksheet.Cell(currentRow, 13).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.other : "other";
                 worksheet.Cell(currentRow, 13).Style.Font.SetBold();
                 worksheet.Cell(currentRow, 14).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date";
                 worksheet.Cell(currentRow, 14).Style.Font.SetBold();
@@ -243,7 +243,7 @@ namespace Cargotruck.Server.Controllers
                     worksheet.Cell(currentRow, 10).Value = expense.Repair_cost;
                     worksheet.Cell(currentRow, 11).Value = expense.Repair_description;
                     worksheet.Cell(currentRow, 12).Value = expense.Cost_of_storage;
-                    worksheet.Cell(currentRow, 13).Value = expense.Other;
+                    worksheet.Cell(currentRow, 13).Value = expense.other;
                     worksheet.Cell(currentRow, 14).Value = expense.Date;
                 }
 
@@ -428,7 +428,7 @@ namespace Cargotruck.Server.Controllers
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 });
-                table2.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Other : "Other", font1))
+                table2.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.other : "other", font1))
                 {
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
@@ -479,7 +479,7 @@ namespace Cargotruck.Server.Controllers
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(expense.Other.ToString())) { s = expense.Other.ToString(); }
+                    if (!string.IsNullOrEmpty(expense.other.ToString())) { s = expense.other.ToString(); }
                     else { s = "-"; }
                     table2.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
@@ -545,7 +545,7 @@ namespace Cargotruck.Server.Controllers
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Repair_cost : "Repair cost") + ";");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Repair_description : "Repair description") + ";");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Cost_of_storage : "Cost of storage") + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Other : "Other") + ";");
+            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.other : "other") + ";");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date") + ";");
             txt.Write("\n");
 
@@ -563,7 +563,7 @@ namespace Cargotruck.Server.Controllers
                 txt.Write(expense.Repair_cost + ";");
                 txt.Write(expense.Repair_description + ";");
                 txt.Write(expense.Cost_of_storage + ";");
-                txt.Write(expense.Other + ";");
+                txt.Write(expense.other + ";");
                 txt.Write(expense.Date + ";");
                 txt.Write("\n");
             }
@@ -629,7 +629,7 @@ namespace Cargotruck.Server.Controllers
                                 lang == "hu" ? Cargotruck.Shared.Resources.Resource.Repair_cost : "Repair cost",
                                 lang == "hu" ? Cargotruck.Shared.Resources.Resource.Repair_description : "Repair description",
                                 lang == "hu" ? Cargotruck.Shared.Resources.Resource.Repair_description : "Cost of storage",
-                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Repair_description : "Other",
+                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Repair_description : "other",
                                 lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date"
                             };
 
@@ -696,8 +696,8 @@ namespace Cargotruck.Server.Controllers
                                         break;
                                 }
 
-                                var sql = @"Insert Into Expenses (User_id,Type,Type_id,Fuel,Road_fees,Penalty,Driver_spending,Driver_salary,Repair_cost,Repair_description,Cost_of_storage,Other,Date) 
-                                Values (@User_id,@Type,@Type_id,@Fuel,@Road_fees,@Penalty,@Driver_spending,@Driver_salary,@Repair_cost,@Repair_description,@Cost_of_storage,@Other,@Date)";
+                                var sql = @"Insert Into Expenses (User_id,Type,Type_id,Fuel,Road_fees,Penalty,Driver_spending,Driver_salary,Repair_cost,Repair_description,Cost_of_storage,other,Date) 
+                                Values (@User_id,@Type,@Type_id,@Fuel,@Road_fees,@Penalty,@Driver_spending,@Driver_salary,@Repair_cost,@Repair_description,@Cost_of_storage,@other,@Date)";
                                 var insert = await _context.Database.ExecuteSqlRawAsync(sql,
                                     new SqlParameter("@User_id", list[l]),
                                     new SqlParameter("@Type", list[l + 1]),
@@ -710,7 +710,7 @@ namespace Cargotruck.Server.Controllers
                                     new SqlParameter("@Repair_cost", list[l + 8]),
                                     new SqlParameter("@Repair_description", list[l + 9]),
                                     new SqlParameter("@Cost_of_storage", list[l + 10]),
-                                    new SqlParameter("@Other", list[l + 11]),
+                                    new SqlParameter("@other", list[l + 11]),
                                     new SqlParameter("@Date", list[l + 12] == System.DBNull.Value ? System.DBNull.Value : DateTime.Parse(list[l + 12].ToString()))
                                     );
 

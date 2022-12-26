@@ -52,7 +52,7 @@ namespace Cargotruck.Server.Controllers
             sortOrder = sortOrder == "Time_of_receipt" ? (desc ? "Time_of_receipt_desc" : "Time_of_receipt") : (sortOrder);
             sortOrder = sortOrder == "Place_of_delivery" ? (desc ? "Place_of_delivery_desc" : "Place_of_delivery") : (sortOrder);
             sortOrder = sortOrder == "Time_of_delivery" ? (desc ? "Time_of_delivery_desc" : "Time_of_delivery") : (sortOrder);
-            sortOrder = sortOrder == "Other_stops" ? (desc ? "Other_stops_desc" : "Other_stops") : (sortOrder);
+            sortOrder = sortOrder == "other_stops" ? (desc ? "other_stops_desc" : "other_stops") : (sortOrder);
             sortOrder = sortOrder == "Id_cargo" ? (desc ? "Id_cargo_desc" : "Id_cargo") : (sortOrder);
             sortOrder = sortOrder == "Storage_time" ? (desc ? "Storage_time_desc" : "Storage_time") : (sortOrder);
             sortOrder = sortOrder == "Completed" ? (desc ? "Completed_desc" : "Completed") : (sortOrder);
@@ -101,11 +101,11 @@ namespace Cargotruck.Server.Controllers
                 case "Time_of_delivery":
                     t = t.OrderBy(s => s.Time_of_delivery).ToList();
                     break;
-                case "Other_stops_desc":
-                    t = t.OrderByDescending(s => s.Other_stops).ToList();
+                case "other_stops_desc":
+                    t = t.OrderByDescending(s => s.other_stops).ToList();
                     break;
-                case "Other_stops":
-                    t = t.OrderBy(s => s.Other_stops).ToList();
+                case "other_stops":
+                    t = t.OrderBy(s => s.other_stops).ToList();
                     break;
                 case "Id_cargo_desc":
                     t = t.OrderByDescending(s => s.Id_cargo).ToList();
@@ -239,7 +239,7 @@ namespace Cargotruck.Server.Controllers
                 worksheet.Cell(currentRow, 7).Style.Font.SetBold();
                 worksheet.Cell(currentRow, 8).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_delivery : "Time of delivery";
                 worksheet.Cell(currentRow, 8).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 9).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Other_stops : "Other stops";
+                worksheet.Cell(currentRow, 9).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.other_stops : "other stops";
                 worksheet.Cell(currentRow, 9).Style.Font.SetBold();
                 worksheet.Cell(currentRow, 10).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Id_cargo : "Id cargo";
                 worksheet.Cell(currentRow, 10).Style.Font.SetBold();
@@ -270,7 +270,7 @@ namespace Cargotruck.Server.Controllers
                     worksheet.Cell(currentRow, 6).Value = task.Time_of_receipt;
                     worksheet.Cell(currentRow, 7).Value = task.Place_of_delivery;
                     worksheet.Cell(currentRow, 8).Value = task.Time_of_delivery;
-                    worksheet.Cell(currentRow, 9).Value = task.Other_stops;
+                    worksheet.Cell(currentRow, 9).Value = task.other_stops;
                     worksheet.Cell(currentRow, 10).Value = task.Id_cargo;
                     worksheet.Cell(currentRow, 11).Value = task.Storage_time;
                     worksheet.Cell(currentRow, 12).Value = task.Completed;
@@ -378,7 +378,7 @@ namespace Cargotruck.Server.Controllers
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 });
-                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Other_stops : "Other stops", font1))
+                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.other_stops : "other stops", font1))
                 {
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
@@ -442,7 +442,7 @@ namespace Cargotruck.Server.Controllers
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(task.Other_stops)) { s = task.Other_stops.ToString(); }
+                    if (!string.IsNullOrEmpty(task.other_stops)) { s = task.other_stops.ToString(); }
                     else { s = "-"; }
                     table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
@@ -626,7 +626,7 @@ namespace Cargotruck.Server.Controllers
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_receipt : "Time of receipt") + "; ");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Place_of_delivery : "Place of delivery") + "; ");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_delivery : "Time of delivery") + "; ");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Other_stops : "Other stops") + "; ");
+            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.other_stops : "other stops") + "; ");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Id_cargo : "Id cargo") + "; ");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Storage_time : "Storage time") + "; ");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Completed : "Completed") + "; ");
@@ -646,7 +646,7 @@ namespace Cargotruck.Server.Controllers
                 txt.Write(task.Time_of_receipt + ";");
                 txt.Write(task.Place_of_delivery + ";");
                 txt.Write(task.Time_of_delivery + ";");
-                txt.Write(task.Other_stops + ";"); 
+                txt.Write(task.other_stops + ";"); 
                 txt.Write(task.Id_cargo + ";");
                 txt.Write(task.Storage_time + ";");
                 txt.Write(task.Completed + ";");
@@ -712,16 +712,16 @@ namespace Cargotruck.Server.Controllers
                                 List<string?> titles = new List<string?>() {
                                      "Id",
                                     lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID",
+                                    lang == "hu" ? Cargotruck.Shared.Resources.Resource.Partner : "Partner",
                                     lang == "hu" ? Cargotruck.Shared.Resources.Resource.Description : "Description",
                                     lang == "hu" ? Cargotruck.Shared.Resources.Resource.Place_of_receipt : "Place of receipt",
                                     lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_receipt : "Time of receipt",
                                     lang == "hu" ? Cargotruck.Shared.Resources.Resource.Place_of_delivery : "Place of delivery",
                                     lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_delivery : "Time of delivery",
-                                    lang == "hu" ? Cargotruck.Shared.Resources.Resource.Other_stops : "Other stops",
+                                    lang == "hu" ? Cargotruck.Shared.Resources.Resource.other_stops : "other stops",
                                     lang == "hu" ? Cargotruck.Shared.Resources.Resource.Id_cargo : "Id cargo",
                                     lang == "hu" ? Cargotruck.Shared.Resources.Resource.Storage_time : "Storage time",
                                     lang == "hu" ? Cargotruck.Shared.Resources.Resource.Completed : "Completed",
-                                    lang == "hu" ? Cargotruck.Shared.Resources.Resource.Partner : "Partner",
                                     lang == "hu" ? Cargotruck.Shared.Resources.Resource.Completion_time : "Completion time",
                                     lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_delay : "Time of delay",
                                     lang == "hu" ? Cargotruck.Shared.Resources.Resource.Payment : "Payment",
@@ -754,7 +754,6 @@ namespace Cargotruck.Server.Controllers
                                 else if (titles.Count() == 1 &&  titles.Contains("Id")) 
                                 {
                                     haveColumns = true;
-                                
                                 }
                             }
                             else if(haveColumns)
@@ -767,8 +766,8 @@ namespace Cargotruck.Server.Controllers
                                     if (cell.Value!=null && cell.Value.ToString()!="") { list.Add(cell.Value); }
                                     else { list.Add(System.DBNull.Value); }
                                 }
-                                var sql = @"Insert Into Tasks (User_id,Partner,Description,Place_of_receipt,Time_of_receipt,Place_of_delivery,Time_of_delivery,Other_stops,Id_cargo,Storage_time,Completed,Completion_time,Time_of_delay,Payment,Final_Payment,Penalty,Date ) 
-                                        Values (@User_id,@Partner,@Description,@Place_of_receipt,@Time_of_receipt, @Place_of_delivery,@Time_of_delivery,@Other_stops,@Id_cargo,@Storage_time,@Completed,@Completion_time,@Time_of_delay,@Payment,@Final_Payment,@Penalty,@Date)";
+                                var sql = @"Insert Into Tasks (User_id,Partner,Description,Place_of_receipt,Time_of_receipt,Place_of_delivery,Time_of_delivery,other_stops,Id_cargo,Storage_time,Completed,Completion_time,Time_of_delay,Payment,Final_Payment,Penalty,Date ) 
+                                        Values (@User_id,@Partner,@Description,@Place_of_receipt,@Time_of_receipt, @Place_of_delivery,@Time_of_delivery,@other_stops,@Id_cargo,@Storage_time,@Completed,@Completion_time,@Time_of_delay,@Payment,@Final_Payment,@Penalty,@Date)";
                                 var insert =  await _context.Database.ExecuteSqlRawAsync(sql,
                                     new SqlParameter("@User_id", list[l]),
                                     new SqlParameter("@Partner", list[l+1]),
@@ -777,7 +776,7 @@ namespace Cargotruck.Server.Controllers
                                     new SqlParameter("@Time_of_receipt", list[l + 4] == System.DBNull.Value ? System.DBNull.Value : DateTime.Parse(list[l + 4].ToString())),
                                     new SqlParameter("@Place_of_delivery", list[l + 5]),
                                     new SqlParameter("@Time_of_delivery", list[l + 6] == System.DBNull.Value ? System.DBNull.Value : DateTime.Parse(list[l + 6].ToString())),
-                                    new SqlParameter("@Other_stops", list[l + 7]),
+                                    new SqlParameter("@other_stops", list[l + 7]),
                                     new SqlParameter("@Id_cargo", list[l + 8]),
                                     new SqlParameter("@Storage_time", list[l + 9]),
                                     new SqlParameter("@Completed", list[l + 10]),

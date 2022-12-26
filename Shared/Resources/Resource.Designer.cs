@@ -961,7 +961,7 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Nem található!.
         /// </summary>
         public static string Notfound {
             get {
@@ -981,18 +981,18 @@ namespace Cargotruck.Shared.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Egyéb.
         /// </summary>
-        public static string Other {
+        public static string other {
             get {
-                return ResourceManager.GetString("Other", resourceCulture);
+                return ResourceManager.GetString("other", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Egyéb megállóhelyek.
         /// </summary>
-        public static string Other_stops {
+        public static string other_stops {
             get {
-                return ResourceManager.GetString("Other_stops", resourceCulture);
+                return ResourceManager.GetString("other_stops", resourceCulture);
             }
         }
         
@@ -1224,6 +1224,15 @@ namespace Cargotruck.Shared.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Javítás.
         /// </summary>
+        public static string repair {
+            get {
+                return ResourceManager.GetString("repair", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Javítás költsége.
+        /// </summary>
         public static string Repair_cost {
             get {
                 return ResourceManager.GetString("Repair_cost", resourceCulture);
@@ -1272,6 +1281,15 @@ namespace Cargotruck.Shared.Resources {
         public static string Role {
             get {
                 return ResourceManager.GetString("Role", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fizetés.
+        /// </summary>
+        public static string salary {
+            get {
+                return ResourceManager.GetString("salary", resourceCulture);
             }
         }
         
@@ -1357,6 +1375,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Raktározás.
+        /// </summary>
+        public static string storage {
+            get {
+                return ResourceManager.GetString("storage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Raktározás kezdete.
         /// </summary>
         public static string Storage_starting_time {
@@ -1384,6 +1411,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string String1 {
+            get {
+                return ResourceManager.GetString("String1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sikeresen frissítve!.
         /// </summary>
         public static string Succesfull_update {
@@ -1398,6 +1434,15 @@ namespace Cargotruck.Shared.Resources {
         public static string Success_upload {
             get {
                 return ResourceManager.GetString("Success_upload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Megbízás.
+        /// </summary>
+        public static string task {
+            get {
+                return ResourceManager.GetString("task", resourceCulture);
             }
         }
         

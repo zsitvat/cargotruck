@@ -162,7 +162,7 @@ namespace Cargotruck.Server.Migrations
                     b.Property<int?>("Monthly_expensesId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Other")
+                    b.Property<int?>("other")
                         .HasColumnType("int");
 
                     b.Property<int?>("Penalty")
@@ -299,7 +299,7 @@ namespace Cargotruck.Server.Migrations
                     b.Property<int?>("Monthly_expensesId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Other_stops")
+                    b.Property<string>("other_stops")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Partner")

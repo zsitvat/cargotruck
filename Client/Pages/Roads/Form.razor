@@ -110,7 +110,7 @@
                                             @foreach (var task in tasks)
                                             {
                                                 if(!task.Completed){
-                                                    <option value="@task.Id">@task.Id - @task.Date - @task.Description.Substring(0, task.Description.Length >= 50 ? 50 : task.Description.Length)</option>
+                                                    <option value="@task.Id">@task.Id - @task.Date - @task.Description?.Substring(0, task.Description.Length >= 80 ? 80 : task.Description.Length)</option>
                                                 }
                                             }
                                         }
@@ -129,7 +129,7 @@
                                         {
                                             @foreach (var cargo in cargoes)
                                             {
-                                                <option value="@cargo.Id">@cargo.Id - @cargo.Description.Substring(0,50)</option>
+                                                <option value="@cargo.Id">@cargo.Id - @cargo.Description?.ToString().Substring(0,cargo.Description.Length >= 80 ? 80 : cargo.Description.Length)</option>
                                             }
                                         }
                                     </select>

@@ -29,8 +29,8 @@ namespace Cargotruck.Shared.Models
         [Required(ErrorMessageResourceName = "Error_time_of_delivery", ErrorMessageResourceType = typeof(Resource))]
         [Display(Name = "Time_of_delivery", ResourceType = typeof(Resource))]
         public DateTime? Time_of_delivery { get; set; }
-        [Display(Name = "Other_stops", ResourceType = typeof(Resource))]
-        public string? Other_stops { get; set; }
+        [Display(Name = "other_stops", ResourceType = typeof(Resource))]
+        public string? other_stops { get; set; }
         [Display(Name = "Id_cargo", ResourceType = typeof(Resource))]
         public string? Id_cargo { get; set; }
         [Display(Name = "Storage_time", ResourceType = typeof(Resource))]

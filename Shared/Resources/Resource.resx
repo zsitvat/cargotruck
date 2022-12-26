@@ -403,7 +403,7 @@
     <value>Új felhasználó</value>
   </data>
   <data name="Notfound" xml:space="preserve">
-    <value />
+    <value>Nem található!</value>
   </data>
   <data name="Not_excel" xml:space="preserve">
     <value>Csak .xlsx formátum elfogadott!</value>
@@ -423,10 +423,10 @@
   <data name="on_road" xml:space="preserve">
     <value>Úton</value>
   </data>
-  <data name="Other" xml:space="preserve">
+  <data name="other" xml:space="preserve">
     <value>Egyéb</value>
   </data>
-  <data name="Other_stops" xml:space="preserve">
+  <data name="other_stops" xml:space="preserve">
     <value>Egyéb megállóhelyek</value>
   </data>
   <data name="Owner" xml:space="preserve">
@@ -504,8 +504,11 @@
   <data name="rented" xml:space="preserve">
     <value>Bérelve</value>
   </data>
-  <data name="Repair_cost" xml:space="preserve">
+  <data name="repair" xml:space="preserve">
     <value>Javítás</value>
+  </data>
+  <data name="Repair_cost" xml:space="preserve">
+    <value>Javítás költsége</value>
   </data>
   <data name="Repair_description" xml:space="preserve">
     <value>Leírás a javításról</value>
@@ -521,6 +524,9 @@
   </data>
   <data name="Role" xml:space="preserve">
     <value>Jogosultság</value>
+  </data>
+  <data name="salary" xml:space="preserve">
+    <value>Fizetés</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Mentés</value>
@@ -549,6 +555,9 @@
   <data name="Status" xml:space="preserve">
     <value>Státusz</value>
   </data>
+  <data name="storage" xml:space="preserve">
+    <value>Raktározás</value>
+  </data>
   <data name="Storageman" xml:space="preserve">
     <value>Raktáros</value>
   </data>
@@ -558,11 +567,17 @@
   <data name="Storage_time" xml:space="preserve">
     <value>Raktározás ideje</value>
   </data>
+  <data name="String1" xml:space="preserve">
+    <value />
+  </data>
   <data name="Succesfull_update" xml:space="preserve">
     <value>Sikeresen frissítve!</value>
   </data>
   <data name="Success_upload" xml:space="preserve">
     <value>Feltöltés sikeres!</value>
+  </data>
+  <data name="task" xml:space="preserve">
+    <value>Megbízás</value>
   </data>
   <data name="Tasks" xml:space="preserve">
     <value>Megbízások</value>

@@ -66,28 +66,29 @@
                             </div>
                         </div>
                     </div>
-                     <div class="form-group">
+                    
+            </div>
+                <div class="d-inline-block forms-margin" >
+                <div class="form-group">
+                    <div>
+                        <label>@localizer["Task_id"]:</label>
                         <div>
-                            <label>@localizer["Task_id"]:</label>
-                            <div>
-                                <select  class="form-control" @bind="@cargoes.Task_id">
-                                    <option value="" selected disabled>@localizer["Select_placeholder"]</option>
-                                    @if (tasks != null)
+                            <select class="form-control" @bind="@cargoes.Task_id">
+                                @if (tasks != null)
+                                {
+                                    @foreach (var task in tasks)
                                     {
-                                        @foreach (var task in tasks)
+                                        if (!task.Completed)
                                         {
-                                            if(!task.Completed){
-                                                <option value="@task.Id">@task.Id - @task.Date - @task.Description.Substring(0, task.Description.Length >= 50 ? 50 : task.Description.Length)</option>
-                                            }
+                                            <option value="@task.Id">@task.Id - @task.Date - @task.Description?.Substring(0, task.Description.Length >= 50 ? 50 : task.Description.Length)</option>
                                         }
                                     }
-                                </select>
-                                <ValidationMessage For="@(() => cargoes.Task_id)" />
-                            </div>
+                                }
+                            </select>
+                            <ValidationMessage For="@(() => cargoes.Task_id)" />
                         </div>
                     </div>
-            </div>
-                <div class="d-inline-block forms-margin second-col mt-3" >
+                </div>
                     <div class="form-group">
                         <div>
                             <label>@localizer["Warehouse_id"]:</label>

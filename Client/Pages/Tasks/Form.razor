@@ -76,10 +76,10 @@
                 </div>
                   <div class="form-group ">
                     <div>
-                        <label>@localizer["Other_stops"]:</label>
+                        <label>@localizer["other_stops"]:</label>
                         <div>
-                            <InputText class="form-control inputs" @bind-Value="@tasks.Other_stops" />
-                            <ValidationMessage For="@(() => tasks.Other_stops)" />
+                            <InputText class="form-control inputs" @bind-Value="@tasks.other_stops" />
+                            <ValidationMessage For="@(() => tasks.other_stops)" />
                         </div>
                     </div>
                 </div>
@@ -91,11 +91,12 @@
                         <label>@localizer["Id_cargo"]:</label>
                         <div> 
                             <select class="form-control" @bind="@tasks.Id_cargo">
-                                @if (tasks.Id_cargo != null)
+                                @if (cargoes != null)
                                 {
+                                    <option value="" selected disabled>@localizer["Select_placeholder"]</option>
                                     @foreach (var cargo in cargoes)
                                     {
-                                        <option value="@cargo.Id">@cargo.Id - @cargo.Description.Substring(0,50)</option>
+                                        <option value="@cargo.Id">@cargo.Id - @cargo.Description?.Substring(0, cargo.Description.Length >= 80 ? 80 : cargo.Description.Length)</option>
                                     }
                                 }
                             </select>
@@ -183,6 +184,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        cargoes = await client.GetFromJsonAsync<Cargoes[]>("api/cargoes/get");
+        cargoes = await client.GetFromJsonAsync<Cargoes[]>("api/cargoes/getcargoes");
     }
 }

@@ -495,9 +495,13 @@ table th button{
     color: white;
 }
 
-.iconify2{
-    height:30px;
-    width:30px;
+.nav-link {
+    white-space: nowrap;
+}
+
+.iconify2 {
+    height: 30px;
+    width: 30px;
 }
 
 [data-title]:hover:after {

@@ -12,7 +12,7 @@ namespace Cargotruck.Shared.Models
         public long User_id { get; set; }
         [Required(ErrorMessageResourceName = "Error_type", ErrorMessageResourceType = typeof(Resource))]
         [Display(Name = "Type", ResourceType = typeof(Resource))]
-        public Type Type { get; set; }
+        public Type? Type { get; set; }
         [Required(ErrorMessageResourceName = "Error_type_id", ErrorMessageResourceType = typeof(Resource))]
         [Display(Name = "Type_id", ResourceType = typeof(Resource))]
         public int? Type_id { get; set; }
@@ -32,8 +32,8 @@ namespace Cargotruck.Shared.Models
         public string? Repair_description { get; set; }
         [Display(Name = "Cost_of_storage", ResourceType = typeof(Resource))]
         public int? Cost_of_storage { get; set; }
-        [Display(Name = "Other", ResourceType = typeof(Resource))]
-        public int? Other { get; set; }
+        [Display(Name = "other", ResourceType = typeof(Resource))]
+        public int? other { get; set; }
         [Display(Name = "Date", ResourceType = typeof(Resource))]
         public DateTime Date { get; set; } = DateTime.Now;
     }
