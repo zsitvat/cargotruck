@@ -3,7 +3,7 @@
 @inject NavigationManager uriHelper
 @inject IJSRuntime js
 
-<Form ButtonText="Create" trucks="@truck" OnValidSubmit="@CreateCargo" />
+<Form ButtonText="Create" trucks="@truck" OnValidSubmit="@CreateCargo" TitleText="Create_truck"/>
 
 @code {
     Trucks truck = new Trucks();

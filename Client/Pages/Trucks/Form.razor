@@ -10,6 +10,7 @@
                     <a href="@PageHistoryState.GetGoBackPage()"><span class="oi oi-arrow-circle-left" aria-hidden="true" ></span></a>
                 }
             </div>
+            <p class="edit-title">@localizer[TitleText]</p>
                 <div class="form-group">
                     <button type="submit" class="btn btn-success">
                         <i class="oi oi-circle-check"></i> @localizer[ButtonText]
@@ -93,6 +94,7 @@
 @code {
     [Parameter] public Trucks? trucks { get; set; }
     [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public string? TitleText { get; set; }
     [Parameter] public EventCallback OnValidSubmit { get; set; }
     Roads[]? roads { get; set; }
 

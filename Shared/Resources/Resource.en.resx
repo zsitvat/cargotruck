@@ -168,11 +168,26 @@
   <data name="Create" xml:space="preserve">
     <value>Create</value>
   </data>
+  <data name="Create_cargo" xml:space="preserve">
+    <value>Create cargo</value>
+  </data>
+  <data name="Create_expense" xml:space="preserve">
+    <value>Create expense</value>
+  </data>
   <data name="Create_new" xml:space="preserve">
     <value>Create new</value>
   </data>
-  <data name="Create_tasks" xml:space="preserve">
+  <data name="Create_road" xml:space="preserve">
+    <value>Create road</value>
+  </data>
+  <data name="Create_task" xml:space="preserve">
     <value>Create tasks</value>
+  </data>
+  <data name="Create_truck" xml:space="preserve">
+    <value>Create Truck</value>
+  </data>
+  <data name="Create_warehouse" xml:space="preserve">
+    <value>Create warehouse</value>
   </data>
   <data name="csv" xml:space="preserve">
     <value>Export to CSV</value>
@@ -219,11 +234,26 @@
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
   </data>
+  <data name="Edit_cargo" xml:space="preserve">
+    <value>Edit cargo</value>
+  </data>
+  <data name="Edit_expense" xml:space="preserve">
+    <value>Edit expense</value>
+  </data>
   <data name="Edit_profile" xml:space="preserve">
     <value>Edit profile</value>
   </data>
-  <data name="Edit_tasks" xml:space="preserve">
+  <data name="Edit_road" xml:space="preserve">
+    <value>Edit road</value>
+  </data>
+  <data name="Edit_task" xml:space="preserve">
     <value>Edit task</value>
+  </data>
+  <data name="Edit_truck" xml:space="preserve">
+    <value>Edit truck</value>
+  </data>
+  <data name="Edit_warehouse" xml:space="preserve">
+    <value>Edit warehouse</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>E-mail</value>
@@ -528,7 +558,7 @@
   <data name="Save" xml:space="preserve">
     <value>Save</value>
   </data>
-  <data name="search" xml:space="preserve">
+  <data name="Search" xml:space="preserve">
     <value>Search...</value>
   </data>
   <data name="Section" xml:space="preserve">

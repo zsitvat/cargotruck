@@ -129,37 +129,38 @@ namespace Cargotruck.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> PageCount()
         {
-            var r = await _context.Roads.ToListAsync();
-            int PageCount = r.Count();
+            var data = await _context.Roads.ToListAsync();
+            int PageCount = data.Count();
             return Ok(PageCount);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var r = await _context.Roads.FirstOrDefaultAsync(a => a.Id == id);
-            return Ok(r);
+            var data = await _context.Roads.FirstOrDefaultAsync(a => a.Id == id);
+            return Ok(data);
         }
 
         [HttpGet]
         public async Task<IActionResult> GetRoads()
         {
-            var r = await _context.Roads.ToListAsync();
-            return Ok(r);
+            var data = await _context.Roads.ToListAsync();
+            return Ok(data);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(Roads r)
+        public async Task<IActionResult> Post(Roads data)
         {
-            _context.Add(r);
+            data.User_id = _context.Users.FirstOrDefault(a => a.UserName == User.Identity.Name).Id;
+            _context.Add(data);
             await _context.SaveChangesAsync();
-            return Ok(r.Id);
+            return Ok(data.Id);
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put(Roads r)
+        public async Task<IActionResult> Put(Roads data)
         {
-            _context.Entry(r).State = EntityState.Modified;
+            _context.Entry(data).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return NoContent();
         }
@@ -167,8 +168,8 @@ namespace Cargotruck.Server.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var r = new Roads { Id = id };
-            _context.Remove(r);
+            var data = new Roads { Id = id };
+            _context.Remove(data);
             await _context.SaveChangesAsync();
             return NoContent();
         }
@@ -178,7 +179,7 @@ namespace Cargotruck.Server.Controllers
         [HttpGet]
         public async Task<string> Excel(string lang)
         {
-            var roads = from r in _context.Roads select r;
+            var roads = from data in _context.Roads select data;
             using (var workbook = new XLWorkbook())
             {
                 var worksheet = workbook.Worksheets.Add("Roads");

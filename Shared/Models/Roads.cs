@@ -8,8 +8,7 @@ namespace Cargotruck.Shared.Models
     {
         [Required]
         public int Id { get; set; }
-        [Required]
-        public int User_id { get; set; }
+        public string? User_id { get; set; }
         [Display(Name = "Task_id", ResourceType = typeof(Resource))]
         public int? Task_id { get; set; }
         [Display(Name = "Id_cargo", ResourceType = typeof(Resource))]
@@ -26,7 +25,7 @@ namespace Cargotruck.Shared.Models
         [Display(Name = "Starting_place", ResourceType = typeof(Resource))]
         public string Starting_place { get; set; }
         [Display(Name = "Ending_place", ResourceType = typeof(Resource))]
-        public string Ending_place { get; set; }
+        public string? Ending_place { get; set; }
         [Required(ErrorMessageResourceName = "Error_direction", ErrorMessageResourceType = typeof(Resource))]
         [Display(Name = "Direction", ResourceType = typeof(Resource))]
         public string Direction { get; set; }

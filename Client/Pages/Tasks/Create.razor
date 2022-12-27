@@ -3,10 +3,11 @@
 @inject NavigationManager uriHelper
 @inject IJSRuntime js
 
- <Form ButtonText="Create" tasks="@task" OnValidSubmit="@CreateTasks" />
+<Form ButtonText="Create" tasks="@task" OnValidSubmit="@CreateTasks" TitleText="Create_task" />
 
 @code {
     Tasks task = new Tasks();
+
     async Task CreateTasks()
     {
         await http.PostAsJsonAsync("api/tasks/post", task);

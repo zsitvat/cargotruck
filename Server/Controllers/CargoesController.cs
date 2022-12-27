@@ -143,6 +143,7 @@ namespace Cargotruck.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(Cargoes data)
         {
+            data.User_id = _context.Users.FirstOrDefault(a => a.UserName == User.Identity.Name).Id;
             _context.Add(data);
             await _context.SaveChangesAsync();
             return Ok(data.Id);

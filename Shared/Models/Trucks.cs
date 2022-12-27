@@ -19,8 +19,7 @@ namespace Cargotruck.Shared.Models
     {
         [Required]
         public int Id { get; set; }   
-        [Required]
-        public int User_id { get; set; }
+        public string? User_id { get; set; }
         [Required(ErrorMessageResourceName = "Error_vehicle_registration_number", ErrorMessageResourceType = typeof(Resource))]
         [Display(Name = "Vehicle_registration_number", ResourceType = typeof(Resource))]
         public string Vehicle_registration_number { get; set; }

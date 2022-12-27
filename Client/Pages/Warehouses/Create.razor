@@ -3,11 +3,11 @@
 @inject NavigationManager uriHelper
 @inject IJSRuntime js
 
-<Form ButtonText="Create" warehouses="@warehouse" OnValidSubmit="@CreateCargo" />
+<Form ButtonText="Create" warehouses="@warehouse" OnValidSubmit="@CreateWarehouse" TitleText="Create_warehouse"/>
 
 @code {
     Warehouses warehouse = new Warehouses();
-    async Task CreateCargo()
+    async Task CreateWarehouse()
     {
         await http.PostAsJsonAsync("api/warehouses/post", warehouse);
         uriHelper.NavigateTo("/Warehouses");

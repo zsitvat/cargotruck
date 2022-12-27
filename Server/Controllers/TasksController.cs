@@ -9,6 +9,7 @@ using ClosedXML.Excel;
 using Document = iTextSharp.text.Document;
 using Microsoft.Data.SqlClient;
 using System.Text;
+using Cargotruck.Shared.Models;
 
 namespace Cargotruck.Server.Controllers
 {
@@ -191,6 +192,7 @@ namespace Cargotruck.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(Tasks t)
         {
+            t.User_id = _context.Users.FirstOrDefault(a => a.UserName == User.Identity.Name).Id;
             _context.Add(t);
             await _context.SaveChangesAsync();
             return Ok(t.Id);
@@ -311,7 +313,7 @@ namespace Cargotruck.Server.Controllers
             Font font1 = FontFactory.GetFont(FontFactory.TIMES_BOLD, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 12);
             Font font2 = FontFactory.GetFont(FontFactory.TIMES_ROMAN, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 10);
 
-            Type type = typeof(Tasks);
+            System.Type type = typeof(Tasks);
             var column_number = (type.GetProperties().Length) / 2;
             var columnDefinitionSize = new float[column_number];
             for (int i = 0; i < column_number; i++) columnDefinitionSize[i] = 1F;

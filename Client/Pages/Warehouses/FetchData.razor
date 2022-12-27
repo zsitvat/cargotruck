@@ -9,7 +9,7 @@
     <button data-title="@localizer["txt"]" class="btn btn-light" @onclick="@(() => ExportToCSV("txt"))"><span class="icon iconify" style="margin:0;" data-icon="material-symbols:text-snippet-outline"></span></button>
     <button data-title="@localizer["csv"]" class="btn btn-light" @onclick="@(() => ExportToCSV("csv"))"><span class="icon iconify" style="margin:0;" data-icon="bi:filetype-csv"></span></button>
     <span class="file-upload-title" import-data-title="@localizer["File_input"]"><UploadFiles page="warehouses" StateChanged="StateChanged" /></span>
-    <input value="@searchString" @oninput="@Search" placeholder="@(searchString != null ? searchString : localizer["Search"])" class="form-control inputs input_search" type="search" id="search-input" name="SearchString">
+    <input value="@searchString" @oninput="@Search" placeholder="@(searchString != "" ? searchString : localizer["Search"])" class="form-control inputs input_search" type="search" id="search-input" name="SearchString">
 </div>
 <br>
 @document_error
@@ -42,7 +42,7 @@ else
                                 }
                                 @if (showColumns[2])
                                 {
-                                    <th><button class="@(sortOrder=="Cargo_id" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Cargo_id"))">@localizer["Cargo_id"]</button></th>
+                                    <th><button>@localizer["Cargo_id"]</button></th>
                                 }
                                 @if (showColumns[3])
                                 {
@@ -68,7 +68,15 @@ else
                                     }
                                     @if (showColumns[2])
                                     {
-                                        <td>@item.Cargo_ids</td>
+                                        <td>
+                                        @foreach (var cargo in cargoes)
+                                        {
+                                                @if(cargo.Warehouse_id==item.Id)
+                                                {
+                                                    @(cargo.Id + " / " + cargo.Warehouse_section + " "); 
+                                                }                                      
+                                        }
+                                        </td>
                                     }
                                     @if (showColumns[3])
                                     {
@@ -132,6 +140,7 @@ else
 @code {
     public bool settings = false;
     Warehouses[]? warehouses { get; set; }
+    Cargoes[]? cargoes { get; set; }
     List<bool> showColumns = Enumerable.Repeat(true, 16).ToList();
     private int currentPage = 1;
     int pageSize = 10;
@@ -147,13 +156,14 @@ else
         PageHistoryState.AddPageToHistory("/Warehouses");
         base.OnInitialized();
         dataRows = await client.GetFromJsonAsync<int>("api/warehouses/pagecount");
+        cargoes = await client.GetFromJsonAsync<Cargoes[]?>("api/cargoes/getcargoes");
         await ShowPage();
     }
 
     async Task Delete(int Id)
     {
         var data = warehouses.First(x => x.Id == Id);
-        if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {data.Address} - {data.Cargo_ids} ({data.Id})"))
+        if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {data.Address} - {data.Owner} ({data.Id})"))
         {
             await client.DeleteAsync($"api/warehouses/delete/{Id}");
             var shouldreload = dataRows % ((currentPage == 1 ? currentPage : currentPage - 1) * pageSize);

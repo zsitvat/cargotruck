@@ -10,6 +10,9 @@ using Microsoft.Data.SqlClient;
 using Cargotruck.Shared.Models;
 using Font = iTextSharp.text.Font;
 using System.Text;
+using System.Linq.Dynamic.Core;
+using DocumentFormat.OpenXml.Spreadsheet;
+using System.Reflection;
 
 namespace Cargotruck.Server.Controllers
 {
@@ -34,14 +37,12 @@ namespace Cargotruck.Server.Controllers
                 data = data.Where(s =>
                (s.Address.ToString().ToLower()!.Contains(searchString))
             || (s.Owner == null ? false : s.Owner.ToString().ToLower()!.Contains(searchString))
-            || (s.Cargo_ids.ToString()!.Contains(searchString))
             || s.Date.ToString()!.Contains(searchString)
             ).ToList();
             }
 
             sortOrder = sortOrder == "Address" ? (desc ? "Address_desc" : "Address") : (sortOrder);
             sortOrder = sortOrder == "Owner" ? (desc ? "Owner_desc" : "Owner") : (sortOrder);
-            sortOrder = sortOrder == "Cargo_id" ? (desc ? "Cargo_id_desc" : "Cargo_id") : (sortOrder);
             sortOrder = sortOrder == "Date" || String.IsNullOrEmpty(sortOrder) ? (desc ? "Date_desc" : "") : (sortOrder);
 
             switch (sortOrder)
@@ -57,12 +58,6 @@ namespace Cargotruck.Server.Controllers
                     break;
                 case "Owner":
                     data = data.OrderBy(s => s.Owner).ToList();
-                    break;
-                case "Cargo_id_desc":
-                    data = data.OrderByDescending(s => s.Cargo_ids).ToList();
-                    break;
-                case "Cargo_id":
-                    data = data.OrderBy(s => s.Cargo_ids).ToList();
                     break;
                 case "Date_desc":
                     data = data.OrderByDescending(s => s.Date).ToList();
@@ -100,6 +95,7 @@ namespace Cargotruck.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(Warehouses data)
         {
+            data.User_id = _context.Users.FirstOrDefault(a => a.UserName == User.Identity.Name).Id;
             _context.Add(data);
             await _context.SaveChangesAsync();
             return Ok(data.Id);
@@ -128,6 +124,7 @@ namespace Cargotruck.Server.Controllers
         public async Task<string> Excel(string lang)
         {
             var warehouses = from data in _context.Warehouses select data;
+            var cargoes = from data in _context.Cargoes select data;
             using (var workbook = new XLWorkbook())
             {
                 var worksheet = workbook.Worksheets.Add("Warehouses");
@@ -147,12 +144,23 @@ namespace Cargotruck.Server.Controllers
 
                 foreach (var warehouse in warehouses)
                 {
+                    var cellValue = "-";
                     currentRow++;
+
                     worksheet.Cell(currentRow, 1).Value = warehouse.Id;
                     worksheet.Cell(currentRow, 2).Value = warehouse.User_id;
                     worksheet.Cell(currentRow, 3).Value = warehouse.Address;
                     worksheet.Cell(currentRow, 4).Value = warehouse.Owner;
-                    worksheet.Cell(currentRow, 5).Value = warehouse.Cargo_ids;
+
+                    foreach (Cargoes cargo in cargoes)
+                    {
+                        if (cargo.Warehouse_id == warehouse.Id)
+                        {
+                            cellValue = "[" + cargo.Id + "/" + cargo.Warehouse_section + "]";
+                        }
+                    }
+
+                    worksheet.Cell(currentRow, 5).Value = cellValue;
                     worksheet.Cell(currentRow, 6).Value = warehouse.Date;
                 }
 
@@ -170,6 +178,7 @@ namespace Cargotruck.Server.Controllers
         public async Task<string> PDF(string lang)
         {
             var warehouses = from data in _context.Warehouses select data;
+            var cargoes = from data in _context.Cargoes select data;
 
             int pdfRowIndex = 1;
             Random rnd = new Random();
@@ -186,7 +195,7 @@ namespace Cargotruck.Server.Controllers
             Font font2 = FontFactory.GetFont(FontFactory.TIMES_ROMAN, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 10);
 
             System.Type type = typeof(Warehouses);
-            var column_number = (type.GetProperties().Length)-1; 
+            var column_number = (type.GetProperties().Length); 
             var columnDefinitionSize = new float[column_number];
             for (int i = 0; i < column_number; i++) columnDefinitionSize[i] = 1F;
 
@@ -263,7 +272,15 @@ namespace Cargotruck.Server.Controllers
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(warehouse.Cargo_ids.ToString())) { s = warehouse.Cargo_ids.ToString(); }
+                    if (cargoes!=null) {
+                        foreach (Cargoes cargo in cargoes)
+                        {
+                            if(cargo.Warehouse_id == warehouse.Id)
+                            { 
+                                s = (s + "[" + cargo.Id + "/" + cargo.Warehouse_section + "]");
+                            }
+                        }
+                    }
                     else { s = "-"; }
                     table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
@@ -309,6 +326,7 @@ namespace Cargotruck.Server.Controllers
         public async Task<string> CSV(string lang)
         {
             var warehouses = from data in _context.Warehouses select data;
+            var cargoes = from data in _context.Cargoes select data;
 
             Random rnd = new Random();
             int random = rnd.Next(1000000, 9999999);
@@ -330,7 +348,14 @@ namespace Cargotruck.Server.Controllers
                 txt.Write(warehouse.User_id + ";");
                 txt.Write(warehouse.Address + ";");
                 txt.Write(warehouse.Owner + ";");
-                txt.Write(warehouse.Cargo_ids + ";");
+                foreach (Cargoes cargo in cargoes)
+                {
+                    if (cargo.Warehouse_id == warehouse.Id)
+                    {
+                        txt.Write("[" + cargo.Id + "/" + cargo.Warehouse_section + "]");
+                    }
+                }
+                txt.Write(";");
                 txt.Write(warehouse.Date + ";");
                 txt.Write("\n");
             }
@@ -423,6 +448,7 @@ namespace Cargotruck.Server.Controllers
                             else if (haveColumns)
                             {
                                 List<object?> list = new List<object?>();
+                                int nulls = 0;
                                 //Add rows to DataTable.
                                 dt.Rows.Add();
                                 foreach (IXLCell cell in row.Cells(1, dt.Columns.Count))
@@ -431,26 +457,53 @@ namespace Cargotruck.Server.Controllers
                                     {
                                         list.Add(cell.Value);
                                     }
-                                    else { list.Add(System.DBNull.Value); }
+                                    else { 
+                                        list.Add(System.DBNull.Value);
+                                        nulls += 1;
+                                    }
                                 }
-                                var sql = @"Insert Into Warehouses (User_id,Address,Owner,Cargo_id,Date) 
-                                Values (@User_id,@Address,@Owner,@Cargo_id,@Date)";
-                                var insert = await _context.Database.ExecuteSqlRawAsync(sql,
-                                    new SqlParameter("@User_id", list[l]),
-                                    new SqlParameter("@Address", list[l + 1]),
-                                    new SqlParameter("@Owner", list[l + 2]),
-                                    new SqlParameter("@Cargo_id", list[l + 3]),
-                                    new SqlParameter("@Date", list[l + 4] == System.DBNull.Value ? System.DBNull.Value : DateTime.Parse(list[l + 4].ToString()))
-                                    );
+                                if (nulls != list.Count()) { 
+                                    var sql = @"Insert Into Warehouses (User_id,Address,Owner,Date) 
+                                    Values (@User_id,@Address,@Owner,@Date)";
+                                    var insert = await _context.Database.ExecuteSqlRawAsync(sql,
+                                        new SqlParameter("@User_id", list[l]?.ToString()),
+                                        new SqlParameter("@Address", list[l + 1]),
+                                        new SqlParameter("@Owner", list[l + 2]),
+                                        new SqlParameter("@Date", list[l + 4] == System.DBNull.Value ? System.DBNull.Value : DateTime.Parse(list[l + 4].ToString()))
+                                        );
 
-                                if (insert > 0)
-                                {
-                                    error = "";
-                                    await _context.SaveChangesAsync();
-                                }
-                                else if (insert <= 0)
-                                {
-                                    System.IO.File.Delete(path); // delete the file
+                                    string[] substrings;
+
+                                    substrings = list[l + 3].ToString().Split("]");
+
+                                    if (substrings != null) { 
+                                        for (int s = 0; s < substrings.Length-1;++s) 
+                                        {
+                                            var CargoId = substrings[s].Substring(1, substrings[s].IndexOf("/")-1);
+                                            var warehouseSection = substrings[s].Substring(substrings[s].IndexOf("/")+1);
+
+                                            var greatestId =  _context.Warehouses.OrderBy(s => s.Id).Last().Id;
+
+                                            var sql2 = @"Update Cargoes 
+                                                        Set Warehouse_id = @Warehouse_id, Warehouse_section = @Warehouse_section
+                                                         Where Id = @Id";
+                                            var insert2 = await _context.Database.ExecuteSqlRawAsync(sql2,
+                                                new SqlParameter("@Warehouse_id", greatestId),
+                                                new SqlParameter("@Warehouse_section", warehouseSection),
+                                                new SqlParameter("@Id", CargoId)
+                                                );
+                                        }
+                                    }
+
+                                    if (insert > 0)
+                                    {
+                                        error = "";
+                                        await _context.SaveChangesAsync();
+                                    }
+                                    else if (insert <= 0)
+                                    {
+                                        System.IO.File.Delete(path); // delete the file
+                                    }
                                 }
                             }
                             else

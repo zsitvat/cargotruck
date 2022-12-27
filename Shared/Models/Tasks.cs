@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using Cargotruck.Shared.Resources;
 
@@ -11,7 +10,7 @@ namespace Cargotruck.Shared.Models
     {
         [Required]
         public int Id { get; set; }
-        public long User_id { get; set; }
+        public string? User_id { get; set; }
         [Required(ErrorMessageResourceName = "Error_partner", ErrorMessageResourceType = typeof(Resource))]
         [Display(Name = "Partner", ResourceType = typeof(Resource))]
         public string? Partner { get; set; }

@@ -10,6 +10,7 @@
                     <a href="@PageHistoryState.GetGoBackPage()"><span class="oi oi-arrow-circle-left" aria-hidden="true" ></span></a>
                 }
             </div>
+            <p class="edit-title">@localizer[TitleText]</p>
                 <div class="form-group">
                     <button type="submit" class="btn btn-success">
                         <i class="oi oi-circle-check"></i> @localizer[ButtonText]
@@ -94,7 +95,7 @@
                             <label>@localizer["Warehouse_id"]:</label>
                             <div>
                                 <select class="form-control" @bind="@cargoes.Warehouse_id">
-                                    <option value="" selected disabled>@localizer["Select_placeholder"]</option>
+                                    <option selected disabled>@localizer["Select_placeholder"]</option>
                                     @if (warehouses != null)
                                     {
                                         @foreach (var warehouse in warehouses)
@@ -135,6 +136,7 @@
 @code {
     [Parameter] public Cargoes? cargoes { get; set; }
     [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public string? TitleText { get; set; }
     [Parameter] public EventCallback OnValidSubmit { get; set; }
     Warehouses[]? warehouses { get; set; }
     Tasks[]? tasks { get; set; }

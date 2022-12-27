@@ -3,9 +3,8 @@
 @inject NavigationManager uriHelper
 @inject IJSRuntime js
 
-<h3>@localizer["Edit_warehouses"]</h3>
 
-<Form ButtonText="Update" warehouses="@warehouse" OnValidSubmit="@EditCargo" />
+<Form ButtonText="Update" warehouses="@warehouse" OnValidSubmit="@EditWarehouse" TitleText="Edit_warehouse"/>
 
 @code {
     [Parameter] public int Id { get; set; }
@@ -16,7 +15,7 @@
         warehouse = await http.GetFromJsonAsync<Warehouses>($"api/warehouses/getById/{Id}");
     }
 
-    async Task EditCargo()
+    async Task EditWarehouse()
     {
         var text = @localizer["Succesfull_update"];
         await http.PutAsJsonAsync("api/warehouses/put", warehouse);

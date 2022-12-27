@@ -9,8 +9,7 @@ namespace Cargotruck.Shared.Models
     {
         [Required]
         public int Id { get; set; }
-        [Required]
-        public int User_id { get; set; }
+        public string? User_id { get; set; }
         [Display(Name = "Task_id", ResourceType = typeof(Resource))]
         public List<Tasks>? Task_id { get; set; }
         [Display(Name = "Expenses_id", ResourceType = typeof(Resource))]

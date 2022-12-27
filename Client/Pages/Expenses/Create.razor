@@ -3,7 +3,7 @@
 @inject NavigationManager uriHelper
 @inject IJSRuntime js
 
-<Form ButtonText="Create" expenses="@expense" OnValidSubmit="@CreateExpense" />
+<Form ButtonText="Create" expenses="@expense" OnValidSubmit="@CreateExpense" TitleText="Create_expense" />
 
 @code {
     Expenses expense = new Expenses();

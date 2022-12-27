@@ -8,8 +8,7 @@ namespace Cargotruck.Shared.Models
     {
         [Required]
         public int Id { get; set; }
-        [Required]
-        public int User_id { get; set; }
+        public string? User_id { get; set; }
         [Required(ErrorMessageResourceName = "Error_task_id", ErrorMessageResourceType = typeof(Resource))]
         [Display(Name = "Task_id", ResourceType = typeof(Resource))]
         public int Task_id { get; set; }

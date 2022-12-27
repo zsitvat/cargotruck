@@ -275,10 +275,11 @@ table th button{
 
 .forms-margin {
     margin-left: 20%;
+    margin-top:0.5rem;
 }
 
-.forms-margin .form-group {
-    margin-top: 8%;
+.forms-margin label {
+    margin-top: 1rem;
 }
 
 .form-group label{
@@ -453,6 +454,14 @@ table th button{
     text-align: center;
 }
 
+.edit-title {
+    position: absolute;
+    left: 5rem;
+    top:1rem;
+    color: #F5F7FA;
+    font-weight: 300;
+    font-size:16px;
+}
 
 .login-btn {
     font-weight: 400;
@@ -796,7 +805,10 @@ tbody td, tbody th{
 
     .second-col {
         position: relative;
-        top: -5.65rem;
+        top: -5.4rem;
+    }
+    .center-div {
+        margin-left: 40%;
     }
 }
 @media (min-width: 1230px) {

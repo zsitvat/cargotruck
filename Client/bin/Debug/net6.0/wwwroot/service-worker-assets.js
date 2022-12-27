@@ -1,7 +1,7 @@
 ﻿self.assetsManifest = {
   "assets": [
     {
-      "hash": "sha256-3e0\/RU2fm9cX1H08aaaBFds0xvEyzygO7\/MAiPCuTVs=",
+      "hash": "sha256-sm4OKeHIuJfitTaKSAqlrUc+JUJtGxh6pwpTI3PNnJI=",
       "url": "css\/app.css"
     },
     {
@@ -101,7 +101,7 @@
       "url": "index.html"
     },
     {
-      "hash": "sha256-IuBMKX2HEjCocWtiAkXXb+x5gG3Gof1RwuF8TUK0izo=",
+      "hash": "sha256-R3BSrqK2jfC4fXnT9HMP8HaT\/+6djH6lTOI\/2A+fHtY=",
       "url": "js\/site.js"
     },
     {
@@ -993,23 +993,23 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-xB0BSBAnUlONljoM2392dEMPXgFX++W1MVkQ4CtUkK8=",
+      "hash": "sha256-6mkdhmtECGGg4FqraPY7o5w1LXEkKBuRvsIPqYEAaOY=",
       "url": "_framework\/Cargotruck.Shared.dll"
     },
     {
-      "hash": "sha256-m\/GE1kHD\/7wGLxFFrVY14TyEZ4d\/rxiHVosdvu3mqs0=",
+      "hash": "sha256-AIdCrXCxjokAVVAH47X\/exQkc2v+KW8IsTqTgxD7Q9U=",
       "url": "_framework\/Cargotruck.Shared.pdb"
     },
     {
-      "hash": "sha256-wcpgy\/d5qGjK3y\/aCPtdc9bp\/9Yh3kLURn1k8OsjMS8=",
+      "hash": "sha256-ryM6gMUBa5\/fpAKfZ+Z8e5+ZHg8fTjnRbcnPhg5HP+Q=",
       "url": "_framework\/en\/Cargotruck.Shared.resources.dll"
     },
     {
-      "hash": "sha256-Sm+6KKk4nDG3NRDa3LJVce1U2ZQRfelzrPHldw\/FoUk=",
+      "hash": "sha256-7lCCjIXbc27l43g0nCuROT9Xl\/NS7Olijkmkl1HoRwo=",
       "url": "_framework\/Cargotruck.Client.dll"
     },
     {
-      "hash": "sha256-CmOQPKFJfOl0Eg4vPDv20Mec\/H1k5rPlqTb00LyGYIs=",
+      "hash": "sha256-qtL+DtL69yk8EAe0YUxlLsJfAvZv9nhEZnQL2dseifw=",
       "url": "_framework\/Cargotruck.Client.pdb"
     },
     {
@@ -1017,7 +1017,7 @@
       "url": "_framework\/blazor.webassembly.js"
     },
     {
-      "hash": "sha256-haJTRAZuEVEyk0DXmh9jwSKlMRyXLu3E53el3C1\/11M=",
+      "hash": "sha256-VeJKxyzmBycgy0gk2bjINXkOgtC6YL\/Pc9TUrCMW1Ms=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -1025,5 +1025,5 @@
       "url": "_content\/Microsoft.AspNetCore.Components.WebAssembly.Authentication\/AuthenticationService.js"
     }
   ],
-  "version": "xy8FyYaA"
+  "version": "Rbd+IvE0"
 };

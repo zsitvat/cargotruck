@@ -3,9 +3,8 @@
 @inject NavigationManager uriHelper
 @inject IJSRuntime js
 
-<h3>@localizer["Edit_expenses"]</h3>
 
-<Form ButtonText="Update" expenses="@expense" OnValidSubmit="@EditExpense" />
+<Form ButtonText="Update" expenses="@expense" OnValidSubmit="@EditExpense" TitleText="Edit_expense"/>
 
 @code {
     [Parameter] public int Id { get; set; }

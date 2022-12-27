@@ -148,7 +148,7 @@
     <value>Rakományok</value>
   </data>
   <data name="Cargo_id" xml:space="preserve">
-    <value>Szállítmány azonosító</value>
+    <value>Rakomány azonosító</value>
   </data>
   <data name="Cargo_man" xml:space="preserve">
     <value>Rakományos</value>
@@ -168,11 +168,26 @@
   <data name="Create" xml:space="preserve">
     <value>Létrehozás</value>
   </data>
+  <data name="Create_cargo" xml:space="preserve">
+    <value>Rakomány adatok  létrehozása</value>
+  </data>
+  <data name="Create_expense" xml:space="preserve">
+    <value>Kiadások  létrehozása</value>
+  </data>
   <data name="Create_new" xml:space="preserve">
     <value>Új fiók</value>
   </data>
-  <data name="Create_tasks" xml:space="preserve">
+  <data name="Create_road" xml:space="preserve">
+    <value>Út adatok  létrehozása</value>
+  </data>
+  <data name="Create_task" xml:space="preserve">
     <value>Megbízás létrehozása</value>
+  </data>
+  <data name="Create_truck" xml:space="preserve">
+    <value>Jármű adatainak  létrehozása</value>
+  </data>
+  <data name="Create_warehouse" xml:space="preserve">
+    <value>Raktár adatok létrehozása</value>
   </data>
   <data name="csv" xml:space="preserve">
     <value>Letöltés CSV-ként</value>
@@ -222,11 +237,26 @@
   <data name="Edit" xml:space="preserve">
     <value>Módosít</value>
   </data>
+  <data name="Edit_cargo" xml:space="preserve">
+    <value>Rakomány adatok szerkesztése</value>
+  </data>
+  <data name="Edit_expense" xml:space="preserve">
+    <value>Kiadások szerkesztése</value>
+  </data>
   <data name="Edit_profile" xml:space="preserve">
     <value>Profil szerkesztése</value>
   </data>
-  <data name="Edit_tasks" xml:space="preserve">
+  <data name="Edit_road" xml:space="preserve">
+    <value>Út szerkesztése</value>
+  </data>
+  <data name="Edit_task" xml:space="preserve">
     <value>Megbízás módosítása</value>
+  </data>
+  <data name="Edit_truck" xml:space="preserve">
+    <value>Jármű adatainak szerkesztése</value>
+  </data>
+  <data name="Edit_warehouse" xml:space="preserve">
+    <value>Raktár adatok szerkesztése</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>E-mail</value>
@@ -531,7 +561,7 @@
   <data name="Save" xml:space="preserve">
     <value>Mentés</value>
   </data>
-  <data name="search" xml:space="preserve">
+  <data name="Search" xml:space="preserve">
     <value>Keresés...</value>
   </data>
   <data name="Section" xml:space="preserve">
@@ -568,6 +598,9 @@
     <value>Raktározás ideje</value>
   </data>
   <data name="String1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="String2" xml:space="preserve">
     <value />
   </data>
   <data name="Succesfull_update" xml:space="preserve">

@@ -8,8 +8,7 @@ namespace Cargotruck.Shared.Models
     {
         [Required]
         public int Id { get; set; }
-        [Required]
-        public long User_id { get; set; }
+        public string? User_id { get; set; }
         [Required(ErrorMessageResourceName = "Error_type", ErrorMessageResourceType = typeof(Resource))]
         [Display(Name = "Type", ResourceType = typeof(Resource))]
         public Type? Type { get; set; }
