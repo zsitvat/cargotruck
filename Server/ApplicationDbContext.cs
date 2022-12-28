@@ -22,6 +22,7 @@ namespace Cargotruck.Data
         public DbSet<Cargoes> Cargoes { get; set; }
         public DbSet<Expenses> Expenses { get; set; }
         public DbSet<Monthly_expenses> Monthly_Expenses { get; set; }
+        public DbSet<Monthly_expenses_tasks_expenses> Monthly_expenses_tasks_expenses { get; set; }
         public DbSet<Roads> Roads { get; set; }
         public DbSet<Trucks> Trucks { get; set; }
         public DbSet<Warehouses> Warehouses { get; set; }

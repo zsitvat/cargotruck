@@ -28,7 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\Monthly_expenses\" />
     <Folder Include="wwwroot\img\profiles\" />
   </ItemGroup>
 

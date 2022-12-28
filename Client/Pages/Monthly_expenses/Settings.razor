@@ -1,0 +1,85 @@
+﻿monthly_expense
+<div class="settings-card mb-6">
+    <div class="card-body mb-3">
+        <div class="d-inline-block ms-5">
+        <a class="btn btn-danger x" @onclick="@SettingsClosed"><i class="oi oi-x"></i></a>
+            <div class="form-group">
+                <div>
+                <label>
+                        @localizer["Earning"]:
+                    <input type="checkbox" @onchange="@(async () =>{ showColumns[0]=!showColumns[0]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[0]" />
+                    </label>
+                </div>
+            </div>
+            <div class="form-group ">
+                <div>
+                <label>
+                        @localizer["Profit"]:
+                    <input type="checkbox" @onchange="@(async () =>{ showColumns[1]=!showColumns[1]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[1]" />
+                    </label>
+                </div>
+            </div>
+            <div class="form-group ">
+                <div>
+                <label>
+                        @localizer["Expenses"]:
+                    <input type="checkbox" @onchange="@(async () =>{ showColumns[2]=!showColumns[2]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[2]" />
+                    </label>
+                </div>
+            </div>
+            <div class="form-group ">
+                <div>
+                    <label>
+                        @localizer["Task_id"]:
+                        <input type="checkbox" @onchange="@(async () =>{ showColumns[3]=!showColumns[3]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[3]" />
+                    </label>
+                </div>
+            </div>
+                <div class="form-group ">
+                    <div>
+                        <label>
+                        @localizer["Date"]:
+                        <input type="checkbox" @onchange="@(async () =>{ showColumns[4]=!showColumns[4]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[4]" />
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+        <div class="form-group mt-2">
+            <div>
+                <label class="ms-5">
+                    @localizer["PageSize"]:
+                    <input class="number-input" value="@pageSize" @oninput="@InputChange" type="number" />   
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+
+   
+
+
+@code {
+    [Parameter] public List<bool> showColumns { get; set; }
+    [Parameter] public bool settings { get; set; }
+    [Parameter] public int pageSize { get; set; }
+    [Parameter] public  EventCallback  OnSettingsChanged { get; set; }
+    [Parameter] public  EventCallback  OnSettingsClosed { get; set; }
+    [Parameter] public EventCallback<int> OnInputChanged { get; set; }
+
+    protected async Task SettingsChanged()
+    {
+        await OnSettingsChanged.InvokeAsync();
+    }
+
+    protected async Task SettingsClosed()
+    {
+        await OnSettingsClosed.InvokeAsync();
+    }
+
+    private async Task InputChange(ChangeEventArgs args)
+    {
+        pageSize = string.IsNullOrEmpty(args.Value.ToString()) ? pageSize : Int32.Parse(args.Value.ToString());
+        await OnInputChanged.InvokeAsync(pageSize);
+    }
+}

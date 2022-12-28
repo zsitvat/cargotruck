@@ -1,0 +1,32 @@
+﻿@page "/Monthly_expenses/edit/{Id:int}"
+@inject HttpClient http
+@inject NavigationManager uriHelper
+@inject IJSRuntime js
+
+
+<Form ButtonText="Update" Monthly_expenses="@monthly_expense" OnValidSubmit="@EditMonthlyExpense" TitleText="Edit_monthly_expense"/>
+
+@code {
+    [Parameter] public int Id { get; set; }
+    Monthly_expenses? monthly_expense = new Monthly_expenses();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        monthly_expense = await http.GetFromJsonAsync<Monthly_expenses>($"api/Monthly_expenses/getById/{Id}");
+    }
+
+    async Task EditMonthlyExpense()
+    {
+        var text = @localizer["Succesfull_update"];
+        await http.PutAsJsonAsync("api/monthly_expenses/put", monthly_expense);
+        await js.InvokeVoidAsync("alert", $"{text}");
+        uriHelper.NavigateTo("/Monthly_expenses");
+
+    }
+
+    protected override void OnInitialized()
+    {
+        PageHistoryState.AddPageToHistory("/Monthly_expenses/edit/{Id:int}");
+        base.OnInitialized();
+    }
+}

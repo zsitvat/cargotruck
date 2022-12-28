@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Cargotruck.Shared.Resources;
 
 
@@ -9,6 +10,7 @@ namespace Cargotruck.Shared.Models
     public class Tasks
     {
         [Required]
+        [ForeignKey("Task_id")]
         public int Id { get; set; }
         public string? User_id { get; set; }
         [Required(ErrorMessageResourceName = "Error_partner", ErrorMessageResourceType = typeof(Resource))]

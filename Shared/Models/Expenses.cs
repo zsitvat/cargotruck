@@ -1,18 +1,19 @@
 ﻿using Cargotruck.Shared.Resources;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cargotruck.Shared.Models
 {
     public class Expenses
     {
         [Required]
+        [ForeignKey("Expense_id")]
         public int Id { get; set; }
         public string? User_id { get; set; }
         [Required(ErrorMessageResourceName = "Error_type", ErrorMessageResourceType = typeof(Resource))]
         [Display(Name = "Type", ResourceType = typeof(Resource))]
         public Type? Type { get; set; }
-        [Required(ErrorMessageResourceName = "Error_type_id", ErrorMessageResourceType = typeof(Resource))]
         [Display(Name = "Type_id", ResourceType = typeof(Resource))]
         public int? Type_id { get; set; }
         [Display(Name = "Fuel", ResourceType = typeof(Resource))]

@@ -61,6 +61,114 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Január.
+        /// </summary>
+        public static string _1 {
+            get {
+                return ResourceManager.GetString("1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Október.
+        /// </summary>
+        public static string _10 {
+            get {
+                return ResourceManager.GetString("10", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to November.
+        /// </summary>
+        public static string _11 {
+            get {
+                return ResourceManager.GetString("11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to December.
+        /// </summary>
+        public static string _12 {
+            get {
+                return ResourceManager.GetString("12", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Február.
+        /// </summary>
+        public static string _2 {
+            get {
+                return ResourceManager.GetString("2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Március.
+        /// </summary>
+        public static string _3 {
+            get {
+                return ResourceManager.GetString("3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Április.
+        /// </summary>
+        public static string _4 {
+            get {
+                return ResourceManager.GetString("4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Május.
+        /// </summary>
+        public static string _5 {
+            get {
+                return ResourceManager.GetString("5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Június.
+        /// </summary>
+        public static string _6 {
+            get {
+                return ResourceManager.GetString("6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Július.
+        /// </summary>
+        public static string _7 {
+            get {
+                return ResourceManager.GetString("7", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Augusztus.
+        /// </summary>
+        public static string _8 {
+            get {
+                return ResourceManager.GetString("8", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Szeptember.
+        /// </summary>
+        public static string _9 {
+            get {
+                return ResourceManager.GetString("9", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fiók.
         /// </summary>
         public static string Account {
@@ -736,6 +844,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kiadás azonosító.
+        /// </summary>
+        public static string Expense_id_ {
+            get {
+                return ResourceManager.GetString("Expense_id:", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kiadások.
         /// </summary>
         public static string Expenses {
@@ -970,11 +1087,20 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hónap.
+        /// </summary>
+        public static string Month {
+            get {
+                return ResourceManager.GetString("Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Havi kiadások.
         /// </summary>
-        public static string Monthly_Expenses {
+        public static string Monthly_expenses {
             get {
-                return ResourceManager.GetString("Monthly_Expenses", resourceCulture);
+                return ResourceManager.GetString("Monthly_expenses", resourceCulture);
             }
         }
         
@@ -1515,6 +1641,15 @@ namespace Cargotruck.Shared.Resources {
         public static string String2 {
             get {
                 return ResourceManager.GetString("String2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string String3 {
+            get {
+                return ResourceManager.GetString("String3", resourceCulture);
             }
         }
         
