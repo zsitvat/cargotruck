@@ -22,6 +22,7 @@
     <div class="form-card mb-6" style="border-top-left-radius:unset;border-top-right-radius:unset;">
         <div class="card-body mb-3">
                 <div class="d-inline-block forms-margin center-div">
+                    <!--
                     <div class="form-group">
                         <div>
                         <label>@localizer["Earning"]:</label>
@@ -31,6 +32,15 @@
                             </div>
                         </div>
                     </div>
+                <div class="form-group">
+                    <div>
+                        <label>@localizer["Expense"]:</label>
+                        <div>
+                            <InputNumber class="form-control inputs" @bind-Value="@Monthly_expenses.Expense" />
+                            <ValidationMessage For="@(() => Monthly_expenses.Expense)" />
+                        </div>
+                    </div>
+                </div>
                     <div class="form-group ">
                         <div>
                         <label>@localizer["Profit"]:</label>
@@ -40,21 +50,19 @@
                             </div>
                         </div>
                     </div>
+                    -->
                      <div class="form-group">
                         <div>
                         <label>@localizer["Task_id"]:</label>
                             <div>
-                            <select class="form-control" @onchange=HandleChangeTask multiple>
-                                <option value="" selected disabled>@localizer["Select_placeholder"]</option>
-                                @if (tasks != null)
-                                    {
+                            @if (tasks != null){
+                                <select class="form-control" @onchange=HandleChangeTask multiple>
                                     @foreach (var task in tasks)
                                         {
-                                        <option value="@task.Id">@task.Id</option>
+                                        <option value="@task.Id">@task.Id - @task.Description - @task.Final_Payment  </option>
                                         }
-                                    }
                                 </select>
-                            <ValidationMessage For="@(() => Monthly_expenses_tasks_expenses.Task_id)" />
+                            }
                             </div>
                         </div>
                     </div>
@@ -62,17 +70,15 @@
                         <div>
                         <label>@localizer["Expense_id"]:</label>
                             <div>
-                            <select class="form-control" @onchange=HandleChangeExpense multiple>
-                                    <option value="" selected disabled>@localizer["Select_placeholder"]</option>
-                                    @if (expenses != null)
-                                    {
+                            @if (expenses != null){
+                                <select class="form-control" @onchange=HandleChangeExpense multiple>d                              
                                     @foreach (var expense in expenses)
                                         {
                                         <option value="@expense.Id">@expense.Id - @expense.Type_id/@expense.Type</option>
                                         }
-                                    }
+                                    
                                 </select>
-                            <ValidationMessage For="@(() => Monthly_expenses_tasks_expenses.Expense_id)" />
+                            }
                             </div>
                         </div>
                     </div>
@@ -85,36 +91,29 @@
 
 @code {
     [Parameter] public Monthly_expenses? Monthly_expenses { get; set; }
-    [Parameter] public Monthly_expenses_tasks_expenses? Monthly_expenses_tasks_expenses { get; set; }
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public string? TitleText { get; set; }
     [Parameter] public EventCallback OnValidSubmit { get; set; }
+    [Parameter] public EventCallback<string[]?> OnHandleChangeTask { get; set; }
+    [Parameter] public EventCallback<string[]?> OnHandleChangeExpense { get; set; }
+
 
     Tasks[]? tasks { get; set; }
     Expenses[]? expenses { get; set; }
 
-    int[]? selectedTaskId;
-    int[]? selectedExpenseId;
     protected override async Task OnInitializedAsync()
     {
         tasks = await client.GetFromJsonAsync<Tasks[]?>("api/tasks/gettasks");
         expenses = await client.GetFromJsonAsync<Expenses[]?>("api/expenses/getexpenses");
     }
 
-    void HandleChangeTask(ChangeEventArgs args)
+    public async void HandleChangeTask(ChangeEventArgs args)
     {
-        selectedTaskId = args.Value as int[];
-        foreach (var id in selectedTaskId)
-        {
-            Monthly_expenses_tasks_expenses.Task_id = id;
-        }   
-    }
-    void HandleChangeExpense(ChangeEventArgs args) {
-        selectedExpenseId = args.Value as int[];
-        foreach (var id in selectedExpenseId)
-        {
-            Monthly_expenses_tasks_expenses.Expense_id = id;
-        }
+        await OnHandleChangeTask.InvokeAsync(args.Value as string[]);
     }
 
+    public async void HandleChangeExpense(ChangeEventArgs args)
+    {
+        await OnHandleChangeExpense.InvokeAsync(args.Value as string[]);
+    }
 }

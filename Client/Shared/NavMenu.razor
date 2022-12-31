@@ -75,14 +75,14 @@
 
 <AuthorizeView Roles="Manager,User,Admin">
     <Authorized>
-        <div class="nav-item px-3">
+        <div class="nav-item px-3 hide-on-desktop">
             <NavLink class="nav-link" @onclick="()=>expandSubNav = !expandSubNav">
                 <span class="iconify" data-icon="arcticons:money-manager" aria-hidden="true"></span> @localizer["Expenses_menu"]
             </NavLink>
         </div>
         @if (expandSubNav)
         {
-            <div class="nav-item px-3 ms-3">
+             <div class="nav-item px-3 ms-3 hide-on-desktop">
                 <NavLink class="nav-link" href="Expenses">
                     <span class="iconify" data-icon="game-icons:pay-money"></span>@localizer["Expenses"]
                 </NavLink>
@@ -91,6 +91,19 @@
                 </NavLink>
             </div>
         }
+    </Authorized>
+</AuthorizeView>
+
+<AuthorizeView Roles="Manager,User,Admin">
+    <Authorized>
+            <div class="nav-item ms-3 hide">
+                <NavLink class="nav-link" href="Expenses">
+                    <span class="iconify" data-icon="game-icons:pay-money"></span>@localizer["Expenses"]
+                </NavLink>
+                <NavLink class="nav-link" href="Monthly_Expenses">
+                    <span class="iconify" data-icon="game-icons:receive-money"></span>@localizer["Monthly_expenses"]
+                </NavLink>
+            </div>
     </Authorized>
 </AuthorizeView>
 

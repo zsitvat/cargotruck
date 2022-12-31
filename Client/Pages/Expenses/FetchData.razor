@@ -12,15 +12,15 @@
     <input value="@searchString" @oninput="@Search" placeholder="@(searchString != "" ? searchString : localizer["Search"])" class="form-control inputs input_search" type="search" id="search-input" name="SearchString">
 </div>
 <br>
-@document_error
+<p class="error">@document_error</p>
 
 @if (expenses == null)
 {
-    <text>Loading...</text>
+    <text>@localizer["Loading"]</text>
 }
 else if (expenses.Length == 0)
 {
-    <text>No Records Found.</text>
+    <text>@localizer["No_records"]</text>
 }
 else
 {

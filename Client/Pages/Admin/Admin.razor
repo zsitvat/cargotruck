@@ -13,11 +13,11 @@
 
 @if (users == null)
 {
-    <text>Loading...</text>
+    <text>@localizer["Loading"]</text>
 }
 else if (users.Length == 0)
 {
-    <text>No Records Found.</text>
+    <text>@localizer["No_records"]</text>
 }
 else
 {

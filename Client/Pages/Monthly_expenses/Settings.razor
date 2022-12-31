@@ -1,4 +1,4 @@
-﻿monthly_expense
+﻿
 <div class="settings-card mb-6">
     <div class="card-body mb-3">
         <div class="d-inline-block ms-5">
@@ -14,16 +14,24 @@
             <div class="form-group ">
                 <div>
                 <label>
-                        @localizer["Profit"]:
+                        @localizer["Expense"]:
                     <input type="checkbox" @onchange="@(async () =>{ showColumns[1]=!showColumns[1]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[1]" />
                     </label>
                 </div>
             </div>
             <div class="form-group ">
                 <div>
+                    <label>
+                        @localizer["Profit"]:
+                        <input type="checkbox" @onchange="@(async () =>{ showColumns[2]=!showColumns[2]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[2]" />
+                    </label>
+                </div>
+            </div>
+            <div class="form-group ">
+                <div>
                 <label>
-                        @localizer["Expenses"]:
-                    <input type="checkbox" @onchange="@(async () =>{ showColumns[2]=!showColumns[2]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[2]" />
+                        @localizer["Expense_id"]:
+                    <input type="checkbox" @onchange="@(async () =>{ showColumns[3]=!showColumns[3]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[3]" />
                     </label>
                 </div>
             </div>
@@ -31,7 +39,7 @@
                 <div>
                     <label>
                         @localizer["Task_id"]:
-                        <input type="checkbox" @onchange="@(async () =>{ showColumns[3]=!showColumns[3]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[3]" />
+                        <input type="checkbox" @onchange="@(async () =>{ showColumns[4]=!showColumns[4]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[4]" />
                     </label>
                 </div>
             </div>
@@ -39,7 +47,7 @@
                     <div>
                         <label>
                         @localizer["Date"]:
-                        <input type="checkbox" @onchange="@(async () =>{ showColumns[4]=!showColumns[4]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[4]" />
+                        <input type="checkbox" @onchange="@(async () =>{ showColumns[5]=!showColumns[5]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[5]" />
                         </label>
                     </div>
                 </div>

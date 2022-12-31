@@ -79,7 +79,19 @@ a:active {
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
- input {
+.green {
+    background: rgba(227, 242, 222,0.5) !important;
+}
+
+.striped tr:nth-child(even) {
+    background-color: #F2F2F2;
+}
+
+.red {
+    background: rgba(244, 186, 186,0.5) !important;
+}
+
+input {
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
@@ -114,6 +126,10 @@ a:active {
 .page-error {
     position:absolute;
     font-size:15px;
+    color:red;
+}
+
+.error{
     color:red;
 }
 
@@ -211,9 +227,13 @@ th {
     white-space: nowrap;
 }
 
-table th button{
-    border:none;
-    background:none;
+.last-col{
+    padding-right:1rem !important;
+}
+
+table th button {
+    border: none;
+    background: none;
 }
 
 .arrow-up::after {
@@ -976,6 +996,7 @@ tbody td, tbody th{
     .bottom-row a {
         padding-left: 2%;
     }
+
     .table-width {
         max-width: 90vw;
     }
@@ -987,6 +1008,10 @@ tbody td, tbody th{
 
     .buttons{
         text-align:center;
+    }
+
+    .hide-on-desktop{
+        display:none;
     }
 }
 

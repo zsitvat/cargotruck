@@ -2,25 +2,23 @@
 
 <h3>@localizer["Monthly_expenses"]</h3>
 <div class="form-group buttons">
-
     <a data-title="@localizer["Settings"]" class="btn btn-light" @onclick="@(() => settings=!settings)"><i class="oi oi-cog"></i></a>
     <button data-title="@localizer["pdf"]" class="btn btn-light" @onclick="@ExportToPdf"><i class="oi oi-document"></i></button>
     <button data-title="@localizer["excel"]" class="btn btn-light" @onclick="@ExportToExcel"><i class="oi oi-spreadsheet"></i></button>
     <button data-title="@localizer["txt"]" class="btn btn-light" @onclick="@(() => ExportToCSV("txt"))"><span class="icon iconify" style="margin:0;" data-icon="material-symbols:text-snippet-outline"></span></button>
     <button data-title="@localizer["csv"]" class="btn btn-light" @onclick="@(() => ExportToCSV("csv"))"><span class="icon iconify" style="margin:0;" data-icon="bi:filetype-csv"></span></button>
-    <span class="file-upload-title" import-data-title="@localizer["File_input"]"><UploadFiles page="monthly_expenses" StateChanged="StateChanged" /></span>
     <input value="@searchString" @oninput="@Search" placeholder="@(searchString != "" ? searchString : localizer["Search"])" class="form-control inputs input_search" type="search" id="search-input" name="SearchString">
 </div>
 <br>
-@document_error
+<p class="error">@document_error</p>
 
 @if (Monthly_expenses == null)
 {
-    <text>Loading...</text>
+    <text>@localizer["Loading"]</text>
 }
 else if (Monthly_expenses.Length == 0)
 {
-    <text>No Records Found.</text>
+    <text>@localizer["No_records"]</text>
 }
 else
 {
@@ -28,7 +26,7 @@ else
         <div class="form-card mb-1 table-width">
             <div class="card-body mb-3">
                 <div class="table-responsive fixed-table-body">
-                    <table class="table table-striped">
+                    <table class="table striped">
                         <thead>
                             <tr>
                                 <th class="counter-col"> </th>
@@ -39,19 +37,23 @@ else
                                 }
                                 @if (showColumns[1])
                                 {
-                                    <th><button class="@(sortOrder=="Profit" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Profit"))">@localizer["Profit"]</button></th>
+                                    <th><button class="@(sortOrder=="Expense" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Expense"))">@localizer["Expense"]</button></th>
                                 }
                                 @if (showColumns[2])
                                 {
-                                    <th><button>@localizer["Expenses"]</button></th>
+                                    <th><button class="@(sortOrder=="Profit" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Profit"))">@localizer["Profit"]</button></th>
                                 }
                                 @if (showColumns[3])
                                 {
-                                    <th><button>@localizer["Task_id"]</button></th>
+                                    <th><button>@localizer["Expenses_id"]</button></th>
                                 }
                                 @if (showColumns[4])
                                 {
-                                    <th><button style="min-width:5rem;" class="@(sortOrder=="Date" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Date"))">@localizer["Date"]</button></th>
+                                    <th><button>@localizer["Task_id"]</button></th>
+                                }
+                                @if (showColumns[5])
+                                {
+                                    <th class="last-col"><button class=" @(sortOrder=="Date" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Date"))">@localizer["Date"]</button></th>
                                 }
                             </tr>
                         </thead>
@@ -60,7 +62,7 @@ else
                             @foreach (Monthly_expenses item in Monthly_expenses)
                             {
                                 rowCounter += 1;
-                                <tr>
+                                <tr class="@(item.Profit <=0 ? "red": "")">
                                     <td>@rowCounter</td>
                                     <td>@localizer[item.Date.Month.ToString()]</td>
                                     @if (showColumns[0])
@@ -69,34 +71,52 @@ else
                                     }
                                     @if (showColumns[1])
                                     {
-                                        <td>@item.Profit </td>
+                                        <td>@item.Expense</td>
                                     }
                                     @if (showColumns[2])
                                     {
-                                        foreach(var id in connection_ids){
-                                            if (id.Monthly_expense_id==item.Id)
-                                            {
-                                                <td>@id.Expense_id</td>
-                                            } 
-                                        }
+                                        <td>@item.Profit </td>
                                     }
                                     @if (showColumns[3])
                                     {
-                                        foreach (var id in connection_ids)
-                                        {
-                                            if (id.Monthly_expense_id == item.Id)
+                                        <td>
+                                            @foreach (var ConId in connection_ids.Where(x => x.Monthly_expense_id == item.Monthly_expense_id && x.Expense_id != null))
                                             {
-                                                <td>@id.Task_id</td>
+                                                @if (connection_ids.Where(x => x.Monthly_expense_id == item.Monthly_expense_id && x.Expense_id != null).Last().Id != ConId.Id)
+                                                {
+                                                    @(ConId.Expense_id + ", ")
+                                                }
+                                                else
+                                                {
+                                                    @ConId.Expense_id
+                                                }
                                             }
-                                        }
+                                        </td>
                                     }
                                     @if (showColumns[4])
                                     {
-                                        <td>@item.Date</td>
+                                        <td>
+                                            @foreach (var ConId in connection_ids.Where(x => x.Monthly_expense_id == item.Monthly_expense_id && x.Task_id != null))
+                                            {
+                                                @if (connection_ids.Where(x => x.Monthly_expense_id == item.Monthly_expense_id && x.Task_id != null ).Last().Id != ConId.Id)
+                                                {
+                                                    @(ConId.Task_id + ", ")
+                                                        
+                                                }
+                                                else
+                                                {
+                                                    @ConId.Task_id
+                                                }
+                                            }
+                                        </td>
+                                    }
+                                    @if (showColumns[5])
+                                    {
+                                        <td class="last-col">@item.Date</td>
                                     }
                                     <td>
-                                        <a class="btn  fixed" href="Monthly_expenses/edit/@item.Id"> <span data-title="@localizer["Edit"]" class="oi oi-pencil" aria-hidden="true"></span></a>
-                                        <button class="btn fixed2" @onclick="@(() => Delete(item.Id))"> <span data-title="@localizer["Delete"]" class="oi oi-trash" aria-hidden="true"></span></button>
+                                        <a class="btn  fixed" href="Monthly_expenses/edit/@item.Monthly_expense_id"> <span data-title="@localizer["Edit"]" class="oi oi-pencil" aria-hidden="true"></span></a>
+                                        <button class="btn fixed2" @onclick="@(() => Delete(item.Monthly_expense_id))"> <span data-title="@localizer["Delete"]" class="oi oi-trash" aria-hidden="true"></span></button>
                                     </td>
                                 </tr>
                             }
@@ -158,7 +178,7 @@ else
     int pageSize = 10;
     int dataRows;
     float maxPage;
-    private string sortOrder = "Date";
+    private string sortOrder = "Month_desc";
     private bool desc = false;
     private string? searchString = "";
     string? document_error;
@@ -167,16 +187,17 @@ else
     {
         PageHistoryState.AddPageToHistory("/Monthly_expenses");
         base.OnInitialized();
+        var refreshdata = await client.GetStringAsync("api/Monthly_expenses/createcontable");
         dataRows = await client.GetFromJsonAsync<int>("api/Monthly_expenses/pagecount");
         connection_ids = await client.GetFromJsonAsync<Monthly_expenses_tasks_expenses[]?>
-        ("api/monthly_expenses/getconnectionids");
+        ("api/Monthly_expenses/getconnectionids");
         await ShowPage();
     }
 
     async Task Delete(int Id)
     {
-        var data = Monthly_expenses.First(x => x.Id == Id);
-        if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {data.Earning} - {data.Profit} ({data.Id})"))
+        var data = Monthly_expenses.First(x => x.Monthly_expense_id == Id);
+        if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {data.Earning} - {data.Profit} ({data.Monthly_expense_id})"))
         {
             await client.DeleteAsync($"api/Monthly_expenses/delete/{Id}");
             var shouldreload = dataRows % ((currentPage == 1 ? currentPage : currentPage - 1) * pageSize);
@@ -246,8 +267,9 @@ else
         if (pageSize < 1 || pageSize == null ){ pageSize = 10; }
         else if (pageSize >= dataRows) { pageSize = dataRows != 0 ? dataRows : 1 ; }
         maxPage = (int)Math.Ceiling((decimal)((float)dataRows / (float)pageSize));
-
-        Monthly_expenses = await client.GetFromJsonAsync<Monthly_expenses[]>($"api/Monthly_expenses/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}");
+        var checkData = await client.GetAsync("api/Monthly_expenses/checkdata");
+        Monthly_expenses = await client.GetFromJsonAsync<Monthly_expenses[]>($"api/Monthly_expenses/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&lang={CultureInfo.CurrentCulture.Name.ToString()}");
+        document_error = checkData.IsSuccessStatusCode ? "" : localizer["CheckFailed"];
         StateHasChanged();
     }
 

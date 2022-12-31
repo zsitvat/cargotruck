@@ -192,6 +192,7 @@ namespace Cargotruck.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(Tasks t)
         {
+            t.Final_Payment = (t.Payment != null ? t.Payment : 0) - (t.Penalty != null ? t.Penalty : 0);
             t.User_id = _context.Users.FirstOrDefault(a => a.UserName == User.Identity.Name).Id;
             _context.Add(t);
             await _context.SaveChangesAsync();
@@ -201,6 +202,7 @@ namespace Cargotruck.Server.Controllers
         [HttpPut]
         public async Task<IActionResult> Put(Tasks t)
         {
+            t.Final_Payment = (t.Payment != null ? t.Payment : 0) - (t.Penalty != null ? t.Penalty : 0);
             _context.Entry(t).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return NoContent();

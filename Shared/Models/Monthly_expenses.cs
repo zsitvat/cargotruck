@@ -9,11 +9,13 @@ namespace Cargotruck.Shared.Models
     public class Monthly_expenses
     {
         [Required]
-        [ForeignKey("Monthly_expense_id")]
-        public int Id { get; set; }
+        [Key]
+        public int Monthly_expense_id { get; set; }
         public string? User_id { get; set; }
-        [Display(Name = "Task_id", ResourceType = typeof(Resource))]
+        [Display(Name = "Earning", ResourceType = typeof(Resource))]
         public int? Earning { get; set; } = 0;
+        [Display(Name = "Expense", ResourceType = typeof(Resource))]
+        public int? Expense { get; set; } = 0;
         [Display(Name = "Profit", ResourceType = typeof(Resource))]
         public int? Profit { get; set; } = 0;
         [Display(Name = "Date", ResourceType = typeof(Resource))]
@@ -25,12 +27,10 @@ namespace Cargotruck.Shared.Models
     {
         [Required]
         public int Id { get; set; }
-        [Required]
-        [ForeignKey("Id")]
-        public int? Monthly_expense_id { get; set; }
-        [ForeignKey("Id")]
+        [ForeignKey("Monthly_expenses")]
+        public int Monthly_expense_id { get; set; }
+        public Monthly_expenses? Monthly_expenses { get; set; }
         public int? Expense_id { get; set; }
-        [ForeignKey("Id")]
         public int? Task_id { get; set; }
     }
 }

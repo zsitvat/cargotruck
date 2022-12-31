@@ -12,15 +12,15 @@
     <input value="@searchString" @oninput="@Search" placeholder="@(searchString != "" ? searchString : localizer["Search"])" class="form-control inputs input_search" type="search" id="search-input" name="SearchString">
 </div>
 <br>
-@document_error
+<p class="error">@document_error</p>
 
 @if (tasks == null)
 {
-    <text>Loading...</text>
+    <text>@localizer["Loading"]</text>
 }
 else if (tasks.Length == 0)
 {
-    <text>No Records Found.</text>
+    <text>@localizer["No_records"]</text>
 }
 else
 {
@@ -28,7 +28,7 @@ else
         <div class="form-card mb-1 table-width">
             <div class="card-body mb-3">
                 <div class="table-responsive fixed-table-body">
-                    <table class="table table-striped">
+                    <table class="table striped">
                         <thead>
                             <tr>
                                 <th> </th>
@@ -94,7 +94,7 @@ else
                                 }
                                 @if (showColumns[15])
                                 {
-                                    <th><button style="min-width:5rem;" class="@(sortOrder=="Date" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Date"))">@localizer["Date"]</button></th>
+                                    <th class="last-col"><button class="@(sortOrder=="Date" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Date"))">@localizer["Date"]</button></th>
                                 }
                             </tr>
                         </thead>
@@ -103,7 +103,7 @@ else
                             @foreach (Tasks item in tasks)
                             {
                                 rowCounter += 1;
-                                <tr>
+                                <tr class="@(item.Completed ? "green": "")">
                                     <td>@rowCounter</td>
                                     @if (showColumns[0])
                                     {

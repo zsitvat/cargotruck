@@ -6,13 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Data;
 using ClosedXML.Excel;
 using Document = iTextSharp.text.Document;
-using Microsoft.Data.SqlClient;
 using Cargotruck.Shared.Models;
 using Font = iTextSharp.text.Font;
 using System.Text;
 using System.Linq.Dynamic.Core;
-using DocumentFormat.OpenXml.Spreadsheet;
-using System.Reflection;
+using DocumentFormat.OpenXml.InkML;
+
 
 namespace Cargotruck.Server.Controllers
 {
@@ -27,8 +26,9 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(int page, int pageSize, string sortOrder, bool desc, string? searchString)
+        public async Task<IActionResult> Get(int page, int pageSize, string sortOrder, bool desc, string? searchString, string lang)
         {
+            await CreateMonths(); // checks and create the monthly expenses data for the current month
             var data = await _context.Monthly_Expenses.ToListAsync();
             searchString = searchString == null ? null : searchString.ToLower();
 
@@ -42,6 +42,7 @@ namespace Cargotruck.Server.Controllers
             }
 
             sortOrder = sortOrder == "Earning" ? (desc ? "Earning_desc" : "Earning") : (sortOrder);
+            sortOrder = sortOrder == "Expense" ? (desc ? "Expense_desc" : "Expense") : (sortOrder);
             sortOrder = sortOrder == "Month" ? (desc ? "Month_desc" : "Month") : (sortOrder);
             sortOrder = sortOrder == "Profit" ? (desc ? "Profit_desc" : "Profit") : (sortOrder);
             sortOrder = sortOrder == "Date" || String.IsNullOrEmpty(sortOrder) ? (desc ? "Date_desc" : "") : (sortOrder);
@@ -53,6 +54,12 @@ namespace Cargotruck.Server.Controllers
                     break;
                 case "Earning":
                     data = data.OrderBy(s => s.Earning).ToList();
+                    break;
+                case "Expense_desc":
+                    data = data.OrderByDescending(s => s.Expense).ToList();
+                    break;
+                case "Expense":
+                    data = data.OrderBy(s => s.Expense).ToList();
                     break;
                 case "Profit_desc":
                     data = data.OrderByDescending(s => s.Profit).ToList();
@@ -85,6 +92,13 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> GetConnectionIds()
+        {
+            var data = await _context.Monthly_expenses_tasks_expenses.ToListAsync();
+            return Ok(data);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> PageCount()
         {
             var data = await _context.Monthly_Expenses.ToListAsync();
@@ -95,31 +109,110 @@ namespace Cargotruck.Server.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var data = await _context.Monthly_Expenses.FirstOrDefaultAsync(a => a.Id == id);
+            var data = await _context.Monthly_Expenses.FirstOrDefaultAsync(a => a.Monthly_expense_id == id);
             return Ok(data);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Post(Monthly_expenses data)
+        public async Task CheckData()
         {
-            data.User_id = _context.Users.FirstOrDefault(a => a.UserName == User.Identity.Name).Id;
-            _context.Add(data);
+            var monthly_Expenses = await _context.Monthly_Expenses.ToListAsync();
+            var conIds = await _context.Monthly_expenses_tasks_expenses.ToListAsync();
+            foreach (var data in monthly_Expenses) {
+                data.Profit = 0;
+                data.Earning = 0;
+                data.Expense = 0;
+                data.User_id = "Generated";
+                if (data.Monthly_expenses_tasks_expenses != null) { 
+                    foreach (var row in data.Monthly_expenses_tasks_expenses)
+                    {
+                        var task = await _context.Tasks.FirstOrDefaultAsync(a => a.Id == row.Task_id);
+                        var expense = await _context.Expenses.FirstOrDefaultAsync(a => a.Id == row.Expense_id);
+                        if (row.Monthly_expense_id == data.Monthly_expense_id)
+                        {
+                            data.Earning = data.Earning + (task?.Final_Payment != null ? task.Final_Payment : 0) ;
+                            data.Expense = data.Expense
+                                + (expense?.Cost_of_storage != null ? expense.Cost_of_storage : 0) 
+                                + (expense?.Repair_cost != null ? expense.Repair_cost : 0) 
+                                + (expense?.Driver_salary != null ? expense.Driver_salary : 0) 
+                                + (expense?.Driver_spending != null ? expense.Driver_spending : 0) 
+                                + (expense?.Fuel != null ? expense.Fuel : 0) 
+                                + (expense?.Road_fees != null ? expense.Road_fees : 0) 
+                                + (expense?.Penalty != null ? expense.Penalty : 0) 
+                                + (expense?.other != null ? expense.other : 0) ;
+                        }
+                    }
+                }
+                data.Profit = (data.Earning != null ?  data.Earning : 0) - (data.Expense != null ?  data.Expense : 0);
+                _context.Update(data);
+            }
             await _context.SaveChangesAsync();
-            return Ok(data.Id);
         }
 
         [HttpPut]
         public async Task<IActionResult> Put(Monthly_expenses data)
         {
+            data.User_id = _context.Users.FirstOrDefault(a => a.UserName == User.Identity.Name).Id;
             _context.Entry(data).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return NoContent();
         }
 
+        [HttpPost]
+        public async Task<IActionResult> PostConnectionIds(Monthly_expenses_tasks_expenses connectionIds, bool first)
+        {
+            //_context.Entry(connectionIds).State = EntityState.Modified;
+            if (first) 
+            {
+                var itemsToDelete = _context.Monthly_expenses_tasks_expenses.Where(x => x.Monthly_expense_id == connectionIds.Monthly_expense_id);
+                _context.RemoveRange(itemsToDelete);
+            }
+            _context.Add(connectionIds);
+            await _context.SaveChangesAsync();
+            return Ok(connectionIds.Id);
+        }
+
+        [HttpPost]
+        public async Task CreateMonths()
+        {
+            Monthly_expenses data = new Monthly_expenses();
+            var currentDate = DateTime.Now;
+            Monthly_expenses? hasCurrentMonth = _context.Monthly_Expenses.Where(x => x.Date.Year == currentDate.Year && x.Date.Month == currentDate.Month).FirstOrDefault();
+            if (hasCurrentMonth == null) 
+            {
+                data.User_id = "Generated";
+                data.Date = DateTime.Now;
+                _context.Add(data);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task CreateConTable()
+        {
+            var monthly_expenses = await _context.Monthly_Expenses.ToListAsync();
+
+            await _context.Database.ExecuteSqlRawAsync("TRUNCATE TABLE Monthly_expenses_tasks_expenses");
+            foreach (var row in monthly_expenses)
+            {
+                var tasks = await _context.Tasks.Where(t=> t.Date.Year == row.Date.Year && t.Date.Month == row.Date.Month && t.Completed).ToListAsync();
+                var expenses = await _context.Expenses.Where(e => e.Date.Year == row.Date.Year && e.Date.Month == row.Date.Month).ToListAsync();
+                int lenght = (tasks.Count() > expenses.Count()) ? tasks.Count() : expenses.Count();        
+                for (int i = 0; i < lenght; ++i)
+                {
+                    Monthly_expenses_tasks_expenses connectionIds = new Monthly_expenses_tasks_expenses();
+                    connectionIds.Monthly_expense_id = row.Monthly_expense_id;
+                    if (tasks.Count()>i && tasks[i] != null) connectionIds.Task_id = tasks[i].Id;
+                    if (expenses.Count()>i && expenses[i] != null) connectionIds.Expense_id =expenses[i].Id;
+
+                    _context.Add(connectionIds);
+                }
+                await _context.SaveChangesAsync();
+            } 
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var data = new Monthly_expenses { Id = id };
+            var data = new Monthly_expenses { Monthly_expense_id = id };
             _context.Remove(data);
             await _context.SaveChangesAsync();
             return NoContent();
@@ -131,11 +224,13 @@ namespace Cargotruck.Server.Controllers
         public async Task<string> Excel(string lang)
         {
             var Monthly_Expenses = from data in _context.Monthly_Expenses select data;
-            var cargoes = from data in _context.Cargoes select data;
+            var Monthly_expenses_tasks_expenses =  _context.Monthly_expenses_tasks_expenses.OrderBy(x=>x.Id);
+
             using (var workbook = new XLWorkbook())
             {
                 var worksheet = workbook.Worksheets.Add("Monthly_Expenses");
                 var currentRow = 1;
+
                 worksheet.Cell(currentRow, 1).Value = "Id";
                 worksheet.Cell(currentRow, 1).Style.Font.SetBold();
                 worksheet.Cell(currentRow, 2).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Month : "Month";
@@ -144,28 +239,50 @@ namespace Cargotruck.Server.Controllers
                 worksheet.Cell(currentRow, 3).Style.Font.SetBold();
                 worksheet.Cell(currentRow, 4).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Earning : "Earning";
                 worksheet.Cell(currentRow, 4).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 5).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Profit : "Profit";
+                worksheet.Cell(currentRow, 5).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Expense : "Expense";
                 worksheet.Cell(currentRow, 5).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 6).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Expenses : "Expenses";
+                worksheet.Cell(currentRow, 6).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Profit : "Profit";
                 worksheet.Cell(currentRow, 6).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 7).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Expenses : "Task_id";
+                worksheet.Cell(currentRow, 7).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Expense_id : "Expenses ID";
                 worksheet.Cell(currentRow, 7).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 8).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date";
+                worksheet.Cell(currentRow, 8).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Task_id : "Task_id";
                 worksheet.Cell(currentRow, 8).Style.Font.SetBold();
+                worksheet.Cell(currentRow, 9).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date";
+                worksheet.Cell(currentRow, 9).Style.Font.SetBold();
 
                 foreach (var monthly_expense in Monthly_Expenses)
                 {
-                    var cellValue = "-";
                     currentRow++;
 
-                    worksheet.Cell(currentRow, 1).Value = monthly_expense.Id;
+                    worksheet.Cell(currentRow, 1).Value = monthly_expense.Monthly_expense_id;
                     worksheet.Cell(currentRow, 2).Value = monthly_expense.Date.Month;
                     worksheet.Cell(currentRow, 3).Value = monthly_expense.User_id;
                     worksheet.Cell(currentRow, 4).Value = monthly_expense.Earning;
-                    worksheet.Cell(currentRow, 5).Value = monthly_expense.Profit;
-                   /* worksheet.Cell(currentRow, 6).Value = monthly_expense.Expenses;
-                    worksheet.Cell(currentRow, 7).Value = monthly_expense.Task_id;*/
-                    worksheet.Cell(currentRow, 8).Value = monthly_expense.Date;
+                    worksheet.Cell(currentRow, 5).Value = monthly_expense.Expense;
+                    worksheet.Cell(currentRow, 6).Value = monthly_expense.Profit;
+                    foreach(var row in Monthly_expenses_tasks_expenses.Where(x => x.Monthly_expense_id == monthly_expense.Monthly_expense_id && x.Expense_id != null))
+                    {
+                        if (Monthly_expenses_tasks_expenses.Where(x => x.Monthly_expense_id == monthly_expense.Monthly_expense_id && x.Expense_id != null).Last().Id != row.Id)
+                        {
+                            worksheet.Cell(currentRow, 7).Value = worksheet.Cell(currentRow, 7).Value + (row.Expense_id + "; ");
+                        }
+                        else
+                        {
+                            worksheet.Cell(currentRow, 7).Value = worksheet.Cell(currentRow, 7).Value + row.Expense_id.ToString();
+                        }                 
+                    }
+                    foreach (var row in Monthly_expenses_tasks_expenses.Where(x => x.Monthly_expense_id == monthly_expense.Monthly_expense_id && x.Task_id != null))
+                    {
+                        if (Monthly_expenses_tasks_expenses.Where(x => x.Monthly_expense_id == monthly_expense.Monthly_expense_id && x.Task_id != null).Last().Id != row.Id)
+                        {
+                            worksheet.Cell(currentRow, 8).Value = worksheet.Cell(currentRow, 8).Value + (row.Task_id + "; ");
+                        }
+                        else
+                        {
+                            worksheet.Cell(currentRow, 8).Value = worksheet.Cell(currentRow, 8).Value + row.Task_id.ToString();
+                        }
+                    }
+                    worksheet.Cell(currentRow, 9).Value = monthly_expense.Date;
                 }
 
                 using (var stream = new MemoryStream())
@@ -182,10 +299,11 @@ namespace Cargotruck.Server.Controllers
         public async Task<string> PDF(string lang)
         {
             var Monthly_Expenses = from data in _context.Monthly_Expenses select data;
-            var cargoes = from data in _context.Cargoes select data;
+            var Monthly_expenses_tasks_expenses = _context.Monthly_expenses_tasks_expenses.OrderBy(x => x.Id);
+            Monthly_expenses_tasks_expenses.OrderBy(x => x.Id);
 
             int pdfRowIndex = 1;
-            Random rnd = new Random();
+            Random rnd = new();
             int random = rnd.Next(1000000, 9999999);
             string filename = "Monthly_Expenses" + random + "_" + DateTime.Now.ToString("dd-MM-yyyy");
             string filepath = "Files/" + filename + ".pdf";
@@ -199,7 +317,7 @@ namespace Cargotruck.Server.Controllers
             Font font2 = FontFactory.GetFont(FontFactory.TIMES_ROMAN, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 10);
 
             System.Type type = typeof(Monthly_expenses);
-            var column_number = (type.GetProperties().Length);
+            var column_number = (type.GetProperties().Length) + 1;
             var columnDefinitionSize = new float[column_number];
             for (int i = 0; i < column_number; i++) columnDefinitionSize[i] = 1F;
 
@@ -241,6 +359,11 @@ namespace Cargotruck.Server.Controllers
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 });
+                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Expense : "Expense", font1))
+                {
+                    HorizontalAlignment = Element.ALIGN_CENTER,
+                    VerticalAlignment = Element.ALIGN_MIDDLE
+                });
                 table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Profit : "Profit", font1))
                 {
                     HorizontalAlignment = Element.ALIGN_CENTER,
@@ -265,7 +388,7 @@ namespace Cargotruck.Server.Controllers
                 foreach (Monthly_expenses monthly_expense in Monthly_Expenses)
                 {
                     var s = "";
-                    if (!string.IsNullOrEmpty(monthly_expense.Id.ToString())) { s = monthly_expense.Id.ToString(); }
+                    if (!string.IsNullOrEmpty(monthly_expense.Monthly_expense_id.ToString())) { s = monthly_expense.Monthly_expense_id.ToString(); }
                     else { s = "-"; }
                     table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
@@ -286,6 +409,13 @@ namespace Cargotruck.Server.Controllers
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
+                    if (!string.IsNullOrEmpty(monthly_expense.Expense.ToString())) { s = monthly_expense.Expense.ToString(); }
+                    else { s = "-"; }
+                    table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    {
+                        HorizontalAlignment = Element.ALIGN_CENTER,
+                        VerticalAlignment = Element.ALIGN_MIDDLE
+                    });
                     if (!string.IsNullOrEmpty(monthly_expense.Profit.ToString())) { s = monthly_expense.Profit.ToString(); }
                     else { s = "-"; }
                     table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
@@ -293,20 +423,41 @@ namespace Cargotruck.Server.Controllers
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    /*if (!string.IsNullOrEmpty(monthly_expense.Profit.ToString())) { s = monthly_expense.Expenses.ToString(); }
-                    else { s = "-"; }
+                    s = "";
+                    foreach (var row in Monthly_expenses_tasks_expenses.Where(x => x.Monthly_expense_id == monthly_expense.Monthly_expense_id && x.Expense_id != null))
+                    {
+                        if (Monthly_expenses_tasks_expenses.Where(x => x.Monthly_expense_id == monthly_expense.Monthly_expense_id && x.Expense_id != null).Last().Id != row.Id)
+                        {
+                            s = s +  row.Expense_id.ToString() + ", ";                            
+                        }
+                        else
+                        {
+                            s = s + row.Expense_id.ToString();                       
+                        }
+                    }
                     table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(monthly_expense.Profit.ToString())) { s = monthly_expense.Task_id.ToString(); }
-                    else { s = "-"; }
+                    s = "";
+                    foreach (var row in Monthly_expenses_tasks_expenses.Where(x => x.Monthly_expense_id == monthly_expense.Monthly_expense_id && x.Task_id != null))
+                    {
+                        if (Monthly_expenses_tasks_expenses.Where(x => x.Monthly_expense_id == monthly_expense.Monthly_expense_id && x.Task_id != null).Last().Id != row.Id)
+                        {
+                            s = s + row.Task_id.ToString() + ", ";
+                        }
+                        else
+                        {
+                            s = s + row.Task_id.ToString();
+                        }    
+                    }
                     table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
-                    });*/
+                    });
+
                     if (!string.IsNullOrEmpty(monthly_expense.Date.ToString())) { s = monthly_expense.Date.ToString(); }
                     else { s = "-"; }
                     table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
@@ -346,8 +497,8 @@ namespace Cargotruck.Server.Controllers
         public async Task<string> CSV(string lang)
         {
             var Monthly_Expenses = from data in _context.Monthly_Expenses select data;
-            var cargoes = from data in _context.Cargoes select data;
-
+            var Monthly_expenses_tasks_expenses = _context.Monthly_expenses_tasks_expenses.OrderBy(x => x.Id);
+            Monthly_expenses_tasks_expenses.OrderBy(x=>x.Id);
             Random rnd = new Random();
             int random = rnd.Next(1000000, 9999999);
             string filename = "Monthly_Expenses" + random + "_" + DateTime.Now.ToString("dd-MM-yyyy");
@@ -358,6 +509,7 @@ namespace Cargotruck.Server.Controllers
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID") + ";");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Month : "Month") + ";");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Earning : "Earning") + ";");
+            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Expense : "Expense") + ";");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Profit : "Profit") + ";");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Expenses : "Expenses") + ";");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Task_id : "Task ID") + ";");
@@ -366,13 +518,39 @@ namespace Cargotruck.Server.Controllers
 
             foreach (var monthly_expense in Monthly_Expenses)
             {
-                txt.Write(monthly_expense.Id + ";");
+                var s="";
+                txt.Write(monthly_expense.Monthly_expense_id + ";");
                 txt.Write(monthly_expense.User_id + ";");
                 txt.Write(monthly_expense.Date.Month + ";");
                 txt.Write(monthly_expense.Earning + ";");
+                txt.Write(monthly_expense.Expense + ";");
                 txt.Write(monthly_expense.Profit + ";");
-                /*txt.Write(monthly_expense.Expenses + ";");
-                txt.Write(monthly_expense.Task_id + ";");*/
+                s = "";
+                foreach (var row in Monthly_expenses_tasks_expenses.Where(x => x.Monthly_expense_id == monthly_expense.Monthly_expense_id && x.Expense_id != null))
+                {
+                    if (Monthly_expenses_tasks_expenses.Where(x => x.Monthly_expense_id == monthly_expense.Monthly_expense_id && x.Expense_id != null).Last().Id != row.Id)
+                    {
+                        s = s + (row.Expense_id + ", ");
+                    }
+                    else
+                    {
+                        s = s + row.Expense_id.ToString();
+                    } 
+                }
+                txt.Write(s + ";");
+                s = "";
+                foreach (var row in Monthly_expenses_tasks_expenses.Where(x => x.Monthly_expense_id == monthly_expense.Monthly_expense_id && x.Task_id != null))
+                {
+                    if (Monthly_expenses_tasks_expenses.Where(x => x.Monthly_expense_id == monthly_expense.Monthly_expense_id && x.Task_id != null).Last().Id != row.Id)
+                    {
+                        s = s + (row.Task_id + ", ");
+                    }
+                    else
+                    {
+                        s = s + row.Task_id.ToString();
+                    }
+                }
+                txt.Write(s + ";");
                 txt.Write(monthly_expense.Date + ";");
                 txt.Write("\n");
             }
@@ -400,180 +578,5 @@ namespace Cargotruck.Server.Controllers
             return file;
         }
 
-        public async Task<IActionResult> Import(string file, string lang)
-        {
-            var error = "";
-            var haveColumns = false;
-            if (file != null)
-            {
-                string path = Path.Combine("Files/", file);
-                //Checking file content length and Extension must be .xlsx  
-                if (file != null && System.IO.File.Exists(path) && file.ToLower().Contains(".xlsx"))
-                {
-
-                    //Started reading the Excel file.  
-                    XLWorkbook workbook = new XLWorkbook(path);
-
-                    IXLWorksheet worksheet = workbook.Worksheet(1);
-                    //Loop through the Worksheet rows.
-                    DataTable? dt = new DataTable();
-                    bool firstRow = true;
-                    if (worksheet.Row(2).CellsUsed().Count() > 1 && worksheet.Row(2).Cell(worksheet.Row(1).CellsUsed().Count()) != null)
-                    {
-                        int l = 0;
-                        foreach (IXLRow row in worksheet.Rows())
-                        {
-                            //Use the first row to add columns to DataTable with column names check.
-                            if (firstRow)
-                            {
-                                List<string?> titles = new List<string?>() {
-                                "Id",
-                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Month : "Month",
-                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID",
-                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Earning : "Earning",
-                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Profit : "Profit",
-                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Expenses : "Expenses",
-                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Task_id : "Task ID",
-                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date"
-                            };
-
-                                foreach (IXLCell cell in row.Cells())
-                                {
-                                    if (titles.Contains(cell.Value.ToString()))
-                                    {
-                                        titles.Remove(cell.Value.ToString());
-                                        dt.Columns.Add(cell.Value.ToString());
-                                    }
-                                    else
-                                    {
-                                        error = lang == "hu" ? @Cargotruck.Shared.Resources.Resource.Not_match_col : "Wrong column names!";
-                                        System.IO.File.Delete(path); // delete the file
-                                        return BadRequest(error);
-                                    }
-
-                                }
-                                firstRow = false;
-                                if (titles.Count() == 0)
-                                {
-                                    haveColumns = true;
-                                    l += 1;
-                                }
-                                else if (titles.Count() == 1 && titles.Contains("Id"))
-                                {
-                                    haveColumns = true;
-
-                                }
-                            }
-                            else if (haveColumns)
-                            {
-                                List<object?> list = new List<object?>();
-                                int nulls = 0;
-                                //Add rows to DataTable.
-                                dt.Rows.Add();
-                                foreach (IXLCell cell in row.Cells(1, dt.Columns.Count))
-                                {
-                                    if (cell.Value != null && cell.Value.ToString() != "")
-                                    {
-                                        list.Add(cell.Value);
-                                    }
-                                    else
-                                    {
-                                        list.Add(System.DBNull.Value);
-                                        nulls += 1;
-                                    }
-                                }
-                                if (nulls != list.Count())
-                                {
-                                    var sql = @"Insert Into Monthly_Expenses (User_id,Earning,Profit,Expenses,Task_id,Date) 
-                                    Values (@User_id,@Earning,@Profit,@Expenses,@Task_id,@Date)";
-                                    var insert = await _context.Database.ExecuteSqlRawAsync(sql,
-                                        new SqlParameter("@User_id", list[l + 1]?.ToString()),
-                                        new SqlParameter("@Earning", list[l + 2]),
-                                        new SqlParameter("@Profit", list[l + 3]),
-                                        new SqlParameter("@Expenses", list[l + 4]),
-                                        new SqlParameter("@Task_id", list[l + 5]),
-                                        new SqlParameter("@Date", list[l + 6] == System.DBNull.Value ? System.DBNull.Value : DateTime.Parse(list[l + 6].ToString()))
-                                        );
-                                    
-                                    /*
-                                    string[] substrings;
-
-                                    substrings = list[l + 3].ToString().Split("]");
-                                    
-                                    if (substrings != null)
-                                    {
-                                        for (int s = 0; s < substrings.Length - 1; ++s)
-                                        {
-                                            var CargoId = substrings[s].Substring(1, substrings[s].IndexOf("/") - 1);
-                                            var Monthly_Expensesection = substrings[s].Substring(substrings[s].IndexOf("/") + 1);
-
-                                            var greatestId = _context.Monthly_Expenses.OrderBy(s => s.Id).Last().Id;
-
-                                            var sql2 = @"Update Cargoes 
-                                                        Set monthly_expense_id = @monthly_expense_id, monthly_expense_section = @monthly_expense_section
-                                                         Where Id = @Id";
-                                            var insert2 = await _context.Database.ExecuteSqlRawAsync(sql2,
-                                                new SqlParameter("@monthly_expense_id", greatestId),
-                                                new SqlParameter("@monthly_expense_section", Monthly_Expensesection),
-                                                new SqlParameter("@Id", CargoId)
-                                                );
-                                        }
-                                    }*/
-
-                                    if (insert > 0)
-                                    {
-                                        error = "";
-                                        await _context.SaveChangesAsync();
-                                    }
-                                    else if (insert <= 0)
-                                    {
-                                        System.IO.File.Delete(path); // delete the file
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                error = lang == "hu" ? @Cargotruck.Shared.Resources.Resource.Not_match_col_count : "Missing columns in the datatable";
-                                return BadRequest(error);
-                            }
-                            //If no data in Excel file  
-                            if (firstRow)
-                            {
-                                error = lang == "hu" ? @Cargotruck.Shared.Resources.Resource.Empty_excel : "Empty excel file!";
-                                System.IO.File.Delete(path); // delete the file
-                                return BadRequest(error);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        error = lang == "hu" ? @Cargotruck.Shared.Resources.Resource.Missing_data_rows : "No datarows in the file!";
-                        System.IO.File.Delete(path); // delete the file
-                        return BadRequest(error);
-                    }
-                }
-                else
-                {
-                    //If file extension of the uploaded file is different then .xlsx  
-                    error = lang == "hu" ? @Cargotruck.Shared.Resources.Resource.Not_excel : "Bad format! The file is not an excel.";
-                    System.IO.File.Delete(path); // delete the file
-                    return BadRequest(error);
-                }
-            }
-            else
-            {
-                error = lang == "hu" ? @Cargotruck.Shared.Resources.Resource.No_excel : "File not found!";
-                return BadRequest(error);
-            }
-            return NoContent();
-        }
-
-
-        [HttpGet]
-        public async Task<IActionResult> GetConnectionIds()
-        {
-            var data = await _context.Monthly_expenses_tasks_expenses.ToListAsync();
-            return Ok(data);
-        }
     }
 }

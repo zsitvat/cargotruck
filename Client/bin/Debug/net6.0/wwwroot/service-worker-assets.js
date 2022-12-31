@@ -1,7 +1,7 @@
 ﻿self.assetsManifest = {
   "assets": [
     {
-      "hash": "sha256-sm4OKeHIuJfitTaKSAqlrUc+JUJtGxh6pwpTI3PNnJI=",
+      "hash": "sha256-6MctIFzuLr4hIZY6hAz8sjeDTD6Fasfj5Szgjya5CTY=",
       "url": "css\/app.css"
     },
     {
@@ -97,7 +97,7 @@
       "url": "img\/profiles\/ovrbzspm.jpg"
     },
     {
-      "hash": "sha256-5Uth35bAu7iKR7u90tpumBjwn1bAXBg5BX8IuYWbrEE=",
+      "hash": "sha256-jvSXiiLPbCqUgUdLj6bvJ6Qd4Arbn81OBzJO5lR40iw=",
       "url": "index.html"
     },
     {
@@ -993,23 +993,23 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-t6vVa3EavEj7p0EtchNsGoKZPLw9RWkuhr8ePVrkNes=",
+      "hash": "sha256-hSdCDBPjB7T7AQVCI6RZkQqag6\/S+M2vzdgixmntxEA=",
       "url": "_framework\/Cargotruck.Shared.dll"
     },
     {
-      "hash": "sha256-z4tyXDx8NEiB2DgrEnT5v5lRroeS+s5dBDQ68rwIqp4=",
+      "hash": "sha256-l+t2DbvJ8PjfsT2Lp+hbQJyuYiZJXR08bZcr\/gJ3eOY=",
       "url": "_framework\/Cargotruck.Shared.pdb"
     },
     {
-      "hash": "sha256-ayTEAKAMXx1EczlmpLxkoD5bRbDjGGQ5Blp7qQZqqG0=",
+      "hash": "sha256-kcU5PI58iunLiXowY6sjpz2fYRl4VJABT2ptosD1SVY=",
       "url": "_framework\/en\/Cargotruck.Shared.resources.dll"
     },
     {
-      "hash": "sha256-JyulRm6huGCtqLKZAPCZAuwBRNprF42ScdW8rEKMn5U=",
+      "hash": "sha256-j26413+A4HxTUTepD8STzNoQ9WqpkoBxO0HwPqajVHY=",
       "url": "_framework\/Cargotruck.Client.dll"
     },
     {
-      "hash": "sha256-lnVptamD9bgIMz9NNAy0jhsZAZufuqMU7BbqOjIP\/4A=",
+      "hash": "sha256-XJFHkAPORbL3+q\/1fINxDKyTtvVpJsQa8EMoe29Gz+Y=",
       "url": "_framework\/Cargotruck.Client.pdb"
     },
     {
@@ -1017,7 +1017,7 @@
       "url": "_framework\/blazor.webassembly.js"
     },
     {
-      "hash": "sha256-X93dmlBU2Z5avE3FKIPBKTKRXDOEqn\/oGyrc\/l28D+A=",
+      "hash": "sha256-7FMUdrU19j4PN+dAXMVZ3EIQbJgzL6fhhwyxoXsO5+8=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -1025,5 +1025,5 @@
       "url": "_content\/Microsoft.AspNetCore.Components.WebAssembly.Authentication\/AuthenticationService.js"
     }
   ],
-  "version": "OmuQp\/iZ"
+  "version": "aUwoxmGK"
 };

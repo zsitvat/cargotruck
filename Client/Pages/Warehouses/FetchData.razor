@@ -12,15 +12,15 @@
     <input value="@searchString" @oninput="@Search" placeholder="@(searchString != "" ? searchString : localizer["Search"])" class="form-control inputs input_search" type="search" id="search-input" name="SearchString">
 </div>
 <br>
-@document_error
+<p class="error">@document_error</p>
 
 @if (warehouses == null)
 {
-    <text>Loading...</text>
+    <text>@localizer["Loading"]</text>
 }
 else if (warehouses.Length == 0)
 {
-    <text>No Records Found.</text>
+    <text>@localizer["No_records"]</text>
 }
 else
 {
@@ -46,7 +46,7 @@ else
                                 }
                                 @if (showColumns[3])
                                 {
-                                    <th><button style="min-width:5rem;" class="@(sortOrder=="Date" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Date"))">@localizer["Date"]</button></th>
+                                    <th class="last-col"><button class="@(sortOrder=="Date" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Date"))">@localizer["Date"]</button></th>
                                 }
                             </tr>
                         </thead>
@@ -80,7 +80,7 @@ else
                                     }
                                     @if (showColumns[3])
                                     {
-                                        <td>@item.Date</td>
+                                        <td class="last-col">@item.Date</td>
                                     }
                                     <td>
                                         <a class="btn  fixed" href="Warehouses/edit/@item.Id"> <span data-title="@localizer["Edit"]" class="oi oi-pencil" aria-hidden="true"></span></a>
