@@ -86,7 +86,7 @@
                 </div>
             </div>
     
-            <div class="d-inline-block forms-margin">
+            <div class="d-inline-block forms-margin second-col">
                   <div class="form-group">
                     <div>
                         <label>@localizer["Id_cargo"]:</label>
@@ -172,11 +172,17 @@
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public string? TitleText { get; set; }
     [Parameter] public EventCallback OnValidSubmit { get; set; }
-    Cargoes[]? cargoes { get; set; }
-
+    List<Cargoes>? cargoes { get; set; }
+    List<Tasks>? taskWithCargo { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        cargoes = await client.GetFromJsonAsync<Cargoes[]>("api/cargoes/getcargoes");
+        cargoes = await client.GetFromJsonAsync < List<Cargoes>>("api/cargoes/getcargoes");
+        taskWithCargo = await client.GetFromJsonAsync<List<Tasks>>("api/tasks/gettasks");
+        taskWithCargo = taskWithCargo?.Where(x => x.Id_cargo != null).ToList();
+        foreach (var task in taskWithCargo)
+        {
+            cargoes.RemoveAll(x => x.Id == task.Id_cargo && x.Id != tasks?.Id_cargo);
+        }
     }
 }

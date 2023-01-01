@@ -11,6 +11,7 @@ using Font = iTextSharp.text.Font;
 using System.Text;
 using System.Linq.Dynamic.Core;
 using DocumentFormat.OpenXml.InkML;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 
 namespace Cargotruck.Server.Controllers
@@ -118,10 +119,12 @@ namespace Cargotruck.Server.Controllers
             var monthly_Expenses = await _context.Monthly_Expenses.ToListAsync();
             var conIds = await _context.Monthly_expenses_tasks_expenses.ToListAsync();
             foreach (var data in monthly_Expenses) {
-                data.Profit = 0;
-                data.Earning = 0;
-                data.Expense = 0;
-                data.User_id = "Generated";
+                if (conIds.Where(x=>x.Monthly_expense_id==data.Monthly_expense_id  && (x.Task_id !=null || x.Expense_id !=null)).Any())
+                {
+                    data.Profit = 0;
+                    data.Earning = 0;
+                    data.Expense = 0;
+                }
                 if (data.Monthly_expenses_tasks_expenses != null) { 
                     foreach (var row in data.Monthly_expenses_tasks_expenses)
                     {
@@ -158,6 +161,16 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> Post(Monthly_expenses data)
+        {
+            data.User_id = _context.Users.FirstOrDefault(a => a.UserName == User.Identity.Name).Id;
+            data.Profit = (data.Earning != null ? data.Earning : 0) - (data.Expense != null ? data.Expense : 0);
+            _context.Add(data);
+            await _context.SaveChangesAsync();
+            return Ok(data.Monthly_expense_id);
+        }
+
+        [HttpPost]
         public async Task<IActionResult> PostConnectionIds(Monthly_expenses_tasks_expenses connectionIds, bool first)
         {
             //_context.Entry(connectionIds).State = EntityState.Modified;
@@ -176,7 +189,7 @@ namespace Cargotruck.Server.Controllers
         {
             Monthly_expenses data = new Monthly_expenses();
             var currentDate = DateTime.Now;
-            Monthly_expenses? hasCurrentMonth = _context.Monthly_Expenses.Where(x => x.Date.Year == currentDate.Year && x.Date.Month == currentDate.Month).FirstOrDefault();
+            Monthly_expenses? hasCurrentMonth = _context.Monthly_Expenses.Where(x => x.Date.Year == currentDate.Year && x.Date.Month == currentDate.Month && x.User_id=="Generated").FirstOrDefault();
             if (hasCurrentMonth == null) 
             {
                 data.User_id = "Generated";
@@ -188,9 +201,12 @@ namespace Cargotruck.Server.Controllers
 
         public async Task CreateConTable()
         {
-            var monthly_expenses = await _context.Monthly_Expenses.ToListAsync();
-
-            await _context.Database.ExecuteSqlRawAsync("TRUNCATE TABLE Monthly_expenses_tasks_expenses");
+            var monthly_expenses = await _context.Monthly_Expenses.Where(x=>x.User_id == "Generated").ToListAsync();
+            foreach (var row in monthly_expenses) 
+            { 
+                var itemsToDelete = _context.Monthly_expenses_tasks_expenses.Where(x => x.Monthly_expense_id == row.Monthly_expense_id);
+                _context.RemoveRange(itemsToDelete);
+            }
             foreach (var row in monthly_expenses)
             {
                 var tasks = await _context.Tasks.Where(t=> t.Date.Year == row.Date.Year && t.Date.Month == row.Date.Month && t.Completed).ToListAsync();

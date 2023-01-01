@@ -349,6 +349,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Havi kiadás hozzáadása.
+        /// </summary>
+        public static string Create_monthly_expense {
+            get {
+                return ResourceManager.GetString("Create_monthly_expense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Új fiók.
         /// </summary>
         public static string Create_new {
@@ -988,6 +997,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Generált adat.
+        /// </summary>
+        public static string Generated {
+            get {
+                return ResourceManager.GetString("Generated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sikeresen bejelentkeztél.
         /// </summary>
         public static string Hello {
@@ -1209,6 +1227,15 @@ namespace Cargotruck.Shared.Resources {
         public static string Not_excel {
             get {
                 return ResourceManager.GetString("Not_excel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Felhasználó által létrehozott.
+        /// </summary>
+        public static string Not_generated {
+            get {
+                return ResourceManager.GetString("Not_generated", resourceCulture);
             }
         }
         

@@ -213,6 +213,9 @@
   <data name="Create_expense" xml:space="preserve">
     <value>Create expense</value>
   </data>
+  <data name="Create_monthly_expense" xml:space="preserve">
+    <value>Create a monthly expense</value>
+  </data>
   <data name="Create_new" xml:space="preserve">
     <value>Create new</value>
   </data>
@@ -423,6 +426,9 @@
   <data name="garage" xml:space="preserve">
     <value>Garage</value>
   </data>
+  <data name="Generated" xml:space="preserve">
+    <value>Generated</value>
+  </data>
   <data name="Hello" xml:space="preserve">
     <value>Succesful login</value>
   </data>
@@ -491,6 +497,9 @@
   </data>
   <data name="Not_excel" xml:space="preserve">
     <value>Please select file with .xlsx extension!</value>
+  </data>
+  <data name="Not_generated" xml:space="preserve">
+    <value>Not generated</value>
   </data>
   <data name="Not_match_col" xml:space="preserve">
     <value>Wrong column names</value>

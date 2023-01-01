@@ -2,6 +2,7 @@
 
 <h3>@localizer["Monthly_expenses"]</h3>
 <div class="form-group buttons">
+    <a class="btn btn-success me-4" href="/Monthly_expenses/create"><i class="oi oi-plus"></i> @localizer["Add"]</a>
     <a data-title="@localizer["Settings"]" class="btn btn-light" @onclick="@(() => settings=!settings)"><i class="oi oi-cog"></i></a>
     <button data-title="@localizer["pdf"]" class="btn btn-light" @onclick="@ExportToPdf"><i class="oi oi-document"></i></button>
     <button data-title="@localizer["excel"]" class="btn btn-light" @onclick="@ExportToExcel"><i class="oi oi-spreadsheet"></i></button>
@@ -63,7 +64,14 @@ else
                             {
                                 rowCounter += 1;
                                 <tr class="@(item.Profit <=0 ? "red": "")">
-                                    <td>@rowCounter</td>
+                                   @if(item.User_id=="Generated") 
+                                   {
+                                      <td import-data-title="@localizer["Generated"]">@rowCounter</td>    
+                                   }
+                                   else
+                                   {
+                                        <td import-data-title="@localizer["Not_generated"]">@rowCounter*</td>
+                                   }
                                     <td>@localizer[item.Date.Month.ToString()]</td>
                                     @if (showColumns[0])
                                     {

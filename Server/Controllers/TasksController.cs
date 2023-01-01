@@ -37,7 +37,7 @@ namespace Cargotruck.Server.Controllers
                 || (s.Place_of_receipt == null ? false :  s.Place_of_receipt.ToLower()!.Contains(searchString))
                 || (s.Place_of_delivery == null ? false : s.Place_of_delivery.ToLower()!.Contains(searchString))
                 || (s.Time_of_delivery.ToString()!.Contains(searchString))
-                || (s.Id_cargo == null ? false : s.Id_cargo.ToLower()!.Contains(searchString))
+                || (s.Id_cargo == null ? false : s.Id_cargo.ToString()!.Contains(searchString))
                 || (s.Storage_time == null ? false : s.Storage_time.ToLower()!.Contains(searchString))
                 || (s.Completion_time == null ? false : s.Completion_time.ToString()!.Contains(searchString))
                 || (s.Payment == null ? false : s.Payment.ToString()!.Contains(searchString))
@@ -453,7 +453,7 @@ namespace Cargotruck.Server.Controllers
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(task.Id_cargo)) { s = task.Id_cargo.ToString(); }
+                    if (!string.IsNullOrEmpty(task.Id_cargo.ToString())) { s = task.Id_cargo.ToString(); }
                     else { s = "-"; }
                     table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {

@@ -213,6 +213,9 @@
   <data name="Create_expense" xml:space="preserve">
     <value>Kiadások  létrehozása</value>
   </data>
+  <data name="Create_monthly_expense" xml:space="preserve">
+    <value>Havi kiadás hozzáadása</value>
+  </data>
   <data name="Create_new" xml:space="preserve">
     <value>Új fiók</value>
   </data>
@@ -426,6 +429,9 @@
   <data name="garage" xml:space="preserve">
     <value>Garázsban</value>
   </data>
+  <data name="Generated" xml:space="preserve">
+    <value>Generált adat</value>
+  </data>
   <data name="Hello" xml:space="preserve">
     <value>Sikeresen bejelentkeztél</value>
   </data>
@@ -494,6 +500,9 @@
   </data>
   <data name="Not_excel" xml:space="preserve">
     <value>Csak .xlsx formátum elfogadott!</value>
+  </data>
+  <data name="Not_generated" xml:space="preserve">
+    <value>Felhasználó által létrehozott</value>
   </data>
   <data name="Not_match_col" xml:space="preserve">
     <value>Nem egyeznek az oszlopok!</value>

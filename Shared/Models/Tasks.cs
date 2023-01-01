@@ -33,7 +33,7 @@ namespace Cargotruck.Shared.Models
         [Display(Name = "other_stops", ResourceType = typeof(Resource))]
         public string? other_stops { get; set; }
         [Display(Name = "Id_cargo", ResourceType = typeof(Resource))]
-        public string? Id_cargo { get; set; }
+        public int? Id_cargo { get; set; }
         [Display(Name = "Storage_time", ResourceType = typeof(Resource))]
         public string? Storage_time { get; set; }
         [Display(Name = "Completed", ResourceType = typeof(Resource))]
