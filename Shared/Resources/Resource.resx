@@ -474,6 +474,9 @@
   <data name="Manager" xml:space="preserve">
     <value>Manager</value>
   </data>
+  <data name="Mandatory" xml:space="preserve">
+    <value>Kötelezően választani kell!</value>
+  </data>
   <data name="Max_weight" xml:space="preserve">
     <value>Terhelés max súlya</value>
   </data>

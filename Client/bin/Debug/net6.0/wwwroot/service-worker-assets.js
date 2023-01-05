@@ -1,7 +1,7 @@
 ﻿self.assetsManifest = {
   "assets": [
     {
-      "hash": "sha256-qNox8PksqS\/yv2jmmzoO3CNXJzmww0PllQ8u+7uAo38=",
+      "hash": "sha256-3HDiAKwlg5fYL1dPj0OrvbUU3K3g+z+4VtjpCoj0XSA=",
       "url": "css\/app.css"
     },
     {
@@ -149,12 +149,28 @@
       "url": "_framework\/Microsoft.AspNetCore.Components.WebAssembly.Authentication.dll"
     },
     {
+      "hash": "sha256-a6fdLU2+pLdxE\/8nxhssfgbn7Zn+9mX5+7R3vdMhHkQ=",
+      "url": "_framework\/Microsoft.AspNetCore.Cors.dll"
+    },
+    {
       "hash": "sha256-9OqV15+tGCjm+gqDbUluRywPUSgj2x\/T1ulmfvSS7l8=",
       "url": "_framework\/Microsoft.AspNetCore.Cryptography.Internal.dll"
     },
     {
       "hash": "sha256-7VGCZTcuHmkNpytP+82ZwQkynVkOUUefrktutlE6D4o=",
       "url": "_framework\/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll"
+    },
+    {
+      "hash": "sha256-qFKmKNr9iAZiZxOVvLJBfMhkKfDy1GvY81fHh1hiphU=",
+      "url": "_framework\/Microsoft.AspNetCore.Http.Abstractions.dll"
+    },
+    {
+      "hash": "sha256-dsGZ+sGJdrYngMg72CIF31THFtl6ovcKTjtGtj9orn8=",
+      "url": "_framework\/Microsoft.AspNetCore.Http.Extensions.dll"
+    },
+    {
+      "hash": "sha256-J2xQUZ4BD6tsrQkvGS5HDQfkTGMzmaS76TA9nJrtCpg=",
+      "url": "_framework\/Microsoft.AspNetCore.Http.Features.dll"
     },
     {
       "hash": "sha256-qipfr0xKM+exxPMLzR6SSE1cn66D9+Jo877+mnaxq+8=",
@@ -225,6 +241,10 @@
       "url": "_framework\/Microsoft.Extensions.FileSystemGlobbing.dll"
     },
     {
+      "hash": "sha256-K5\/O91dt69IHKav69ftn+7DKPmnzkipTvwM4Sd4Zres=",
+      "url": "_framework\/Microsoft.Extensions.Http.dll"
+    },
+    {
       "hash": "sha256-UQUdMwOd7SVS0rd0l5E7G2r6N72KUtSUPLxam8BN40c=",
       "url": "_framework\/Microsoft.Extensions.Identity.Core.dll"
     },
@@ -265,8 +285,28 @@
       "url": "_framework\/Microsoft.JSInterop.WebAssembly.dll"
     },
     {
+      "hash": "sha256-P66ftDrXwc6ayND8uYzIk0CPQy1GjNZAPHx9RMhi3V4=",
+      "url": "_framework\/Microsoft.Net.Http.Headers.dll"
+    },
+    {
       "hash": "sha256-56MWX7GCuiW+O0EPzkUo0jj6T\/mhpVB6x+UFQtaS2qE=",
       "url": "_framework\/Microsoft.Win32.SystemEvents.dll"
+    },
+    {
+      "hash": "sha256-SBbEJ29XXk2FuAYzoN8urfKUlv4AvcM814Q+YTc73g4=",
+      "url": "_framework\/Newtonsoft.Json.dll"
+    },
+    {
+      "hash": "sha256-SwBG7gNBJMv8tY8JbzLIzpzNzjZUkdJE48Q9uCysd6g=",
+      "url": "_framework\/Refit.dll"
+    },
+    {
+      "hash": "sha256-mlRAv\/GdF\/SbM7rrI7XF0wFMcdkzA2X6qS+Io4jGn8M=",
+      "url": "_framework\/Refit.HttpClientFactory.dll"
+    },
+    {
+      "hash": "sha256-RNfvgIvfJ9pFMFmv5d0TLwYeMCuzSxv\/PHm3QknFJkA=",
+      "url": "_framework\/RestSharp.dll"
     },
     {
       "hash": "sha256-FwTliQ0DZdjsM2pGhbBJ8+N11S\/RuTn8r3AcBpSaWfI=",
@@ -993,23 +1033,23 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-D4qy5MpPcNaqz45xZRIkewZXqQoCCYJ1y91bGNzk8AE=",
+      "hash": "sha256-r\/5GdpFhWmLPcpZCe53unetWCBhaRD4BOmINcv5vY30=",
       "url": "_framework\/Cargotruck.Shared.dll"
     },
     {
-      "hash": "sha256-Sl9r+eoivYIQJ1N8wN7w7dKe\/daMXFegRZkOmCrqW88=",
+      "hash": "sha256-m5YenmWxVxJnuIAAscQJhJgqACKnI1h\/Pdt3CdViEzo=",
       "url": "_framework\/Cargotruck.Shared.pdb"
     },
     {
-      "hash": "sha256-7yi336hOWUR7sXZbB2DfyCtf2ks6uPCAB2PCeNLIHuA=",
+      "hash": "sha256-a2CZAXbpWXv1fqKHc4+inZxn7Ci\/u\/MLi2Hxv6crBdA=",
       "url": "_framework\/en\/Cargotruck.Shared.resources.dll"
     },
     {
-      "hash": "sha256-qzyXbKhEWhmTROpPoIvdjbk2N4aq6tKqWXo9toE4rZY=",
+      "hash": "sha256-yAJR9hKwtySSP4wvYbWS+49zSxAa7OOBcTwV3BWtNck=",
       "url": "_framework\/Cargotruck.Client.dll"
     },
     {
-      "hash": "sha256-AIs8BlSpDm5znqGr2XGjtvC6mrEtMOVZmm7lsTVjZ3w=",
+      "hash": "sha256-5ET9uWvkNPmT09drd5EOwC655PMNSNvJKJWy5tE1OvI=",
       "url": "_framework\/Cargotruck.Client.pdb"
     },
     {
@@ -1017,7 +1057,7 @@
       "url": "_framework\/blazor.webassembly.js"
     },
     {
-      "hash": "sha256-Jkn8YxqDIpxhIBEhjoQD\/8o6OQlD8l1kTxFI4Xd\/Z+U=",
+      "hash": "sha256-HY+zcGT4bgTLiuGaRn4ItJGVN6Qq56YHH7hxAB9PR54=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -1025,5 +1065,5 @@
       "url": "_content\/Microsoft.AspNetCore.Components.WebAssembly.Authentication\/AuthenticationService.js"
     }
   ],
-  "version": "icQ7\/uEp"
+  "version": "N3Y77zlx"
 };

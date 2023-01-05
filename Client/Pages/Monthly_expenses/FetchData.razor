@@ -197,9 +197,18 @@ else
         base.OnInitialized();
         var refreshdata = await client.GetStringAsync("api/Monthly_expenses/createcontable");
         dataRows = await client.GetFromJsonAsync<int>("api/Monthly_expenses/pagecount");
+        var checkData = await client.GetAsync("api/Monthly_expenses/checkdata");
         connection_ids = await client.GetFromJsonAsync<Monthly_expenses_tasks_expenses[]?>
-        ("api/Monthly_expenses/getconnectionids");
-        await ShowPage();
+        ("api/Monthly_expenses/getconnectionids"); 
+        if (checkData.IsSuccessStatusCode) 
+        { 
+            await ShowPage(); 
+            document_error = "";
+        }
+        else
+        {
+            document_error = localizer["CheckFailed"];
+        }
     }
 
     async Task Delete(int Id)
@@ -212,6 +221,15 @@ else
             if (shouldreload == 1 && dataRows > 0) { navigationManager.NavigateTo("/Monthly_expenses", true); }
             await OnInitializedAsync();
         }
+    }
+
+    protected async Task ShowPage()
+    {
+        if (pageSize < 1 || pageSize == null) { pageSize = 10; }
+        else if (pageSize >= dataRows) { pageSize = dataRows != 0 ? dataRows : 1; }
+        maxPage = (int)Math.Ceiling((decimal)((float)dataRows / (float)pageSize));
+        Monthly_expenses = await client.GetFromJsonAsync<Monthly_expenses[]>($"api/Monthly_expenses/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&lang={CultureInfo.CurrentCulture.Name.ToString()}");
+        StateHasChanged();
     }
 
     public void SettingsClosed()
@@ -267,18 +285,6 @@ else
     {
         searchString = args.Value.ToString();
         await ShowPage();
-    }
-
-
-    protected async Task ShowPage()
-    {
-        if (pageSize < 1 || pageSize == null ){ pageSize = 10; }
-        else if (pageSize >= dataRows) { pageSize = dataRows != 0 ? dataRows : 1 ; }
-        maxPage = (int)Math.Ceiling((decimal)((float)dataRows / (float)pageSize));
-        var checkData = await client.GetAsync("api/Monthly_expenses/checkdata");
-        Monthly_expenses = await client.GetFromJsonAsync<Monthly_expenses[]>($"api/Monthly_expenses/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&lang={CultureInfo.CurrentCulture.Name.ToString()}");
-        document_error = checkData.IsSuccessStatusCode ? "" : localizer["CheckFailed"];
-        StateHasChanged();
     }
 
     private async Task ExportToPdf ()
@@ -358,7 +364,7 @@ else
         }
     }
 
-    private async void StateChanged()
+    private async Task StateChanged()
     {
         await OnInitializedAsync();
     }

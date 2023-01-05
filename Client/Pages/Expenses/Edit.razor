@@ -13,6 +13,7 @@
     protected async override Task OnParametersSetAsync()
     {
         expense = await http.GetFromJsonAsync<Expenses>($"api/expenses/getById/{Id}");
+        expense.Type = null;
     }
 
     async Task EditExpense()
@@ -21,7 +22,6 @@
         await http.PutAsJsonAsync("api/expenses/put", expense);
         await js.InvokeVoidAsync("alert", $"{text}");
         uriHelper.NavigateTo("/Expenses");
-
     }
 
     protected override void OnInitialized()

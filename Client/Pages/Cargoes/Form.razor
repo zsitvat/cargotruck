@@ -54,7 +54,7 @@
                         <label>@localizer["Vehicle_registration_number"]:</label>
                             <div>
                             <select class="form-control" @bind="@cargoes.Vehicle_registration_number">
-                                    <option value="" selected disabled>@localizer["Select_placeholder"]</option>
+                                    <option selected>@localizer["Select_placeholder"]</option>
                                     @if (trucks != null)
                                     {
                                     @foreach (var truck in trucks)
@@ -75,6 +75,7 @@
                         <label>@localizer["Task_id"]:</label>
                         <div>
                             <select class="form-control" @bind="@cargoes.Task_id">
+                                <option selected disabled>@localizer["Mandatory"]</option>
                                 @if (tasks != null)
                                 {
                                     @foreach (var task in tasks)
@@ -95,7 +96,7 @@
                             <label>@localizer["Warehouse_id"]:</label>
                             <div>
                                 <select class="form-control" @bind="@cargoes.Warehouse_id">
-                                    <option selected disabled>@localizer["Select_placeholder"]</option>
+                                    <option selected>@localizer["Select_placeholder"]</option>
                                     @if (warehouses != null)
                                     {
                                         @foreach (var warehouse in warehouses)
@@ -139,14 +140,20 @@
     [Parameter] public string? TitleText { get; set; }
     [Parameter] public EventCallback OnValidSubmit { get; set; }
     Warehouses[]? warehouses { get; set; }
-    Tasks[]? tasks { get; set; }
-    Trucks[]? trucks { get; set; }
+    List<Tasks>? tasks { get; set; }
+    List<Trucks>? trucks { get; set; }
 
 
     protected override async Task OnInitializedAsync()
     {
         warehouses = await client.GetFromJsonAsync<Warehouses[]?>("api/warehouses/getwarehouses");
-        tasks = await client.GetFromJsonAsync<Tasks[]?>("api/tasks/gettasks");
-        trucks = await client.GetFromJsonAsync<Trucks[]?>("api/trucks/gettrucks");
+        tasks = await client.GetFromJsonAsync < List<Tasks>?>("api/tasks/gettasks");
+        trucks = await client.GetFromJsonAsync < List<Trucks>?>("api/trucks/gettrucks");
+        var cargoWithIds = await client.GetFromJsonAsync<List<Cargoes>>("api/cargoes/getcargoes");
+        foreach (var cargo in cargoWithIds)
+        {
+            trucks?.RemoveAll(x => x.Vehicle_registration_number == cargo.Vehicle_registration_number && x.Vehicle_registration_number != cargoes?.Vehicle_registration_number);
+            tasks?.RemoveAll(x => x.Id == cargo.Task_id && x.Id != cargoes?.Task_id);
+        }
     }
 }

@@ -1132,6 +1132,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kötelezően választani kell!.
+        /// </summary>
+        public static string Mandatory {
+            get {
+                return ResourceManager.GetString("Mandatory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Terhelés max súlya.
         /// </summary>
         public static string Max_weight {

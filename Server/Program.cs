@@ -11,6 +11,9 @@ using System.Globalization;
 using Microsoft.AspNetCore.Mvc.Localization;
 using System.Reflection;
 using System.IdentityModel.Tokens.Jwt;
+using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
+using static Org.BouncyCastle.Math.EC.ECCurve;
+using Cargotruck.Server.Controllers;
 
 // create appsettings.json if not exist
 const string File_name = "appsettings.json";
@@ -41,6 +44,7 @@ static string GetRandomString()
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddMvc().AddControllersAsServices();
+
 // Add services to the container.
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 //localization service
@@ -72,7 +76,6 @@ CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("hu");
 
 builder.Services.AddIdentity<Users, IdentityRole>(options => options.SignIn.RequireConfirmedPhoneNumber = false).AddEntityFrameworkStores<ApplicationDbContext>();
 
-
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
@@ -89,9 +92,9 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 
-
-
 var app = builder.Build();
+
+
 
 // add the appDbContext service
 using (var scope = app.Services.CreateAsyncScope())
@@ -110,6 +113,7 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
 app.UseRequestLocalization(new RequestLocalizationOptions
 {
     DefaultRequestCulture = new RequestCulture("hu"),
@@ -128,7 +132,6 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
 
 app.MapRazorPages();
 app.MapControllers();

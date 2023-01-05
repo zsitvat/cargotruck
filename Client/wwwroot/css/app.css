@@ -631,8 +631,13 @@ table th button {
     margin-bottom: 2px;
 }
 
+.currency{
+    display:inline-block;
+    margin-left:4rem;
+}
+
 .login-input-group-text {
-    top:0px;
+    top: 0px;
     padding: 0.55rem;
     border-bottom-right-radius: unset;
     border-top-right-radius: unset;

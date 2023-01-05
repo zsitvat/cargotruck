@@ -74,7 +74,7 @@
                                 <label>@localizer["Direction"]:</label>
                             <div>
                                 <select class="form-control" @bind="@roads.Direction">
-                                    <option value="" selected disabled>@localizer["Select_placeholder"]</option>
+                                    <option  selected disabled>@localizer["Select_placeholder"]</option>
                                     <option value="TO">@localizer["to"]</option>
                                     <option value="FROM">@localizer["from"]</option>
                                 </select>
@@ -87,7 +87,7 @@
                             <label>@localizer["Expenses_id"]:</label>
                             <div>
                             <select class="form-control" @bind="@roads.Expenses_id">
-                                        <option value="" selected disabled>@localizer["Select_placeholder"]</option>
+                                        <option  selected disabled>@localizer["Select_placeholder"]</option>
                                         @if (expenses!=null)
                                         {
                                         @foreach (var expense in expenses)
@@ -105,7 +105,7 @@
                                 <label>@localizer["Task_id"]:</label>
                                 <div>
                             <select class="form-control" @bind="@roads.Task_id">
-                                        <option value="" selected disabled>@localizer["Select_placeholder"]</option>
+                                        <option selected disabled>@localizer["Select_placeholder"]</option>
                                         @if (tasks != null)
                                         {
                                             @foreach (var task in tasks)
@@ -125,7 +125,7 @@
                                 <label>@localizer["Id_cargo"]:</label>
                                 <div>
                             <select class="form-control" @bind="@roads.Id_cargo">
-                                        <option value="" selected disabled>@localizer["Select_placeholder"]</option>
+                                        <option selected disabled>@localizer["Select_placeholder"]</option>
                                         @if (cargoes != null)
                                         {
                                             @foreach (var cargo in cargoes)
@@ -150,15 +150,22 @@
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public string? TitleText { get; set; }
     [Parameter] public EventCallback OnValidSubmit { get; set; }
-    Cargoes[]? cargoes { get; set; }
+    List<Cargoes>? cargoes { get; set; }
     Tasks[]? tasks { get; set; }
-    Expenses[]? expenses { get; set; }
+    List<Expenses>? expenses { get; set; }
 
 
     protected override async Task OnInitializedAsync()
     {
-        cargoes = await client.GetFromJsonAsync<Cargoes[]?>("api/cargoes/getcargoes");
+        cargoes = await client.GetFromJsonAsync<List<Cargoes>?>("api/cargoes/getcargoes");
         tasks = await client.GetFromJsonAsync<Tasks[]?>("api/tasks/gettasks");
-        expenses = await client.GetFromJsonAsync<Expenses[]?>("api/expenses/getexpenses");
+        expenses = await client.GetFromJsonAsync<List<Expenses>?>("api/expenses/getexpenses");
+        var roadWithIds = await client.GetFromJsonAsync<List<Roads>>("api/roads/getroads");
+        roadWithIds = roadWithIds.Where(x => x.Expenses_id != null || x.Id_cargo != null).ToList();
+        foreach (var road in roadWithIds)
+        {
+            expenses.RemoveAll(x => x.Id == road.Expenses_id && x.Id != roads?.Expenses_id);
+            cargoes.RemoveAll(x => x.Id == road.Id_cargo && x.Id != roads?.Id_cargo);
+        }
     }
 }

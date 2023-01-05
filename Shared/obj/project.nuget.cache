@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "4R7lmFAg0AuInjhgz4V6IXvdOAeSAz1k7U0Qky4F2nVkzTEMrbWa9nYh+Nwl8Dzcbc9nw8UlgswJFYq/gH4CJg==",
+  "dgSpecHash": "NvjjF/e9ScC/uH6B9G5ZI8CUqKmZ7j3oV3c2j6vB7r4E5FJxmYb7WrLwlgfhHf7xXeW7pjiOckoY91TybC96Tw==",
   "success": true,
   "projectFilePath": "F:\\Szakdoga app\\Cargotruck\\Shared\\Cargotruck.Shared.csproj",
   "expectedPackageFiles": [
@@ -29,6 +29,8 @@
     "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
     "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
     "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
+    "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\newtonsoft.json\\13.0.2\\newtonsoft.json.13.0.2.nupkg.sha512",
+    "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\restsharp\\106.15.0\\restsharp.106.15.0.nupkg.sha512",
     "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\runtime.native.system.data.sqlclient.sni\\4.7.0\\runtime.native.system.data.sqlclient.sni.4.7.0.nupkg.sha512",
     "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\runtime.win-x64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",

@@ -12,7 +12,7 @@ using System.Text;
 using System.Linq.Dynamic.Core;
 using DocumentFormat.OpenXml.InkML;
 using DocumentFormat.OpenXml.Spreadsheet;
-
+using Microsoft.ClearScript.JavaScript;
 
 namespace Cargotruck.Server.Controllers
 {
@@ -185,7 +185,7 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpPost]
-        public async Task CreateMonths()
+        public async Task<IActionResult> CreateMonths()
         {
             Monthly_expenses data = new Monthly_expenses();
             var currentDate = DateTime.Now;
@@ -196,7 +196,9 @@ namespace Cargotruck.Server.Controllers
                 data.Date = DateTime.Now;
                 _context.Add(data);
                 await _context.SaveChangesAsync();
+                return Ok(data.Monthly_expense_id);
             }
+            return Ok();
         }
 
         public async Task CreateConTable()

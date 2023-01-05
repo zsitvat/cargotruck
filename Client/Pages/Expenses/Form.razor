@@ -27,7 +27,7 @@
                         <label>@localizer["Type"]:</label>
                         <div>
                             <select id="Type" class="form-control" @oninput="@((e)=>onChangeGetType(e))" @bind="@expenses.Type">
-                                <option value="" selected disabled>@localizer["Select_placeholder"]</option>
+                                <option  selected disabled>@localizer["Select_placeholder"]</option>
                                 @foreach (var value in Enum.GetValues<Cargotruck.Shared.Models.Type>())
                                 {
                                     <option value="@value">@localizer[value.ToString()]</option> 
@@ -43,7 +43,7 @@
                         <label>@localizer["Type_id"]:</label>
                             <div>
                                 <select class="form-control" @bind="@expenses.Type_id">
-                                    <option value="" selected disabled>@localizer["Select_placeholder"]</option>
+                                    <option  selected disabled>@localizer["Select_placeholder"]</option>
                                     @switch(type) 
                                         {
                                         case "task":
@@ -124,7 +124,6 @@
                         </div>
                     </div>
                  }
-
                 @if(type == "salary"){
                      <div class="form-group ">
                         <div>
@@ -190,17 +189,30 @@
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public string? TitleText { get; set; }
     [Parameter] public EventCallback OnValidSubmit { get; set; }
-    Cargoes[]? cargoes { get; set; }
-    Tasks[]? tasks { get; set; }
-    Roads[]? roads { get; set; }
+    List<Cargoes>? cargoes { get; set; }
+    List<Tasks>? tasks { get; set; }
+    List<Roads>? roads { get; set; }
     string? type;
 
 
     protected override async Task OnInitializedAsync()
     {
-        cargoes = await client.GetFromJsonAsync<Cargoes[]?>("api/cargoes/getcargoes");
-        tasks = await client.GetFromJsonAsync<Tasks[]?>("api/tasks/gettasks");
-        roads = await client.GetFromJsonAsync<Roads[]?>("api/roads/getroads");
+        cargoes = await client.GetFromJsonAsync<List<Cargoes>?>("api/cargoes/getcargoes");
+        tasks = await client.GetFromJsonAsync<List<Tasks>?>("api/tasks/gettasks");
+        roads = await client.GetFromJsonAsync<List<Roads>?>("api/roads/getroads");
+        var expenseWithIds = await client.GetFromJsonAsync<List<Expenses>>("api/expenses/getexpenses");
+        foreach (var expense in expenseWithIds)
+        {
+            var value = expense.Type.Value.ToString();
+            roads?.RemoveAll(x => x.Id == expense.Type_id && value == "repair" &&
+                x.Id != expenses?.Type_id);
+
+            tasks?.RemoveAll(x => x.Id == expense.Type_id && value == "task" &&
+                x.Id != expenses?.Type_id);
+
+            cargoes?.RemoveAll(x => x.Id == expense.Type_id && value == "storage" &&
+                x.Id != expenses?.Type_id);
+        }
     }
 
     void onChangeGetType(ChangeEventArgs e)

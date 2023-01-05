@@ -471,6 +471,9 @@
   <data name="Manager" xml:space="preserve">
     <value>Manager</value>
   </data>
+  <data name="Mandatory" xml:space="preserve">
+    <value>The input can't be empty!</value>
+  </data>
   <data name="Max_weight" xml:space="preserve">
     <value>Max weight of the cargo</value>
   </data>
