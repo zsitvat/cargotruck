@@ -1,7 +1,4 @@
 ﻿@page "/Expenses"
-@using System.Xml;
-@using Newtonsoft.Json;
-@using RestSharp;
 
 <h3>@localizer["Expenses"]</h3>
 <div class="form-group buttons">
@@ -118,7 +115,7 @@ else
                                             {
                                                 @if (currency != "HUF" && rates != null)
                                                 {
-                                                    @(GetCurrencyAsync(item.Fuel).Result.Value.ToString() + " " + currency)
+                                                    @(GetCurrencyAsync(item.Fuel).Result.Value.ToString("0.##") + " " + currency)
                                                 }
                                                 else
                                                 {

@@ -9,6 +9,12 @@
     <button data-title="@localizer["txt"]" class="btn btn-light" @onclick="@(() => ExportToCSV("txt"))"><span class="icon iconify" style="margin:0;" data-icon="material-symbols:text-snippet-outline"></span></button>
     <button data-title="@localizer["csv"]" class="btn btn-light" @onclick="@(() => ExportToCSV("csv"))"><span class="icon iconify" style="margin:0;" data-icon="bi:filetype-csv"></span></button>
     <input value="@searchString" @oninput="@Search" placeholder="@(searchString != "" ? searchString : localizer["Search"])" class="form-control inputs input_search" type="search" id="search-input" name="SearchString">
+    <select data-title="@localizer["Currency"]" class="form-control currency" @oninput="@((e)=>onChangeGetType(e))" @bind="currency">
+        <option value="HUF">HUF</option>
+        <option value="EUR">EUR</option>
+        <option value="USD">USD</option>
+        <option value="CZK">CZK</option>
+    </select>
 </div>
 <br>
 <p class="error">@document_error</p>
@@ -75,15 +81,51 @@ else
                                     <td>@localizer[item.Date.Month.ToString()]</td>
                                     @if (showColumns[0])
                                     {
-                                        <td>@item.Earning</td>
+                                        <td>
+                                            @if (@item.Earning != null)
+                                            {
+                                                @if (currency != "HUF" && rates != null)
+                                                {
+                                                    @(GetCurrencyAsync(item.Earning).Result.Value.ToString("0.##") + " " + currency)
+                                                }
+                                                else
+                                                {
+                                                    @(item.Earning + " HUF")
+                                                }
+                                            }
+                                        </td>
                                     }
                                     @if (showColumns[1])
                                     {
-                                        <td>@item.Expense</td>
+                                        <td>
+                                            @if (@item.Expense != null)
+                                            {
+                                                @if (currency != "HUF" && rates != null)
+                                                {
+                                                    @(GetCurrencyAsync(item.Expense).Result.Value.ToString("0.##") + " " + currency)
+                                                }
+                                                else
+                                                {
+                                                    @(item.Expense + " HUF")
+                                                }
+                                            }
+                                        </td>
                                     }
                                     @if (showColumns[2])
                                     {
-                                        <td>@item.Profit </td>
+                                         <td>
+                                            @if (@item.Profit != null)
+                                            {
+                                                @if (currency != "HUF" && rates != null)
+                                                {
+                                                    @(GetCurrencyAsync(item.Profit).Result.Value.ToString("0.##") + " " + currency)
+                                                }
+                                                else
+                                                {
+                                                    @(item.Profit + " HUF")
+                                                }
+                                            }
+                                        </td>
                                     }
                                     @if (showColumns[3])
                                     {
@@ -190,11 +232,26 @@ else
     private bool desc = false;
     private string? searchString = "";
     string? document_error;
+    string currency = "HUF";
+    Dictionary<string, dynamic>? rates;
 
     protected override async Task OnInitializedAsync()
     {
         PageHistoryState.AddPageToHistory("/Monthly_expenses");
         base.OnInitialized();
+        if (rates == null)
+        {
+            try
+            {
+                await GetRatesAsync();
+            }
+            catch (Exception ex)
+            {
+
+                document_error = $"Error - Type: {ex.GetType()}, Message: {ex.Message}";
+                Console.WriteLine(document_error);
+            }
+        }
         var refreshdata = await client.GetStringAsync("api/Monthly_expenses/createcontable");
         dataRows = await client.GetFromJsonAsync<int>("api/Monthly_expenses/pagecount");
         var checkData = await client.GetAsync("api/Monthly_expenses/checkdata");
@@ -209,6 +266,49 @@ else
         {
             document_error = localizer["CheckFailed"];
         }
+    }
+
+    public async Task GetRatesAsync()
+    {
+        var request = new HttpRequestMessage
+            {
+                Method = new HttpMethod("GET"),
+                RequestUri = new Uri("https://api.apilayer.com/exchangerates_data/latest?symbols=EUR,HUF,USD,CZK&base=EUR")
+            };
+
+        request.Headers.Add("apikey", "XwSDWGpGqDKu8ZIbOl56Kne74V14oEpC");
+
+        var response = await client.SendAsync(request);
+        if (response.IsSuccessStatusCode)
+        {
+
+            var json = response.Content.ReadAsStringAsync().Result;
+            Dictionary<string, dynamic> dict = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(json);
+            var ratesJson = dict["rates"].ToString().Trim(new Char[] { '\n' }).Replace(" ", "");
+            rates = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(ratesJson);
+        }
+    }
+
+    public async Task<float?> GetCurrencyAsync(int? amount)
+    {
+        float? conversionNum = amount;
+        if (rates != null && currency != "HUF")
+        {
+            if (currency != "EUR")
+            {
+                conversionNum = (float)((amount / rates["HUF"]) * rates[currency]);
+            }
+            else
+            {
+                conversionNum = (float)(amount / rates["HUF"]);
+            }
+        }
+        return conversionNum;
+    }
+
+    async void onChangeGetType(ChangeEventArgs e)
+    {
+        currency = e.Value.ToString();
     }
 
     async Task Delete(int Id)
