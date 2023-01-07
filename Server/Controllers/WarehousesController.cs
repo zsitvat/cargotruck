@@ -469,7 +469,7 @@ namespace Cargotruck.Server.Controllers
                                         new SqlParameter("@User_id", list[l]?.ToString()),
                                         new SqlParameter("@Address", list[l + 1]),
                                         new SqlParameter("@Owner", list[l + 2]),
-                                        new SqlParameter("@Date", list[l + 4] == System.DBNull.Value ? System.DBNull.Value : DateTime.Parse(list[l + 4].ToString()))
+                                        new SqlParameter("@Date", DateTime.Now)
                                         );
 
                                     string[] substrings;

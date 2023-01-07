@@ -368,7 +368,6 @@ table th button {
     background-color: white;
     border-top: 1px solid #d6d5d5;
     z-index:0;
-
 }
 
 .footer-text{
@@ -560,7 +559,6 @@ table th button {
 
 [data-title] {
     position: relative;
-    z-index: 99999;
 }
 
 [import-data-title]:hover:after {
@@ -590,7 +588,6 @@ table th button {
 
 [import-data-title] {
     position: relative;
-    z-index: 99999;
 }
 
 .custom-file-input::-webkit-file-upload-button {
@@ -633,7 +630,27 @@ table th button {
 
 .currency{
     display:inline-block;
-    margin-left:4rem;
+    margin-left:2rem;
+}
+
+.filter-icon {
+    margin: 0;
+}
+
+.filter-button {
+    display: inline-block;
+    margin: 0;
+    margin-left: 1rem;
+    margin-right:-0.2rem;
+    border:none;
+    background: none;
+}
+
+.filter {
+    display: inline-block;
+    margin-left: 0rem;
+    text-align:center;
+    width:fit-content;
 }
 
 .login-input-group-text {
@@ -849,6 +866,10 @@ tbody td, tbody th{
         padding-left: 20%;
     }
 
+    .profile-form input {
+        width: 19rem;
+        margin-top: 1%;
+    }
 }
 
 @media (min-width: 768px) {
@@ -859,7 +880,7 @@ tbody td, tbody th{
     }
     .input_search {
         display: inline;
-        margin-left: 5rem;
+        margin-left: 1rem;
     }
 }
 
@@ -891,21 +912,17 @@ tbody td, tbody th{
     .table-width {
         max-width:79vw;
     }
-
 }
 
 @media (max-width: 1220px) {
-    .card {
-        min-width: 110%;
-    }
-
+   
     table img {
         margin-left: 10%;
         border: 2px solid rgba(0,0,0,.075);
     }
 
     .profile-form input {
-        width: 17.9rem;
+        width: 18.5rem;
         margin-top: 1%;
     }
 
@@ -935,13 +952,13 @@ tbody td, tbody th{
         margin-left: 10%;
     }
     .card {
-        min-width: 125%;
+        min-width: 25rem;
         min-height: fit-content;
     }
 
 
     .profile-form input {
-        width: 17.9rem;
+        width: 18.5rem;
         margin-top: 1%;
     }
 
@@ -965,10 +982,7 @@ tbody td, tbody th{
 
     .input_search {
         margin-top: 10px;
-    }
-
-    .file-upload {
-        margin-top: 10px;
+        display:inline-block;
     }
 }
 
@@ -979,6 +993,10 @@ tbody td, tbody th{
 
     .table-width {
         max-width: 68vw;
+    }
+
+    .currency {
+        margin-left: 0.2rem;
     }
 }
 
@@ -1009,6 +1027,9 @@ tbody td, tbody th{
     .input_search {
         margin-top: 0.4rem;
         width:100%;
+        max-width:22rem;
+        margin:auto;
+        margin-top:0.5rem;
     }
 
     .buttons{
@@ -1018,22 +1039,58 @@ tbody td, tbody th{
     .hide-on-desktop{
         display:none;
     }
+
+    .currency {
+        margin-left: 0rem;
+        position: relative;
+        left: 15.8rem;
+        bottom: 5.3rem;
+        padding-bottom: 0.5rem;
+        padding-top: 0.6rem;
+    }
+
+    .currency option{
+        position: relative;
+        left: 2rem;
+    }
+
+    .bottom-row {
+        position: initial;
+    }
+}
+
+@media (max-width: 580px) {
+    .currency {
+        margin-left: 0rem;
+        position: relative;
+        left: 13rem;
+        bottom: 2.3rem;
+        padding-bottom: 0.5rem;
+        padding-top: 0.6rem;
+    }
+}
+
+@media (max-width: 480px) {
+     .currency {
+        margin-left: 0rem;
+        position: relative;
+        left: 8rem;
+        bottom: 5.3rem;
+        padding-bottom: 0.5rem;
+        padding-top: 0.6rem;
+    }
 }
 
 @media (max-width: 430px) {
-    .card table {
-        padding-left: 10%;
-    }
-
     table img{
         margin-left:5%;
     }
     .profile-form {
-        margin-left: 0%;
+        margin-left: 8%;
     }
 
     .card {
-        min-width: 105%;
+        min-width: 24rem;
         min-height: fit-content;
     }
 
@@ -1043,9 +1100,38 @@ tbody td, tbody th{
     }
 
     .profile-form input {
-        width: 17.9rem;
+        width: 18.5rem;
         margin-top: 1%;
     }
+    .table-width {
+        max-width: 85vw;
+    }
+}
+
+@media (max-width: 400px) {
+    table img {
+        margin-left: 5%;
+    }
+
+    .profile-form {
+        margin-left: 3.5%;
+    }
+
+    .card {
+        min-width: 22rem;
+        min-height: fit-content;
+    }
+
+    .card2 {
+        min-width: 105%;
+        min-height: fit-content;
+    }
+
+    .profile-form input {
+        width: 18.5rem;
+        margin-top: 1%;
+    }
+
     .table-width {
         max-width: 85vw;
     }

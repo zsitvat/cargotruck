@@ -13,6 +13,7 @@ using DocumentFormat.OpenXml.Office.CustomUI;
 using DocumentFormat.OpenXml.Spreadsheet;
 using Font = iTextSharp.text.Font;
 using System.Text;
+using Type = Cargotruck.Shared.Models.Type;
 
 namespace Cargotruck.Server.Controllers
 {
@@ -170,6 +171,14 @@ namespace Cargotruck.Server.Controllers
             data.User_id = _context.Users.FirstOrDefault(a => a.UserName == User.Identity.Name).Id;
             _context.Add(data);
             await _context.SaveChangesAsync();
+
+            if (data.Type.ToString() == Type.repair.ToString())
+            {
+                var road = _context.Roads.FirstOrDefault(a => a.Id == data.Type_id);
+                road.Expenses_id = data.Id;
+                _context.Entry(road).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+            }
             return Ok(data.Id);
         }
 
@@ -177,6 +186,13 @@ namespace Cargotruck.Server.Controllers
         public async Task<IActionResult> Put(Expenses data)
         {
             _context.Entry(data).State = EntityState.Modified;
+            if (data.Type.ToString() == Type.repair.ToString())
+            {
+                var road = _context.Roads.FirstOrDefault(a => a.Id == data.Type_id);
+                road.Expenses_id = data.Id;
+                _context.Entry(road).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+            }
             await _context.SaveChangesAsync();
             return NoContent();
         }
@@ -236,15 +252,15 @@ namespace Cargotruck.Server.Controllers
                     worksheet.Cell(currentRow, 2).Value = expense.User_id;
                     worksheet.Cell(currentRow, 3).Value = expense.Type;
                     worksheet.Cell(currentRow, 4).Value = expense.Type_id;
-                    worksheet.Cell(currentRow, 5).Value = expense.Fuel;
-                    worksheet.Cell(currentRow, 6).Value = expense.Road_fees;
-                    worksheet.Cell(currentRow, 7).Value = expense.Penalty;
-                    worksheet.Cell(currentRow, 8).Value = expense.Driver_spending;
-                    worksheet.Cell(currentRow, 9).Value = expense.Driver_salary;
-                    worksheet.Cell(currentRow, 10).Value = expense.Repair_cost;
+                    worksheet.Cell(currentRow, 5).Value = expense.Fuel + (expense.Fuel != null ? " HUF" : "");
+                    worksheet.Cell(currentRow, 6).Value = expense.Road_fees + (expense.Road_fees != null ? " HUF" : "");
+                    worksheet.Cell(currentRow, 7).Value = expense.Penalty + (expense.Penalty != null ? " HUF" : "");
+                    worksheet.Cell(currentRow, 8).Value = expense.Driver_spending + (expense.Driver_spending != null ? " HUF" : "");
+                    worksheet.Cell(currentRow, 9).Value = expense.Driver_salary + (expense.Driver_salary != null ? " HUF" : "");
+                    worksheet.Cell(currentRow, 10).Value = expense.Repair_cost + (expense.Repair_cost != null ? " HUF" : "");
                     worksheet.Cell(currentRow, 11).Value = expense.Repair_description;
-                    worksheet.Cell(currentRow, 12).Value = expense.Cost_of_storage;
-                    worksheet.Cell(currentRow, 13).Value = expense.other;
+                    worksheet.Cell(currentRow, 12).Value = expense.Cost_of_storage + (expense.Cost_of_storage != null ? " HUF" : "");
+                    worksheet.Cell(currentRow, 13).Value = expense.other + (expense.other != null ? " HUF" : "");
                     worksheet.Cell(currentRow, 14).Value = expense.Date;
                 }
 
@@ -369,28 +385,28 @@ namespace Cargotruck.Server.Controllers
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(expense.Fuel.ToString())) { s = expense.Fuel.ToString(); }
+                    if (!string.IsNullOrEmpty(expense.Fuel.ToString())) { s = expense.Fuel.ToString() + " HUF"; }
                     else { s = "-"; }
                     table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(expense.Road_fees.ToString())) { s = expense.Road_fees.ToString(); }
+                    if (!string.IsNullOrEmpty(expense.Road_fees.ToString())) { s = expense.Road_fees.ToString() + " HUF"; }
                     else { s = "-"; }
                     table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(expense.Penalty.ToString())) { s = expense.Penalty.ToString(); }
+                    if (!string.IsNullOrEmpty(expense.Penalty.ToString())) { s = expense.Penalty.ToString() + " HUF"; }
                     else { s = "-"; }
                     table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(expense.Driver_spending.ToString())) { s = expense.Driver_spending.ToString(); }
+                    if (!string.IsNullOrEmpty(expense.Driver_spending.ToString())) { s = expense.Driver_spending.ToString() + " HUF"; }
                     else { s = "-"; }
                     table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
@@ -452,35 +468,35 @@ namespace Cargotruck.Server.Controllers
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(expense.Driver_salary.ToString())) { s = expense.Driver_salary.ToString(); }
+                    if (!string.IsNullOrEmpty(expense.Driver_salary.ToString())) { s = expense.Driver_salary.ToString() + " HUF"; }
                     else { s = "-"; }
                     table2.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(expense.Repair_cost.ToString())) { s = expense.Repair_cost.ToString(); }
+                    if (!string.IsNullOrEmpty(expense.Repair_cost.ToString())) { s = expense.Repair_cost.ToString() + " HUF"; }
                     else { s = "-"; }
                     table2.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(expense.Repair_description)) { s = expense.Repair_description.ToString(); }
+                    if (!string.IsNullOrEmpty(expense.Repair_description)) { s = expense.Repair_description.ToString() + " HUF"; }
                     else { s = "-"; }
                     table2.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(expense.Cost_of_storage.ToString())) { s = expense.Cost_of_storage.ToString(); }
+                    if (!string.IsNullOrEmpty(expense.Cost_of_storage.ToString())) { s = expense.Cost_of_storage.ToString() + " HUF"; }
                     else { s = "-"; }
                     table2.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(expense.other.ToString())) { s = expense.other.ToString(); }
+                    if (!string.IsNullOrEmpty(expense.other.ToString())) { s = expense.other.ToString() + " HUF"; }
                     else { s = "-"; }
                     table2.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
@@ -556,15 +572,15 @@ namespace Cargotruck.Server.Controllers
                 txt.Write(expense.User_id + ";");
                 txt.Write(expense.Type + ";");
                 txt.Write(expense.Type_id + ";");
-                txt.Write(expense.Fuel + ";");
-                txt.Write(expense.Road_fees + ";");
-                txt.Write(expense.Penalty + ";");
-                txt.Write(expense.Driver_spending + ";");
-                txt.Write(expense.Driver_salary + ";");
-                txt.Write(expense.Repair_cost + ";");
+                txt.Write(expense.Fuel + (expense.Fuel != null ? " HUF" : "") + ";");
+                txt.Write(expense.Road_fees + (expense.Road_fees != null ? " HUF" : "") + ";");
+                txt.Write(expense.Penalty + (expense.Penalty != null ? " HUF" : "") + ";");
+                txt.Write(expense.Driver_spending + (expense.Driver_spending != null ? " HUF" : "") + ";");
+                txt.Write(expense.Driver_salary + (expense.Driver_salary != null ? " HUF" : "") + ";");
+                txt.Write(expense.Repair_cost + (expense.Repair_cost != null ? " HUF" : "") + ";");
                 txt.Write(expense.Repair_description + ";");
-                txt.Write(expense.Cost_of_storage + ";");
-                txt.Write(expense.other + ";");
+                txt.Write(expense.Cost_of_storage + (expense.Cost_of_storage != null ? " HUF" : "") + ";");
+                txt.Write(expense.other + (expense.other != null ? " HUF" : "") + ";");
                 txt.Write(expense.Date + ";");
                 txt.Write("\n");
             }
@@ -629,8 +645,8 @@ namespace Cargotruck.Server.Controllers
                                 lang == "hu" ? Cargotruck.Shared.Resources.Resource.Driver_salary : "Driver salary",
                                 lang == "hu" ? Cargotruck.Shared.Resources.Resource.Repair_cost : "Repair cost",
                                 lang == "hu" ? Cargotruck.Shared.Resources.Resource.Repair_description : "Repair description",
-                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Repair_description : "Cost of storage",
-                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Repair_description : "other",
+                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Cost_of_storage : "Cost of storage",
+                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.other : "other",
                                 lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date"
                             };
 
@@ -697,6 +713,14 @@ namespace Cargotruck.Server.Controllers
                                         break;
                                 }
 
+                                for (int i=l+3; i < list.Count()-1; i++)
+                                {
+                                    if (i != (l + 9) && list[i]!= null && list[i] != System.DBNull.Value)
+                                    {
+                                        list[i] = new String(list[i]?.ToString()?.Where(Char.IsDigit).ToArray());
+                                    }
+                                }
+
                                 var sql = @"Insert Into Expenses (User_id,Type,Type_id,Fuel,Road_fees,Penalty,Driver_spending,Driver_salary,Repair_cost,Repair_description,Cost_of_storage,other,Date) 
                                 Values (@User_id,@Type,@Type_id,@Fuel,@Road_fees,@Penalty,@Driver_spending,@Driver_salary,@Repair_cost,@Repair_description,@Cost_of_storage,@other,@Date)";
                                 var insert = await _context.Database.ExecuteSqlRawAsync(sql,
@@ -712,7 +736,7 @@ namespace Cargotruck.Server.Controllers
                                     new SqlParameter("@Repair_description", list[l + 9]),
                                     new SqlParameter("@Cost_of_storage", list[l + 10]),
                                     new SqlParameter("@other", list[l + 11]),
-                                    new SqlParameter("@Date", list[l + 12] == System.DBNull.Value ? System.DBNull.Value : DateTime.Parse(list[l + 12].ToString()))
+                                    new SqlParameter("@Date", DateTime.Now)
                                     );
 
                                 if (insert > 0)

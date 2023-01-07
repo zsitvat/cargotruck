@@ -46,6 +46,7 @@
                             <div>
                             @if (tasks != null){
                                 <select class="form-control" @onchange=HandleChangeTask multiple>
+                                    <option value="*">@localizer["Nothing"]</option>
                                     @foreach (var task in tasks)
                                         {
                                         <option value="@task.Id">@task.Id - @task.Description - @task.Final_Payment  </option>
@@ -60,7 +61,8 @@
                         <label>@localizer["Expense_id"]:</label>
                             <div>
                             @if (expenses != null){
-                                <select class="form-control" @onchange=HandleChangeExpense multiple>d                              
+                                <select class="form-control" @onchange=HandleChangeExpense multiple>
+                                    <option value="*">@localizer["Nothing"]</option>
                                     @foreach (var expense in expenses)
                                         {
                                         <option value="@expense.Id">@expense.Id - @expense.Type_id/@expense.Type</option>

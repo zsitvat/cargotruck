@@ -943,6 +943,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Szűrés.
+        /// </summary>
+        public static string Filter {
+            get {
+                return ResourceManager.GetString("Filter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Végleges összeg.
         /// </summary>
         public static string Final_Payment {
@@ -1231,6 +1240,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nincs teljesítve.
+        /// </summary>
+        public static string Not_completed {
+            get {
+                return ResourceManager.GetString("Not_completed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Csak .xlsx formátum elfogadott!.
         /// </summary>
         public static string Not_excel {
@@ -1276,11 +1294,29 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nincs kiválasztva.
+        /// </summary>
+        public static string Nothing {
+            get {
+                return ResourceManager.GetString("Nothing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Úton.
         /// </summary>
         public static string on_road {
             get {
                 return ResourceManager.GetString("on_road", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nem lehet negatív szám!.
+        /// </summary>
+        public static string OnlyPositive {
+            get {
+                return ResourceManager.GetString("OnlyPositive", resourceCulture);
             }
         }
         

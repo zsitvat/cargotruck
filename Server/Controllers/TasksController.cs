@@ -10,6 +10,7 @@ using Document = iTextSharp.text.Document;
 using Microsoft.Data.SqlClient;
 using System.Text;
 using Cargotruck.Shared.Models;
+using DocumentFormat.OpenXml.Bibliography;
 
 namespace Cargotruck.Server.Controllers
 {
@@ -24,11 +25,20 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(int page, int pageSize, string sortOrder, bool desc, string? searchString)
+        public async Task<IActionResult> Get(int page, int pageSize, string sortOrder, bool desc, string? searchString, string? filter)
         {
             var t = await _context.Tasks.ToListAsync();
-            searchString = searchString == null ? null : searchString.ToLower();
 
+            if (filter == "completed")
+            {
+                t = t.Where(data => data.Completed).ToList();
+            }
+            else if (filter == "not_completed")
+            {
+                t = t.Where(data => data.Completed == false).ToList();
+            }
+
+            searchString = searchString == null ? null : searchString.ToLower();
             if (searchString != null && searchString != "") 
             { 
                     t = t.Where(s => (
@@ -46,6 +56,7 @@ namespace Cargotruck.Server.Controllers
                 || (s.Date.ToString()!.Contains(searchString))
                 ).ToList(); 
             }
+
             
             sortOrder = sortOrder == "Partner" ? ( desc ? "Partner_desc" : "Partner" ) : (sortOrder);
             sortOrder = sortOrder == "Description " ? (desc ? "Description_desc" : "Description") : (sortOrder);
@@ -196,6 +207,12 @@ namespace Cargotruck.Server.Controllers
             t.User_id = _context.Users.FirstOrDefault(a => a.UserName == User.Identity.Name).Id;
             _context.Add(t);
             await _context.SaveChangesAsync();
+
+            var cargo = _context.Cargoes.FirstOrDefault(a => a.Id == t.Id_cargo);
+            cargo.Task_id = t.Id;
+            _context.Entry(cargo).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
             return Ok(t.Id);
         }
 
@@ -204,6 +221,9 @@ namespace Cargotruck.Server.Controllers
         {
             t.Final_Payment = (t.Payment != null ? t.Payment : 0) - (t.Penalty != null ? t.Penalty : 0);
             _context.Entry(t).State = EntityState.Modified;
+            var cargo = _context.Cargoes.FirstOrDefault(a => a.Id == t.Id_cargo);
+            cargo.Task_id = t.Id;
+            _context.Entry(cargo).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return NoContent();
         }
@@ -280,9 +300,9 @@ namespace Cargotruck.Server.Controllers
                     worksheet.Cell(currentRow, 12).Value = task.Completed;
                     worksheet.Cell(currentRow, 13).Value = task.Completion_time;
                     worksheet.Cell(currentRow, 14).Value = task.Time_of_delay;
-                    worksheet.Cell(currentRow, 15).Value = task.Payment;
-                    worksheet.Cell(currentRow, 16).Value = task.Final_Payment;
-                    worksheet.Cell(currentRow, 17).Value = task.Penalty;
+                    worksheet.Cell(currentRow, 15).Value = task.Payment + (task.Payment != null ? " HUF" : "");
+                    worksheet.Cell(currentRow, 16).Value = task.Final_Payment + (task.Final_Payment != null ? " HUF" : "");
+                    worksheet.Cell(currentRow, 17).Value = task.Penalty + (task.Penalty != null ? " HUF" : "");
                     worksheet.Cell(currentRow, 18).Value = task.Date;
                 }
 
@@ -551,21 +571,21 @@ namespace Cargotruck.Server.Controllers
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(task.Payment.ToString())) { s = task.Payment.ToString(); }
+                    if (!string.IsNullOrEmpty(task.Payment.ToString())) { s = task.Payment.ToString() + " HUF"; }
                     else { s = "-"; }
                     table2.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(task.Final_Payment.ToString())) { s = task.Final_Payment.ToString(); }
+                    if (!string.IsNullOrEmpty(task.Final_Payment.ToString())) { s = task.Final_Payment.ToString() + " HUF"; }
                     else { s = "-"; }
                     table2.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(task.Penalty.ToString())) { s = task.Penalty.ToString(); }
+                    if (!string.IsNullOrEmpty(task.Penalty.ToString())) { s = task.Penalty.ToString() + " HUF"; }
                     else { s = "-"; }
                     table2.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
@@ -656,9 +676,9 @@ namespace Cargotruck.Server.Controllers
                 txt.Write(task.Completed + ";");
                 txt.Write(task.Completion_time + ";");
                 txt.Write(task.Time_of_delay + ";");
-                txt.Write(task.Payment + ";");
-                txt.Write(task.Final_Payment + ";");
-                txt.Write(task.Penalty + "; ");
+                txt.Write(task.Payment + (task.Payment != null ? " HUF" :"") + ";");
+                txt.Write(task.Final_Payment + (task.Final_Payment != null ? " HUF" : "") + ";");
+                txt.Write(task.Penalty + (task.Penalty != null ? " HUF" : "") + "; ");
                 txt.Write(task.Date + "; ");
                 txt.Write("\n");
             }
@@ -770,6 +790,10 @@ namespace Cargotruck.Server.Controllers
                                     if (cell.Value!=null && cell.Value.ToString()!="") { list.Add(cell.Value); }
                                     else { list.Add(System.DBNull.Value); }
                                 }
+
+                                list[l + 13] = new String(list[l + 13]?.ToString()?.Where(Char.IsDigit).ToArray());
+                                list[l + 14] = new String(list[l + 14]?.ToString()?.Where(Char.IsDigit).ToArray());
+                                list[l + 15] = new String(list[l + 15]?.ToString()?.Where(Char.IsDigit).ToArray());
                                 var sql = @"Insert Into Tasks (User_id,Partner,Description,Place_of_receipt,Time_of_receipt,Place_of_delivery,Time_of_delivery,other_stops,Id_cargo,Storage_time,Completed,Completion_time,Time_of_delay,Payment,Final_Payment,Penalty,Date ) 
                                         Values (@User_id,@Partner,@Description,@Place_of_receipt,@Time_of_receipt, @Place_of_delivery,@Time_of_delivery,@other_stops,@Id_cargo,@Storage_time,@Completed,@Completion_time,@Time_of_delay,@Payment,@Final_Payment,@Penalty,@Date)";
                                 var insert =  await _context.Database.ExecuteSqlRawAsync(sql,
@@ -789,7 +813,7 @@ namespace Cargotruck.Server.Controllers
                                     new SqlParameter("@Payment", list[l + 13]),
                                     new SqlParameter("@Final_Payment", list[l + 14]),
                                     new SqlParameter("@Penalty", list[l + 15]),
-                                    new SqlParameter("@Date", list[l + 16] == System.DBNull.Value ? System.DBNull.Value : DateTime.Parse(list[l + 16].ToString()))
+                                    new SqlParameter("@Date", DateTime.Now)
                                     );
 
                                 if (insert > 0)

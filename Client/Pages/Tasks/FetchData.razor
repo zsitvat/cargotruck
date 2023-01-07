@@ -10,6 +10,28 @@
     <button data-title="@localizer["csv"]" class="btn btn-light" @onclick="@(() => ExportToCSV(".csv"))"><span class="icon iconify" style="margin:0;" data-icon="bi:filetype-csv"></span></button>
     <span class="file-upload-title" import-data-title="@localizer["File_input"]"><UploadFiles page="tasks" StateChanged="StateChanged" /></span>
     <input value="@searchString" @oninput="@Search" placeholder="@(searchString != "" ? searchString : localizer["Search"])" class="form-control inputs input_search" type="search" id="search-input" name="SearchString">
+    
+    @if (filter == "completed" || filter == "not_completed")
+    {
+        <button @onclick="@(()=>onChangeResetFilter())" class="filter-button"><span class="icon iconify filter-icon" data-icon="material-symbols:filter-alt-off"></span></button>
+    }
+    else
+    {
+        <button @onclick="@(()=>onChangeResetFilter())" class="filter-button"><span class="icon iconify filter-icon" data-icon="material-symbols:filter-alt"></span></button>
+    }
+
+    <select class="form-control filter" @oninput="@((e)=>onChangeGetFilter(e))" @bind="filter">
+        <option value="" selected disabled>@localizer["Nothing"]</option>
+        <option value="completed">@localizer["Completed"]</option>
+        <option value="not_completed">@localizer["Not_completed"]</option>
+    </select>
+
+    <select data-title="@localizer["Currency"]" class="form-control currency" @oninput="@((e)=>onChangeGetType(e))" @bind="currency">
+        <option value="HUF">HUF</option>
+        <option value="EUR">EUR</option>
+        <option value="USD">USD</option>
+        <option value="CZK">CZK</option>
+    </select>
 </div>
 <br>
 <p class="error">@document_error</p>
@@ -163,15 +185,51 @@ else
                                     }
                                     @if (showColumns[12])
                                     {
-                                        <td>@item.Payment</td>
+                                        <td>
+                                            @if (@item.Payment != null)
+                                            {
+                                                @if (currency != "HUF" && rates != null)
+                                                {
+                                                    @(GetCurrencyAsync(item.Payment).Result.Value.ToString("0.##") + " " + currency)
+                                                }
+                                                else
+                                                {
+                                                    @(item.Payment + " HUF")
+                                                }
+                                            }
+                                        </td>
                                     }
                                     @if (showColumns[13])
                                     {
-                                        <td>@item.Final_Payment</td>
+                                          <td>
+                                            @if (@item.Final_Payment != null)
+                                            {
+                                                @if (currency != "HUF" && rates != null)
+                                                {
+                                                    @(GetCurrencyAsync(item.Final_Payment).Result.Value.ToString("0.##") + " " + currency)
+                                                }
+                                                else
+                                                {
+                                                    @(item.Final_Payment + " HUF")
+                                                }
+                                            }
+                                        </td>
                                     }
                                     @if (showColumns[14])
                                     {
-                                        <td>@item.Penalty</td>
+                                        <td>
+                                            @if (@item.Penalty != null)
+                                            {
+                                                @if (currency != "HUF" && rates != null)
+                                                {
+                                                    @(GetCurrencyAsync(item.Penalty).Result.Value.ToString("0.##") + " " + currency)
+                                                }
+                                                else
+                                                {
+                                                    @(item.Penalty + " HUF")
+                                                }
+                                            }
+                                        </td>
                                     }
                                     @if (showColumns[15])
                                     {
@@ -233,24 +291,77 @@ else
     }
 }
 @code {
-    public bool settings = false;
+    private bool settings = false;
     Tasks[]? tasks { get; set; }
-    List<bool> showColumns = Enumerable.Repeat(true, 16).ToList();
+    private List<bool> showColumns = Enumerable.Repeat(true, 16).ToList();
     private int currentPage = 1;
     int pageSize = 10;
     int dataRows;
     float maxPage;
     private string sortOrder = "Date";
-    private bool desc = false;
+    private bool desc = true;
     private string? searchString = "";
+    string? filter = "";
     string? document_error;
+    string currency = "HUF";
+    Dictionary<string, dynamic>? rates;
+    string? filterIcon;
 
     protected override async Task OnInitializedAsync()
     {
         PageHistoryState.AddPageToHistory("/Tasks");
         base.OnInitialized();
+        if (rates == null)
+        {
+            try
+            {
+                rates = await CurrencyExchange.GetRatesAsync(client);
+            }
+            catch (Exception ex)
+            {
+
+                document_error = $"Error - Type: {ex.GetType()}, Message: {ex.Message}";
+                Console.WriteLine(document_error);
+            }
+        }
         dataRows = await client.GetFromJsonAsync<int>("api/tasks/pagecount");
         await ShowPage();
+    }
+
+     public async Task<float?> GetCurrencyAsync(int? amount)
+    {
+        float? conversionNum = amount;
+        if (rates != null && currency != "HUF")
+        {         
+            if (currency != "EUR")
+            {
+                conversionNum = (float)((amount / rates["HUF"]) * rates[currency]);
+            }
+            else
+            {
+                conversionNum = (float)(amount / rates["HUF"]);
+            }
+        }
+        return conversionNum;
+    }
+
+    async void onChangeGetType(ChangeEventArgs e)
+    {
+        currency = e.Value.ToString();
+    }
+
+    async void onChangeGetFilter(ChangeEventArgs e)
+    {
+        filter = e.Value.ToString();
+        await OnInitializedAsync();
+        StateHasChanged();
+    }
+
+    async void onChangeResetFilter()
+    {
+        filter = "";
+        await OnInitializedAsync();
+        StateHasChanged();
     }
 
     async Task Delete(int Id)
@@ -327,7 +438,7 @@ else
         else if (pageSize >= dataRows) { pageSize = dataRows != 0 ? dataRows : 1 ; }
         maxPage = (int)Math.Ceiling((decimal)((float)dataRows / (float)pageSize));
 
-        tasks = await client.GetFromJsonAsync<Tasks[]>($"api/tasks/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}");
+        tasks = await client.GetFromJsonAsync<Tasks[]>($"api/tasks/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}");
         StateHasChanged();
     }
 

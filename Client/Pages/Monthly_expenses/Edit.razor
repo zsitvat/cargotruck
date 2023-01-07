@@ -51,7 +51,14 @@
         {
             lenght = 0;
         }
+
+        for (int i = 0; i < lenght; ++i)
+        {
+            if (selectedTaskId?[i] == "*") { selectedTaskId = null; }
+            if (selectedExpenseId?[i] == "*") { selectedExpenseId = null; }
+        }
         Monthly_expenses_tasks_expenses.Monthly_expense_id = Id;
+
         for (int i = 0; i < lenght; ++i)
         {
             Monthly_expenses_tasks_expenses.Task_id = null;

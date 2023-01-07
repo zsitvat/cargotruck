@@ -54,7 +54,7 @@
                         <label>@localizer["Vehicle_registration_number"]:</label>
                             <div>
                             <select class="form-control" @bind="@cargoes.Vehicle_registration_number">
-                                    <option selected>@localizer["Select_placeholder"]</option>
+                                    <option value="" selected>@localizer["Select_placeholder"]</option>
                                     @if (trucks != null)
                                     {
                                     @foreach (var truck in trucks)

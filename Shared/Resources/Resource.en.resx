@@ -408,6 +408,9 @@
   <data name="File_input" xml:space="preserve">
     <value>Import data</value>
   </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Filter</value>
+  </data>
   <data name="Final_Payment" xml:space="preserve">
     <value>Final payment</value>
   </data>
@@ -498,6 +501,12 @@
   <data name="Notfound" xml:space="preserve">
     <value>Sorry, there's nothing at this address.</value>
   </data>
+  <data name="Nothing" xml:space="preserve">
+    <value>Not chosen</value>
+  </data>
+  <data name="Not_completed" xml:space="preserve">
+    <value>Not completed</value>
+  </data>
   <data name="Not_excel" xml:space="preserve">
     <value>Please select file with .xlsx extension!</value>
   </data>
@@ -518,6 +527,9 @@
   </data>
   <data name="No_records" xml:space="preserve">
     <value>@localizer["No_records"]</value>
+  </data>
+  <data name="OnlyPositive" xml:space="preserve">
+    <value>Only positive number allowed.</value>
   </data>
   <data name="on_road" xml:space="preserve">
     <value>On road</value>

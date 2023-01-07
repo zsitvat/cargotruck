@@ -526,7 +526,7 @@ namespace Cargotruck.Server.Controllers
                                     new SqlParameter("@Status", list[l + 3]),
                                     new SqlParameter("@Road_id", list[l + 4]),
                                     new SqlParameter("@Max_weight", list[l + 5]),
-                                    new SqlParameter("@Date", list[l + 6] == System.DBNull.Value ? System.DBNull.Value : DateTime.Parse(list[l + 6].ToString()))
+                                    new SqlParameter("@Date", DateTime.Now)
                                     );
 
                                 if (insert > 0)

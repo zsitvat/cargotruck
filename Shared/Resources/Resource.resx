@@ -411,6 +411,9 @@
   <data name="File_input" xml:space="preserve">
     <value>Adatok feltöltése</value>
   </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Szűrés</value>
+  </data>
   <data name="Final_Payment" xml:space="preserve">
     <value>Végleges összeg</value>
   </data>
@@ -501,6 +504,12 @@
   <data name="Notfound" xml:space="preserve">
     <value>Nem található!</value>
   </data>
+  <data name="Nothing" xml:space="preserve">
+    <value>Nincs kiválasztva</value>
+  </data>
+  <data name="Not_completed" xml:space="preserve">
+    <value>Nincs teljesítve</value>
+  </data>
   <data name="Not_excel" xml:space="preserve">
     <value>Csak .xlsx formátum elfogadott!</value>
   </data>
@@ -521,6 +530,9 @@
   </data>
   <data name="No_records" xml:space="preserve">
     <value>Nem található adat!</value>
+  </data>
+  <data name="OnlyPositive" xml:space="preserve">
+    <value>Nem lehet negatív szám!</value>
   </data>
   <data name="on_road" xml:space="preserve">
     <value>Úton</value>

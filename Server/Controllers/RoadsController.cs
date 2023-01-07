@@ -154,6 +154,11 @@ namespace Cargotruck.Server.Controllers
             data.User_id = _context.Users.FirstOrDefault(a => a.UserName == User.Identity.Name).Id;
             _context.Add(data);
             await _context.SaveChangesAsync();
+            var expense = _context.Expenses.FirstOrDefault(a => a.Id == data.Expenses_id);
+            expense.Type_id = data.Id;
+            expense.Type = Shared.Models.Type.repair;
+            _context.Entry(expense).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
             return Ok(data.Id);
         }
 
@@ -161,6 +166,10 @@ namespace Cargotruck.Server.Controllers
         public async Task<IActionResult> Put(Roads data)
         {
             _context.Entry(data).State = EntityState.Modified;
+            var expense = _context.Expenses.FirstOrDefault(a => a.Id == data.Expenses_id);
+            expense.Type_id = data.Id;
+            expense.Type = Shared.Models.Type.repair;
+            _context.Entry(expense).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return NoContent();
         }
@@ -635,7 +644,7 @@ namespace Cargotruck.Server.Controllers
                                     new SqlParameter("@Ending_place", list[l + 7]),
                                     new SqlParameter("@Direction", list[l + 8]),
                                     new SqlParameter("@Expenses_id", list[l + 9]),
-                                    new SqlParameter("@Date", list[l + 10] == System.DBNull.Value ? System.DBNull.Value : DateTime.Parse(list[l + 10].ToString()))
+                                    new SqlParameter("@Date", DateTime.Now)
                                     );
 
                                 if (insert > 0)

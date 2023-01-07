@@ -308,7 +308,7 @@ else
     int dataRows;
     float maxPage;
     private string sortOrder = "Date";
-    private bool desc = false;
+    private bool desc = true;
     private string? searchString = "";
     string? document_error;
     string currency = "HUF";
@@ -322,7 +322,7 @@ else
         {
             try
             {
-                await GetRatesAsync();
+                rates = await CurrencyExchange.GetRatesAsync(client);
             }
             catch (Exception ex)
             {
@@ -334,27 +334,6 @@ else
         dataRows = await client.GetFromJsonAsync<int>("api/expenses/pagecount");
         await ShowPage();
     }
-
-    public async Task GetRatesAsync()
-    {
-        var request = new HttpRequestMessage
-            {
-                Method = new HttpMethod("GET"),
-                RequestUri = new Uri("https://api.apilayer.com/exchangerates_data/latest?symbols=EUR,HUF,USD,CZK&base=EUR")
-            };
-
-        request.Headers.Add("apikey", "XwSDWGpGqDKu8ZIbOl56Kne74V14oEpC");
-
-        var response = await client.SendAsync(request);
-        if (response.IsSuccessStatusCode)
-        {
-
-            var json = response.Content.ReadAsStringAsync().Result;
-            Dictionary<string, dynamic> dict = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(json);
-            var ratesJson = dict["rates"].ToString().Trim(new Char[] { '\n' }).Replace(" ", "");
-            rates = JsonConvert.DeserializeObject< Dictionary<string, dynamic>>(ratesJson);
-        }
-    }    
 
     public async Task<float?> GetCurrencyAsync(int? amount)
     {
