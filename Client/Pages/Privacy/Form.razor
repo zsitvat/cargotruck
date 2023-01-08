@@ -1,0 +1,68 @@
+﻿<!--
+    Az alkalmazás egyetemi szakdolgozat céljából készül! így minden ehhez kapcsolódó szabály érvényes rá.
+    Az alkalmazás a fejlesztés során valós adatokat nem tartalmaz.
+-->
+
+
+<EditForm class="privacy-form" Model="@privacies" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <div class="form-card mt-3">
+        <div class="card-body mb-3 privacy-form-card">
+                <div class="d-inline-block ms-5 me-5 center-div">
+                    <h1 class="align-center">@localizer["Add_privacy"]</h1>
+                    <a class="btn btn-danger x" @onclick="@WindowClosed"><i class="oi oi-x"></i></a>
+                    <div class="form-group">
+                        <div>
+                            <label>@localizer["Language"]:</label>
+                            <div>
+                                <select class="form-control" @bind="@privacies.lang">
+                                    <option selected disabled>@localizer["Nothing"]</option>
+                                    <option value="hu" >@localizer["hu"]</option>
+                                    <option value="en" >@localizer["en"]</option>
+                                </select>
+                            <ValidationMessage For="@(() => privacies.lang)" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div>
+                        <label>@localizer["Privacy_name"]:</label>
+                            <div>
+                            <InputText class="form-control inputs" @bind-Value="@privacies.name" />
+                            <ValidationMessage For="@(() => privacies.name)" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <div>
+                        <label>@localizer["Privacy_text"]:</label>
+                            <div>
+                            <InputTextArea class="form-control inputs textarea" @bind-Value="@privacies.text" />
+                                <ValidationMessage For="@(() => privacies.text)" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group mt-4 text-center">
+                        <button type="submit" class="btn btn-primary">
+                            @localizer["Save"]
+                        </button>
+                    </div>
+              </div>
+        </div>
+    </div>
+
+</EditForm>
+
+
+@code {
+    [Parameter] public Privacies? privacies { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public bool addNewWindow { get; set; }
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+    [Parameter] public EventCallback OnWindowClosed { get; set; }
+
+    protected async Task WindowClosed()
+    {
+        await OnWindowClosed.InvokeAsync();
+    }
+}

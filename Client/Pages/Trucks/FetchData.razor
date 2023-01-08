@@ -10,6 +10,23 @@
     <button data-title="@localizer["csv"]" class="btn btn-light" @onclick="@(() => ExportToCSV("csv"))"><span class="icon iconify" style="margin:0;" data-icon="bi:filetype-csv"></span></button>
     <span class="file-upload-title" import-data-title="@localizer["File_input"]"><UploadFiles page="trucks" StateChanged="StateChanged" /></span>
     <input value="@searchString" @oninput="@Search" placeholder="@(searchString != "" ? searchString : localizer["Search"])" class="form-control inputs input_search" type="search" id="search-input" name="SearchString">
+    <!--Filter icon-->
+    @if (filter == Status.loaned || filter == Status.on_road || filter == Status.under_repair || filter == Status.rented || filter == Status.delivering || filter == Status.garage)
+    {
+        <button @onclick="@(()=>onChangeResetFilter())" class="filter-button"><span class="icon iconify filter-icon" data-icon="material-symbols:filter-alt-off"></span></button>
+    }
+    else
+    {
+        <button @onclick="@(()=>onChangeResetFilter())" class="filter-button not-pointer"><span class="icon iconify filter-icon not-pointer" data-icon="material-symbols:filter-alt"></span></button>
+    }
+    <!--Filter-->
+    <select class="form-control filter" @oninput="@((e)=>onChangeGetFilter(e))" @bind="filter">
+        <option value="" selected disabled>@localizer["Nothing"]</option>
+        @foreach (var value in Enum.GetValues<Status>())
+        {
+            <option value="@value">@localizer[value.ToString()]</option>
+        }
+    </select>
 </div>
 <br>
 <p class="error">@document_error</p>
@@ -76,7 +93,7 @@ else
                                     }
                                     @if (showColumns[2])
                                     {
-                                        <td>@item.Status</td>
+                                        <td>@localizer[item.Status.ToString()]</td>
                                     }
                                     @if (showColumns[3])
                                     {
@@ -157,6 +174,8 @@ else
     private bool desc = true;
     private string? searchString = "";
     string? document_error;
+    string? filterIcon;
+    Status? filter;
 
     protected override async Task OnInitializedAsync()
     {
@@ -183,6 +202,41 @@ else
         settings = !settings;
     }
 
+    async void onChangeGetFilter(ChangeEventArgs e)
+    {
+        switch (e.Value)
+        {
+            case "loaned":
+                filter = Status.loaned;
+                break;
+            case "on_road":
+                filter = Status.on_road;
+                break;
+            case "garage":
+                filter = Status.garage;
+                break;
+            case "rented":
+                filter = Status.rented;
+                break;
+            case "under_repair":
+                filter = Status.under_repair;
+                break;
+            case "delivering":
+                filter = Status.delivering;
+                break;
+            default:
+                filter = null ;
+                break;
+        }
+        
+        await OnInitializedAsync();
+    }
+
+    async void onChangeResetFilter()
+    {
+        filter = null;
+        await OnInitializedAsync();
+    }
 
     public void SettingsChanged(){}
 
@@ -240,7 +294,7 @@ else
         else if (pageSize >= dataRows) { pageSize = dataRows != 0 ? dataRows : 1 ; }
         maxPage = (int)Math.Ceiling((decimal)((float)dataRows / (float)pageSize));
 
-        trucks = await client.GetFromJsonAsync<Trucks[]>($"api/trucks/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}");
+        trucks = await client.GetFromJsonAsync<Trucks[]>($"api/trucks/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}");
         StateHasChanged();
     }
 

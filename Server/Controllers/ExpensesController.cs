@@ -14,6 +14,7 @@ using DocumentFormat.OpenXml.Spreadsheet;
 using Font = iTextSharp.text.Font;
 using System.Text;
 using Type = Cargotruck.Shared.Models.Type;
+using DocumentFormat.OpenXml.Office2010.Excel;
 
 namespace Cargotruck.Server.Controllers
 {
@@ -28,14 +29,18 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(int page, int pageSize, string sortOrder, bool desc, string? searchString)
+        public async Task<IActionResult> Get(int page, int pageSize, string sortOrder, bool desc, string? searchString, Type? filter)
         {
-            var r = await _context.Expenses.ToListAsync();
-            searchString = searchString == null ? null : searchString.ToLower();
+            var data = await _context.Expenses.ToListAsync();
+            if (filter != null)
+            {
+                data = data.Where(data => data.Type == filter).ToList();
+            }
 
+            searchString = searchString == null ? null : searchString.ToLower();
             if (searchString != null && searchString != "")
             {
-                r = r.Where(s =>
+                data = data.Where(s =>
                s.Type.ToString().ToLower()!.Contains(searchString)
             || s.Type_id.ToString().ToLower()!.Contains(searchString)
             || (s.Fuel == null ? false : s.Fuel.ToString()!.Contains(searchString))
@@ -67,80 +72,80 @@ namespace Cargotruck.Server.Controllers
             switch (sortOrder)
             {
                 case "Type_desc":
-                    r = r.OrderByDescending(s => s.Type).ToList();
+                    data = data.OrderByDescending(s => s.Type).ToList();
                     break;
                 case "Type":
-                    r = r.OrderBy(s => s.Type).ToList();
+                    data = data.OrderBy(s => s.Type).ToList();
                     break;
                 case "Type_id_desc":
-                    r = r.OrderByDescending(s => s.Type_id).ToList();
+                    data = data.OrderByDescending(s => s.Type_id).ToList();
                     break;
                 case "Type_id":
-                    r = r.OrderBy(s => s.Type_id).ToList();
+                    data = data.OrderBy(s => s.Type_id).ToList();
                     break;
                 case "Fuel_desc":
-                    r = r.OrderByDescending(s => s.Fuel).ToList();
+                    data = data.OrderByDescending(s => s.Fuel).ToList();
                     break;
                 case "Fuel":
-                    r = r.OrderBy(s => s.Fuel).ToList();
+                    data = data.OrderBy(s => s.Fuel).ToList();
                     break;
                 case "Road_fees_desc":
-                    r = r.OrderByDescending(s => s.Road_fees).ToList();
+                    data = data.OrderByDescending(s => s.Road_fees).ToList();
                     break;
                 case "Road_fees":
-                    r = r.OrderBy(s => s.Road_fees).ToList();
+                    data = data.OrderBy(s => s.Road_fees).ToList();
                     break;
                 case "Penalty_desc":
-                    r = r.OrderByDescending(s => s.Penalty).ToList();
+                    data = data.OrderByDescending(s => s.Penalty).ToList();
                     break;
                 case "Penalty":
-                    r = r.OrderBy(s => s.Penalty).ToList();
+                    data = data.OrderBy(s => s.Penalty).ToList();
                     break;
                 case "Driver_spending_desc":
-                    r = r.OrderByDescending(s => s.Driver_spending).ToList();
+                    data = data.OrderByDescending(s => s.Driver_spending).ToList();
                     break;
                 case "Driver_spending":
-                    r = r.OrderBy(s => s.Driver_spending).ToList();
+                    data = data.OrderBy(s => s.Driver_spending).ToList();
                     break;
                 case "Driver_salary_desc":
-                    r = r.OrderByDescending(s => s.Driver_salary).ToList();
+                    data = data.OrderByDescending(s => s.Driver_salary).ToList();
                     break;
                 case "Driver_salary":
-                    r = r.OrderBy(s => s.Driver_salary).ToList();
+                    data = data.OrderBy(s => s.Driver_salary).ToList();
                     break;
                 case "Repair_cost_desc":
-                    r = r.OrderByDescending(s => s.Repair_cost).ToList();
+                    data = data.OrderByDescending(s => s.Repair_cost).ToList();
                     break;
                 case "Repair_cost":
-                    r = r.OrderBy(s => s.Repair_cost).ToList();
+                    data = data.OrderBy(s => s.Repair_cost).ToList();
                     break;
                 case "Repair_description_desc":
-                    r = r.OrderByDescending(s => s.Repair_description).ToList();
+                    data = data.OrderByDescending(s => s.Repair_description).ToList();
                     break;
                 case "Repair_description":
-                    r = r.OrderBy(s => s.Repair_description).ToList();
+                    data = data.OrderBy(s => s.Repair_description).ToList();
                     break;
                 case "Cost_of_storage_desc":
-                    r = r.OrderByDescending(s => s.Repair_description).ToList();
+                    data = data.OrderByDescending(s => s.Repair_description).ToList();
                     break;
                 case "Cost_of_storage":
-                    r = r.OrderBy(s => s.Repair_description).ToList();
+                    data = data.OrderBy(s => s.Repair_description).ToList();
                     break;
                 case "other_desc":
-                    r = r.OrderByDescending(s => s.Repair_description).ToList();
+                    data = data.OrderByDescending(s => s.Repair_description).ToList();
                     break;
                 case "other":
-                    r = r.OrderBy(s => s.Repair_description).ToList();
+                    data = data.OrderBy(s => s.Repair_description).ToList();
                     break;
                 case "Date_desc":
-                    r = r.OrderByDescending(s => s.Date).ToList();
+                    data = data.OrderByDescending(s => s.Date).ToList();
                     break;
                 default:
-                    r = r.OrderBy(s => s.Date).ToList();
+                    data = data.OrderBy(s => s.Date).ToList();
                     break;
             }
-            r = r.Skip((page - 1) * pageSize).Take(pageSize).ToList();
-            return Ok(r);
+            data = data.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            return Ok(data);
         }
 
         [HttpGet]

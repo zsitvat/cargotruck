@@ -354,14 +354,12 @@ else
     {
         filter = e.Value.ToString();
         await OnInitializedAsync();
-        StateHasChanged();
     }
 
     async void onChangeResetFilter()
     {
         filter = "";
         await OnInitializedAsync();
-        StateHasChanged();
     }
 
     async Task Delete(int Id)

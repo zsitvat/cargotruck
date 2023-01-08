@@ -54,8 +54,8 @@
 
         for (int i = 0; i < lenght; ++i)
         {
-            if (selectedTaskId?[i] == "*") { selectedTaskId = null; }
-            if (selectedExpenseId?[i] == "*") { selectedExpenseId = null; }
+            if (selectedTaskId?.Length > i &&  selectedTaskId?[i] == "*") { selectedTaskId = null; }
+            if (selectedExpenseId?.Length > i && selectedExpenseId?[i] == "*") { selectedExpenseId = null; }
         }
         Monthly_expenses_tasks_expenses.Monthly_expense_id = Id;
 

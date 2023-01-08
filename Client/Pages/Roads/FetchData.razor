@@ -25,7 +25,6 @@
         <option value="to">@localizer["to"]</option>
         <option value="from">@localizer["from"]</option>
     </select>
-
 </div>
 <br>
 <p class="error">@document_error</p>
@@ -238,16 +237,13 @@ else
     {
         filter = e.Value.ToString();
         await OnInitializedAsync();
-        StateHasChanged();
     }
 
     async void onChangeResetFilter()
     {
         filter = "";
         await OnInitializedAsync();
-        StateHasChanged();
     }
-
 
     public void SettingsChanged(){}
 

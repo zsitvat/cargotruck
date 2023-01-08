@@ -162,6 +162,9 @@
   <data name="Address" xml:space="preserve">
     <value>Cím</value>
   </data>
+  <data name="Add_privacy" xml:space="preserve">
+    <value>Szabály hozzáadása</value>
+  </data>
   <data name="Admin" xml:space="preserve">
     <value>Adminisztrátor</value>
   </data>
@@ -309,6 +312,9 @@
   <data name="Empty_excel" xml:space="preserve">
     <value>Üres excel fájl!</value>
   </data>
+  <data name="en" xml:space="preserve">
+    <value>Angol</value>
+  </data>
   <data name="Ending_date" xml:space="preserve">
     <value>Befejezés dátum</value>
   </data>
@@ -444,6 +450,9 @@
   <data name="Home_title" xml:space="preserve">
     <value>Főoldal</value>
   </data>
+  <data name="hu" xml:space="preserve">
+    <value>Magyar</value>
+  </data>
   <data name="Id" xml:space="preserve">
     <value>Azonosító</value>
   </data>
@@ -458,6 +467,9 @@
   </data>
   <data name="Import" xml:space="preserve">
     <value>Feltöltés Excel-ből</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Nyelv</value>
   </data>
   <data name="Loading" xml:space="preserve">
     <value>Betöltés...</value>
@@ -594,11 +606,11 @@
   <data name="Privacy" xml:space="preserve">
     <value>Szabályzat</value>
   </data>
-  <data name="Privacy_text" xml:space="preserve">
-    <value>Az alkalmazás egyetemi szakdolgozat céljából készül! így minden ehhez kapcsolódó szabály érvényes rá.</value>
+  <data name="Privacy_name" xml:space="preserve">
+    <value>Szabály elnevezése</value>
   </data>
-  <data name="Privacy_text2" xml:space="preserve">
-    <value>Az alkalmazás a fejlesztés során valós adatokat nem tartalmaz.</value>
+  <data name="Privacy_text" xml:space="preserve">
+    <value>Szabály szövege</value>
   </data>
   <data name="Profile" xml:space="preserve">
     <value>Profil</value>

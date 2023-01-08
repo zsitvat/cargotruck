@@ -10,6 +10,25 @@
     <button data-title="@localizer["csv"]" class="btn btn-light" @onclick="@(() => ExportToCSV("csv"))"><span class="icon iconify" style="margin:0;" data-icon="bi:filetype-csv"></span></button>
     <span class="file-upload-title" import-data-title="@localizer["File_input"]"><UploadFiles page="expenses" StateChanged="StateChanged" /></span>
     <input value="@searchString" @oninput="@Search" placeholder="@(searchString != "" ? searchString : localizer["Search"])" class="form-control inputs input_search" type="search" id="search-input" name="SearchString">
+    
+    <!--Filter icon-->
+    @if (filter == Cargotruck.Shared.Models.Type.salary || filter == Cargotruck.Shared.Models.Type.storage || filter == Cargotruck.Shared.Models.Type.repair || filter == Cargotruck.Shared.Models.Type.task || filter == Cargotruck.Shared.Models.Type.other)
+    {
+        <button @onclick="@(()=>onChangeResetFilter())" class="filter-button"><span class="icon iconify filter-icon" data-icon="material-symbols:filter-alt-off"></span></button>
+    }
+    else
+    {
+        <button @onclick="@(()=>onChangeResetFilter())" class="filter-button not-pointer"><span class="icon iconify filter-icon not-pointer" data-icon="material-symbols:filter-alt"></span></button>
+    }
+    <!--Filter-->
+    <select class="form-control filter" @oninput="@((e)=>onChangeGetFilter(e))" @bind="filter">
+        <option value="" selected disabled>@localizer["Nothing"]</option>
+        @foreach (var value in Enum.GetValues<Cargotruck.Shared.Models.Type>())
+        {
+            <option value="@value">@localizer[value.ToString()]</option>
+        }
+    </select>
+    
     <select data-title="@localizer["Currency"]" class="form-control currency" @oninput="@((e)=>onChangeGetType(e))" @bind="currency">
         <option value="HUF">HUF</option>
         <option value="EUR">EUR</option>
@@ -313,6 +332,8 @@ else
     string? document_error;
     string currency = "HUF";
     Dictionary<string, dynamic>? rates;
+    string? filterIcon;
+    Cargotruck.Shared.Models.Type? filter;
 
     protected override async Task OnInitializedAsync()
     {
@@ -326,7 +347,7 @@ else
             }
             catch (Exception ex)
             {
-                
+
                 document_error = $"Error - Type: {ex.GetType()}, Message: {ex.Message}";
                 Console.WriteLine(document_error);
             }         
@@ -374,6 +395,38 @@ else
         settings = !settings;
     }
 
+    async void onChangeGetFilter(ChangeEventArgs e)
+    {
+        switch (e.Value)
+        {
+            case "salary":
+                filter = Cargotruck.Shared.Models.Type.salary;
+                break;
+            case "task":
+                filter = Cargotruck.Shared.Models.Type.task;
+                break;
+            case "storage":
+                filter = Cargotruck.Shared.Models.Type.storage;
+                break;
+            case "repair":
+                filter = Cargotruck.Shared.Models.Type.repair;
+                break;
+            case "other":
+                filter = Cargotruck.Shared.Models.Type.other;
+                break;
+            default:
+                filter = null;
+                break;
+        }
+
+        await OnInitializedAsync();
+    }
+
+    async void onChangeResetFilter()
+    {
+        filter = null;
+        await OnInitializedAsync();
+    }
 
     public void SettingsChanged(){}
 
@@ -431,7 +484,7 @@ else
         else if (pageSize >= dataRows) { pageSize = dataRows != 0 ? dataRows : 1 ; }
         maxPage = (int)Math.Ceiling((decimal)((float)dataRows / (float)pageSize));
 
-        expenses = await client.GetFromJsonAsync<Expenses[]>($"api/expenses/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}");
+        expenses = await client.GetFromJsonAsync<Expenses[]>($"api/expenses/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}");
         StateHasChanged();
     }
 

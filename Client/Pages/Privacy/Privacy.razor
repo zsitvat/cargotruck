@@ -1,0 +1,109 @@
+﻿@page "/Privacy"
+@using Cargotruck.Shared.Resources
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<Resource> localizer
+@inject HttpClient http
+@inject NavigationManager uriHelper
+@inject IJSRuntime js
+
+
+@if (privacies == null)
+{
+    <text>@localizer["Loading"]</text>
+}
+else if (privacies.Length == 0)
+{
+    <text>@localizer["No_records"]</text>
+}
+else
+{
+    <div>
+        <div class="col-md-6 stretch-card">
+            @foreach(Privacies item in privacies)
+            {
+                @if(item.text != null){
+                    <div class="card card2 mt-2 pe-4 ps-2">
+                        <div class="card-body privacy-card d-inline">
+                            @if (item.name != null && showtext[item.Id])
+                            {
+                                <button class="filter-button not-pointer me-0" @onclick="@(()=>Show(item.Id))"><h1><span class="icon iconify d-inline" data-icon="material-symbols:keyboard-double-arrow-up"></span>@item.name</h1></button>
+
+                            }
+                            else if (item.name != null && !showtext[item.Id])
+                            {
+                                <button class="filter-button not-pointer me-0" @onclick="@(()=>Show(item.Id))"><h1><span class="icon iconify d-inline" data-icon="material-symbols:keyboard-double-arrow-down"></span>@item.name</h1></button>
+                            }
+                            @if (showtext[item.Id] || item.name == null){
+                                <h1 class="@(item.name==null ? "ms-2" : "ms-5")">@item.text</h1>
+                            }
+                            <button class="btn fixed-privacy" @onclick="@(() => Delete(item.Id))"> <span data-title="@localizer["Delete"]" class="oi oi-trash" aria-hidden="true"></span></button>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+ 
+}
+
+@if (addNewWindow)
+{
+    <AuthorizeView Roles="Admin">
+        <Authorized>
+            <Form OnWindowClosed="WindowClosed" addNewWindow="addNewWindow" ButtonText="Submit" privacies="privacy" OnValidSubmit="@CreatePrivacy" />
+        </Authorized>
+    </AuthorizeView>
+}
+else
+{
+    <a class="btn btn-light add-privacy" @onclick="@(() => addNewWindow=!addNewWindow)"><span class="icon iconify d-inline" style="color:forestgreen;" data-icon="material-symbols:add-circle"></span>@localizer["Add_privacy"]</a>
+}
+
+@code{
+    private bool addNewWindow = false;
+    Privacies[]? privacies { get; set; }
+    Privacies privacy = new Privacies();
+    Dictionary<dynamic, bool> showtext = new Dictionary<dynamic, bool>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        PageHistoryState.AddPageToHistory("/Privacy");
+        base.OnInitialized();
+        privacies = await client.GetFromJsonAsync<Privacies[]>($"api/privacy/get?lang={CultureInfo.CurrentCulture.ToString()}");
+        showtext.Clear();
+        foreach (var item in privacies)
+        {
+            if (item != null)
+            {
+                showtext.Add(item.Id, false);
+            }
+        }  
+    }
+
+    async Task Delete(int Id)
+    {
+        var data = privacies?.First(x => x.Id == Id);
+        if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {data?.name}  {data.text} - {data.lang}({data.Id})"))
+        {
+            await client.DeleteAsync($"api/privacy/delete/{Id}");
+            await OnInitializedAsync();
+        }
+    }
+
+    async Task CreatePrivacy()
+    {
+        await http.PostAsJsonAsync("api/privacy/post", privacy);
+        uriHelper.NavigateTo("/Privacy",true);
+    }
+
+    protected async Task Show(int id)
+    {
+        showtext[id] = !showtext[id];
+        StateHasChanged();
+    }
+
+    public void WindowClosed()
+    {
+        addNewWindow = !addNewWindow;
+    }
+}

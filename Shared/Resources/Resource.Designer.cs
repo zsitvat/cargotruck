@@ -187,6 +187,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Szabály hozzáadása.
+        /// </summary>
+        public static string Add_privacy {
+            get {
+                return ResourceManager.GetString("Add_privacy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cím.
         /// </summary>
         public static string Address {
@@ -637,6 +646,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Angol.
+        /// </summary>
+        public static string en {
+            get {
+                return ResourceManager.GetString("en", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Befejezés dátum.
         /// </summary>
         public static string Ending_date {
@@ -1042,6 +1060,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Magyar.
+        /// </summary>
+        public static string hu {
+            get {
+                return ResourceManager.GetString("hu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Azonosító.
         /// </summary>
         public static string Id {
@@ -1083,6 +1110,15 @@ namespace Cargotruck.Shared.Resources {
         public static string Import {
             get {
                 return ResourceManager.GetString("Import", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nyelv.
+        /// </summary>
+        public static string Language {
+            get {
+                return ResourceManager.GetString("Language", resourceCulture);
             }
         }
         
@@ -1492,20 +1528,20 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Az alkalmazás egyetemi szakdolgozat céljából készül! így minden ehhez kapcsolódó szabály érvényes rá..
+        ///   Looks up a localized string similar to Szabály elnevezése.
         /// </summary>
-        public static string Privacy_text {
+        public static string Privacy_name {
             get {
-                return ResourceManager.GetString("Privacy_text", resourceCulture);
+                return ResourceManager.GetString("Privacy_name", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Az alkalmazás a fejlesztés során valós adatokat nem tartalmaz..
+        ///   Looks up a localized string similar to Szabály szövege.
         /// </summary>
-        public static string Privacy_text2 {
+        public static string Privacy_text {
             get {
-                return ResourceManager.GetString("Privacy_text2", resourceCulture);
+                return ResourceManager.GetString("Privacy_text", resourceCulture);
             }
         }
         

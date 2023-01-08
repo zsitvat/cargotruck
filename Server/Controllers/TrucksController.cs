@@ -13,6 +13,7 @@ using DocumentFormat.OpenXml.Office.CustomUI;
 using DocumentFormat.OpenXml.Spreadsheet;
 using Font = iTextSharp.text.Font;
 using System.Text;
+using DocumentFormat.OpenXml.Office2010.Excel;
 
 namespace Cargotruck.Server.Controllers
 {
@@ -27,11 +28,16 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(int page, int pageSize, string sortOrder, bool desc, string? searchString)
+        public async Task<IActionResult> Get(int page, int pageSize, string sortOrder, bool desc, string? searchString,Status? filter)
         {
             var data = await _context.Trucks.ToListAsync();
-            searchString = searchString == null ? null : searchString.ToLower();
 
+            if (filter != null)
+            {
+                data = data.Where(data => data.Status == filter).ToList();
+            }
+
+            searchString = searchString == null ? null : searchString.ToLower();
             if (searchString != null && searchString != "")
             {
                 data = data.Where(s =>

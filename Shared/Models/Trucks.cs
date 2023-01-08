@@ -14,7 +14,6 @@ namespace Cargotruck.Shared.Models
         loaned, 
         rented
     };
-
     public class Trucks
     {
         [Required]

@@ -227,8 +227,9 @@ th {
     white-space: nowrap;
 }
 
-.last-col{
-    padding-right:1rem !important;
+.last-col {
+    padding-right: 1rem !important;
+    padding-left: 1rem !important;
 }
 
 table th button {
@@ -284,13 +285,57 @@ table th button {
     font-size: 13px;
 }
 
-.fixed:focus,.fixed2:focus{
-    box-shadow:none !important;
+.fixed:focus, .fixed2:focus, fixed-privacy:focus {
+    box-shadow: none !important;
+    border:none;
 }
 
-.icon{
-    border:none;
-    background:transparent;
+.fixed-privacy {
+    position: absolute;
+    right: 5px;
+    top:16px;
+    font-size: 13px;
+    padding:0;
+}
+
+.privacy-form-card {
+    min-width: 15rem;
+    max-width: 40rem;
+    border: 0.25rem;
+    height:fit-content;
+}
+
+.privacy-form {
+    position: fixed;
+    left: 50%;
+    bottom:3.5rem;
+}
+
+.privacy-form .form-group input {
+    min-width: 18rem;
+}
+
+.privacy-form .form-group label {
+    margin-top:1rem;
+}
+
+.add-privacy {
+    position: fixed;
+    right: -1px;
+    top:8rem;
+    border-bottom-right-radius: initial;
+    border-top-right-radius: initial;
+    z-index:500;
+}
+
+.textarea {
+    min-width: 100%;
+    min-height: 5rem !important;
+}
+
+.icon {
+    border: none;
+    background: transparent;
 }
 
 .forms-margin {
@@ -378,9 +423,14 @@ table th button {
     padding: 0.5rem 0.5rem;
 }
 
+.privacy-card {
+    min-width: 20rem;
+    width: fit-content;
+}
+
 .register input, .register select {
     width: 100%;
-    margin-top:2px;
+    margin-top: 2px;
 }
 
 .login-card {
@@ -641,18 +691,27 @@ table th button {
 .filter-button {
     display: inline-block;
     margin: 0;
-    margin-left: 1rem;
+    margin-left: -1rem;
     margin-right:-0.2rem;
     border:none;
     background: none;
+    max-width:fit-content;
 }
 
 .filter {
     display: inline-block;
     margin-left: 0rem;
     text-align:center;
-    width:fit-content;
+    max-width:fit-content;
     cursor:pointer;
+}
+
+.privacy-dropdown-button {
+    display: inline-block;
+    margin: 0;
+    border: none;
+    background: none;
+    max-width: fit-content;
 }
 
 .not-pointer {
