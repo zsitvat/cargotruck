@@ -10,16 +10,16 @@
     <button data-title="@localizer["csv"]" class="btn btn-light" @onclick="@(() => ExportToCSV(".csv"))"><span class="icon iconify" style="margin:0;" data-icon="bi:filetype-csv"></span></button>
     <span class="file-upload-title" import-data-title="@localizer["File_input"]"><UploadFiles page="tasks" StateChanged="StateChanged" /></span>
     <input value="@searchString" @oninput="@Search" placeholder="@(searchString != "" ? searchString : localizer["Search"])" class="form-control inputs input_search" type="search" id="search-input" name="SearchString">
-    
+    <!--Filter icon-->
     @if (filter == "completed" || filter == "not_completed")
     {
         <button @onclick="@(()=>onChangeResetFilter())" class="filter-button"><span class="icon iconify filter-icon" data-icon="material-symbols:filter-alt-off"></span></button>
     }
     else
     {
-        <button @onclick="@(()=>onChangeResetFilter())" class="filter-button"><span class="icon iconify filter-icon" data-icon="material-symbols:filter-alt"></span></button>
+        <button @onclick="@(()=>onChangeResetFilter())" class="filter-button not-pointer"><span class="icon iconify filter-icon not-pointer" data-icon="material-symbols:filter-alt"></span></button>
     }
-
+    <!--Filter-->
     <select class="form-control filter" @oninput="@((e)=>onChangeGetFilter(e))" @bind="filter">
         <option value="" selected disabled>@localizer["Nothing"]</option>
         <option value="completed">@localizer["Completed"]</option>
@@ -301,11 +301,11 @@ else
     private string sortOrder = "Date";
     private bool desc = true;
     private string? searchString = "";
-    string? filter = "";
     string? document_error;
     string currency = "HUF";
     Dictionary<string, dynamic>? rates;
     string? filterIcon;
+    string? filter = "";
 
     protected override async Task OnInitializedAsync()
     {

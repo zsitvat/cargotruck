@@ -628,9 +628,10 @@ table th button {
     margin-bottom: 2px;
 }
 
-.currency{
-    display:inline-block;
-    margin-left:2rem;
+.currency {
+    display: inline-block;
+    margin-left: 2rem;
+    cursor: pointer;
 }
 
 .filter-icon {
@@ -651,6 +652,11 @@ table th button {
     margin-left: 0rem;
     text-align:center;
     width:fit-content;
+    cursor:pointer;
+}
+
+.not-pointer {
+    cursor: initial;
 }
 
 .login-input-group-text {

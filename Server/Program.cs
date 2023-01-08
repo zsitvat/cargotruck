@@ -80,14 +80,16 @@ builder.Services.ConfigureApplicationCookie(options =>
 {
     options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
     options.Cookie.HttpOnly = false;
+    options.Cookie.SameSite = SameSiteMode.None;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
     options.Events.OnRedirectToLogin = context =>
     {  
         context.Response.StatusCode = 401;
         return Task.CompletedTask;
     };
 });
-builder.Services.AddControllers().AddNewtonsoftJson();
 
+builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
@@ -110,9 +112,13 @@ if (app.Environment.IsDevelopment())
 else
 {
     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+app.UseCookiePolicy(new CookiePolicyOptions
+{
+    MinimumSameSitePolicy = SameSiteMode.None
+});
 
 app.UseRequestLocalization(new RequestLocalizationOptions
 {
@@ -127,7 +133,7 @@ app.UseRequestLocalization(new RequestLocalizationOptions
 app.UseHttpsRedirection();
 app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
-
+app.UseHttpsRedirection();
 app.UseRouting();
 
 app.UseAuthentication();

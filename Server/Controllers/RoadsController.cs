@@ -13,6 +13,7 @@ using DocumentFormat.OpenXml.Office.CustomUI;
 using DocumentFormat.OpenXml.Spreadsheet;
 using Font = iTextSharp.text.Font;
 using System.Text;
+using DocumentFormat.OpenXml.Office2010.Excel;
 
 namespace Cargotruck.Server.Controllers
 {
@@ -27,14 +28,23 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(int page, int pageSize, string sortOrder, bool desc, string? searchString)
+        public async Task<IActionResult> Get(int page, int pageSize, string sortOrder, bool desc, string? searchString, string? filter)
         {
-            var r = await _context.Roads.ToListAsync();
-            searchString = searchString == null ? null : searchString.ToLower();
+            var data = await _context.Roads.ToListAsync();
 
+            if (filter == "to")
+            {
+                data = data.Where(data => data.Direction=="TO").ToList();
+            }
+            else if (filter == "from")
+            {
+                data = data.Where(data => data.Direction =="FROM").ToList();
+            }
+
+            searchString = searchString == null ? null : searchString.ToLower();
             if (searchString != null && searchString != "")
             {
-                    r = r.Where(s => 
+                data = data.Where(s => 
                     (s.Task_id == null ? false : s.Task_id.ToString().ToLower()!.Contains(searchString))
                 || (s.Id_cargo == null ? false : s.Id_cargo.ToString().ToLower()!.Contains(searchString))
                 || (s.Purpose_of_the_trip == null ? false : s.Purpose_of_the_trip.ToLower()!.Contains(searchString))
@@ -62,68 +72,68 @@ namespace Cargotruck.Server.Controllers
             switch (sortOrder)
             {
                 case "Task_id_desc":
-                    r = r.OrderByDescending(s => s.Task_id).ToList();
+                    data = data.OrderByDescending(s => s.Task_id).ToList();
                     break;
                 case "Task_id":
-                    r = r.OrderBy(s => s.Task_id).ToList();
+                    data = data.OrderBy(s => s.Task_id).ToList();
                     break;
                 case "Id_cargo_desc":
-                    r = r.OrderByDescending(s => s.Id_cargo).ToList();
+                    data = data.OrderByDescending(s => s.Id_cargo).ToList();
                     break;
                 case "Id_cargo":
-                    r = r.OrderBy(s => s.Id_cargo).ToList();
+                    data = data.OrderBy(s => s.Id_cargo).ToList();
                     break;
                 case "Purpose_of_the_trip_desc":
-                    r = r.OrderByDescending(s => s.Purpose_of_the_trip).ToList();
+                    data = data.OrderByDescending(s => s.Purpose_of_the_trip).ToList();
                     break;
                 case "Purpose_of_the_trip":
-                    r = r.OrderBy(s => s.Purpose_of_the_trip).ToList();
+                    data = data.OrderBy(s => s.Purpose_of_the_trip).ToList();
                     break;
                 case "Starting_date_desc":
-                    r = r.OrderByDescending(s => s.Starting_date).ToList();
+                    data = data.OrderByDescending(s => s.Starting_date).ToList();
                     break;
                 case "Starting_date":
-                    r = r.OrderBy(s => s.Starting_date).ToList();
+                    data = data.OrderBy(s => s.Starting_date).ToList();
                     break;
                 case "Ending_date_desc":
-                    r = r.OrderByDescending(s => s.Ending_date).ToList();
+                    data = data.OrderByDescending(s => s.Ending_date).ToList();
                     break;
                 case "Ending_date":
-                    r = r.OrderBy(s => s.Ending_date).ToList();
+                    data = data.OrderBy(s => s.Ending_date).ToList();
                     break;
                 case "Starting_place_desc":
-                    r = r.OrderByDescending(s => s.Starting_place).ToList();
+                    data = data.OrderByDescending(s => s.Starting_place).ToList();
                     break;
                 case "Starting_place":
-                    r = r.OrderBy(s => s.Starting_place).ToList();
+                    data = data.OrderBy(s => s.Starting_place).ToList();
                     break;
                 case "Ending_place_desc":
-                    r = r.OrderByDescending(s => s.Ending_place).ToList();
+                    data = data.OrderByDescending(s => s.Ending_place).ToList();
                     break;
                 case "Ending_place":
-                    r = r.OrderBy(s => s.Ending_place).ToList();
+                    data = data.OrderBy(s => s.Ending_place).ToList();
                     break;
                 case "Direction_desc":
-                    r = r.OrderByDescending(s => s.Direction).ToList();
+                    data = data.OrderByDescending(s => s.Direction).ToList();
                     break;
                 case "Direction":
-                    r = r.OrderBy(s => s.Direction).ToList();
+                    data = data.OrderBy(s => s.Direction).ToList();
                     break;
                 case "Expenses_id_desc":
-                    r = r.OrderByDescending(s => s.Expenses_id).ToList();
+                    data = data.OrderByDescending(s => s.Expenses_id).ToList();
                     break;
                 case "Expenses_id":
-                    r = r.OrderBy(s => s.Expenses_id).ToList();
+                    data = data.OrderBy(s => s.Expenses_id).ToList();
                     break;
                 case "Date_desc":
-                    r = r.OrderByDescending(s => s.Date).ToList();
+                    data = data.OrderByDescending(s => s.Date).ToList();
                     break;
                 default:
-                    r = r.OrderBy(s => s.Date).ToList();
+                    data = data.OrderBy(s => s.Date).ToList();
                     break;
             }
-            r = r.Skip((page - 1) * pageSize).Take(pageSize).ToList();
-            return Ok(r);
+            data = data.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            return Ok(data);
         }
 
         [HttpGet]
