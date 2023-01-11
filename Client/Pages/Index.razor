@@ -2,21 +2,203 @@
 @using Cargotruck.Shared.Resources
 @using Microsoft.Extensions.Localization
 @inject IStringLocalizer<Resource> localizer
+@inject Cargotruck.Client.Services.PageHistoryState PageHistoryState
 
+<link rel="stylesheet" href="css/hexamenu.css" type="text/css" />
 
 <div>
 <AuthorizeView>
     <Authorized>
-        <div class="col-md-1 stretch-card">
-            <div class="card card2  ps-2">
-                <div class="card-body">
-                    <h1>@localizer["Hello"] @context.User.Identity.Name !</h1>
+        @if(afterLogin){
+            <div class="col-md-1 stretch-card successful-login">
+                <div class="card card2 ps-2">
+                    <div class="card-body">
+                        <h1>
+                            <span class="icon iconify" style="margin:0;color:forestgreen;" data-icon="mdi:lock-open-check"></span>
+                            @localizer["Hello"] @context.User.Identity.Name!
+                        </h1>
+                    </div>
                 </div>
             </div>
-        </div>
+        }
+            <main class="site-wrapper">
+                <div class="pt-table desktop-768">
+                    <div class="pt-tablecell page-home relative" >
+                        <div class="overlay"></div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-xs-12 col-md-offset-1 col-md-10 col-lg-offset-2 col-lg-8">
+                                    <div class="hexagon-menu clear">
+                                        <div class="hexagon-item">
+                                            <div class="hex-item">
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                            </div>
+                                            <div class="hex-item">
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                            </div>
+                                            <NavLink href="Tasks">
+                                                <a class="hex-content">
+                                                    <span class="hex-content-inner">
+                                                   
+                                                            @localizer["Tasks"]<span class="oi oi-task" aria-hidden="true"></span>
+                                                    
+                                                    </span>
+                                                    <svg viewBox="0 0 173.20508075688772 200" height="200" width="174" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M86.60254037844386 0L173.20508075688772 50L173.20508075688772 150L86.60254037844386 200L0 150L0 50Z" fill="#1e2530"></path></svg>
+                                                </a>
+                                            </NavLink>
+                                        </div>
+                                        <div class="hexagon-item">
+                                            <div class="hex-item">
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                            </div>
+                                            <div class="hex-item">
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                            </div>
+                                            <NavLink href="Roads">
+                                                <a class="hex-content">
+                                                    <span class="hex-content-inner">
+                                                            @localizer["Roads"]<br/><span class="hexa-icon iconify" data-icon="healthicons:paved-road"></span>
+                                                    </span>
+                                                    <svg viewBox="0 0 173.20508075688772 200" height="200" width="174" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M86.60254037844386 0L173.20508075688772 50L173.20508075688772 150L86.60254037844386 200L0 150L0 50Z" fill="#1e2530"></path></svg>
+                                                </a>
+                                            </NavLink>
+                                        </div>
+                                        <div class="hexagon-item">
+                                            <div class="hex-item">
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                            </div>
+                                            <div class="hex-item">
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                            </div>
+                                            <NavLink href="Cargoes">
+                                                <a class="hex-content">
+                                                    <span class="hex-content-inner">
+                                                            @localizer["Cargoes"]<span class="hexa-icon iconify" data-icon="akar-icons:shipping-box-v2"></span>
+                                                    </span>
+                                                    <svg viewBox="0 0 173.20508075688772 200" height="200" width="174" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M86.60254037844386 0L173.20508075688772 50L173.20508075688772 150L86.60254037844386 200L0 150L0 50Z" fill="#1e2530"></path></svg>
+                                                </a>
+                                            </NavLink>
+                                        </div>
+                                        <div class="hexagon-item">
+                                            <div class="hex-item">
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                            </div>
+                                            <div class="hex-item">
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                            </div>                                               
+                                            <NavLink href="Warehouses">
+                                                <a class="hex-content">
+                                                    <span class="hex-content-inner">
+                                                            @localizer["Warehouse"]<span class="hexa-icon iconify" data-icon="ic:twotone-warehouse"></span>
+                                                    </span>
+                                                    <svg viewBox="0 0 173.20508075688772 200" height="200" width="174" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M86.60254037844386 0L173.20508075688772 50L173.20508075688772 150L86.60254037844386 200L0 150L0 50Z" fill="#1e2530"></path></svg>
+                                                </a>
+                                            </NavLink>
+                                        </div>
+                                        <div class="hexagon-item">
+                                            <div class="hex-item">
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                            </div>
+                                            <div class="hex-item">
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                            </div>
+                                            <NavLink href="Trucks">
+                                                <a class="hex-content">
+                                                    <span class="hex-content-inner">
+                                                            @localizer["Trucks"]<span class="hexa-icon iconify" data-icon="cil:truck"></span>
+                                                    </span>
+                                                    <svg viewBox="0 0 173.20508075688772 200" height="200" width="174" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M86.60254037844386 0L173.20508075688772 50L173.20508075688772 150L86.60254037844386 200L0 150L0 50Z" fill="#1e2530"></path></svg>
+                                                </a>
+                                            </NavLink>
+                                        </div>
+                                        <div class="hexagon-item">
+                                            <div class="hex-item">
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                            </div>
+                                            <div class="hex-item">
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                            </div>
+                                            <NavLink href="Expenses">
+                                                <a class="hex-content">
+                                                    <span class="hex-content-inner">
+                                                            @localizer["Expenses"]<span class="hexa-icon iconify" data-icon="game-icons:pay-money"></span>
+                                                    </span>
+                                                    <svg viewBox="0 0 173.20508075688772 200" height="200" width="174" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M86.60254037844386 0L173.20508075688772 50L173.20508075688772 150L86.60254037844386 200L0 150L0 50Z" fill="#1e2530"></path></svg>
+                                                </a>
+                                            </NavLink>
+                                        </div>
+                                        <div class="hexagon-item">
+                                            <div class="hex-item">
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                            </div>
+                                            <div class="hex-item">
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                            </div>
+                                            <NavLink href="Monthly_Expenses">
+                                                <a class="hex-content">
+                                                    <span class="hex-content-inner">
+                                                            @localizer["Monthly_expenses"]<span class="hexa-icon iconify" data-icon="game-icons:receive-money"></span>
+                                                    </span>
+                                                    <svg viewBox="0 0 173.20508075688772 200" height="200" width="174" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M86.60254037844386 0L173.20508075688772 50L173.20508075688772 150L86.60254037844386 200L0 150L0 50Z" fill="#1e2530"></path></svg>
+                                                </a>
+                                            </NavLink>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
     </Authorized>
     <Authorizing>
         <img src="~/css/img/loading.gif" alt="loading" width="500" height="600">
     </Authorizing>
 </AuthorizeView>
 </div>
+
+@code{
+    bool afterLogin = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if(!PageHistoryState.GetPageIsVisited("/"))
+        {
+            PageHistoryState.AddPageToHistory("/");
+        }
+        else
+        {
+            afterLogin = false;
+        }
+        base.OnInitialized();
+    }
+}
+

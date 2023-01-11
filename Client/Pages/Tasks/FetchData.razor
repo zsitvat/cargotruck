@@ -25,13 +25,16 @@
         <option value="completed">@localizer["Completed"]</option>
         <option value="not_completed">@localizer["Not_completed"]</option>
     </select>
-
     <select data-title="@localizer["Currency"]" class="form-control currency" @oninput="@((e)=>onChangeGetType(e))" @bind="currency">
         <option value="HUF">HUF</option>
         <option value="EUR">EUR</option>
         <option value="USD">USD</option>
         <option value="CZK">CZK</option>
     </select>
+    <div class="date-filter">
+        <Input class="form-control" type="datetime-local" value="@dateFilter?.StartDate.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm", CultureInfo.CurrentCulture)" @oninput="@((e)=>{DateStartInput(e);})">
+        <Input class="form-control" type="datetime-local" value="@dateFilter?.EndDate.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm", CultureInfo.CurrentCulture)" @oninput="@((e)=>{DateEndInput(e);})">
+    </div>
 </div>
 <br>
 <p class="error">@document_error</p>
@@ -141,7 +144,7 @@ else
                                     }
                                     @if (showColumns[3])
                                     {
-                                        <td>@(item.Time_of_receipt.HasValue ? @item.Time_of_receipt.Value.ToString("MM/dd/yyyy HH:mm") :  "")</td>
+                                        <td>@(item.Time_of_receipt.HasValue ? @item.Time_of_receipt.Value.ToString("yyyy/MM/dd HH:mm") : "")</td>
                                     }
                                     @if (showColumns[4])
                                     {
@@ -149,7 +152,7 @@ else
                                     }
                                     @if (showColumns[5])
                                     {
-                                        <td>@(item.Time_of_delivery.HasValue ? @item.Time_of_delivery.Value.ToString("MM/dd/yyyy HH:mm") :  "")</td>
+                                        <td>@(item.Time_of_delivery.HasValue ? @item.Time_of_delivery.Value.ToString("yyyy/MM/dd HH:mm") : "")</td>
                                     }
                                     @if (showColumns[6])
                                     {
@@ -306,6 +309,30 @@ else
     Dictionary<string, dynamic>? rates;
     string? filterIcon;
     string? filter = "";
+    DateFilter? dateFilter = new DateFilter();
+
+    public class DateFilter
+    {
+        public DateTime? StartDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1,0,0,0);
+        public DateTime? EndDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.DaysInMonth(DateTime.Today.Year, DateTime.Today.Month),23,59,59);
+    }
+
+    async void DateStartInput(ChangeEventArgs e)
+    {
+        if (e != null) {
+            dateFilter.StartDate = DateTime.Parse(e.Value.ToString());
+            await OnInitializedAsync();
+        }
+    }
+
+    async void DateEndInput(ChangeEventArgs e)
+    {
+        if (e != null)
+        {
+            dateFilter.EndDate = DateTime.Parse(e.Value.ToString());
+            await OnInitializedAsync();
+        }
+    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -321,6 +348,10 @@ else
             {
 
                 document_error = $"Error - Type: {ex.GetType()}, Message: {ex.Message}";
+                if (ex.GetType().ToString() == "Microsoft.CSharp.RuntimeBinder.RuntimeBinderException")
+                {
+                    document_error = "You have exceeded your daily monthly API rate limit. Please review and upgrade your subscription plan at promptapi.com subscriptions to continue.";
+                }
                 Console.WriteLine(document_error);
             }
         }
@@ -436,7 +467,7 @@ else
         else if (pageSize >= dataRows) { pageSize = dataRows != 0 ? dataRows : 1 ; }
         maxPage = (int)Math.Ceiling((decimal)((float)dataRows / (float)pageSize));
 
-        tasks = await client.GetFromJsonAsync<Tasks[]>($"api/tasks/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}");
+        tasks = await client.GetFromJsonAsync<Tasks[]>($"api/tasks/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
         StateHasChanged();
     }
 

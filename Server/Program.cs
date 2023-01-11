@@ -14,6 +14,7 @@ using System.IdentityModel.Tokens.Jwt;
 using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using static Org.BouncyCastle.Math.EC.ECCurve;
 using Cargotruck.Server.Controllers;
+using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 
 // create appsettings.json if not exist
 const string File_name = "appsettings.json";
@@ -93,7 +94,6 @@ builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
-
 var app = builder.Build();
 
 
@@ -114,7 +114,9 @@ else
     app.UseExceptionHandler("/Error");
     app.UseHsts();
 }
+    
 
+StaticWebAssetsLoader.UseStaticWebAssets(builder.Environment, builder.Configuration);
 app.UseCookiePolicy(new CookiePolicyOptions
 {
     MinimumSameSitePolicy = SameSiteMode.None

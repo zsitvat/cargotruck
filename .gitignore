@@ -1,5 +1,7 @@
 .vscode/
 Cargotruck/.vs
+.vs/Cargotruck
+.vs/Cargotruck/
 .vs/
 ./vs
 ../.vs

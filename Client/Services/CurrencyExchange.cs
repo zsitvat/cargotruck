@@ -28,7 +28,7 @@ namespace Cargotruck.Client.Services
             }
             else 
             {
-                var error = result.ToString();
+                var error = response.Content.ReadAsStringAsync();
                 return error;
             }
         }

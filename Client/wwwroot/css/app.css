@@ -270,6 +270,40 @@ table th button {
     padding: 0.5rem 0.2rem;
 }
 
+.successful-login {
+    position: fixed;
+    top: 8rem;
+    right: 10rem;
+    z-index: 100;
+    animation-direction: alternate-reverse;
+    animation: login-alert 8s;
+    visibility:hidden;
+}
+
+@keyframes login-alert {
+    0% {
+        right: 0rem;
+        visibility:visible;
+    }
+
+    15% {
+        right: 10rem;
+    }
+
+    90% {
+        right: 10rem;
+    }
+
+    100% {
+        right: -10rem;
+    }
+}
+
+.successful-login .card{
+    border-top-right-radius: unset;
+    border-bottom-right-radius: unset;
+    padding-top:0.2rem;
+}
 
 .fixed {
     position: absolute;
@@ -301,13 +335,16 @@ table th button {
 .privacy-form-card {
     min-width: 15rem;
     max-width: 40rem;
-    border: 0.25rem;
     height:fit-content;
+}
+
+.privacy-form .form-card{
+    border-radius: 0.25rem !important;
 }
 
 .privacy-form {
     position: fixed;
-    left: 50%;
+    left: 70%;
     bottom:3.5rem;
 }
 
@@ -678,9 +715,21 @@ table th button {
     margin-bottom: 2px;
 }
 
+.date-filter{
+    display:inline-block;
+    position:relative;
+    top:1rem;
+    left:2rem;
+}
+
+.date-filter input {
+    width: 9.2rem;
+    font-size: 12px;
+}
+
 .currency {
     display: inline-block;
-    margin-left: 2rem;
+    margin-left: 1rem;
     cursor: pointer;
 }
 
@@ -691,7 +740,7 @@ table th button {
 .filter-button {
     display: inline-block;
     margin: 0;
-    margin-left: -1rem;
+    margin-left: 0.5rem;
     margin-right:-0.2rem;
     border:none;
     background: none;
@@ -704,6 +753,16 @@ table th button {
     text-align:center;
     max-width:fit-content;
     cursor:pointer;
+}
+
+.privacy-button {
+    display: inline-block;
+    margin: 0;
+    margin-left: -1rem;
+    margin-right: -0.2rem;
+    border: none;
+    background: none;
+    max-width: fit-content;
 }
 
 .privacy-dropdown-button {

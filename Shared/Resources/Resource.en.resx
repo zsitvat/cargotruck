@@ -538,7 +538,7 @@
     <value>No file found!</value>
   </data>
   <data name="No_records" xml:space="preserve">
-    <value>@localizer["No_records"]</value>
+    <value>No records found!</value>
   </data>
   <data name="OnlyPositive" xml:space="preserve">
     <value>Only positive number allowed.</value>
@@ -604,10 +604,10 @@
     <value>Privacy</value>
   </data>
   <data name="Privacy_name" xml:space="preserve">
-    <value>Name of privacy</value>
+    <value>Name of policy</value>
   </data>
   <data name="Privacy_text" xml:space="preserve">
-    <value>Privacy text</value>
+    <value>Text of policy</value>
   </data>
   <data name="Profile" xml:space="preserve">
     <value>Profile</value>
@@ -638,6 +638,9 @@
   </data>
   <data name="Roads" xml:space="preserve">
     <value>Roads</value>
+  </data>
+  <data name="Roads_" xml:space="preserve">
+    <value>     Roads  </value>
   </data>
   <data name="Road_fees" xml:space="preserve">
     <value>Road fees</value>
@@ -691,6 +694,9 @@
     <value>Storage time</value>
   </data>
   <data name="String1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="String2" xml:space="preserve">
     <value />
   </data>
   <data name="Succesfull_update" xml:space="preserve">

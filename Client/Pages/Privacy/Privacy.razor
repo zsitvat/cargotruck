@@ -26,12 +26,12 @@ else
                         <div class="card-body privacy-card d-inline">
                             @if (item.name != null && showtext[item.Id])
                             {
-                                <button class="filter-button not-pointer me-0" @onclick="@(()=>Show(item.Id))"><h1><span class="icon iconify d-inline" data-icon="material-symbols:keyboard-double-arrow-up"></span>@item.name</h1></button>
+                                <button class="privacy-button not-pointer me-0" @onclick="@(()=>Show(item.Id))"><h1><span class="icon iconify d-inline" data-icon="material-symbols:keyboard-double-arrow-up"></span>@item.name</h1></button>
 
                             }
                             else if (item.name != null && !showtext[item.Id])
                             {
-                                <button class="filter-button not-pointer me-0" @onclick="@(()=>Show(item.Id))"><h1><span class="icon iconify d-inline" data-icon="material-symbols:keyboard-double-arrow-down"></span>@item.name</h1></button>
+                                <button class="privacy-button not-pointer me-0" @onclick="@(()=>Show(item.Id))"><h1><span class="icon iconify d-inline" data-icon="material-symbols:keyboard-double-arrow-down"></span>@item.name</h1></button>
                             }
                             @if (showtext[item.Id] || item.name == null){
                                 <h1 class="@(item.name==null ? "ms-2" : "ms-5")">@item.text</h1>
@@ -56,7 +56,11 @@ else
 }
 else
 {
-    <a class="btn btn-light add-privacy" @onclick="@(() => addNewWindow=!addNewWindow)"><span class="icon iconify d-inline" style="color:forestgreen;" data-icon="material-symbols:add-circle"></span>@localizer["Add_privacy"]</a>
+    <AuthorizeView Roles="Admin">
+        <Authorized>
+           <a class="btn btn-light add-privacy" @onclick="@(() => addNewWindow=!addNewWindow)"><span class="icon iconify d-inline" style="color:forestgreen;" data-icon="material-symbols:add-circle"></span>@localizer["Add_privacy"]</a>
+        </Authorized>
+    </AuthorizeView>
 }
 
 @code{

@@ -13,6 +13,11 @@
             previousPages.Add(pageName);
         }
 
+        public void ResetPageToHistory()
+        {
+            previousPages.Clear();
+        }
+
         public string GetGoBackPage()
         {
             if (previousPages.Count > 1)
@@ -23,6 +28,24 @@
 
             // Can't go back because you didn't navigate enough
             return previousPages.FirstOrDefault();
+        }
+
+        public bool GetPageIsVisited(string myPage)
+        {
+            if (previousPages.Count > 0)
+            {
+                foreach(var page in previousPages)
+                {
+                    if(page==myPage)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            // Can't go back because you didn't navigate enough
+            return false;
         }
 
         public bool CanGoBack()

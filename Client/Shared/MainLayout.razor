@@ -82,6 +82,7 @@
     }
     async Task LogoutClick()
     {
+        PageHistoryState.ResetPageToHistory();
         await authStateProvider.Logout();
         navigationManager.NavigateTo("/login");
     }
