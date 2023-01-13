@@ -38,8 +38,6 @@ namespace Cargotruck.Server.Controllers
                 t = t.Where(data => data.Completed == false).ToList();
             }
 
-            t = t.Where(s => (dateFilterStartDate != null ? s.Date >= dateFilterStartDate : true) && (dateFilterEndDate != null ? s.Date <= dateFilterEndDate : true)).ToList();
-
             searchString = searchString == null ? null : searchString.ToLower();
             if (searchString != null && searchString != "") 
             { 
@@ -56,6 +54,7 @@ namespace Cargotruck.Server.Controllers
                 || (s.Final_Payment == null ? false : s.Final_Payment.ToString()!.Contains(searchString))
                 || (s.Penalty == null ? false : s.Penalty.ToString()!.Contains(searchString))
                 || (s.Date.ToString()!.Contains(searchString))
+                && (dateFilterStartDate != null ? s.Date >= dateFilterStartDate : true) && (dateFilterEndDate != null ? s.Date <= dateFilterEndDate : true)
                 ).ToList(); 
             }
 
@@ -229,6 +228,16 @@ namespace Cargotruck.Server.Controllers
             _context.Entry(cargo).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return NoContent();
+        }
+
+
+        [HttpPut]
+        public async Task<IActionResult> ChangeCompletion(Tasks t)
+        {
+            t.Completed = !t.Completed;
+            _context.Entry(t).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return Ok();
         }
 
         [HttpDelete("{id}")]

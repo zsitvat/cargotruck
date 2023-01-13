@@ -74,8 +74,8 @@
                     <div>
                         <label>@localizer["Task_id"]:</label>
                         <div>
-                            <select class="form-control" @bind="@cargoes.Task_id">
-                                <option selected disabled>@localizer["Mandatory"]</option>
+                            <InputSelect class="form-control" @bind-Value="@cargoes.Task_id">
+                                <option value="" selected disabled>@localizer["Mandatory"]</option>
                                 @if (tasks != null)
                                 {
                                     @foreach (var task in tasks)
@@ -86,7 +86,7 @@
                                         }
                                     }
                                 }
-                            </select>
+                            </InputSelect>
                             <ValidationMessage For="@(() => cargoes.Task_id)" />
                         </div>
                     </div>

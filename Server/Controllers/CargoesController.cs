@@ -27,11 +27,13 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(int page, int pageSize, string sortOrder, bool desc, string? searchString)
+        public async Task<IActionResult> Get(int page, int pageSize, string sortOrder, bool desc, string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var data = await _context.Cargoes.ToListAsync();
-            searchString = searchString == null ? null : searchString.ToLower();
 
+            data = data.Where(s => (dateFilterStartDate != null ? s.Date >= dateFilterStartDate : true) && (dateFilterEndDate != null ? s.Date <= dateFilterEndDate : true)).ToList();
+
+            searchString = searchString == null ? null : searchString.ToLower();
             if (searchString != null && searchString != "")
             {
                     data = data.Where(s =>
@@ -136,7 +138,7 @@ namespace Cargotruck.Server.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var data= await _context.Cargoes.FirstOrDefaultAsync(a => a.Id == id);
+            var data = await _context.Cargoes.FirstOrDefaultAsync(a => a.Id == id);
             return Ok(data);
         }
 
@@ -148,10 +150,11 @@ namespace Cargotruck.Server.Controllers
             await _context.SaveChangesAsync();
 
             var task = _context.Tasks.FirstOrDefault(a => a.Id == data.Task_id);
-            task.Id_cargo = data.Id;
-            _context.Entry(task).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-
+            if(task != null) { 
+                task.Id_cargo = data.Id;
+                _context.Entry(task).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+            }
             return Ok(data.Id);
         }
 

@@ -28,9 +28,11 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(int page, int pageSize, string sortOrder, bool desc, string? searchString,Status? filter)
+        public async Task<IActionResult> Get(int page, int pageSize, string sortOrder, bool desc, string? searchString,Status? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var data = await _context.Trucks.ToListAsync();
+
+            data = data.Where(s => (dateFilterStartDate != null ? s.Date >= dateFilterStartDate : true) && (dateFilterEndDate != null ? s.Date <= dateFilterEndDate : true)).ToList();
 
             if (filter != null)
             {

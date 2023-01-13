@@ -35,6 +35,11 @@
         <option value="USD">USD</option>
         <option value="CZK">CZK</option>
     </select>
+
+    <div class="date-filter" data-title="@localizer["date-filter-info"]">
+        <Input class="form-control" type="datetime-local" value="@dateFilter?.StartDate.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm", CultureInfo.CurrentCulture)" @oninput="@((e)=>{DateStartInput(e);})">
+        <Input class="form-control" type="datetime-local" value="@dateFilter?.EndDate.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm", CultureInfo.CurrentCulture)" @oninput="@((e)=>{DateEndInput(e);})">
+    </div>
 </div>
 
 
@@ -313,10 +318,7 @@ else
     {
         <Settings OnSettingsClosed="SettingsClosed" OnInputChanged="InputChanged" OnSettingsChanged="SettingsChanged" showColumns="@showColumns" settings="@settings" pageSize="@pageSize" />
     }
-    else
-    {
-        <div class="mb-6"></div>
-    }
+
 }
 @code {
     public bool settings = false;
@@ -334,6 +336,31 @@ else
     Dictionary<string, dynamic>? rates;
     string? filterIcon;
     Cargotruck.Shared.Models.Type? filter;
+    DateFilter? dateFilter = new DateFilter();
+
+    public class DateFilter
+    {
+        public DateTime? StartDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1, 0, 0, 0);
+        public DateTime? EndDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.DaysInMonth(DateTime.Today.Year, DateTime.Today.Month), 23, 59, 59);
+    }
+
+    async void DateStartInput(ChangeEventArgs e)
+    {
+         if (e != null && e.Value.ToString() != "" ) 
+        {
+            dateFilter.StartDate = DateTime.Parse(e.Value.ToString());
+            await OnInitializedAsync();
+        }
+    }
+
+    async void DateEndInput(ChangeEventArgs e)
+    {
+         if (e != null && e.Value.ToString() != "" ) 
+        {
+            dateFilter.EndDate = DateTime.Parse(e.Value.ToString());
+            await OnInitializedAsync();
+        }
+    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -484,7 +511,7 @@ else
         else if (pageSize >= dataRows) { pageSize = dataRows != 0 ? dataRows : 1 ; }
         maxPage = (int)Math.Ceiling((decimal)((float)dataRows / (float)pageSize));
 
-        expenses = await client.GetFromJsonAsync<Expenses[]>($"api/expenses/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}");
+        expenses = await client.GetFromJsonAsync<Expenses[]>($"api/expenses/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
         StateHasChanged();
     }
 

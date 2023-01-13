@@ -259,6 +259,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rakomány.
+        /// </summary>
+        public static string Cargo {
+            get {
+                return ResourceManager.GetString("Cargo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rakomány azonosító.
         /// </summary>
         public static string Cargo_id {
@@ -435,6 +444,15 @@ namespace Cargotruck.Shared.Resources {
         public static string Date {
             get {
                 return ResourceManager.GetString("Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Az időpontok közötti adatok megjelenítve..
+        /// </summary>
+        public static string date_filter_info {
+            get {
+                return ResourceManager.GetString("date-filter-info", resourceCulture);
             }
         }
         
@@ -741,6 +759,24 @@ namespace Cargotruck.Shared.Resources {
         public static string Error_password {
             get {
                 return ResourceManager.GetString("Error_password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A jelszónak 8 és 30 karakter között kell lennie!.
+        /// </summary>
+        public static string Error_password_lenght {
+            get {
+                return ResourceManager.GetString("Error_password_lenght", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A jelszónak tartalmaznia kell kis- és nagybetűt, számot és speciális karaktert!.
+        /// </summary>
+        public static string Error_password_validation {
+            get {
+                return ResourceManager.GetString("Error_password_validation", resourceCulture);
             }
         }
         

@@ -128,7 +128,7 @@ public class FilesaveController : ControllerBase
                                 var deleteold = rootpath + img;
 
                                 //delete the old one
-                                if (System.IO.File.Exists(deleteold))
+                                if (System.IO.File.Exists(deleteold) && deleteold.Contains("/profiles/"))
                                 {
                                     System.IO.File.Delete(deleteold);
                                 }

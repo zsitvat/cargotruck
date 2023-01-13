@@ -183,6 +183,9 @@
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="Cargo" xml:space="preserve">
+    <value>Cargo</value>
+  </data>
   <data name="Cargoes" xml:space="preserve">
     <value>Cargoes</value>
   </data>
@@ -242,6 +245,9 @@
   </data>
   <data name="Date" xml:space="preserve">
     <value>Date</value>
+  </data>
+  <data name="date-filter-info" xml:space="preserve">
+    <value>Data beetween the dates is shown.</value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
@@ -341,6 +347,12 @@
   </data>
   <data name="Error_password" xml:space="preserve">
     <value>The password  is required!</value>
+  </data>
+  <data name="Error_password_lenght" xml:space="preserve">
+    <value>The password must between 8 and 30 characters lenght.</value>
+  </data>
+  <data name="Error_password_validation" xml:space="preserve">
+    <value>The password must contain lowercase and capital letter, number and a special character.</value>
   </data>
   <data name="Error_place_of_delivery" xml:space="preserve">
     <value>The place of delivery is required!</value>

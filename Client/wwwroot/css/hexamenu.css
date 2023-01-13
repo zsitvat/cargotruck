@@ -698,15 +698,31 @@ textarea, label {
     }
 }
 
+@media only screen and (max-width: 1300px) {
+    .hexagon-menu{
+        position:absolute;
+
+    }
+}
+
+@media only screen and (max-width: 1230px) {
+    .hexagon-menu {
+        position: absolute;
+    }
+}
 
 
+@media only screen and (max-width: 1030px) {
+    .hexagon-menu {
+        position: absolute;
+        left:30%;
+    }
 
-
-@media only screen and (max-width: 767px) {
     .hexagon-item {
         float: none;
         margin: 0 auto 50px;
     }
+
 
         .hexagon-item:first-child {
             margin-left: auto;
@@ -719,4 +735,49 @@ textarea, label {
         -o-transform: rotate(30deg) translate(0px, 0px);
         transform: rotate(30deg) translate(0px, 0px);
     }
+}
+
+@media only screen and (max-width: 768px) {
+
+    .hexagon-menu {
+        position: absolute;
+        left: 30%;
+    }
+
+    .hexagon-item {
+        float: none;
+        margin: 0 auto 50px;
+    }
+
+
+    .hexagon-item:first-child {
+        margin-left: auto;
+    }
+
+    .page-home .hexagon-item:nth-last-child(1), .page-home .hexagon-item:nth-last-child(2), .page-home .hexagon-item:nth-last-child(3) {
+        -webkit-transform: rotate(30deg) translate(0px, 0px);
+        -moz-transform: rotate(30deg) translate(0px, 0px);
+        -ms-transform: rotate(30deg) translate(0px, 0px);
+        -o-transform: rotate(30deg) translate(0px, 0px);
+        transform: rotate(30deg) translate(0px, 0px);
+    }
+}
+
+@media only screen and (max-width: 480px) {
+
+    .hexagon-menu {
+        position: absolute;
+        left: 20%;
+    }
+
+}
+
+
+@media only screen and (max-width: 360px) {
+
+    .hexagon-menu {
+        position: absolute;
+        left: 8%;
+    }
+
 }

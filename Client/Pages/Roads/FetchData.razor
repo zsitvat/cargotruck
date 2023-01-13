@@ -25,6 +25,10 @@
         <option value="to">@localizer["to"]</option>
         <option value="from">@localizer["from"]</option>
     </select>
+    <div class="date-filter" data-title="@localizer["date-filter-info"]">
+        <Input class="form-control" type="datetime-local" value="@dateFilter?.StartDate.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm", CultureInfo.CurrentCulture)" @oninput="@((e)=>{DateStartInput(e);})">
+        <Input class="form-control" type="datetime-local" value="@dateFilter?.EndDate.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm", CultureInfo.CurrentCulture)" @oninput="@((e)=>{DateEndInput(e);})">
+    </div>
 </div>
 <br>
 <p class="error">@document_error</p>
@@ -187,10 +191,6 @@ else
     {
         <Settings OnSettingsClosed="SettingsClosed" OnInputChanged="InputChanged" OnSettingsChanged="SettingsChanged" showColumns="@showColumns" settings="@settings" pageSize="@pageSize" />
     }
-    else
-    {
-        <div class="mb-6"></div>
-    }
 }
 @code {
     public bool settings = false;
@@ -206,6 +206,31 @@ else
     string? document_error;
     string? filterIcon;
     string? filter = "";
+    DateFilter? dateFilter = new DateFilter();
+
+    public class DateFilter
+    {
+        public DateTime? StartDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1, 0, 0, 0);
+        public DateTime? EndDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.DaysInMonth(DateTime.Today.Year, DateTime.Today.Month), 23, 59, 59);
+    }
+
+    async void DateStartInput(ChangeEventArgs e)
+    {
+         if (e != null && e.Value.ToString() != "" ) 
+        {
+            dateFilter.StartDate = DateTime.Parse(e.Value.ToString());
+            await OnInitializedAsync();
+        }
+    }
+
+    async void DateEndInput(ChangeEventArgs e)
+    {
+         if (e != null && e.Value.ToString() != "" ) 
+        {
+            dateFilter.EndDate = DateTime.Parse(e.Value.ToString());
+            await OnInitializedAsync();
+        }
+    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -217,7 +242,7 @@ else
 
     async Task Delete(int Id)
     {
-        var r = roads.First(x => x.Id == Id);
+        var r = roads?.First(x => x.Id == Id);
         if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {r.Purpose_of_the_trip} - {r.Direction} ({r.Id})"))
         {
             await client.DeleteAsync($"api/roads/delete/{Id}");
@@ -301,7 +326,7 @@ else
         else if (pageSize >= dataRows) { pageSize = dataRows != 0 ? dataRows : 1 ; }
         maxPage = (int)Math.Ceiling((decimal)((float)dataRows / (float)pageSize));
 
-        roads = await client.GetFromJsonAsync<Roads[]>($"api/roads/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}");
+        roads = await client.GetFromJsonAsync<Roads[]>($"api/roads/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
         StateHasChanged();
     }
 

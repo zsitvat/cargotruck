@@ -45,8 +45,12 @@ h1{
     font-size:16px;
 }
 
-ul{
-    padding:0.5rem;
+h2 {
+    font-size: 20px;
+}
+
+ul {
+    padding: 0.5rem;
 }
 
 a, .btn-link {
@@ -75,8 +79,18 @@ a:active {
 .btn-primary {
     color: #fff;
     background-color: #1b6ec2;
-    border-color: #1861ac;
+    border-color: transparent;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.no-button {
+    display: inline-block;
+    margin: 0;
+    margin-left: 0.5rem;
+    margin-right: -0.2rem;
+    border: none;
+    background: none;
+    max-width: fit-content;
 }
 
 .green {
@@ -89,10 +103,6 @@ a:active {
 
 .red {
     background: rgba(244, 186, 186,0.5) !important;
-}
-
-input {
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
 .content {
@@ -327,9 +337,9 @@ table th button {
 .fixed-privacy {
     position: absolute;
     right: 5px;
-    top:16px;
+    top: 16px;
     font-size: 13px;
-    padding:0;
+    padding: 0;
 }
 
 .privacy-form-card {
@@ -338,13 +348,9 @@ table th button {
     height:fit-content;
 }
 
-.privacy-form .form-card{
-    border-radius: 0.25rem !important;
-}
-
 .privacy-form {
     position: fixed;
-    left: 70%;
+    left: 65%;
     bottom:3.5rem;
 }
 
@@ -359,10 +365,9 @@ table th button {
 .add-privacy {
     position: fixed;
     right: -1px;
-    top:8rem;
-    border-bottom-right-radius: initial;
-    border-top-right-radius: initial;
-    z-index:500;
+    top: 8rem;
+    border-radius: initial;
+    z-index: 500;
 }
 
 .textarea {
@@ -395,6 +400,12 @@ table th button {
     margin-right: 20%;
 }
 
+.completed-icon{
+    color: green;
+    margin-left: 4px;
+    width:15px;
+}
+
 
 .middle div, .middle button {
     margin-top: 1rem;
@@ -417,7 +428,7 @@ table th button {
     border-radius: 0.25rem;
     margin: 2px;
     background-color: white;
-    border: 1px solid #d6d5d5;
+    border: 1px solid rgba(120,120,120,.1);
     cursor: pointer
 }
 
@@ -446,14 +457,20 @@ table th button {
     bottom: 0px;
     padding-top: 0.8rem;
     padding-bottom: 0.8rem;
-    width:100%;
+    width: 100%;
     background-color: white;
-    border-top: 1px solid #d6d5d5;
-    z-index:0;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 10%), 0 -1px 0 rgb(0 0 0 / 2%);
+    z-index: 0;
 }
 
 .footer-text{
     font-size:12px;
+}
+
+.card {
+    box-shadow: 0 0 1px rgb(0 0 0 / 15%) !important;
+    border:none;
+    border-radius:initial;
 }
 
 .card-body {
@@ -463,6 +480,7 @@ table th button {
 .privacy-card {
     min-width: 20rem;
     width: fit-content;
+    border-radius: initial;
 }
 
 .register input, .register select {
@@ -527,29 +545,72 @@ table th button {
     min-width: 0;
     background-color: #fff;
     background-clip: border-box;
-    border: 1px solid rgba(0,0,0,.125);
+
 }
 
 .settings-card {
     box-shadow: 0 0 1px rgb(0 0 0 / 15%);
     position: relative;
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
+    display: inline-flex;
     background-color: #fff;
     background-clip: border-box;
-    border: 1px solid rgba(0,0,0,.125);
-    width:fit-content;
-    padding-top:3rem;
+    width: fit-content;
+    height: fit-content;
+    padding-top: 1rem;
+    padding-right: 3rem;
+    margin-right: 1rem;
+}
+
+.getbyid-card {
+    box-shadow: 0 0 1px rgb(0 0 0 / 15%);
+    position: relative;
+    display: inline-flex;
+    background-color: #fff;
+    background-clip: border-box;
+    width: fit-content;
+    max-width: 25rem;
+    height: fit-content;
+    padding-top: 1rem;
+    padding-left: 1rem;
+    padding-right: 3rem;
+    margin-right: 1rem;
+}
+
+.getbyid-card p {
+    font-size: 15px;
+    white-space: nowrap;
+    padding-left: 1.5rem;
+    margin: 0;
+    margin-top: 0.12rem;
+}
+
+.getbyid-card b {
+    font-size: 15px;
+    white-space: nowrap;
     padding-right:3rem;
 }
 
-.x{
+.getbyid-card .row{
+    padding-bottom: 0.25rem;
+}
+
+.column {
+    float: left;
+    width: 50%;
+}
+
+.hideandshow-cards {
+    vertical-align: middle;
+    display: inline-flex;
+    height: fit-content;
+}
+
+.x {
     position: absolute;
     right: 0.5rem;
-    top:0.5rem;
-    font-size:15px;
-    padding:2px 8px;
+    top: 0.5rem;
+    font-size: 15px;
+    padding: 2px 8px;
 }
 
 .login-icon {
@@ -577,17 +638,20 @@ table th button {
 
 .btn-light {
     background-color: white;
-    border: 1px solid #d6d5d5;
     padding: 0.5rem 0.7rem 0.4rem 0.7rem;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
 .btn-light:hover {
     background-color: white;
-    border: 1px solid #d6d5d5;
+    border: 1px solid rgba(120,120,120,.1);
 }
 
 .btn-light:hover i, .btn-light:hover span {
+    opacity: 0.6;
+}
+
+.btn-light .icon:hover {
     opacity: 0.6;
 }
 
@@ -598,6 +662,7 @@ table th button {
 
 .top-row[b-afudbecg3u] {
     background-color: #fff !important;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 10%), 0 -1px 0 rgb(0 0 0 / 2%);
 }
 
 .sidebar[b-afudbecg3u] {
@@ -690,6 +755,10 @@ table th button {
     cursor: pointer;
 }
 
+.custom-file-input:hover {
+   opacity:0.7;
+}
+
 
 .file-upload {
     font-size: 10px !important;
@@ -709,6 +778,7 @@ table th button {
 .form-control {
     width: fit-content;
     font-size: 0.9rem;
+    border-color: rgba(120,130,140,.2);
 }
 
 .inputs {
@@ -1036,6 +1106,10 @@ tbody td, tbody th{
     .table-width {
         max-width:79vw;
     }
+
+    body{
+        overflow-x: hidden;
+    }
 }
 
 @media (max-width: 1220px) {
@@ -1067,6 +1141,16 @@ tbody td, tbody th{
 
     .input_search{
         margin-left:2px;
+    }
+
+    .privacy-form {
+        position: fixed;
+        left: 20rem;
+        bottom: 3.5rem;
+    }
+
+    .settings-card{
+        margin-bottom:0.5rem;
     }
 }
 
@@ -1121,6 +1205,12 @@ tbody td, tbody th{
 
     .currency {
         margin-left: 0.2rem;
+    }
+
+    .privacy-form {
+        position: fixed;
+        left: 18rem;
+        bottom: 3.5rem;
     }
 }
 
@@ -1181,6 +1271,12 @@ tbody td, tbody th{
     .bottom-row {
         position: initial;
     }
+
+    .privacy-form {
+        position: fixed;
+        left: 1rem;
+        bottom: 3.5rem;
+    }
 }
 
 @media (max-width: 580px) {
@@ -1202,6 +1298,11 @@ tbody td, tbody th{
         bottom: 5.3rem;
         padding-bottom: 0.5rem;
         padding-top: 0.6rem;
+    }
+
+    .card2 {
+        min-width: 108%;
+        min-height: fit-content;
     }
 }
 
@@ -1229,6 +1330,17 @@ tbody td, tbody th{
     }
     .table-width {
         max-width: 85vw;
+    }
+
+    .privacy-form {
+        position: fixed;
+        left: 1rem;
+        bottom: 3.5rem;
+        width:85%;
+    }
+
+    .privacy-form input {
+        min-width: 90% !important;
     }
 }
 
@@ -1259,6 +1371,17 @@ tbody td, tbody th{
     .table-width {
         max-width: 85vw;
     }
+
+    .privacy-form {
+        position: fixed;
+        left: 1rem;
+        bottom: 3.5rem;
+        width: 90%;
+    }
+
+    .privacy-form input {
+        min-width: 80% !important;
+    }
 }
 
 tr td:first-child {
@@ -1287,4 +1410,8 @@ tr td:first-child {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
+}
+
+.culture-selector{
+    font-size:13px;
 }

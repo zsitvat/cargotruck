@@ -13,7 +13,7 @@
     <!--Filter icon-->
     @if (filter == "completed" || filter == "not_completed")
     {
-        <button @onclick="@(()=>onChangeResetFilter())" class="filter-button"><span class="icon iconify filter-icon" data-icon="material-symbols:filter-alt-off"></span></button>
+        <button @onclick="@(()=>onChangeResetFilter())" class="filter-button">fluent-mdl2:accept-medium</button>
     }
     else
     {
@@ -31,7 +31,7 @@
         <option value="USD">USD</option>
         <option value="CZK">CZK</option>
     </select>
-    <div class="date-filter">
+    <div class="date-filter" data-title="@localizer["date-filter-info"]">
         <Input class="form-control" type="datetime-local" value="@dateFilter?.StartDate.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm", CultureInfo.CurrentCulture)" @oninput="@((e)=>{DateStartInput(e);})">
         <Input class="form-control" type="datetime-local" value="@dateFilter?.EndDate.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm", CultureInfo.CurrentCulture)" @oninput="@((e)=>{DateEndInput(e);})">
     </div>
@@ -160,7 +160,7 @@ else
                                     }
                                     @if (showColumns[7])
                                     {
-                                        <td>@item.Id_cargo</td>
+                                        <td><button class="no-button" @onclick="@(()=>GetById(item.Id_cargo))">@item.Id_cargo</button></td>
                                     }
                                     @if (showColumns[8])
                                     {
@@ -170,13 +170,12 @@ else
                                     {
                                         if (item.Completed == true)
                                         {
-                                            <td>@localizer["True"]</td>
+                                            <td><button @onclick="@(()=>ChangeCompletion(item))" class="no-button">@localizer["True"]<span class="icon iconify completed-icon" data-icon="fluent-mdl2:accept-medium"></span></button></td>
                                         }
                                         else
                                         {
-                                            <td>@localizer["False"]</td>
+                                            <td><button @onclick="@(()=>ChangeCompletion(item))" class="no-button">@localizer["False"]<span class="icon iconify" style="color:red" data-icon="mdi:alpha-x"></span></button></td>
                                         }
-
                                     }
                                     @if (showColumns[10])
                                     {
@@ -195,7 +194,7 @@ else
                                                 {
                                                     @(GetCurrencyAsync(item.Payment).Result.Value.ToString("0.##") + " " + currency)
                                                 }
-                                                else
+                                                else if(item.Payment  != 0)
                                                 {
                                                     @(item.Payment + " HUF")
                                                 }
@@ -211,7 +210,7 @@ else
                                                 {
                                                     @(GetCurrencyAsync(item.Final_Payment).Result.Value.ToString("0.##") + " " + currency)
                                                 }
-                                                else
+                                                else if (item.Final_Payment != 0)
                                                 {
                                                     @(item.Final_Payment + " HUF")
                                                 }
@@ -227,7 +226,7 @@ else
                                                 {
                                                     @(GetCurrencyAsync(item.Penalty).Result.Value.ToString("0.##") + " " + currency)
                                                 }
-                                                else
+                                                else if (item.Penalty != 0)
                                                 {
                                                     @(item.Penalty + " HUF")
                                                 }
@@ -284,18 +283,51 @@ else
         </div>
     </div>
 
-    @if (settings)
-    {
-        <Settings OnSettingsClosed="SettingsClosed" OnInputChanged="InputChanged" OnSettingsChanged="SettingsChanged" showColumns="@showColumns" settings="@settings" pageSize="@pageSize" />
-    }
-    else
-    {
-        <div class="mb-6"></div>
-    }
+    <div class="hideandshow-cards">
+        @if (settings)
+        {
+            <Settings OnSettingsClosed="SettingsClosed" OnInputChanged="InputChanged" OnSettingsChanged="SettingsChanged" showColumns="@showColumns" settings="@settings" pageSize="@pageSize" />
+        }
+        @if ( idData!= null)
+        {
+            <div class="getbyid-card mb-6">
+                <div class="card-body">
+                    <div class="ms-4">
+                        <a class="btn btn-danger x" @onclick="@( ()=> idData=null )"><i class="oi oi-x"></i></a>
+                        <h2 class="align-center fw-bold">@localizer["Cargo"]</h2>
+                        <div class="row mt-4">
+                            <div class="column">
+                                <b>@localizer["Weight"]:</b>
+                                <b>@localizer["Description"]:</b>
+                                <b>@localizer["Delivery_requirements"]:</b>
+                                <b>@localizer["Vehicle_registration_number"]:</b>
+                                <b>@localizer["Warehouse_id"]:</b>
+                                <b>@localizer["Warehouse_section"]:</b>
+                                <b>@localizer["Storage_starting_time"]:</b>
+                                <b>@localizer["Date"]:</b>
+                            </div>
+                            <div class="column">
+                                <p>@(idData.Weight != null ? (idData.Weight + "kg"):  "-")</p>
+                                <p>@(idData.Description != null ? idData.Description : "-") </p>
+                                <p>@(idData.Delivery_requirements != null ? idData.Delivery_requirements : "-") </p>
+                                <p>@(idData.Vehicle_registration_number != null ? idData.Vehicle_registration_number : "-")</p>
+                                <p>@(idData.Warehouse_id != null ? idData.Warehouse_id : "-") </p>
+                                <p>@(idData.Warehouse_section != null ? idData.Warehouse_section : "-") </p>
+                                <p>@(idData.Storage_starting_time != null ? idData.Storage_starting_time : "-") </p>
+                                <p>@idData.Date</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
 }
 @code {
     private bool settings = false;
     Tasks[]? tasks { get; set; }
+    Cargoes? idData { get; set; }
     private List<bool> showColumns = Enumerable.Repeat(true, 16).ToList();
     private int currentPage = 1;
     int pageSize = 10;
@@ -319,7 +351,8 @@ else
 
     async void DateStartInput(ChangeEventArgs e)
     {
-        if (e != null) {
+        if (e != null && e.Value.ToString() != "" ) 
+        {
             dateFilter.StartDate = DateTime.Parse(e.Value.ToString());
             await OnInitializedAsync();
         }
@@ -327,7 +360,7 @@ else
 
     async void DateEndInput(ChangeEventArgs e)
     {
-        if (e != null)
+        if (e != null && e.Value.ToString() != "" ) 
         {
             dateFilter.EndDate = DateTime.Parse(e.Value.ToString());
             await OnInitializedAsync();
@@ -337,7 +370,9 @@ else
     protected override async Task OnInitializedAsync()
     {
         PageHistoryState.AddPageToHistory("/Tasks");
-        base.OnInitialized();
+        base.OnInitialized();  
+        dataRows = await client.GetFromJsonAsync<int>("api/tasks/pagecount");
+        await ShowPage();   
         if (rates == null)
         {
             try
@@ -355,11 +390,9 @@ else
                 Console.WriteLine(document_error);
             }
         }
-        dataRows = await client.GetFromJsonAsync<int>("api/tasks/pagecount");
-        await ShowPage();
     }
 
-     public async Task<float?> GetCurrencyAsync(int? amount)
+    public async Task<float?> GetCurrencyAsync(int? amount)
     {
         float? conversionNum = amount;
         if (rates != null && currency != "HUF")
@@ -393,6 +426,12 @@ else
         await OnInitializedAsync();
     }
 
+    async Task ChangeCompletion(Tasks task)
+    {
+        await client.PutAsJsonAsync($"api/tasks/changecompletion", task);
+        await ShowPage();
+    }
+
     async Task Delete(int Id)
     {
         var t = tasks.First(x => x.Id == Id);
@@ -403,6 +442,15 @@ else
             if (shouldreload == 1 && dataRows > 0) { navigationManager.NavigateTo("/Tasks", true); }
             await OnInitializedAsync();
         }
+    }
+
+    async Task GetById(int? id)
+    {
+        if (id != null)
+        {
+            idData = await client.GetFromJsonAsync<Cargoes?>($"api/cargoes/getbyid/{id}");
+        }
+
     }
 
     public void SettingsClosed()

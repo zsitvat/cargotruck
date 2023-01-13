@@ -132,15 +132,14 @@ app.UseRequestLocalization(new RequestLocalizationOptions
         new QueryStringRequestCultureProvider(),
     }
 });
+
+app.UseAuthentication();
 app.UseHttpsRedirection();
 app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
 app.UseHttpsRedirection();
 app.UseRouting();
-
-app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapRazorPages();
 app.MapControllers();
 app.MapFallbackToFile("index.html");

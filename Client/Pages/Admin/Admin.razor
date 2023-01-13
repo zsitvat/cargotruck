@@ -8,6 +8,23 @@
 <h3>@localizer["Admin"]</h3>
 <div class="form-group">
     <a class="btn btn-success" href="/Register"><i class="oi oi-plus"></i> @localizer["Create_new"]</a>
+    @if (filter != null && filter != "")
+    {
+        <button @onclick="@(()=>onChangeResetFilter())" class="filter-button"><span class="icon iconify filter-icon" data-icon="material-symbols:filter-alt-off"></span></button>
+    }
+    else
+    {
+        <button @onclick="@(()=>onChangeResetFilter())" class="filter-button not-pointer"><span class="icon iconify filter-icon not-pointer" data-icon="material-symbols:filter-alt"></span></button>
+    }
+    @if(roles != null) {
+        <select class="form-control filter" @oninput="@((e)=>onChangeGetFilter(e))" @bind="filter">
+            <option value="" selected>@localizer["Nothing"]</option>
+            @foreach (var role in roles.Values)
+            {
+                <option value="@role">@localizer[@role]</option>
+            }
+        </select>
+    }
 </div>
 <br>
 
@@ -40,7 +57,7 @@ else
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (Users item in users)
+                                    @foreach (Users item in users.Where(x => (filter != null && filter != "" ? roles?[x.Id] == filter : true)))
                                     {
                                         int i = 0;
                                         i += 1;
@@ -76,6 +93,9 @@ else
     Users[] users { get; set; }
     Dictionary<string, string>? claims { get; set; }
     Dictionary<string, string>? roles { get; set; }
+    string? filterIcon;
+    string? filter = "";
+
     protected override async Task OnInitializedAsync()
     {
         users = await client.GetFromJsonAsync<Users[]>("api/admin/get");
@@ -91,5 +111,17 @@ else
             await client.DeleteAsync($"api/admin/{Id}");
             await OnInitializedAsync();
         }
+    }
+
+    async void onChangeGetFilter(ChangeEventArgs e)
+    {
+        filter = e.Value.ToString();
+        await OnInitializedAsync();
+    }
+
+    async void onChangeResetFilter()
+    {
+        filter = "";
+        await OnInitializedAsync();
     }
 }

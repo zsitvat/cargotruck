@@ -183,6 +183,9 @@
   <data name="Cancel" xml:space="preserve">
     <value>Mégse</value>
   </data>
+  <data name="Cargo" xml:space="preserve">
+    <value>Rakomány</value>
+  </data>
   <data name="Cargoes" xml:space="preserve">
     <value>Rakományok</value>
   </data>
@@ -242,6 +245,9 @@
   </data>
   <data name="Date" xml:space="preserve">
     <value>Dátum</value>
+  </data>
+  <data name="date-filter-info" xml:space="preserve">
+    <value>Az időpontok közötti adatok megjelenítve.</value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>Törlés</value>
@@ -344,6 +350,12 @@
   </data>
   <data name="Error_password" xml:space="preserve">
     <value>Jelszó megadása kötelezõ.</value>
+  </data>
+  <data name="Error_password_lenght" xml:space="preserve">
+    <value>A jelszónak 8 és 30 karakter között kell lennie!</value>
+  </data>
+  <data name="Error_password_validation" xml:space="preserve">
+    <value>A jelszónak tartalmaznia kell kis- és nagybetűt, számot és speciális karaktert!</value>
   </data>
   <data name="Error_place_of_delivery" xml:space="preserve">
     <value>A leadás helyének megadása kötelezõ.</value>
