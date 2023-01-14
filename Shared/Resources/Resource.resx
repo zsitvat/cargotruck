@@ -240,6 +240,9 @@
   <data name="csv" xml:space="preserve">
     <value>Letöltés CSV-ként</value>
   </data>
+  <data name="currency_api_is_exceeded" xml:space="preserve">
+    <value>Elfogyott a napi valutaváltás lekérésének a száma a hónapban. </value>
+  </data>
   <data name="Data_import" xml:space="preserve">
     <value>Adatok feltöltése</value>
   </data>
@@ -452,6 +455,30 @@
   </data>
   <data name="Generated" xml:space="preserve">
     <value>Generált adat</value>
+  </data>
+  <data name="go_to_admin" xml:space="preserve">
+    <value>Irány az adminisztrátor felület →</value>
+  </data>
+  <data name="go_to_cargoes" xml:space="preserve">
+    <value>Irány a rakományok oldal →</value>
+  </data>
+  <data name="go_to_expenses" xml:space="preserve">
+    <value>Irány a kiadások oldal →</value>
+  </data>
+  <data name="go_to_monthly_expenses" xml:space="preserve">
+    <value>Irány a havi kiadások oldal →</value>
+  </data>
+  <data name="go_to_roads" xml:space="preserve">
+    <value>Irány az utak oldal →</value>
+  </data>
+  <data name="go_to_tasks" xml:space="preserve">
+    <value>Irány a megbízások oldal →</value>
+  </data>
+  <data name="go_to_trucks" xml:space="preserve">
+    <value>Irány az járművek oldal →</value>
+  </data>
+  <data name="go_to_warehouses" xml:space="preserve">
+    <value>Irány az raktárak oldal →</value>
   </data>
   <data name="Hello" xml:space="preserve">
     <value>Sikeresen bejelentkeztél</value>
@@ -704,15 +731,6 @@
   </data>
   <data name="Storage_time" xml:space="preserve">
     <value>Raktározás ideje</value>
-  </data>
-  <data name="String1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="String2" xml:space="preserve">
-    <value />
-  </data>
-  <data name="String3" xml:space="preserve">
-    <value />
   </data>
   <data name="Succesfull_update" xml:space="preserve">
     <value>Sikeresen frissítve!</value>

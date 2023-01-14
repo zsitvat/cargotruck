@@ -1,0 +1,414 @@
+﻿
+<div class="getbyid-card mb-6">
+    <div class="card-body">
+        <div class="ms-0">
+            <a class="btn btn-danger x" @onclick="@( ()=> SetToNull())"><i class="oi oi-x"></i></a>
+            @if (currency_api_error != null && currency_api_error != "")
+            {
+                <div class="d-inline-block mt-3 mb-4">
+                    <button class="no-button currency-api-error-icon error d-inline-block" @onclick="@(() => showError=!showError)">
+                        <span class="icon iconify d-inline" style="color:darkred;" data-icon="material-symbols:error-circle-rounded-outline"></span>
+                    </button>
+                    <p class="error currency-api-error-in-child d-inline-block">
+                        @if (showError)
+                        {
+                            @localizer[@currency_api_error]
+                        }
+                    </p>
+                </div>
+            }
+            @if (getByIdType == "cargo")
+            {
+                <NavLink href="Cargoes" data-title="@localizer["go_to_cargoes"]">
+                    <h2 class="align-center fw-bold">@localizer["Cargo"]</h2>
+                </NavLink>
+                <div id="cargo" class="row mt-4">
+                    <div class="column">
+                        <p><b>@localizer["Weight"]:</b></p>
+                        <p><b>@localizer["Description"]:</b></p>
+                        <p><b>@localizer["Delivery_requirements"]:</b></p>
+                        <p><b>@localizer["Vehicle_registration_number"]:</b></p>
+                        <p><b>@localizer["Warehouse_id"]:</b></p>
+                        <p><b>@localizer["Warehouse_section"]:</b></p>
+                        <p><b>@localizer["Storage_starting_time"]:</b></p>
+                        <p><b>@localizer["Date"]:</b></p>
+                    </div>
+                    <div class="column">
+                        <p>@(idDataCargo?.Weight != null ? (idDataCargo.Weight + "kg") : "-")</p>
+                        <p>@(idDataCargo?.Description != null ? idDataCargo.Description : "-") </p>
+                        <p>@(idDataCargo?.Delivery_requirements != null ? idDataCargo.Delivery_requirements : "-") </p>
+                        <p>@(idDataCargo?.Vehicle_registration_number != null ? idDataCargo.Vehicle_registration_number : "-")</p>
+                        <p>@(idDataCargo?.Warehouse_id != null ? idDataCargo.Warehouse_id : "-") </p>
+                        <p>@(idDataCargo?.Warehouse_section != null ? idDataCargo.Warehouse_section : "-") </p>
+                        <p>@(idDataCargo?.Storage_starting_time != null ? idDataCargo.Storage_starting_time : "-") </p>
+                        <p>@(idDataCargo?.Date.ToString())</p>
+                    </div>
+                </div>
+            }
+            else if (getByIdType == "task")
+            {
+                <NavLink href="Tasks" data-title="@localizer["go_to_tasks"]">
+                    <h2 class="align-center fw-bold">@localizer["Task"]</h2>
+                </NavLink>
+                <select data-title="@localizer["Currency"]" class="form-control currency" @oninput="@((e)=>onChangeGetType(e))" @bind="currency">
+                    <option value="HUF">HUF</option>
+                    <option value="EUR">EUR</option>
+                    <option value="USD">USD</option>
+                    <option value="CZK">CZK</option>
+                </select>
+                <div id="task" class="row mt-4">
+                    <div class="column">
+                        <p><b>@localizer["Partner"]:</b></p>
+                        <p><b>@localizer["Description"]:</b></p>
+                        <p><b>@localizer["Place_of_receipt"]:</b></p>
+                        <p><b>@localizer["Time_of_receipt"]:</b></p>
+                        <p><b>@localizer["Place_of_delivery"]:</b></p>
+                        <p><b>@localizer["Time_of_delivery"]:</b></p>
+                        <p><b>@localizer["other_stops"]:</b></p>
+                        <p><b>@localizer["Id_cargo"]:</b></p>
+                        <p><b>@localizer["Storage_time"]:</b></p>
+                        <p><b>@localizer["Completed"]:</b></p>
+                        <p><b>@localizer["Completion_time"]:</b></p>
+                        <p><b>@localizer["Time_of_delay"]:</b></p>
+                        <p><b>@localizer["Payment"]:</b></p>
+                        <p><b>@localizer["Final_Payment"]:</b></p>
+                        <p><b>@localizer["Penalty"]:</b></p>
+                        <p><b>@localizer["Date"]:</b></p>
+                    </div>
+                    <div class="column">
+                        <p>@(idDataTask?.Partner != null ? (idDataTask.Partner) : "-")</p>
+                        <p>@(idDataTask?.Description != null ? idDataTask.Description : "-")</p>
+                        <p>@(idDataTask?.Place_of_receipt != null ? idDataTask.Place_of_receipt : "-")</p>
+                        <p>@(idDataTask?.Time_of_receipt != null ? idDataTask.Time_of_receipt : "-")</p>
+                        <p>@(idDataTask?.Place_of_delivery != null ? idDataTask.Place_of_delivery : "-")</p>
+                        <p>@(idDataTask?.Time_of_delivery != null ? idDataTask.Time_of_delivery : "-")</p>
+                        <p>@(idDataTask?.other_stops != null ? idDataTask.other_stops : "-")</p>
+                        <p>@(idDataTask?.Id_cargo != null ? idDataTask.Id_cargo : "-")</p>
+                        <p>@(idDataTask?.Storage_time != null ? idDataTask.Storage_time : "-")</p>
+                        <p>@(idDataTask?.Completed != null ? idDataTask.Completed : "-")</p>
+                        <p>@(idDataTask?.Completion_time != null ? idDataTask.Completion_time : "-") </p>
+                        <p>@(idDataTask?.Time_of_delay != null ? idDataTask.Time_of_delay : "-")</p>
+                        <p>
+                            @if (idDataTask?.Payment != null)
+                        {
+                            @if (currency != "HUF" && rates != null)
+                            {
+                                @(GetCurrencyAsync(idDataTask.Payment).Result.Value.ToString("0.##") + " " + currency)
+                            }
+                            else if (idDataTask.Payment != 0)
+                            {
+                                @(idDataTask.Payment + " HUF")
+                            }
+                           
+                        } 
+                        else
+                        {
+                            @("-")
+                        }
+                        </p>
+                        <p>
+                            @if (idDataTask?.Final_Payment != null)
+                        {
+                            @if (currency != "HUF" && rates != null)
+                            {
+                                @(GetCurrencyAsync(idDataTask.Final_Payment).Result.Value.ToString("0.##") + " " + currency)
+                            }
+                            else if (idDataTask.Final_Payment != 0)
+                            {
+                                @(idDataTask.Final_Payment + " HUF")
+                            }
+                           
+                        } 
+                        else
+                        {
+                            @("-")
+                        }
+                        </p>
+                        <p>
+                            @if (idDataTask?.Penalty != null)
+                        {
+                            @if (currency != "HUF" && rates != null)
+                            {
+                                @(GetCurrencyAsync(idDataTask.Penalty).Result.Value.ToString("0.##") + " " + currency)
+                            }
+                            else if (idDataTask.Penalty != 0)
+                            {
+                                @(idDataTask.Penalty + " HUF")
+                            }
+                           
+                        } 
+                        else
+                        {
+                            @("-")
+                        }
+                        </p>
+                        <p>@(idDataTask?.Date.ToString())</p>
+                    </div>
+                </div>
+            }
+            else if (getByIdType == "expense")
+            {
+                <NavLink href="Expenses" data-title="@localizer["go_to_expenses"]">
+                    <h2 class="align-center fw-bold">@localizer["Expense"]</h2>
+                </NavLink>
+                <select data-title="@localizer["Currency"]" class="form-control currency" @oninput="@((e)=>onChangeGetType(e))" @bind="currency">
+                    <option value="HUF">HUF</option>
+                    <option value="EUR">EUR</option>
+                    <option value="USD">USD</option>
+                    <option value="CZK">CZK</option>
+                </select>
+                <div id="expense" class="row mt-4">
+                    <div class="column">
+                        <p><b>@localizer["Type"]:</b></p>
+                        <p><b>@localizer["Type_id"]:</b></p>
+                        <p><b>@localizer["Fuel"]:</b></p>
+                        <p><b>@localizer["Road_fees"]:</b></p>
+                        <p><b>@localizer["Penalty_expenses"]:</b></p>
+                        <p><b>@localizer["Driver_spending"]:</b></p>
+                        <p><b>@localizer["Driver_salary"]:</b></p>
+                        <p><b>@localizer["Repair_cost"]:</b></p>
+                        <p><b>@localizer["Repair_description"]:</b></p>
+                        <p><b>@localizer["Cost_of_storage"]:</b></p>
+                        <p><b>@localizer["other"]:</b></p>
+                        <p><b>@localizer["Date"]:</b></p>
+                    </div>
+                    <div class="column">
+                        <p>@(idDataExpense?.Type != null ? idDataExpense.Type : "-")</p>
+                        <p>@(idDataExpense?.Type_id != null ? idDataExpense.Type_id : "-")</p>
+                        <p>
+                        @if (idDataExpense?.Fuel != null)
+                        {
+                            @if (currency != "HUF" && rates != null)
+                            {
+                                @(GetCurrencyAsync(idDataExpense?.Fuel).Result.Value.ToString("0.##") + " " + currency)
+                            }
+                            else if (idDataExpense?.Fuel != 0)
+                            {
+                                @(idDataExpense?.Fuel + " HUF")
+                            }
+                           
+                        } 
+                        else
+                        {
+                            @("-")
+                        }
+                        </p>
+                        <p>
+                        @if (idDataExpense?.Road_fees != null)
+                        {
+                            @if (currency != "HUF" && rates != null)
+                            {
+                                @(GetCurrencyAsync(idDataExpense?.Road_fees).Result.Value.ToString("0.##") + " " + currency)
+                            }
+                            else if (idDataExpense?.Road_fees != 0)
+                            {
+                                @(idDataExpense?.Road_fees + " HUF")
+                            }
+                           
+                        } 
+                        else
+                        {
+                            @("-")
+                        }
+                        </p>
+                        <p>
+                        @if (idDataExpense?.Penalty != null)
+                        {
+                            @if (currency != "HUF" && rates != null)
+                            {
+                                @(GetCurrencyAsync(idDataExpense?.Penalty).Result.Value.ToString("0.##") + " " + currency)
+                            }
+                            else if (idDataExpense?.Penalty != 0)
+                            {
+                                @(idDataExpense?.Penalty + " HUF")
+                            }
+                          
+                        }  
+                        else
+                        {
+                            @("-")
+                        }
+                        </p>
+                            <p>
+                        @if (idDataExpense?.Driver_spending != null)
+                        {
+                            @if (currency != "HUF" && rates != null)
+                            {
+                                @(GetCurrencyAsync(idDataExpense?.Driver_spending).Result.Value.ToString("0.##") + " " + currency)
+                            }
+                            else if (idDataExpense?.Driver_spending != 0)
+                            {
+                                @(idDataExpense?.Driver_spending + " HUF")
+                            }
+                          
+                        }  
+                        else
+                        {
+                            @("-")
+                        }
+                        </p>
+                        <p>
+                        @if (idDataExpense?.Driver_salary != null)
+                        {
+                            @if (currency != "HUF" && rates != null)
+                            {
+                                @(GetCurrencyAsync(idDataExpense?.Driver_salary).Result.Value.ToString("0.##") + " " + currency)
+                            }
+                            else if (idDataExpense?.Driver_salary != 0)
+                            {
+                                @(idDataExpense?.Driver_salary + " HUF")
+                            }
+                           
+                        } 
+                        else
+                        {
+                            @("-")
+                        }
+                        </p>
+                        <p>
+                        @if (idDataExpense?.Repair_cost != null)
+                        {
+                            @if (currency != "HUF" && rates != null)
+                            {
+                                @(GetCurrencyAsync(idDataExpense?.Repair_cost).Result.Value.ToString("0.##") + " " + currency)
+                            }
+                            else if (idDataExpense?.Repair_cost != 0)
+                            {
+                                @(idDataExpense?.Repair_cost + " HUF")
+                            }
+                            
+                        }
+                        else
+                        {
+                            @("-")
+                        }
+                        </p>
+                        <p>@(idDataExpense?.Repair_description != null ? idDataExpense.Repair_description : "-")</p>
+                        <p>
+                        @if (idDataExpense?.Cost_of_storage != null)
+                        {
+                            @if (currency != "HUF" && rates != null)
+                            {
+                                @(GetCurrencyAsync(idDataExpense?.Cost_of_storage).Result.Value.ToString("0.##") + " " + currency)
+                            }
+                            else if (idDataExpense?.Cost_of_storage != 0)
+                            {
+                                @(idDataExpense?.Cost_of_storage + " HUF")
+                            }
+                           
+                        } 
+                        else
+                        {
+                            @("-")
+                        }
+                        </p>
+                        <p>
+                        @if (idDataExpense?.other != null)
+                        {
+                            @if (currency != "HUF" && rates != null)
+                            {
+                                @(GetCurrencyAsync(idDataExpense?.other).Result.Value.ToString("0.##") + " " + currency)
+                            }
+                            else if (idDataExpense?.other != 0)
+                            {
+                                @(idDataExpense?.other + " HUF")
+                            }
+                           
+                        } 
+                        else
+                        {
+                            @("-")
+                        }
+                        </p>
+                        <p>@(idDataExpense?.Date.ToString())</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    string currency = "HUF";
+    Dictionary<string, dynamic>? rates;
+    string? currency_api_error;
+    bool showError = true;
+    Cargoes? idDataCargo;
+    Tasks? idDataTask;
+    Expenses? idDataExpense;
+    [Parameter] public int? getById { get; set; }
+    [Parameter] public string? getByIdType { get; set; }
+    [Parameter] public EventCallback onSetToNull { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (rates == null)
+        {
+            try
+            {
+                rates = await CurrencyExchange.GetRatesAsync(client);
+            }
+            catch (Exception ex)
+            {
+
+                currency_api_error = $"Error - Type: {ex.GetType()}, Message: {ex.Message}";
+                if (ex.GetType().ToString() == "Microsoft.CSharp.RuntimeBinder.RuntimeBinderException")
+                {
+                    currency_api_error = "currency_api_is_exceeded";
+                }
+            }
+        }
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (getById != null)
+        {
+            if (getByIdType == "cargo")
+            {
+                idDataCargo = await client.GetFromJsonAsync<Cargoes?>($"api/cargoes/getbyid/{getById}");
+            }
+            else if (getByIdType == "task")
+            {
+                idDataTask = await client.GetFromJsonAsync<Tasks?>($"api/tasks/getbyid/{getById}");
+            }
+            else if (getByIdType == "expense")
+            {
+                idDataExpense = await client.GetFromJsonAsync<Expenses?>($"api/expenses/getbyid/{getById}");
+            }
+           else
+            {
+                idDataExpense = null;
+                idDataTask = null;
+                idDataCargo = null;
+            }
+        }  
+    }
+
+    protected async Task SetToNull()
+    {
+        await onSetToNull.InvokeAsync();
+    }
+
+    public async Task<float?> GetCurrencyAsync(int? amount)
+    {
+        float? conversionNum = amount;
+        if (rates != null && currency != "HUF")
+        {
+            if (currency != "EUR")
+            {
+                conversionNum = (float)((amount / rates["HUF"]) * rates[currency]);
+            }
+            else
+            {
+                conversionNum = (float)(amount / rates["HUF"]);
+            }
+        }
+        return conversionNum;
+    }
+
+    async void onChangeGetType(ChangeEventArgs e)
+    {
+        currency = e.Value.ToString();
+    }
+}

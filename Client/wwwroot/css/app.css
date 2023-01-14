@@ -93,6 +93,10 @@ a:active {
     max-width: fit-content;
 }
 
+.none {
+    display: none;
+}
+
 .green {
     background: rgba(227, 242, 222,0.5) !important;
 }
@@ -141,6 +145,28 @@ a:active {
 
 .error{
     color:red;
+}
+
+
+.currency-api-error{
+    font-size:14px;
+    position:absolute;
+    margin-top:4px;
+}
+
+.currency-api-error-icon svg {
+    width: 15px;
+    cursor:pointer;
+    margin-right:0;
+}
+
+.currency-api-error-in-child {
+    font-size: 12px;
+    position: absolute;
+    white-space: initial !important;
+    padding:0;
+    padding-right:2rem;
+    margin-bottom:1rem;
 }
 
 #blazor-error-ui {
@@ -581,7 +607,6 @@ table th button {
     white-space: nowrap;
     padding-left: 1.5rem;
     margin: 0;
-    margin-top: 0.12rem;
 }
 
 .getbyid-card b {
@@ -594,9 +619,14 @@ table th button {
     padding-bottom: 0.25rem;
 }
 
-.column {
+.column:first-child {
     float: left;
-    width: 50%;
+    width: 55%;
+}
+
+.column:nth-child(2){
+    float: left;
+    width: 45%;
 }
 
 .hideandshow-cards {
@@ -682,6 +712,10 @@ table th button {
 .iconify2 {
     height: 30px;
     width: 30px;
+}
+
+.getbyid-card [data-title]:after {
+    left:2rem;
 }
 
 [data-title]:hover:after {
@@ -1113,7 +1147,7 @@ tbody td, tbody th{
 }
 
 @media (max-width: 1220px) {
-   
+
     table img {
         margin-left: 10%;
         border: 2px solid rgba(0,0,0,.075);
@@ -1125,7 +1159,7 @@ tbody td, tbody th{
     }
 
     .card2 {
-        padding-top:0.5rem;
+        padding-top: 0.5rem;
         min-width: 18rem;
         min-height: fit-content;
     }
@@ -1139,8 +1173,8 @@ tbody td, tbody th{
         max-width: 75vw;
     }
 
-    .input_search{
-        margin-left:2px;
+    .input_search {
+        margin-left: 2px;
     }
 
     .privacy-form {
@@ -1149,8 +1183,8 @@ tbody td, tbody th{
         bottom: 3.5rem;
     }
 
-    .settings-card{
-        margin-bottom:0.5rem;
+    .settings-card {
+        margin-bottom: 0.5rem;
     }
 }
 
@@ -1159,6 +1193,7 @@ tbody td, tbody th{
     .profile-form {
         margin-left: 10%;
     }
+
     .card {
         min-width: 25rem;
         min-height: fit-content;
@@ -1190,11 +1225,12 @@ tbody td, tbody th{
 
     .input_search {
         margin-top: 10px;
-        display:inline-block;
+        display: inline-block;
     }
+
 }
 
-@media (max-width: 868px)  {
+@media (max-width: 868px) {
     .bottom-row a {
         padding-left: 40%;
     }
@@ -1218,6 +1254,7 @@ tbody td, tbody th{
     .hide {
         display: block;
     }
+
     .profile-form {
         margin-left: 10%;
     }
@@ -1225,9 +1262,10 @@ tbody td, tbody th{
     .card {
         margin-top: 2%;
     }
+
     .card-table {
         min-width: 400px;
-        margin-bottom:5rem;
+        margin-bottom: 5rem;
     }
 
     .bottom-row a {
@@ -1239,31 +1277,22 @@ tbody td, tbody th{
     }
 
     .input_search {
-        margin-top: 0.4rem;
-        width:100%;
-        max-width:22rem;
-        margin:auto;
-        margin-top:0.5rem;
+        width: 100%;
+        max-width: 22rem;
+        margin: auto;
+        margin-top: 0.5rem;
+        margin-bottom:0.5rem;
     }
 
-    .buttons{
-        text-align:center;
+    .buttons {
+        text-align: center;
     }
 
-    .hide-on-desktop{
-        display:none;
+    .hide-on-desktop {
+        display: none;
     }
 
-    .currency {
-        margin-left: 0rem;
-        position: relative;
-        left: 15.8rem;
-        bottom: 5.3rem;
-        padding-bottom: 0.5rem;
-        padding-top: 0.6rem;
-    }
-
-    .currency option{
+    .currency option {
         position: relative;
         left: 2rem;
     }
@@ -1277,39 +1306,59 @@ tbody td, tbody th{
         left: 1rem;
         bottom: 3.5rem;
     }
-}
 
-@media (max-width: 580px) {
-    .currency {
+    .hideandshow-cards {
+        display: initial;
+    }
+
+    .hideandshow-cards .getbyid-card, .hideandshow-cards .settings-card {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .date-filter {
+        left: 0rem;
+        top:0.5rem;
+    }
+
+    .filter-button {
         margin-left: 0rem;
-        position: relative;
-        left: 13rem;
-        bottom: 2.3rem;
-        padding-bottom: 0.5rem;
-        padding-top: 0.6rem;
     }
 }
 
 @media (max-width: 480px) {
-     .currency {
-        margin-left: 0rem;
-        position: relative;
-        left: 8rem;
-        bottom: 5.3rem;
-        padding-bottom: 0.5rem;
-        padding-top: 0.6rem;
-    }
-
     .card2 {
         min-width: 108%;
         min-height: fit-content;
     }
+
+    .currency-api-error {
+        position: initial;
+        margin-top: 1px;
+        width: 100%;
+    }
+    .me-4{
+        margin-right:20rem !important;
+    }
+
+    .btn-success {
+        margin: 0;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        width: 120px;
+        margin: 0 50%;
+        position: relative;
+        left: -65px;
+        margin-bottom: 0.5rem;
+    }
 }
 
 @media (max-width: 430px) {
-    table img{
-        margin-left:5%;
+    table img {
+        margin-left: 5%;
     }
+
     .profile-form {
         margin-left: 8%;
     }
@@ -1328,6 +1377,7 @@ tbody td, tbody th{
         width: 18.5rem;
         margin-top: 1%;
     }
+
     .table-width {
         max-width: 85vw;
     }
@@ -1336,12 +1386,17 @@ tbody td, tbody th{
         position: fixed;
         left: 1rem;
         bottom: 3.5rem;
-        width:85%;
+        width: 85%;
     }
 
     .privacy-form input {
         min-width: 90% !important;
     }
+
+    .hideandshow-cards p, .hideandshow-cards b, .hideandshow-cards, .hideandshow-cards h2 {
+        font-size: 80%;
+    }
+
 }
 
 @media (max-width: 400px) {
@@ -1379,9 +1434,9 @@ tbody td, tbody th{
         width: 90%;
     }
 
-    .privacy-form input {
-        min-width: 80% !important;
-    }
+        .privacy-form input {
+            min-width: 80% !important;
+        }
 }
 
 tr td:first-child {
@@ -1394,7 +1449,7 @@ tr td:first-child {
 /* width */
 ::-webkit-scrollbar {
     width: 12px;
-    height:12px;
+    height: 12px;
 }
 
 /* Track */
@@ -1407,11 +1462,11 @@ tr td:first-child {
     background: #888;
 }
 
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-    background: #555;
-}
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
 
-.culture-selector{
-    font-size:13px;
+.culture-selector {
+    font-size: 13px;
 }

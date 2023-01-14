@@ -27,7 +27,7 @@ namespace Cargotruck.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> Get(int page, int pageSize, string sortOrder, bool desc, string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
-            var t = await _context.Tasks.ToListAsync();
+            var t = await _context.Tasks.Where(s=>(dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
 
             if (filter == "completed")
             {
@@ -54,7 +54,6 @@ namespace Cargotruck.Server.Controllers
                 || (s.Final_Payment == null ? false : s.Final_Payment.ToString()!.Contains(searchString))
                 || (s.Penalty == null ? false : s.Penalty.ToString()!.Contains(searchString))
                 || (s.Date.ToString()!.Contains(searchString))
-                && (dateFilterStartDate != null ? s.Date >= dateFilterStartDate : true) && (dateFilterEndDate != null ? s.Date <= dateFilterEndDate : true)
                 ).ToList(); 
             }
 

@@ -240,6 +240,9 @@
   <data name="csv" xml:space="preserve">
     <value>Export to CSV</value>
   </data>
+  <data name="currency_api_is_exceeded" xml:space="preserve">
+    <value>You have exceeded your daily monthly API rate limit.</value>
+  </data>
   <data name="Data_import" xml:space="preserve">
     <value>Import data</value>
   </data>
@@ -449,6 +452,30 @@
   </data>
   <data name="Generated" xml:space="preserve">
     <value>Generated</value>
+  </data>
+  <data name="go_to_admin" xml:space="preserve">
+    <value>Go to admin page  →</value>
+  </data>
+  <data name="go_to_cargoes" xml:space="preserve">
+    <value>Go to cargoes page →</value>
+  </data>
+  <data name="go_to_expenses" xml:space="preserve">
+    <value>Go to expenses page →</value>
+  </data>
+  <data name="go_to_monthly_expenses" xml:space="preserve">
+    <value>Go to monthly expenses page →</value>
+  </data>
+  <data name="go_to_roads" xml:space="preserve">
+    <value>Go to roads page →</value>
+  </data>
+  <data name="go_to_tasks" xml:space="preserve">
+    <value>Go to tasks page →</value>
+  </data>
+  <data name="go_to_trucks" xml:space="preserve">
+    <value>Go to trucks page →</value>
+  </data>
+  <data name="go_to_warehouses" xml:space="preserve">
+    <value>Go to warehouses page →</value>
   </data>
   <data name="Hello" xml:space="preserve">
     <value>Succesful login</value>

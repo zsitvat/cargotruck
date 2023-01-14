@@ -127,15 +127,15 @@ else
                                     }
                                     @if (showColumns[6])
                                     {
-                                        <td>@item.Task_id</td>
+                                        <td><button class="no-button" @onclick="@(()=>GetById(item.Task_id,"task"))">@item.Task_id</button></td>
                                     }
                                     @if (showColumns[7])
                                     {
-                                        <td>@item.Id_cargo</td>
+                                        <td><button class="no-button" @onclick="@(()=>GetById(item.Id_cargo,"cargo"))">@item.Id_cargo</button></td>
                                     }
                                     @if (showColumns[8])
                                     {
-                                        <td>@item.Expenses_id</td>
+                                        <td><button class="no-button" @onclick="@(()=>GetById(item.Expenses_id,"expense"))">@item.Expenses_id</button></td>
                                     }
                                     @if (showColumns[9])
                                     {
@@ -187,14 +187,22 @@ else
         </div>
     </div>
 
-    @if (settings)
-    {
-        <Settings OnSettingsClosed="SettingsClosed" OnInputChanged="InputChanged" OnSettingsChanged="SettingsChanged" showColumns="@showColumns" settings="@settings" pageSize="@pageSize" />
-    }
+    <div class="hideandshow-cards">
+        @if (settings)
+        {
+            <Settings OnSettingsClosed="SettingsClosed" OnInputChanged="InputChanged" OnSettingsChanged="SettingsChanged" showColumns="@showColumns" settings="@settings" pageSize="@pageSize" />
+        }
+        @if (getById != null)
+        {
+            <GetbyidComponent getById="@getById" getByIdType="@getByIdType" onSetToNull="SetToNull" />
+        }
+    </div>
 }
 @code {
     public bool settings = false;
     Roads[]? roads { get; set; }
+    int? getById { get; set; }
+    string? getByIdType { get; set; }
     List<bool> showColumns = Enumerable.Repeat(true, 16).ToList();
     private int currentPage = 1;
     int pageSize = 10;
@@ -208,15 +216,9 @@ else
     string? filter = "";
     DateFilter? dateFilter = new DateFilter();
 
-    public class DateFilter
-    {
-        public DateTime? StartDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1, 0, 0, 0);
-        public DateTime? EndDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.DaysInMonth(DateTime.Today.Year, DateTime.Today.Month), 23, 59, 59);
-    }
-
     async void DateStartInput(ChangeEventArgs e)
     {
-         if (e != null && e.Value.ToString() != "" ) 
+        if (e != null && e.Value.ToString() != "" ) 
         {
             dateFilter.StartDate = DateTime.Parse(e.Value.ToString());
             await OnInitializedAsync();
@@ -225,7 +227,7 @@ else
 
     async void DateEndInput(ChangeEventArgs e)
     {
-         if (e != null && e.Value.ToString() != "" ) 
+        if (e != null && e.Value.ToString() != "" ) 
         {
             dateFilter.EndDate = DateTime.Parse(e.Value.ToString());
             await OnInitializedAsync();
@@ -250,6 +252,19 @@ else
             if (shouldreload == 1 && dataRows > 0) { navigationManager.NavigateTo("/Roads", true); }
             await OnInitializedAsync();
         }
+    }
+
+    async Task GetById(int? id, string idType)
+    {
+        getById = id;
+        getByIdType = idType;
+        StateHasChanged();
+    }
+
+    public void SetToNull()
+    {
+        getById = null;
+        getByIdType = null;
     }
 
     public void SettingsClosed()

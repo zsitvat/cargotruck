@@ -30,9 +30,7 @@ namespace Cargotruck.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> Get(int page, int pageSize, string sortOrder, bool desc, string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
-            var data = await _context.Roads.ToListAsync();
-
-            data = data.Where(s => (dateFilterStartDate != null ? s.Date >= dateFilterStartDate : true) && (dateFilterEndDate != null ? s.Date <= dateFilterEndDate : true)).ToList();
+            var data = await _context.Roads.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
 
             if (filter == "to")
             {
@@ -167,10 +165,13 @@ namespace Cargotruck.Server.Controllers
             _context.Add(data);
             await _context.SaveChangesAsync();
             var expense = _context.Expenses.FirstOrDefault(a => a.Id == data.Expenses_id);
-            expense.Type_id = data.Id;
-            expense.Type = Shared.Models.Type.repair;
-            _context.Entry(expense).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            if (expense!=null)
+            {
+                expense.Type_id = data.Id;
+                expense.Type = Shared.Models.Type.repair;
+                _context.Entry(expense).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+            }
             return Ok(data.Id);
         }
 

@@ -30,9 +30,7 @@ namespace Cargotruck.Server.Controllers
         public async Task<IActionResult> Get(int page, int pageSize, string sortOrder, bool desc, string? searchString, string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             await CreateMonths(); // checks and create the monthly expenses data for the current month
-            var data = await _context.Monthly_Expenses.ToListAsync();
-
-            data = data.Where(s => (dateFilterStartDate != null ? s.Date >= dateFilterStartDate : true) && (dateFilterEndDate != null ? s.Date <= dateFilterEndDate : true)).ToList();
+            var data = await _context.Monthly_Expenses.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
 
             searchString = searchString == null ? null : searchString.ToLower();
             if (searchString != null && searchString != "")

@@ -41,10 +41,24 @@
         <Input class="form-control" type="datetime-local" value="@dateFilter?.EndDate.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm", CultureInfo.CurrentCulture)" @oninput="@((e)=>{DateEndInput(e);})">
     </div>
 </div>
-
-
 <br>
+
 <p class="error">@document_error</p>
+
+@if (currency_api_error != null && currency_api_error != "")
+{
+    <div class="d-inline-block">
+        <button class="no-button currency-api-error-icon error d-inline-block" @onclick="@(() => showError=!showError)">
+            <span class="icon iconify d-inline" style="color:darkred;" data-icon="material-symbols:error-circle-rounded-outline"></span>
+        </button>
+        <p class="error currency-api-error d-inline-block">
+            @if (showError)
+            {
+                @localizer[@currency_api_error]
+            }
+        </p>
+    </div>
+}
 
 @if (expenses == null)
 {
@@ -332,17 +346,13 @@ else
     private bool desc = true;
     private string? searchString = "";
     string? document_error;
+    string? currency_api_error;
+    bool showError = false;
     string currency = "HUF";
     Dictionary<string, dynamic>? rates;
     string? filterIcon;
     Cargotruck.Shared.Models.Type? filter;
     DateFilter? dateFilter = new DateFilter();
-
-    public class DateFilter
-    {
-        public DateTime? StartDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1, 0, 0, 0);
-        public DateTime? EndDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.DaysInMonth(DateTime.Today.Year, DateTime.Today.Month), 23, 59, 59);
-    }
 
     async void DateStartInput(ChangeEventArgs e)
     {
@@ -375,8 +385,11 @@ else
             catch (Exception ex)
             {
 
-                document_error = $"Error - Type: {ex.GetType()}, Message: {ex.Message}";
-                Console.WriteLine(document_error);
+                currency_api_error = $"Error - Type: {ex.GetType()}, Message: {ex.Message}";
+                if (ex.GetType().ToString() == "Microsoft.CSharp.RuntimeBinder.RuntimeBinderException")
+                {
+                    currency_api_error = "currency_api_is_exceeded";
+                }
             }         
         }
         dataRows = await client.GetFromJsonAsync<int>("api/expenses/pagecount");

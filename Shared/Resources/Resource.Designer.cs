@@ -430,6 +430,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Elfogyott a napi valutaváltás lekérésének a száma a hónapban. .
+        /// </summary>
+        public static string currency_api_is_exceeded {
+            get {
+                return ResourceManager.GetString("currency_api_is_exceeded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Adatok feltöltése.
         /// </summary>
         public static string Data_import {
@@ -1065,6 +1074,78 @@ namespace Cargotruck.Shared.Resources {
         public static string Generated {
             get {
                 return ResourceManager.GetString("Generated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Irány az adminisztrátor felület →.
+        /// </summary>
+        public static string go_to_admin {
+            get {
+                return ResourceManager.GetString("go_to_admin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Irány a rakományok oldal →.
+        /// </summary>
+        public static string go_to_cargoes {
+            get {
+                return ResourceManager.GetString("go_to_cargoes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Irány a kiadások oldal →.
+        /// </summary>
+        public static string go_to_expenses {
+            get {
+                return ResourceManager.GetString("go_to_expenses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Irány a havi kiadások oldal →.
+        /// </summary>
+        public static string go_to_monthly_expenses {
+            get {
+                return ResourceManager.GetString("go_to_monthly_expenses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Irány az utak oldal →.
+        /// </summary>
+        public static string go_to_roads {
+            get {
+                return ResourceManager.GetString("go_to_roads", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Irány a megbízások oldal →.
+        /// </summary>
+        public static string go_to_tasks {
+            get {
+                return ResourceManager.GetString("go_to_tasks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Irány az járművek oldal →.
+        /// </summary>
+        public static string go_to_trucks {
+            get {
+                return ResourceManager.GetString("go_to_trucks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Irány az raktárak oldal →.
+        /// </summary>
+        public static string go_to_warehouses {
+            get {
+                return ResourceManager.GetString("go_to_warehouses", resourceCulture);
             }
         }
         
@@ -1821,33 +1902,6 @@ namespace Cargotruck.Shared.Resources {
         public static string Storageman {
             get {
                 return ResourceManager.GetString("Storageman", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string String1 {
-            get {
-                return ResourceManager.GetString("String1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string String2 {
-            get {
-                return ResourceManager.GetString("String2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string String3 {
-            get {
-                return ResourceManager.GetString("String3", resourceCulture);
             }
         }
         
