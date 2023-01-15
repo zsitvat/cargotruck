@@ -84,7 +84,7 @@ else
                                   
                                     @if (showColumns[0])
                                     {
-                                        <td>@item.Task_id</td>
+                                        <td><button class="no-button" @onclick="@(()=>GetById(item.Task_id.ToString(),"task"))">@item.Task_id</button></td>
                                     }
                                     @if (showColumns[1])
                                     {
@@ -100,15 +100,15 @@ else
                                     }
                                     @if (showColumns[4])
                                     {
-                                        <td>@item.Vehicle_registration_number</td>
+                                        <td><button class="no-button" @onclick="@(()=>GetById(item.Vehicle_registration_number,"truck"))">@item.Vehicle_registration_number</button></td>
                                     }
                                     @if (showColumns[5])
                                     {
-                                        <td>@item.Warehouse_id</td>
+                                        <td><button class="no-button" @onclick="@(()=>GetById(item.Warehouse_id.ToString(),"warehouse"))">@item.Warehouse_id</button></td>
                                     }
                                     @if (showColumns[6])
                                     {
-                                        <td>@item.Warehouse_section</td>
+                                        <td><button class="no-button" @onclick="@(()=>GetById(item.Warehouse_id.ToString(),"warehouse"))">@item.Warehouse_section</button></td>
                                     }
                                     @if (showColumns[7])
                                     {
@@ -164,15 +164,23 @@ else
         </div>
     </div>
 
-    @if (settings)
-    {
-        <Settings OnSettingsClosed="SettingsClosed" OnInputChanged="InputChanged" OnSettingsChanged="SettingsChanged" showColumns="@showColumns" settings="@settings" pageSize="@pageSize" />
-    }
+    <div class="hideandshow-cards">
+        @if (settings)
+        {
+            <Settings OnSettingsClosed="SettingsClosed" OnInputChanged="InputChanged" OnSettingsChanged="SettingsChanged" showColumns="@showColumns" settings="@settings" pageSize="@pageSize" />
+        }
+        @if (getById != null)
+        {
+            <GetbyidComponent getById="@getById" getByIdType="@getByIdType" onSetToNull="SetToNull" />
+        }
+    </div>
 
 }
 @code {
     public bool settings = false;
     Cargoes[]? cargoes { get; set; }
+    string? getById { get; set; }
+    string? getByIdType { get; set; }
     List<bool> showColumns = Enumerable.Repeat(true, 16).ToList();
     private int currentPage = 1;
     int pageSize = 10;
@@ -220,6 +228,19 @@ else
             if (shouldreload == 1 && dataRows > 0) { navigationManager.NavigateTo("/Cargoes", true); }
             await OnInitializedAsync();
         }
+    }
+
+    async Task GetById(string? id, string idType)
+    {
+        getById = id;
+        getByIdType = idType;
+        StateHasChanged();
+    }
+
+    public void SetToNull()
+    {
+        getById = null;
+        getByIdType = null;
     }
 
     public void SettingsClosed()

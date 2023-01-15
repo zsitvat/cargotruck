@@ -194,7 +194,7 @@ else
         }
         @if (getById != null)
         {
-            <GetbyidComponent getById="@getById" getByIdType="@getByIdType" onSetToNull="SetToNull" />
+            <GetbyidComponent getById="@getById.ToString()" getByIdType="@getByIdType" onSetToNull="SetToNull" />
         }
     </div>
 }

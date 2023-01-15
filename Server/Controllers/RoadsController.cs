@@ -180,9 +180,13 @@ namespace Cargotruck.Server.Controllers
         {
             _context.Entry(data).State = EntityState.Modified;
             var expense = _context.Expenses.FirstOrDefault(a => a.Id == data.Expenses_id);
-            expense.Type_id = data.Id;
-            expense.Type = Shared.Models.Type.repair;
-            _context.Entry(expense).State = EntityState.Modified;
+            if (expense != null)
+            {
+                expense.Type_id = data.Id;
+                expense.Type = Shared.Models.Type.repair;
+                _context.Entry(expense).State = EntityState.Modified;
+                
+            }
             await _context.SaveChangesAsync();
             return NoContent();
         }

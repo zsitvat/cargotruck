@@ -178,7 +178,7 @@ else
                                     }
                                     @if (showColumns[7])
                                     {
-                                        <td><button class="no-button" @onclick="@(()=>GetById(item.Id_cargo))">@item.Id_cargo</button></td>
+                                        <td><button class="no-button" @onclick="@(()=>GetById(item.Id_cargo,"cargo"))">@item.Id_cargo</button></td>
                                     }
                                     @if (showColumns[8])
                                     {
@@ -308,7 +308,7 @@ else
         }
         @if (getById != null)
         {
-            <GetbyidComponent getById="@getById" onSetToNull="SetToNull" />
+            <GetbyidComponent getById="@getById.ToString()" getByIdType="@getByIdType" onSetToNull="SetToNull" />
         }
     </div>
 
@@ -317,6 +317,7 @@ else
     private bool settings = false;
     Tasks[]? tasks { get; set; }
     int? getById { get; set; }
+    string? getByIdType { get; set; }
     private List<bool> showColumns = Enumerable.Repeat(true, 16).ToList();
     private int currentPage = 1;
     int pageSize = 10;
@@ -428,15 +429,17 @@ else
         }
     }
 
-    async Task GetById(int? id)
+    async Task GetById(int? id,string? idType)
     {
         getById = id;
+        getByIdType = idType;
         StateHasChanged();
     }
 
     public void SetToNull()
     {
         getById = null;
+        getByIdType = null;
     }
 
     public void SettingsClosed()

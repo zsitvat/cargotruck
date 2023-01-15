@@ -181,9 +181,12 @@ namespace Cargotruck.Server.Controllers
             if (data.Type.ToString() == Type.repair.ToString())
             {
                 var road = _context.Roads.FirstOrDefault(a => a.Id == data.Type_id);
-                road.Expenses_id = data.Id;
-                _context.Entry(road).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
+                if (road != null)
+                {
+                    road.Expenses_id = data.Id;
+                    _context.Entry(road).State = EntityState.Modified;
+                    await _context.SaveChangesAsync();
+                }
             }
             return Ok(data.Id);
         }
@@ -195,9 +198,11 @@ namespace Cargotruck.Server.Controllers
             if (data.Type.ToString() == Type.repair.ToString())
             {
                 var road = _context.Roads.FirstOrDefault(a => a.Id == data.Type_id);
-                road.Expenses_id = data.Id;
-                _context.Entry(road).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
+                if (road != null)
+                {
+                    road.Expenses_id = data.Id;
+                    _context.Entry(road).State = EntityState.Modified;
+                }
             }
             await _context.SaveChangesAsync();
             return NoContent();

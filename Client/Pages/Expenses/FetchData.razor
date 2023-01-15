@@ -144,7 +144,7 @@ else
                                     }
                                     @if (showColumns[1])
                                     {
-                                        <td>@item.Type_id</td>
+                                        <td><button class="no-button" @onclick="@(()=>GetById(item.Type_id,item.Type.ToString()))">@item.Type_id</button></td>
                                     }
                                     @if (showColumns[2])
                                     {
@@ -328,15 +328,23 @@ else
         </div>
     </div>
 
-    @if (settings)
-    {
-        <Settings OnSettingsClosed="SettingsClosed" OnInputChanged="InputChanged" OnSettingsChanged="SettingsChanged" showColumns="@showColumns" settings="@settings" pageSize="@pageSize" />
-    }
+    <div class="hideandshow-cards">
+        @if (settings)
+        {
+            <Settings OnSettingsClosed="SettingsClosed" OnInputChanged="InputChanged" OnSettingsChanged="SettingsChanged" showColumns="@showColumns" settings="@settings" pageSize="@pageSize" />
+        }
+        @if (getById != null)
+        {
+            <GetbyidComponent getById="@getById.ToString()" getByIdType="@getByIdType" onSetToNull="SetToNull" />
+        }
+    </div>
 
 }
 @code {
     public bool settings = false;
     Expenses[]? expenses { get; set; }
+    int? getById { get; set; }
+    string? getByIdType { get; set; }
     List<bool> showColumns = Enumerable.Repeat(true, 16).ToList();
     private int currentPage = 1;
     int pageSize = 10;
@@ -428,6 +436,19 @@ else
             if (shouldreload == 1 && dataRows > 0) { navigationManager.NavigateTo("/Expenses", true); }
             await OnInitializedAsync();
         }
+    }
+
+    async Task GetById(int? id, string idType)
+    {
+        getById = id;
+        getByIdType = idType;
+        StateHasChanged();
+    }
+
+    public void SetToNull()
+    {
+        getById = null;
+        getByIdType = null;
     }
 
     public void SettingsClosed()

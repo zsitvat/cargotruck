@@ -3,7 +3,7 @@
     <div class="card-body">
         <div class="ms-0">
             <a class="btn btn-danger x" @onclick="@( ()=> SetToNull())"><i class="oi oi-x"></i></a>
-            @if (currency_api_error != null && currency_api_error != "")
+            @if (currency_api_error != null && currency_api_error != "" && (getByIdType == "task" || getByIdType == "expense"))
             {
                 <div class="d-inline-block mt-3 mb-4">
                     <button class="no-button currency-api-error-icon error d-inline-block" @onclick="@(() => showError=!showError)">
@@ -17,7 +17,7 @@
                     </p>
                 </div>
             }
-            @if (getByIdType == "cargo")
+            @if (getByIdType == "cargo" || getByIdType == "storage")
             {
                 <NavLink href="Cargoes" data-title="@localizer["go_to_cargoes"]">
                     <h2 class="align-center fw-bold">@localizer["Cargo"]</h2>
@@ -42,6 +42,80 @@
                         <p>@(idDataCargo?.Warehouse_section != null ? idDataCargo.Warehouse_section : "-") </p>
                         <p>@(idDataCargo?.Storage_starting_time != null ? idDataCargo.Storage_starting_time : "-") </p>
                         <p>@(idDataCargo?.Date.ToString())</p>
+                    </div>
+                </div>
+            }
+            else if (getByIdType == "road" || getByIdType == "repair")
+            {
+                <NavLink href="Roads" data-title="@localizer["go_to_roads"]">
+                    <h2 class="align-center fw-bold">@localizer["Roads"]</h2>
+                </NavLink>
+                <div id="road" class="row mt-4">
+                    <div class="column">
+                        <p><b>@localizer["Task_id"]:</b></p>
+                        <p><b>@localizer["Id_cargo"]:</b></p>
+                        <p><b>@localizer["Purpose_of_the_trip"]:</b></p>
+                        <p><b>@localizer["Starting_date"]:</b></p>
+                        <p><b>@localizer["Ending_date"]:</b></p>
+                        <p><b>@localizer["Starting_place"]:</b></p>
+                        <p><b>@localizer["Ending_place"]:</b></p>
+                        <p><b>@localizer["Direction"]:</b></p>
+                        <p><b>@localizer["Expenses_id"]:</b></p>
+                        <p><b>@localizer["Date"]:</b></p>
+                    </div>
+                    <div class="column">
+                        <p>@(idDataRoad?.Task_id != null ? (idDataRoad.Task_id) : "-")</p>
+                        <p>@(idDataRoad?.Id_cargo != null ? idDataRoad.Id_cargo : "-") </p>
+                        <p>@(idDataRoad?.Purpose_of_the_trip != null ? idDataRoad.Purpose_of_the_trip : "-") </p>
+                        <p>@(idDataRoad?.Starting_date != null ? idDataRoad.Starting_date : "-")</p>
+                        <p>@(idDataRoad?.Ending_date != null ? idDataRoad.Ending_date : "-") </p>
+                        <p>@(idDataRoad?.Starting_place != null ? idDataRoad.Starting_place : "-") </p>
+                        <p>@(idDataRoad?.Ending_place != null ? idDataRoad.Ending_place : "-") </p>
+                        <p>@(idDataRoad?.Direction != null ? (idDataRoad.Direction == "TO" ? @localizer["to"] : @localizer["from"]) : "-") </p>
+                        <p>@(idDataRoad?.Expenses_id != null ? idDataRoad.Expenses_id : "-") </p>
+                        <p>@(idDataRoad?.Date.ToString())</p>
+                    </div>
+                </div>
+            }
+            else if (getByIdType == "truck")
+            {
+                <NavLink href="Trucks" data-title="@localizer["go_to_trucks"]">
+                    <h2 class="align-center fw-bold">@localizer["Truck"]</h2>
+                </NavLink>
+                <div id="truck" class="row mt-4">
+                    <div class="column">
+                        <p><b>@localizer["Vehicle_registration_number"]:</b></p>
+                        <p><b>@localizer["Brand"]:</b></p>
+                        <p><b>@localizer["Status"]:</b></p>
+                        <p><b>@localizer["Road_id"]:</b></p>
+                        <p><b>@localizer["Max_weight"]:</b></p>
+                        <p><b>@localizer["Date"]:</b></p>
+                    </div>
+                    <div class="column">
+                        <p>@(idDataTruck?.Vehicle_registration_number != null ? (idDataTruck.Vehicle_registration_number + "kg") : "-")</p>
+                        <p>@(idDataTruck?.Brand != null ? idDataTruck.Brand : "-") </p>
+                        <p>@(idDataTruck?.Status != null ? idDataTruck.Status : "-") </p>
+                        <p>@(idDataTruck?.Road_id != null ? idDataTruck.Road_id : "-")</p>
+                        <p>@(idDataTruck?.Max_weight != null ? idDataTruck.Max_weight : "-") </p>
+                        <p>@(idDataTruck?.Date.ToString())</p>
+                    </div>
+                </div>
+            }
+            else if (getByIdType == "warehouse")
+            {
+                <NavLink href="Warehouses" data-title="@localizer["go_to_warehouses"]">
+                    <h2 class="align-center fw-bold">@localizer["Warehouse"]</h2>
+                </NavLink>
+                <div id="warehouse" class="row mt-4">
+                    <div class="column">
+                        <p><b>@localizer["Warehouse_address"]:</b></p>
+                        <p><b>@localizer["Warehouse_owner"]:</b></p>
+                        <p><b>@localizer["Date"]:</b></p>
+                    </div>
+                    <div class="column">
+                        <p>@(idDataWarehouse?.Address != null ? idDataWarehouse.Address : "-")</p>
+                        <p>@(idDataWarehouse?.Owner != null ? idDataWarehouse.Owner : "-")</p>
+                        <p>@(idDataWarehouse?.Date.ToString())</p>
                     </div>
                 </div>
             }
@@ -174,7 +248,7 @@
                     </div>
                     <div class="column">
                         <p>@(idDataExpense?.Type != null ? idDataExpense.Type : "-")</p>
-                        <p>@(idDataExpense?.Type_id != null ? idDataExpense.Type_id : "-")</p>
+                        <p>@(idDataExpense?.Type_id != null ? @localizer[idDataExpense.Type.ToString()] : "-")</p>
                         <p>
                         @if (idDataExpense?.Fuel != null)
                         {
@@ -336,13 +410,16 @@
     Cargoes? idDataCargo;
     Tasks? idDataTask;
     Expenses? idDataExpense;
-    [Parameter] public int? getById { get; set; }
+    Roads? idDataRoad;
+    Warehouses? idDataWarehouse;
+    Trucks? idDataTruck;
+    [Parameter] public string? getById { get; set; }
     [Parameter] public string? getByIdType { get; set; }
     [Parameter] public EventCallback onSetToNull { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        if (rates == null)
+        if (rates == null && (getByIdType == "task" || getByIdType == "expense"))
         {
             try
             {
@@ -364,7 +441,7 @@
     {
         if (getById != null)
         {
-            if (getByIdType == "cargo")
+            if (getByIdType == "cargo" || getByIdType == "storage")
             {
                 idDataCargo = await client.GetFromJsonAsync<Cargoes?>($"api/cargoes/getbyid/{getById}");
             }
@@ -376,11 +453,27 @@
             {
                 idDataExpense = await client.GetFromJsonAsync<Expenses?>($"api/expenses/getbyid/{getById}");
             }
-           else
+            else if (getByIdType == "road" || getByIdType == "repair")
             {
-                idDataExpense = null;
-                idDataTask = null;
+                idDataRoad = await client.GetFromJsonAsync<Roads?>($"api/roads/getbyid/{getById}");
+            }
+            else if (getByIdType == "warehouse")
+            {
+                idDataWarehouse = await client.GetFromJsonAsync<Warehouses?>($"api/warehouses/getbyid/{getById}");
+            }
+            else if (getByIdType == "truck")
+            {
+                idDataTruck = await client.GetFromJsonAsync<Trucks?>($"api/trucks/getbyid/{getById}");
+            }
+            else
+            { 
                 idDataCargo = null;
+                idDataTask = null;
+                idDataExpense = null;
+                idDataRoad = null;
+                idDataWarehouse = null;
+                idDataTruck = null;
+                getById = null;
             }
         }  
     }

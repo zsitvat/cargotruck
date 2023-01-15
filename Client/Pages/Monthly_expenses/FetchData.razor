@@ -154,11 +154,11 @@ else
                                             {
                                                 @if (connection_ids.Where(x => x.Monthly_expense_id == item.Monthly_expense_id && x.Expense_id != null).Last().Id != ConId.Id)
                                                 {
-                                                    @(ConId.Expense_id + ", ")
+                                                    <button class="no-button" @onclick="@(()=>GetById(ConId.Expense_id,"expense"))">@(ConId.Expense_id + ", ")</button>
                                                 }
                                                 else
                                                 {
-                                                    @ConId.Expense_id
+                                                    <button class="no-button" @onclick="@(()=>GetById(ConId.Expense_id,"expense"))">@ConId.Expense_id</button>
                                                 }
                                             }
                                         </td>
@@ -170,12 +170,12 @@ else
                                             {
                                                 @if (connection_ids.Where(x => x.Monthly_expense_id == item.Monthly_expense_id && x.Task_id != null ).Last().Id != ConId.Id)
                                                 {
-                                                    @(ConId.Task_id + ", ")
+                                                    <button class="no-button" @onclick="@(()=>GetById(ConId.Task_id,"task"))">@(ConId.Task_id + ", ")</button>
                                                         
                                                 }
                                                 else
                                                 {
-                                                    @ConId.Task_id
+                                                    <button class="no-button" @onclick="@(()=>GetById(ConId.Task_id,"task"))">@ConId.Task_id</button>
                                                 }
                                             }
                                         </td>
@@ -230,15 +230,24 @@ else
         </div>
     </div>
 
-    @if (settings)
-    {
-        <Settings OnSettingsClosed="SettingsClosed" OnInputChanged="InputChanged" OnSettingsChanged="SettingsChanged" showColumns="@showColumns" settings="@settings" pageSize="@pageSize" />
-    }
+    <div class="hideandshow-cards">
+        @if (settings)
+        {
+            <Settings OnSettingsClosed="SettingsClosed" OnInputChanged="InputChanged" OnSettingsChanged="SettingsChanged" showColumns="@showColumns" settings="@settings" pageSize="@pageSize" />
+        }
+        @if (getById != null)
+        {
+            <GetbyidComponent getById="@getById.ToString()" getByIdType="@getByIdType" onSetToNull="SetToNull" />
+        }
+    </div>
+
 }
 @code {
     public bool settings = false;
     Monthly_expenses[]? Monthly_expenses { get; set; }
     Monthly_expenses_tasks_expenses[]? connection_ids { get; set; }
+    int? getById { get; set; }
+    string? getByIdType { get; set; }
     List<bool> showColumns = Enumerable.Repeat(true, 16).ToList();
     private int currentPage = 1;
     int pageSize = 10;
@@ -339,6 +348,19 @@ else
             if (shouldreload == 1 && dataRows > 0) { navigationManager.NavigateTo("/Monthly_expenses", true); }
             await OnInitializedAsync();
         }
+    }
+
+    async Task GetById(int? id, string idType)
+    {
+        getById = id;
+        getByIdType = idType;
+        StateHasChanged();
+    }
+
+    public void SetToNull()
+    {
+        getById = null;
+        getByIdType = null;
     }
 
     protected async Task ShowPage()

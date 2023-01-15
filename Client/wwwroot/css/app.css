@@ -597,7 +597,6 @@ table th button {
     max-width: 25rem;
     height: fit-content;
     padding-top: 1rem;
-    padding-left: 1rem;
     padding-right: 3rem;
     margin-right: 1rem;
 }
@@ -1394,7 +1393,7 @@ tbody td, tbody th{
     }
 
     .hideandshow-cards p, .hideandshow-cards b, .hideandshow-cards, .hideandshow-cards h2 {
-        font-size: 80%;
+        font-size: 90%;
     }
 
 }

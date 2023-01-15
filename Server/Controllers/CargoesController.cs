@@ -161,9 +161,12 @@ namespace Cargotruck.Server.Controllers
         {
             _context.Entry(data).State = EntityState.Modified;
             var task = _context.Tasks.FirstOrDefault(a => a.Id == data.Task_id);
-            task.Id_cargo = data.Id;
-            _context.Entry(task).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            if (task != null) { 
+                task.Id_cargo = data.Id;
+                _context.Entry(task).State = EntityState.Modified;
+                
+            }
+            await _context.SaveChangesAsync(); 
             return NoContent();
         }
 

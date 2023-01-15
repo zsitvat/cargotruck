@@ -77,7 +77,7 @@ else
                                         {
                                                 @if(cargo.Warehouse_id==item.Id)
                                                 {
-                                                    @(cargo.Id + " / " + cargo.Warehouse_section + " "); 
+                                                    <button class="no-button" @onclick="@(()=>GetById(cargo.Id,"cargo"))"> @(cargo.Warehouse_section != null ? (cargo.Id + "/" + cargo.Warehouse_section + " ") : cargo.Id + " ")</button>
                                                 }                                      
                                         }
                                         </td>
@@ -132,15 +132,23 @@ else
         </div>
     </div>
 
-    @if (settings)
-    {
-        <Settings OnSettingsClosed="SettingsClosed" OnInputChanged="InputChanged" OnSettingsChanged="SettingsChanged" showColumns="@showColumns" settings="@settings" pageSize="@pageSize" />
-    }
+    <div class="hideandshow-cards">
+        @if (settings)
+        {
+            <Settings OnSettingsClosed="SettingsClosed" OnInputChanged="InputChanged" OnSettingsChanged="SettingsChanged" showColumns="@showColumns" settings="@settings" pageSize="@pageSize" />
+        }
+        @if (getById != null)
+        {
+            <GetbyidComponent getById="@getById.ToString()" getByIdType="@getByIdType" onSetToNull="SetToNull" />
+        }
+    </div>
 }
 @code {
     public bool settings = false;
     Warehouses[]? warehouses { get; set; }
     Cargoes[]? cargoes { get; set; }
+    int? getById { get; set; }
+    string? getByIdType { get; set; }
     List<bool> showColumns = Enumerable.Repeat(true, 16).ToList();
     private int currentPage = 1;
     int pageSize = 10;
@@ -189,6 +197,19 @@ else
             if (shouldreload == 1 && dataRows > 0) { navigationManager.NavigateTo("/Warehouses", true); }
             await OnInitializedAsync();
         }
+    }
+
+    async Task GetById(int? id, string? idType)
+    {
+        getById = id;
+        getByIdType = idType;
+        StateHasChanged();
+    }
+
+    public void SetToNull()
+    {
+        getById = null;
+        getByIdType = null;
     }
 
     public void SettingsClosed()

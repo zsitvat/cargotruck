@@ -223,8 +223,11 @@ namespace Cargotruck.Server.Controllers
             t.Final_Payment = (t.Payment != null ? t.Payment : 0) - (t.Penalty != null ? t.Penalty : 0);
             _context.Entry(t).State = EntityState.Modified;
             var cargo = _context.Cargoes.FirstOrDefault(a => a.Id == t.Id_cargo);
-            cargo.Task_id = t.Id;
-            _context.Entry(cargo).State = EntityState.Modified;
+            if (cargo != null)
+            {
+                cargo.Task_id = t.Id;
+                _context.Entry(cargo).State = EntityState.Modified;
+            }
             await _context.SaveChangesAsync();
             return NoContent();
         }
