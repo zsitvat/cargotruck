@@ -93,6 +93,13 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> Count()
+        {
+            var t = await _context.Monthly_Expenses.CountAsync();
+            return Ok(t);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> GetConnectionIds()
         {
             var data = await _context.Monthly_expenses_tasks_expenses.ToListAsync();

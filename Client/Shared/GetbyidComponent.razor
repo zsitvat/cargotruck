@@ -20,7 +20,7 @@
             @if (getByIdType == "cargo" || getByIdType == "storage")
             {
                 <NavLink href="Cargoes" data-title="@localizer["go_to_cargoes"]">
-                    <h2 class="align-center fw-bold">@localizer["Cargo"]</h2>
+                    <h2 class="align-center fw-bold">@localizer["cargo"]</h2>
                 </NavLink>
                 <div id="cargo" class="row mt-4">
                     <div class="column">
@@ -48,7 +48,7 @@
             else if (getByIdType == "road" || getByIdType == "repair")
             {
                 <NavLink href="Roads" data-title="@localizer["go_to_roads"]">
-                    <h2 class="align-center fw-bold">@localizer["Roads"]</h2>
+                    <h2 class="align-center fw-bold">@localizer["road"]</h2>
                 </NavLink>
                 <div id="road" class="row mt-4">
                     <div class="column">
@@ -80,7 +80,7 @@
             else if (getByIdType == "truck")
             {
                 <NavLink href="Trucks" data-title="@localizer["go_to_trucks"]">
-                    <h2 class="align-center fw-bold">@localizer["Truck"]</h2>
+                    <h2 class="align-center fw-bold">@localizer["truck"]</h2>
                 </NavLink>
                 <div id="truck" class="row mt-4">
                     <div class="column">
@@ -94,7 +94,7 @@
                     <div class="column">
                         <p>@(idDataTruck?.Vehicle_registration_number != null ? (idDataTruck.Vehicle_registration_number + "kg") : "-")</p>
                         <p>@(idDataTruck?.Brand != null ? idDataTruck.Brand : "-") </p>
-                        <p>@(idDataTruck?.Status != null ? idDataTruck.Status : "-") </p>
+                        <p>@(idDataTruck?.Status != null ? localizer[idDataTruck.Status.ToString()] : "-") </p>
                         <p>@(idDataTruck?.Road_id != null ? idDataTruck.Road_id : "-")</p>
                         <p>@(idDataTruck?.Max_weight != null ? idDataTruck.Max_weight : "-") </p>
                         <p>@(idDataTruck?.Date.ToString())</p>
@@ -159,7 +159,7 @@
                         <p>@(idDataTask?.other_stops != null ? idDataTask.other_stops : "-")</p>
                         <p>@(idDataTask?.Id_cargo != null ? idDataTask.Id_cargo : "-")</p>
                         <p>@(idDataTask?.Storage_time != null ? idDataTask.Storage_time : "-")</p>
-                        <p>@(idDataTask?.Completed != null ? idDataTask.Completed : "-")</p>
+                        <p>@(idDataTask?.Completed != null ? ( idDataTask.Completed ? localizer["True"] : localizer["False"]) : "-")</p>
                         <p>@(idDataTask?.Completion_time != null ? idDataTask.Completion_time : "-") </p>
                         <p>@(idDataTask?.Time_of_delay != null ? idDataTask.Time_of_delay : "-")</p>
                         <p>
@@ -247,8 +247,8 @@
                         <p><b>@localizer["Date"]:</b></p>
                     </div>
                     <div class="column">
-                        <p>@(idDataExpense?.Type != null ? idDataExpense.Type : "-")</p>
-                        <p>@(idDataExpense?.Type_id != null ? @localizer[idDataExpense.Type.ToString()] : "-")</p>
+                        <p>@(idDataExpense?.Type != null ? @localizer[idDataExpense.Type.ToString()] : "-")</p>
+                        <p>@(idDataExpense?.Type_id != null ? idDataExpense.Type_id : "-")</p>
                         <p>
                         @if (idDataExpense?.Fuel != null)
                         {

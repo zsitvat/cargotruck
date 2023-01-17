@@ -144,6 +144,13 @@ namespace Cargotruck.Server.Controllers
             return Ok(PageCount);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Count()
+        {
+            var t = await _context.Roads.CountAsync();
+            return Ok(t);
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {

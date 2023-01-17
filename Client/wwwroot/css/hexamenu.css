@@ -220,7 +220,7 @@ textarea, label {
     }
 
 .loading-mask {
-    background-color: #FA6862;
+    background-color: #ff0000;
     height: 100%;
     left: 0;
     position: absolute;
@@ -444,7 +444,7 @@ textarea, label {
 
         .hexagon-item:hover .hex-item div::before,
         .hexagon-item:hover .hex-item div::after {
-            background-color: rgba(180, 1, 29,1);
+            background-color: #53a6fa;
         }
 
         .hexagon-item:hover .hex-content svg {

@@ -27,6 +27,7 @@ namespace Cargotruck.Data
         public DbSet<Trucks> Trucks { get; set; }
         public DbSet<Warehouses> Warehouses { get; set; }
         public DbSet<Privacies> Privacies { get; set; }
+        public DbSet<Logins> Logins { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

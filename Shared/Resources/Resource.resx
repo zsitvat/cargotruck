@@ -183,11 +183,14 @@
   <data name="Cancel" xml:space="preserve">
     <value>Mégse</value>
   </data>
-  <data name="Cargo" xml:space="preserve">
+  <data name="cargo" xml:space="preserve">
     <value>Rakomány</value>
   </data>
   <data name="Cargoes" xml:space="preserve">
     <value>Rakományok</value>
+  </data>
+  <data name="Cargoes_unfinished" xml:space="preserve">
+    <value>rakomány vár kiszállításra</value>
   </data>
   <data name="Cargo_id" xml:space="preserve">
     <value>Rakomány azonosító</value>
@@ -444,6 +447,9 @@
   <data name="from" xml:space="preserve">
     <value>Visszaút</value>
   </data>
+  <data name="From_user" xml:space="preserve">
+    <value>darab felhasználó által</value>
+  </data>
   <data name="Fuel" xml:space="preserve">
     <value>Üzemanyag</value>
   </data>
@@ -521,6 +527,12 @@
   </data>
   <data name="LoginErrorMessage" xml:space="preserve">
     <value>Ez a felhasználó már létezik!</value>
+  </data>
+  <data name="logins" xml:space="preserve">
+    <value>bejelentkezés</value>
+  </data>
+  <data name="Logins_same" xml:space="preserve">
+    <value>különbőző felhasználó</value>
   </data>
   <data name="Logout" xml:space="preserve">
     <value>Kijelentkezés</value>
@@ -678,6 +690,9 @@
   <data name="Repair_description" xml:space="preserve">
     <value>Leírás a javításról</value>
   </data>
+  <data name="road" xml:space="preserve">
+    <value>út</value>
+  </data>
   <data name="Roads" xml:space="preserve">
     <value>Utak</value>
   </data>
@@ -732,6 +747,9 @@
   <data name="Storage_time" xml:space="preserve">
     <value>Raktározás ideje</value>
   </data>
+  <data name="String1" xml:space="preserve">
+    <value />
+  </data>
   <data name="Succesfull_update" xml:space="preserve">
     <value>Sikeresen frissítve!</value>
   </data>
@@ -746,6 +764,9 @@
   </data>
   <data name="Tasks_title" xml:space="preserve">
     <value>Megbízások</value>
+  </data>
+  <data name="Tasks_unfinished" xml:space="preserve">
+    <value>megbízás vár befejezésre</value>
   </data>
   <data name="Task_id" xml:space="preserve">
     <value>Megbízás azonosító</value>
@@ -774,8 +795,14 @@
   <data name="to" xml:space="preserve">
     <value>Odaút</value>
   </data>
+  <data name="truck" xml:space="preserve">
+    <value>jármű</value>
+  </data>
   <data name="Trucks" xml:space="preserve">
     <value>Járművek</value>
+  </data>
+  <data name="Trucks_unfinished" xml:space="preserve">
+    <value>jármű van használatban</value>
   </data>
   <data name="True" xml:space="preserve">
     <value>Igen</value>

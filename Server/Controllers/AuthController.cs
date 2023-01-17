@@ -37,7 +37,7 @@ namespace Cargotruck.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginRequest request)
         {
-            //if no user, create admin
+            //if no user found, create admin
             if (!_userManager.Users.Any())
             {
                 var admin = new Users();
@@ -55,6 +55,15 @@ namespace Cargotruck.Server.Controllers
             var singInResult = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
             if (!singInResult.Succeeded) return BadRequest(password_error);
             await _signInManager.SignInAsync(user, request.RememberMe);
+
+            //save login date
+            Logins login = new Logins();
+            login.UserName = user.UserName;
+            login.UserId = user.Id;
+            login.LoginDate = DateTime.Now;
+            _context.Add(login);
+            await _context.SaveChangesAsync();
+
             return Ok();
         }
 

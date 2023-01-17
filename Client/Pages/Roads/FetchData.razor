@@ -35,11 +35,11 @@
 
 @if (roads == null)
 {
-    <text>@localizer["Loading"]</text>
+    <text><p class="text">@localizer["Loading"]</p></text>
 }
 else if (roads.Length == 0)
 {
-    <text>@localizer["No_records"]</text>
+    <text><p class="text">@localizer["No_records"]</p></text>
 }
 else
 {
@@ -254,7 +254,7 @@ else
         }
     }
 
-    async Task GetById(int? id, string idType)
+    async Task GetById(int? id, string? idType)
     {
         getById = id;
         getByIdType = idType;

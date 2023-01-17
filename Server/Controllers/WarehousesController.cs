@@ -78,6 +78,13 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> Count()
+        {
+            var t = await _context.Warehouses.CountAsync();
+            return Ok(t);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> PageCount()
         {
             var data = await _context.Warehouses.ToListAsync();

@@ -1,7 +1,7 @@
 ﻿self.assetsManifest = {
   "assets": [
     {
-      "hash": "sha256-b8bS5SdvckMMu2hawpxpooZcwVBH+0p\/vooHOmUX7hQ=",
+      "hash": "sha256-W8qvLNgIm5DxzPZ0eJqQFmVf0fQRSqCOlwa18e1tmnQ=",
       "url": "css\/app.css"
     },
     {
@@ -13,7 +13,7 @@
       "url": "css\/bootstrap\/bootstrap.min.css.map"
     },
     {
-      "hash": "sha256-lTLollI46Z8M7DwyHvbn\/11X\/zMmnrtPGmDcHRAGc14=",
+      "hash": "sha256-VmrGWYiNyiW5KScZiWepAflG\/9q9hyBk4WDXws8SOEw=",
       "url": "css\/hexamenu.css"
     },
     {
@@ -1041,23 +1041,23 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-C\/Oq3X9+WV\/OwUCTC1JyKipdWQvYQialS0KzqcWlEl8=",
+      "hash": "sha256-EGNH7mlWsqa\/JweyM09phy3N0WHmrdVORh8KBfrnDHs=",
       "url": "_framework\/Cargotruck.Shared.dll"
     },
     {
-      "hash": "sha256-PV48C6TAGD4UaQ5vi+pLhF8o93qrkTDVJLZqaq8GeDM=",
+      "hash": "sha256-i2qAMkAsWOHpRu5Jv+hEDSxiviwfB3eWFUdY0sGbES0=",
       "url": "_framework\/Cargotruck.Shared.pdb"
     },
     {
-      "hash": "sha256-to\/z6ETVPOEK3dzHyMv5za8nZjOwyWlEvbozMpHIUJ8=",
+      "hash": "sha256-JadqdfCeFHSZRs0ISXX4+8qfGQr5ShMFnjSoYlIoNgI=",
       "url": "_framework\/en\/Cargotruck.Shared.resources.dll"
     },
     {
-      "hash": "sha256-aBlGng8WeEV7o83sLzDNN\/E20Eyhc+kQtcyWau+GQT4=",
+      "hash": "sha256-3NrqMfr5FAIuXXaTWU1jznRl40IK\/jx71eHp0VzUC\/w=",
       "url": "_framework\/Cargotruck.Client.dll"
     },
     {
-      "hash": "sha256-51L5dTS4NZGdjc37ZVQyY32XBYItGcoAjOdyHFZ0epo=",
+      "hash": "sha256-mmUltDkls41OJDKvRRcl0d9bfjL3Cm1+SECFxYySmk0=",
       "url": "_framework\/Cargotruck.Client.pdb"
     },
     {
@@ -1065,7 +1065,7 @@
       "url": "_framework\/blazor.webassembly.js"
     },
     {
-      "hash": "sha256-iJXbJuhkUTbtxXTexuLwSbjqhTTTC0i11v5\/gPtAQu4=",
+      "hash": "sha256-SMTjVxYaFt29bRg81zQPmz0D+2TTYIynsCVDVQFFhNg=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -1073,5 +1073,5 @@
       "url": "_content\/Microsoft.AspNetCore.Components.WebAssembly.Authentication\/AuthenticationService.js"
     }
   ],
-  "version": "IutvciRn"
+  "version": "sGG3QPH1"
 };

@@ -76,6 +76,12 @@ a:active {
     text-decoration: none !important;
 }
 
+
+.text{
+    margin-top:0.8rem;
+    margin-left:1rem;
+}
+
 .btn-primary {
     color: #fff;
     background-color: #1b6ec2;
@@ -308,12 +314,12 @@ table th button {
 
 .successful-login {
     position: fixed;
-    top: 8rem;
+    top: 12rem;
     right: 10rem;
     z-index: 100;
     animation-direction: alternate-reverse;
     animation: login-alert 8s;
-    visibility:hidden;
+    visibility: hidden;
 }
 
 @keyframes login-alert {
@@ -323,11 +329,11 @@ table th button {
     }
 
     15% {
-        right: 10rem;
+        right: 0rem;
     }
 
     90% {
-        right: 10rem;
+        right: 0rem;
     }
 
     100% {
@@ -406,9 +412,16 @@ table th button {
     background: transparent;
 }
 
+.symbol svg {
+    position: relative;
+    left: 7px;
+    top: 9px;
+    color: rgb(229,237,254);
+}
+
 .forms-margin {
     margin-left: 20%;
-    margin-top:0.5rem;
+    margin-top: 0.5rem;
 }
 
 .forms-margin label {
@@ -618,6 +631,44 @@ table th button {
     padding-bottom: 0.25rem;
 }
 
+.box-shadow-0, .box-shadow-0 .box, .box-shadow-0 .box-color {
+    box-shadow: 0 0 1px rgb(0 0 0 / 15%);
+}
+
+.avatar {
+    background: #53A6FA;
+    min-width:50px;
+    min-height:50px;
+    max-height:50px;
+    max-width:50px;
+}
+
+.list-item {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    -ms-flex-align: stretch;
+    align-items: stretch;
+    padding: 0.75rem 0.5rem;
+    position: relative;
+}
+
+.box, .box-color {
+    background-color: #fff;
+    position: relative;
+    margin-bottom: 0.5rem;
+    min-width:fit-content;
+}
+
+.text-muted{
+    font-size:80%;
+}
+
+.text-md {
+    font-size: 100%;
+}
+
 .column:first-child {
     float: left;
     width: 55%;
@@ -818,11 +869,15 @@ table th button {
     margin-bottom: 2px;
 }
 
-.date-filter{
-    display:inline-block;
-    position:relative;
-    top:1rem;
-    left:2rem;
+#inputimg {
+    margin-left:2rem;
+}
+
+.date-filter {
+    display: inline-block;
+    position: relative;
+    top: 1rem;
+    left: 2rem;
 }
 
 .date-filter input {
@@ -1185,7 +1240,10 @@ tbody td, tbody th{
     .settings-card {
         margin-bottom: 0.5rem;
     }
-}
+
+    .col-lg-3 {
+        width: 50%;
+    }
 
 
 @media (max-width: 1024px) {
@@ -1226,7 +1284,7 @@ tbody td, tbody th{
         margin-top: 10px;
         display: inline-block;
     }
-
+   
 }
 
 @media (max-width: 868px) {
@@ -1400,16 +1458,25 @@ tbody td, tbody th{
 
 @media (max-width: 400px) {
     table img {
-        margin-left: 5%;
+        margin-left: 10%;
     }
 
     .profile-form {
-        margin-left: 3.5%;
+        margin-left: 0.5%;
     }
 
     .card {
-        min-width: 22rem;
+        min-width: 20rem;
+        max-width:20rem;
         min-height: fit-content;
+    }
+
+    .card:last-child {
+        margin-bottom: 1rem;
+    }
+
+    #inputimg{
+        margin-left:-2%;
     }
 
     .card2 {
@@ -1418,7 +1485,7 @@ tbody td, tbody th{
     }
 
     .profile-form input {
-        width: 18.5rem;
+        width: 17.8rem;
         margin-top: 1%;
     }
 
@@ -1433,9 +1500,9 @@ tbody td, tbody th{
         width: 90%;
     }
 
-        .privacy-form input {
-            min-width: 80% !important;
-        }
+    .privacy-form input {
+        min-width: 80% !important;
+    }
 }
 
 tr td:first-child {

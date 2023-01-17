@@ -183,11 +183,14 @@
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
-  <data name="Cargo" xml:space="preserve">
+  <data name="cargo" xml:space="preserve">
     <value>Cargo</value>
   </data>
   <data name="Cargoes" xml:space="preserve">
     <value>Cargoes</value>
+  </data>
+  <data name="Cargoes_unfinished" xml:space="preserve">
+    <value>cargo waiting for delivery</value>
   </data>
   <data name="Cargo_id" xml:space="preserve">
     <value>Cargo ID</value>
@@ -441,6 +444,9 @@
   <data name="from" xml:space="preserve">
     <value>Back from the destination</value>
   </data>
+  <data name="From_user" xml:space="preserve">
+    <value>users exist</value>
+  </data>
   <data name="Fuel" xml:space="preserve">
     <value>Fuel</value>
   </data>
@@ -518,6 +524,12 @@
   </data>
   <data name="LoginErrorMessage" xml:space="preserve">
     <value>The user is already exist!</value>
+  </data>
+  <data name="logins" xml:space="preserve">
+    <value>user logged in</value>
+  </data>
+  <data name="Logins_same" xml:space="preserve">
+    <value>different user</value>
   </data>
   <data name="Logout" xml:space="preserve">
     <value>Logout</value>
@@ -675,6 +687,9 @@
   <data name="Repair_description" xml:space="preserve">
     <value>Repair description</value>
   </data>
+  <data name="road" xml:space="preserve">
+    <value>road</value>
+  </data>
   <data name="Roads" xml:space="preserve">
     <value>Roads</value>
   </data>
@@ -753,6 +768,9 @@
   <data name="Tasks_title" xml:space="preserve">
     <value>Tasks</value>
   </data>
+  <data name="Tasks_unfinished" xml:space="preserve">
+    <value>task waiting for completion</value>
+  </data>
   <data name="Task_id" xml:space="preserve">
     <value>Task ID</value>
   </data>
@@ -780,8 +798,14 @@
   <data name="to" xml:space="preserve">
     <value>Road to the destination</value>
   </data>
+  <data name="truck" xml:space="preserve">
+    <value>truck</value>
+  </data>
   <data name="Trucks" xml:space="preserve">
     <value>Trucks</value>
+  </data>
+  <data name="Trucks_unfinished" xml:space="preserve">
+    <value>truck are in use</value>
   </data>
   <data name="True" xml:space="preserve">
     <value>True</value>
@@ -803,6 +827,9 @@
   </data>
   <data name="Username" xml:space="preserve">
     <value>Username</value>
+  </data>
+  <data name="User_has" xml:space="preserve">
+    <value>user exist</value>
   </data>
   <data name="User_id" xml:space="preserve">
     <value>User ID</value>

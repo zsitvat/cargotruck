@@ -3,14 +3,71 @@
 @using Microsoft.Extensions.Localization
 @inject IStringLocalizer<Resource> localizer
 @inject Cargotruck.Client.Services.PageHistoryState PageHistoryState
+@using Cargotruck.Shared.Models
 
 <link rel="stylesheet" href="css/hexamenu.css" type="text/css" />
 
 <div>
+
+    <div class="row">
+        <div class="col-sm-6 col-lg-3">
+            <div class="box list-item">
+                <span class="avatar w-40 text-center rounded symbol me-3">
+                    <span class="icon iconify" data-icon="clarity:tasks-solid"></span>
+                </span>
+                <div class="list-body">
+                    <h2 class="m-0 text-md">
+                        @Counts["numberOfTasks"] <span class="text-sm">@localizer["task"].ToString().ToLower()</span>
+                    </h2>
+                    <small class="text-muted">@Counts["numberOfTasksUnFinished"] @localizer["Tasks_unfinished"].</small>
+                </div>
+            </div>               
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="box list-item">
+                <span class="avatar wnumberOfTasks-40 text-center rounded symbol me-3">
+                    <span class="icon iconify" data-icon="cil:truck"></span>
+                </span>
+                <div class="list-body">
+                    <h2 class="m-0 text-md">
+                        @Counts["numberOfTrucks"] <span class="text-sm">@localizer["truck"].ToString().ToLower()</span>
+                    </h2>
+                    <small class="text-muted">@Counts["numberOfTrucksUnFinished"] @localizer["Trucks_unfinished"].</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="box list-item">
+                <span class="avatar w-40 text-center rounded symbol me-3">
+                    <span class="icon iconify" data-icon="carbon:delivery-parcel"></span>
+                </span>
+                <div class="list-body">
+                    <h2 class="m-0 text-md">
+                        @Counts["numberOfCargoes"] <span class="text-sm">@localizer["cargo"].ToString().ToLower()</span>
+                    </h2>
+                    <small class="text-muted">@Counts["numberOfCargoesUnFinished"] @localizer["Cargoes_unfinished"].</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="box list-item">
+                <span class="avatar w-40 text-center rounded symbol me-3">
+                    <span class="icon iconify" data-icon="mdi:account-lock-open"></span>
+                </span>
+                <div class="list-body">
+                    <h2 class="m-0 text-md">
+                        @Counts["numberOfLogins"] <span class="text-sm">@localizer["logins"].ToString().ToLower()</span>
+                    </h2>
+                    <small class="text-muted">@Counts["numberOfUsers"] @localizer["From_user"].</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
 <AuthorizeView>
     <Authorized>
         @if(afterLogin){
-            <div class="col-md-1 stretch-card successful-login">
+            <div class="col-md-3 stretch-card successful-login">
                 <div class="card card2 ps-2">
                     <div class="card-body">
                         <h1>
@@ -187,18 +244,47 @@
 
 @code{
     bool afterLogin = true;
+    Dictionary<string, int?> Counts = new Dictionary<string, int?>(){
+    {"numberOfTasksUnFinished",0},
+    {"numberOfTrucksUnFinished",0},
+    {"numberOfCargoesUnFinished",0},
+    {"numberOfLogins",0},
+    {"numberOfTasks",0},
+    {"numberOfTrucks",0},
+    {"numberOfCargoes",0},
+    {"numberOfUsers",0}
+    };
+
+
 
     protected override async Task OnInitializedAsync()
     {
-        if(!PageHistoryState.GetPageIsVisited("/"))
+        if (!PageHistoryState.GetPageIsVisited("/"))
         {
             PageHistoryState.AddPageToHistory("/");
+            afterLogin = false;
         }
         else
         {
             afterLogin = false;
         }
         base.OnInitialized();
+
+        await GetNumbers();
+    }
+
+    protected async Task GetNumbers()
+    {
+        Counts["numberOfTasks"] = await client.GetFromJsonAsync<int>($"api/tasks/count?all={true}");
+        Counts["numberOfTrucks"] = await client.GetFromJsonAsync<int>($"api/trucks/count?all={true}");
+        Counts["numberOfCargoes"] = await client.GetFromJsonAsync<int>($"api/cargoes/count?all={true}");
+
+        Counts["numberOfTasksUnFinished"] = await client.GetFromJsonAsync<int>($"api/tasks/count?all={false}");
+        Counts["numberOfTrucksUnFinished"] = await client.GetFromJsonAsync<int>($"api/trucks/count?all={false}");
+        Counts["numberOfCargoesUnFinished"] = await client.GetFromJsonAsync<int>($"api/cargoes/count?all={false}");
+
+        Counts["numberOfLogins"] = await client.GetFromJsonAsync<int>("api/admin/loginscount");
+        Counts["numberOfUsers"] = await client.GetFromJsonAsync<int>("api/admin/count");
     }
 }
 

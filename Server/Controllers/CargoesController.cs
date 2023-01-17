@@ -13,6 +13,7 @@ using DocumentFormat.OpenXml.Office.CustomUI;
 using DocumentFormat.OpenXml.Spreadsheet;
 using Font = iTextSharp.text.Font;
 using System.Text;
+using DocumentFormat.OpenXml.Office2021.DocumentTasks;
 
 namespace Cargotruck.Server.Controllers
 {
@@ -123,6 +124,31 @@ namespace Cargotruck.Server.Controllers
         {
             var data = await _context.Cargoes.ToListAsync();
             return Ok(data);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Count(bool all)
+        {
+            if (all)
+            {
+                return Ok(await _context.Cargoes.CountAsync());
+            }
+            else
+            {
+                int count = 0;
+                var cargoes = await _context.Cargoes.ToListAsync();
+                var tasks = await _context.Tasks.Where(x => x.Completed == false).ToListAsync();
+                foreach (var cargo in cargoes) {
+                    foreach (var task in tasks)
+                    { 
+                        if(cargo.Task_id == task.Id)
+                        {
+                            count++;
+                        }
+                    }
+                }  
+                return Ok(count);
+            }
         }
 
         [HttpGet]

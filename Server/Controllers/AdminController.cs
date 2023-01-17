@@ -23,6 +23,20 @@ namespace Cargotruck.Server.Controllers
             return Ok(u);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Count()
+        {
+            var t = await _context.Users.CountAsync();
+            return Ok(t);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> LoginsCount()
+        {
+            var t = await _context.Logins.CountAsync();
+            return Ok(t);
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(string id)
         {
