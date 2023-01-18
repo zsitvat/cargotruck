@@ -151,13 +151,18 @@ a:active {
 
 .error{
     color:red;
+    font-size:14px;
+}
+
+.file-upload-error{
+    position:absolute;
 }
 
 
-.currency-api-error{
-    font-size:14px;
-    position:absolute;
-    margin-top:4px;
+.currency-api-error {
+    font-size: 14px;
+    position: absolute;
+    margin-top: 4px;
 }
 
 .currency-api-error-icon svg {
@@ -1045,7 +1050,7 @@ ul, li {
 }
 
 .imginput-label{
-    margin-bottom:1rem;
+    margin-bottom:0.2rem;
 }
 
 .small_profile_picture {

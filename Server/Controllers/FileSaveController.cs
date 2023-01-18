@@ -1,41 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Net;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+﻿using System.Net;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Cargotruck.Shared.Models;
 using Cargotruck.Server.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using Cargotruck.Data;
-using Microsoft.EntityFrameworkCore.Migrations;
-using System.Globalization;
-using Cargotruck.Server.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
 public class FilesaveController : ControllerBase
 {
     private readonly IWebHostEnvironment env;
-    private readonly ILogger<FilesaveController> logger;
     private readonly UserManager<Users> _userManager;
     private readonly ApplicationDbContext _context;
     private readonly SignInManager<Users> _signInManager;
-    public FilesaveController(IWebHostEnvironment env,ILogger<FilesaveController> logger, UserManager<Users> userManager, ApplicationDbContext context, SignInManager<Users> signInManager)
+    public FilesaveController(IWebHostEnvironment env, UserManager<Users> userManager, ApplicationDbContext context, SignInManager<Users> signInManager)
     {
         _userManager = userManager;
         _signInManager = signInManager;
         this.env = env;
-        this.logger = logger;
         _context = context;
     }
 
     [HttpPost("{id}"), HttpPost]
-    public async Task<ActionResult<IList<UploadResult>>> PostFile([FromForm] IEnumerable<IFormFile> files, string id)
+    public async Task<ActionResult<IList<UploadResult>>> PostFile([FromForm] IEnumerable<IFormFile> files, string id, string? lang)
     {
         string? path = null;
         var maxAllowedFiles = 1;
@@ -57,16 +45,12 @@ public class FilesaveController : ControllerBase
             {
                 if (file.Length == 0)
                 {
-                    logger.LogInformation("{FileName} length is 0 (Err: 1)",
-                        trustedFileNameForDisplay);
-                    uploadResult.ErrorCode = 1;
+                    return BadRequest(lang == "hu" ? $"{trustedFileNameForDisplay} hossza 0." : $"{trustedFileNameForDisplay} length is 0.");
                 }
                 else if (file.Length > maxFileSize)
                 {
-                    logger.LogInformation("{FileName} of {Length} bytes is " +
-                        "larger than the limit of {Limit} bytes (Err: 2)",
-                        trustedFileNameForDisplay, file.Length, maxFileSize);
-                    uploadResult.ErrorCode = 2;
+
+                    return BadRequest(lang=="hu" ? $"{trustedFileNameForDisplay} hossza {file.Length} bájt, mely túllépi a megengedett {maxFileSize} bájtot."  : $"{trustedFileNameForDisplay} of {file.Length} bytes is larger than the limit of {maxFileSize} bytes.");
                 }
                 else
                 {
@@ -83,7 +67,7 @@ public class FilesaveController : ControllerBase
                             folder = "Files/";
                         }
                         // image upload part
-                        else
+                        else if(uploadResult.FileName.Contains(".jpg") || uploadResult.FileName.Contains(".jpeg") || uploadResult.FileName.Contains(".png") || uploadResult.FileName.Contains(".webp"))
                         {
                             rootpath = env.ContentRootPath.Replace("\\Server", "\\Client\\") + "wwwroot"; 
                             trustedFileNameForFileStorage = Path.GetRandomFileName();
@@ -91,12 +75,15 @@ public class FilesaveController : ControllerBase
                             folder = "img/profiles";
                            
                         }
+                        else
+                        {
+                            return BadRequest(lang == "hu" ? $"{uploadResult.FileName} nem egy kép." : $"{uploadResult.FileName} is not an image.");
+                        }
                         var image = folder + "/" + trustedFileNameForFileStorage;
                         path = Path.Combine(rootpath, folder ,trustedFileNameForFileStorage);
                         await using FileStream fs = new(path, FileMode.Create);
                         await file.CopyToAsync(fs);
 
-                        logger.LogInformation("{FileName} saved at {Path}",trustedFileNameForDisplay, path);
                         uploadResult.Uploaded = true;
                         uploadResult.StoredFileName = trustedFileNameForFileStorage;
 
@@ -142,19 +129,14 @@ public class FilesaveController : ControllerBase
                     }
                     catch (IOException ex)
                     {
-                        logger.LogError("{FileName} error on upload (Err: 3): {Message}",
-                            trustedFileNameForDisplay, ex.Message);
-                        uploadResult.ErrorCode = 3;
+                        return BadRequest(lang == "hu" ? $"{trustedFileNameForDisplay} hiba a feltöltésnél: {ex.Message}"  : $"{trustedFileNameForDisplay} error on upload: {ex.Message}");
                     }
                 }
                 filesProcessed++;
             }
             else
             {
-                logger.LogInformation("{FileName} not uploaded because the " +
-                    "request exceeded the allowed {Count} of files (Err: 4)",
-                    trustedFileNameForDisplay, maxAllowedFiles);
-                uploadResult.ErrorCode = 4;
+                return BadRequest(lang == "hu" ? $"{trustedFileNameForDisplay} a feltöltés nem sikerült, mert a hivás túllépte a  {maxAllowedFiles} darab fájlt." : $"{trustedFileNameForDisplay} not uploaded because the request exceeded the allowed {maxAllowedFiles} of files.");
             }
 
             uploadResults.Add(uploadResult);

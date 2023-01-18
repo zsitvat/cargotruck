@@ -585,6 +585,9 @@
   <data name="Not_match_col_count" xml:space="preserve">
     <value>Hiányzó oszlopok az adattáblában!</value>
   </data>
+  <data name="Not_uploaded" xml:space="preserve">
+    <value>feltöltése nem sikerült.</value>
+  </data>
   <data name="No_content" xml:space="preserve">
     <value>Nincs adat!</value>
   </data>

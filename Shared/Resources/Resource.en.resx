@@ -582,6 +582,9 @@
   <data name="Not_match_col_count" xml:space="preserve">
     <value>Missing columns!</value>
   </data>
+  <data name="Not_uploaded" xml:space="preserve">
+    <value>not uploaded.</value>
+  </data>
   <data name="No_content" xml:space="preserve">
     <value>No content!</value>
   </data>

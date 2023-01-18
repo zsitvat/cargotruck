@@ -1474,6 +1474,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to feltöltése nem sikerült..
+        /// </summary>
+        public static string Not_uploaded {
+            get {
+                return ResourceManager.GetString("Not_uploaded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nem található!.
         /// </summary>
         public static string Notfound {

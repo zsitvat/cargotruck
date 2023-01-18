@@ -49,17 +49,7 @@
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogInformation(
-                        "{FileName} not uploaded (Err: 6): {Message}", 
-                        file.Name, ex.Message);
-
-                    uploadResults.Add(
-                        new()
-                        {
-                            FileName = file.Name, 
-                            ErrorCode = 6, 
-                            Uploaded = false
-                        });
+                    error = file.Name + " " + localizer["Not_uploaded"] + " " + ex.Message;
                 }
             }
         }
@@ -86,19 +76,6 @@
                 }
             }  
         }
-    }
-
-    private static bool FileUpload(IList<UploadResult> uploadResults, string? fileName, ILogger<UploadFiles> logger, out UploadResult result)
-    {
-        result = uploadResults.SingleOrDefault(f => f.FileName == fileName) ?? new();
-
-        if (!result.Uploaded)
-        {
-            logger.LogInformation("{FileName} not uploaded (Err: 5)", fileName);
-            result.ErrorCode = 5;
-        }
-
-        return result.Uploaded;
     }
 
     private class File
