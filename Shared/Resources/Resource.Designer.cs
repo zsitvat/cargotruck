@@ -1051,7 +1051,7 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to darab felhasználó által.
+        ///   Looks up a localized string similar to darab felhasználó létezik..
         /// </summary>
         public static string From_user {
             get {

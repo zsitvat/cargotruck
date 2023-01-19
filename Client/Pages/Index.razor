@@ -17,9 +17,9 @@
                 </span>
                 <div class="list-body">
                     <h2 class="m-0 text-md">
-                        @Counts["numberOfTasks"] <span class="text-sm">@localizer["task"].ToString().ToLower()</span>
+                        @counts["numberOfTasks"] <span class="text-sm">@localizer["task"].ToString().ToLower()</span>
                     </h2>
-                    <small class="text-muted">@Counts["numberOfTasksUnFinished"] @localizer["Tasks_unfinished"].</small>
+                    <small class="text-muted">@counts["numberOfTasksUnFinished"] @localizer["Tasks_unfinished"].</small>
                 </div>
             </div>               
         </div>
@@ -30,9 +30,9 @@
                 </span>
                 <div class="list-body">
                     <h2 class="m-0 text-md">
-                        @Counts["numberOfTrucks"] <span class="text-sm">@localizer["truck"].ToString().ToLower()</span>
+                        @counts["numberOfTrucks"] <span class="text-sm">@localizer["truck"].ToString().ToLower()</span>
                     </h2>
-                    <small class="text-muted">@Counts["numberOfTrucksUnFinished"] @localizer["Trucks_unfinished"].</small>
+                    <small class="text-muted">@counts["numberOfTrucksUnFinished"] @localizer["Trucks_unfinished"].</small>
                 </div>
             </div>
         </div>
@@ -43,9 +43,9 @@
                 </span>
                 <div class="list-body">
                     <h2 class="m-0 text-md">
-                        @Counts["numberOfCargoes"] <span class="text-sm">@localizer["cargo"].ToString().ToLower()</span>
+                        @counts["numberOfCargoes"] <span class="text-sm">@localizer["cargo"].ToString().ToLower()</span>
                     </h2>
-                    <small class="text-muted">@Counts["numberOfCargoesUnFinished"] @localizer["Cargoes_unfinished"].</small>
+                    <small class="text-muted">@counts["numberOfCargoesUnFinished"] @localizer["Cargoes_unfinished"].</small>
                 </div>
             </div>
         </div>
@@ -56,9 +56,9 @@
                 </span>
                 <div class="list-body">
                     <h2 class="m-0 text-md">
-                        @Counts["numberOfLogins"] <span class="text-sm">@localizer["logins"].ToString().ToLower()</span>
+                        @counts["numberOfLogins"] <span class="text-sm">@localizer["logins"].ToString().ToLower()</span>
                     </h2>
-                    <small class="text-muted">@Counts["numberOfUsers"] @localizer["From_user"].</small>
+                    <small class="text-muted">@counts["numberOfUsers"] @localizer["From_user"].</small>
                 </div>
             </div>
         </div>
@@ -100,9 +100,7 @@
                                             <NavLink href="Tasks">
                                                 <a class="hex-content">
                                                     <span class="hex-content-inner">
-                                                   
-                                                            @localizer["Tasks"]<span class="oi oi-task" aria-hidden="true"></span>
-                                                    
+                                                        @localizer["Tasks"]<br /><span class="oi oi-task" aria-hidden="true"></span>
                                                     </span>
                                                     <svg viewBox="0 0 173.20508075688772 200" height="200" width="174" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M86.60254037844386 0L173.20508075688772 50L173.20508075688772 150L86.60254037844386 200L0 150L0 50Z" fill="#1e2530"></path></svg>
                                                 </a>
@@ -242,17 +240,18 @@
 </AuthorizeView>
 </div>
 
+
 @code{
     bool afterLogin = true;
-    Dictionary<string, int?> Counts = new Dictionary<string, int?>(){
-    {"numberOfTasksUnFinished",0},
-    {"numberOfTrucksUnFinished",0},
-    {"numberOfCargoesUnFinished",0},
-    {"numberOfLogins",0},
-    {"numberOfTasks",0},
-    {"numberOfTrucks",0},
-    {"numberOfCargoes",0},
-    {"numberOfUsers",0}
+    Dictionary<string, int?> counts = new Dictionary<string, int?>(){
+    {"numberOfTasksUnFinished",null},
+    {"numberOfTrucksUnFinished",null},
+    {"numberOfCargoesUnFinished",null},
+    {"numberOfLogins",null},
+    {"numberOfTasks",null},
+    {"numberOfTrucks",null},
+    {"numberOfCargoes",null},
+    {"numberOfUsers",null}
     };
 
 
@@ -275,16 +274,77 @@
 
     protected async Task GetNumbers()
     {
-        Counts["numberOfTasks"] = await client.GetFromJsonAsync<int>($"api/tasks/count?all={true}");
-        Counts["numberOfTrucks"] = await client.GetFromJsonAsync<int>($"api/trucks/count?all={true}");
-        Counts["numberOfCargoes"] = await client.GetFromJsonAsync<int>($"api/cargoes/count?all={true}");
+        Dictionary<string, int?> numbersDic = new Dictionary<string, int?>(){
+        {"numberOfTasksUnFinished",0},
+        {"numberOfTrucksUnFinished",0},
+        {"numberOfCargoesUnFinished",0},
+        {"numberOfLogins",0},
+        {"numberOfTasks",0},
+        {"numberOfTrucks",0},
+        {"numberOfCargoes",0},
+        {"numberOfUsers",0}
+        };
+        numbersDic["numberOfTasks"] = await client.GetFromJsonAsync<int>($"api/tasks/count?all={true}");
+        numbersDic["numberOfTrucks"] = await client.GetFromJsonAsync<int>($"api/trucks/count?all={true}");
+        numbersDic["numberOfCargoes"] = await client.GetFromJsonAsync<int>($"api/cargoes/count?all={true}");
 
-        Counts["numberOfTasksUnFinished"] = await client.GetFromJsonAsync<int>($"api/tasks/count?all={false}");
-        Counts["numberOfTrucksUnFinished"] = await client.GetFromJsonAsync<int>($"api/trucks/count?all={false}");
-        Counts["numberOfCargoesUnFinished"] = await client.GetFromJsonAsync<int>($"api/cargoes/count?all={false}");
+        numbersDic["numberOfTasksUnFinished"] = await client.GetFromJsonAsync<int>($"api/tasks/count?all={false}");
+        numbersDic["numberOfTrucksUnFinished"] = await client.GetFromJsonAsync<int>($"api/trucks/count?all={false}");
+        numbersDic["numberOfCargoesUnFinished"] = await client.GetFromJsonAsync<int>($"api/cargoes/count?all={false}");
 
-        Counts["numberOfLogins"] = await client.GetFromJsonAsync<int>("api/admin/loginscount");
-        Counts["numberOfUsers"] = await client.GetFromJsonAsync<int>("api/admin/count");
+        numbersDic["numberOfLogins"] = await client.GetFromJsonAsync<int>("api/admin/loginscount");
+        numbersDic["numberOfUsers"] = await client.GetFromJsonAsync<int>("api/admin/count");
+
+        await GetNumbersCounter(numbersDic);
+    }
+
+    protected async Task GetNumbersCounter(Dictionary<string, int?> MaxNumbers)
+    {
+        int max = 0;
+        foreach(var num in MaxNumbers)
+        {
+            if (max < num.Value)
+            {
+                max = (int)num.Value;
+            }
+        }
+        for (int i = 0; i < max; i++)
+        {
+            if (i <= MaxNumbers["numberOfTasks"])
+            {
+                counts["numberOfTasks"] = i;
+            }
+            if (i <= MaxNumbers["numberOfTrucks"])
+            {
+                counts["numberOfTrucks"] = i;
+            }
+            if (i <= MaxNumbers["numberOfCargoes"])
+            {
+                counts["numberOfCargoes"] = i;
+            }
+            if (i <= MaxNumbers["numberOfTasksUnFinished"])
+            {
+                counts["numberOfTasksUnFinished"] = i;
+            }
+             if (i <= MaxNumbers["numberOfTrucksUnFinished"])
+            {
+                counts["numberOfTrucksUnFinished"] = i;
+            }
+            if (i <= MaxNumbers["numberOfCargoesUnFinished"])
+            {
+                counts["numberOfCargoesUnFinished"] = i;
+            }
+            if (i <= MaxNumbers["numberOfLogins"])
+            {
+                counts["numberOfLogins"] = i;
+            }
+            if (i <= MaxNumbers["numberOfUsers"])
+            {
+                counts["numberOfUsers"] = i;
+            }
+            await Task.Delay(50);
+            StateHasChanged();
+        }
     }
 }
 

@@ -13,9 +13,9 @@
         <div class="top-row px-4">
             <NavLink href="/Privacy">
                 <span class="about ms-5" aria-hidden="true">@localizer["Privacy"]</span>
-            </NavLink> 
+            </NavLink>
             <AuthorizeView>
-                <Authorized>    
+                <Authorized>
                     <li class="username" @onclick="()=>expandSubMenu= !expandSubMenu">
                         <div class="top-nav-profile">
                             @foreach (var claim in context.User.Claims)

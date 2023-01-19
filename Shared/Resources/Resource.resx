@@ -448,7 +448,7 @@
     <value>Visszaút</value>
   </data>
   <data name="From_user" xml:space="preserve">
-    <value>darab felhasználó által</value>
+    <value>darab felhasználó létezik.</value>
   </data>
   <data name="Fuel" xml:space="preserve">
     <value>Üzemanyag</value>
