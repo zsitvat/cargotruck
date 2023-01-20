@@ -14,6 +14,7 @@ using DocumentFormat.OpenXml.Spreadsheet;
 using Font = iTextSharp.text.Font;
 using System.Text;
 using DocumentFormat.OpenXml.Office2021.DocumentTasks;
+using DocumentFormat.OpenXml.Office2010.Excel;
 
 namespace Cargotruck.Server.Controllers
 {
@@ -28,9 +29,18 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(int page, int pageSize, string sortOrder, bool desc, string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        public async Task<IActionResult> Get(int page, int pageSize, string sortOrder, bool desc, string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var data = await _context.Cargoes.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
+
+            if (filter == "InWarehouse")
+            {
+                data = data.Where(data => data.Warehouse_id!=null).ToList();
+            }
+            else if (filter == "NotInWarehouse")
+            {
+                data = data.Where(data => data.Warehouse_id == null).ToList();
+            }
 
             searchString = searchString == null ? null : searchString.ToLower();
             if (searchString != null && searchString != "")

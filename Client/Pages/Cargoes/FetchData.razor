@@ -10,6 +10,22 @@
     <button data-title="@localizer["csv"]" class="btn btn-light" @onclick="@(() => ExportToCSV("csv"))"><span class="icon iconify" style="margin:0;" data-icon="bi:filetype-csv"></span></button>
     <span class="file-upload-title" import-data-title="@localizer["File_input"]"><UploadFiles page="cargoes" StateChanged="StateChanged" /></span>
     <input value="@searchString" @oninput="@Search" placeholder="@(searchString != "" ? searchString : localizer["Search"])" class="form-control inputs input_search" type="search" id="search-input" name="SearchString">
+
+    @if (filter == "InWarehouse" || filter == "NotInWarehouse")
+    {
+        <button @onclick="@(()=>onChangeResetFilter())" class="filter-button"><span class="icon iconify filter-icon" data-icon="material-symbols:filter-alt-off"></span></button>
+    }
+    else
+    {
+        <button @onclick="@(()=>onChangeResetFilter())" class="filter-button not-pointer"><span class="icon iconify filter-icon not-pointer" data-icon="material-symbols:filter-alt"></span></button>
+    }
+    <!--Filter-->
+    <select class="form-control filter" @oninput="@((e)=>onChangeGetFilter(e))" @bind="filter">
+        <option value="" selected disabled>@localizer["Nothing"]</option>
+        <option value="InWarehouse">@localizer["InWarehouse"]</option>
+        <option value="NotInWarehouse">@localizer["NotInWarehouse"]</option>
+    </select>
+    
     <div class="date-filter" data-title="@localizer["date-filter-info"]">
         <Input class="form-control" type="datetime-local" value="@dateFilter?.StartDate.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm", CultureInfo.CurrentCulture)" @oninput="@((e)=>{DateStartInput(e);})">
         <Input class="form-control" type="datetime-local" value="@dateFilter?.EndDate.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm", CultureInfo.CurrentCulture)" @oninput="@((e)=>{DateEndInput(e);})">
@@ -28,7 +44,7 @@ else if (cargoes.Length == 0)
 }
 else
 {
-    <div class="col-md-8 stretch-card mb-2">
+    <div class="col-md-8 stretch-card mb-2 me-3">
         <div class="form-card mb-1 table-width">
             <div class="card-body mb-3">
                 <div class="table-responsive fixed-table-body">
@@ -190,6 +206,8 @@ else
     private bool desc = true;
     private string? searchString = "";
     string? document_error;
+    string? filterIcon;
+    string? filter = "";
     DateFilter? dateFilter = new DateFilter();
 
     async void DateStartInput(ChangeEventArgs e)
@@ -217,6 +235,20 @@ else
         dataRows = await client.GetFromJsonAsync<int>("api/cargoes/pagecount");
         await ShowPage();
     }
+
+
+    async void onChangeGetFilter(ChangeEventArgs e)
+    {
+        filter = e.Value.ToString();
+        await OnInitializedAsync();
+    }
+
+    async void onChangeResetFilter()
+    {
+        filter = "";
+        await OnInitializedAsync();
+    }
+
 
     async Task Delete(int Id)
     {
@@ -305,7 +337,7 @@ else
         else if (pageSize >= dataRows) { pageSize = dataRows != 0 ? dataRows : 1 ; }
         maxPage = (int)Math.Ceiling((decimal)((float)dataRows / (float)pageSize));
 
-        cargoes = await client.GetFromJsonAsync<Cargoes[]>($"api/cargoes/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
+        cargoes = await client.GetFromJsonAsync<Cargoes[]>($"api/cargoes/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
         StateHasChanged();
     }
 

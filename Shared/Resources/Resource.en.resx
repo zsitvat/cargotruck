@@ -510,6 +510,9 @@
   <data name="Import" xml:space="preserve">
     <value>Import from Excel</value>
   </data>
+  <data name="InWarehouse" xml:space="preserve">
+    <value>In warehouse</value>
+  </data>
   <data name="Language" xml:space="preserve">
     <value>Language</value>
   </data>
@@ -566,6 +569,9 @@
   </data>
   <data name="Nothing" xml:space="preserve">
     <value>Not chosen</value>
+  </data>
+  <data name="NotInWarehouse" xml:space="preserve">
+    <value>Not in warehouse</value>
   </data>
   <data name="Not_completed" xml:space="preserve">
     <value>Not completed</value>

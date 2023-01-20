@@ -263,7 +263,7 @@ table {
 }
 
 td{
-    padding:0px !important;
+    padding:0px 5px !important;
     vertical-align:middle;
 }
 
@@ -489,6 +489,11 @@ table th button {
     text-align:center;
 }
 
+input[type=number] {
+    text-align:center;
+    max-width:8rem;
+}
+
 .currentpage {
     font-weight: bold;
     background-color: rgb(211, 211, 211);
@@ -597,7 +602,6 @@ table th button {
     min-width: 0;
     background-color: #fff;
     background-clip: border-box;
-
 }
 
 .settings-card {
@@ -1294,7 +1298,7 @@ tbody td:first-child{
         }
 
         .table-width {
-            max-width: 70vw;
+            max-width: 68vw;
         }
 
         .input_search {
@@ -1317,7 +1321,7 @@ tbody td:first-child{
         }
 
         .table-width {
-            max-width: 68vw;
+            max-width: 60vw;
         }
 
         .currency {
@@ -1328,6 +1332,10 @@ tbody td:first-child{
             position: fixed;
             left: 18rem;
             bottom: 3.5rem;
+        }
+
+        body {
+            overflow-x: auto;
         }
     }
 
@@ -1449,6 +1457,10 @@ tbody td:first-child{
             position: relative;
             left: -65px;
             margin-bottom: 0.5rem;
+        }
+
+        body {
+            overflow-x: hidden;
         }
     }
 
@@ -1580,10 +1592,10 @@ tbody td:first-child{
         background: #888;
     }
 
-        /* Handle on hover */
-        ::-webkit-scrollbar-thumb:hover {
-            background: #555;
-        }
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
 
     .culture-selector {
         font-size: 13px;

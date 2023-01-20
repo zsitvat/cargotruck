@@ -513,6 +513,9 @@
   <data name="Import" xml:space="preserve">
     <value>Feltöltés Excel-ből</value>
   </data>
+  <data name="InWarehouse" xml:space="preserve">
+    <value>Raktárban</value>
+  </data>
   <data name="Language" xml:space="preserve">
     <value>Nyelv</value>
   </data>
@@ -569,6 +572,9 @@
   </data>
   <data name="Nothing" xml:space="preserve">
     <value>Nincs kiválasztva</value>
+  </data>
+  <data name="NotInWarehouse" xml:space="preserve">
+    <value>Nincs raktárban</value>
   </data>
   <data name="Not_completed" xml:space="preserve">
     <value>Nincs teljesítve</value>

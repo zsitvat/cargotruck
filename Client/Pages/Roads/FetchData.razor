@@ -43,7 +43,7 @@ else if (roads.Length == 0)
 }
 else
 {
-    <div class="col-md-8 stretch-card mb-2">
+    <div class="col-md-8 stretch-card mb-2 me-3">
         <div class="form-card mb-1 table-width">
             <div class="card-body mb-3">
                 <div class="table-responsive fixed-table-body">
@@ -77,17 +77,21 @@ else
                                 }
                                 @if (showColumns[6])
                                 {
-                                    <th><button class="@(sortOrder=="Task_id" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Task_id"))">@localizer["Task_id"]</button></th>
+                                    <th><button class="@(sortOrder=="Fuel" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Fuel"))">@localizer["Fuel"]</button></th>
                                 }
                                 @if (showColumns[7])
                                 {
-                                    <th><button class="@(sortOrder=="Id_cargo" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Id_cargo"))">@localizer["Id_cargo"]</button></th>
+                                    <th><button class="@(sortOrder=="Task_id" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Task_id"))">@localizer["Task_id"]</button></th>
                                 }
                                 @if (showColumns[8])
                                 {
-                                    <th><button class="@(sortOrder=="Expenses_id" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Expenses_id"))">@localizer["Expenses_id"]</button></th>
+                                    <th><button class="@(sortOrder=="Id_cargo" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Id_cargo"))">@localizer["Id_cargo"]</button></th>
                                 }
                                 @if (showColumns[9])
+                                {
+                                    <th><button class="@(sortOrder=="Expenses_id" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Expenses_id"))">@localizer["Expenses_id"]</button></th>
+                                }
+                                @if (showColumns[10])
                                 {
                                     <th><button style="min-width:5rem;" class="@(sortOrder=="Date" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Date"))">@localizer["Date"]</button></th>
                                 }
@@ -127,17 +131,21 @@ else
                                     }
                                     @if (showColumns[6])
                                     {
-                                        <td><button class="no-button" @onclick="@(()=>GetById(item.Task_id,"task"))">@item.Task_id</button></td>
+                                        <td>@item.Fuel</td>
                                     }
                                     @if (showColumns[7])
                                     {
-                                        <td><button class="no-button" @onclick="@(()=>GetById(item.Id_cargo,"cargo"))">@item.Id_cargo</button></td>
+                                        <td><button class="no-button" @onclick="@(()=>GetById(item.Task_id,"task"))">@item.Task_id</button></td>
                                     }
                                     @if (showColumns[8])
                                     {
-                                        <td><button class="no-button" @onclick="@(()=>GetById(item.Expenses_id,"expense"))">@item.Expenses_id</button></td>
+                                        <td><button class="no-button" @onclick="@(()=>GetById(item.Id_cargo,"cargo"))">@item.Id_cargo</button></td>
                                     }
                                     @if (showColumns[9])
+                                    {
+                                        <td><button class="no-button" @onclick="@(()=>GetById(item.Expenses_id,"expense"))">@item.Expenses_id</button></td>
+                                    }
+                                    @if (showColumns[10])
                                     {
                                         <td>@item.Date</td>
                                     }
@@ -203,7 +211,7 @@ else
     Roads[]? roads { get; set; }
     int? getById { get; set; }
     string? getByIdType { get; set; }
-    List<bool> showColumns = Enumerable.Repeat(true, 16).ToList();
+    List<bool> showColumns = Enumerable.Repeat(true, 12).ToList();
     private int currentPage = 1;
     int pageSize = 10;
     int dataRows;

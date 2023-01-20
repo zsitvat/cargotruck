@@ -29,6 +29,8 @@ namespace Cargotruck.Shared.Models
         [Required(ErrorMessageResourceName = "Error_direction", ErrorMessageResourceType = typeof(Resource))]
         [Display(Name = "Direction", ResourceType = typeof(Resource))]
         public string Direction { get; set; }
+        [Display(Name = "Fuel", ResourceType = typeof(Resource))]
+        public string? Fuel { get; set; }
         [Display(Name = "Expenses_id", ResourceType = typeof(Resource))]
         public int? Expenses_id { get; set; }
         [Display(Name = "Date", ResourceType = typeof(Resource))]

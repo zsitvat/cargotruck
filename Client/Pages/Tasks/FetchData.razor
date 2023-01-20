@@ -13,7 +13,7 @@
     <!--Filter icon-->
     @if (filter == "completed" || filter == "not_completed")
     {
-        <button @onclick="@(()=>onChangeResetFilter())" class="filter-button">fluent-mdl2:accept-medium</button>
+         <button @onclick="@(()=>onChangeResetFilter())" class="filter-button"><span class="icon iconify filter-icon" data-icon="material-symbols:filter-alt-off"></span></button>
     }
     else
     {
@@ -67,7 +67,7 @@ else if (tasks.Length == 0)
 }
 else
 {
-    <div class="col-md-8 stretch-card mb-2">
+    <div class="col-md-8 stretch-card mb-2 me-3">
         <div class="form-card mb-1 table-width">
             <div class="card-body mb-3">
                 <div class="table-responsive fixed-table-body">

@@ -1249,6 +1249,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Raktárban.
+        /// </summary>
+        public static string InWarehouse {
+            get {
+                return ResourceManager.GetString("InWarehouse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nyelv.
         /// </summary>
         public static string Language {
@@ -1497,6 +1506,15 @@ namespace Cargotruck.Shared.Resources {
         public static string Nothing {
             get {
                 return ResourceManager.GetString("Nothing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nincs raktárban.
+        /// </summary>
+        public static string NotInWarehouse {
+            get {
+                return ResourceManager.GetString("NotInWarehouse", resourceCulture);
             }
         }
         

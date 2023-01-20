@@ -85,7 +85,7 @@
                         <div>
                             <label>@localizer["Fuel"]:</label>
                             <div>
-                                <InputNumber class="form-control inputs" @bind-Value="@expenses.Fuel" />
+                                <InputNumber min="0"  class="form-control inputs" @bind-Value="@expenses.Fuel" />
                                 <ValidationMessage For="@(() => expenses.Fuel)" />
                             </div>
                         </div>
@@ -96,7 +96,7 @@
                         <div>
                             <label>@localizer["Road_fees"]:</label>
                             <div>
-                                <InputNumber class="form-control inputs" @bind-Value="@expenses.Road_fees" />
+                                <InputNumber min="0"  class="form-control inputs" @bind-Value="@expenses.Road_fees" />
                                 <ValidationMessage For="@(() => expenses.Road_fees)" />
                             </div>
                         </div>
@@ -107,7 +107,7 @@
                         <div>
                             <label>@localizer["Penalty"]:</label>
                             <div>
-                                <InputNumber class="form-control inputs" @bind-Value="@expenses.Penalty" />
+                                <InputNumber min="0"  class="form-control inputs" @bind-Value="@expenses.Penalty" />
                                 <ValidationMessage For="@(() => expenses.Penalty)" />
                             </div>
                         </div>
@@ -118,7 +118,7 @@
                         <div>
                             <label>@localizer["Driver_spending"]:</label>
                             <div>
-                                <InputNumber class="form-control inputs" @bind-Value="@expenses.Driver_spending" />
+                                <InputNumber min="0"  class="form-control inputs" @bind-Value="@expenses.Driver_spending" />
                                 <ValidationMessage For="@(() => expenses.Driver_spending)" />
                             </div>
                         </div>
@@ -129,7 +129,7 @@
                         <div>
                         <label>@localizer["Driver_salary"]:</label>
                             <div>
-                                <InputNumber class="form-control inputs" @bind-Value="@expenses.Driver_salary" />
+                                <InputNumber min="0"  class="form-control inputs" @bind-Value="@expenses.Driver_salary" />
                                 <ValidationMessage For="@(() => expenses.Driver_salary)" />
                             </div>
                         </div>
@@ -140,7 +140,7 @@
                         <div>
                         <label>@localizer["Repair_cost"]:</label>
                             <div>
-                            <InputNumber class="form-control inputs" @bind-Value="@expenses.Repair_cost" />
+                            <InputNumber min="0"  class="form-control inputs" @bind-Value="@expenses.Repair_cost" />
                             <ValidationMessage For="@(() => expenses.Repair_cost)" />
                             </div>
                         </div>
@@ -160,7 +160,7 @@
                         <div>
                         <label>@localizer["Cost_of_storage"]:</label>
                             <div>
-                            <InputNumber class="form-control inputs" @bind-Value="@expenses.Cost_of_storage" />
+                            <InputNumber min="0"  class="form-control inputs" @bind-Value="@expenses.Cost_of_storage" />
                             <ValidationMessage For="@(() => expenses.Cost_of_storage)" />
                             </div>
                         </div>
@@ -172,7 +172,7 @@
                         <div>
                             <label>@localizer["other"]:</label>
                             <div>
-                            <InputNumber class="form-control inputs" @bind-Value="@expenses.other" />
+                            <InputNumber min="0"  class="form-control inputs" @bind-Value="@expenses.other" />
                             <ValidationMessage For="@(() => expenses.other)" />
                             </div>
                         </div>
