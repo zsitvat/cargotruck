@@ -1,7 +1,7 @@
 ﻿self.assetsManifest = {
   "assets": [
     {
-      "hash": "sha256-67UZshZYhBVbICLW01uyn6KhFGfvSoUCdB5r8QE63\/s=",
+      "hash": "sha256-9NknkhWGyJqYBme0ziMkQmIX+YutrQRBwergJO8n8Yk=",
       "url": "css\/app.css"
     },
     {
@@ -13,7 +13,7 @@
       "url": "css\/bootstrap\/bootstrap.min.css.map"
     },
     {
-      "hash": "sha256-VmrGWYiNyiW5KScZiWepAflG\/9q9hyBk4WDXws8SOEw=",
+      "hash": "sha256-25nPqRruYTGWejniZNm5tIIfJhUxBWB8CJy\/JBND2fA=",
       "url": "css\/hexamenu.css"
     },
     {
@@ -1041,23 +1041,23 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-qsZ6bQh5RhfRg\/Lehmj7yTJEu2BMkc5508utk1HkgbU=",
+      "hash": "sha256-7GSf\/OtsOJueoaI+9TPrKeKHDmQQMGSpo7M\/yB7nZe8=",
       "url": "_framework\/Cargotruck.Shared.dll"
     },
     {
-      "hash": "sha256-OCRj0cW+s+9qzwhH4NzuOK0IXM+YlMY98OBCy3n1Mk0=",
+      "hash": "sha256-LVKquFa5IrLsqYTEMDDypshUMgOXQc1Yj7l1rg33NoA=",
       "url": "_framework\/Cargotruck.Shared.pdb"
     },
     {
-      "hash": "sha256-Y3ceFGzPl7v9fOZDGm0Lbb3BwPx3SBmr794p5ejuyA8=",
+      "hash": "sha256-8ymuwcUzOhCDYuzCr3j0Mmf8R6m2xegrWXVUBPTKKdk=",
       "url": "_framework\/en\/Cargotruck.Shared.resources.dll"
     },
     {
-      "hash": "sha256-uYpAW\/4u8oW+BCNdl0DReyYM5vlrhwolujCMT2KhLmA=",
+      "hash": "sha256-GuJXczWnH4vlcDfHGSR6+a1SpcSAnagd67FfRLKY4bI=",
       "url": "_framework\/Cargotruck.Client.dll"
     },
     {
-      "hash": "sha256-2uH9eHVWW142+IBpZOl+p8necXxAE3FyCA+O82IBgJY=",
+      "hash": "sha256-F+wY70Q76FJPvgXRw3xQROdmHffo7Sy4xvU\/0ppmJ+o=",
       "url": "_framework\/Cargotruck.Client.pdb"
     },
     {
@@ -1065,7 +1065,7 @@
       "url": "_framework\/blazor.webassembly.js"
     },
     {
-      "hash": "sha256-nsONRZoO+SV8bA0\/J9l0Q0fvg3NIUMVOufrbIkDdB4Y=",
+      "hash": "sha256-xyk3Ov9ZR1Y3rpR0IE5oP+6jKCjh9D18xRDGI9yE61g=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -1073,5 +1073,5 @@
       "url": "_content\/Microsoft.AspNetCore.Components.WebAssembly.Authentication\/AuthenticationService.js"
     }
   ],
-  "version": "RmjOyBOg"
+  "version": "36mhBbRo"
 };

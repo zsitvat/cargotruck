@@ -70,81 +70,33 @@ namespace Cargotruck.Server.Controllers
             sortOrder = sortOrder == "other" ? (desc ? "other_desc" : "other") : (sortOrder);
             sortOrder = sortOrder == "Date" || String.IsNullOrEmpty(sortOrder) ? (desc ? "Date_desc" : "") : (sortOrder);
 
-            switch (sortOrder)
+            data = sortOrder switch
             {
-                case "Type_desc":
-                    data = data.OrderByDescending(s => s.Type).ToList();
-                    break;
-                case "Type":
-                    data = data.OrderBy(s => s.Type).ToList();
-                    break;
-                case "Type_id_desc":
-                    data = data.OrderByDescending(s => s.Type_id).ToList();
-                    break;
-                case "Type_id":
-                    data = data.OrderBy(s => s.Type_id).ToList();
-                    break;
-                case "Fuel_desc":
-                    data = data.OrderByDescending(s => s.Fuel).ToList();
-                    break;
-                case "Fuel":
-                    data = data.OrderBy(s => s.Fuel).ToList();
-                    break;
-                case "Road_fees_desc":
-                    data = data.OrderByDescending(s => s.Road_fees).ToList();
-                    break;
-                case "Road_fees":
-                    data = data.OrderBy(s => s.Road_fees).ToList();
-                    break;
-                case "Penalty_desc":
-                    data = data.OrderByDescending(s => s.Penalty).ToList();
-                    break;
-                case "Penalty":
-                    data = data.OrderBy(s => s.Penalty).ToList();
-                    break;
-                case "Driver_spending_desc":
-                    data = data.OrderByDescending(s => s.Driver_spending).ToList();
-                    break;
-                case "Driver_spending":
-                    data = data.OrderBy(s => s.Driver_spending).ToList();
-                    break;
-                case "Driver_salary_desc":
-                    data = data.OrderByDescending(s => s.Driver_salary).ToList();
-                    break;
-                case "Driver_salary":
-                    data = data.OrderBy(s => s.Driver_salary).ToList();
-                    break;
-                case "Repair_cost_desc":
-                    data = data.OrderByDescending(s => s.Repair_cost).ToList();
-                    break;
-                case "Repair_cost":
-                    data = data.OrderBy(s => s.Repair_cost).ToList();
-                    break;
-                case "Repair_description_desc":
-                    data = data.OrderByDescending(s => s.Repair_description).ToList();
-                    break;
-                case "Repair_description":
-                    data = data.OrderBy(s => s.Repair_description).ToList();
-                    break;
-                case "Cost_of_storage_desc":
-                    data = data.OrderByDescending(s => s.Repair_description).ToList();
-                    break;
-                case "Cost_of_storage":
-                    data = data.OrderBy(s => s.Repair_description).ToList();
-                    break;
-                case "other_desc":
-                    data = data.OrderByDescending(s => s.Repair_description).ToList();
-                    break;
-                case "other":
-                    data = data.OrderBy(s => s.Repair_description).ToList();
-                    break;
-                case "Date_desc":
-                    data = data.OrderByDescending(s => s.Date).ToList();
-                    break;
-                default:
-                    data = data.OrderBy(s => s.Date).ToList();
-                    break;
-            }
+                "Type_desc" => data.OrderByDescending(s => s.Type).ToList(),
+                "Type" => data.OrderBy(s => s.Type).ToList(),
+                "Type_id_desc" => data.OrderByDescending(s => s.Type_id).ToList(),
+                "Type_id" => data.OrderBy(s => s.Type_id).ToList(),
+                "Fuel_desc" => data.OrderByDescending(s => s.Fuel).ToList(),
+                "Fuel" => data.OrderBy(s => s.Fuel).ToList(),
+                "Road_fees_desc" => data.OrderByDescending(s => s.Road_fees).ToList(),
+                "Road_fees" => data.OrderBy(s => s.Road_fees).ToList(),
+                "Penalty_desc" => data.OrderByDescending(s => s.Penalty).ToList(),
+                "Penalty" => data.OrderBy(s => s.Penalty).ToList(),
+                "Driver_spending_desc" => data.OrderByDescending(s => s.Driver_spending).ToList(),
+                "Driver_spending" => data.OrderBy(s => s.Driver_spending).ToList(),
+                "Driver_salary_desc" => data.OrderByDescending(s => s.Driver_salary).ToList(),
+                "Driver_salary" => data.OrderBy(s => s.Driver_salary).ToList(),
+                "Repair_cost_desc" => data.OrderByDescending(s => s.Repair_cost).ToList(),
+                "Repair_cost" => data.OrderBy(s => s.Repair_cost).ToList(),
+                "Repair_description_desc" => data.OrderByDescending(s => s.Repair_description).ToList(),
+                "Repair_description" => data.OrderBy(s => s.Repair_description).ToList(),
+                "Cost_of_storage_desc" => data.OrderByDescending(s => s.Repair_description).ToList(),
+                "Cost_of_storage" => data.OrderBy(s => s.Repair_description).ToList(),
+                "other_desc" => data.OrderByDescending(s => s.Repair_description).ToList(),
+                "other" => data.OrderBy(s => s.Repair_description).ToList(),
+                "Date_desc" => data.OrderByDescending(s => s.Date).ToList(),
+                _ => data.OrderBy(s => s.Date).ToList(),
+            };
             data = data.Skip((page - 1) * pageSize).Take(pageSize).ToList();
             return Ok(data);
         }
@@ -227,7 +179,7 @@ namespace Cargotruck.Server.Controllers
 
         //closedXML needed !!!
         [HttpGet]
-        public async Task<string> Excel(string lang)
+        public string Excel(string lang)
         {
             var expenses = from r in _context.Expenses select r;
             using (var workbook = new XLWorkbook())
@@ -270,15 +222,15 @@ namespace Cargotruck.Server.Controllers
                     worksheet.Cell(currentRow, 2).Value = expense.User_id;
                     worksheet.Cell(currentRow, 3).Value = expense.Type;
                     worksheet.Cell(currentRow, 4).Value = expense.Type_id;
-                    worksheet.Cell(currentRow, 5).Value = expense.Fuel + (expense.Fuel != null ? " HUF" : "");
-                    worksheet.Cell(currentRow, 6).Value = expense.Road_fees + (expense.Road_fees != null ? " HUF" : "");
-                    worksheet.Cell(currentRow, 7).Value = expense.Penalty + (expense.Penalty != null ? " HUF" : "");
-                    worksheet.Cell(currentRow, 8).Value = expense.Driver_spending + (expense.Driver_spending != null ? " HUF" : "");
-                    worksheet.Cell(currentRow, 9).Value = expense.Driver_salary + (expense.Driver_salary != null ? " HUF" : "");
-                    worksheet.Cell(currentRow, 10).Value = expense.Repair_cost + (expense.Repair_cost != null ? " HUF" : "");
+                    worksheet.Cell(currentRow, 5).Value += (expense.Fuel != null ? " HUF" : "");
+                    worksheet.Cell(currentRow, 6).Value += (expense.Road_fees != null ? " HUF" : "");
+                    worksheet.Cell(currentRow, 7).Value += (expense.Penalty != null ? " HUF" : "");
+                    worksheet.Cell(currentRow, 8).Value += (expense.Driver_spending != null ? " HUF" : "");
+                    worksheet.Cell(currentRow, 9).Value += (expense.Driver_salary != null ? " HUF" : "");
+                    worksheet.Cell(currentRow, 10).Value += (expense.Repair_cost != null ? " HUF" : "");
                     worksheet.Cell(currentRow, 11).Value = expense.Repair_description;
-                    worksheet.Cell(currentRow, 12).Value = expense.Cost_of_storage + (expense.Cost_of_storage != null ? " HUF" : "");
-                    worksheet.Cell(currentRow, 13).Value = expense.other + (expense.other != null ? " HUF" : "");
+                    worksheet.Cell(currentRow, 12).Value += (expense.Cost_of_storage != null ? " HUF" : "");
+                    worksheet.Cell(currentRow, 13).Value += (expense.other != null ? " HUF" : "");
                     worksheet.Cell(currentRow, 14).Value = expense.Date;
                 }
 
@@ -293,7 +245,7 @@ namespace Cargotruck.Server.Controllers
 
         //iTextSharp needed !!!
         [HttpGet]
-        public async Task<string> PDF(string lang)
+        public string PDF(string lang)
         {
             var expenses = from r in _context.Expenses select r;
 
@@ -558,7 +510,7 @@ namespace Cargotruck.Server.Controllers
 
         //iTextSharp needed !!!
         [HttpGet]
-        public async Task<string> CSV(string lang)
+        public string CSV(string lang)
         {
             var expenses = from r in _context.Expenses select r;
 

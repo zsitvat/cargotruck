@@ -124,7 +124,7 @@
                 <NavLink href="Tasks" data-title="@localizer["go_to_tasks"]">
                     <h2 class="align-center fw-bold">@localizer["Task"]</h2>
                 </NavLink>
-                <select data-title="@localizer["Currency"]" class="form-control currency" @oninput="@((e)=>onChangeGetType(e))" @bind="currency">
+                <select data-title="@localizer["Currency"]" class="form-control currency" @oninput="@((e)=>OnChangeGetType(e))" @bind="currency">
                     <option value="HUF">HUF</option>
                     <option value="EUR">EUR</option>
                     <option value="USD">USD</option>
@@ -167,7 +167,7 @@
                         {
                             @if (currency != "HUF" && rates != null)
                             {
-                                @(GetCurrencyAsync(idDataTask.Payment).Result.Value.ToString("0.##") + " " + currency)
+                                @(GetCurrency(idDataTask.Payment).Value.ToString("0.##") + " " + currency)
                             }
                             else if (idDataTask.Payment != 0)
                             {
@@ -185,7 +185,7 @@
                         {
                             @if (currency != "HUF" && rates != null)
                             {
-                                @(GetCurrencyAsync(idDataTask.Final_Payment).Result.Value.ToString("0.##") + " " + currency)
+                                @(GetCurrency(idDataTask.Final_Payment).Value.ToString("0.##") + " " + currency)
                             }
                             else if (idDataTask.Final_Payment != 0)
                             {
@@ -203,7 +203,7 @@
                         {
                             @if (currency != "HUF" && rates != null)
                             {
-                                @(GetCurrencyAsync(idDataTask.Penalty).Result.Value.ToString("0.##") + " " + currency)
+                                @(GetCurrency(idDataTask.Penalty).Value.ToString("0.##") + " " + currency)
                             }
                             else if (idDataTask.Penalty != 0)
                             {
@@ -225,7 +225,7 @@
                 <NavLink href="Expenses" data-title="@localizer["go_to_expenses"]">
                     <h2 class="align-center fw-bold">@localizer["Expense"]</h2>
                 </NavLink>
-                <select data-title="@localizer["Currency"]" class="form-control currency" @oninput="@((e)=>onChangeGetType(e))" @bind="currency">
+                <select data-title="@localizer["Currency"]" class="form-control currency" @oninput="@((e)=>OnChangeGetType(e))" @bind="currency">
                     <option value="HUF">HUF</option>
                     <option value="EUR">EUR</option>
                     <option value="USD">USD</option>
@@ -254,7 +254,7 @@
                         {
                             @if (currency != "HUF" && rates != null)
                             {
-                                @(GetCurrencyAsync(idDataExpense?.Fuel).Result.Value.ToString("0.##") + " " + currency)
+                                @(GetCurrency(idDataExpense?.Fuel).Value.ToString("0.##") + " " + currency)
                             }
                             else if (idDataExpense?.Fuel != 0)
                             {
@@ -272,7 +272,7 @@
                         {
                             @if (currency != "HUF" && rates != null)
                             {
-                                @(GetCurrencyAsync(idDataExpense?.Road_fees).Result.Value.ToString("0.##") + " " + currency)
+                                @(GetCurrency(idDataExpense?.Road_fees).Value.ToString("0.##") + " " + currency)
                             }
                             else if (idDataExpense?.Road_fees != 0)
                             {
@@ -290,7 +290,7 @@
                         {
                             @if (currency != "HUF" && rates != null)
                             {
-                                @(GetCurrencyAsync(idDataExpense?.Penalty).Result.Value.ToString("0.##") + " " + currency)
+                                @(GetCurrency(idDataExpense?.Penalty).Value.ToString("0.##") + " " + currency)
                             }
                             else if (idDataExpense?.Penalty != 0)
                             {
@@ -308,7 +308,7 @@
                         {
                             @if (currency != "HUF" && rates != null)
                             {
-                                @(GetCurrencyAsync(idDataExpense?.Driver_spending).Result.Value.ToString("0.##") + " " + currency)
+                                @(GetCurrency(idDataExpense?.Driver_spending).Value.ToString("0.##") + " " + currency)
                             }
                             else if (idDataExpense?.Driver_spending != 0)
                             {
@@ -326,7 +326,7 @@
                         {
                             @if (currency != "HUF" && rates != null)
                             {
-                                @(GetCurrencyAsync(idDataExpense?.Driver_salary).Result.Value.ToString("0.##") + " " + currency)
+                                @(GetCurrency(idDataExpense?.Driver_salary).Value.ToString("0.##") + " " + currency)
                             }
                             else if (idDataExpense?.Driver_salary != 0)
                             {
@@ -344,7 +344,7 @@
                         {
                             @if (currency != "HUF" && rates != null)
                             {
-                                @(GetCurrencyAsync(idDataExpense?.Repair_cost).Result.Value.ToString("0.##") + " " + currency)
+                                @(GetCurrency(idDataExpense?.Repair_cost).Value.ToString("0.##") + " " + currency)
                             }
                             else if (idDataExpense?.Repair_cost != 0)
                             {
@@ -363,7 +363,7 @@
                         {
                             @if (currency != "HUF" && rates != null)
                             {
-                                @(GetCurrencyAsync(idDataExpense?.Cost_of_storage).Result.Value.ToString("0.##") + " " + currency)
+                                @(GetCurrency(idDataExpense?.Cost_of_storage).Value.ToString("0.##") + " " + currency)
                             }
                             else if (idDataExpense?.Cost_of_storage != 0)
                             {
@@ -381,7 +381,7 @@
                         {
                             @if (currency != "HUF" && rates != null)
                             {
-                                @(GetCurrencyAsync(idDataExpense?.other).Result.Value.ToString("0.##") + " " + currency)
+                                @(GetCurrency(idDataExpense?.other).Value.ToString("0.##") + " " + currency)
                             }
                             else if (idDataExpense?.other != 0)
                             {
@@ -401,107 +401,3 @@
         </div>
     </div>
 </div>
-
-@code {
-    string currency = "HUF";
-    Dictionary<string, dynamic>? rates;
-    string? currency_api_error;
-    bool showError = true;
-    Cargoes? idDataCargo;
-    Tasks? idDataTask;
-    Expenses? idDataExpense;
-    Roads? idDataRoad;
-    Warehouses? idDataWarehouse;
-    Trucks? idDataTruck;
-    [Parameter] public string? getById { get; set; }
-    [Parameter] public string? getByIdType { get; set; }
-    [Parameter] public EventCallback onSetToNull { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        if (rates == null && (getByIdType == "task" || getByIdType == "expense"))
-        {
-            try
-            {
-                rates = await CurrencyExchange.GetRatesAsync(client);
-            }
-            catch (Exception ex)
-            {
-
-                currency_api_error = $"Error - Type: {ex.GetType()}, Message: {ex.Message}";
-                if (ex.GetType().ToString() == "Microsoft.CSharp.RuntimeBinder.RuntimeBinderException")
-                {
-                    currency_api_error = "currency_api_is_exceeded";
-                }
-            }
-        }
-    }
-
-    protected override async Task OnParametersSetAsync()
-    {
-        if (getById != null)
-        {
-            if (getByIdType == "cargo" || getByIdType == "storage")
-            {
-                idDataCargo = await client.GetFromJsonAsync<Cargoes?>($"api/cargoes/getbyid/{getById}");
-            }
-            else if (getByIdType == "task")
-            {
-                idDataTask = await client.GetFromJsonAsync<Tasks?>($"api/tasks/getbyid/{getById}");
-            }
-            else if (getByIdType == "expense")
-            {
-                idDataExpense = await client.GetFromJsonAsync<Expenses?>($"api/expenses/getbyid/{getById}");
-            }
-            else if (getByIdType == "road" || getByIdType == "repair")
-            {
-                idDataRoad = await client.GetFromJsonAsync<Roads?>($"api/roads/getbyid/{getById}");
-            }
-            else if (getByIdType == "warehouse")
-            {
-                idDataWarehouse = await client.GetFromJsonAsync<Warehouses?>($"api/warehouses/getbyid/{getById}");
-            }
-            else if (getByIdType == "truck")
-            {
-                idDataTruck = await client.GetFromJsonAsync<Trucks?>($"api/trucks/getbyid/{getById}");
-            }
-            else
-            { 
-                idDataCargo = null;
-                idDataTask = null;
-                idDataExpense = null;
-                idDataRoad = null;
-                idDataWarehouse = null;
-                idDataTruck = null;
-                getById = null;
-            }
-        }  
-    }
-
-    protected async Task SetToNull()
-    {
-        await onSetToNull.InvokeAsync();
-    }
-
-    public async Task<float?> GetCurrencyAsync(int? amount)
-    {
-        float? conversionNum = amount;
-        if (rates != null && currency != "HUF")
-        {
-            if (currency != "EUR")
-            {
-                conversionNum = (float)((amount / rates["HUF"]) * rates[currency]);
-            }
-            else
-            {
-                conversionNum = (float)(amount / rates["HUF"]);
-            }
-        }
-        return conversionNum;
-    }
-
-    async void onChangeGetType(ChangeEventArgs e)
-    {
-        currency = e.Value.ToString();
-    }
-}

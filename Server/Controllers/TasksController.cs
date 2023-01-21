@@ -75,105 +75,41 @@ namespace Cargotruck.Server.Controllers
             sortOrder = sortOrder == "Penalty" ? (desc ? "Penalty_desc" : "Penalty") : (sortOrder);
             sortOrder = sortOrder == "Date" || String.IsNullOrEmpty(sortOrder) ? (desc ? "Date_desc" : "") : (sortOrder);
 
-            switch (sortOrder)
+            t = sortOrder switch
             {
-                case "Partner_desc":
-                    t = t.OrderByDescending(s => s.Partner).ToList();
-                    break;
-                case "Partner":
-                    t = t.OrderBy(s => s.Partner).ToList();
-                    break;
-                case "Description_desc":
-                    t = t.OrderByDescending(s => s.Description).ToList();
-                    break;
-                case "Description":
-                    t = t.OrderBy(s => s.Description).ToList();
-                    break;
-                case "Place_of_receipt_desc":
-                    t = t.OrderByDescending(s => s.Place_of_receipt).ToList();
-                    break;
-                case "Place_of_receipt":
-                    t = t.OrderBy(s => s.Place_of_receipt).ToList();
-                    break;
-                case "Time_of_receipt_desc":
-                    t = t.OrderByDescending(s => s.Time_of_receipt).ToList();
-                    break;
-                case "Time_of_receipt":
-                    t = t.OrderBy(s => s.Time_of_receipt).ToList();
-                    break;
-                case "Place_of_delivery_desc":
-                    t = t.OrderByDescending(s => s.Place_of_delivery).ToList();
-                    break;
-                case "Place_of_delivery":
-                    t = t.OrderBy(s => s.Place_of_delivery).ToList();
-                    break;
-                case "Time_of_delivery_desc":
-                    t = t.OrderByDescending(s => s.Time_of_delivery).ToList();
-                    break;
-                case "Time_of_delivery":
-                    t = t.OrderBy(s => s.Time_of_delivery).ToList();
-                    break;
-                case "other_stops_desc":
-                    t = t.OrderByDescending(s => s.other_stops).ToList();
-                    break;
-                case "other_stops":
-                    t = t.OrderBy(s => s.other_stops).ToList();
-                    break;
-                case "Id_cargo_desc":
-                    t = t.OrderByDescending(s => s.Id_cargo).ToList();
-                    break;
-                case "Id_cargo":
-                    t = t.OrderBy(s => s.Id_cargo).ToList();
-                    break;
-                case "Storage_time_desc":
-                    t = t.OrderByDescending(s => s.Storage_time).ToList();
-                    break;
-                case "Storage_time":
-                    t = t.OrderBy(s => s.Storage_time).ToList();
-                    break;
-                case "Completed_desc":
-                    t = t.OrderByDescending(s => s.Completed).ToList();
-                    break;
-                case "Completed":
-                    t = t.OrderBy(s => s.Completed).ToList();
-                    break;
-                case "Completion_time_desc":
-                    t = t.OrderByDescending(s => s.Completion_time).ToList();
-                    break;
-                case "Completion_time":
-                    t = t.OrderBy(s => s.Completion_time).ToList();
-                    break;
-                case "Time_of_delay_desc":
-                    t = t.OrderByDescending(s => s.Time_of_delay).ToList();
-                    break;
-                case "Time_of_delay":
-                    t = t.OrderBy(s => s.Time_of_delay).ToList();
-                    break;
-                case "Payment_desc":
-                    t = t.OrderByDescending(s => s.Payment).ToList();
-                    break;
-                case "Payment":
-                    t = t.OrderBy(s => s.Payment).ToList();
-                    break;
-                case "Final_Payment_desc":
-                    t = t.OrderByDescending(s => s.Final_Payment).ToList();
-                    break;
-                case "Final_Payment":
-                    t = t.OrderBy(s => s.Final_Payment).ToList();
-                    break;
-                case "Penalty_desc":
-                    t = t.OrderByDescending(s => s.Penalty).ToList();
-                    break;
-                case "Penalty":
-                    t = t.OrderBy(s => s.Penalty).ToList();
-                    break;
-                case "Date_desc":
-                    t = t.OrderByDescending(s => s.Date).ToList();
-                    break;
-                default:
-                    t = t.OrderBy(s => s.Date).ToList();
-                    break;
-            }
+                "Partner_desc" => t.OrderByDescending(s => s.Partner).ToList(),
+                "Partner" => t.OrderBy(s => s.Partner).ToList(),
+                "Description_desc" => t.OrderByDescending(s => s.Description).ToList(),
+                "Description" => t.OrderBy(s => s.Description).ToList(),
+                "Place_of_receipt_desc" => t.OrderByDescending(s => s.Place_of_receipt).ToList(),
+                "Place_of_receipt" => t.OrderBy(s => s.Place_of_receipt).ToList(),
+                "Time_of_receipt_desc" => t.OrderByDescending(s => s.Time_of_receipt).ToList(),
+                "Time_of_receipt" => t.OrderBy(s => s.Time_of_receipt).ToList(),
+                "Place_of_delivery_desc" => t.OrderByDescending(s => s.Place_of_delivery).ToList(),
+                "Place_of_delivery" => t.OrderBy(s => s.Place_of_delivery).ToList(),
+                "Time_of_delivery_desc" => t.OrderByDescending(s => s.Time_of_delivery).ToList(),
+                "Time_of_delivery" => t.OrderBy(s => s.Time_of_delivery).ToList(),
+                "other_stops_desc" => t.OrderByDescending(s => s.other_stops).ToList(),
+                "other_stops" => t.OrderBy(s => s.other_stops).ToList(),
+                "Id_cargo_desc" => t.OrderByDescending(s => s.Id_cargo).ToList(),
+                "Id_cargo" => t.OrderBy(s => s.Id_cargo).ToList(),
+                "Storage_time_desc" => t.OrderByDescending(s => s.Storage_time).ToList(),
+                "Storage_time" => t.OrderBy(s => s.Storage_time).ToList(),
+                "Completed_desc" => t.OrderByDescending(s => s.Completed).ToList(),
+                "Completed" => t.OrderBy(s => s.Completed).ToList(),
+                "Completion_time_desc" => t.OrderByDescending(s => s.Completion_time).ToList(),
+                "Completion_time" => t.OrderBy(s => s.Completion_time).ToList(),
+                "Time_of_delay_desc" => t.OrderByDescending(s => s.Time_of_delay).ToList(),
+                "Time_of_delay" => t.OrderBy(s => s.Time_of_delay).ToList(),
+                "Payment_desc" => t.OrderByDescending(s => s.Payment).ToList(),
+                "Payment" => t.OrderBy(s => s.Payment).ToList(),
+                "Final_Payment_desc" => t.OrderByDescending(s => s.Final_Payment).ToList(),
+                "Final_Payment" => t.OrderBy(s => s.Final_Payment).ToList(),
+                "Penalty_desc" => t.OrderByDescending(s => s.Penalty).ToList(),
+                "Penalty" => t.OrderBy(s => s.Penalty).ToList(),
+                "Date_desc" => t.OrderByDescending(s => s.Date).ToList(),
+                _ => t.OrderBy(s => s.Date).ToList(),
+            };
             t = t.Skip((page - 1) * pageSize).Take(pageSize).ToList();
             return Ok(t);
         }
@@ -267,7 +203,7 @@ namespace Cargotruck.Server.Controllers
 
         //closedXML needed !!!
         [HttpGet]
-        public async Task<string> Excel(string lang)
+        public string Excel(string lang)
         {
             var tasks = from t in _context.Tasks select t;
             using (var workbook = new XLWorkbook())
@@ -276,9 +212,9 @@ namespace Cargotruck.Server.Controllers
                 var currentRow = 1;
                 worksheet.Cell(currentRow, 1).Value = "Id";
                 worksheet.Cell(currentRow, 1).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 2).Value = lang == "hu" ?  Cargotruck.Shared.Resources.Resource.User_id : "User ID";
+                worksheet.Cell(currentRow, 2).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID";
                 worksheet.Cell(currentRow, 2).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 3).Value = lang == "hu" ?  Cargotruck.Shared.Resources.Resource.Partner : "Partner";
+                worksheet.Cell(currentRow, 3).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Partner : "Partner";
                 worksheet.Cell(currentRow, 3).Style.Font.SetBold();
                 worksheet.Cell(currentRow, 4).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Description : "Description";
                 worksheet.Cell(currentRow, 4).Style.Font.SetBold();
@@ -333,21 +269,21 @@ namespace Cargotruck.Server.Controllers
                     worksheet.Cell(currentRow, 18).Value = task.Date;
                 }
 
-                 using (var stream = new MemoryStream())
+                using (var stream = new MemoryStream())
                 {
                     workbook.SaveAs(stream);
                     var content = stream.ToArray();
                     return Convert.ToBase64String(content);
-                }    
+                }
             }
         }
 
         //iTextSharp needed !!!
         [HttpGet]
-        public async Task<string> PDF(string lang)
+        public string PDF(string lang)
         {
             var tasks = from t in _context.Tasks select t;
-          
+
             int pdfRowIndex = 1;
             Random rnd = new Random();
             int random = rnd.Next(1000000, 9999999);
@@ -399,16 +335,16 @@ namespace Cargotruck.Server.Controllers
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 });
-                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ?  Cargotruck.Shared.Resources.Resource.Partner : "Partner", font1))
+                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Partner : "Partner", font1))
                 {
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 });
-                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ?  Cargotruck.Shared.Resources.Resource.Description : "Description", font1))
+                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Description : "Description", font1))
                 {
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
-                }); 
+                });
                 table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Place_of_receipt : "Place of receipt", font1))
                 {
                     HorizontalAlignment = Element.ALIGN_CENTER,
@@ -577,7 +513,7 @@ namespace Cargotruck.Server.Controllers
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(task.Completed.ToString())) { s = task.Completed == true ? Cargotruck.Shared.Resources.Resource.True : Cargotruck.Shared.Resources.Resource.False ; }
+                    if (!string.IsNullOrEmpty(task.Completed.ToString())) { s = task.Completed == true ? Cargotruck.Shared.Resources.Resource.True : Cargotruck.Shared.Resources.Resource.False; }
                     else { s = "-"; }
                     table2.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
@@ -659,7 +595,7 @@ namespace Cargotruck.Server.Controllers
 
         //iTextSharp needed !!!
         [HttpGet]
-        public async Task<string>CSV(string lang)
+        public string CSV(string lang)
         {
             var tasks = from t in _context.Tasks select t;
 
@@ -688,8 +624,8 @@ namespace Cargotruck.Server.Controllers
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Penalty : "Penalty") + "; ");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date") + "; ");
             txt.Write("\n");
-            foreach (var task in tasks) 
-            {       
+            foreach (var task in tasks)
+            {
                 txt.Write(task.Id + ";");
                 txt.Write(task.Partner + ";");
                 txt.Write(task.Description + ";");
@@ -697,13 +633,13 @@ namespace Cargotruck.Server.Controllers
                 txt.Write(task.Time_of_receipt + ";");
                 txt.Write(task.Place_of_delivery + ";");
                 txt.Write(task.Time_of_delivery + ";");
-                txt.Write(task.other_stops + ";"); 
+                txt.Write(task.other_stops + ";");
                 txt.Write(task.Id_cargo + ";");
                 txt.Write(task.Storage_time + ";");
                 txt.Write(task.Completed + ";");
                 txt.Write(task.Completion_time + ";");
                 txt.Write(task.Time_of_delay + ";");
-                txt.Write(task.Payment + (task.Payment != null ? " HUF" :"") + ";");
+                txt.Write(task.Payment + (task.Payment != null ? " HUF" : "") + ";");
                 txt.Write(task.Final_Payment + (task.Final_Payment != null ? " HUF" : "") + ";");
                 txt.Write(task.Penalty + (task.Penalty != null ? " HUF" : "") + "; ");
                 txt.Write(task.Date + "; ");

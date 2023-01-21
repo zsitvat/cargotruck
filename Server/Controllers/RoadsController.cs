@@ -72,75 +72,31 @@ namespace Cargotruck.Server.Controllers
             sortOrder = sortOrder == "Expenses_id" ? (desc ? "Expenses_id_desc" : "Expenses_id") : (sortOrder);
             sortOrder = sortOrder == "Date" || String.IsNullOrEmpty(sortOrder) ? (desc ? "Date_desc" : "") : (sortOrder);
 
-            switch (sortOrder)
+            data = sortOrder switch
             {
-                case "Task_id_desc":
-                    data = data.OrderByDescending(s => s.Task_id).ToList();
-                    break;
-                case "Task_id":
-                    data = data.OrderBy(s => s.Task_id).ToList();
-                    break;
-                case "Id_cargo_desc":
-                    data = data.OrderByDescending(s => s.Id_cargo).ToList();
-                    break;
-                case "Id_cargo":
-                    data = data.OrderBy(s => s.Id_cargo).ToList();
-                    break;
-                case "Purpose_of_the_trip_desc":
-                    data = data.OrderByDescending(s => s.Purpose_of_the_trip).ToList();
-                    break;
-                case "Purpose_of_the_trip":
-                    data = data.OrderBy(s => s.Purpose_of_the_trip).ToList();
-                    break;
-                case "Starting_date_desc":
-                    data = data.OrderByDescending(s => s.Starting_date).ToList();
-                    break;
-                case "Starting_date":
-                    data = data.OrderBy(s => s.Starting_date).ToList();
-                    break;
-                case "Ending_date_desc":
-                    data = data.OrderByDescending(s => s.Ending_date).ToList();
-                    break;
-                case "Ending_date":
-                    data = data.OrderBy(s => s.Ending_date).ToList();
-                    break;
-                case "Starting_place_desc":
-                    data = data.OrderByDescending(s => s.Starting_place).ToList();
-                    break;
-                case "Starting_place":
-                    data = data.OrderBy(s => s.Starting_place).ToList();
-                    break;
-                case "Ending_place_desc":
-                    data = data.OrderByDescending(s => s.Ending_place).ToList();
-                    break;
-                case "Ending_place":
-                    data = data.OrderBy(s => s.Ending_place).ToList();
-                    break;
-                case "Direction_desc":
-                    data = data.OrderByDescending(s => s.Direction).ToList();
-                    break;
-                case "Direction":
-                    data = data.OrderBy(s => s.Direction).ToList();
-                    break;
-                case "Fuel_desc":
-                    data = data.OrderByDescending(s => s.Fuel).ToList();
-                    break;
-                case "Fuel":
-                    data = data.OrderBy(s => s.Fuel).ToList();
-                    break;
-                case "Expenses_id_desc":
-                    data = data.OrderByDescending(s => s.Expenses_id).ToList();
-                    break;
-                case "Expenses_id":
-                    data = data.OrderBy(s => s.Expenses_id).ToList();
-                    break;
-                case "Date_desc":
-                    data = data.OrderByDescending(s => s.Date).ToList();
-                    break;
-                default:
-                    data = data.OrderBy(s => s.Date).ToList();
-                    break;
-            }
+                "Task_id_desc" => data.OrderByDescending(s => s.Task_id).ToList(),
+                "Task_id" => data.OrderBy(s => s.Task_id).ToList(),
+                "Id_cargo_desc" => data.OrderByDescending(s => s.Id_cargo).ToList(),
+                "Id_cargo" => data.OrderBy(s => s.Id_cargo).ToList(),
+                "Purpose_of_the_trip_desc" => data.OrderByDescending(s => s.Purpose_of_the_trip).ToList(),
+                "Purpose_of_the_trip" => data.OrderBy(s => s.Purpose_of_the_trip).ToList(),
+                "Starting_date_desc" => data.OrderByDescending(s => s.Starting_date).ToList(),
+                "Starting_date" => data.OrderBy(s => s.Starting_date).ToList(),
+                "Ending_date_desc" => data.OrderByDescending(s => s.Ending_date).ToList(),
+                "Ending_date" => data.OrderBy(s => s.Ending_date).ToList(),
+                "Starting_place_desc" => data.OrderByDescending(s => s.Starting_place).ToList(),
+                "Starting_place" => data.OrderBy(s => s.Starting_place).ToList(),
+                "Ending_place_desc" => data.OrderByDescending(s => s.Ending_place).ToList(),
+                "Ending_place" => data.OrderBy(s => s.Ending_place).ToList(),
+                "Direction_desc" => data.OrderByDescending(s => s.Direction).ToList(),
+                "Direction" => data.OrderBy(s => s.Direction).ToList(),
+                "Fuel_desc" => data.OrderByDescending(s => s.Fuel).ToList(),
+                "Fuel" => data.OrderBy(s => s.Fuel).ToList(),
+                "Expenses_id_desc" => data.OrderByDescending(s => s.Expenses_id).ToList(),
+                "Expenses_id" => data.OrderBy(s => s.Expenses_id).ToList(),
+                "Date_desc" => data.OrderByDescending(s => s.Date).ToList(),
+                _ => data.OrderBy(s => s.Date).ToList(),
+            };
             data = data.Skip((page - 1) * pageSize).Take(pageSize).ToList();
             return Ok(data);
         }
@@ -219,7 +175,7 @@ namespace Cargotruck.Server.Controllers
 
         //closedXML needed !!!
         [HttpGet]
-        public async Task<string> Excel(string lang)
+        public string Excel(string lang)
         {
             var roads = from data in _context.Roads select data;
             using (var workbook = new XLWorkbook())
@@ -282,7 +238,7 @@ namespace Cargotruck.Server.Controllers
 
         //iTextSharp needed !!!
         [HttpGet]
-        public async Task<string> PDF(string lang)
+        public string PDF(string lang)
         {
             var roads = from r in _context.Roads select r;
 
@@ -414,7 +370,7 @@ namespace Cargotruck.Server.Controllers
 
 
                 document.Add(table);
-                document.Add(new Paragraph("\n"));    
+                document.Add(new Paragraph("\n"));
                 table2.AddCell(new PdfPCell(new Phrase("Id", font1))
                 {
                     HorizontalAlignment = Element.ALIGN_CENTER,
@@ -474,7 +430,7 @@ namespace Cargotruck.Server.Controllers
                     });
                     if (!string.IsNullOrEmpty(road.Direction.ToString())) { s = road.Direction.ToString(); }
                     else { s = "-"; }
-                    table2.AddCell(new PdfPCell(new Phrase( s.ToString()=="TO" ? lang=="hu" ? Cargotruck.Shared.Resources.Resource.to: "Go to the direction" : lang == "hu" ? Cargotruck.Shared.Resources.Resource.from : "Go from the direction", font2))
+                    table2.AddCell(new PdfPCell(new Phrase(s.ToString() == "TO" ? lang == "hu" ? Cargotruck.Shared.Resources.Resource.to : "Go to the direction" : lang == "hu" ? Cargotruck.Shared.Resources.Resource.from : "Go from the direction", font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
@@ -523,7 +479,7 @@ namespace Cargotruck.Server.Controllers
 
         //iTextSharp needed !!!
         [HttpGet]
-        public async Task<string> CSV(string lang)
+        public string CSV(string lang)
         {
             var roads = from r in _context.Roads select r;
 
@@ -542,7 +498,7 @@ namespace Cargotruck.Server.Controllers
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Ending_date : "Ending_date") + ";");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Starting_place : "Starting place") + ";");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Ending_place : "Ending_place") + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Direction : "Direction") + ";" );
+            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Direction : "Direction") + ";");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Fuel : "Fuel") + ";");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Expenses_id : "Expenses_id") + ";");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date") + ";");
@@ -554,7 +510,7 @@ namespace Cargotruck.Server.Controllers
                 txt.Write(road.User_id + ";");
                 txt.Write(road.Task_id + ";");
                 txt.Write(road.Id_cargo + ";");
-                txt.Write(road.Purpose_of_the_trip + ";"); 
+                txt.Write(road.Purpose_of_the_trip + ";");
                 txt.Write(road.Starting_date + ";");
                 txt.Write(road.Ending_date + ";");
                 txt.Write(road.Starting_place + ";");

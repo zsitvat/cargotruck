@@ -639,9 +639,34 @@ textarea, label {
     }
 }
 
+@media (min-width: 1000px) {
+    .col-lg-8 {
+        width: 80.66666667%;
+    }
+}
+
+
 @media (min-width: 1200px) {
     .col-lg-8 {
-        width: 66.66666667%;
+        width: 76.66666667%;
+    }
+}
+
+@media (min-width: 1420px) {
+    .col-lg-8 {
+        width: 68%;
+    }
+}
+
+@media (min-width: 1600px) {
+    .col-lg-8 {
+        width: 58%;
+    }
+}
+
+@media (min-width: 1800px) {
+    .col-lg-8 {
+        width: 58%;
     }
 }
 

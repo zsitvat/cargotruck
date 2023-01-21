@@ -68,64 +68,28 @@ namespace Cargotruck.Server.Controllers
             sortOrder = sortOrder == "Storage_starting_time" ? (desc ? "Storage_starting_time_desc" : "Storage_starting_time") : (sortOrder);
             sortOrder = sortOrder == "Date" || String.IsNullOrEmpty(sortOrder) ? (desc ? "Date_desc" : "") : (sortOrder);
 
-            switch (sortOrder)
+            data = sortOrder switch
             {
-                case "Task_id_desc":
-                    data= data.OrderByDescending(s => s.Task_id).ToList();
-                    break;
-                case "Task_id":
-                    data= data.OrderBy(s => s.Task_id).ToList();
-                    break;
-                case "Weight_desc":
-                    data= data.OrderByDescending(s => s.Weight).ToList();
-                    break;
-                case "Weight":
-                    data= data.OrderBy(s => s.Weight).ToList();
-                    break;
-                case "Description_desc":
-                    data= data.OrderByDescending(s => s.Description).ToList();
-                    break;
-                case "Description":
-                    data= data.OrderBy(s => s.Description).ToList();
-                    break;
-                case "Delivery_requirements_desc":
-                    data= data.OrderByDescending(s => s.Delivery_requirements).ToList();
-                    break;
-                case "Delivery_requirements":
-                    data= data.OrderBy(s => s.Delivery_requirements).ToList();
-                    break;
-                case "Vehicle_registration_number_desc":
-                    data= data.OrderByDescending(s => s.Vehicle_registration_number).ToList();
-                    break;
-                case "Vehicle_registration_number":
-                    data= data.OrderBy(s => s.Vehicle_registration_number).ToList();
-                    break;
-                case "Warehouse_id_desc":
-                    data= data.OrderByDescending(s => s.Warehouse_id).ToList();
-                    break;
-                case "Warehouse_id":
-                    data= data.OrderBy(s => s.Warehouse_id).ToList();
-                    break;
-                case "Warehouse_section_desc":
-                    data= data.OrderByDescending(s => s.Warehouse_section).ToList();
-                    break;
-                case "Warehouse_section":
-                    data= data.OrderBy(s => s.Warehouse_section).ToList();
-                    break;
-                case "Storage_starting_time_desc":
-                    data= data.OrderByDescending(s => s.Storage_starting_time).ToList();
-                    break;
-                case "Storage_starting_time":
-                    data= data.OrderBy(s => s.Storage_starting_time).ToList();
-                    break;
-                case "Date_desc":
-                    data= data.OrderByDescending(s => s.Date).ToList();
-                    break;
-                default:
-                    data= data.OrderBy(s => s.Date).ToList();
-                    break;
-            }
-            data= data.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+                "Task_id_desc" => data.OrderByDescending(s => s.Task_id).ToList(),
+                "Task_id" => data.OrderBy(s => s.Task_id).ToList(),
+                "Weight_desc" => data.OrderByDescending(s => s.Weight).ToList(),
+                "Weight" => data.OrderBy(s => s.Weight).ToList(),
+                "Description_desc" => data.OrderByDescending(s => s.Description).ToList(),
+                "Description" => data.OrderBy(s => s.Description).ToList(),
+                "Delivery_requirements_desc" => data.OrderByDescending(s => s.Delivery_requirements).ToList(),
+                "Delivery_requirements" => data.OrderBy(s => s.Delivery_requirements).ToList(),
+                "Vehicle_registration_number_desc" => data.OrderByDescending(s => s.Vehicle_registration_number).ToList(),
+                "Vehicle_registration_number" => data.OrderBy(s => s.Vehicle_registration_number).ToList(),
+                "Warehouse_id_desc" => data.OrderByDescending(s => s.Warehouse_id).ToList(),
+                "Warehouse_id" => data.OrderBy(s => s.Warehouse_id).ToList(),
+                "Warehouse_section_desc" => data.OrderByDescending(s => s.Warehouse_section).ToList(),
+                "Warehouse_section" => data.OrderBy(s => s.Warehouse_section).ToList(),
+                "Storage_starting_time_desc" => data.OrderByDescending(s => s.Storage_starting_time).ToList(),
+                "Storage_starting_time" => data.OrderBy(s => s.Storage_starting_time).ToList(),
+                "Date_desc" => data.OrderByDescending(s => s.Date).ToList(),
+                _ => data.OrderBy(s => s.Date).ToList(),
+            };
+            data = data.Skip((page - 1) * pageSize).Take(pageSize).ToList();
             return Ok(data);
         }
 
@@ -218,7 +182,7 @@ namespace Cargotruck.Server.Controllers
 
         //closedXML needed !!!
         [HttpGet]
-        public async Task<string> Excel(string lang)
+        public string Excel(string lang)
         {
             var cargoes = from data in _context.Cargoes select data;
             using (var workbook = new XLWorkbook())
@@ -275,7 +239,7 @@ namespace Cargotruck.Server.Controllers
 
         //iTextSharp needed !!!
         [HttpGet]
-        public async Task<string> PDF(string lang)
+        public string PDF(string lang)
         {
             var cargoes = from data in _context.Cargoes select data;
 
@@ -504,7 +468,7 @@ namespace Cargotruck.Server.Controllers
 
         //iTextSharp needed !!!
         [HttpGet]
-        public async Task<string> CSV(string lang)
+        public string CSV(string lang)
         {
             var cargoes = from data in _context.Cargoes select data;
 

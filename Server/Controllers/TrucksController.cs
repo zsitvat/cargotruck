@@ -57,45 +57,21 @@ namespace Cargotruck.Server.Controllers
             sortOrder = sortOrder == "Max_weight" ? (desc ? "Max_weight_desc" : "Max_weight") : (sortOrder);
             sortOrder = sortOrder == "Date" || String.IsNullOrEmpty(sortOrder) ? (desc ? "Date_desc" : "") : (sortOrder);
 
-            switch (sortOrder)
+            data = sortOrder switch
             {
-                case "Vehicle_registration_number_desc":
-                    data = data.OrderByDescending(s => s.Vehicle_registration_number).ToList();
-                    break;
-                case "Vehicle_registration_number":
-                    data = data.OrderBy(s => s.Vehicle_registration_number).ToList();
-                    break;
-                case "Brand_desc":
-                    data = data.OrderByDescending(s => s.Brand).ToList();
-                    break;
-                case "Brand":
-                    data = data.OrderBy(s => s.Brand).ToList();
-                    break;
-                case "Status_desc":
-                    data = data.OrderByDescending(s => s.Status).ToList();
-                    break;
-                case "Status":
-                    data = data.OrderBy(s => s.Status).ToList();
-                    break;
-                case "Road_id_desc":
-                    data = data.OrderByDescending(s => s.Road_id).ToList();
-                    break;
-                case "Road_id":
-                    data = data.OrderBy(s => s.Road_id).ToList();
-                    break;
-                case "Max_weight_desc":
-                    data = data.OrderByDescending(s => s.Max_weight).ToList();
-                    break;
-                case "Max_weight":
-                    data = data.OrderBy(s => s.Max_weight).ToList();
-                    break;
-                case "Date_desc":
-                    data = data.OrderByDescending(s => s.Date).ToList();
-                    break;
-                default:
-                    data = data.OrderBy(s => s.Date).ToList();
-                    break;
-            }
+                "Vehicle_registration_number_desc" => data.OrderByDescending(s => s.Vehicle_registration_number).ToList(),
+                "Vehicle_registration_number" => data.OrderBy(s => s.Vehicle_registration_number).ToList(),
+                "Brand_desc" => data.OrderByDescending(s => s.Brand).ToList(),
+                "Brand" => data.OrderBy(s => s.Brand).ToList(),
+                "Status_desc" => data.OrderByDescending(s => s.Status).ToList(),
+                "Status" => data.OrderBy(s => s.Status).ToList(),
+                "Road_id_desc" => data.OrderByDescending(s => s.Road_id).ToList(),
+                "Road_id" => data.OrderBy(s => s.Road_id).ToList(),
+                "Max_weight_desc" => data.OrderByDescending(s => s.Max_weight).ToList(),
+                "Max_weight" => data.OrderBy(s => s.Max_weight).ToList(),
+                "Date_desc" => data.OrderByDescending(s => s.Date).ToList(),
+                _ => data.OrderBy(s => s.Date).ToList(),
+            };
             data = data.Skip((page - 1) * pageSize).Take(pageSize).ToList();
             return Ok(data);
         }
@@ -124,7 +100,7 @@ namespace Cargotruck.Server.Controllers
         public async Task<IActionResult> PageCount()
         {
             var data = await _context.Trucks.ToListAsync();
-            int PageCount = data.Count();
+            int PageCount = data.Count;
             return Ok(PageCount);
         }
 
@@ -164,7 +140,7 @@ namespace Cargotruck.Server.Controllers
 
         //closedXML needed !!!
         [HttpGet]
-        public async Task<string> Excel(string lang)
+        public string Excel(string lang)
         {
             var trucks = from data in _context.Trucks select data;
             using (var workbook = new XLWorkbook())
@@ -212,7 +188,7 @@ namespace Cargotruck.Server.Controllers
 
         //iTextSharp needed !!!
         [HttpGet]
-        public async Task<string> PDF(string lang)
+        public string PDF(string lang)
         {
             var trucks = from data in _context.Trucks select data;
 
@@ -231,7 +207,7 @@ namespace Cargotruck.Server.Controllers
             Font font2 = FontFactory.GetFont(FontFactory.TIMES_ROMAN, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 10);
 
             System.Type type = typeof(Trucks);
-            var column_number = (type.GetProperties().Length)-1;
+            var column_number = (type.GetProperties().Length) - 1;
             var columnDefinitionSize = new float[column_number];
             for (int i = 0; i < column_number; i++) columnDefinitionSize[i] = 1F;
 
@@ -377,7 +353,7 @@ namespace Cargotruck.Server.Controllers
 
         //iTextSharp needed !!!
         [HttpGet]
-        public async Task<string> CSV(string lang)
+        public string CSV(string lang)
         {
             var trucks = from data in _context.Trucks select data;
 
@@ -420,7 +396,7 @@ namespace Cargotruck.Server.Controllers
             byte[] convertedCsvFileContents = Encoding.Convert(Encoding.Default, utf8Encoding, csvFileContentsAsBytes);
             string convertedCsvFileContentsAsString = utf8Encoding.GetString(convertedCsvFileContents);
             System.IO.File.WriteAllText(filepath, convertedCsvFileContentsAsString, utf8Encoding);
-            
+
             //filestream for download
             FileStream sourceFile = new FileStream(filepath, FileMode.Open);
             MemoryStream memoryStream = new MemoryStream();
@@ -486,12 +462,12 @@ namespace Cargotruck.Server.Controllers
 
                                 }
                                 firstRow = false;
-                                if (titles.Count() == 0)
+                                if (titles.Count == 0)
                                 {
                                     haveColumns = true;
                                     l += 1;
                                 }
-                                else if (titles.Count() == 1 && titles.Contains("Id"))
+                                else if (titles.Count == 1 && titles.Contains("Id"))
                                 {
                                     haveColumns = true;
 
@@ -511,31 +487,16 @@ namespace Cargotruck.Server.Controllers
                                     else { list.Add(System.DBNull.Value); }
                                 }
 
-                                switch (list[l + 3])
+                                list[l + 3] = list[l + 3] switch
                                 {
-                                    case "delivering":
-                                        list[l + 3] = 0;
-                                        break;
-                                    case "on_road":
-                                        list[l + 3] = 1;
-                                        break;
-                                    case "garage":
-                                        list[l + 3] = 2;
-                                        break;
-                                    case "under_repair":
-                                        list[l + 3] = 3;
-                                        break;
-                                    case "loaned":
-                                        list[l + 3] = 4;
-                                        break;
-                                   case "rented":
-                                        list[l + 3] = 5;
-                                        break;
-                                    default:
-                                        list[l + 3] = System.DBNull.Value;
-                                        break;
-                                }
-
+                                    "delivering" => 0,
+                                    "on_road" => 1,
+                                    "garage" => 2,
+                                    "under_repair" => 3,
+                                    "loaned" => 4,
+                                    "rented" => 5,
+                                    _ => System.DBNull.Value,
+                                };
                                 var sql = @"Insert Into Trucks (User_id,Vehicle_registration_number,Brand,Status,Road_id,Max_weight,Date) 
                                 Values (@User_id,@Vehicle_registration_number,@Brand,@Status,@Road_id,@Max_weight,@Date)";
                                 var insert = await _context.Database.ExecuteSqlRawAsync(sql,

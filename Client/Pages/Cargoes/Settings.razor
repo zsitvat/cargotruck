@@ -96,6 +96,7 @@
     [Parameter] public  EventCallback  OnSettingsChanged { get; set; }
     [Parameter] public  EventCallback  OnSettingsClosed { get; set; }
     [Parameter] public EventCallback<int> OnInputChanged { get; set; }
+
     protected async Task SettingsChanged()
     {
         await OnSettingsChanged.InvokeAsync();

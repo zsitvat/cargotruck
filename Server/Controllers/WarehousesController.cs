@@ -45,27 +45,15 @@ namespace Cargotruck.Server.Controllers
             sortOrder = sortOrder == "Owner" ? (desc ? "Owner_desc" : "Owner") : (sortOrder);
             sortOrder = sortOrder == "Date" || String.IsNullOrEmpty(sortOrder) ? (desc ? "Date_desc" : "") : (sortOrder);
 
-            switch (sortOrder)
+            data = sortOrder switch
             {
-                case "Address_desc":
-                    data = data.OrderByDescending(s => s.Address).ToList();
-                    break;
-                case "Address":
-                    data = data.OrderBy(s => s.Address).ToList();
-                    break;
-                case "Owner_desc":
-                    data = data.OrderByDescending(s => s.Owner).ToList();
-                    break;
-                case "Owner":
-                    data = data.OrderBy(s => s.Owner).ToList();
-                    break;
-                case "Date_desc":
-                    data = data.OrderByDescending(s => s.Date).ToList();
-                    break;
-                default:
-                    data = data.OrderBy(s => s.Date).ToList();
-                    break;
-            }
+                "Address_desc" => data.OrderByDescending(s => s.Address).ToList(),
+                "Address" => data.OrderBy(s => s.Address).ToList(),
+                "Owner_desc" => data.OrderByDescending(s => s.Owner).ToList(),
+                "Owner" => data.OrderBy(s => s.Owner).ToList(),
+                "Date_desc" => data.OrderByDescending(s => s.Date).ToList(),
+                _ => data.OrderBy(s => s.Date).ToList(),
+            };
             data = data.Skip((page - 1) * pageSize).Take(pageSize).ToList();
             return Ok(data);
         }
@@ -88,7 +76,7 @@ namespace Cargotruck.Server.Controllers
         public async Task<IActionResult> PageCount()
         {
             var data = await _context.Warehouses.ToListAsync();
-            int PageCount = data.Count();
+            int PageCount = data.Count;
             return Ok(PageCount);
         }
 
@@ -128,7 +116,7 @@ namespace Cargotruck.Server.Controllers
 
         //closedXML needed !!!
         [HttpGet]
-        public async Task<string> Excel(string lang)
+        public string Excel(string lang)
         {
             var warehouses = from data in _context.Warehouses select data;
             var cargoes = from data in _context.Cargoes select data;
@@ -182,7 +170,7 @@ namespace Cargotruck.Server.Controllers
 
         //iTextSharp needed !!!
         [HttpGet]
-        public async Task<string> PDF(string lang)
+        public string PDF(string lang)
         {
             var warehouses = from data in _context.Warehouses select data;
             var cargoes = from data in _context.Cargoes select data;
@@ -202,7 +190,7 @@ namespace Cargotruck.Server.Controllers
             Font font2 = FontFactory.GetFont(FontFactory.TIMES_ROMAN, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 10);
 
             System.Type type = typeof(Warehouses);
-            var column_number = (type.GetProperties().Length); 
+            var column_number = (type.GetProperties().Length);
             var columnDefinitionSize = new float[column_number];
             for (int i = 0; i < column_number; i++) columnDefinitionSize[i] = 1F;
 
@@ -279,11 +267,12 @@ namespace Cargotruck.Server.Controllers
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (cargoes!=null) {
+                    if (cargoes != null)
+                    {
                         foreach (Cargoes cargo in cargoes)
                         {
-                            if(cargo.Warehouse_id == warehouse.Id)
-                            { 
+                            if (cargo.Warehouse_id == warehouse.Id)
+                            {
                                 s = (s + "[" + cargo.Id + "/" + cargo.Warehouse_section + "]");
                             }
                         }
@@ -330,7 +319,7 @@ namespace Cargotruck.Server.Controllers
 
         //iTextSharp needed !!!
         [HttpGet]
-        public async Task<string> CSV(string lang)
+        public string CSV(string lang)
         {
             var warehouses = from data in _context.Warehouses select data;
             var cargoes = from data in _context.Cargoes select data;
@@ -441,12 +430,12 @@ namespace Cargotruck.Server.Controllers
 
                                 }
                                 firstRow = false;
-                                if (titles.Count() == 0)
+                                if (titles.Count == 0)
                                 {
                                     haveColumns = true;
                                     l += 1;
                                 }
-                                else if (titles.Count() == 1 && titles.Contains("Id"))
+                                else if (titles.Count == 1 && titles.Contains("Id"))
                                 {
                                     haveColumns = true;
 
@@ -469,7 +458,7 @@ namespace Cargotruck.Server.Controllers
                                         nulls += 1;
                                     }
                                 }
-                                if (nulls != list.Count()) { 
+                                if (nulls != list.Count) { 
                                     var sql = @"Insert Into Warehouses (User_id,Address,Owner,Date) 
                                     Values (@User_id,@Address,@Owner,@Date)";
                                     var insert = await _context.Database.ExecuteSqlRawAsync(sql,

@@ -617,6 +617,10 @@ input[type=number] {
     margin-right: 1rem;
 }
 
+.settings-card label {
+    font-weight: bolder;
+}
+
 .getbyid-card {
     box-shadow: 0 0 1px rgb(0 0 0 / 15%);
     position: relative;
@@ -1341,11 +1345,10 @@ tbody td:first-child{
 
     @media (max-width: 640px) {
 
-        footer{
-            position:fixed;
-            bottom:0;
-            width:100%;
-
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
         }
 
         .hide {
@@ -1408,10 +1411,10 @@ tbody td:first-child{
             display: initial;
         }
 
-        .hideandshow-cards .getbyid-card, .hideandshow-cards .settings-card {
-            max-width: 100%;
-            width: 100%;
-        }
+            .hideandshow-cards .getbyid-card, .hideandshow-cards .settings-card {
+                max-width: 100%;
+                width: 100%;
+            }
 
         .date-filter {
             left: 0rem;
@@ -1499,9 +1502,9 @@ tbody td:first-child{
             width: 85%;
         }
 
-        .privacy-form input {
-            min-width: 90% !important;
-        }
+            .privacy-form input {
+                min-width: 90% !important;
+            }
 
         .hideandshow-cards p, .hideandshow-cards b, .hideandshow-cards, .hideandshow-cards h2 {
             font-size: 90%;
@@ -1564,9 +1567,9 @@ tbody td:first-child{
             width: 90%;
         }
 
-            .privacy-form input {
-                min-width: 80% !important;
-            }
+        .privacy-form input {
+            min-width: 80% !important;
+        }
     }
 
     tr td:first-child {
