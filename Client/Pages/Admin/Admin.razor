@@ -63,14 +63,18 @@ else
                                         i += 1;
                                         <tr>
                                             <td>@i</td>
-                                            <td><img class="table-img" src="@claims[$"img/{@item.Id}"]" /></td>
+                                            @if(claims!=null){
+                                                <td><img class="table-img" src="@claims[$"img/{@item.Id}"]" /></td>
+                                            }
                                             <td style="min-width: 18rem;">@item.Id</td>
                                             <td>@item.UserName</td>
                                             <td>@item.Email</td>
                                             <td>@item.PhoneNumber</td>
-                                            <td>@roles[item.Id]</td>
+                                            @if (roles!=null) { 
+                                                <td>@roles[item.Id]</td>
+                                            }
                                             <td>
-                                                @if(item.UserName == context.User.Identity.Name){
+                                                @if(item.UserName == context?.User?.Identity?.Name){
                                                     <a title="@localizer["Edit"]" class="btn fixed" href="/profile"><span class="oi oi-pencil" aria-hidden="true"></span></a>
                                                 }else{
                                                     <a title="@localizer["Edit"]" class="btn fixed" href="/profile/Edit/@item.Id"><span class="oi oi-pencil" aria-hidden="true"></span></a>
@@ -114,7 +118,7 @@ else
 
     async void onChangeGetFilter(ChangeEventArgs e)
     {
-        filter = e.Value.ToString();
+        filter = e.Value?.ToString();
         await OnInitializedAsync();
     }
 

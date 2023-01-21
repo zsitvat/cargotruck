@@ -107,7 +107,7 @@ namespace Cargotruck.Client.Components
 
         void OnChangeGetType(ChangeEventArgs e)
         {
-            currency = e.Value?.ToString();
+            currency = e.Value?.ToString()!;
         }
     }
 }

@@ -159,7 +159,7 @@
                         <p>@(idDataTask?.other_stops != null ? idDataTask.other_stops : "-")</p>
                         <p>@(idDataTask?.Id_cargo != null ? idDataTask.Id_cargo : "-")</p>
                         <p>@(idDataTask?.Storage_time != null ? idDataTask.Storage_time : "-")</p>
-                        <p>@(idDataTask?.Completed != null ? ( idDataTask.Completed ? localizer["True"] : localizer["False"]) : "-")</p>
+                        <p>@(idDataTask?.Completed != null ? (idDataTask.Completed ? localizer["True"] : localizer["False"]) : "-")</p>
                         <p>@(idDataTask?.Completion_time != null ? idDataTask.Completion_time : "-") </p>
                         <p>@(idDataTask?.Time_of_delay != null ? idDataTask.Time_of_delay : "-")</p>
                         <p>
@@ -167,14 +167,14 @@
                             {
                                 @if (currency != "HUF" && rates != null)
                                 {
-                                    @(GetCurrency(idDataTask.Payment).Value.ToString("0.##") + " " + currency)
+                                    @(GetCurrency(idDataTask.Payment)!.Value.ToString("0.##") + " " + currency)
                                 }
                                 else if (idDataTask.Payment != 0)
                                 {
                                     @(idDataTask.Payment + " HUF")
                                 }
-                           
-                            } 
+
+                            }
                             else
                             {
                                 @("-")
@@ -185,14 +185,14 @@
                             {
                                 @if (currency != "HUF" && rates != null)
                                 {
-                                    @(GetCurrency(idDataTask.Final_Payment).Value.ToString("0.##") + " " + currency)
+                                    @(GetCurrency(idDataTask.Final_Payment)!.Value.ToString("0.##") + " " + currency)
                                 }
                                 else if (idDataTask.Final_Payment != 0)
                                 {
                                     @(idDataTask.Final_Payment + " HUF")
                                 }
-                           
-                            } 
+
+                            }
                             else
                             {
                                 @("-")
@@ -203,14 +203,14 @@
                             {
                                 @if (currency != "HUF" && rates != null)
                                 {
-                                    @(GetCurrency(idDataTask.Penalty).Value.ToString("0.##") + " " + currency)
+                                    @(GetCurrency(idDataTask.Penalty)!.Value.ToString("0.##") + " " + currency)
                                 }
                                 else if (idDataTask.Penalty != 0)
                                 {
                                     @(idDataTask.Penalty + " HUF")
                                 }
-                           
-                            } 
+
+                            }
                             else
                             {
                                 @("-")
@@ -247,21 +247,21 @@
                         <p><b>@localizer["Date"]:</b></p>
                     </div>
                     <div class="column">
-                        <p>@(idDataExpense?.Type != null ? @localizer[idDataExpense.Type.ToString()] : "-")</p>
+                        <p>@(idDataExpense?.Type != null ? @localizer[idDataExpense.Type.ToString()!] : "-")</p>
                         <p>@(idDataExpense?.Type_id != null ? idDataExpense.Type_id : "-")</p>
                         <p>
                             @if (idDataExpense?.Fuel != null)
                             {
                                 @if (currency != "HUF" && rates != null)
                                 {
-                                    @(GetCurrency(idDataExpense?.Fuel).Value.ToString("0.##") + " " + currency)
+                                    @(GetCurrency(idDataExpense?.Fuel)!.Value.ToString("0.##") + " " + currency)
                                 }
                                 else if (idDataExpense?.Fuel != 0)
                                 {
                                     @(idDataExpense?.Fuel + " HUF")
                                 }
-                           
-                            } 
+
+                            }
                             else
                             {
                                 @("-")
@@ -272,14 +272,14 @@
                             {
                                 @if (currency != "HUF" && rates != null)
                                 {
-                                    @(GetCurrency(idDataExpense?.Road_fees).Value.ToString("0.##") + " " + currency)
+                                    @(GetCurrency(idDataExpense?.Road_fees)!.Value.ToString("0.##") + " " + currency)
                                 }
                                 else if (idDataExpense?.Road_fees != 0)
                                 {
                                     @(idDataExpense?.Road_fees + " HUF")
                                 }
-                           
-                            } 
+
+                            }
                             else
                             {
                                 @("-")
@@ -290,32 +290,32 @@
                             {
                                 @if (currency != "HUF" && rates != null)
                                 {
-                                    @(GetCurrency(idDataExpense?.Penalty).Value.ToString("0.##") + " " + currency)
+                                    @(GetCurrency(idDataExpense?.Penalty)!.Value.ToString("0.##") + " " + currency)
                                 }
                                 else if (idDataExpense?.Penalty != 0)
                                 {
                                     @(idDataExpense?.Penalty + " HUF")
                                 }
-                          
-                            }  
+
+                            }
                             else
                             {
                                 @("-")
                             }
                         </p>
-                            <p>
+                        <p>
                             @if (idDataExpense?.Driver_spending != null)
                             {
                                 @if (currency != "HUF" && rates != null)
                                 {
-                                    @(GetCurrency(idDataExpense?.Driver_spending).Value.ToString("0.##") + " " + currency)
+                                    @(GetCurrency(idDataExpense?.Driver_spending)!.Value.ToString("0.##") + " " + currency)
                                 }
                                 else if (idDataExpense?.Driver_spending != 0)
                                 {
                                     @(idDataExpense?.Driver_spending + " HUF")
                                 }
-                          
-                            }  
+
+                            }
                             else
                             {
                                 @("-")
@@ -326,14 +326,14 @@
                             {
                                 @if (currency != "HUF" && rates != null)
                                 {
-                                    @(GetCurrency(idDataExpense?.Driver_salary).Value.ToString("0.##") + " " + currency)
+                                    @(GetCurrency(idDataExpense?.Driver_salary)!.Value.ToString("0.##") + " " + currency)
                                 }
                                 else if (idDataExpense?.Driver_salary != 0)
                                 {
                                     @(idDataExpense?.Driver_salary + " HUF")
                                 }
-                           
-                            } 
+
+                            }
                             else
                             {
                                 @("-")
@@ -344,13 +344,13 @@
                             {
                                 @if (currency != "HUF" && rates != null)
                                 {
-                                    @(GetCurrency(idDataExpense?.Repair_cost).Value.ToString("0.##") + " " + currency)
+                                    @(GetCurrency(idDataExpense?.Repair_cost)!.Value.ToString("0.##") + " " + currency)
                                 }
                                 else if (idDataExpense?.Repair_cost != 0)
                                 {
                                     @(idDataExpense?.Repair_cost + " HUF")
                                 }
-                            
+
                             }
                             else
                             {
@@ -363,15 +363,15 @@
                             {
                                 @if (currency != "HUF" && rates != null)
                                 {
-                                    @(GetCurrency(idDataExpense?.Cost_of_storage).Value.ToString("0.##") + " " + currency)
+                                    @(GetCurrency(idDataExpense?.Cost_of_storage)!.Value.ToString("0.##") + " " + currency)
                                 }
                                 else if (idDataExpense?.Cost_of_storage != 0)
                                 {
                                     @(idDataExpense?.Cost_of_storage + " HUF")
                                 }
-                           
-                            } 
-                            else 
+
+                            }
+                            else
                             {
                                 @("-")
                             }
@@ -381,14 +381,14 @@
                             {
                                 @if (currency != "HUF" && rates != null)
                                 {
-                                    @(GetCurrency(idDataExpense?.other).Value.ToString("0.##") + " " + currency)
+                                    @(GetCurrency(idDataExpense?.other)!.Value.ToString("0.##") + " " + currency)
                                 }
                                 else if (idDataExpense?.other != 0)
                                 {
                                     @(idDataExpense?.other + " HUF")
                                 }
-                           
-                            } 
+
+                            }
                             else
                             {
                                 @("-")

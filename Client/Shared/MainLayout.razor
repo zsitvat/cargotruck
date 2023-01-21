@@ -76,7 +76,7 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        if (!(await AuthenticationState).User.Identity.IsAuthenticated)
+        if (!(await AuthenticationState!).User.Identity!.IsAuthenticated)
         {
             if (!navigationManager.Uri.ToString().Contains("login") && !navigationManager.Uri.ToString().Contains("Privacy"))
             {

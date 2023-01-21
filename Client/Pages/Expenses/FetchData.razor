@@ -140,9 +140,9 @@ else
                                     @if (showColumns[0])
                                     {
                                         <td>
-                                            if (item.Type != null)
+                                            @if (item.Type != null)
                                             {
-                                                @localizer[item.Type.ToString()]
+                                                @localizer[item.Type.ToString()!]
                                             }
                                         </td>
                                     }
@@ -150,7 +150,7 @@ else
                                     {
                                         if (item.Type_id != null)
                                         {
-                                            <td><button class="no-button" @onclick="@(()=>GetById(item.Type_id,item.Type?.ToString()))">@item.Type_id</button></td>
+                                            <td><button class="no-button" @onclick="@(()=>GetById(item.Type_id,item.Type?.ToString()!))">@item.Type_id</button></td>
                                         }
                                     }
                                     @if (showColumns[2])
@@ -160,7 +160,7 @@ else
                                             {
                                                 @if (currency != "HUF" && rates != null)
                                                 {
-                                                    @(GetCurrency(item.Fuel).Value.ToString("0.##") + " " + currency)
+                                                    @(GetCurrency(item.Fuel)!.Value.ToString("0.##") + " " + currency)
                                                 }
                                                 else
                                                 {
@@ -176,7 +176,7 @@ else
                                             {
                                                 @if (currency != "HUF" && rates != null)
                                                 {
-                                                    @(GetCurrency(item.Road_fees).Value.ToString("0.##") + " " + currency)
+                                                    @(GetCurrency(item.Road_fees)!.Value.ToString("0.##") + " " + currency)
                                                 }
                                                 else
                                                 {
@@ -192,7 +192,7 @@ else
                                                 {
                                                 @if (currency != "HUF" && rates != null)
                                                 {
-                                                    @(GetCurrency(item.Penalty).Value.ToString("0.##") + " " + currency)
+                                                    @(GetCurrency(item.Penalty)!.Value.ToString("0.##") + " " + currency)
                                                 }
                                                 else
                                                 {
@@ -208,7 +208,7 @@ else
                                                 {
                                                 @if (currency != "HUF" && rates != null)
                                                 {
-                                                    @(GetCurrency(item.Driver_spending).Value.ToString("0.##") + " " + currency)
+                                                    @(GetCurrency(item.Driver_spending)!.Value.ToString("0.##") + " " + currency)
                                                 }
                                                 else
                                                 {
@@ -224,7 +224,7 @@ else
                                             {
                                                 @if (currency != "HUF" && rates != null)
                                                 {
-                                                    @(GetCurrency(item.Driver_salary).Value.ToString("0.##") + " " + currency)
+                                                    @(GetCurrency(item.Driver_salary)!.Value.ToString("0.##") + " " + currency)
                                                 }
                                                 else
                                                 {
@@ -240,7 +240,7 @@ else
                                             {
                                                 @if (currency != "HUF" && rates != null)
                                                 {
-                                                    @(GetCurrency(item.Repair_cost).Value.ToString("0.##") + " " + currency)
+                                                    @(GetCurrency(item.Repair_cost)!.Value.ToString("0.##") + " " + currency)
                                                 }
                                                 else
                                                 {
@@ -260,7 +260,7 @@ else
                                             {
                                                 @if (currency != "HUF" && rates != null)
                                                 {
-                                                    @(GetCurrency(item.Cost_of_storage).Value.ToString("0.##") + " " + currency)
+                                                    @(GetCurrency(item.Cost_of_storage)!.Value.ToString("0.##") + " " + currency)
                                                 }
                                                 else
                                                 {
@@ -276,7 +276,7 @@ else
                                             {
                                                 @if (currency != "HUF" && rates != null)
                                                 {
-                                                    @(GetCurrency(item.other).Value.ToString("0.##") + " " + currency)
+                                                    @(GetCurrency(item.other)!.Value.ToString("0.##") + " " + currency)
                                                 }
                                                 else
                                                 {
@@ -310,7 +310,7 @@ else
         }
         @if (IdForGetById != null)
         {
-            <GetbyidComponent getById="@IdForGetById.ToString()" getByIdType="@getByIdType" onSetToNull="SetToNull" />
+            <GetbyidComponent getById="@IdForGetById.ToString()" getByIdType="@getByIdType" OnSetToNull="SetToNull" />
         }
     </div>
 }
