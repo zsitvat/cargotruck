@@ -28,7 +28,7 @@ namespace Cargotruck.Client.Pages.Trucks
         {
             if (e != null && e.Value.ToString() != "")
             {
-                dateFilter.StartDate = DateTime.Parse(e.Value.ToString());
+                dateFilter.StartDate = DateTime.Parse(e.Value?.ToString());
                 await OnInitializedAsync();
             }
         }
@@ -37,7 +37,7 @@ namespace Cargotruck.Client.Pages.Trucks
         {
             if (e != null && e.Value.ToString() != "")
             {
-                dateFilter.EndDate = DateTime.Parse(e.Value.ToString());
+                dateFilter.EndDate = DateTime.Parse(e.Value?.ToString());
                 await OnInitializedAsync();
             }
         }
@@ -52,8 +52,8 @@ namespace Cargotruck.Client.Pages.Trucks
 
         async Task Delete(int Id)
         {
-            var data = trucks.First(x => x.Id == Id);
-            if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {data.Vehicle_registration_number} - {data.Status} ({data.Id})"))
+            var data = trucks?.First(x => x.Id == Id);
+            if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {data?.Vehicle_registration_number} - {data?.Status} ({data?.Id})"))
             {
                 await client.DeleteAsync($"api/trucks/delete/{Id}");
                 var shouldreload = dataRows % ((currentPage == 1 ? currentPage : currentPage - 1) * pageSize);
@@ -149,7 +149,7 @@ namespace Cargotruck.Client.Pages.Trucks
         private async Task ExportToPdf()
         {
             //get base64 string from web api call
-            var Response = await client.GetAsync($"api/trucks/pdf?lang={CultureInfo.CurrentCulture.Name.ToString()}");
+            var Response = await client.GetAsync($"api/trucks/pdf?lang={CultureInfo.CurrentCulture.Name}");
 
             if (Response.IsSuccessStatusCode)
             {
@@ -175,7 +175,7 @@ namespace Cargotruck.Client.Pages.Trucks
         private async Task ExportToExcel()
         {
             //get base64 string from web api call
-            var Response = await client.GetAsync($"api/trucks/excel?lang={CultureInfo.CurrentCulture.Name.ToString()}");
+            var Response = await client.GetAsync($"api/trucks/excel?lang={CultureInfo.CurrentCulture.Name}");
 
             if (Response.IsSuccessStatusCode)
             {
@@ -201,7 +201,7 @@ namespace Cargotruck.Client.Pages.Trucks
         private async Task ExportToCSV(string format)
         {
             //get base64 string from web api call
-            var Response = await client.GetAsync($"api/trucks/csv?lang={CultureInfo.CurrentCulture.Name.ToString()}");
+            var Response = await client.GetAsync($"api/trucks/csv?lang={CultureInfo.CurrentCulture.Name}");
 
             if (Response.IsSuccessStatusCode)
             {

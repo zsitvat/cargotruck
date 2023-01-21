@@ -149,15 +149,18 @@ else
                                     @if (showColumns[3])
                                     {
                                         <td>
-                                            @foreach (var ConId in connection_ids.Where(x => x.Monthly_expense_id == item.Monthly_expense_id && x.Expense_id != null))
+                                            @if (connection_ids != null)
                                             {
-                                                @if (connection_ids.Where(x => x.Monthly_expense_id == item.Monthly_expense_id && x.Expense_id != null).Last().Id != ConId.Id)
+                                                @foreach (var ConId in connection_ids.Where(x => x.Monthly_expense_id == item.Monthly_expense_id && x.Expense_id != null))
                                                 {
-                                                    <button class="no-button" @onclick="@(()=>GetById(ConId.Expense_id,"expense"))">@(ConId.Expense_id + ", ")</button>
-                                                }
-                                                else
-                                                {
-                                                    <button class="no-button" @onclick="@(()=>GetById(ConId.Expense_id,"expense"))">@ConId.Expense_id</button>
+                                                    @if (connection_ids.Where(x => x.Monthly_expense_id == item.Monthly_expense_id && x.Expense_id != null).Last().Id != ConId.Id)
+                                                    {
+                                                        <button class="no-button" @onclick="@(()=>GetById(ConId.Expense_id,"expense"))">@(ConId.Expense_id + ", ")</button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button class="no-button" @onclick="@(()=>GetById(ConId.Expense_id,"expense"))">@ConId.Expense_id</button>
+                                                    }
                                                 }
                                             }
                                         </td>
@@ -165,6 +168,7 @@ else
                                     @if (showColumns[4])
                                     {
                                         <td>
+                                        @if (connection_ids != null){
                                             @foreach (var ConId in connection_ids.Where(x => x.Monthly_expense_id == item.Monthly_expense_id && x.Task_id != null))
                                             {
                                                 @if (connection_ids.Where(x => x.Monthly_expense_id == item.Monthly_expense_id && x.Task_id != null ).Last().Id != ConId.Id)
@@ -177,6 +181,7 @@ else
                                                     <button class="no-button" @onclick="@(()=>GetById(ConId.Task_id,"task"))">@ConId.Task_id</button>
                                                 }
                                             }
+                                        }
                                         </td>
                                     }
                                     @if (showColumns[5])

@@ -17,7 +17,7 @@ namespace Cargotruck.Data
             Database.EnsureCreated();
             //Database.Migrate();
         }
-        public DbSet<Users>  Users { get; set; }
+        public DbSet<Users> Users { get; set; }
         public DbSet<Tasks> Tasks { get; set; }
         public DbSet<Cargoes> Cargoes { get; set; }
         public DbSet<Expenses> Expenses { get; set; }

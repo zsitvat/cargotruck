@@ -22,7 +22,7 @@
     }
     <!--Filter-->
     <select class="form-control filter" @oninput="@((e)=>onChangeGetFilter(e))" @bind="filter">
-        <option value="" selected disabled>@localizer["Nothing"]</option>
+        <option value="" selected>@localizer["Nothing"]</option>
         @foreach (var value in Enum.GetValues<Status>())
         {
             <option value="@value">@localizer[value.ToString()]</option>

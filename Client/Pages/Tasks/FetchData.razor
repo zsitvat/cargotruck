@@ -14,19 +14,19 @@
     <!--Filter icon-->
     @if (filter == "completed" || filter == "not_completed")
     {
-         <button @onclick="@(()=>onChangeResetFilter())" class="filter-button"><span class="icon iconify filter-icon" data-icon="material-symbols:filter-alt-off"></span></button>
+         <button @onclick="@(()=>OnChangeResetFilter())" class="filter-button"><span class="icon iconify filter-icon" data-icon="material-symbols:filter-alt-off"></span></button>
     }
     else
     {
-        <button @onclick="@(()=>onChangeResetFilter())" class="filter-button not-pointer"><span class="icon iconify filter-icon not-pointer" data-icon="material-symbols:filter-alt"></span></button>
+        <button @onclick="@(()=>OnChangeResetFilter())" class="filter-button not-pointer"><span class="icon iconify filter-icon not-pointer" data-icon="material-symbols:filter-alt"></span></button>
     }
     <!--Filter-->
-    <select class="form-control filter" @oninput="@((e)=>onChangeGetFilter(e))" @bind="filter">
-        <option value="" selected disabled>@localizer["Nothing"]</option>
+    <select class="form-control filter" @oninput="@((e)=>OnChangeGetFilter(e))" @bind="filter">
+        <option value="" selected>@localizer["Nothing"]</option>
         <option value="completed">@localizer["Completed"]</option>
         <option value="not_completed">@localizer["Not_completed"]</option>
     </select>
-    <select data-title="@localizer["Currency"]" class="form-control currency" @oninput="@((e)=>onChangeGetType(e))" @bind="currency">
+    <select data-title="@localizer["Currency"]" class="form-control currency" @oninput="@((e)=>OnChangeGetType(e))" @bind="currency">
         <option value="HUF">HUF</option>
         <option value="EUR">EUR</option>
         <option value="USD">USD</option>
@@ -58,11 +58,11 @@
     </div>
 }
 
-@if (tasks == null)
+@if (Tasks == null)
 {
     <text><p class="text">@localizer["Loading"]</p></text>
 }
-else if (tasks.Length == 0)
+else if (Tasks.Length == 0)
 {
     <text><p class="text">@localizer["No_records"]</p></text>
 }
@@ -144,7 +144,7 @@ else
                         </thead>
                         <tbody>
                             
-                            @foreach (Tasks item in tasks)
+                            @foreach (Tasks item in Tasks)
                             {
                                 
                                 <tr class="@(item.Completed ? "green": "")">
@@ -209,7 +209,7 @@ else
                                         <td>
                                             @if (@item.Payment != null)
                                             {
-                                                @if (currency != "HUF" && rates != null)
+                                                @if (currency != "HUF" && Rates != null)
                                                 {
                                                     @(GetCurrency(item.Payment).Value.ToString("0.##") + " " + currency)
                                                 }
@@ -225,7 +225,7 @@ else
                                           <td>
                                             @if (@item.Final_Payment != null)
                                             {
-                                                @if (currency != "HUF" && rates != null)
+                                                @if (currency != "HUF" && Rates != null)
                                                 {
                                                     @(GetCurrency(item.Final_Payment).Value.ToString("0.##") + " " + currency)
                                                 }
@@ -241,7 +241,7 @@ else
                                         <td>
                                             @if (@item.Penalty != null)
                                             {
-                                                @if (currency != "HUF" && rates != null)
+                                                @if (currency != "HUF" && Rates != null)
                                                 {
                                                     @(GetCurrency(item.Penalty).Value.ToString("0.##") + " " + currency)
                                                 }
@@ -277,7 +277,7 @@ else
         }
         @if (IdForGetById != null)
         {
-            <GetbyidComponent getById="@IdForGetById.ToString()" getByIdType="@getByIdType" onSetToNull="SetToNull" />
+            <GetbyidComponent getById="@IdForGetById.ToString()" getByIdType="@GetByIdType" onSetToNull="SetToNull" />
         }
     </div>
 

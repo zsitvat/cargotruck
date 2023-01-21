@@ -27,7 +27,7 @@
                                     <img src="@claim.Value" class="small_profile_picture" alt="profile">
                                 }
                            }
-                      <span class="btn btn-sm">@context.User.Identity.Name</span>
+                      <span class="btn btn-sm">@context?.User?.Identity?.Name</span>
                     </div>
                         @if (expandSubMenu)
                         {
@@ -51,7 +51,9 @@
         </div>
 
         <article class="content px-4 mt-3" @onclick="()=>expandSubMenu= false">
+            <CascadingValue Value="@rates">
             @Body
+            </CascadingValue>
         </article>
        
     </main>
@@ -67,9 +69,11 @@
 
 @code{
     private bool expandSubMenu;
+    Dictionary<string, dynamic>? rates{ get; set; }
 
     [CascadingParameter]
     Task<AuthenticationState>? AuthenticationState { get; set; }
+
     protected override async Task OnParametersSetAsync()
     {
         if (!(await AuthenticationState).User.Identity.IsAuthenticated)

@@ -30,7 +30,7 @@
             <label class="form-check-label" for="inputRememberMe">@localizer["Remember_me"]</label>
         </div>
         <div class="row"><div class="col"><button type="submit" class="login-btn btn btn-primary btn-block mt-3">@localizer["Login"]</button></div></div>
-        <label class="text-danger">@error</label>
+        <label class="text-danger">@localizer[error]</label>
 
 
     </EditForm>
@@ -38,11 +38,11 @@
 
 @code {
     LoginRequest loginRequest { get; set; } = new LoginRequest();
-    string? error { get; set; }
+    string error { get; set; } = "";
 
     async Task OnSubmit()
     {
-        error = null;
+        error = "";
         try
         {
             await authStateProvider.Login(loginRequest);

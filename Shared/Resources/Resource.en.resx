@@ -579,6 +579,9 @@
   <data name="Not_excel" xml:space="preserve">
     <value>Please select file with .xlsx extension!</value>
   </data>
+  <data name="Not_found" xml:space="preserve">
+    <value>The user is not found.</value>
+  </data>
   <data name="Not_generated" xml:space="preserve">
     <value>Not generated</value>
   </data>
@@ -756,7 +759,7 @@
   <data name="Storage_time" xml:space="preserve">
     <value>Storage time</value>
   </data>
-  <data name="String1" xml:space="preserve">
+  <data name="String11" xml:space="preserve">
     <value />
   </data>
   <data name="String2" xml:space="preserve">

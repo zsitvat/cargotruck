@@ -23,7 +23,7 @@
     }
     <!--Filter-->
     <select class="form-control filter" @oninput="@((e)=>OnChangeGetFilter(e))" @bind="filter">
-        <option value="" selected disabled>@localizer["Nothing"]</option>
+        <option value="" selected>@localizer["Nothing"]</option>
         @foreach (var value in Enum.GetValues<Cargotruck.Shared.Models.Type>())
         {
             <option value="@value">@localizer[value.ToString()]</option>
@@ -140,12 +140,18 @@ else
                                     @if (showColumns[0])
                                     {
                                         <td>
-                                            @localizer[item.Type.ToString()]
+                                            if (item.Type != null)
+                                            {
+                                                @localizer[item.Type.ToString()]
+                                            }
                                         </td>
                                     }
                                     @if (showColumns[1])
                                     {
-                                        <td><button class="no-button" @onclick="@(()=>GetById(item.Type_id,item.Type.ToString()))">@item.Type_id</button></td>
+                                        if (item.Type_id != null)
+                                        {
+                                            <td><button class="no-button" @onclick="@(()=>GetById(item.Type_id,item.Type?.ToString()))">@item.Type_id</button></td>
+                                        }
                                     }
                                     @if (showColumns[2])
                                     {

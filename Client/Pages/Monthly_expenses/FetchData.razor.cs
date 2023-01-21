@@ -26,23 +26,23 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
         string? currency_api_error;
         bool showError = false;
         string currency = "HUF";
-        Dictionary<string, dynamic>? rates;
+       [CascadingParameter]  Dictionary<string, dynamic>? rates {get;set;}
         DateFilter? dateFilter = new();
 
         async void DateStartInput(ChangeEventArgs e)
         {
-            if (e != null && e.Value.ToString() != "")
+            if (e != null && e.Value?.ToString() != "")
             {
-                dateFilter.StartDate = DateTime.Parse(e.Value.ToString());
+                dateFilter.StartDate = DateTime.Parse(e.Value?.ToString());
                 await OnInitializedAsync();
             }
         }
 
         async void DateEndInput(ChangeEventArgs e)
         {
-            if (e != null && e.Value.ToString() != "")
+            if (e != null && e.Value?.ToString() != "")
             {
-                dateFilter.EndDate = DateTime.Parse(e.Value.ToString());
+                dateFilter.EndDate = DateTime.Parse(e.Value?.ToString());
                 await OnInitializedAsync();
             }
         }
@@ -102,13 +102,13 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
 
         void OnChangeGetType(ChangeEventArgs e)
         {
-            currency = e.Value.ToString();
+            currency = e.Value?.ToString();
         }
 
         async Task Delete(int Id)
         {
-            var data = Monthly_expenses.First(x => x.Monthly_expense_id == Id);
-            if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {data.Earning} - {data.Profit} ({data.Monthly_expense_id})"))
+            var data = Monthly_expenses?.First(x => x.Monthly_expense_id == Id);
+            if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {data?.Earning} - {data?.Profit} ({data?.Monthly_expense_id})"))
             {
                 await client.DeleteAsync($"api/Monthly_expenses/delete/{Id}");
                 var shouldreload = dataRows % ((currentPage == 1 ? currentPage : currentPage - 1) * pageSize);
@@ -175,7 +175,7 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
 
         protected async Task Search(ChangeEventArgs args)
         {
-            searchString = args.Value.ToString();
+            searchString = args.Value?.ToString();
             await ShowPage();
         }
 

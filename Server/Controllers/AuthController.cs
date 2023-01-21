@@ -51,7 +51,7 @@ namespace Cargotruck.Server.Controllers
 
             var password_error = _localizer["Password_error"].Value;
             var user = await _userManager.FindByNameAsync(request.UserName);
-            if (user == null) return BadRequest("Not found");
+            if (user == null) return BadRequest("Not_found");
             var singInResult = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
             if (!singInResult.Succeeded) return BadRequest(password_error);
             await _signInManager.SignInAsync(user, request.RememberMe);

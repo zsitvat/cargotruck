@@ -22,7 +22,7 @@
     }
     <!--Filter-->
     <select class="form-control filter" @oninput="@((e)=>OnChangeGetFilter(e))" @bind="filter">
-        <option value="" selected disabled>@localizer["Nothing"]</option>
+        <option value="" selected>@localizer["Nothing"]</option>
         <option value="to">@localizer["to"]</option>
         <option value="from">@localizer["from"]</option>
     </select>

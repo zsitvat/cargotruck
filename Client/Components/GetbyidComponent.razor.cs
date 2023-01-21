@@ -7,8 +7,9 @@ namespace Cargotruck.Client.Components
 {
     public partial class GetbyidComponent
     {
+        [CascadingParameter]
+        Dictionary<string, dynamic>? rates { get; set; }
         string currency = "HUF";
-        Dictionary<string, dynamic>? rates;
         string? currency_api_error;
         bool showError = true;
         Cargoes? idDataCargo;
@@ -106,7 +107,7 @@ namespace Cargotruck.Client.Components
 
         void OnChangeGetType(ChangeEventArgs e)
         {
-            currency = e.Value.ToString();
+            currency = e.Value?.ToString();
         }
     }
 }

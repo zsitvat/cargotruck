@@ -19,11 +19,11 @@
 <br>
 <p class="error">@document_error</p>
 
-@if (warehouses == null)
+@if (Warehouses == null)
 {
     <text><p class="text">@localizer["Loading"]</p></text>
 }
-else if (warehouses.Length == 0)
+else if (Warehouses.Length == 0)
 {
     <text><p class="text">@localizer["No_records"]</p></text>
 }
@@ -57,7 +57,7 @@ else
                         </thead>
                         <tbody>
                             
-                            @foreach (Warehouses item in warehouses)
+                            @foreach (Warehouses item in Warehouses)
                             {
                                 
                                 <tr>
@@ -74,12 +74,15 @@ else
                                     @if (showColumns[2])
                                     {
                                         <td>
-                                        @foreach (var cargo in cargoes)
-                                        {
-                                                @if(cargo.Warehouse_id==item.Id)
-                                                {
-                                                    <button class="no-button" @onclick="@(()=>GetById(cargo.Id,"cargo"))"> @(cargo.Warehouse_section != null ? (cargo.Id + "/" + cargo.Warehouse_section + " ") : cargo.Id + " ")</button>
-                                                }                                      
+                                            @if (Cargoes != null)
+                                            {
+                                            @foreach (var cargo in Cargoes)
+                                            {
+                                                    @if(cargo.Warehouse_id==item.Id)
+                                                    {
+                                                        <button class="no-button" @onclick="@(()=>GetById(cargo.Id,"cargo"))"> @(cargo.Warehouse_section != null ? (cargo.Id + "/" + cargo.Warehouse_section + " ") : cargo.Id + " ")</button>
+                                                    }                                      
+                                            }
                                         }
                                         </td>
                                     }
@@ -108,7 +111,7 @@ else
         }
         @if (IdForGetById != null)
         {
-            <GetbyidComponent getById="@IdForGetById.ToString()" getByIdType="@getByIdType" onSetToNull="SetToNull" />
+            <GetbyidComponent getById="@IdForGetById.ToString()" getByIdType="@GetByIdType" onSetToNull="SetToNull" />
         }
     </div>
 }

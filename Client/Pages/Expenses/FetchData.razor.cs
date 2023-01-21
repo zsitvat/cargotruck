@@ -25,7 +25,7 @@ namespace Cargotruck.Client.Pages.Expenses
         string? currency_api_error;
         bool showError = false;
         string currency = "HUF";
-        Dictionary<string, dynamic>? rates;
+        [CascadingParameter]  Dictionary<string, dynamic>? rates {get;set;}
         Cargotruck.Shared.Models.Type? filter;
         DateFilter dateFilter = new();
 
@@ -33,7 +33,7 @@ namespace Cargotruck.Client.Pages.Expenses
         {
             if (e != null && e.Value?.ToString() != "")
             {
-                dateFilter.StartDate = DateTime.Parse(e.Value?.ToString());
+                dateFilter.StartDate = DateTime.Parse(e?.Value?.ToString());
                 await OnInitializedAsync();
             }
         }
@@ -42,7 +42,7 @@ namespace Cargotruck.Client.Pages.Expenses
         {
             if (e != null && e.Value?.ToString() != "")
             {
-                dateFilter.EndDate = DateTime.Parse(e.Value?.ToString());
+                dateFilter.EndDate = DateTime.Parse(e?.Value?.ToString());
                 await OnInitializedAsync();
             }
         }
@@ -98,7 +98,7 @@ namespace Cargotruck.Client.Pages.Expenses
         async Task Delete(int Id)
         {
             var data = expenses.First(x => x.Id == Id);
-            if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {data.Type} - {data.Type_id} - {data.Date}"))
+            if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {data?.Type} - {data?.Type_id} - {data?.Date}"))
             {
                 await client.DeleteAsync($"api/expenses/delete/{Id}");
                 var shouldreload = dataRows % ((currentPage == 1 ? currentPage : currentPage - 1) * pageSize);

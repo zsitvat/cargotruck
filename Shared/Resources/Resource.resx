@@ -582,6 +582,9 @@
   <data name="Not_excel" xml:space="preserve">
     <value>Csak .xlsx formátum elfogadott!</value>
   </data>
+  <data name="Not_found" xml:space="preserve">
+    <value>A felhasználó nem található.</value>
+  </data>
   <data name="Not_generated" xml:space="preserve">
     <value>Felhasználó által létrehozott</value>
   </data>

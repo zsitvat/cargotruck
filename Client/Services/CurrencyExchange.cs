@@ -7,7 +7,7 @@ namespace Cargotruck.Client.Services
     public static class CurrencyExchange
     {
         [Inject]
-        static HttpClient? client { get; set; }
+        static HttpClient? Client { get; set; }
         public static async Task<dynamic> GetRatesAsync(HttpClient? client)
         {
             var request = new HttpRequestMessage
@@ -18,7 +18,7 @@ namespace Cargotruck.Client.Services
 
             request.Headers.Add("apikey", "XwSDWGpGqDKu8ZIbOl56Kne74V14oEpC");
 
-            var response = await client.SendAsync(request);
+            var response = await client?.SendAsync(request);
             var result = response.Content.ReadAsStringAsync().Result;
             if (response.IsSuccessStatusCode)
             {
@@ -32,6 +32,5 @@ namespace Cargotruck.Client.Services
                 return error;
             }
         }
-
     }
 }

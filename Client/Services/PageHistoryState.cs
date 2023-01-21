@@ -18,7 +18,7 @@
             previousPages.Clear();
         }
 
-        public string GetGoBackPage()
+        public string? GetGoBackPage()
         {
             if (previousPages.Count > 1)
             {
@@ -27,7 +27,7 @@
             }
 
             // Can't go back because you didn't navigate enough
-            return previousPages.FirstOrDefault();
+            return previousPages?.FirstOrDefault();
         }
 
         public bool GetPageIsVisited(string myPage)

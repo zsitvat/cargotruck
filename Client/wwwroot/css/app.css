@@ -33,6 +33,11 @@ html, body {
     opacity: 0.9;
 }
 
+.btn-check:focus + .btn, .btn:focus {
+    outline: 0;
+    box-shadow: none !important;
+}
+
 .font-weight-bold {
     font-weight: bold !important;
 }
@@ -1297,306 +1302,308 @@ tr td:first-child {
     .col-lg-3 {
         width: 50%;
     }
+}
 
-
-    @media (max-width: 1024px) {
-        .profile-form {
-            margin-left: 10%;
-        }
-
-        .card {
-            min-width: 25rem;
-            min-height: fit-content;
-        }
-
-
-        .profile-form input {
-            width: 18.5rem;
-            margin-top: 1%;
-        }
-
-        .card2 {
-            min-width: 18rem;
-            min-height: fit-content;
-        }
-
-        .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8 {
-            width: fit-content !important;
-            margin-right: 5.5%;
-        }
-
-        .bottom-row a {
-            padding-left: 30%;
-        }
-
-        .table-width {
-            max-width: 68vw;
-        }
-
-        .input_search {
-            margin-top: 10px;
-            display: inline-block;
-        }
-
-        .sidebar {
-            position: fixed !important;
-        }
-
-        article {
-            margin-left: 250px !important;
-        }
+@media (max-width: 1024px) {
+    .profile-form {
+        margin-left: 10%;
     }
 
-    @media (max-width: 868px) {
-        .bottom-row a {
-            padding-left: 40%;
-        }
-
-        .table-width {
-            max-width: 60vw;
-        }
-
-        .currency {
-            margin-left: 0.2rem;
-        }
-
-        .privacy-form {
-            position: fixed;
-            left: 18rem;
-            bottom: 3.5rem;
-        }
-
-        body {
-            overflow-x: auto;
-        }
+    .card {
+        min-width: 25rem;
+        min-height: fit-content;
     }
 
-    @media (max-width: 640px) {
 
-        footer {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-
-        .hide {
-            display: block;
-        }
-
-        .profile-form {
-            margin-left: 10%;
-        }
-
-        .card {
-            margin-top: 2%;
-        }
-
-        .card-table {
-            min-width: 400px;
-            margin-bottom: 5rem;
-        }
-
-        .bottom-row a {
-            padding-left: 2%;
-        }
-
-        .table-width {
-            max-width: 90vw;
-        }
-
-        .input_search {
-            width: 100%;
-            max-width: 22rem;
-            margin: auto;
-            margin-top: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .buttons {
-            text-align: center;
-        }
-
-        .hide-on-desktop {
-            display: none;
-        }
-
-        .currency option {
-            position: relative;
-            left: 2rem;
-        }
-
-        .bottom-row {
-            position: initial;
-        }
-
-        .privacy-form {
-            position: fixed;
-            left: 1rem;
-            bottom: 3.5rem;
-        }
-
-        .hideandshow-cards {
-            display: initial;
-        }
-
-        .hideandshow-cards .getbyid-card, .hideandshow-cards .settings-card {
-            max-width: 100%;
-            width: 100%;
-        }
-
-        .date-filter {
-            left: 0rem;
-            top: 0.5rem;
-        }
-
-        .filter-button {
-            margin-left: 0rem;
-        }
-
-        .sidebar {
-            position: sticky !important;
-        }
-
-        article {
-            margin-left: 0px !important;
-        }
+    .profile-form input {
+        width: 18.5rem;
+        margin-top: 1%;
     }
 
-    @media (max-width: 480px) {
-        .card2 {
-            min-width: 108%;
-            min-height: fit-content;
-        }
-
-        .currency-api-error {
-            position: initial;
-            margin-top: 1px;
-            width: 100%;
-        }
-
-        .me-4 {
-            margin-right: 20rem !important;
-        }
-
-        .btn-success {
-            margin: 0;
-            position: relative;
-            display: flex;
-            justify-content: center;
-            width: 120px;
-            margin: 0 50%;
-            position: relative;
-            left: -65px;
-            margin-bottom: 0.5rem;
-        }
-
-        body {
-            overflow-x: hidden;
-        }
+    .card2 {
+        min-width: 18rem;
+        min-height: fit-content;
     }
 
-    @media (max-width: 430px) {
-
-        table img {
-            margin-left: 5%;
-        }
-
-        .profile-form {
-            margin-left: 8%;
-        }
-
-        .card {
-            min-width: 24rem;
-            min-height: fit-content;
-        }
-
-        .card2 {
-            min-width: 105%;
-            min-height: fit-content;
-        }
-
-        .profile-form input {
-            width: 18.5rem;
-            margin-top: 1%;
-        }
-
-        .table-width {
-            max-width: 85vw;
-        }
-
-        .privacy-form {
-            position: fixed;
-            left: 1rem;
-            bottom: 3.5rem;
-            width: 85%;
-        }
-
-        .privacy-form input {
-            min-width: 90% !important;
-        }
-
-        .hideandshow-cards p, .hideandshow-cards b, .hideandshow-cards, .hideandshow-cards h2 {
-            font-size: 90%;
-        }
-
-        .avatar {
-            min-width: 40px;
-            min-height: 40px;
-            max-height: 40px;
-            max-width: 40px;
-        }
-
-        .symbol svg {
-            left: 6px;
-            top: 5px;
-        }
+    .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8 {
+        width: fit-content !important;
+        margin-right: 5.5%;
     }
 
-    @media (max-width: 400px) {
-        table img {
-            margin-left: 10%;
-        }
-
-        .profile-form {
-            margin-left: 0.5%;
-        }
-
-        .card {
-            min-width: 20rem;
-            max-width: 20rem;
-            min-height: fit-content;
-        }
-
-        .card:last-child {
-            margin-bottom: 1rem;
-        }
-
-        #inputimg {
-            margin-left: -2%;
-        }
-
-        .card2 {
-            min-width: 105%;
-            min-height: fit-content;
-        }
-
-        .profile-form input {
-            width: 17.8rem;
-            margin-top: 1%;
-        }
-
-        .table-width {
-            max-width: 85vw;
-        }
-
-        .privacy-form {
-            position: fixed;
-            left: 1rem;
-            bottom: 3.5rem;
-            width: 90%;
-        }
-
-        .privacy-form input {
-            min-width: 80% !important;
-        }
+    .bottom-row a {
+        padding-left: 30%;
     }
+
+    .table-width {
+        max-width: 68vw;
+    }
+
+    .input_search {
+        margin-top: 10px;
+        display: inline-block;
+    }
+
+    .sidebar {
+        position: fixed !important;
+    }
+
+    article {
+        margin-left: 250px !important;
+    }
+}
+
+@media (max-width: 868px) {
+    .bottom-row a {
+        padding-left: 40%;
+    }
+
+    .table-width {
+        max-width: 60vw;
+    }
+
+    .currency {
+        margin-left: 0.2rem;
+    }
+
+    .privacy-form {
+        position: fixed;
+        left: 18rem;
+        bottom: 3.5rem;
+    }
+
+    body {
+        overflow-x: auto;
+    }
+}
+
+@media (max-width: 640px) {
+
+    footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+    }
+
+    .hide {
+        display: block;
+    }
+
+    .profile-form {
+        margin-left: 10%;
+    }
+
+    .card {
+        margin-top: 2%;
+    }
+
+    .card-table {
+        min-width: 400px;
+        margin-bottom: 5rem;
+    }
+
+    .bottom-row a {
+        padding-left: 2%;
+    }
+
+    .table-width {
+        max-width: 90vw;
+    }
+
+    .input_search {
+        width: 100%;
+        max-width: 22rem;
+        margin: auto;
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .buttons {
+        text-align: center;
+    }
+
+    .hide-on-desktop {
+        display: none;
+    }
+
+    .currency option {
+        position: relative;
+        left: 2rem;
+    }
+
+    .bottom-row {
+        position: initial;
+    }
+
+    .privacy-form {
+        position: fixed;
+        left: 1rem;
+        bottom: 3.5rem;
+    }
+
+    .hideandshow-cards {
+        display: initial;
+    }
+
+    .hideandshow-cards .getbyid-card, .hideandshow-cards .settings-card {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .date-filter {
+        left: 0rem;
+        top: 0.5rem;
+    }
+
+    .filter-button {
+        margin-left: 0rem;
+    }
+
+    .sidebar {
+        position: sticky !important;
+    }
+
+    article {
+        margin-left: 0px !important;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .card2 {
+        min-width: 108%;
+        min-height: fit-content;
+    }
+
+    .currency-api-error {
+        position: initial;
+        margin-top: 1px;
+        width: 100%;
+    }
+
+    .me-4 {
+        margin-right: 20rem !important;
+    }
+
+    .btn-success {
+        margin: 0;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        width: 120px;
+        margin: 0 50%;
+        position: relative;
+        left: -65px;
+        margin-bottom: 0.5rem;
+    }
+
+    body {
+        overflow-x: hidden;
+    }
+}
+
+@media (max-width: 430px) {
+
+    table img {
+        margin-left: 5%;
+    }
+
+    .profile-form {
+        margin-left: 8%;
+    }
+
+    .card {
+        min-width: 24rem;
+        min-height: fit-content;
+    }
+
+    .card2 {
+        min-width: 105%;
+        min-height: fit-content;
+    }
+
+    .profile-form input {
+        width: 18.5rem;
+        margin-top: 1%;
+    }
+
+    .table-width {
+        max-width: 85vw;
+    }
+
+    .privacy-form {
+        position: fixed;
+        left: 1rem;
+        bottom: 3.5rem;
+        width: 85%;
+    }
+
+    .privacy-form input {
+        min-width: 90% !important;
+    }
+
+    .hideandshow-cards p, .hideandshow-cards b, .hideandshow-cards, .hideandshow-cards h2 {
+        font-size: 90%;
+    }
+
+    .avatar {
+        min-width: 40px;
+        min-height: 40px;
+        max-height: 40px;
+        max-width: 40px;
+    }
+
+    .symbol svg {
+        left: 6px;
+        top: 5px;
+    }
+}
+
+@media (max-width: 400px) {
+
+    table img {
+        margin-left: 10%;
+    }
+
+    .profile-form {
+        margin-left: 0.5%;
+    }
+
+    .card {
+        min-width: 20rem;
+        max-width: 20rem;
+        min-height: fit-content;
+    }
+
+    .card:last-child {
+        margin-bottom: 1rem;
+    }
+
+    #inputimg {
+        margin-left: -2%;
+    }
+
+    .card2 {
+        min-width: 105%;
+        min-height: fit-content;
+    }
+
+    .profile-form input {
+        width: 17.8rem;
+        margin-top: 1%;
+    }
+
+    .table-width {
+        max-width: 85vw;
+    }
+
+    .privacy-form {
+        position: fixed;
+        left: 1rem;
+        bottom: 3.5rem;
+        width: 90%;
+    }
+
+    .privacy-form input {
+        min-width: 80% !important;
+    }
+}

@@ -10,10 +10,10 @@ namespace Cargotruck.Client.Pages.Tasks
     public partial class FetchData
     {
         private bool settings = false;
-        Cargotruck.Shared.Models.Tasks[]? tasks { get; set; }
+        Cargotruck.Shared.Models.Tasks[]? Tasks { get; set; }
         int? IdForGetById { get; set; }
-        string? getByIdType { get; set; }
-        private List<bool> showColumns = Enumerable.Repeat(true, 16).ToList();
+        string? GetByIdType { get; set; }
+        private readonly List<bool> showColumns = Enumerable.Repeat(true, 16).ToList();
         private int currentPage = 1;
         int pageSize = 10;
         int dataRows;
@@ -25,7 +25,7 @@ namespace Cargotruck.Client.Pages.Tasks
         string? document_error;
         bool showError = false;
         string currency = "HUF";
-        Dictionary<string, dynamic>? rates;
+        [CascadingParameter]  Dictionary<string, dynamic>? Rates {get;set;}
         string? filter = "";
         DateFilter? dateFilter = new();
 
@@ -53,11 +53,11 @@ namespace Cargotruck.Client.Pages.Tasks
             base.OnInitialized();
             dataRows = await client.GetFromJsonAsync<int>("api/tasks/pagecount");
             await ShowPage();
-            if (rates == null)
+            if (Rates == null)
             {
                 try
                 {
-                    rates = await CurrencyExchange.GetRatesAsync(client);
+                    Rates = await CurrencyExchange.GetRatesAsync(client);
                 }
                 catch (Exception ex)
                 {
@@ -74,32 +74,32 @@ namespace Cargotruck.Client.Pages.Tasks
         public float? GetCurrency(int? amount)
         {
             float? conversionNum = amount;
-            if (rates != null && currency != "HUF")
+            if (Rates != null && currency != "HUF")
             {
                 if (currency != "EUR")
                 {
-                    conversionNum = (float)((amount / rates["HUF"]) * rates[currency]);
+                    conversionNum = (float)((amount / Rates["HUF"]) * Rates[currency]);
                 }
                 else
                 {
-                    conversionNum = (float)(amount / rates["HUF"]);
+                    conversionNum = (float)(amount / Rates["HUF"]);
                 }
             }
             return conversionNum;
         }
 
-        async void onChangeGetType(ChangeEventArgs e)
+        void OnChangeGetType(ChangeEventArgs e)
         {
             currency = e.Value?.ToString();
         }
 
-        async void onChangeGetFilter(ChangeEventArgs e)
+        async void OnChangeGetFilter(ChangeEventArgs e)
         {
             filter = e.Value?.ToString();
             await OnInitializedAsync();
         }
 
-        async void onChangeResetFilter()
+        async void OnChangeResetFilter()
         {
             filter = "";
             await OnInitializedAsync();
@@ -113,7 +113,7 @@ namespace Cargotruck.Client.Pages.Tasks
 
         async Task Delete(int Id)
         {
-            var t = tasks.First(x => x.Id == Id);
+            var t = Tasks.First(x => x.Id == Id);
             if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {t.Partner} ({t.Id})"))
             {
                 await client.DeleteAsync($"api/tasks/delete/{Id}");
@@ -126,14 +126,14 @@ namespace Cargotruck.Client.Pages.Tasks
         void GetById(int? id, string? idType)
         {
             IdForGetById = id;
-            getByIdType = idType;
+            GetByIdType = idType;
             StateHasChanged();
         }
 
         public void SetToNull()
         {
             IdForGetById = null;
-            getByIdType = null;
+            GetByIdType = null;
         }
 
         public void SettingsClosed()
@@ -142,7 +142,7 @@ namespace Cargotruck.Client.Pages.Tasks
         }
 
 
-        public void SettingsChanged() { }
+        public static void SettingsChanged() { }
 
         public async void InputChanged(int ChangedPageSize)
         {
@@ -182,14 +182,14 @@ namespace Cargotruck.Client.Pages.Tasks
             else if (pageSize >= dataRows) { pageSize = dataRows != 0 ? dataRows : 1; }
             maxPage = (int)Math.Ceiling((decimal)((float)dataRows / (float)pageSize));
 
-            tasks = await client.GetFromJsonAsync<Cargotruck.Shared.Models.Tasks[]>($"api/tasks/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
+            Tasks = await client.GetFromJsonAsync<Cargotruck.Shared.Models.Tasks[]>($"api/tasks/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
             StateHasChanged();
         }
 
         private async Task ExportToPdf()
         {
             //get base64 string from web api call
-            var Response = await client.GetAsync($"api/tasks/pdf?lang={CultureInfo.CurrentCulture.Name.ToString()}");
+            var Response = await client.GetAsync($"api/tasks/pdf?lang={CultureInfo.CurrentCulture.Name}");
 
             if (Response.IsSuccessStatusCode)
             {
@@ -215,7 +215,7 @@ namespace Cargotruck.Client.Pages.Tasks
         private async Task ExportToExcel()
         {
             //get base64 string from web api call
-            var Response = await client.GetAsync($"api/tasks/excel?lang={CultureInfo.CurrentCulture.Name.ToString()}");
+            var Response = await client.GetAsync($"api/tasks/excel?lang={CultureInfo.CurrentCulture.Name}");
 
             if (Response.IsSuccessStatusCode)
             {
@@ -241,7 +241,7 @@ namespace Cargotruck.Client.Pages.Tasks
         private async Task ExportToCSV(string format)
         {
             //get base64 string from web api call
-            var Response = await client.GetAsync($"api/tasks/csv?lang={CultureInfo.CurrentCulture.Name.ToString()}");
+            var Response = await client.GetAsync($"api/tasks/csv?lang={CultureInfo.CurrentCulture.Name}");
 
             if (Response.IsSuccessStatusCode)
             {

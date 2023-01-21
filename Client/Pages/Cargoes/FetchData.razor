@@ -14,15 +14,15 @@
 
     @if (filter == "InWarehouse" || filter == "NotInWarehouse")
     {
-        <button @onclick="@(()=>onChangeResetFilter())" class="filter-button"><span class="icon iconify filter-icon" data-icon="material-symbols:filter-alt-off"></span></button>
+        <button @onclick="@(()=>OnChangeResetFilter())" class="filter-button"><span class="icon iconify filter-icon" data-icon="material-symbols:filter-alt-off"></span></button>
     }
     else
     {
-        <button @onclick="@(()=>onChangeResetFilter())" class="filter-button not-pointer"><span class="icon iconify filter-icon not-pointer" data-icon="material-symbols:filter-alt"></span></button>
+        <button @onclick="@(()=>OnChangeResetFilter())" class="filter-button not-pointer"><span class="icon iconify filter-icon not-pointer" data-icon="material-symbols:filter-alt"></span></button>
     }
     <!--Filter-->
-    <select class="form-control filter" @oninput="@((e)=>onChangeGetFilter(e))" @bind="filter">
-        <option value="" selected disabled>@localizer["Nothing"]</option>
+    <select class="form-control filter" @oninput="@((e)=>OnChangeGetFilter(e))" @bind="filter">
+        <option value="" selected>@localizer["Nothing"]</option>
         <option value="InWarehouse">@localizer["InWarehouse"]</option>
         <option value="NotInWarehouse">@localizer["NotInWarehouse"]</option>
     </select>
@@ -35,11 +35,11 @@
 <br>
 <p class="error">@document_error</p>
 
-@if (cargoes == null)
+@if (Cargoes == null)
 {
     <text><p class="text">@localizer["Loading"]</p></text>
 }
-else if (cargoes.Length == 0)
+else if (Cargoes.Length == 0)
 {
     <text><p class="text">@localizer["No_records"]</p></text>
 }
@@ -92,7 +92,7 @@ else
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (Cargoes item in cargoes)
+                            @foreach (Cargoes item in Cargoes)
                             {  
                                 <tr>
                                     <td>@item.Id</td>
@@ -154,7 +154,7 @@ else
         }
         @if (IdForGetById != null)
         {
-            <GetbyidComponent getById="@IdForGetById" getByIdType="@getByIdType" onSetToNull="SetToNull" />
+            <GetbyidComponent getById="@IdForGetById" getByIdType="@GetByIdType" onSetToNull="SetToNull" />
         }
     </div>
 
