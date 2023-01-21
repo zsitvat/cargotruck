@@ -22,7 +22,6 @@ namespace Cargotruck.Client.Pages.Cargoes
         private bool desc = true;
         private string? searchString = "";
         string? document_error;
-        string? filterIcon;
         string? filter = "";
         DateFilter? dateFilter = new DateFilter();
 
@@ -30,7 +29,7 @@ namespace Cargotruck.Client.Pages.Cargoes
         {
             if (e != null && e.Value.ToString() != "")
             {
-                dateFilter.StartDate = DateTime.Parse(e.Value.ToString());
+                dateFilter.StartDate = DateTime.Parse(e.Value?.ToString());
                 await OnInitializedAsync();
             }
         }
@@ -39,7 +38,7 @@ namespace Cargotruck.Client.Pages.Cargoes
         {
             if (e != null && e.Value.ToString() != "")
             {
-                dateFilter.EndDate = DateTime.Parse(e.Value.ToString());
+                dateFilter.EndDate = DateTime.Parse(e.Value?.ToString());
                 await OnInitializedAsync();
             }
         }
@@ -68,7 +67,7 @@ namespace Cargotruck.Client.Pages.Cargoes
 
         async Task Delete(int Id)
         {
-            var data = cargoes.First(x => x.Id == Id);
+            var data = cargoes?.First(x => x.Id == Id);
             if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {data.Task_id} - {data.Description} ({data.Id})"))
             {
                 await client.DeleteAsync($"api/cargoes/delete/{Id}");
@@ -133,7 +132,7 @@ namespace Cargotruck.Client.Pages.Cargoes
 
         protected async Task ShowPage()
         {
-            if (pageSize < 1 || pageSize == null) { pageSize = 10; }
+            if (pageSize < 1) { pageSize = 10; }
             else if (pageSize >= dataRows) { pageSize = dataRows != 0 ? dataRows : 1; }
             maxPage = (int)Math.Ceiling((decimal)((float)dataRows / (float)pageSize));
 

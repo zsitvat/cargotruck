@@ -36,7 +36,7 @@ namespace Cargotruck.Server.Controllers
             if (searchString != null && searchString != "")
             {
                 data = data.Where(s =>
-            (s.Earning.ToString().ToLower()!.Contains(searchString))
+            s.Earning.ToString().ToLower()!.Contains(searchString)
             || (s.Profit.ToString().ToLower()!.Contains(searchString))
             || s.Date.ToString()!.Contains(searchString)
             ).ToList();
@@ -141,7 +141,7 @@ namespace Cargotruck.Server.Controllers
         [HttpPut]
         public async Task<IActionResult> Put(Monthly_expenses data)
         {
-            data.User_id = _context.Users.FirstOrDefault(a => a.UserName == User.Identity.Name).Id;
+            data.User_id = _context?.Users?.FirstOrDefault(a => a.UserName == User.Identity.Name)?.Id;
             _context.Entry(data).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return NoContent();
@@ -150,9 +150,9 @@ namespace Cargotruck.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(Monthly_expenses data)
         {
-            data.User_id = _context.Users.FirstOrDefault(a => a.UserName == User.Identity.Name).Id;
+            data.User_id = _context?.Users?.FirstOrDefault(a => a.UserName == User.Identity.Name)?.Id;
             data.Profit = (data.Earning != null ? data.Earning : 0) - (data.Expense != null ? data.Expense : 0);
-            _context.Add(data);
+            _context?.Add(data);
             await _context.SaveChangesAsync();
             return Ok(data.Monthly_expense_id);
         }
@@ -499,7 +499,7 @@ namespace Cargotruck.Server.Controllers
 
         //iTextSharp needed !!!
         [HttpGet]
-        public string CSV(string lang)
+        public async Task<string> CSV(string lang)
         {
             var Monthly_Expenses = from data in _context.Monthly_Expenses select data;
             var Monthly_expenses_tasks_expenses = _context.Monthly_expenses_tasks_expenses.OrderBy(x => x.Id);
@@ -574,12 +574,15 @@ namespace Cargotruck.Server.Controllers
             //filestream for download
             FileStream sourceFile = new FileStream(filepath, FileMode.Open);
             MemoryStream memoryStream = new MemoryStream();
-            sourceFile.CopyToAsync(memoryStream);
+            await sourceFile.CopyToAsync(memoryStream);
             var buffer = memoryStream.ToArray();
             var file = Convert.ToBase64String(buffer);
             sourceFile.Dispose();
             sourceFile.Close();
-            System.IO.File.Delete(filepath); // delete the file in the app folder
+            if (!sourceFile.CanWrite)
+            {
+                System.IO.File.Delete(filepath); // delete the file in the app folder
+            }
             return file;
         }
 

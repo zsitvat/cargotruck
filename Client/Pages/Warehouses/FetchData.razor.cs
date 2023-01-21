@@ -119,7 +119,7 @@ namespace Cargotruck.Client.Pages.Warehouses
 
         protected async Task ShowPage()
         {
-            if (pageSize < 1 || pageSize == null) { pageSize = 10; }
+            if (pageSize < 1) { pageSize = 10; }
             else if (pageSize >= dataRows) { pageSize = dataRows != 0 ? dataRows : 1; }
             maxPage = (int)Math.Ceiling((decimal)((float)dataRows / (float)pageSize));
 

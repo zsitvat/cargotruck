@@ -90,10 +90,9 @@ else
     </AuthorizeView>
 }
 @code {
-    Users[] users { get; set; }
+    Users[]? users { get; set; }
     Dictionary<string, string>? claims { get; set; }
     Dictionary<string, string>? roles { get; set; }
-    string? filterIcon;
     string? filter = "";
 
     protected override async Task OnInitializedAsync()
@@ -105,7 +104,7 @@ else
 
     async Task Delete(string Id)
     {
-        var u = users.First(x => x.Id == Id);
+        var u = users?.First(x => x.Id == Id);
         if (await js.InvokeAsync<bool>("confirm", $"{@localizer["delete?"]} {u.UserName} ({u.Id})"))
         {
             await client.DeleteAsync($"api/admin/{Id}");

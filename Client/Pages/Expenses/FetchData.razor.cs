@@ -71,7 +71,7 @@ namespace Cargotruck.Client.Pages.Expenses
             await ShowPage();
         }
 
-        public async Task<float?> GetCurrencyAsync(int? amount)
+        public float? GetCurrency(int? amount)
         {
             float? conversionNum = amount;
 
@@ -90,7 +90,7 @@ namespace Cargotruck.Client.Pages.Expenses
             return conversionNum;
         }
 
-        async void OnChangeGetType(ChangeEventArgs e)
+        void OnChangeGetType(ChangeEventArgs e)
         {
             currency = e.Value?.ToString();
         }
@@ -107,7 +107,7 @@ namespace Cargotruck.Client.Pages.Expenses
             }
         }
 
-        async Task GetById(int? id, string idType)
+        void GetById(int? id, string idType)
         {
             IdForGetById = id;
             getByIdType = idType;
@@ -127,28 +127,15 @@ namespace Cargotruck.Client.Pages.Expenses
 
         async void OnChangeGetFilter(ChangeEventArgs e)
         {
-            switch (e.Value)
+            filter = e.Value switch
             {
-                case "salary":
-                    filter = Cargotruck.Shared.Models.Type.salary;
-                    break;
-                case "task":
-                    filter = Cargotruck.Shared.Models.Type.task;
-                    break;
-                case "storage":
-                    filter = Cargotruck.Shared.Models.Type.storage;
-                    break;
-                case "repair":
-                    filter = Cargotruck.Shared.Models.Type.repair;
-                    break;
-                case "other":
-                    filter = Cargotruck.Shared.Models.Type.other;
-                    break;
-                default:
-                    filter = null;
-                    break;
-            }
-
+                "salary" => (Cargotruck.Shared.Models.Type?)Cargotruck.Shared.Models.Type.salary,
+                "task" => (Cargotruck.Shared.Models.Type?)Cargotruck.Shared.Models.Type.task,
+                "storage" => (Cargotruck.Shared.Models.Type?)Cargotruck.Shared.Models.Type.storage,
+                "repair" => (Cargotruck.Shared.Models.Type?)Cargotruck.Shared.Models.Type.repair,
+                "other" => (Cargotruck.Shared.Models.Type?)Cargotruck.Shared.Models.Type.other,
+                _ => null,
+            };
             await OnInitializedAsync();
         }
 
@@ -194,7 +181,7 @@ namespace Cargotruck.Client.Pages.Expenses
 
         protected async Task ShowPage()
         {
-            if (pageSize < 1 || pageSize == null) { pageSize = 10; }
+            if (pageSize < 1) { pageSize = 10; }
             else if (pageSize >= dataRows) { pageSize = dataRows != 0 ? dataRows : 1; }
             maxPage = (int)Math.Ceiling((decimal)((float)dataRows / (float)pageSize));
 

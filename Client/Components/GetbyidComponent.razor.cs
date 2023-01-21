@@ -17,13 +17,13 @@ namespace Cargotruck.Client.Components
         Roads? idDataRoad;
         Warehouses? idDataWarehouse;
         Trucks? idDataTruck;
-        [Parameter] public string? getById { get; set; }
-        [Parameter] public string? getByIdType { get; set; }
-        [Parameter] public EventCallback onSetToNull { get; set; }
+        [Parameter] public string? GetById { get; set; }
+        [Parameter] public string? GetByIdType { get; set; }
+        [Parameter] public EventCallback OnSetToNull { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            if (rates == null && (getByIdType == "task" || getByIdType == "expense"))
+            if (rates == null && (GetByIdType == "task" || GetByIdType == "expense"))
             {
                 try
                 {
@@ -43,31 +43,31 @@ namespace Cargotruck.Client.Components
 
         protected override async Task OnParametersSetAsync()
         {
-            if (getById != null)
+            if (GetById != null)
             {
-                if (getByIdType == "cargo" || getByIdType == "storage")
+                if (GetByIdType == "cargo" || GetByIdType == "storage")
                 {
-                    idDataCargo = await client.GetFromJsonAsync<Cargoes?>($"api/cargoes/getbyid/{getById}");
+                    idDataCargo = await client.GetFromJsonAsync<Cargoes?>($"api/cargoes/getbyid/{GetById}");
                 }
-                else if (getByIdType == "task")
+                else if (GetByIdType == "task")
                 {
-                    idDataTask = await client.GetFromJsonAsync<Tasks?>($"api/tasks/getbyid/{getById}");
+                    idDataTask = await client.GetFromJsonAsync<Tasks?>($"api/tasks/getbyid/{GetById}");
                 }
-                else if (getByIdType == "expense")
+                else if (GetByIdType == "expense")
                 {
-                    idDataExpense = await client.GetFromJsonAsync<Expenses?>($"api/expenses/getbyid/{getById}");
+                    idDataExpense = await client.GetFromJsonAsync<Expenses?>($"api/expenses/getbyid/{GetById}");
                 }
-                else if (getByIdType == "road" || getByIdType == "repair")
+                else if (GetByIdType == "road" || GetByIdType == "repair")
                 {
-                    idDataRoad = await client.GetFromJsonAsync<Roads?>($"api/roads/getbyid/{getById}");
+                    idDataRoad = await client.GetFromJsonAsync<Roads?>($"api/roads/getbyid/{GetById}");
                 }
-                else if (getByIdType == "warehouse")
+                else if (GetByIdType == "warehouse")
                 {
-                    idDataWarehouse = await client.GetFromJsonAsync<Warehouses?>($"api/warehouses/getbyid/{getById}");
+                    idDataWarehouse = await client.GetFromJsonAsync<Warehouses?>($"api/warehouses/getbyid/{GetById}");
                 }
-                else if (getByIdType == "truck")
+                else if (GetByIdType == "truck")
                 {
-                    idDataTruck = await client.GetFromJsonAsync<Trucks?>($"api/trucks/getbyid/{getById}");
+                    idDataTruck = await client.GetFromJsonAsync<Trucks?>($"api/trucks/getbyid/{GetById}");
                 }
                 else
                 {
@@ -77,14 +77,14 @@ namespace Cargotruck.Client.Components
                     idDataRoad = null;
                     idDataWarehouse = null;
                     idDataTruck = null;
-                    getById = null;
+                    GetById = null;
                 }
             }
         }
 
         protected async Task SetToNull()
         {
-            await onSetToNull.InvokeAsync();
+            await OnSetToNull.InvokeAsync();
         }
 
         public float? GetCurrency(int? amount)

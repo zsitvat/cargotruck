@@ -11,6 +11,7 @@ using Microsoft.Data.SqlClient;
 using System.Text;
 using Cargotruck.Shared.Models;
 using DocumentFormat.OpenXml.Bibliography;
+using Microsoft.ClearScript.JavaScript;
 
 namespace Cargotruck.Server.Controllers
 {
@@ -595,7 +596,7 @@ namespace Cargotruck.Server.Controllers
 
         //iTextSharp needed !!!
         [HttpGet]
-        public string CSV(string lang)
+        public async Task<string> CSV(string lang)
         {
             var tasks = from t in _context.Tasks select t;
 
@@ -659,12 +660,14 @@ namespace Cargotruck.Server.Controllers
 
             FileStream sourceFile = new FileStream(filepath, FileMode.Open);
             MemoryStream memoryStream = new MemoryStream();
-            sourceFile.CopyToAsync(memoryStream);
+            await sourceFile.CopyToAsync(memoryStream);
             var buffer = memoryStream.ToArray();
             var file = Convert.ToBase64String(buffer);
             sourceFile.Dispose();
             sourceFile.Close();
-            System.IO.File.Delete(filepath); // delete the file in the app folder
+            if (!sourceFile.CanWrite) {
+                System.IO.File.Delete(filepath); // delete the file in the app folder
+            }
             return file;
         }
 
@@ -764,9 +767,9 @@ namespace Cargotruck.Server.Controllers
                                     new SqlParameter("@Partner", list[l+1]),
                                     new SqlParameter("@Description", list[l + 2]),
                                     new SqlParameter("@Place_of_receipt", list[l + 3]),
-                                    new SqlParameter("@Time_of_receipt", list[l + 4] == System.DBNull.Value ? System.DBNull.Value : DateTime.Parse(list[l + 4].ToString())),
+                                    new SqlParameter("@Time_of_receipt", list[l + 4] == System.DBNull.Value || list[l + 4] == null ? System.DBNull.Value : DateTime.Parse(list[l + 4].ToString())),
                                     new SqlParameter("@Place_of_delivery", list[l + 5]),
-                                    new SqlParameter("@Time_of_delivery", list[l + 6] == System.DBNull.Value ? System.DBNull.Value : DateTime.Parse(list[l + 6].ToString())),
+                                    new SqlParameter("@Time_of_delivery", list[l + 6] == System.DBNull.Value || list[l + 6] == null ? System.DBNull.Value : DateTime.Parse(list[l + 6].ToString())),
                                     new SqlParameter("@other_stops", list[l + 7]),
                                     new SqlParameter("@Id_cargo", list[l + 8]),
                                     new SqlParameter("@Storage_time", list[l + 9]),

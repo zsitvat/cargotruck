@@ -319,7 +319,7 @@ namespace Cargotruck.Server.Controllers
 
         //iTextSharp needed !!!
         [HttpGet]
-        public string CSV(string lang)
+        public async Task<string> CSV(string lang)
         {
             var warehouses = from data in _context.Warehouses select data;
             var cargoes = from data in _context.Cargoes select data;
@@ -370,12 +370,15 @@ namespace Cargotruck.Server.Controllers
             //filestream for download
             FileStream sourceFile = new FileStream(filepath, FileMode.Open);
             MemoryStream memoryStream = new MemoryStream();
-            sourceFile.CopyToAsync(memoryStream);
+            await sourceFile.CopyToAsync(memoryStream);
             var buffer = memoryStream.ToArray();
             var file = Convert.ToBase64String(buffer);
             sourceFile.Dispose();
             sourceFile.Close();
-            System.IO.File.Delete(filepath); // delete the file in the app folder
+            if (!sourceFile.CanWrite)
+            {
+                System.IO.File.Delete(filepath); // delete the file in the app folder
+            }
             return file;
         }
 
@@ -475,7 +478,7 @@ namespace Cargotruck.Server.Controllers
                                     if (substrings != null) { 
                                         for (int s = 0; s < substrings.Length-1;++s) 
                                         {
-                                            var CargoId = substrings[s].Substring(1, substrings[s].IndexOf("/")-1);
+                                            var CargoId = substrings[s][1..substrings[s].IndexOf("/")];
                                             var warehouseSection = substrings[s].Substring(substrings[s].IndexOf("/")+1);
 
                                             var greatestId =  _context.Warehouses.OrderBy(s => s.Id).Last().Id;

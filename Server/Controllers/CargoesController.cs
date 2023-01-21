@@ -344,21 +344,21 @@ namespace Cargotruck.Server.Controllers
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(cargo.Description.ToString())) { s = cargo.Description.ToString(); }
+                    if (!string.IsNullOrEmpty(cargo?.Description?.ToString())) { s = cargo.Description.ToString(); }
                     else { s = "-"; }
                     table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(cargo.Delivery_requirements.ToString())) { s = cargo.Delivery_requirements.ToString(); }
+                    if (!string.IsNullOrEmpty(cargo?.Delivery_requirements?.ToString())) { s = cargo.Delivery_requirements.ToString(); }
                     else { s = "-"; }
                     table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(cargo.Vehicle_registration_number)) { s = cargo.Vehicle_registration_number.ToString(); }
+                    if (!string.IsNullOrEmpty(cargo?.Vehicle_registration_number)) { s = cargo.Vehicle_registration_number.ToString(); }
                     else { s = "-"; }
                     table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
@@ -405,35 +405,35 @@ namespace Cargotruck.Server.Controllers
                     var s = "";
                     if (!string.IsNullOrEmpty(cargo.Id.ToString())) { s = cargo.Id.ToString(); }
                     else { s = "-"; }
-                    table2.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    table2.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
                     if (!string.IsNullOrEmpty(cargo.Warehouse_id.ToString())) { s = cargo.Warehouse_id.ToString(); }
                     else { s = "-"; }
-                    table2.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    table2.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
                     if (!string.IsNullOrEmpty(cargo.Warehouse_section)) { s = cargo.Warehouse_section.ToString(); }
                     else { s = "-"; }
-                    table2.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    table2.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
                     if (!string.IsNullOrEmpty(cargo.Storage_starting_time.ToString())) { s = cargo.Storage_starting_time.ToString(); }
                     else { s = "-"; }
-                    table2.AddCell(new PdfPCell(new Phrase(s.ToString() == "TO" ? lang == "hu" ? Cargotruck.Shared.Resources.Resource.to : "Go to the direction" : lang == "hu" ? Cargotruck.Shared.Resources.Resource.from : "Go from the direction", font2))
+                    table2.AddCell(new PdfPCell(new Phrase(s?.ToString() == "TO" ? lang == "hu" ? Cargotruck.Shared.Resources.Resource.to : "Go to the direction" : lang == "hu" ? Cargotruck.Shared.Resources.Resource.from : "Go from the direction", font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
                     if (!string.IsNullOrEmpty(cargo.Date.ToString())) { s = cargo.Date.ToString(); }
                     else { s = "-"; }
-                    table2.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    table2.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
@@ -468,7 +468,7 @@ namespace Cargotruck.Server.Controllers
 
         //iTextSharp needed !!!
         [HttpGet]
-        public string CSV(string lang)
+        public async Task<string> CSV(string lang)
         {
             var cargoes = from data in _context.Cargoes select data;
 
@@ -520,12 +520,15 @@ namespace Cargotruck.Server.Controllers
             //filestream for download
             FileStream sourceFile = new FileStream(filepath, FileMode.Open);
             MemoryStream memoryStream = new MemoryStream();
-            sourceFile.CopyToAsync(memoryStream);
+            await sourceFile.CopyToAsync(memoryStream);
             var buffer = memoryStream.ToArray();
             var file = Convert.ToBase64String(buffer);
             sourceFile.Dispose();
             sourceFile.Close();
-            System.IO.File.Delete(filepath); // delete the file in the app folder
+            if (!sourceFile.CanWrite)
+            {
+                System.IO.File.Delete(filepath); // delete the file in the app folder
+            }
             return file;
         }
 
@@ -620,7 +623,7 @@ namespace Cargotruck.Server.Controllers
                                     new SqlParameter("@Vehicle_registration_number", list[l + 5]),
                                     new SqlParameter("@Warehouse_id", list[l + 6]),
                                     new SqlParameter("@Warehouse_section", list[l + 7]),
-                                    new SqlParameter("@Storage_starting_time", list[l + 8] == System.DBNull.Value ? System.DBNull.Value : DateTime.Parse(list[l + 8].ToString())),
+                                    new SqlParameter("@Storage_starting_time", list[l + 8] == System.DBNull.Value || list[l + 8] == null ? System.DBNull.Value : DateTime.Parse(list[l + 8].ToString())),
                                     new SqlParameter("@Date", DateTime.Now)
                                     );
 

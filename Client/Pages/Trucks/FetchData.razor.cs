@@ -21,7 +21,6 @@ namespace Cargotruck.Client.Pages.Trucks
         private bool desc = true;
         private string? searchString = "";
         string? document_error;
-        string? filterIcon;
         Status? filter;
         DateFilter? dateFilter = new();
 
@@ -63,7 +62,7 @@ namespace Cargotruck.Client.Pages.Trucks
             }
         }
 
-        async Task GetById(int? id, string? idType)
+        void GetById(int? id, string? idType)
         {
             IdForGetById = id;
             getByIdType = idType;
@@ -83,31 +82,16 @@ namespace Cargotruck.Client.Pages.Trucks
 
         async void onChangeGetFilter(ChangeEventArgs e)
         {
-            switch (e.Value)
+            filter = e.Value switch
             {
-                case "loaned":
-                    filter = Status.loaned;
-                    break;
-                case "on_road":
-                    filter = Status.on_road;
-                    break;
-                case "garage":
-                    filter = Status.garage;
-                    break;
-                case "rented":
-                    filter = Status.rented;
-                    break;
-                case "under_repair":
-                    filter = Status.under_repair;
-                    break;
-                case "delivering":
-                    filter = Status.delivering;
-                    break;
-                default:
-                    filter = null;
-                    break;
-            }
-
+                "loaned" => (Status?)Status.loaned,
+                "on_road" => (Status?)Status.on_road,
+                "garage" => (Status?)Status.garage,
+                "rented" => (Status?)Status.rented,
+                "under_repair" => (Status?)Status.under_repair,
+                "delivering" => (Status?)Status.delivering,
+                _ => null,
+            };
             await OnInitializedAsync();
         }
 
@@ -154,7 +138,7 @@ namespace Cargotruck.Client.Pages.Trucks
 
         protected async Task ShowPage()
         {
-            if (pageSize < 1 || pageSize == null) { pageSize = 10; }
+            if (pageSize < 1) { pageSize = 10; }
             else if (pageSize >= dataRows) { pageSize = dataRows != 0 ? dataRows : 1; }
             maxPage = (int)Math.Ceiling((decimal)((float)dataRows / (float)pageSize));
 

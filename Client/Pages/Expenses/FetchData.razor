@@ -154,7 +154,7 @@ else
                                             {
                                                 @if (currency != "HUF" && rates != null)
                                                 {
-                                                    @(GetCurrencyAsync(item.Fuel).Result.Value.ToString("0.##") + " " + currency)
+                                                    @(GetCurrency(item.Fuel).Value.ToString("0.##") + " " + currency)
                                                 }
                                                 else
                                                 {
@@ -170,7 +170,7 @@ else
                                             {
                                                 @if (currency != "HUF" && rates != null)
                                                 {
-                                                    @(GetCurrencyAsync(item.Road_fees).Result.Value.ToString("0.##") + " " + currency)
+                                                    @(GetCurrency(item.Road_fees).Value.ToString("0.##") + " " + currency)
                                                 }
                                                 else
                                                 {
@@ -186,7 +186,7 @@ else
                                                 {
                                                 @if (currency != "HUF" && rates != null)
                                                 {
-                                                    @(GetCurrencyAsync(item.Penalty).Result.Value.ToString("0.##") + " " + currency)
+                                                    @(GetCurrency(item.Penalty).Value.ToString("0.##") + " " + currency)
                                                 }
                                                 else
                                                 {
@@ -202,7 +202,7 @@ else
                                                 {
                                                 @if (currency != "HUF" && rates != null)
                                                 {
-                                                    @(GetCurrencyAsync(item.Driver_spending).Result.Value.ToString("0.##") + " " + currency)
+                                                    @(GetCurrency(item.Driver_spending).Value.ToString("0.##") + " " + currency)
                                                 }
                                                 else
                                                 {
@@ -218,7 +218,7 @@ else
                                             {
                                                 @if (currency != "HUF" && rates != null)
                                                 {
-                                                    @(GetCurrencyAsync(item.Driver_salary).Result.Value.ToString("0.##") + " " + currency)
+                                                    @(GetCurrency(item.Driver_salary).Value.ToString("0.##") + " " + currency)
                                                 }
                                                 else
                                                 {
@@ -234,7 +234,7 @@ else
                                             {
                                                 @if (currency != "HUF" && rates != null)
                                                 {
-                                                    @(GetCurrencyAsync(item.Repair_cost).Result.Value.ToString("0.##") + " " + currency)
+                                                    @(GetCurrency(item.Repair_cost).Value.ToString("0.##") + " " + currency)
                                                 }
                                                 else
                                                 {
@@ -254,7 +254,7 @@ else
                                             {
                                                 @if (currency != "HUF" && rates != null)
                                                 {
-                                                    @(GetCurrencyAsync(item.Cost_of_storage).Result.Value.ToString("0.##") + " " + currency)
+                                                    @(GetCurrency(item.Cost_of_storage).Value.ToString("0.##") + " " + currency)
                                                 }
                                                 else
                                                 {
@@ -270,7 +270,7 @@ else
                                             {
                                                 @if (currency != "HUF" && rates != null)
                                                 {
-                                                    @(GetCurrencyAsync(item.other).Result.Value.ToString("0.##") + " " + currency)
+                                                    @(GetCurrency(item.other).Value.ToString("0.##") + " " + currency)
                                                 }
                                                 else
                                                 {

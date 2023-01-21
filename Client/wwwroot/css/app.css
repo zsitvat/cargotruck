@@ -975,8 +975,6 @@ input[type=number] {
     min-height: 2rem;
 }
 
-
-
 .table-img {
     width: 50px;
     height: 50px;
@@ -1011,7 +1009,6 @@ ul, li {
     padding: 0;
     z-index:250;
 }
-
 
 .username-dropdown li, .username-dropdown span {
     color: black;
@@ -1057,7 +1054,6 @@ ul, li {
     text-decoration: none;
 }
 
-
 .profile_picture {
     width: 220px;
     height: 200px;
@@ -1087,12 +1083,9 @@ ul, li {
     background-color: rgba(0,0,0,.075);
 }
 
-
-
 .top-row[b-afudbecg3u] a {
     margin-left: 0rem !important;
 }
-
 
 .culture-selector {
     width: fit-content;
@@ -1114,7 +1107,40 @@ tbody td:first-child{
    padding-left:1rem !important;
 }
 
+tr td:first-child {
+    padding-right: 10px !important;
+    padding-left: 12px !important;
+}
+
+/*Scroll bar css*/
+
+/* width */
+::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.culture-selector {
+    font-size: 13px;
+}
+
 @media (min-width: 1024px) {
+
     .card {
         padding-top:1rem;
         min-height: 34rem;
@@ -1161,6 +1187,7 @@ tbody td:first-child{
     }
 }
 @media (min-width: 1230px) {
+
     .card table {
         padding-left: 10%;
     }
@@ -1192,6 +1219,7 @@ tbody td:first-child{
 }
 
 @media (max-width: 1920px) {
+
     .hide {
         display: none;
     }
@@ -1411,10 +1439,10 @@ tbody td:first-child{
             display: initial;
         }
 
-            .hideandshow-cards .getbyid-card, .hideandshow-cards .settings-card {
-                max-width: 100%;
-                width: 100%;
-            }
+        .hideandshow-cards .getbyid-card, .hideandshow-cards .settings-card {
+            max-width: 100%;
+            width: 100%;
+        }
 
         .date-filter {
             left: 0rem;
@@ -1468,6 +1496,7 @@ tbody td:first-child{
     }
 
     @media (max-width: 430px) {
+
         table img {
             margin-left: 5%;
         }
@@ -1502,9 +1531,9 @@ tbody td:first-child{
             width: 85%;
         }
 
-            .privacy-form input {
-                min-width: 90% !important;
-            }
+        .privacy-form input {
+            min-width: 90% !important;
+        }
 
         .hideandshow-cards p, .hideandshow-cards b, .hideandshow-cards, .hideandshow-cards h2 {
             font-size: 90%;
@@ -1538,9 +1567,9 @@ tbody td:first-child{
             min-height: fit-content;
         }
 
-            .card:last-child {
-                margin-bottom: 1rem;
-            }
+        .card:last-child {
+            margin-bottom: 1rem;
+        }
 
         #inputimg {
             margin-left: -2%;
@@ -1570,36 +1599,4 @@ tbody td:first-child{
         .privacy-form input {
             min-width: 80% !important;
         }
-    }
-
-    tr td:first-child {
-        padding-right: 10px !important;
-        padding-left: 12px !important;
-    }
-
-    /*Scroll bar css*/
-
-    /* width */
-    ::-webkit-scrollbar {
-        width: 12px;
-        height: 12px;
-    }
-
-    /* Track */
-    ::-webkit-scrollbar-track {
-        background: #f1f1f1;
-    }
-
-    /* Handle */
-    ::-webkit-scrollbar-thumb {
-        background: #888;
-    }
-
-    /* Handle on hover */
-    ::-webkit-scrollbar-thumb:hover {
-        background: #555;
-    }
-
-    .culture-selector {
-        font-size: 13px;
     }

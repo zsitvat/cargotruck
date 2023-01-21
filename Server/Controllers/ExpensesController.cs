@@ -133,9 +133,9 @@ namespace Cargotruck.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(Expenses data)
         {
-            data.User_id = _context.Users.FirstOrDefault(a => a.UserName == User.Identity.Name).Id;
-            _context.Add(data);
-            await _context.SaveChangesAsync();
+            data.User_id = _context?.Users?.FirstOrDefault(a => a.UserName == User.Identity.Name)?.Id;
+            _context?.Add(data);
+            await _context?.SaveChangesAsync();
 
             if (data.Type.ToString() == Type.repair.ToString())
             {
@@ -336,49 +336,49 @@ namespace Cargotruck.Server.Controllers
                     var s = "";
                     if (!string.IsNullOrEmpty(expense.Id.ToString())) { s = expense.Id.ToString(); }
                     else { s = "-"; }
-                    table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    table.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
                     if (!string.IsNullOrEmpty(expense.Type.ToString())) { s = expense.Type.ToString(); }
                     else { s = "-"; }
-                    table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    table.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
                     if (!string.IsNullOrEmpty(expense.Type_id.ToString())) { s = expense.Type_id.ToString(); }
                     else { s = "-"; }
-                    table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    table.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
                     if (!string.IsNullOrEmpty(expense.Fuel.ToString())) { s = expense.Fuel.ToString() + " HUF"; }
                     else { s = "-"; }
-                    table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    table.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
                     if (!string.IsNullOrEmpty(expense.Road_fees.ToString())) { s = expense.Road_fees.ToString() + " HUF"; }
                     else { s = "-"; }
-                    table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    table.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
                     if (!string.IsNullOrEmpty(expense.Penalty.ToString())) { s = expense.Penalty.ToString() + " HUF"; }
                     else { s = "-"; }
-                    table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    table.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
                     if (!string.IsNullOrEmpty(expense.Driver_spending.ToString())) { s = expense.Driver_spending.ToString() + " HUF"; }
                     else { s = "-"; }
-                    table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    table.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
@@ -433,49 +433,49 @@ namespace Cargotruck.Server.Controllers
                     var s = "";
                     if (!string.IsNullOrEmpty(expense.Id.ToString())) { s = expense.Id.ToString(); }
                     else { s = "-"; }
-                    table2.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    table2.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
                     if (!string.IsNullOrEmpty(expense.Driver_salary.ToString())) { s = expense.Driver_salary.ToString() + " HUF"; }
                     else { s = "-"; }
-                    table2.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    table2.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
                     if (!string.IsNullOrEmpty(expense.Repair_cost.ToString())) { s = expense.Repair_cost.ToString() + " HUF"; }
                     else { s = "-"; }
-                    table2.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    table2.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
                     if (!string.IsNullOrEmpty(expense.Repair_description)) { s = expense.Repair_description.ToString() + " HUF"; }
                     else { s = "-"; }
-                    table2.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    table2.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
                     if (!string.IsNullOrEmpty(expense.Cost_of_storage.ToString())) { s = expense.Cost_of_storage.ToString() + " HUF"; }
                     else { s = "-"; }
-                    table2.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    table2.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
                     if (!string.IsNullOrEmpty(expense.other.ToString())) { s = expense.other.ToString() + " HUF"; }
                     else { s = "-"; }
-                    table2.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    table2.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
                     if (!string.IsNullOrEmpty(expense.Date.ToString())) { s = expense.Date.ToString(); }
                     else { s = "-"; }
-                    table2.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    table2.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
@@ -510,7 +510,7 @@ namespace Cargotruck.Server.Controllers
 
         //iTextSharp needed !!!
         [HttpGet]
-        public string CSV(string lang)
+        public async Task<string> CSV(string lang)
         {
             var expenses = from r in _context.Expenses select r;
 
@@ -568,12 +568,15 @@ namespace Cargotruck.Server.Controllers
             //filestream for download
             FileStream sourceFile = new FileStream(filepath, FileMode.Open);
             MemoryStream memoryStream = new MemoryStream();
-            sourceFile.CopyToAsync(memoryStream);
+            await sourceFile.CopyToAsync(memoryStream);
             var buffer = memoryStream.ToArray();
             var file = Convert.ToBase64String(buffer);
             sourceFile.Dispose();
             sourceFile.Close();
-            System.IO.File.Delete(filepath); // delete the file in the app folder
+            if (!sourceFile.CanWrite)
+            {
+                System.IO.File.Delete(filepath); // delete the file in the app folder
+            }
             return file;
         }
 

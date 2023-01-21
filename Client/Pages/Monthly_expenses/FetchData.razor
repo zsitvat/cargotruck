@@ -105,7 +105,7 @@ else
                                             {
                                                 @if (currency != "HUF" && rates != null)
                                                 {
-                                                    @(GetCurrencyAsync(item.Earning).Result.Value.ToString("0.##") + " " + currency)
+                                                    @(GetCurrency(item.Earning).Value.ToString("0.##") + " " + currency)
                                                 }
                                                 else
                                                 {
@@ -121,7 +121,7 @@ else
                                             {
                                                 @if (currency != "HUF" && rates != null)
                                                 {
-                                                    @(GetCurrencyAsync(item.Expense).Result.Value.ToString("0.##") + " " + currency)
+                                                    @(GetCurrency(item.Expense).Value.ToString("0.##") + " " + currency)
                                                 }
                                                 else
                                                 {
@@ -137,7 +137,7 @@ else
                                             {
                                                 @if (currency != "HUF" && rates != null)
                                                 {
-                                                    @(GetCurrencyAsync(item.Profit).Result.Value.ToString("0.##") + " " + currency)
+                                                    @(GetCurrency(item.Profit).Value.ToString("0.##") + " " + currency)
                                                 }
                                                 else
                                                 {

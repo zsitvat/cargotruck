@@ -26,7 +26,6 @@ namespace Cargotruck.Client.Pages.Tasks
         bool showError = false;
         string currency = "HUF";
         Dictionary<string, dynamic>? rates;
-        string? filterIcon;
         string? filter = "";
         DateFilter? dateFilter = new();
 
@@ -72,7 +71,7 @@ namespace Cargotruck.Client.Pages.Tasks
             }
         }
 
-        public async Task<float?> GetCurrencyAsync(int? amount)
+        public float? GetCurrency(int? amount)
         {
             float? conversionNum = amount;
             if (rates != null && currency != "HUF")
@@ -124,7 +123,7 @@ namespace Cargotruck.Client.Pages.Tasks
             }
         }
 
-        async Task GetById(int? id, string? idType)
+        void GetById(int? id, string? idType)
         {
             IdForGetById = id;
             getByIdType = idType;
@@ -179,7 +178,7 @@ namespace Cargotruck.Client.Pages.Tasks
 
         protected async Task ShowPage()
         {
-            if (pageSize < 1 || pageSize == null) { pageSize = 10; }
+            if (pageSize < 1) { pageSize = 10; }
             else if (pageSize >= dataRows) { pageSize = dataRows != 0 ? dataRows : 1; }
             maxPage = (int)Math.Ceiling((decimal)((float)dataRows / (float)pageSize));
 
