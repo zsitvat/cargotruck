@@ -1,10 +1,10 @@
 ﻿using System.Net;
 using Microsoft.AspNetCore.Mvc;
-using Cargotruck.Shared.Models;
 using Cargotruck.Server.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using Cargotruck.Data;
+using Cargotruck.Shared.Models.Request;
 
 [ApiController]
 [Route("api/[controller]")]

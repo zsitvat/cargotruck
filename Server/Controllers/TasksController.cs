@@ -39,21 +39,21 @@ namespace Cargotruck.Server.Controllers
                 t = t.Where(data => data.Completed == false).ToList();
             }
 
-            searchString = searchString == null ? null : searchString.ToLower();
+            searchString = searchString?.ToLower();
             if (searchString != null && searchString != "") 
             { 
                     t = t.Where(s => (
-                    s.Partner == null ? false : s.Partner.ToLower()!.Contains(searchString))
-                || (s.Description == null ? false : s.Description.ToLower()!.Contains(searchString))
-                || (s.Place_of_receipt == null ? false :  s.Place_of_receipt.ToLower()!.Contains(searchString))
-                || (s.Place_of_delivery == null ? false : s.Place_of_delivery.ToLower()!.Contains(searchString))
+                    s.Partner != null && s.Partner.ToLower()!.Contains(searchString))
+                || (s.Description != null && s.Description.ToLower()!.Contains(searchString))
+                || (s.Place_of_receipt != null && s.Place_of_receipt.ToLower()!.Contains(searchString))
+                || (s.Place_of_delivery != null && s.Place_of_delivery.ToLower()!.Contains(searchString))
                 || (s.Time_of_delivery.ToString()!.Contains(searchString))
-                || (s.Id_cargo == null ? false : s.Id_cargo.ToString()!.Contains(searchString))
-                || (s.Storage_time == null ? false : s.Storage_time.ToLower()!.Contains(searchString))
-                || (s.Completion_time == null ? false : s.Completion_time.ToString()!.Contains(searchString))
-                || (s.Payment == null ? false : s.Payment.ToString()!.Contains(searchString))
-                || (s.Final_Payment == null ? false : s.Final_Payment.ToString()!.Contains(searchString))
-                || (s.Penalty == null ? false : s.Penalty.ToString()!.Contains(searchString))
+                || (s.Id_cargo != null && s.Id_cargo.ToString()!.Contains(searchString))
+                || (s.Storage_time != null && s.Storage_time.ToLower()!.Contains(searchString))
+                || (s.Completion_time != null && s.Completion_time.ToString()!.Contains(searchString))
+                || (s.Payment != null && s.Payment.ToString()!.Contains(searchString))
+                || (s.Final_Payment != null && s.Final_Payment.ToString()!.Contains(searchString))
+                || (s.Penalty != null && s.Penalty.ToString()!.Contains(searchString))
                 || (s.Date.ToString()!.Contains(searchString))
                 ).ToList(); 
             }
@@ -139,7 +139,7 @@ namespace Cargotruck.Server.Controllers
         public async Task<IActionResult> PageCount()
         {
             var t = await _context.Tasks.ToListAsync();
-            int PageCount = t.Count();
+            int PageCount = t.Count;
             return Ok(PageCount);
         }
 
@@ -154,7 +154,12 @@ namespace Cargotruck.Server.Controllers
         public async Task<IActionResult> Post(Tasks t)
         {
             t.Final_Payment = (t.Payment != null ? t.Payment : 0) - (t.Penalty != null ? t.Penalty : 0);
-            t.User_id = _context.Users.FirstOrDefault(a => a.UserName == User.Identity.Name).Id;
+            t.User_id = _context.Users.FirstOrDefault(a => a.UserName == User.Identity!.Name)?.Id;
+            if (t.Completed)
+            {
+                t.Completion_time = DateTime.Now;
+            }
+            else { t.Completion_time = null; }
             _context.Add(t);
             await _context.SaveChangesAsync();
 
@@ -171,7 +176,13 @@ namespace Cargotruck.Server.Controllers
         public async Task<IActionResult> Put(Tasks t)
         {
             t.Final_Payment = (t.Payment != null ? t.Payment : 0) - (t.Penalty != null ? t.Penalty : 0);
+            if (t.Completed) 
+            {
+                t.Completion_time = DateTime.Now;
+            }
+            else { t.Completion_time = null; }
             _context.Entry(t).State = EntityState.Modified;
+
             var cargo = _context.Cargoes.FirstOrDefault(a => a.Id == t.Id_cargo);
             if (cargo != null)
             {
@@ -187,6 +198,11 @@ namespace Cargotruck.Server.Controllers
         public async Task<IActionResult> ChangeCompletion(Tasks t)
         {
             t.Completed = !t.Completed;
+            if (t.Completed)
+            {
+                t.Completion_time = DateTime.Now;
+            }
+            else { t.Completion_time = null; }
             _context.Entry(t).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return Ok();
@@ -207,76 +223,72 @@ namespace Cargotruck.Server.Controllers
         public string Excel(string lang)
         {
             var tasks = from t in _context.Tasks select t;
-            using (var workbook = new XLWorkbook())
+            using var workbook = new XLWorkbook();
+            var worksheet = workbook.Worksheets.Add("Tasks");
+            var currentRow = 1;
+            worksheet.Cell(currentRow, 1).Value = "Id";
+            worksheet.Cell(currentRow, 1).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 2).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID";
+            worksheet.Cell(currentRow, 2).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 3).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Partner : "Partner";
+            worksheet.Cell(currentRow, 3).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 4).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Description : "Description";
+            worksheet.Cell(currentRow, 4).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 5).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Place_of_receipt : "Place of receipt";
+            worksheet.Cell(currentRow, 5).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 6).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_receipt : "Time of receipt";
+            worksheet.Cell(currentRow, 6).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 7).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Place_of_delivery : "Place of delivery";
+            worksheet.Cell(currentRow, 7).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 8).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_delivery : "Time of delivery";
+            worksheet.Cell(currentRow, 8).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 9).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.other_stops : "other stops";
+            worksheet.Cell(currentRow, 9).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 10).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Id_cargo : "Id cargo";
+            worksheet.Cell(currentRow, 10).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 11).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Storage_time : "Storage time";
+            worksheet.Cell(currentRow, 11).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 12).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Completed : "Completed";
+            worksheet.Cell(currentRow, 12).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 13).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Completion_time : "Completion time";
+            worksheet.Cell(currentRow, 13).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 14).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_delay : "Time of delay";
+            worksheet.Cell(currentRow, 14).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 15).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Payment : "Payment";
+            worksheet.Cell(currentRow, 15).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 16).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Final_Payment : "Final Payment";
+            worksheet.Cell(currentRow, 16).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 17).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Penalty : "Penalty";
+            worksheet.Cell(currentRow, 17).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 18).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date";
+            worksheet.Cell(currentRow, 18).Style.Font.SetBold();
+            foreach (var task in tasks)
             {
-                var worksheet = workbook.Worksheets.Add("Tasks");
-                var currentRow = 1;
-                worksheet.Cell(currentRow, 1).Value = "Id";
-                worksheet.Cell(currentRow, 1).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 2).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID";
-                worksheet.Cell(currentRow, 2).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 3).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Partner : "Partner";
-                worksheet.Cell(currentRow, 3).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 4).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Description : "Description";
-                worksheet.Cell(currentRow, 4).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 5).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Place_of_receipt : "Place of receipt";
-                worksheet.Cell(currentRow, 5).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 6).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_receipt : "Time of receipt";
-                worksheet.Cell(currentRow, 6).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 7).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Place_of_delivery : "Place of delivery";
-                worksheet.Cell(currentRow, 7).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 8).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_delivery : "Time of delivery";
-                worksheet.Cell(currentRow, 8).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 9).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.other_stops : "other stops";
-                worksheet.Cell(currentRow, 9).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 10).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Id_cargo : "Id cargo";
-                worksheet.Cell(currentRow, 10).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 11).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Storage_time : "Storage time";
-                worksheet.Cell(currentRow, 11).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 12).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Completed : "Completed";
-                worksheet.Cell(currentRow, 12).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 13).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Completion_time : "Completion time";
-                worksheet.Cell(currentRow, 13).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 14).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_delay : "Time of delay";
-                worksheet.Cell(currentRow, 14).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 15).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Payment : "Payment";
-                worksheet.Cell(currentRow, 15).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 16).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Final_Payment : "Final Payment";
-                worksheet.Cell(currentRow, 16).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 17).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Penalty : "Penalty";
-                worksheet.Cell(currentRow, 17).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 18).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date";
-                worksheet.Cell(currentRow, 18).Style.Font.SetBold();
-                foreach (var task in tasks)
-                {
-                    currentRow++;
-                    worksheet.Cell(currentRow, 1).Value = task.Id;
-                    worksheet.Cell(currentRow, 2).Value = task.User_id;
-                    worksheet.Cell(currentRow, 3).Value = task.Partner;
-                    worksheet.Cell(currentRow, 4).Value = task.Description;
-                    worksheet.Cell(currentRow, 5).Value = task.Place_of_receipt;
-                    worksheet.Cell(currentRow, 6).Value = task.Time_of_receipt;
-                    worksheet.Cell(currentRow, 7).Value = task.Place_of_delivery;
-                    worksheet.Cell(currentRow, 8).Value = task.Time_of_delivery;
-                    worksheet.Cell(currentRow, 9).Value = task.other_stops;
-                    worksheet.Cell(currentRow, 10).Value = task.Id_cargo;
-                    worksheet.Cell(currentRow, 11).Value = task.Storage_time;
-                    worksheet.Cell(currentRow, 12).Value = task.Completed;
-                    worksheet.Cell(currentRow, 13).Value = task.Completion_time;
-                    worksheet.Cell(currentRow, 14).Value = task.Time_of_delay;
-                    worksheet.Cell(currentRow, 15).Value = task.Payment + (task.Payment != null ? " HUF" : "");
-                    worksheet.Cell(currentRow, 16).Value = task.Final_Payment + (task.Final_Payment != null ? " HUF" : "");
-                    worksheet.Cell(currentRow, 17).Value = task.Penalty + (task.Penalty != null ? " HUF" : "");
-                    worksheet.Cell(currentRow, 18).Value = task.Date;
-                }
-
-                using (var stream = new MemoryStream())
-                {
-                    workbook.SaveAs(stream);
-                    var content = stream.ToArray();
-                    return Convert.ToBase64String(content);
-                }
+                currentRow++;
+                worksheet.Cell(currentRow, 1).Value = task.Id;
+                worksheet.Cell(currentRow, 2).Value = task.User_id;
+                worksheet.Cell(currentRow, 3).Value = task.Partner;
+                worksheet.Cell(currentRow, 4).Value = task.Description;
+                worksheet.Cell(currentRow, 5).Value = task.Place_of_receipt;
+                worksheet.Cell(currentRow, 6).Value = task.Time_of_receipt;
+                worksheet.Cell(currentRow, 7).Value = task.Place_of_delivery;
+                worksheet.Cell(currentRow, 8).Value = task.Time_of_delivery;
+                worksheet.Cell(currentRow, 9).Value = task.other_stops;
+                worksheet.Cell(currentRow, 10).Value = task.Id_cargo;
+                worksheet.Cell(currentRow, 11).Value = task.Storage_time;
+                worksheet.Cell(currentRow, 12).Value = task.Completed;
+                worksheet.Cell(currentRow, 13).Value = task.Completion_time;
+                worksheet.Cell(currentRow, 14).Value = task.Time_of_delay;
+                worksheet.Cell(currentRow, 15).Value = task.Payment + (task.Payment != null ? " HUF" : "");
+                worksheet.Cell(currentRow, 16).Value = task.Final_Payment + (task.Final_Payment != null ? " HUF" : "");
+                worksheet.Cell(currentRow, 17).Value = task.Penalty + (task.Penalty != null ? " HUF" : "");
+                worksheet.Cell(currentRow, 18).Value = task.Date;
             }
+
+            using var stream = new MemoryStream();
+            workbook.SaveAs(stream);
+            var content = stream.ToArray();
+            return Convert.ToBase64String(content);
         }
 
         //iTextSharp needed !!!
@@ -286,13 +298,13 @@ namespace Cargotruck.Server.Controllers
             var tasks = from t in _context.Tasks select t;
 
             int pdfRowIndex = 1;
-            Random rnd = new Random();
+            Random rnd = new();
             int random = rnd.Next(1000000, 9999999);
             string filename = "Tasks" + random + "_" + DateTime.Now.ToString("dd-MM-yyyy");
             string filepath = "Files/" + filename + ".pdf";
 
-            Document document = new Document(PageSize.A4, 5f, 5f, 10f, 10f);
-            FileStream fs = new FileStream(filepath, FileMode.Create);
+            Document document = new(PageSize.A4, 5f, 5f, 10f, 10f);
+            FileStream fs = new(filepath, FileMode.Create);
             PdfWriter writer = PdfWriter.GetInstance(document, fs);
             document.Open();
 
@@ -322,14 +334,16 @@ namespace Cargotruck.Server.Controllers
                 HorizontalAlignment = Element.ALIGN_CENTER
             };
 
-            var title = new Paragraph(15, lang == "hu" ? Cargotruck.Shared.Resources.Resource.Tasks : "Tasks");
-            title.Alignment = Element.ALIGN_CENTER;
+            var title = new Paragraph(15, lang == "hu" ? Cargotruck.Shared.Resources.Resource.Tasks : "Tasks")
+            {
+                Alignment = Element.ALIGN_CENTER
+            };
 
 
             document.Add(title);
             document.Add(new Paragraph("\n"));
 
-            if (tasks.Count() > 0)
+            if (tasks.Any())
             {
                 table.AddCell(new PdfPCell(new Phrase("Id", font1))
                 {
@@ -388,21 +402,21 @@ namespace Cargotruck.Server.Controllers
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(task.Partner.ToString())) { s = task.Partner.ToString(); }
+                    if (!string.IsNullOrEmpty(task.Partner?.ToString())) { s = task.Partner.ToString(); }
                     else { s = "-"; }
                     table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(task.Description.ToString())) { s = task.Description.ToString(); }
+                    if (!string.IsNullOrEmpty(task.Description?.ToString())) { s = task.Description.ToString(); }
                     else { s = "-"; }
                     table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(task.Place_of_receipt.ToString())) { s = task.Place_of_receipt.ToString(); }
+                    if (!string.IsNullOrEmpty(task.Place_of_receipt?.ToString())) { s = task.Place_of_receipt.ToString(); }
                     else { s = "-"; }
                     table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
@@ -411,12 +425,12 @@ namespace Cargotruck.Server.Controllers
                     });
                     if (!string.IsNullOrEmpty(task.Time_of_receipt.ToString())) { s = task.Time_of_receipt.ToString(); }
                     else { s = "-"; }
-                    table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    table.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(task.Place_of_delivery.ToString())) { s = task.Place_of_delivery.ToString(); }
+                    if (!string.IsNullOrEmpty(task.Place_of_delivery?.ToString())) { s = task.Place_of_delivery.ToString(); }
                     else { s = "-"; }
                     table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
@@ -425,21 +439,21 @@ namespace Cargotruck.Server.Controllers
                     });
                     if (!string.IsNullOrEmpty(task.Time_of_delivery.ToString())) { s = task.Time_of_delivery.ToString(); }
                     else { s = "-"; }
-                    table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    table.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
                     if (!string.IsNullOrEmpty(task.other_stops)) { s = task.other_stops.ToString(); }
                     else { s = "-"; }
-                    table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    table.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
                     if (!string.IsNullOrEmpty(task.Id_cargo.ToString())) { s = task.Id_cargo.ToString(); }
                     else { s = "-"; }
-                    table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    table.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
@@ -523,7 +537,7 @@ namespace Cargotruck.Server.Controllers
                     });
                     if (!string.IsNullOrEmpty(task.Completion_time.ToString())) { s = task.Completion_time.ToString(); }
                     else { s = "-"; }
-                    table2.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    table2.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
@@ -570,8 +584,10 @@ namespace Cargotruck.Server.Controllers
             }
             else
             {
-                var noContent = new Paragraph(lang == "hu" ? "Nem található adat!" : "No content found!");
-                noContent.Alignment = Element.ALIGN_CENTER;
+                var noContent = new Paragraph(lang == "hu" ? "Nem található adat!" : "No content found!")
+                {
+                    Alignment = Element.ALIGN_CENTER
+                };
                 document.Add(noContent);
             }
             document.Close();
@@ -582,8 +598,8 @@ namespace Cargotruck.Server.Controllers
             fs.Close();
             fs.Dispose();
 
-            FileStream sourceFile = new FileStream(filepath, FileMode.Open);
-            MemoryStream memoryStream = new MemoryStream();
+            FileStream sourceFile = new(filepath, FileMode.Open);
+            MemoryStream memoryStream = new();
             sourceFile.CopyToAsync(memoryStream);
             var buffer = memoryStream.ToArray();
             var pdf = Convert.ToBase64String(buffer);
@@ -600,12 +616,12 @@ namespace Cargotruck.Server.Controllers
         {
             var tasks = from t in _context.Tasks select t;
 
-            Random rnd = new Random();
+            Random rnd = new();
             int random = rnd.Next(1000000, 9999999);
             string filename = "Tasks" + random + "_" + DateTime.Now.ToString("dd-MM-yyyy");
             string filepath = "Files/" + filename + ".txt";
 
-            StreamWriter txt = new StreamWriter(filepath);
+            StreamWriter txt = new(filepath);
             txt.Write("Id" + ";");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID") + ";");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Partner : "Partner") + ";");
@@ -658,8 +674,8 @@ namespace Cargotruck.Server.Controllers
             System.IO.File.WriteAllText(filepath, convertedCsvFileContentsAsString, utf8Encoding);
 
 
-            FileStream sourceFile = new FileStream(filepath, FileMode.Open);
-            MemoryStream memoryStream = new MemoryStream();
+            FileStream sourceFile = new(filepath, FileMode.Open);
+            MemoryStream memoryStream = new();
             await sourceFile.CopyToAsync(memoryStream);
             var buffer = memoryStream.ToArray();
             var file = Convert.ToBase64String(buffer);
@@ -683,11 +699,11 @@ namespace Cargotruck.Server.Controllers
                 {             
 
                     //Started reading the Excel file.  
-                    XLWorkbook workbook = new XLWorkbook(path);
+                    XLWorkbook workbook = new(path);
                     
                     IXLWorksheet worksheet = workbook.Worksheet(1);
                     //Loop through the Worksheet rows.
-                    DataTable? dt = new DataTable();
+                    DataTable? dt = new();
                     bool firstRow = true;
                     if (worksheet.Row(2).CellsUsed().Count() > 1 && worksheet.Row(2).Cell(worksheet.Row(1).CellsUsed().Count()) !=null) {
                         int l = 0;
@@ -699,7 +715,7 @@ namespace Cargotruck.Server.Controllers
                             //Use the first row to add columns to DataTable with column names check.
                             if (firstRow)
                             {
-                                List<string?> titles = new List<string?>() {
+                                List<string?> titles = new() {
                                      "Id",
                                     lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID",
                                     lang == "hu" ? Cargotruck.Shared.Resources.Resource.Partner : "Partner",
@@ -736,24 +752,24 @@ namespace Cargotruck.Server.Controllers
                                
                                 }
                                 firstRow = false;
-                                if (titles.Count() == 0) 
+                                if (titles.Count == 0) 
                                 { 
                                     haveColumns = true; 
                                         l += 1;
                                 }
-                                else if (titles.Count() == 1 &&  titles.Contains("Id")) 
+                                else if (titles.Count == 1 &&  titles.Contains("Id")) 
                                 {
                                     haveColumns = true;
                                 }
                             }
                             else if(haveColumns)
                             {
-                                List<object?> list = new List<object?>();
+                                List<object?> list = new();
                                 //Add rows to DataTable.
                                 dt.Rows.Add();
                                 foreach (IXLCell cell in row.Cells(1, dt.Columns.Count))
                                 {
-                                    if (cell.Value!=null && cell.Value.ToString()!="") { list.Add(cell.Value); }
+                                    if (cell.Value != null && cell.Value.ToString()!="") { list.Add(cell.Value); }
                                     else { list.Add(System.DBNull.Value); }
                                 }
 
@@ -767,9 +783,9 @@ namespace Cargotruck.Server.Controllers
                                     new SqlParameter("@Partner", list[l+1]),
                                     new SqlParameter("@Description", list[l + 2]),
                                     new SqlParameter("@Place_of_receipt", list[l + 3]),
-                                    new SqlParameter("@Time_of_receipt", list[l + 4] == System.DBNull.Value || list[l + 4] == null ? System.DBNull.Value : DateTime.Parse(list[l + 4].ToString())),
+                                    new SqlParameter("@Time_of_receipt", list[l + 4] == System.DBNull.Value || list[l + 4] == null ? System.DBNull.Value : DateTime.Parse(list[l + 4]?.ToString()!)),
                                     new SqlParameter("@Place_of_delivery", list[l + 5]),
-                                    new SqlParameter("@Time_of_delivery", list[l + 6] == System.DBNull.Value || list[l + 6] == null ? System.DBNull.Value : DateTime.Parse(list[l + 6].ToString())),
+                                    new SqlParameter("@Time_of_delivery", list[l + 6] == System.DBNull.Value || list[l + 6] == null ? System.DBNull.Value : DateTime.Parse(list[l + 6]?.ToString()!)),
                                     new SqlParameter("@other_stops", list[l + 7]),
                                     new SqlParameter("@Id_cargo", list[l + 8]),
                                     new SqlParameter("@Storage_time", list[l + 9]),

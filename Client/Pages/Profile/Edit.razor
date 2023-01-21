@@ -50,13 +50,13 @@
 
 
 @functions {
-    [Parameter] public string Id { get; set; }
+    [Parameter] public string? Id { get; set; }
     UpdateRequest updateRequest { get; set; } = new UpdateRequest();
-    string error { get; set; }
+    string error { get; set; } = "";
 
     async Task OnSubmit()
     {
-        error = null;
+        error = "";
         try
         { 
             if(Id != null){

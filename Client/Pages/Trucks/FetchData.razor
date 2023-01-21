@@ -14,14 +14,14 @@
     <!--Filter icon-->
     @if (filter == Status.loaned || filter == Status.on_road || filter == Status.under_repair || filter == Status.rented || filter == Status.delivering || filter == Status.garage)
     {
-        <button @onclick="@(()=>onChangeResetFilter())" class="filter-button"><span class="icon iconify filter-icon" data-icon="material-symbols:filter-alt-off"></span></button>
+        <button @onclick="@(()=>OnChangeResetFilter())" class="filter-button"><span class="icon iconify filter-icon" data-icon="material-symbols:filter-alt-off"></span></button>
     }
     else
     {
-        <button @onclick="@(()=>onChangeResetFilter())" class="filter-button not-pointer"><span class="icon iconify filter-icon not-pointer" data-icon="material-symbols:filter-alt"></span></button>
+        <button @onclick="@(()=>OnChangeResetFilter())" class="filter-button not-pointer"><span class="icon iconify filter-icon not-pointer" data-icon="material-symbols:filter-alt"></span></button>
     }
     <!--Filter-->
-    <select class="form-control filter" @oninput="@((e)=>onChangeGetFilter(e))" @bind="filter">
+    <select class="form-control filter" @oninput="@((e)=>OnChangeGetFilter(e))" @bind="filter">
         <option value="" selected>@localizer["Nothing"]</option>
         @foreach (var value in Enum.GetValues<Status>())
         {
@@ -36,11 +36,11 @@
 <br>
 <p class="error">@document_error</p>
 
-@if (trucks == null)
+@if (Trucks == null)
 {
     <text><p class="text">@localizer["Loading"]</p></text>
 }
-else if (trucks.Length == 0)
+else if (Trucks.Length == 0)
 {
     <text><p class="text">@localizer["No_records"]</p></text>
 }
@@ -82,7 +82,7 @@ else
                         </thead>
                         <tbody>
                             
-                            @foreach (Trucks item in trucks)
+                            @foreach (Trucks item in Trucks)
                             {
                                 
                                 <tr>
@@ -134,7 +134,7 @@ else
         }
         @if (IdForGetById != null)
         {
-            <GetbyidComponent getById="@IdForGetById.ToString()" getByIdType="@getByIdType" OnSetToNull="SetToNull" />
+            <GetbyidComponent getById="@IdForGetById.ToString()" getByIdType="@GetByIdType" OnSetToNull="SetToNull" />
         }
     </div>
 }

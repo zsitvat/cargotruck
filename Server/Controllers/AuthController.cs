@@ -2,6 +2,7 @@
 using Cargotruck.Data;
 using Cargotruck.Server.Models;
 using Cargotruck.Shared.Models;
+using Cargotruck.Shared.Models.Request;
 using Cargotruck.Shared.Resources;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;

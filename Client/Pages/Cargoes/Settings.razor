@@ -90,7 +90,7 @@
 
 
 @code {
-    [Parameter] public List<bool> showColumns { get; set; }
+    [Parameter] public List<bool> showColumns { get; set; } = new();
     [Parameter] public bool settings { get; set; }
     [Parameter] public int pageSize { get; set; }
     [Parameter] public  EventCallback  OnSettingsChanged { get; set; }
@@ -109,7 +109,7 @@
 
     private async Task InputChange(ChangeEventArgs args)
     {
-        pageSize = string.IsNullOrEmpty(args?.Value?.ToString()) ? pageSize : Int32.Parse(args.Value.ToString());
+        pageSize = string.IsNullOrEmpty(args?.Value?.ToString()) ? pageSize : Int32.Parse(args.Value?.ToString()!);
         await OnInputChanged.InvokeAsync(pageSize);
     }
 }

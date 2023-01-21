@@ -1,4 +1,5 @@
 ﻿using Cargotruck.Shared.Models;
+using Cargotruck.Shared.Models.Request;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System.Globalization;
@@ -9,10 +10,11 @@ namespace Cargotruck.Client.Pages.Trucks
     public partial class FetchData
     {
         public bool settings = false;
-        Cargotruck.Shared.Models.Trucks[]? trucks { get; set; }
+        Cargotruck.Shared.Models.Trucks[]? Trucks { get; set; }
         int? IdForGetById { get; set; }
-        string? getByIdType { get; set; }
-        List<bool> showColumns = Enumerable.Repeat(true, 16).ToList();
+        string? GetByIdType { get; set; }
+
+        readonly List<bool> showColumns = Enumerable.Repeat(true, 6).ToList();
         private int currentPage = 1;
         int pageSize = 10;
         int dataRows;
@@ -26,18 +28,18 @@ namespace Cargotruck.Client.Pages.Trucks
 
         async void DateStartInput(ChangeEventArgs e)
         {
-            if (e != null && e.Value.ToString() != "")
+            if (e != null && e.Value?.ToString() != "")
             {
-                dateFilter.StartDate = DateTime.Parse(e.Value?.ToString());
+                dateFilter!.StartDate = DateTime.Parse(e.Value?.ToString()!);
                 await OnInitializedAsync();
             }
         }
 
         async void DateEndInput(ChangeEventArgs e)
         {
-            if (e != null && e.Value.ToString() != "")
+            if (e != null && e.Value?.ToString() != "")
             {
-                dateFilter.EndDate = DateTime.Parse(e.Value?.ToString());
+                dateFilter!.EndDate = DateTime.Parse(e.Value?.ToString()!);
                 await OnInitializedAsync();
             }
         }
@@ -52,7 +54,7 @@ namespace Cargotruck.Client.Pages.Trucks
 
         async Task Delete(int Id)
         {
-            var data = trucks?.First(x => x.Id == Id);
+            var data = Trucks?.First(x => x.Id == Id);
             if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {data?.Vehicle_registration_number} - {data?.Status} ({data?.Id})"))
             {
                 await client.DeleteAsync($"api/trucks/delete/{Id}");
@@ -65,14 +67,14 @@ namespace Cargotruck.Client.Pages.Trucks
         void GetById(int? id, string? idType)
         {
             IdForGetById = id;
-            getByIdType = idType;
+            GetByIdType = idType;
             StateHasChanged();
         }
 
         public void SetToNull()
         {
             IdForGetById = null;
-            getByIdType = null;
+            GetByIdType = null;
         }
 
         public void SettingsClosed()
@@ -80,7 +82,7 @@ namespace Cargotruck.Client.Pages.Trucks
             settings = !settings;
         }
 
-        async void onChangeGetFilter(ChangeEventArgs e)
+        async void OnChangeGetFilter(ChangeEventArgs e)
         {
             filter = e.Value switch
             {
@@ -95,13 +97,13 @@ namespace Cargotruck.Client.Pages.Trucks
             await OnInitializedAsync();
         }
 
-        async void onChangeResetFilter()
+        async void OnChangeResetFilter()
         {
             filter = null;
             await OnInitializedAsync();
         }
 
-        public void SettingsChanged() { }
+        public static void SettingsChanged() { }
 
         public async void InputChanged(int ChangedPageSize)
         {
@@ -126,7 +128,7 @@ namespace Cargotruck.Client.Pages.Trucks
 
         protected async Task Search(ChangeEventArgs args)
         {
-            searchString = args.Value.ToString();
+            searchString = args.Value?.ToString();
             await ShowPage();
         }
 
@@ -142,7 +144,7 @@ namespace Cargotruck.Client.Pages.Trucks
             else if (pageSize >= dataRows) { pageSize = dataRows != 0 ? dataRows : 1; }
             maxPage = (int)Math.Ceiling((decimal)((float)dataRows / (float)pageSize));
 
-            trucks = await client.GetFromJsonAsync<Cargotruck.Shared.Models.Trucks[]>($"api/trucks/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
+            Trucks = await client.GetFromJsonAsync<Cargotruck.Shared.Models.Trucks[]>($"api/trucks/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
             StateHasChanged();
         }
 

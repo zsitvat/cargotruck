@@ -42,10 +42,10 @@ namespace Cargotruck.Server.Controllers
             {
                 data = data.Where(s =>
                (s.Vehicle_registration_number.ToString().ToLower()!.Contains(searchString))
-            || (s.Brand == null ? false : s.Brand.ToString().ToLower()!.Contains(searchString))
+            || (s.Brand != null && s.Brand.ToString().ToLower()!.Contains(searchString))
             || (s.Status.ToString()!.Contains(searchString))
-            || (s.Road_id == null ? false : s.Road_id.ToString().ToLower()!.Contains(searchString))
-            || (s.Max_weight == null ? false : s.Max_weight.ToString()!.Contains(searchString))
+            || (s.Road_id != null && s.Road_id.ToString()!.ToLower().Contains(searchString))
+            || (s.Max_weight != null && s.Max_weight.ToString()!.Contains(searchString))
             || s.Date.ToString()!.Contains(searchString)
             ).ToList();
             }
@@ -114,7 +114,7 @@ namespace Cargotruck.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(Trucks data)
         {
-            data.User_id = _context.Users.FirstOrDefault(a => a.UserName == User.Identity.Name).Id;
+            data.User_id = _context.Users.FirstOrDefault(a => a.UserName == User.Identity!.Name)?.Id;
             _context.Add(data);
             await _context.SaveChangesAsync();
             return Ok(data.Id);
@@ -234,7 +234,7 @@ namespace Cargotruck.Server.Controllers
             document.Add(title);
             document.Add(new Paragraph("\n"));
 
-            if (trucks.Count() > 0)
+            if (trucks.Any())
             {
                 table.AddCell(new PdfPCell(new Phrase("Id", font1))
                 {
@@ -305,7 +305,7 @@ namespace Cargotruck.Server.Controllers
                     });
                     if (!string.IsNullOrEmpty(truck.Road_id.ToString())) { s = truck.Road_id.ToString(); }
                     else { s = "-"; }
-                    table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    table.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE

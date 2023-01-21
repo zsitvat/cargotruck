@@ -1,5 +1,5 @@
 ﻿using Cargotruck.Client.Services;
-using Cargotruck.Shared.Models;
+using Cargotruck.Shared.Models.Request;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System.Globalization;
@@ -33,7 +33,7 @@ namespace Cargotruck.Client.Pages.Tasks
         {
             if (e != null && e.Value?.ToString() != "")
             {
-                dateFilter.StartDate = DateTime.Parse(e.Value?.ToString());
+                dateFilter!.StartDate = DateTime.Parse(e?.Value?.ToString()!);
                 await OnInitializedAsync();
             }
         }
@@ -42,7 +42,7 @@ namespace Cargotruck.Client.Pages.Tasks
         {
             if (e != null && e.Value?.ToString() != "")
             {
-                dateFilter.EndDate = DateTime.Parse(e.Value?.ToString());
+                dateFilter!.EndDate = DateTime.Parse(e?.Value?.ToString()!);
                 await OnInitializedAsync();
             }
         }
@@ -90,7 +90,10 @@ namespace Cargotruck.Client.Pages.Tasks
 
         void OnChangeGetType(ChangeEventArgs e)
         {
-            currency = e.Value?.ToString();
+            if (e.Value != null)
+            {
+                currency = e.Value?.ToString()!;
+            }
         }
 
         async void OnChangeGetFilter(ChangeEventArgs e)
@@ -113,8 +116,8 @@ namespace Cargotruck.Client.Pages.Tasks
 
         async Task Delete(int Id)
         {
-            var t = Tasks.First(x => x.Id == Id);
-            if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {t.Partner} ({t.Id})"))
+            var t = Tasks?.First(x => x.Id == Id);
+            if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {t?.Partner} ({t?.Id})"))
             {
                 await client.DeleteAsync($"api/tasks/delete/{Id}");
                 var shouldreload = dataRows % ((currentPage == 1 ? currentPage : currentPage - 1) * pageSize);

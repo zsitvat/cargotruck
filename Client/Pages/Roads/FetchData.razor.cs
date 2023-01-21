@@ -1,4 +1,4 @@
-﻿using Cargotruck.Shared.Models;
+﻿using Cargotruck.Shared.Models.Request;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System.Globalization;
@@ -27,18 +27,18 @@ namespace Cargotruck.Client.Pages.Roads
 
         async void DateStartInput(ChangeEventArgs e)
         {
-            if (e != null && e.Value.ToString() != "")
+            if (e != null && e.Value?.ToString() != "")
             {
-                dateFilter.StartDate = DateTime.Parse(e.Value.ToString());
+                dateFilter!.StartDate = DateTime.Parse(e?.Value?.ToString()!);
                 await OnInitializedAsync();
             }
         }
 
         async void DateEndInput(ChangeEventArgs e)
         {
-            if (e != null && e.Value.ToString() != "")
+            if (e != null && e.Value?.ToString() != "")
             {
-                dateFilter.EndDate = DateTime.Parse(e.Value.ToString());
+                dateFilter!.EndDate = DateTime.Parse(e?.Value?.ToString()!);
                 await OnInitializedAsync();
             }
         }
@@ -54,7 +54,7 @@ namespace Cargotruck.Client.Pages.Roads
         async Task Delete(int Id)
         {
             var r = Roads?.First(x => x.Id == Id);
-            if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {r.Purpose_of_the_trip} - {r.Direction} ({r.Id})"))
+            if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {r?.Purpose_of_the_trip} - {r?.Direction} ({r?.Id})"))
             {
                 await client.DeleteAsync($"api/roads/delete/{Id}");
                 var shouldreload = dataRows % ((currentPage == 1 ? currentPage : currentPage - 1) * pageSize);
@@ -84,7 +84,7 @@ namespace Cargotruck.Client.Pages.Roads
 
         async void OnChangeGetFilter(ChangeEventArgs e)
         {
-            filter = e.Value.ToString();
+            filter = e.Value?.ToString();
             await OnInitializedAsync();
         }
 
@@ -118,7 +118,7 @@ namespace Cargotruck.Client.Pages.Roads
 
         protected async Task Search(ChangeEventArgs args)
         {
-            searchString = args.Value.ToString();
+            searchString = args.Value?.ToString();
             await ShowPage();
         }
 

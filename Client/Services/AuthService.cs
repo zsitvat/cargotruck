@@ -1,4 +1,4 @@
-﻿using Cargotruck.Shared.Models;
+﻿using Cargotruck.Shared.Models.Request;
 using System.Net.Http.Json;
 
 namespace Cargotruck.Client.Services

@@ -10,7 +10,7 @@
                     <a href="@PageHistoryState.GetGoBackPage()"><span class="oi oi-arrow-circle-left" aria-hidden="true" b-ffa6apske8=""></span></a>
                 }
             </div>
-            <p class="edit-title">@localizer[TitleText]</p>
+            <p class="edit-title">@localizer[TitleText!]</p>
                 <div class="form-group">
                     <button type="submit" class="btn btn-success">
                         <i class="oi oi-circle-check"></i> @localizer[ButtonText]
@@ -21,12 +21,11 @@
 
     <div class="form-card mb-6" style="border-top-left-radius:unset;border-top-right-radius:unset;">
         <div class="card-body mb-3">
-            <div class="d-inline-block forms-margin ">
-         
+            <div class="d-inline-block forms-margin ">       
                 <div class="form-group">
                     <label>@localizer["Partner"]:</label>
                     <div>
-                        <InputText class="form-control inputs" @bind-Value="@tasks.Partner" />
+                        <InputText class="form-control inputs" @bind-Value="@tasks!.Partner" />
                         <ValidationMessage For="@(() => tasks.Partner)" />
                     </div>
                 </div>
@@ -75,7 +74,10 @@
                         </div>
                     </div>
                 </div>
-                  <div class="form-group ">
+            </div>
+    
+            <div class="d-inline-block forms-margin">
+                <div class="form-group ">
                     <div>
                         <label>@localizer["other_stops"]:</label>
                         <div>
@@ -84,9 +86,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-    
-            <div class="d-inline-block forms-margin second-col">
                   <div class="form-group">
                     <div>
                         <label>@localizer["Id_cargo"]:</label>
@@ -111,15 +110,6 @@
                         <div>
                             <InputText class="form-control inputs" @bind-Value="@tasks.Storage_time" />
                             <ValidationMessage For="@(() => tasks.Storage_time)" />
-                        </div>
-                    </div>
-                </div>
-                  <div class="form-group">
-                    <div>
-                        <label>@localizer["Completion_time"]:</label>
-                        <div>
-                            <InputDate Type="InputDateType.DateTimeLocal" @bind-Value:format="yyyy.MM.dd. hh:mm" class="form-control inputs" @bind-Value="@tasks.Completion_time" />
-                            <ValidationMessage For="@(() => tasks.Completion_time)" />
                         </div>
                     </div>
                 </div>
@@ -159,8 +149,6 @@
                     <ValidationMessage For="@(() => tasks.Completed)" />
                 </div>
             </div>
-
-         
     </div>
 </div>
 
@@ -180,9 +168,11 @@
         cargoes = await client.GetFromJsonAsync < List<Cargoes>>("api/cargoes/getcargoes");
         taskWithCargo = await client.GetFromJsonAsync<List<Tasks>>("api/tasks/gettasks");
         taskWithCargo = taskWithCargo?.Where(x => x.Id_cargo != null).ToList();
-        foreach (var task in taskWithCargo)
-        {
-            cargoes.RemoveAll(x => x.Id == task.Id_cargo && x.Id != tasks?.Id_cargo);
+        if (taskWithCargo != null) {
+            foreach (var task in taskWithCargo)
+            {
+                cargoes?.RemoveAll(x => x.Id == task.Id_cargo && x.Id != tasks?.Id_cargo);
+            }
         }
     }
 }

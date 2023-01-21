@@ -1,7 +1,4 @@
-﻿@using System.Linq
-@using System.Net.Http.Headers
-@using Microsoft.Extensions.Logging
-@inject HttpClient Http
+﻿@inject HttpClient Http
 
 <label for="inputimg" class="input-only imginput-label mt-0">@localizer["Image_change"]</label>
 <InputFile id="inputimg" class="form-control"  OnChange="@OnInputFileChange" />

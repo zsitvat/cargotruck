@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cargotruck.Shared.Models
+namespace Cargotruck.Shared.Models.Request
 {
     public class CurrentUser
     {
@@ -13,6 +13,6 @@ namespace Cargotruck.Shared.Models
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public string Name { get; set; }
-        public Dictionary<string, string> Claims { get; set; }   = new Dictionary<string, string>();
+        public Dictionary<string, string> Claims { get; set; } = new Dictionary<string, string>();
     }
 }

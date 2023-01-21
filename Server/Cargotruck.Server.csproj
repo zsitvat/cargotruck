@@ -19,7 +19,7 @@
     <PackageReference Include="BlazorPolyfill.Server" Version="6.0.200" />
     <PackageReference Include="ClosedXML" Version="0.97.0" />
     <PackageReference Include="EntityFramework" Version="6.4.4" />
-    <PackageReference Include="iTextSharp.LGPLv2.Core" Version="1.9.4" />
+    <PackageReference Include="iTextSharp.LGPLv2.Core" Version="3.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="6.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.10" />

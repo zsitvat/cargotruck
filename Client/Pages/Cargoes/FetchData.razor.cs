@@ -1,5 +1,5 @@
 ﻿using Cargotruck.Client.Services;
-using Cargotruck.Shared.Models;
+using Cargotruck.Shared.Models.Request;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System.Globalization;
@@ -13,7 +13,7 @@ namespace Cargotruck.Client.Pages.Cargoes
         Cargotruck.Shared.Models.Cargoes[]? Cargoes { get; set; }
         string? IdForGetById { get; set; }
         string? GetByIdType { get; set; }
-        readonly List<bool> showColumns = Enumerable.Repeat(true, 16).ToList();
+        readonly List<bool> showColumns = Enumerable.Repeat(true, 9).ToList();
         private int currentPage = 1;
         int pageSize = 10;
         int dataRows;
@@ -29,7 +29,7 @@ namespace Cargotruck.Client.Pages.Cargoes
         {
             if (e != null && e.Value?.ToString() != "")
             {
-                dateFilter.StartDate = DateTime.Parse(e.Value?.ToString());
+                dateFilter!.StartDate = DateTime.Parse(e?.Value?.ToString()!);
                 await OnInitializedAsync();
             }
         }
@@ -38,7 +38,7 @@ namespace Cargotruck.Client.Pages.Cargoes
         {
             if (e != null && e?.Value?.ToString() != "")
             {
-                dateFilter.EndDate = DateTime.Parse(e.Value?.ToString());
+                dateFilter!.EndDate = DateTime.Parse(e?.Value?.ToString()!);
                 await OnInitializedAsync();
             }
         }

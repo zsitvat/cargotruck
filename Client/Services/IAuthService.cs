@@ -1,4 +1,4 @@
-﻿using Cargotruck.Shared.Models;
+﻿using Cargotruck.Shared.Models.Request;
 
 namespace Cargotruck.Client.Services
 {

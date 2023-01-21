@@ -1,4 +1,4 @@
-﻿using Cargotruck.Shared.Models;
+﻿using Cargotruck.Shared.Models.Request;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.Security.Claims;
 

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cargotruck.Shared.Models
+namespace Cargotruck.Shared.Models.Request
 {
     public class DateFilter
     {

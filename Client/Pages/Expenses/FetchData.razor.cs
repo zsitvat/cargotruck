@@ -1,5 +1,5 @@
 ﻿using Cargotruck.Client.Services;
-using Cargotruck.Shared.Models;
+using Cargotruck.Shared.Models.Request;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System.Globalization;
@@ -10,10 +10,10 @@ namespace Cargotruck.Client.Pages.Expenses
     public partial class FetchData
     {
         public bool settings = false;
-        Cargotruck.Shared.Models.Expenses[]? expenses { get; set; }
+        Cargotruck.Shared.Models.Expenses[]? expenses;
         int? IdForGetById { get; set; }
-        string? getByIdType { get; set; }
-        List<bool> showColumns = Enumerable.Repeat(true, 16).ToList();
+        string? GetByIdType { get; set; }
+        readonly List<bool> showColumns = Enumerable.Repeat(true, 12).ToList();
         private int currentPage = 1;
         int pageSize = 10;
         int dataRows;
@@ -25,7 +25,7 @@ namespace Cargotruck.Client.Pages.Expenses
         string? currency_api_error;
         bool showError = false;
         string currency = "HUF";
-        [CascadingParameter]  Dictionary<string, dynamic>? rates {get;set;}
+        [CascadingParameter]  Dictionary<string, dynamic>? Rates {get;set;}
         Cargotruck.Shared.Models.Type? filter;
         DateFilter dateFilter = new();
 
@@ -33,7 +33,7 @@ namespace Cargotruck.Client.Pages.Expenses
         {
             if (e != null && e.Value?.ToString() != "")
             {
-                dateFilter.StartDate = DateTime.Parse(e?.Value?.ToString());
+                dateFilter.StartDate = DateTime.Parse(e?.Value?.ToString()!);
                 await OnInitializedAsync();
             }
         }
@@ -42,7 +42,7 @@ namespace Cargotruck.Client.Pages.Expenses
         {
             if (e != null && e.Value?.ToString() != "")
             {
-                dateFilter.EndDate = DateTime.Parse(e?.Value?.ToString());
+                dateFilter.EndDate = DateTime.Parse(e?.Value?.ToString()!);
                 await OnInitializedAsync();
             }
         }
@@ -51,11 +51,11 @@ namespace Cargotruck.Client.Pages.Expenses
         {
             PageHistoryState.AddPageToHistory("/Expenses");
             base.OnInitialized();
-            if (rates == null)
+            if (Rates == null)
             {
                 try
                 {
-                    rates = await CurrencyExchange.GetRatesAsync(client);
+                    Rates = await CurrencyExchange.GetRatesAsync(client);
                 }
                 catch (Exception ex)
                 {
@@ -75,15 +75,15 @@ namespace Cargotruck.Client.Pages.Expenses
         {
             float? conversionNum = amount;
 
-            if (rates != null && currency != "HUF")
+            if (Rates != null && currency != "HUF")
             {
                 if (currency != "EUR")
                 {
-                    conversionNum = (float)((amount / rates["HUF"]) * rates[currency]);
+                    conversionNum = (float)((amount / Rates["HUF"]) * Rates[currency]);
                 }
                 else
                 {
-                    conversionNum = (float)(amount / rates["HUF"]);
+                    conversionNum = (float)(amount / Rates["HUF"]);
                 }
             }
 
@@ -92,12 +92,12 @@ namespace Cargotruck.Client.Pages.Expenses
 
         void OnChangeGetType(ChangeEventArgs e)
         {
-            currency = e.Value?.ToString();
+            if (e.Value != null) { currency = e?.Value?.ToString()!; }
         }
 
         async Task Delete(int Id)
         {
-            var data = expenses.First(x => x.Id == Id);
+            var data = expenses?.First(x => x.Id == Id);
             if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {data?.Type} - {data?.Type_id} - {data?.Date}"))
             {
                 await client.DeleteAsync($"api/expenses/delete/{Id}");
@@ -110,14 +110,14 @@ namespace Cargotruck.Client.Pages.Expenses
         void GetById(int? id, string idType)
         {
             IdForGetById = id;
-            getByIdType = idType;
+            GetByIdType = idType;
             StateHasChanged();
         }
 
         public void SetToNull()
         {
             IdForGetById = null;
-            getByIdType = null;
+            GetByIdType = null;
         }
 
         public void SettingsClosed()
@@ -145,7 +145,7 @@ namespace Cargotruck.Client.Pages.Expenses
             await OnInitializedAsync();
         }
 
-        public void SettingsChanged() { }
+        public static void SettingsChanged() { }
 
         public async void InputChanged(int ChangedPageSize)
         {
@@ -192,7 +192,7 @@ namespace Cargotruck.Client.Pages.Expenses
         private async Task ExportToPdf()
         {
             //get base64 string from web api call
-            var Response = await client.GetAsync($"api/expenses/pdf?lang={CultureInfo.CurrentCulture.Name.ToString()}");
+            var Response = await client.GetAsync($"api/expenses/pdf?lang={CultureInfo.CurrentCulture.Name}");
 
             if (Response.IsSuccessStatusCode)
             {
@@ -218,7 +218,7 @@ namespace Cargotruck.Client.Pages.Expenses
         private async Task ExportToExcel()
         {
             //get base64 string from web api call
-            var Response = await client.GetAsync($"api/expenses/excel?lang={CultureInfo.CurrentCulture.Name.ToString()}");
+            var Response = await client.GetAsync($"api/expenses/excel?lang={CultureInfo.CurrentCulture.Name}");
 
             if (Response.IsSuccessStatusCode)
             {
@@ -244,7 +244,7 @@ namespace Cargotruck.Client.Pages.Expenses
         private async Task ExportToCSV(string format)
         {
             //get base64 string from web api call
-            var Response = await client.GetAsync($"api/expenses/csv?lang={CultureInfo.CurrentCulture.Name.ToString()}");
+            var Response = await client.GetAsync($"api/expenses/csv?lang={CultureInfo.CurrentCulture.Name}");
 
             if (Response.IsSuccessStatusCode)
             {

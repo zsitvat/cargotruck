@@ -1,5 +1,6 @@
 ﻿using Cargotruck.Client.Services;
 using Cargotruck.Shared.Models;
+using Cargotruck.Shared.Models.Request;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System.Globalization;
@@ -14,7 +15,7 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
         Monthly_expenses_tasks_expenses[]? connection_ids { get; set; }
         int? IdForGetById { get; set; }
         string? getByIdType { get; set; }
-        List<bool> showColumns = Enumerable.Repeat(true, 16).ToList();
+        List<bool> showColumns = Enumerable.Repeat(true, 6).ToList();
         private int currentPage = 1;
         int pageSize = 10;
         int dataRows;
@@ -33,7 +34,7 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
         {
             if (e != null && e.Value?.ToString() != "")
             {
-                dateFilter.StartDate = DateTime.Parse(e.Value?.ToString());
+                dateFilter!.StartDate = DateTime.Parse(e?.Value?.ToString()!);
                 await OnInitializedAsync();
             }
         }
@@ -42,7 +43,7 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
         {
             if (e != null && e.Value?.ToString() != "")
             {
-                dateFilter.EndDate = DateTime.Parse(e.Value?.ToString());
+                dateFilter!.EndDate = DateTime.Parse(e?.Value?.ToString()!);
                 await OnInitializedAsync();
             }
         }
@@ -67,7 +68,7 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
                     }
                 }
             }
-            var refreshdata = await client.GetStringAsync("api/Monthly_expenses/createcontable");
+            await client.GetStringAsync("api/Monthly_expenses/createcontable");
             dataRows = await client.GetFromJsonAsync<int>("api/Monthly_expenses/pagecount");
             var checkData = await client.GetAsync("api/Monthly_expenses/checkdata");
             connection_ids = await client.GetFromJsonAsync<Monthly_expenses_tasks_expenses[]?>
@@ -102,7 +103,10 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
 
         void OnChangeGetType(ChangeEventArgs e)
         {
-            currency = e.Value?.ToString();
+            if (e.Value != null)
+            {
+                currency = e.Value.ToString()!;
+            }
         }
 
         async Task Delete(int Id)
@@ -255,11 +259,5 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
                 document_error = localizer["Document_failder_to_create"];
             }
         }
-
-        private async Task StateChanged()
-        {
-            await OnInitializedAsync();
-        }
-
     }
 }

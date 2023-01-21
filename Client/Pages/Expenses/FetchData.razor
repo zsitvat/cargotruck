@@ -158,7 +158,7 @@ else
                                          <td>
                                             @if (@item.Fuel != null)
                                             {
-                                                @if (currency != "HUF" && rates != null)
+                                                @if (currency != "HUF" && Rates != null)
                                                 {
                                                     @(GetCurrency(item.Fuel)!.Value.ToString("0.##") + " " + currency)
                                                 }
@@ -174,7 +174,7 @@ else
                                         <td>
                                             @if (@item.Road_fees != null)
                                             {
-                                                @if (currency != "HUF" && rates != null)
+                                                @if (currency != "HUF" && Rates != null)
                                                 {
                                                     @(GetCurrency(item.Road_fees)!.Value.ToString("0.##") + " " + currency)
                                                 }
@@ -190,7 +190,7 @@ else
                                          <td>
                                             @if (@item.Penalty != null)
                                                 {
-                                                @if (currency != "HUF" && rates != null)
+                                                @if (currency != "HUF" && Rates != null)
                                                 {
                                                     @(GetCurrency(item.Penalty)!.Value.ToString("0.##") + " " + currency)
                                                 }
@@ -206,7 +206,7 @@ else
                                         <td>
                                             @if(@item.Driver_spending != null)
                                                 {
-                                                @if (currency != "HUF" && rates != null)
+                                                @if (currency != "HUF" && Rates != null)
                                                 {
                                                     @(GetCurrency(item.Driver_spending)!.Value.ToString("0.##") + " " + currency)
                                                 }
@@ -222,7 +222,7 @@ else
                                          <td>
                                             @if (@item.Driver_salary != null)
                                             {
-                                                @if (currency != "HUF" && rates != null)
+                                                @if (currency != "HUF" && Rates != null)
                                                 {
                                                     @(GetCurrency(item.Driver_salary)!.Value.ToString("0.##") + " " + currency)
                                                 }
@@ -238,7 +238,7 @@ else
                                         <td>
                                             @if (@item.Repair_cost != null)
                                             {
-                                                @if (currency != "HUF" && rates != null)
+                                                @if (currency != "HUF" && Rates != null)
                                                 {
                                                     @(GetCurrency(item.Repair_cost)!.Value.ToString("0.##") + " " + currency)
                                                 }
@@ -258,7 +258,7 @@ else
                                         <td>
                                             @if (@item.Cost_of_storage != null)
                                             {
-                                                @if (currency != "HUF" && rates != null)
+                                                @if (currency != "HUF" && Rates != null)
                                                 {
                                                     @(GetCurrency(item.Cost_of_storage)!.Value.ToString("0.##") + " " + currency)
                                                 }
@@ -274,7 +274,7 @@ else
                                         <td>
                                             @if (@item.other != null)
                                             {
-                                                @if (currency != "HUF" && rates != null)
+                                                @if (currency != "HUF" && Rates != null)
                                                 {
                                                     @(GetCurrency(item.other)!.Value.ToString("0.##") + " " + currency)
                                                 }
@@ -310,7 +310,7 @@ else
         }
         @if (IdForGetById != null)
         {
-            <GetbyidComponent getById="@IdForGetById.ToString()" getByIdType="@getByIdType" OnSetToNull="SetToNull" />
+            <GetbyidComponent getById="@IdForGetById.ToString()" getByIdType="@GetByIdType" OnSetToNull="SetToNull" />
         }
     </div>
 }
