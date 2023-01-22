@@ -805,11 +805,43 @@ namespace Cargotruck.Server.Controllers
                                     new SqlParameter("@Penalty", list[l + 15]),
                                     new SqlParameter("@Date", DateTime.Now)
                                     );
-
+                                    
                                 if (insert > 0)
                                 {
                                     error = "";
-                                    await _context.SaveChangesAsync();
+                                    var lastId = await _context.Tasks.OrderBy(x => x.Date).LastOrDefaultAsync();
+
+                                    if (list[l + 8] != null) 
+                                    {  
+                                        var taskWithNewIds = await _context.Tasks.Where(x => x.Id_cargo.ToString() == list[l + 8]!.ToString()).ToListAsync();
+                                        Cargoes? cargo = await _context.Cargoes.FirstOrDefaultAsync(x => x.Id.ToString() == list[l + 8]!.ToString());
+
+                                        foreach (var task in taskWithNewIds)
+                                        {
+                                            if (task != null)
+                                            {
+                                                if (task.Id != lastId?.Id)
+                                                {
+                                                    task.Id_cargo = null;
+                                                    _context.Entry(task).State = EntityState.Modified;
+                                                    await _context.SaveChangesAsync();
+                                                }
+                                                else if (cargo == null)
+                                                {
+                                                    task.Id_cargo = null;
+                                                    _context.Entry(task).State = EntityState.Modified;
+                                                    await _context.SaveChangesAsync();
+                                                }
+                                            }
+                                        }
+                                       
+                                        if (cargo != null)
+                                        {
+                                            cargo.Task_id = lastId.Id;
+                                            _context.Entry(cargo).State = EntityState.Modified;
+                                            await _context.SaveChangesAsync();
+                                        }
+                                    }
                                 }
                                 else if(insert <=0)
                                 {

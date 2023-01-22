@@ -179,7 +179,12 @@ else
                                     }
                                     @if (showColumns[7])
                                     {
-                                        <td><button class="no-button" @onclick="@(()=>GetById(item.Id_cargo,"cargo"))">@item.Id_cargo</button></td>
+                                        <td>
+                                            @if(item.Id_cargo != null)
+                                            {
+                                            <button class="no-button" @onclick="@(()=>GetById(item.Id_cargo,"cargo"))">@item.Id_cargo <span class="icon iconify" data-icon="material-symbols:read-more-rounded"></span></button>
+                                            }
+                                        </td>
                                     }
                                     @if (showColumns[8])
                                     {

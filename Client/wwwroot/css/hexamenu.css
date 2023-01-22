@@ -681,7 +681,7 @@ textarea, label {
 
 .pt-table.desktop-768 .pt-tablecell {
     padding-bottom: 110px;
-    padding-top: 100px;
+    padding-top: 50px;
 }
 
 
@@ -739,10 +739,15 @@ textarea, label {
     .hexagon-menu {
         position: absolute;
     }
+
+    .row>*{
+        padding-left: 0 !important;
+    }
 }
 
 
 @media only screen and (max-width: 1030px) {
+
     .hexagon-menu {
         position: absolute;
         left:30%;

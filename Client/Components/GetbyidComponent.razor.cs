@@ -1,6 +1,7 @@
 ﻿using Cargotruck.Client.Services;
 using Cargotruck.Shared.Models;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using System.Net.Http.Json;
 
 namespace Cargotruck.Client.Components
@@ -21,9 +22,10 @@ namespace Cargotruck.Client.Components
         [Parameter] public string? GetById { get; set; }
         [Parameter] public string? GetByIdType { get; set; }
         [Parameter] public EventCallback OnSetToNull { get; set; }
-
+        private ElementReference ForFocus;
         protected override async Task OnInitializedAsync()
         {
+            await base.OnInitializedAsync();
             if (rates == null && (GetByIdType == "task" || GetByIdType == "expense"))
             {
                 try
@@ -39,7 +41,7 @@ namespace Cargotruck.Client.Components
                         currency_api_error = "currency_api_is_exceeded";
                     }
                 }
-            }
+            }    
         }
 
         protected override async Task OnParametersSetAsync()
@@ -81,6 +83,7 @@ namespace Cargotruck.Client.Components
                     GetById = null;
                 }
             }
+            await ForFocus.FocusAsync();
         }
 
         protected async Task SetToNull()
