@@ -46,7 +46,6 @@ namespace Cargotruck.Server.Controllers
             || (s.Status.ToString()!.Contains(searchString))
             || (s.Road_id != null && s.Road_id.ToString()!.ToLower().Contains(searchString))
             || (s.Max_weight != null && s.Max_weight.ToString()!.Contains(searchString))
-            || s.Date.ToString()!.Contains(searchString)
             ).ToList();
             }
 
@@ -97,9 +96,13 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> PageCount()
+        public async Task<IActionResult> PageCount(Status? filter)
         {
             var data = await _context.Trucks.ToListAsync();
+            if (filter != null)
+            {
+                data = data.Where(x => x.Status == filter).ToList();
+            }
             int PageCount = data.Count;
             return Ok(PageCount);
         }
@@ -143,63 +146,59 @@ namespace Cargotruck.Server.Controllers
         public string Excel(string lang)
         {
             var trucks = from data in _context.Trucks select data;
-            using (var workbook = new XLWorkbook())
+            using var workbook = new XLWorkbook();
+            var worksheet = workbook.Worksheets.Add("Trucks");
+            var currentRow = 1;
+            worksheet.Cell(currentRow, 1).Value = "Id";
+            worksheet.Cell(currentRow, 1).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 2).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID";
+            worksheet.Cell(currentRow, 2).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 3).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Vehicle_registration_number : "Task ID";
+            worksheet.Cell(currentRow, 3).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 4).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Brand : "Cargo ID";
+            worksheet.Cell(currentRow, 4).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 5).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Status : "Status";
+            worksheet.Cell(currentRow, 5).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 6).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Road_id : "Road ID";
+            worksheet.Cell(currentRow, 6).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 7).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Max_weight : "Max weight";
+            worksheet.Cell(currentRow, 7).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 8).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date";
+            worksheet.Cell(currentRow, 8).Style.Font.SetBold();
+
+            foreach (var truck in trucks)
             {
-                var worksheet = workbook.Worksheets.Add("Trucks");
-                var currentRow = 1;
-                worksheet.Cell(currentRow, 1).Value = "Id";
-                worksheet.Cell(currentRow, 1).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 2).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID";
-                worksheet.Cell(currentRow, 2).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 3).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Vehicle_registration_number : "Task ID";
-                worksheet.Cell(currentRow, 3).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 4).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Brand : "Cargo ID";
-                worksheet.Cell(currentRow, 4).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 5).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Status : "Status";
-                worksheet.Cell(currentRow, 5).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 6).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Road_id : "Road ID";
-                worksheet.Cell(currentRow, 6).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 7).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Max_weight : "Max weight";
-                worksheet.Cell(currentRow, 7).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 8).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date";
-                worksheet.Cell(currentRow, 8).Style.Font.SetBold();
-
-                foreach (var truck in trucks)
-                {
-                    currentRow++;
-                    worksheet.Cell(currentRow, 1).Value = truck.Id;
-                    worksheet.Cell(currentRow, 2).Value = truck.User_id;
-                    worksheet.Cell(currentRow, 3).Value = truck.Vehicle_registration_number;
-                    worksheet.Cell(currentRow, 4).Value = truck.Brand;
-                    worksheet.Cell(currentRow, 5).Value = truck.Status;
-                    worksheet.Cell(currentRow, 6).Value = truck.Road_id;
-                    worksheet.Cell(currentRow, 7).Value = truck.Max_weight;
-                    worksheet.Cell(currentRow, 8).Value = truck.Date;
-                }
-
-                using (var stream = new MemoryStream())
-                {
-                    workbook.SaveAs(stream);
-                    var content = stream.ToArray();
-                    return Convert.ToBase64String(content);
-                }
+                currentRow++;
+                worksheet.Cell(currentRow, 1).Value = truck.Id;
+                worksheet.Cell(currentRow, 2).Value = truck.User_id;
+                worksheet.Cell(currentRow, 3).Value = truck.Vehicle_registration_number;
+                worksheet.Cell(currentRow, 4).Value = truck.Brand;
+                worksheet.Cell(currentRow, 5).Value = truck.Status;
+                worksheet.Cell(currentRow, 6).Value = truck.Road_id;
+                worksheet.Cell(currentRow, 7).Value = truck.Max_weight;
+                worksheet.Cell(currentRow, 8).Value = truck.Date;
             }
+
+            using var stream = new MemoryStream();
+            workbook.SaveAs(stream);
+            var content = stream.ToArray();
+            return Convert.ToBase64String(content);
         }
 
         //iTextSharp needed !!!
         [HttpGet]
-        public string PDF(string lang)
+         public async Task<string> PDF(string lang)
         {
             var trucks = from data in _context.Trucks select data;
 
             int pdfRowIndex = 1;
-            Random rnd = new Random();
+            Random rnd = new();
             int random = rnd.Next(1000000, 9999999);
             string filename = "Trucks" + random + "_" + DateTime.Now.ToString("dd-MM-yyyy");
             string filepath = "Files/" + filename + ".pdf";
 
-            Document document = new Document(PageSize.A4, 5f, 5f, 10f, 10f);
-            FileStream fs = new FileStream(filepath, FileMode.Create);
+            Document document = new(PageSize.A4, 5f, 5f, 10f, 10f);
+            FileStream fs = new(filepath, FileMode.Create);
             PdfWriter writer = PdfWriter.GetInstance(document, fs);
             document.Open();
 
@@ -339,9 +338,9 @@ namespace Cargotruck.Server.Controllers
             fs.Close();
             fs.Dispose();
 
-            FileStream sourceFile = new FileStream(filepath, FileMode.Open);
-            MemoryStream memoryStream = new MemoryStream();
-            sourceFile.CopyToAsync(memoryStream);
+            FileStream sourceFile = new(filepath, FileMode.Open);
+            MemoryStream memoryStream = new();
+            await sourceFile.CopyToAsync(memoryStream);
             var buffer = memoryStream.ToArray();
             var pdf = Convert.ToBase64String(buffer);
             sourceFile.Dispose();
@@ -357,12 +356,12 @@ namespace Cargotruck.Server.Controllers
         {
             var trucks = from data in _context.Trucks select data;
 
-            Random rnd = new Random();
+            Random rnd = new();
             int random = rnd.Next(1000000, 9999999);
             string filename = "Trucks" + random + "_" + DateTime.Now.ToString("dd-MM-yyyy");
             string filepath = "Files/" + filename + ".csv";
 
-            StreamWriter txt = new StreamWriter(filepath);
+            StreamWriter txt = new(filepath);
             txt.Write("Id" + ";");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID") + ";");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Vehicle_registration_number : "Vehicle registration number") + ";");
@@ -398,8 +397,8 @@ namespace Cargotruck.Server.Controllers
             System.IO.File.WriteAllText(filepath, convertedCsvFileContentsAsString, utf8Encoding);
 
             //filestream for download
-            FileStream sourceFile = new FileStream(filepath, FileMode.Open);
-            MemoryStream memoryStream = new MemoryStream();
+            FileStream sourceFile = new(filepath, FileMode.Open);
+            MemoryStream memoryStream = new();
             await sourceFile.CopyToAsync(memoryStream);
             var buffer = memoryStream.ToArray();
             var file = Convert.ToBase64String(buffer);
@@ -424,11 +423,11 @@ namespace Cargotruck.Server.Controllers
                 {
 
                     //Started reading the Excel file.  
-                    XLWorkbook workbook = new XLWorkbook(path);
+                    XLWorkbook workbook = new(path);
 
                     IXLWorksheet worksheet = workbook.Worksheet(1);
                     //Loop through the Worksheet rows.
-                    DataTable? dt = new DataTable();
+                    DataTable? dt = new();
                     bool firstRow = true;
                     if (worksheet.Row(2).CellsUsed().Count() > 1 && worksheet.Row(2).Cell(worksheet.Row(1).CellsUsed().Count()) != null)
                     {
@@ -438,7 +437,7 @@ namespace Cargotruck.Server.Controllers
                             //Use the first row to add columns to DataTable with column names check.
                             if (firstRow)
                             {
-                                List<string?> titles = new List<string?>() {
+                                List<string?> titles = new() {
                                 "Id",
                                 lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID",
                                 lang == "hu" ? Cargotruck.Shared.Resources.Resource.Vehicle_registration_number : "Vehicle registration number",
@@ -478,7 +477,7 @@ namespace Cargotruck.Server.Controllers
                             }
                             else if (haveColumns)
                             {
-                                List<object?> list = new List<object?>();
+                                List<object?> list = new();
                                 //Add rows to DataTable.
                                 dt.Rows.Add();
                                 foreach (IXLCell cell in row.Cells(1, dt.Columns.Count))

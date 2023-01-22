@@ -11,15 +11,16 @@
     Monthly_expenses? monthly_expense = new Monthly_expenses();
     Monthly_expenses_tasks_expenses? Monthly_expenses_tasks_expenses = new Monthly_expenses_tasks_expenses();
 
-    public async void HandleChangeTask(string[]? selected)
+    public void HandleChangeTask(string[]? selected)
     {
         selectedTaskId = selected;
     }
 
-    public async void HandleChangeExpense(string[]? selected)
+    public void HandleChangeExpense(string[]? selected)
     {
         selectedExpenseId = selected;
     }
+
     async Task CreateMonthlyExpense()
     {
         var result = await http.PostAsJsonAsync("api/Monthly_expenses/post", monthly_expense);
@@ -28,7 +29,7 @@
         int lenght = 0;
         if (selectedTaskId != null && selectedExpenseId != null)
         {
-            lenght = (selectedTaskId.Length > selectedExpenseId?.Length) ? selectedTaskId.Length : selectedExpenseId.Length;
+            lenght = (selectedTaskId.Length > selectedExpenseId?.Length) ? selectedTaskId.Length : selectedExpenseId!.Length;
         }
         else if (selectedTaskId == null && selectedExpenseId != null)
         {
@@ -42,7 +43,7 @@
         {
             lenght = 0;
         }
-        Monthly_expenses_tasks_expenses.Monthly_expense_id = Int32.Parse(result.Content.ReadAsStringAsync().Result.ToString());
+        Monthly_expenses_tasks_expenses!.Monthly_expense_id = Int32.Parse(result.Content.ReadAsStringAsync().Result.ToString());
         for (int i = 0; i < lenght; ++i)
         {
             Monthly_expenses_tasks_expenses.Task_id = null;

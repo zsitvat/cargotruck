@@ -136,9 +136,17 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> PageCount()
+        public async Task<IActionResult> PageCount(string? filter)
         {
             var t = await _context.Tasks.ToListAsync();
+            if (filter == "completed")
+            {
+                t = t.Where(data => data.Completed).ToList();
+            }
+            else if (filter == "not_completed")
+            {
+                t = t.Where(data => data.Completed == false).ToList();
+            }
             int PageCount = t.Count;
             return Ok(PageCount);
         }
@@ -293,7 +301,7 @@ namespace Cargotruck.Server.Controllers
 
         //iTextSharp needed !!!
         [HttpGet]
-        public string PDF(string lang)
+         public async Task<string> PDF(string lang)
         {
             var tasks = from t in _context.Tasks select t;
 
@@ -308,7 +316,7 @@ namespace Cargotruck.Server.Controllers
             PdfWriter writer = PdfWriter.GetInstance(document, fs);
             document.Open();
 
-            Font font1 = FontFactory.GetFont(FontFactory.TIMES_BOLD, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 12);
+            Font font1 = FontFactory.GetFont(FontFactory.TIMES_BOLD, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 11);
             Font font2 = FontFactory.GetFont(FontFactory.TIMES_ROMAN, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 10);
 
             System.Type type = typeof(Tasks);
@@ -600,7 +608,7 @@ namespace Cargotruck.Server.Controllers
 
             FileStream sourceFile = new(filepath, FileMode.Open);
             MemoryStream memoryStream = new();
-            sourceFile.CopyToAsync(memoryStream);
+            await sourceFile.CopyToAsync(memoryStream);
             var buffer = memoryStream.ToArray();
             var pdf = Convert.ToBase64String(buffer);
             sourceFile.Dispose();

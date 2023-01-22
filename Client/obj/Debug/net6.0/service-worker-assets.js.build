@@ -13,7 +13,7 @@
       "url": "css\/bootstrap\/bootstrap.min.css.map"
     },
     {
-      "hash": "sha256-25nPqRruYTGWejniZNm5tIIfJhUxBWB8CJy\/JBND2fA=",
+      "hash": "sha256-oLjPNy8gtaBcS\/lkb6kRvsrfcUDIgYFt5sREIRtj8U0=",
       "url": "css\/hexamenu.css"
     },
     {
@@ -103,6 +103,10 @@
     {
       "hash": "sha256-IZzcXDYuJRrC1cDQUu4c4AnD0DnrYVBFNUO8WNAIlhg=",
       "url": "img\/profiles\/o0kr2uzn.jpg"
+    },
+    {
+      "hash": "sha256-yq0LpicODc55Yv8asrQdSG+d04nTPKSyOtxh6Q9f7Uc=",
+      "url": "img\/profiles\/wh1gvarg.jpg"
     },
     {
       "hash": "sha256-jvSXiiLPbCqUgUdLj6bvJ6Qd4Arbn81OBzJO5lR40iw=",
@@ -1041,23 +1045,23 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-pUm9cTZT\/py4db7Ym85wKZp63uSepgu5fFSkYE333\/4=",
+      "hash": "sha256-JvNN85yosYubytiBMH\/DNKXbo0TycqmKNeVNDU4s1uM=",
       "url": "_framework\/Cargotruck.Shared.dll"
     },
     {
-      "hash": "sha256-Vp2PB\/l5FU9mZxdHsjqfNFpP8bP8KMObWBT8OiEOeb0=",
+      "hash": "sha256-nmBUvaJuPGw2q0RzmhcB+QIHRNDX7h0uOrqIhLYNN8s=",
       "url": "_framework\/Cargotruck.Shared.pdb"
     },
     {
-      "hash": "sha256-dz2jB4m2GfVewnhhGNCx5Y9sjXD7es\/6VomiQauCHuw=",
+      "hash": "sha256-JvTmjBBFNdCmi3CMTaChBkPwE7a0iZZL4QK1GGNvmHU=",
       "url": "_framework\/en\/Cargotruck.Shared.resources.dll"
     },
     {
-      "hash": "sha256-ELylEVzZYhd91e3iY3wujynzouho5RQeSu7uBUggpV4=",
+      "hash": "sha256-dbS6sPHkE6uBEbDq3MWJiBmxL5xWYOcJLx8hxsiPza4=",
       "url": "_framework\/Cargotruck.Client.dll"
     },
     {
-      "hash": "sha256-FYBLb5vua5x17yAUR4ZVVlL1vwAIOnh83ZalAB4LBiI=",
+      "hash": "sha256-qgnAV9k47jWG71HteL6ECdEZXl7mLaBQMSIv15ozDHw=",
       "url": "_framework\/Cargotruck.Client.pdb"
     },
     {
@@ -1065,7 +1069,7 @@
       "url": "_framework\/blazor.webassembly.js"
     },
     {
-      "hash": "sha256-RP5HD4DSbiEsbm1+dkINFeh2OLzL5gNzMCgxqQSgeqc=",
+      "hash": "sha256-Wb1sLO6WSLiDBrw8sLJyjTO8\/HfmJigkkmDsa77i2Gs=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -1073,5 +1077,5 @@
       "url": "_content\/Microsoft.AspNetCore.Components.WebAssembly.Authentication\/AuthenticationService.js"
     }
   ],
-  "version": "yQizh4pK"
+  "version": "wHDj+j9U"
 };

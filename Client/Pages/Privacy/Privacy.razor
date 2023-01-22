@@ -75,19 +75,21 @@ else
         base.OnInitialized();
         privacies = await client.GetFromJsonAsync<Privacies[]>($"api/privacy/get?lang={CultureInfo.CurrentCulture.ToString()}");
         showtext.Clear();
-        foreach (var item in privacies)
-        {
-            if (item != null)
+        if(privacies != null){
+            foreach (var item in privacies)
             {
-                showtext.Add(item.Id, false);
+                if (item != null)
+                {
+                    showtext.Add(item.Id, false);
+                }
             }
-        }  
+        }
     }
 
     async Task Delete(int Id)
     {
         var data = privacies?.First(x => x.Id == Id);
-        if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {data?.name}  {data.text} - {data.lang}({data.Id})"))
+        if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {data?.name}  {data?.text} - {data?.lang}({data?.Id})"))
         {
             await client.DeleteAsync($"api/privacy/delete/{Id}");
             await OnInitializedAsync();
@@ -100,7 +102,7 @@ else
         uriHelper.NavigateTo("/Privacy",true);
     }
 
-    protected async Task Show(int id)
+    protected void Show(int id)
     {
         showtext[id] = !showtext[id];
         StateHasChanged();

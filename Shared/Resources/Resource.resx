@@ -502,7 +502,7 @@
     <value>Azonosító</value>
   </data>
   <data name="Id_cargo" xml:space="preserve">
-    <value>Rakomány ID</value>
+    <value>Rakomány azonosító</value>
   </data>
   <data name="Image" xml:space="preserve">
     <value>Profilkép</value>
@@ -759,9 +759,6 @@
   <data name="Storage_time" xml:space="preserve">
     <value>Raktározás ideje</value>
   </data>
-  <data name="String1" xml:space="preserve">
-    <value />
-  </data>
   <data name="Succesfull_update" xml:space="preserve">
     <value>Sikeresen frissítve!</value>
   </data>
@@ -866,5 +863,8 @@
   </data>
   <data name="Weight" xml:space="preserve">
     <value>Súly</value>
+  </data>
+  <data name="Year" xml:space="preserve">
+    <value>Év</value>
   </data>
 </root>

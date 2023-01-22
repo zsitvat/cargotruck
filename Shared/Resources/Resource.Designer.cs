@@ -1213,7 +1213,7 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rakomány ID.
+        ///   Looks up a localized string similar to Rakomány azonosító.
         /// </summary>
         public static string Id_cargo {
             get {
@@ -1987,15 +1987,6 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string String1 {
-            get {
-                return ResourceManager.GetString("String1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Sikeresen frissítve!.
         /// </summary>
         public static string Succesfull_update {
@@ -2307,6 +2298,15 @@ namespace Cargotruck.Shared.Resources {
         public static string Weight {
             get {
                 return ResourceManager.GetString("Weight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Év.
+        /// </summary>
+        public static string Year {
+            get {
+                return ResourceManager.GetString("Year", resourceCulture);
             }
         }
     }

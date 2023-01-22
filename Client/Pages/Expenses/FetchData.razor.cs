@@ -67,7 +67,7 @@ namespace Cargotruck.Client.Pages.Expenses
                     }
                 }
             }
-            dataRows = await client.GetFromJsonAsync<int>("api/expenses/pagecount");
+            dataRows = await client.GetFromJsonAsync<int>($"api/expenses/pagecount?filter{filter}");
             await ShowPage();
         }
 

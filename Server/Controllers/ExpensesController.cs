@@ -38,22 +38,21 @@ namespace Cargotruck.Server.Controllers
                 data = data.Where(data => data.Type == filter).ToList();
             }
 
-            searchString = searchString == null ? null : searchString.ToLower();
+            searchString = searchString?.ToLower();
             if (searchString != null && searchString != "")
             {
                 data = data.Where(s =>
-               s.Type.ToString().ToLower()!.Contains(searchString)
-            || s.Type_id.ToString().ToLower()!.Contains(searchString)
-            || (s.Fuel == null ? false : s.Fuel.ToString()!.Contains(searchString))
-            || (s.Road_fees == null ? false : s.Road_fees.ToString()!.Contains(searchString))
-            || (s.Penalty == null ? false : s.Fuel.ToString()!.Contains(searchString))
-            || (s.Driver_spending == null ? false : s.Driver_spending.ToString()!.Contains(searchString))
-            || (s.Driver_salary == null ? false : s.Driver_salary.ToString()!.Contains(searchString))
-            || (s.Repair_cost == null ? false : s.Repair_cost.ToString()!.Contains(searchString))
-            || (s.Repair_description == null ? false : s.Repair_description.ToString()!.Contains(searchString))
-            || (s.Cost_of_storage == null ? false : s.Cost_of_storage.ToString()!.Contains(searchString))
-            || (s.other == null ? false : s.other.ToString()!.Contains(searchString))
-            || s.Date.ToString()!.Contains(searchString)
+               s.Type.ToString()!.ToLower().Contains(searchString)
+            || s.Type_id.ToString()!.ToLower().Contains(searchString)
+            || (s.Fuel != null && s.Fuel.ToString()!.Contains(searchString))
+            || (s.Road_fees != null && s.Road_fees.ToString()!.Contains(searchString))
+            || (s.Penalty != null && s.Fuel.ToString()!.Contains(searchString))
+            || (s.Driver_spending != null && s.Driver_spending.ToString()!.Contains(searchString))
+            || (s.Driver_salary != null && s.Driver_salary.ToString()!.Contains(searchString))
+            || (s.Repair_cost != null && s.Repair_cost.ToString()!.Contains(searchString))
+            || (s.Repair_description != null && s.Repair_description.ToString()!.Contains(searchString))
+            || (s.Cost_of_storage != null && s.Cost_of_storage.ToString()!.Contains(searchString))
+            || (s.other != null && s.other.ToString()!.Contains(searchString))
             ).ToList();
             }
 
@@ -102,10 +101,14 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> PageCount()
+        public async Task<IActionResult> PageCount(Type? filter)
         {
             var data = await _context.Expenses.ToListAsync();
-            int PageCount = data.Count();
+            if (filter != null)
+            {
+                data = data.Where(data => data.Type == filter).ToList();
+            }
+            int PageCount = data.Count;
             return Ok(PageCount);
         }
 
@@ -133,9 +136,9 @@ namespace Cargotruck.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(Expenses data)
         {
-            data.User_id = _context?.Users?.FirstOrDefault(a => a.UserName == User.Identity.Name)?.Id;
+            data.User_id = _context?.Users?.FirstOrDefault(a => a.UserName == User.Identity!.Name)?.Id;
             _context?.Add(data);
-            await _context?.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
             if (data.Type.ToString() == Type.repair.ToString())
             {
@@ -182,81 +185,77 @@ namespace Cargotruck.Server.Controllers
         public string Excel(string lang)
         {
             var expenses = from r in _context.Expenses select r;
-            using (var workbook = new XLWorkbook())
+            using var workbook = new XLWorkbook();
+            var worksheet = workbook.Worksheets.Add("Expenses");
+            var currentRow = 1;
+            worksheet.Cell(currentRow, 1).Value = "Id";
+            worksheet.Cell(currentRow, 1).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 2).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID";
+            worksheet.Cell(currentRow, 2).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 3).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Type : "Type";
+            worksheet.Cell(currentRow, 3).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 4).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Type_id : "Type ID";
+            worksheet.Cell(currentRow, 4).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 5).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Fuel : "Fuel";
+            worksheet.Cell(currentRow, 5).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 6).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Road_fees : "Road fees";
+            worksheet.Cell(currentRow, 6).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 7).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Penalty : "Penalty";
+            worksheet.Cell(currentRow, 7).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 8).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Driver_spending : "Driver spending";
+            worksheet.Cell(currentRow, 8).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 9).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Driver_salary : "Driver salary";
+            worksheet.Cell(currentRow, 9).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 10).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Repair_cost : "Repair cost";
+            worksheet.Cell(currentRow, 10).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 11).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Repair_description : "Repair description";
+            worksheet.Cell(currentRow, 11).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 12).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Cost_of_storage : "Cost of storage";
+            worksheet.Cell(currentRow, 12).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 13).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.other : "other";
+            worksheet.Cell(currentRow, 13).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 14).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date";
+            worksheet.Cell(currentRow, 14).Style.Font.SetBold();
+
+            foreach (var expense in expenses)
             {
-                var worksheet = workbook.Worksheets.Add("Expenses");
-                var currentRow = 1;
-                worksheet.Cell(currentRow, 1).Value = "Id";
-                worksheet.Cell(currentRow, 1).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 2).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID";
-                worksheet.Cell(currentRow, 2).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 3).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Type : "Type";
-                worksheet.Cell(currentRow, 3).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 4).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Type_id : "Type ID";
-                worksheet.Cell(currentRow, 4).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 5).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Fuel : "Fuel";
-                worksheet.Cell(currentRow, 5).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 6).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Road_fees : "Road fees";
-                worksheet.Cell(currentRow, 6).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 7).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Penalty : "Penalty";
-                worksheet.Cell(currentRow, 7).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 8).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Driver_spending : "Driver spending";
-                worksheet.Cell(currentRow, 8).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 9).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Driver_salary : "Driver salary";
-                worksheet.Cell(currentRow, 9).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 10).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Repair_cost : "Repair cost";
-                worksheet.Cell(currentRow, 10).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 11).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Repair_description : "Repair description";
-                worksheet.Cell(currentRow, 11).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 12).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Cost_of_storage : "Cost of storage";
-                worksheet.Cell(currentRow, 12).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 13).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.other : "other";
-                worksheet.Cell(currentRow, 13).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 14).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date";
-                worksheet.Cell(currentRow, 14).Style.Font.SetBold();
-
-                foreach (var expense in expenses)
-                {
-                    currentRow++;
-                    worksheet.Cell(currentRow, 1).Value = expense.Id;
-                    worksheet.Cell(currentRow, 2).Value = expense.User_id;
-                    worksheet.Cell(currentRow, 3).Value = expense.Type;
-                    worksheet.Cell(currentRow, 4).Value = expense.Type_id;
-                    worksheet.Cell(currentRow, 5).Value += (expense.Fuel != null ? " HUF" : "");
-                    worksheet.Cell(currentRow, 6).Value += (expense.Road_fees != null ? " HUF" : "");
-                    worksheet.Cell(currentRow, 7).Value += (expense.Penalty != null ? " HUF" : "");
-                    worksheet.Cell(currentRow, 8).Value += (expense.Driver_spending != null ? " HUF" : "");
-                    worksheet.Cell(currentRow, 9).Value += (expense.Driver_salary != null ? " HUF" : "");
-                    worksheet.Cell(currentRow, 10).Value += (expense.Repair_cost != null ? " HUF" : "");
-                    worksheet.Cell(currentRow, 11).Value = expense.Repair_description;
-                    worksheet.Cell(currentRow, 12).Value += (expense.Cost_of_storage != null ? " HUF" : "");
-                    worksheet.Cell(currentRow, 13).Value += (expense.other != null ? " HUF" : "");
-                    worksheet.Cell(currentRow, 14).Value = expense.Date;
-                }
-
-                using (var stream = new MemoryStream())
-                {
-                    workbook.SaveAs(stream);
-                    var content = stream.ToArray();
-                    return Convert.ToBase64String(content);
-                }
+                currentRow++;
+                worksheet.Cell(currentRow, 1).Value = expense.Id;
+                worksheet.Cell(currentRow, 2).Value = expense.User_id;
+                worksheet.Cell(currentRow, 3).Value = expense.Type;
+                worksheet.Cell(currentRow, 4).Value = expense.Type_id;
+                worksheet.Cell(currentRow, 5).Value += (expense.Fuel != null ? " HUF" : "");
+                worksheet.Cell(currentRow, 6).Value += (expense.Road_fees != null ? " HUF" : "");
+                worksheet.Cell(currentRow, 7).Value += (expense.Penalty != null ? " HUF" : "");
+                worksheet.Cell(currentRow, 8).Value += (expense.Driver_spending != null ? " HUF" : "");
+                worksheet.Cell(currentRow, 9).Value += (expense.Driver_salary != null ? " HUF" : "");
+                worksheet.Cell(currentRow, 10).Value += (expense.Repair_cost != null ? " HUF" : "");
+                worksheet.Cell(currentRow, 11).Value = expense.Repair_description;
+                worksheet.Cell(currentRow, 12).Value += (expense.Cost_of_storage != null ? " HUF" : "");
+                worksheet.Cell(currentRow, 13).Value += (expense.other != null ? " HUF" : "");
+                worksheet.Cell(currentRow, 14).Value = expense.Date;
             }
+
+            using var stream = new MemoryStream();
+            workbook.SaveAs(stream);
+            var content = stream.ToArray();
+            return Convert.ToBase64String(content);
         }
 
         //iTextSharp needed !!!
         [HttpGet]
-        public string PDF(string lang)
+         public async Task<string> PDF(string lang)
         {
             var expenses = from r in _context.Expenses select r;
 
             int pdfRowIndex = 1;
-            Random rnd = new Random();
+            Random rnd = new();
             int random = rnd.Next(1000000, 9999999);
             string filename = "Expenses" + random + "_" + DateTime.Now.ToString("dd-MM-yyyy");
             string filepath = "Files/" + filename + ".pdf";
 
-            Document document = new Document(PageSize.A4, 5f, 5f, 10f, 10f);
-            FileStream fs = new FileStream(filepath, FileMode.Create);
+            Document document = new(PageSize.A4, 5f, 5f, 10f, 10f);
+            FileStream fs = new(filepath, FileMode.Create);
             PdfWriter writer = PdfWriter.GetInstance(document, fs);
             document.Open();
 
@@ -293,7 +292,7 @@ namespace Cargotruck.Server.Controllers
             document.Add(title);
             document.Add(new Paragraph("\n"));
 
-            if (expenses.Count() > 0)
+            if (expenses.Any())
             {
                 table.AddCell(new PdfPCell(new Phrase("Id", font1))
                 {
@@ -496,9 +495,9 @@ namespace Cargotruck.Server.Controllers
             fs.Close();
             fs.Dispose();
 
-            FileStream sourceFile = new FileStream(filepath, FileMode.Open);
-            MemoryStream memoryStream = new MemoryStream();
-            sourceFile.CopyToAsync(memoryStream);
+            FileStream sourceFile = new(filepath, FileMode.Open);
+            MemoryStream memoryStream = new();
+            await sourceFile.CopyToAsync(memoryStream);
             var buffer = memoryStream.ToArray();
             var pdf = Convert.ToBase64String(buffer);
             sourceFile.Dispose();
@@ -514,12 +513,12 @@ namespace Cargotruck.Server.Controllers
         {
             var expenses = from r in _context.Expenses select r;
 
-            Random rnd = new Random();
+            Random rnd = new();
             int random = rnd.Next(1000000, 9999999);
             string filename = "Expenses" + random + "_" + DateTime.Now.ToString("dd-MM-yyyy");
             string filepath = "Files/" + filename + ".csv";
 
-            StreamWriter txt = new StreamWriter(filepath);
+            StreamWriter txt = new(filepath);
             txt.Write("Id" + ";");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID") + ";");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Type : "Type") + ";");
@@ -566,8 +565,8 @@ namespace Cargotruck.Server.Controllers
             string convertedCsvFileContentsAsString = utf8Encoding.GetString(convertedCsvFileContents);
             System.IO.File.WriteAllText(filepath, convertedCsvFileContentsAsString, utf8Encoding);
             //filestream for download
-            FileStream sourceFile = new FileStream(filepath, FileMode.Open);
-            MemoryStream memoryStream = new MemoryStream();
+            FileStream sourceFile = new(filepath, FileMode.Open);
+            MemoryStream memoryStream = new();
             await sourceFile.CopyToAsync(memoryStream);
             var buffer = memoryStream.ToArray();
             var file = Convert.ToBase64String(buffer);
@@ -592,11 +591,11 @@ namespace Cargotruck.Server.Controllers
                 {
 
                     //Started reading the Excel file.  
-                    XLWorkbook workbook = new XLWorkbook(path);
+                    XLWorkbook workbook = new(path);
 
                     IXLWorksheet worksheet = workbook.Worksheet(1);
                     //Loop through the Worksheet rows.
-                    DataTable? dt = new DataTable();
+                    DataTable? dt = new();
                     bool firstRow = true;
                     if (worksheet.Row(2).CellsUsed().Count() > 1 && worksheet.Row(2).Cell(worksheet.Row(1).CellsUsed().Count()) != null)
                     {
@@ -606,7 +605,7 @@ namespace Cargotruck.Server.Controllers
                             //Use the first row to add columns to DataTable with column names check.
                             if (firstRow)
                             {
-                                List<string?> titles = new List<string?>() {
+                                List<string?> titles = new() {
                                 "Id",
                                 lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID",
                                 lang == "hu" ? Cargotruck.Shared.Resources.Resource.Type : "Type",
@@ -639,12 +638,12 @@ namespace Cargotruck.Server.Controllers
 
                                 }
                                 firstRow = false;
-                                if (titles.Count() == 0)
+                                if (titles.Count == 0)
                                 {
                                     haveColumns = true;
                                     l += 1;
                                 }
-                                else if (titles.Count() == 1 && titles.Contains("Id"))
+                                else if (titles.Count == 1 && titles.Contains("Id"))
                                 {
                                     haveColumns = true;
 
@@ -652,7 +651,7 @@ namespace Cargotruck.Server.Controllers
                             }
                             else if (haveColumns)
                             {
-                                List<object?> list = new List<object?>();
+                                List<object?> list = new();
                                 //Add rows to DataTable.
                                 dt.Rows.Add();
                                 foreach (IXLCell cell in row.Cells(1, dt.Columns.Count))
@@ -664,29 +663,16 @@ namespace Cargotruck.Server.Controllers
                                     else { list.Add(System.DBNull.Value); }
                                 }
 
-                                switch (list[l + 1])
+                                list[l + 1] = list[l + 1] switch
                                 {
-                                    case "task":
-                                        list[l + 1] = 0;
-                                        break;
-                                    case "repair":
-                                        list[l + 1] = 1;
-                                        break;
-                                    case "storage":
-                                        list[l + 1] = 2;
-                                        break;
-                                    case "salary":
-                                        list[l + 1] = 3;
-                                        break;
-                                    case "other":
-                                        list[l + 1] = 4;
-                                        break;
-                                    default:
-                                        list[l + 1] = System.DBNull.Value;
-                                        break;
-                                }
-
-                                for (int i=l+3; i < list.Count()-1; i++)
+                                    "task" => 0,
+                                    "repair" => 1,
+                                    "storage" => 2,
+                                    "salary" => 3,
+                                    "other" => 4,
+                                    _ => System.DBNull.Value,
+                                };
+                                for (int i=l+3; i < list.Count -1; i++)
                                 {
                                     if (i != (l + 9) && list[i]!= null && list[i] != System.DBNull.Value)
                                     {

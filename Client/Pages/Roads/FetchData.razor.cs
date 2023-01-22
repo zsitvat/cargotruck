@@ -47,7 +47,7 @@ namespace Cargotruck.Client.Pages.Roads
         {
             PageHistoryState.AddPageToHistory("/Roads");
             base.OnInitialized();
-            dataRows = await client.GetFromJsonAsync<int>("api/roads/pagecount");
+            dataRows = await client.GetFromJsonAsync<int>($"api/roads/pagecount?filter{filter}");
             await ShowPage();
         }
 

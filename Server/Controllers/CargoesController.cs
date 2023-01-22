@@ -42,19 +42,18 @@ namespace Cargotruck.Server.Controllers
                 data = data.Where(data => data.Warehouse_id == null).ToList();
             }
 
-            searchString = searchString == null ? null : searchString.ToLower();
+            searchString = searchString?.ToLower();
             if (searchString != null && searchString != "")
             {
                     data = data.Where(s =>
                    (s.Task_id.ToString().ToLower()!.Contains(searchString))
-                || (s.Weight == null ? false : s.Weight.ToString().ToLower()!.Contains(searchString))
-                || (s.Description == null ? false : s.Description.ToLower()!.Contains(searchString))
-                || (s.Delivery_requirements == null ? false : s.Delivery_requirements.ToString().ToLower()!.Contains(searchString))
-                || (s.Vehicle_registration_number == null ? false : s.Vehicle_registration_number.ToString()!.Contains(searchString))
-                || (s.Warehouse_id == null ? false : s.Warehouse_id.ToString()!.Contains(searchString))
-                || (s.Warehouse_section == null ? false : s.Warehouse_section.ToLower()!.Contains(searchString))
-                || (s.Storage_starting_time == null ? false : s.Storage_starting_time.ToString()!.Contains(searchString))
-                || s.Date.ToString()!.Contains(searchString)
+                || (s.Weight != null && s.Weight.ToString().ToLower()!.Contains(searchString))
+                || (s.Description != null && s.Description.ToLower()!.Contains(searchString))
+                || (s.Delivery_requirements != null && s.Delivery_requirements.ToString().ToLower()!.Contains(searchString))
+                || (s.Vehicle_registration_number != null && s.Vehicle_registration_number.ToString()!.Contains(searchString))
+                || (s.Warehouse_id != null && s.Warehouse_id.ToString()!.Contains(searchString))
+                || (s.Warehouse_section != null && s.Warehouse_section.ToLower()!.Contains(searchString))
+                || (s.Storage_starting_time != null && s.Storage_starting_time.ToString()!.Contains(searchString))
                 ).ToList();
             }
 
@@ -129,7 +128,7 @@ namespace Cargotruck.Server.Controllers
         public async Task<IActionResult> PageCount()
         {
             var data= await _context.Cargoes.ToListAsync();
-            int PageCount = data.Count();
+            int PageCount = data.Count;
             return Ok(PageCount);
         }
 
@@ -239,18 +238,18 @@ namespace Cargotruck.Server.Controllers
 
         //iTextSharp needed !!!
         [HttpGet]
-        public string PDF(string lang)
+        public async Task<string> PDF(string lang)
         {
             var cargoes = from data in _context.Cargoes select data;
 
             int pdfRowIndex = 1;
-            Random rnd = new Random();
+            Random rnd = new();
             int random = rnd.Next(1000000, 9999999);
             string filename = "Cargoes" + random + "_" + DateTime.Now.ToString("dd-MM-yyyy");
             string filepath = "Files/" + filename + ".pdf";
 
-            Document document = new Document(PageSize.A4, 5f, 5f, 10f, 10f);
-            FileStream fs = new FileStream(filepath, FileMode.Create);
+            Document document = new(PageSize.A4, 5f, 5f, 10f, 10f);
+            FileStream fs = new(filepath, FileMode.Create);
             PdfWriter writer = PdfWriter.GetInstance(document, fs);
             document.Open();
 
@@ -280,14 +279,16 @@ namespace Cargotruck.Server.Controllers
                 HorizontalAlignment = Element.ALIGN_CENTER
             };
 
-            var title = new Paragraph(15, lang == "hu" ? Cargotruck.Shared.Resources.Resource.Cargoes : "Cargoes");
-            title.Alignment = Element.ALIGN_CENTER;
+            var title = new Paragraph(15, lang == "hu" ? Cargotruck.Shared.Resources.Resource.Cargoes : "Cargoes")
+            {
+                Alignment = Element.ALIGN_CENTER
+            };
 
 
             document.Add(title);
             document.Add(new Paragraph("\n"));
 
-            if (cargoes.Count() > 0)
+            if (cargoes.Any())
             {
                 table.AddCell(new PdfPCell(new Phrase("Id", font1))
                 {
@@ -358,7 +359,7 @@ namespace Cargotruck.Server.Controllers
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(cargo?.Vehicle_registration_number)) { s = cargo.Vehicle_registration_number.ToString(); }
+                    if (!string.IsNullOrEmpty(cargo?.Vehicle_registration_number?.ToString())) { s = cargo.Vehicle_registration_number.ToString(); }
                     else { s = "-"; }
                     table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
@@ -367,8 +368,6 @@ namespace Cargotruck.Server.Controllers
                     });
                     pdfRowIndex++;
                 }
-
-
 
                 document.Add(table);
                 document.Add(new Paragraph("\n"));
@@ -445,8 +444,7 @@ namespace Cargotruck.Server.Controllers
             }
             else
             {
-                var noContent = new Paragraph(lang == "hu" ? "Nem található adat!" : "No content found!");
-                noContent.Alignment = Element.ALIGN_CENTER;
+                var noContent = new Paragraph(lang == "hu" ? "Nem található adat!" : "No content found!") { Alignment = Element.ALIGN_CENTER };
                 document.Add(noContent);
             }
             document.Close();
@@ -454,15 +452,14 @@ namespace Cargotruck.Server.Controllers
             fs.Close();
             fs.Dispose();
 
-            FileStream sourceFile = new FileStream(filepath, FileMode.Open);
-            MemoryStream memoryStream = new MemoryStream();
-            sourceFile.CopyToAsync(memoryStream);
+            FileStream sourceFile = new(filepath, FileMode.Open);
+            MemoryStream memoryStream = new();
+            await sourceFile.CopyToAsync(memoryStream);
             var buffer = memoryStream.ToArray();
             var pdf = Convert.ToBase64String(buffer);
             sourceFile.Dispose();
             sourceFile.Close();
             System.IO.File.Delete(filepath); // delete the file in the app folder
-
             return pdf;
         }
 
@@ -477,7 +474,7 @@ namespace Cargotruck.Server.Controllers
             string filename = "Cargoes" + random + "_" + DateTime.Now.ToString("dd-MM-yyyy");
             string filepath = "Files/" + filename + ".csv";
 
-            StreamWriter txt = new StreamWriter(filepath);
+            StreamWriter txt = new(filepath);
             txt.Write("Id" + ";");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID") + ";");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Task_id : "Task ID") + ";");
@@ -588,12 +585,12 @@ namespace Cargotruck.Server.Controllers
 
                                 }
                                 firstRow = false;
-                                if (titles.Count() == 0)
+                                if (titles.Count == 0)
                                 {
                                     haveColumns = true;
                                     l += 1;
                                 }
-                                else if (titles.Count() == 1 && titles.Contains("Id"))
+                                else if (titles.Count == 1 && titles.Contains("Id"))
                                 {
                                     haveColumns = true;
 

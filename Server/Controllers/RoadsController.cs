@@ -42,21 +42,20 @@ namespace Cargotruck.Server.Controllers
                 data = data.Where(data => data.Direction =="FROM").ToList();
             }
 
-            searchString = searchString == null ? null : searchString.ToLower();
+            searchString = searchString?.ToLower();
             if (searchString != null && searchString != "")
             {
                 data = data.Where(s => 
-                    (s.Task_id == null ? false : s.Task_id.ToString().ToLower()!.Contains(searchString))
-                || (s.Id_cargo == null ? false : s.Id_cargo.ToString().ToLower()!.Contains(searchString))
-                || (s.Purpose_of_the_trip == null ? false : s.Purpose_of_the_trip.ToLower()!.Contains(searchString))
-                || s.Starting_date.ToString().ToLower()!.Contains(searchString)
+                    (s.Task_id != null && s.Task_id.ToString()!.ToLower().Contains(searchString))
+                || (s.Id_cargo != null && s.Id_cargo.ToString()!.ToLower().Contains(searchString))
+                || (s.Purpose_of_the_trip != null && s.Purpose_of_the_trip.ToLower()!.Contains(searchString))
+                || s.Starting_date.ToString()!.ToLower().Contains(searchString)
                 || s.Ending_date.ToString()!.Contains(searchString)
-                || s.Fuel.ToString()!.Contains(searchString)
-                || (s.Starting_place == null ? false : s.Starting_place.ToLower()!.Contains(searchString))
-                || (s.Ending_place == null ? false : s.Ending_place.ToLower()!.Contains(searchString))
-                || (s.Direction == null ? false : s.Direction.ToString()!.Contains(searchString))
-                || (s.Expenses_id == null ? false : s.Expenses_id.ToString()!.Contains(searchString))
-                || s.Date.ToString()!.Contains(searchString)
+                || s.Fuel!.ToString().Contains(searchString)
+                || (s.Starting_place != null && s.Starting_place.ToLower()!.Contains(searchString))
+                || (s.Ending_place != null && s.Ending_place.ToLower()!.Contains(searchString))
+                || (s.Direction != null && s.Direction.ToString()!.Contains(searchString))
+                || (s.Expenses_id != null && s.Expenses_id.ToString()!.Contains(searchString))
                 ).ToList();
             }
 
@@ -102,9 +101,17 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> PageCount()
+        public async Task<IActionResult> PageCount(string? filter)
         {
             var data = await _context.Roads.ToListAsync();
+            if (filter == "to")
+            {
+                data = data.Where(data => data.Direction == "TO").ToList();
+            }
+            else if (filter == "from")
+            {
+                data = data.Where(data => data.Direction == "FROM").ToList();
+            }
             int PageCount = data.Count();
             return Ok(PageCount);
         }
@@ -133,7 +140,7 @@ namespace Cargotruck.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(Roads data)
         {
-            data.User_id = _context.Users.FirstOrDefault(a => a.UserName == User.Identity.Name).Id;
+            data.User_id = _context.Users.FirstOrDefault(a => a.UserName == User.Identity!.Name)?.Id;
             _context.Add(data);
             await _context.SaveChangesAsync();
             var expense = _context.Expenses.FirstOrDefault(a => a.Id == data.Expenses_id);
@@ -178,78 +185,74 @@ namespace Cargotruck.Server.Controllers
         public string Excel(string lang)
         {
             var roads = from data in _context.Roads select data;
-            using (var workbook = new XLWorkbook())
+            using var workbook = new XLWorkbook();
+            var worksheet = workbook.Worksheets.Add("Roads");
+            var currentRow = 1;
+            worksheet.Cell(currentRow, 1).Value = "Id";
+            worksheet.Cell(currentRow, 1).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 2).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID";
+            worksheet.Cell(currentRow, 2).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 3).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Task_id : "Task ID";
+            worksheet.Cell(currentRow, 3).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 4).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Id_cargo : "Cargo ID";
+            worksheet.Cell(currentRow, 4).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 5).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Purpose_of_the_trip : "Purpose_of_the_trip";
+            worksheet.Cell(currentRow, 5).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 6).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Starting_date : "Starting_date";
+            worksheet.Cell(currentRow, 6).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 7).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Ending_date : "Ending_date";
+            worksheet.Cell(currentRow, 7).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 8).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Starting_place : "Starting_place";
+            worksheet.Cell(currentRow, 8).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 9).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Ending_place : "Ending_place";
+            worksheet.Cell(currentRow, 9).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 10).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Direction : "Direction";
+            worksheet.Cell(currentRow, 10).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 11).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Fuel : "Fuel";
+            worksheet.Cell(currentRow, 11).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 12).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Expenses_id : "Expenses_id";
+            worksheet.Cell(currentRow, 12).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 13).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date";
+            worksheet.Cell(currentRow, 13).Style.Font.SetBold();
+
+            foreach (var road in roads)
             {
-                var worksheet = workbook.Worksheets.Add("Roads");
-                var currentRow = 1;
-                worksheet.Cell(currentRow, 1).Value = "Id";
-                worksheet.Cell(currentRow, 1).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 2).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID";
-                worksheet.Cell(currentRow, 2).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 3).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Task_id : "Task ID";
-                worksheet.Cell(currentRow, 3).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 4).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Id_cargo : "Cargo ID";
-                worksheet.Cell(currentRow, 4).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 5).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Purpose_of_the_trip : "Purpose_of_the_trip";
-                worksheet.Cell(currentRow, 5).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 6).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Starting_date : "Starting_date";
-                worksheet.Cell(currentRow, 6).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 7).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Ending_date : "Ending_date";
-                worksheet.Cell(currentRow, 7).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 8).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Starting_place : "Starting_place";
-                worksheet.Cell(currentRow, 8).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 9).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Ending_place : "Ending_place";
-                worksheet.Cell(currentRow, 9).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 10).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Direction : "Direction";
-                worksheet.Cell(currentRow, 10).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 11).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Fuel : "Fuel";
-                worksheet.Cell(currentRow, 11).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 12).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Expenses_id : "Expenses_id";
-                worksheet.Cell(currentRow, 12).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 13).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date";
-                worksheet.Cell(currentRow, 13).Style.Font.SetBold();
-
-                foreach (var road in roads)
-                {
-                    currentRow++;
-                    worksheet.Cell(currentRow, 1).Value = road.Id;
-                    worksheet.Cell(currentRow, 2).Value = road.User_id;
-                    worksheet.Cell(currentRow, 3).Value = road.Task_id;
-                    worksheet.Cell(currentRow, 4).Value = road.Id_cargo;
-                    worksheet.Cell(currentRow, 5).Value = road.Purpose_of_the_trip;
-                    worksheet.Cell(currentRow, 6).Value = road.Starting_date;
-                    worksheet.Cell(currentRow, 7).Value = road.Ending_date;
-                    worksheet.Cell(currentRow, 8).Value = road.Starting_place;
-                    worksheet.Cell(currentRow, 9).Value = road.Ending_place;
-                    worksheet.Cell(currentRow, 10).Value = (road.ToString() == "TO" ? lang == "hu" ? Cargotruck.Shared.Resources.Resource.to : "Go to the direction" : lang == "hu" ? Cargotruck.Shared.Resources.Resource.from : "Go from the direction");
-                    worksheet.Cell(currentRow, 11).Value = road.Fuel;
-                    worksheet.Cell(currentRow, 12).Value = road.Expenses_id;
-                    worksheet.Cell(currentRow, 13).Value = road.Date;
-                }
-
-                using (var stream = new MemoryStream())
-                {
-                    workbook.SaveAs(stream);
-                    var content = stream.ToArray();
-                    return Convert.ToBase64String(content);
-                }
+                currentRow++;
+                worksheet.Cell(currentRow, 1).Value = road.Id;
+                worksheet.Cell(currentRow, 2).Value = road.User_id;
+                worksheet.Cell(currentRow, 3).Value = road.Task_id;
+                worksheet.Cell(currentRow, 4).Value = road.Id_cargo;
+                worksheet.Cell(currentRow, 5).Value = road.Purpose_of_the_trip;
+                worksheet.Cell(currentRow, 6).Value = road.Starting_date;
+                worksheet.Cell(currentRow, 7).Value = road.Ending_date;
+                worksheet.Cell(currentRow, 8).Value = road.Starting_place;
+                worksheet.Cell(currentRow, 9).Value = road.Ending_place;
+                worksheet.Cell(currentRow, 10).Value = (road.ToString() == "TO" ? lang == "hu" ? Cargotruck.Shared.Resources.Resource.to : "Go to the direction" : lang == "hu" ? Cargotruck.Shared.Resources.Resource.from : "Go from the direction");
+                worksheet.Cell(currentRow, 11).Value = road.Fuel;
+                worksheet.Cell(currentRow, 12).Value = road.Expenses_id;
+                worksheet.Cell(currentRow, 13).Value = road.Date;
             }
+
+            using var stream = new MemoryStream();
+            workbook.SaveAs(stream);
+            var content = stream.ToArray();
+            return Convert.ToBase64String(content);
         }
 
         //iTextSharp needed !!!
         [HttpGet]
-        public string PDF(string lang)
+         public async Task<string> PDF(string lang)
         {
             var roads = from r in _context.Roads select r;
 
             int pdfRowIndex = 1;
-            Random rnd = new Random();
+            Random rnd = new();
             int random = rnd.Next(1000000, 9999999);
             string filename = "Roads" + random + "_" + DateTime.Now.ToString("dd-MM-yyyy");
             string filepath = "Files/" + filename + ".pdf";
 
-            Document document = new Document(PageSize.A4, 5f, 5f, 10f, 10f);
-            FileStream fs = new FileStream(filepath, FileMode.Create);
+            Document document = new(PageSize.A4, 5f, 5f, 10f, 10f);
+            FileStream fs = new(filepath, FileMode.Create);
             PdfWriter writer = PdfWriter.GetInstance(document, fs);
             document.Open();
 
@@ -279,14 +282,16 @@ namespace Cargotruck.Server.Controllers
                 HorizontalAlignment = Element.ALIGN_CENTER
             };
 
-            var title = new Paragraph(15, lang == "hu" ? Cargotruck.Shared.Resources.Resource.Roads : "Roads");
-            title.Alignment = Element.ALIGN_CENTER;
+            var title = new Paragraph(15, lang == "hu" ? Cargotruck.Shared.Resources.Resource.Roads : "Roads")
+            {
+                Alignment = Element.ALIGN_CENTER
+            };
 
 
             document.Add(title);
             document.Add(new Paragraph("\n"));
 
-            if (roads.Count() > 0)
+            if (roads.Any())
             {
                 table.AddCell(new PdfPCell(new Phrase("Id", font1))
                 {
@@ -331,35 +336,35 @@ namespace Cargotruck.Server.Controllers
                     });
                     if (!string.IsNullOrEmpty(road.Task_id.ToString())) { s = road.Task_id.ToString(); }
                     else { s = "-"; }
-                    table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    table.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
                     if (!string.IsNullOrEmpty(road.Id_cargo.ToString())) { s = road.Id_cargo.ToString(); }
                     else { s = "-"; }
-                    table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    table.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
                     if (!string.IsNullOrEmpty(road.Purpose_of_the_trip.ToString())) { s = road.Purpose_of_the_trip.ToString(); }
                     else { s = "-"; }
-                    table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    table.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
                     if (!string.IsNullOrEmpty(road.Starting_date.ToString())) { s = road.Starting_date.ToString(); }
                     else { s = "-"; }
-                    table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    table.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
                     if (!string.IsNullOrEmpty(road.Ending_date.ToString())) { s = road.Ending_date.ToString(); }
                     else { s = "-"; }
-                    table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    table.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
@@ -437,7 +442,7 @@ namespace Cargotruck.Server.Controllers
                     });
                     if (!string.IsNullOrEmpty(road.Expenses_id.ToString())) { s = road.Expenses_id.ToString(); }
                     else { s = "-"; }
-                    table2.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    table2.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
@@ -456,8 +461,10 @@ namespace Cargotruck.Server.Controllers
             }
             else
             {
-                var noContent = new Paragraph(lang == "hu" ? "Nem található adat!" : "No content found!");
-                noContent.Alignment = Element.ALIGN_CENTER;
+                var noContent = new Paragraph(lang == "hu" ? "Nem található adat!" : "No content found!")
+                {
+                    Alignment = Element.ALIGN_CENTER
+                };
                 document.Add(noContent);
             }
             document.Close();
@@ -465,9 +472,9 @@ namespace Cargotruck.Server.Controllers
             fs.Close();
             fs.Dispose();
 
-            FileStream sourceFile = new FileStream(filepath, FileMode.Open);
-            MemoryStream memoryStream = new MemoryStream();
-            sourceFile.CopyToAsync(memoryStream);
+            FileStream sourceFile = new(filepath, FileMode.Open);
+            MemoryStream memoryStream = new();
+            await sourceFile.CopyToAsync(memoryStream);
             var buffer = memoryStream.ToArray();
             var pdf = Convert.ToBase64String(buffer);
             sourceFile.Dispose();
@@ -483,12 +490,12 @@ namespace Cargotruck.Server.Controllers
         {
             var roads = from r in _context.Roads select r;
 
-            Random rnd = new Random();
+            Random rnd = new();
             int random = rnd.Next(1000000, 9999999);
             string filename = "Roads" + random + "_" + DateTime.Now.ToString("dd-MM-yyyy");
             string filepath = "Files/" + filename + ".csv";
 
-            StreamWriter txt = new StreamWriter(filepath);
+            StreamWriter txt = new(filepath);
             txt.Write("Id" + ";");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID") + ";");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Task_id : "Task ID") + ";");
@@ -533,8 +540,8 @@ namespace Cargotruck.Server.Controllers
             string convertedCsvFileContentsAsString = utf8Encoding.GetString(convertedCsvFileContents);
             System.IO.File.WriteAllText(filepath, convertedCsvFileContentsAsString, utf8Encoding);
             //filestream for download
-            FileStream sourceFile = new FileStream(filepath, FileMode.Open);
-            MemoryStream memoryStream = new MemoryStream();
+            FileStream sourceFile = new(filepath, FileMode.Open);
+            MemoryStream memoryStream = new();
             await sourceFile.CopyToAsync(memoryStream);
             var buffer = memoryStream.ToArray();
             var file = Convert.ToBase64String(buffer);
@@ -559,11 +566,11 @@ namespace Cargotruck.Server.Controllers
                 {
 
                     //Started reading the Excel file.  
-                    XLWorkbook workbook = new XLWorkbook(path);
+                    XLWorkbook workbook = new(path);
 
                     IXLWorksheet worksheet = workbook.Worksheet(1);
                     //Loop through the Worksheet rows.
-                    DataTable? dt = new DataTable();
+                    DataTable? dt = new();
                     bool firstRow = true;
                     if (worksheet.Row(2).CellsUsed().Count() > 1 && worksheet.Row(2).Cell(worksheet.Row(1).CellsUsed().Count()) != null)
                     {
@@ -573,7 +580,7 @@ namespace Cargotruck.Server.Controllers
                             //Use the first row to add columns to DataTable with column names check.
                             if (firstRow)
                             {
-                                List<string?> titles = new List<string?>() {
+                                List<string?> titles = new() {
                                 "Id",
                                 lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID",
                                 lang == "hu" ? Cargotruck.Shared.Resources.Resource.Task_id : "Task ID",
@@ -618,7 +625,7 @@ namespace Cargotruck.Server.Controllers
                             }
                             else if (haveColumns)
                             {
-                                List<object?> list = new List<object?>();
+                                List<object?> list = new();
                                 //Add rows to DataTable.
                                 dt.Rows.Add();
                                 foreach (IXLCell cell in row.Cells(1, dt.Columns.Count))

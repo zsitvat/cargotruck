@@ -637,6 +637,10 @@ textarea, label {
     .col-lg-offset-2 {
         margin-left: 16.66666667%;
     }
+
+    .col-lg-8 {
+        width: 76.66666667%;
+    }
 }
 
 @media (min-width: 1000px) {
@@ -645,22 +649,23 @@ textarea, label {
     }
 }
 
-
-@media (min-width: 1200px) {
-    .col-lg-8 {
-        width: 76.66666667%;
-    }
-}
-
 @media (min-width: 1420px) {
     .col-lg-8 {
         width: 68%;
+    }
+
+    .col-lg-offset-2 {
+        margin-left: 18.66666667%;
     }
 }
 
 @media (min-width: 1600px) {
     .col-lg-8 {
         width: 58%;
+    }
+
+    .col-lg-offset-2 {
+        margin-left: 22.66666667%;
     }
 }
 

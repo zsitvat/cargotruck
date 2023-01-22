@@ -17,24 +17,47 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get(int page, int pageSize, string? filter)
         {
             var u = await _context.Users.ToListAsync();
+
+            if (filter != null && filter != "")
+            {
+                var Roles = await _context.Roles.ToDictionaryAsync(r => r.Id, r => r.Name);
+                var UsersRoles = await _context.UserRoles.ToDictionaryAsync(r => r.UserId, r => Roles[r.RoleId]);
+                u = u.Where(x => ((filter != null && filter != "") ? UsersRoles?[x.Id] == filter : true)).ToList();
+            }
+
+            u = u.Skip((page - 1) * pageSize).Take(pageSize).ToList();
             return Ok(u);
         }
 
         [HttpGet]
         public async Task<IActionResult> Count()
         {
-            var t = await _context.Users.CountAsync();
-            return Ok(t);
+            var u = await _context.Users.CountAsync();
+            return Ok(u);
         }
 
         [HttpGet]
         public async Task<IActionResult> LoginsCount()
         {
-            var t = await _context.Logins.CountAsync();
-            return Ok(t);
+            var u = await _context.Logins.CountAsync();
+            return Ok(u);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> PageCount(string? filter)
+        {
+            var u = await _context.Users.ToListAsync();
+            if (filter != null && filter != "")
+            {
+                var Roles = await _context.Roles.ToDictionaryAsync(r => r.Id, r => r.Name);
+                var UsersRoles = await _context.UserRoles.ToDictionaryAsync(r => r.UserId, r => Roles[r.RoleId]);
+                u = u.Where(x => ((filter != null && filter != "") ? UsersRoles?[x.Id] == filter : true)).ToList();
+            }
+            int PageCount = u.Count;
+            return Ok(PageCount);
         }
 
         [HttpGet("{id}")]
@@ -60,8 +83,8 @@ namespace Cargotruck.Server.Controllers
         public async Task<IActionResult> Delete(string id)
         {
             //var u = new Users { Id = id };
-            var u = _context.Users.FirstOrDefault(a => a.Id == id);
-            _context.Remove(u);
+            var userForDelete = _context.Users.FirstOrDefault(a => a.Id == id);
+            _context.Remove(userForDelete);
             await _context.SaveChangesAsync();
             return NoContent();
         }

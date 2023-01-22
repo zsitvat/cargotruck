@@ -103,7 +103,7 @@ else
                                         <td>
                                             @if (@item.Earning != null)
                                             {
-                                                @if (currency != "HUF" && rates != null)
+                                                @if (currency != "HUF" && Rates != null)
                                                 {
                                                     @(GetCurrency(item.Earning)!.Value.ToString("0.##") + " " + currency)
                                                 }
@@ -119,7 +119,7 @@ else
                                         <td>
                                             @if (@item.Expense != null)
                                             {
-                                                @if (currency != "HUF" && rates != null)
+                                                @if (currency != "HUF" && Rates != null)
                                                 {
                                                     @(GetCurrency(item.Expense)!.Value.ToString("0.##") + " " + currency)
                                                 }
@@ -135,7 +135,7 @@ else
                                          <td>
                                             @if (@item.Profit != null)
                                             {
-                                                @if (currency != "HUF" && rates != null)
+                                                @if (currency != "HUF" && Rates != null)
                                                 {
                                                     @(GetCurrency(item.Profit)!.Value.ToString("0.##") + " " + currency)
                                                 }
@@ -149,11 +149,11 @@ else
                                     @if (showColumns[3])
                                     {
                                         <td>
-                                            @if (connection_ids != null)
+                                            @if (Connection_ids != null)
                                             {
-                                                @foreach (var ConId in connection_ids.Where(x => x.Monthly_expense_id == item.Monthly_expense_id && x.Expense_id != null))
+                                                @foreach (var ConId in Connection_ids.Where(x => x.Monthly_expense_id == item.Monthly_expense_id && x.Expense_id != null))
                                                 {
-                                                    @if (connection_ids.Where(x => x.Monthly_expense_id == item.Monthly_expense_id && x.Expense_id != null).Last().Id != ConId.Id)
+                                                    @if (Connection_ids.Where(x => x.Monthly_expense_id == item.Monthly_expense_id && x.Expense_id != null).Last().Id != ConId.Id)
                                                     {
                                                         <button class="no-button" @onclick="@(()=>GetById(ConId.Expense_id,"expense"))">@(ConId.Expense_id + ", ")</button>
                                                     }
@@ -168,10 +168,10 @@ else
                                     @if (showColumns[4])
                                     {
                                         <td>
-                                        @if (connection_ids != null){
-                                            @foreach (var ConId in connection_ids.Where(x => x.Monthly_expense_id == item.Monthly_expense_id && x.Task_id != null))
+                                        @if (Connection_ids != null){
+                                            @foreach (var ConId in Connection_ids.Where(x => x.Monthly_expense_id == item.Monthly_expense_id && x.Task_id != null))
                                             {
-                                                @if (connection_ids.Where(x => x.Monthly_expense_id == item.Monthly_expense_id && x.Task_id != null ).Last().Id != ConId.Id)
+                                                @if (Connection_ids.Where(x => x.Monthly_expense_id == item.Monthly_expense_id && x.Task_id != null ).Last().Id != ConId.Id)
                                                 {
                                                     <button class="no-button" @onclick="@(()=>GetById(ConId.Task_id,"task"))">@(ConId.Task_id + ", ")</button>
                                                         
@@ -203,13 +203,17 @@ else
     </div>
 
     <div class="hideandshow-cards">
+        @if (fullYearProfitWindow && Monthly_expenses != null)
+        {
+            <FullYearProfits fullYearProfitWindow="@fullYearProfitWindow" OnFullYearWindowClosed="FullYearWindowClosed" Monthly_expenses="@Monthly_expenses" currency="@currency" />
+        }
         @if (settings)
         {
             <Settings OnSettingsClosed="SettingsClosed" OnInputChanged="InputChanged" OnSettingsChanged="SettingsChanged" showColumns="@showColumns" settings="@settings" pageSize="@pageSize" />
         }
         @if (IdForGetById != null)
         {
-            <GetbyidComponent getById="@IdForGetById.ToString()" getByIdType="@getByIdType" OnSetToNull="SetToNull" />
+            <GetbyidComponent getById="@IdForGetById.ToString()" getByIdType="@GetByIdType" OnSetToNull="SetToNull" />
         }
     </div>
 }

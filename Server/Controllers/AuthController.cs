@@ -41,11 +41,13 @@ namespace Cargotruck.Server.Controllers
             //if no user found, create admin
             if (!_userManager.Users.Any())
             {
-                var admin = new Users();
-                admin.UserName = "admin";
-                admin.Email = "admin@cargotruck.com";
-                admin.PhoneNumber = "+421123456789";
-                var result = await _userManager.CreateAsync(admin, "Admin123*");
+                var admin = new Users
+                {
+                    UserName = "admin",
+                    Email = "admin@cargotruck.com",
+                    PhoneNumber = "+421123456789"
+                };
+                await _userManager.CreateAsync(admin, "Admin123*");
                 await _userManager.AddToRoleAsync(admin, "Admin");
                 await _userManager.AddClaimAsync(admin, new System.Security.Claims.Claim("img", "img/profile.jpg"));
             }
@@ -58,10 +60,12 @@ namespace Cargotruck.Server.Controllers
             await _signInManager.SignInAsync(user, request.RememberMe);
 
             //save login date
-            Logins login = new Logins();
-            login.UserName = user.UserName;
-            login.UserId = user.Id;
-            login.LoginDate = DateTime.Now;
+            Logins login = new()
+            {
+                UserName = user.UserName,
+                UserId = user.Id,
+                LoginDate = DateTime.Now
+            };
             _context.Add(login);
             await _context.SaveChangesAsync();
 
@@ -72,10 +76,10 @@ namespace Cargotruck.Server.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Register(RegisterRequest parameters)
         {
-            var user = new Users();
+            Users user = new();
             user.UserName = parameters.UserName;
-            user.PhoneNumber = parameters.PhoneNumber != null ? parameters.PhoneNumber : user.PhoneNumber;
-            user.Email = parameters.Email != null ? parameters.Email : user.Email;
+            user.PhoneNumber = parameters.PhoneNumber ?? user.PhoneNumber;
+            user.Email = parameters.Email ?? user.Email;
             var result = await _userManager.CreateAsync(user, parameters.Password);
             await _userManager.AddToRoleAsync(user, parameters.Role);
             await _userManager.AddClaimAsync(user, new Claim("img", parameters.Img));
@@ -87,9 +91,9 @@ namespace Cargotruck.Server.Controllers
         public async Task<IActionResult> Update(UpdateRequest parameters)
         {
             var user = new Users();
-            Dictionary<string, string> claims = new Dictionary<string, string>();
-            Dictionary<string, string> userRoles = new Dictionary<string, string>();
-            Dictionary<string, string> roles = new Dictionary<string, string>();
+            Dictionary<string, string> claims = new();
+            Dictionary<string, string> userRoles = new();
+            Dictionary<string, string> roles = new();
             string role = "";
 
             if (parameters.Id != null) {
@@ -105,9 +109,9 @@ namespace Cargotruck.Server.Controllers
             }
             
             if (user == null) return BadRequest();
-            user.UserName = parameters.UserName !=null ? parameters.UserName : user.UserName;
-            user.PhoneNumber = parameters.PhoneNumber != null ? parameters.PhoneNumber : user.PhoneNumber; 
-            user.Email = parameters.Email != null ? parameters.Email : user.Email;
+            user.UserName = parameters.UserName ?? user.UserName;
+            user.PhoneNumber = parameters.PhoneNumber ?? user.PhoneNumber; 
+            user.Email = parameters.Email ?? user.Email;
             var result = await _userManager.UpdateAsync(user);
 
             await _userManager.RemoveFromRoleAsync(user, role);

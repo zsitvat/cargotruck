@@ -18,11 +18,11 @@ namespace Cargotruck.Client.Services
 
             request.Headers.Add("apikey", "XwSDWGpGqDKu8ZIbOl56Kne74V14oEpC");
 
-            var response = await client?.SendAsync(request);
+            var response = await client?.SendAsync(request)!;
             var result = response.Content.ReadAsStringAsync().Result;
             if (response.IsSuccessStatusCode)
             {
-                Dictionary<string, dynamic> dict = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(result);
+                Dictionary<string, dynamic> dict = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(result)!;
                 var ratesJson = dict["rates"].ToString().Trim(new Char[] { '\n' }).Replace(" ", "");
                 return JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(ratesJson);
             }

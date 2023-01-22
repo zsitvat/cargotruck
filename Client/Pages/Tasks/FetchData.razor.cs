@@ -51,7 +51,7 @@ namespace Cargotruck.Client.Pages.Tasks
         {
             PageHistoryState.AddPageToHistory("/Tasks");
             base.OnInitialized();
-            dataRows = await client.GetFromJsonAsync<int>("api/tasks/pagecount");
+            dataRows = await client.GetFromJsonAsync<int>($"api/tasks/pagecount?filter{filter}");
             await ShowPage();
             if (Rates == null)
             {

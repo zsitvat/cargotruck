@@ -1,0 +1,144 @@
+﻿
+<div class="col-md-8 stretch-card mb-2 me-3">
+    <div class="form-card mb-1 table-width">
+        <div class="card-body mb-3">
+            <div class="table-responsive fixed-table-body">
+                <table class="table striped">
+                    <thead>
+                        <tr>
+                            <th>@localizer["Year"]</th>
+                            <th>@localizer["Earning"]</th>
+                            <th>@localizer["Expense"]</th>
+                            <th>@localizer["Profit"]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (DataPerYearList != null)
+                        {
+                            @foreach (DataPerYear item in DataPerYearList)
+                            {
+                                <tr>
+                                    <td>@item.year</td>
+                                    <td>
+                                        @if (@item.earning != null)
+                                        {
+                                            @if (currency != "HUF" && Rates != null)
+                                            {
+                                                @(GetCurrency(item.earning)!.Value.ToString("0.##") + " " + currency)
+                                            }
+                                            else
+                                            {
+                                                @(item.earning + " HUF")
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (@item.expense != null)
+                                        {
+                                            @if (currency != "HUF" && Rates != null)
+                                            {
+                                                @(GetCurrency(item.expense)!.Value.ToString("0.##") + " " + currency)
+                                            }
+                                            else
+                                            {
+                                                @(item.expense + " HUF")
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (@item.profit != null)
+                                        {
+                                            @if (currency != "HUF" && Rates != null)
+                                            {
+                                                @(GetCurrency(item.profit)!.Value.ToString("0.##") + " " + currency)
+                                            }
+                                            else
+                                            {
+                                                @(item.profit + " HUF")
+                                            }
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@code {
+    [CascadingParameter] Dictionary<string, dynamic>? Rates { get; set; }
+    [Parameter] public bool fullYearProfitWindow { get; set; }
+    [Parameter] public EventCallback OnFullYearWindowClosed { get; set; }
+    [Parameter] public Monthly_expenses[]? Monthly_expenses { get; set; }
+    List<DataPerYear>? DataPerYearList = new();
+    [Parameter] public string currency { get; set; } = "HUF";
+
+    public class DataPerYear
+    {
+        public int year;
+        public int? earning;
+        public int? expense;
+        public int? profit;
+    }
+
+    protected async Task FullYearWindowClosed()
+    {
+        await OnFullYearWindowClosed.InvokeAsync();
+    }
+
+    public float? GetCurrency(int? amount)
+    {
+        float? conversionNum = amount;
+        if (Rates != null && currency != "HUF")
+        {
+            if (currency != "EUR")
+            {
+                conversionNum = (float)((amount / Rates["HUF"]) * Rates[currency]);
+            }
+            else
+            {
+                conversionNum = (float)(amount / Rates["HUF"]);
+            }
+        }
+        return conversionNum;
+    }
+
+    protected override void OnInitialized()
+    {
+        if(Monthly_expenses != null){
+            @foreach (var item in Monthly_expenses)
+            {
+
+                bool haveYear = false;
+                if(DataPerYearList != null){
+                    @foreach (var data in DataPerYearList)
+                    {
+                        if (data.year == item.Date.Year)
+                        {
+                            data.earning += item.Earning;
+                            data.expense += item.Expense;
+                            data.profit += item.Profit;
+                            haveYear = true;
+                        }
+                    }
+                }
+
+                if (haveYear == false)
+                {
+                    DataPerYear newDataPerYear = new();
+                    newDataPerYear.year = item.Date.Year;
+                    newDataPerYear.earning = item.Earning;
+                    newDataPerYear.expense = item.Expense;
+                    newDataPerYear.profit = item.Profit;
+                    DataPerYearList?.Add(newDataPerYear);
+                }
+            }
+        }
+    }
+}

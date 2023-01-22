@@ -11,11 +11,12 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
     public partial class FetchData
     {
         public bool settings = false;
+        public bool fullYearProfitWindow = true;
         Cargotruck.Shared.Models.Monthly_expenses[]? Monthly_expenses { get; set; }
-        Monthly_expenses_tasks_expenses[]? connection_ids { get; set; }
+        Monthly_expenses_tasks_expenses[]? Connection_ids { get; set; }
         int? IdForGetById { get; set; }
-        string? getByIdType { get; set; }
-        List<bool> showColumns = Enumerable.Repeat(true, 6).ToList();
+        string? GetByIdType { get; set; }
+        readonly List<bool> showColumns = Enumerable.Repeat(true, 6).ToList();
         private int currentPage = 1;
         int pageSize = 10;
         int dataRows;
@@ -27,7 +28,7 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
         string? currency_api_error;
         bool showError = false;
         string currency = "HUF";
-       [CascadingParameter]  Dictionary<string, dynamic>? rates {get;set;}
+        [CascadingParameter]  Dictionary<string, dynamic>? Rates {get;set;}
         DateFilter? dateFilter = new();
 
         async void DateStartInput(ChangeEventArgs e)
@@ -52,11 +53,12 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
         {
             PageHistoryState.AddPageToHistory("/Monthly_expenses");
             base.OnInitialized();
-            if (rates == null)
+
+            if (Rates == null)
             {
                 try
                 {
-                    rates = await CurrencyExchange.GetRatesAsync(client);
+                    Rates = await CurrencyExchange.GetRatesAsync(client);
                 }
                 catch (Exception ex)
                 {
@@ -68,11 +70,12 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
                     }
                 }
             }
+
             await client.GetStringAsync("api/Monthly_expenses/createcontable");
             dataRows = await client.GetFromJsonAsync<int>("api/Monthly_expenses/pagecount");
             var checkData = await client.GetAsync("api/Monthly_expenses/checkdata");
-            connection_ids = await client.GetFromJsonAsync<Monthly_expenses_tasks_expenses[]?>
-            ("api/Monthly_expenses/getconnectionids");
+            Connection_ids = await client.GetFromJsonAsync<Monthly_expenses_tasks_expenses[]?>("api/Monthly_expenses/getconnectionids");
+
             if (checkData.IsSuccessStatusCode)
             {
                 await ShowPage();
@@ -87,15 +90,15 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
         public float? GetCurrency(int? amount)
         {
             float? conversionNum = amount;
-            if (rates != null && currency != "HUF")
+            if (Rates != null && currency != "HUF")
             {
                 if (currency != "EUR")
                 {
-                    conversionNum = (float)((amount / rates["HUF"]) * rates[currency]);
+                    conversionNum = (float)((amount / Rates["HUF"]) * Rates[currency]);
                 }
                 else
                 {
-                    conversionNum = (float)(amount / rates["HUF"]);
+                    conversionNum = (float)(amount / Rates["HUF"]);
                 }
             }
             return conversionNum;
@@ -124,14 +127,19 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
         void GetById(int? id, string idType)
         {
             IdForGetById = id;
-            getByIdType = idType;
+            GetByIdType = idType;
             StateHasChanged();
         }
 
         public void SetToNull()
         {
             IdForGetById = null;
-            getByIdType = null;
+            GetByIdType = null;
+        }
+
+        public void FullYearWindowClosed()
+        {
+            fullYearProfitWindow = !fullYearProfitWindow;
         }
 
         protected async Task GetCurrentPage(int CurrentPage)
@@ -145,7 +153,7 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
             if (pageSize < 1) { pageSize = 10; }
             else if (pageSize >= dataRows) { pageSize = dataRows != 0 ? dataRows : 1; }
             maxPage = (int)Math.Ceiling((decimal)((float)dataRows / (float)pageSize));
-            Monthly_expenses = await client.GetFromJsonAsync<Cargotruck.Shared.Models.Monthly_expenses[]>($"api/Monthly_expenses/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&lang={CultureInfo.CurrentCulture.Name.ToString()}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
+            Monthly_expenses = await client.GetFromJsonAsync<Cargotruck.Shared.Models.Monthly_expenses[]>($"api/Monthly_expenses/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
             StateHasChanged();
         }
 
@@ -155,7 +163,7 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
         }
 
 
-        public void SettingsChanged() { }
+        public static void SettingsChanged() { }
 
         public async void InputChanged(int ChangedPageSize)
         {

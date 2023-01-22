@@ -57,7 +57,7 @@ else
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (Users item in users.Where(x => (filter != null && filter != "" ? roles?[x.Id] == filter : true)))
+                                    @foreach (Users item in users)
                                     {
                                         int i = 0;
                                         i += 1;
@@ -83,10 +83,10 @@ else
                                             </td>
                                         </tr>
                                     }
-
                                 </tbody>
                             </table>
                         </div>
+                        <Pagination CurrentPage="currentPage" PageSize="pageSize" DataRows="dataRows" MaxPage="maxPage" GetCurrentPage="GetCurrentPage" />
                     </div>
                 </div>
             </div>
@@ -98,20 +98,34 @@ else
     Dictionary<string, string>? claims { get; set; }
     Dictionary<string, string>? roles { get; set; }
     string? filter = "";
+    private int currentPage = 1;
+    int pageSize = 1;
+    int dataRows;
+    float maxPage;
 
     protected override async Task OnInitializedAsync()
     {
-        users = await client.GetFromJsonAsync<Users[]>("api/admin/get");
+        await ShowPage();
+    }
+
+    protected async Task ShowPage()
+    {
+        dataRows = await client.GetFromJsonAsync<int>($"api/admin/pagecount?filter={filter}");
+        if (pageSize < 1) { pageSize = 10; }
+        else if (pageSize >= dataRows) { pageSize = dataRows != 0 ? dataRows : 1; }
+        maxPage = (int)Math.Ceiling((decimal)((float)dataRows / (float)pageSize));
         claims = await client.GetFromJsonAsync<Dictionary<string, string>?>("api/admin/claims");
         roles = await client.GetFromJsonAsync<Dictionary<string, string>?>("api/admin/roles");
+        users = await client.GetFromJsonAsync<Users[]>($"api/admin/get?page={currentPage}&pageSize={pageSize}&filter={filter}");
+        StateHasChanged();
     }
 
     async Task Delete(string Id)
     {
         var u = users?.First(x => x.Id == Id);
-        if (await js.InvokeAsync<bool>("confirm", $"{@localizer["delete?"]} {u?.UserName} ({u?.Id})"))
+        if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {u?.UserName} ({u?.Id})"))
         {
-            await client.DeleteAsync($"api/admin/{Id}");
+            await client.DeleteAsync($"api/admin/delete/{Id}");
             await OnInitializedAsync();
         }
     }
@@ -125,6 +139,12 @@ else
     async void onChangeResetFilter()
     {
         filter = "";
+        await OnInitializedAsync();
+    }
+
+    protected async Task GetCurrentPage(int CurrentPage)
+    {
+        currentPage = CurrentPage;
         await OnInitializedAsync();
     }
 }
