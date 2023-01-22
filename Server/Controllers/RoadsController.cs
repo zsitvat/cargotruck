@@ -112,7 +112,7 @@ namespace Cargotruck.Server.Controllers
             {
                 data = data.Where(data => data.Direction == "FROM").ToList();
             }
-            int PageCount = data.Count();
+            int PageCount = data.Count;
             return Ok(PageCount);
         }
 
@@ -612,12 +612,12 @@ namespace Cargotruck.Server.Controllers
 
                                 }
                                 firstRow = false;
-                                if (titles.Count() == 0)
+                                if (titles.Count == 0)
                                 {
                                     haveColumns = true;
                                     l += 1;
                                 }
-                                else if (titles.Count() == 1 && titles.Contains("Id"))
+                                else if (titles.Count == 1 && titles.Contains("Id"))
                                 {
                                     haveColumns = true;
 
@@ -643,8 +643,8 @@ namespace Cargotruck.Server.Controllers
                                     new SqlParameter("@Task_id", list[l + 1]),
                                     new SqlParameter("@Id_cargo", list[l + 2]),
                                     new SqlParameter("@Purpose_of_the_trip", list[l + 3]),
-                                    new SqlParameter("@Starting_date", list[l + 4] == System.DBNull.Value ? System.DBNull.Value : DateTime.Parse(list[l + 4]?.ToString())),
-                                    new SqlParameter("@Ending_date", list[l + 5] == System.DBNull.Value ? System.DBNull.Value : DateTime.Parse(list[l + 5]?.ToString())),
+                                    new SqlParameter("@Starting_date", list[l + 4] == System.DBNull.Value ? System.DBNull.Value : DateTime.Parse(list[l + 4]?.ToString()!)),
+                                    new SqlParameter("@Ending_date", list[l + 5] == System.DBNull.Value ? System.DBNull.Value : DateTime.Parse(list[l + 5]?.ToString()!)),
                                     new SqlParameter("@Starting_place", list[l + 6]),
                                     new SqlParameter("@Ending_place", list[l + 7]),
                                     new SqlParameter("@Direction", (list[l + 8]?.ToString() == Cargotruck.Shared.Resources.Resource.to || list[l + 8]?.ToString() == "Go to the direction" ? "TO": "FROM")),

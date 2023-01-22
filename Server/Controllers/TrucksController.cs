@@ -226,8 +226,10 @@ namespace Cargotruck.Server.Controllers
                 HorizontalAlignment = Element.ALIGN_CENTER
             };
 
-            var title = new Paragraph(15, lang == "hu" ? Cargotruck.Shared.Resources.Resource.Trucks : "Trucks");
-            title.Alignment = Element.ALIGN_CENTER;
+            var title = new Paragraph(15, lang == "hu" ? Cargotruck.Shared.Resources.Resource.Trucks : "Trucks")
+            {
+                Alignment = Element.ALIGN_CENTER
+            };
 
 
             document.Add(title);
@@ -329,8 +331,10 @@ namespace Cargotruck.Server.Controllers
             }
             else
             {
-                var noContent = new Paragraph(lang == "hu" ? "Nem található adat!" : "No content found!");
-                noContent.Alignment = Element.ALIGN_CENTER;
+                var noContent = new Paragraph(lang == "hu" ? "Nem található adat!" : "No content found!")
+                {
+                    Alignment = Element.ALIGN_CENTER
+                };
                 document.Add(noContent);
             }
             document.Close();

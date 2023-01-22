@@ -203,15 +203,17 @@
         var expenseWithIds = await client.GetFromJsonAsync<List<Expenses>>("api/expenses/getexpenses");
         foreach (var expense in expenseWithIds)
         {
-            var value = expense.Type.Value.ToString();
-            roads?.RemoveAll(x => x.Id == expense.Type_id && value == "repair" &&
-                x.Id != expenses?.Type_id);
+            if(expense.Type != null){
+                var value = expense.Type.Value.ToString();
+                roads?.RemoveAll(x => x.Id == expense.Type_id && value == "repair" &&
+                    x.Id != expenses?.Type_id);
 
-            tasks?.RemoveAll(x => x.Id == expense.Type_id && value == "task" &&
-                x.Id != expenses?.Type_id);
+                tasks?.RemoveAll(x => x.Id == expense.Type_id && value == "task" &&
+                    x.Id != expenses?.Type_id);
 
-            cargoes?.RemoveAll(x => x.Id == expense.Type_id && value == "storage" &&
-                x.Id != expenses?.Type_id);
+                cargoes?.RemoveAll(x => x.Id == expense.Type_id && value == "storage" &&
+                    x.Id != expenses?.Type_id);
+            }
         }
     }
 

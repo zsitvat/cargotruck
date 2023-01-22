@@ -35,8 +35,4 @@
     <Folder Include="wwwroot\img\profiles\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Include="..\.editorconfig" Link=".editorconfig" />
-  </ItemGroup>
-
 </Project>
