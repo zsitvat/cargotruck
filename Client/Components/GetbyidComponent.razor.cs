@@ -22,7 +22,6 @@ namespace Cargotruck.Client.Components
         [Parameter] public string? GetById { get; set; }
         [Parameter] public string? GetByIdType { get; set; }
         [Parameter] public EventCallback OnSetToNull { get; set; }
-        private ElementReference ForFocus;
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
@@ -83,7 +82,6 @@ namespace Cargotruck.Client.Components
                     GetById = null;
                 }
             }
-            await ForFocus.FocusAsync();
         }
 
         protected async Task SetToNull()

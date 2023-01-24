@@ -54,10 +54,10 @@ else
         <div class="form-card mb-1 table-width">
             <div class="card-body mb-3">
                 <div class="table-responsive fixed-table-body">
-                    <table class="table striped">
+                    <table class="table">
                         <thead>
                             <tr>
-                                <th class="counter-col"> </th>
+                                <th>#</th>
                                 <th><button class="@(sortOrder=="Month" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Month"))">@localizer["Month"]</button></th>
                                 @if (showColumns[0])
                                 {
@@ -88,7 +88,8 @@ else
                         <tbody>
                             @foreach (Monthly_expenses item in Monthly_expenses)
                             {
-                                <tr class="@(item.Profit <=0 ? "red": "")">
+                                <tr @onclick="@((e) =>Pages.MouseOnclick(e,item.Monthly_expense_id.ToString()))" @onmouseover="@((e) =>Pages.MouseOver(e,item.Monthly_expense_id.ToString()))" @onmouseout="@((e) =>Pages.MouseOut(e))"
+                            class="@(item.Profit <=0 ? "red": "") @(Pages.MouseOnHoverClass == item.Monthly_expense_id.ToString() || Pages.MouseOnclickClass == item.Monthly_expense_id.ToString() ? "color-on-hover" :"")">
                                    @if(item.User_id=="Generated") 
                                    {
                                       <td import-data-title="@localizer["Generated"]">@item.Monthly_expense_id</td>    
@@ -188,7 +189,7 @@ else
                                     {
                                         <td class="last-col">@item.Date</td>
                                     }
-                                    <td>
+                                    <td class="@(Pages.MouseOnHoverClass == item.Monthly_expense_id.ToString() || Pages.MouseOnclickClass == item.Monthly_expense_id.ToString() ? "show" :"not-show") ">
                                         <a class="btn  fixed" href="Monthly_expenses/edit/@item.Monthly_expense_id"> <span data-title="@localizer["Edit"]" class="oi oi-pencil" aria-hidden="true"></span></a>
                                         <button class="btn fixed2" @onclick="@(() => Delete(item.Monthly_expense_id))"> <span data-title="@localizer["Delete"]" class="oi oi-trash" aria-hidden="true"></span></button>
                                     </td>

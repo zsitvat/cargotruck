@@ -72,10 +72,10 @@ else
         <div class="form-card mb-1 table-width">
             <div class="card-body mb-3">
                 <div class="table-responsive fixed-table-body">
-                    <table class="table striped">
+                    <table class="table">
                         <thead>
                             <tr>
-                                <th> </th>
+                                <th>#</th>
                                 @if (showColumns[0])
                                 {
                                     <th><button class="@(sortOrder=="Partner" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Partner"))">@localizer["Partner"]</button></th>
@@ -138,16 +138,17 @@ else
                                 }
                                 @if (showColumns[15])
                                 {
-                                    <th class="last-col"><button class="@(sortOrder=="Date" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Date"))">@localizer["Date"]</button></th>
+                                    <th><button class="@(sortOrder=="Date" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Date"))">@localizer["Date"]</button></th>
                                 }
                             </tr>
                         </thead>
                         <tbody>
-                            
                             @foreach (Tasks item in Tasks)
                             {
-                                
-                                <tr class="@(item.Completed ? "green": "")">
+                                <tr 
+                                    @onclick="@((e) =>Pages.MouseOnclick(e,item.Id.ToString()))" @onmouseover="@((e) =>Pages.MouseOver(e,item.Id.ToString()))" @onmouseout="@((e) =>Pages.MouseOut(e))"
+                            class="@(item.Completed ? "green": "") @(Pages.MouseOnHoverClass == item.Id.ToString() || Pages.MouseOnclickClass == item.Id.ToString() ? "color-on-hover" :"")
+                                ">
                                     <td>@item.Id</td>
                                     @if (showColumns[0])
                                     {
@@ -261,7 +262,7 @@ else
                                     {
                                         <td>@item.Date</td>
                                     }
-                                    <td>
+                                    <td class="@(Pages.MouseOnHoverClass == item.Id.ToString() || Pages.MouseOnclickClass == item.Id.ToString() ? "show" :"not-show") ">
                                         <a class="btn  fixed" href="Tasks/edit/@item.Id"> <span data-title="@localizer["Edit"]" class="oi oi-pencil" aria-hidden="true"></span></a>
                                         <button class="btn fixed2" @onclick="@(() => Delete(item.Id))"> <span data-title="@localizer["Delete"]" class="oi oi-trash" aria-hidden="true"></span></button>
                                     </td>

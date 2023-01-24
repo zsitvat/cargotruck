@@ -101,7 +101,7 @@ a:active {
 .no-button {
     display: inline-block;
     margin: 0;
-    margin-left: 0.5rem;
+    margin-left: 0.1rem;
     margin-right: -0.2rem;
     border: none;
     background: none;
@@ -114,10 +114,6 @@ a:active {
 
 .green {
     background: rgba(227, 242, 222,0.5) !important;
-}
-
-.striped tr:nth-child(even) {
-    background-color: #F2F2F2;
 }
 
 .red {
@@ -274,18 +270,18 @@ td{
 
 th:first-child {
     min-width: 0.2rem;
+    width:fit-content;
 }
 
+th:last-child {
+    min-width: 5.8rem;
+}
 
 th {
-    min-width: fit-content;
+    min-width: 5rem;
+    width: fit-content;
     vertical-align: middle;
     white-space: nowrap;
-}
-
-.last-col {
-    padding-right: 1rem !important;
-    padding-left: 1rem !important;
 }
 
 table th button {
@@ -323,7 +319,7 @@ table th button {
 }
 
 .table > :not(caption) > * > * {
-    padding: 0.5rem 0.2rem;
+    padding: 0.5rem 0rem;
 }
 
 .successful-login {
@@ -392,10 +388,25 @@ table th button {
     padding: 0;
 }
 
+.not-show {
+    visibility: hidden;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.show {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.color-on-hover {
+    background: rgba(232, 235, 255,0.8) !important;
+}
+
 .privacy-form-card {
     min-width: 15rem;
     max-width: 40rem;
-    height:fit-content;
+    height: fit-content;
 }
 
 .privacy-form {

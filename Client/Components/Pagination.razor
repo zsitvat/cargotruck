@@ -1,34 +1,36 @@
-﻿<div class="align-center pagination-style mt-2">
-    @if (CurrentPage != 1)
-    {
-        <i class="oi oi-media-skip-backward btn btn-pagination" id="prev" @onclick="PrevPage"></i>
-    }
-    else
-    {
-        <i style="opacity:0;" class=" oi oi-media-skip-backward btn btn-pagination"></i>
-    }
-    @for (int i = CurrentPage - 2; i <= CurrentPage + 2; i++)
-    {
-        int j = i;
-        @if (i > 0 && i <= MaxPage)
+﻿@if(MaxPage > 1){
+    <div class="align-center pagination-style mt-2">
+        @if (CurrentPage != 1)
         {
-            if (i == CurrentPage)
-            {
-                <span class="btn btn-pagination currentpage" @onclick="() => SetCurrentPage(j)">@i</span>
-            }
-            else
-            {
-                <span class="btn  btn-pagination" @onclick="() => SetCurrentPage(j)">@i</span>
-            }
+            <i class="oi oi-media-skip-backward btn btn-pagination" id="prev" @onclick="PrevPage"></i>
         }
+        else
+        {
+            <i style="opacity:0;" class=" oi oi-media-skip-backward btn btn-pagination"></i>
+        }
+        @for (int i = CurrentPage - 2; i <= CurrentPage + 2; i++)
+        {
+            int j = i;
+            @if (i > 0 && i <= MaxPage)
+            {
+                if (i == CurrentPage)
+                {
+                    <span class="btn btn-pagination currentpage" @onclick="() => SetCurrentPage(j)">@i</span>
+                }
+                else
+                {
+                    <span class="btn  btn-pagination" @onclick="() => SetCurrentPage(j)">@i</span>
+                }
+            }
 
-    }
-    @if (CurrentPage < MaxPage)
-    {
-        <i class="oi oi-media-skip-forward btn btn-pagination" id="next" @onclick="NextPage"></i>
-    }
-    else
-    {
-        <i style="opacity:0;" class="oi oi-media-skip-forward btn btn-pagination"></i>
-    }
-</div>
+        }
+        @if (CurrentPage < MaxPage)
+        {
+            <i class="oi oi-media-skip-forward btn btn-pagination" id="next" @onclick="NextPage"></i>
+        }
+        else
+        {
+            <i style="opacity:0;" class="oi oi-media-skip-forward btn btn-pagination"></i>
+        }
+    </div>
+}
