@@ -460,6 +460,7 @@ namespace Cargotruck.Server.Controllers
                                         nulls += 1;
                                     }
                                 }
+
                                 if (nulls != list.Count) { 
                                     var sql = @"Insert Into Warehouses (User_id,Address,Owner,Date) 
                                     Values (@User_id,@Address,@Owner,@Date)";

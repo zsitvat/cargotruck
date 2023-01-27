@@ -33,17 +33,26 @@ html, body {
     opacity: 0.9;
 }
 
+.btn-primary:hover {
+    opacity: 1;
+    box-shadow: inset 0px 2px 4px 0px rgba(0, 0, 0, 0.16);
+}
+
 .btn-check:focus + .btn, .btn:focus {
     outline: 0;
-    box-shadow: none !important;
+    box-shadow: rgb(0 0 0 / 16%) 0px 1px 4px !important;
+}
+
+.modal-shadow {
+    box-shadow: 0 1px 1px hsl(0deg 0% 0% / 0.075),
+        0 2px 2px hsl(0deg 0% 0% / 0.075),
+        0 4px 4px hsl(0deg 0% 0% / 0.075),
+        0 8px 8px hsl(0deg 0% 0% / 0.075),
+        0 16px 16px hsl(0deg 0% 0% / 0.075) !important;
 }
 
 .font-weight-bold { 
     font-weight: bold !important;
-}
-
-.btn-primary:hover {
-    opacity: 1;
 }
 
 h1:focus {
@@ -149,9 +158,77 @@ a:active {
 }
 
 .page-error {
+    position: fixed;
+    font-size: 15px;
+    color: red;
+    right: -22.5rem;
+    top: 5rem;
+    max-width: 25rem;
+    padding: 0.5rem;
+    box-shadow: 0 1px 1px hsl(0deg 0% 0% / 0.075), 0 2px 2px hsl(0deg 0% 0% / 0.075), 0 4px 4px hsl(0deg 0% 0% / 0.075), 0 8px 8px hsl(0deg 0% 0% / 0.075), 0 16px 16px hsl(0deg 0% 0% / 0.075);
+    border: 1px solid rgba(120,120,120,.1);
+    background-color: rgb(255, 255, 255);
+    background-clip: border-box;
+    z-index: 500;
+    display: inline;
+    padding-left: 3.5rem;
+    animation-direction: alternate-reverse;
+    animation: document_error_alert 8s;
+}
+
+.page-error:hover {
+    animation-direction: alternate-reverse;
+    animation: document_error_alert-hover 4s;
+}
+
+@keyframes document_error_alert{
+    0% {
+        right: 0rem;
+    }
+
+    15% {
+        right: 0rem;
+    }
+
+    90% {
+        right: -0rem;
+    }
+
+    100% {
+        right: -22.5rem;
+    }
+}
+
+@keyframes document_error_alert-hover {
+    0% {
+        right: 0rem;
+    }
+
+    15% {
+        right: 0rem;
+    }
+
+    90% {
+        right: -0rem;
+    }
+
+    100% {
+        right: -22.5rem;
+    }
+}
+
+.div-icon {
     position:absolute;
-    font-size:15px;
-    color:red;
+    left:10px;
+    top:10px;
+}
+
+.div-error {
+}
+
+
+.page-error div, .page-error svg {
+    display: inline;
 }
 
 .error{
@@ -263,9 +340,9 @@ table {
     padding-right: 1rem;
 }
 
-td{
-    padding:0px 5px !important;
-    vertical-align:middle;
+td {
+    padding: 0px 5px !important;
+    vertical-align: middle;
 }
 
 th:first-child {
@@ -326,7 +403,7 @@ table th button {
     position: fixed;
     top: 12rem;
     right: 10rem;
-    z-index: 100;
+    z-index: 500;
     animation-direction: alternate-reverse;
     animation: login-alert 8s;
     visibility: hidden;
@@ -400,7 +477,20 @@ table th button {
 }
 
 .color-on-hover {
-    background: rgba(232, 235, 255,0.8) !important;
+    background-color: rgba(0,0,0,.075) !important;
+}
+
+.full-year-hover:hover {
+    background-color: rgba(0,0,0,.075) !important;
+}
+
+.warehouse-ids {
+    display: block;
+    max-width: 30rem;
+    max-height: 5rem;
+    min-height: 3rem;
+    height: unset;
+    overflow-y: auto;
 }
 
 .privacy-form-card {
@@ -485,10 +575,8 @@ table th button {
 }
 
 .btn-success:hover {
-    opacity: 0.8 !important;  
-}
-
-.pagination-style {
+    opacity: 0.8 !important;
+    box-shadow: inset 0px 4px 8px 0px rgba(0, 0, 0, 0.25);
 }
 
 .btn-pagination {
@@ -762,6 +850,7 @@ input[type=number] {
 .btn-light:hover {
     background-color: white;
     border: 1px solid rgba(120,120,120,.1);
+    box-shadow: inset 0px 2px 4px 0px rgba(0, 0, 0, 0.16);
 }
 
 .btn-light:hover i, .btn-light:hover span {
@@ -902,12 +991,28 @@ input[type=number] {
     border-color: rgba(120,130,140,.2);
 }
 
+.form-control:hover {
+    box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.16);
+}
+
+.inputs:hover, .valid:hover {
+    box-shadow: inset rgb(13 110 253 / 25%) 0px 0px 0px 0.1rem;
+}
+
+.form-control:focus {
+    box-shadow: rgb(13 110 253 / 25%) 0px 0px 0px 0.2rem;
+}
+
 .inputs {
     margin-bottom: 2px;
 }
 
 #inputimg {
     margin-left:2rem;
+}
+
+#inputimg:hover {
+    box-shadow: inset 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
 }
 
 .date-filter {
@@ -1455,10 +1560,10 @@ tr td:first-child {
         display: initial;
     }
 
-    .hideandshow-cards .getbyid-card, .hideandshow-cards .settings-card {
-        max-width: 100%;
-        width: 100%;
-    }
+        .hideandshow-cards .getbyid-card, .hideandshow-cards .settings-card {
+            max-width: 100%;
+            width: 100%;
+        }
 
     .date-filter {
         left: 0rem;
@@ -1475,6 +1580,13 @@ tr td:first-child {
 
     article {
         margin-left: 0px !important;
+    }
+
+    .page-error {
+        z-index:10;
+        top:85%;
+        overflow:auto;
+        max-height:5rem;
     }
 }
 

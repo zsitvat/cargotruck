@@ -21,31 +21,8 @@ namespace Cargotruck.Client.Pages.Tasks
         private string sortOrder = "Date";
         private bool desc = true;
         private string? searchString = "";
-        string? currency_api_error;
-        string? document_error;
-        bool showError = false;
-        string currency = "HUF";
-        [CascadingParameter]  Dictionary<string, dynamic>? Rates {get;set;}
         string? filter = "";
         DateFilter? dateFilter = new();
-
-        async void DateStartInput(ChangeEventArgs e)
-        {
-            if (e != null && e.Value?.ToString() != "")
-            {
-                dateFilter!.StartDate = DateTime.Parse(e?.Value?.ToString()!);
-                await OnInitializedAsync();
-            }
-        }
-
-        async void DateEndInput(ChangeEventArgs e)
-        {
-            if (e != null && e.Value?.ToString() != "")
-            {
-                dateFilter!.EndDate = DateTime.Parse(e?.Value?.ToString()!);
-                await OnInitializedAsync();
-            }
-        }
 
         protected override async Task OnInitializedAsync()
         {
@@ -53,59 +30,6 @@ namespace Cargotruck.Client.Pages.Tasks
             base.OnInitialized();
             dataRows = await client.GetFromJsonAsync<int>($"api/tasks/pagecount?filter{filter}");
             await ShowPage();
-            if (Rates == null)
-            {
-                try
-                {
-                    Rates = await CurrencyExchange.GetRatesAsync(client);
-                }
-                catch (Exception ex)
-                {
-
-                    currency_api_error = $"Error - Type: {ex.GetType()}, Message: {ex.Message}";
-                    if (ex.GetType().ToString() == "Microsoft.CSharp.RuntimeBinder.RuntimeBinderException")
-                    {
-                        currency_api_error = "currency_api_is_exceeded";
-                    }
-                }
-            }
-        }
-
-        public float? GetCurrency(int? amount)
-        {
-            float? conversionNum = amount;
-            if (Rates != null && currency != "HUF")
-            {
-                if (currency != "EUR")
-                {
-                    conversionNum = (float)((amount / Rates["HUF"]) * Rates[currency]);
-                }
-                else
-                {
-                    conversionNum = (float)(amount / Rates["HUF"]);
-                }
-            }
-            return conversionNum;
-        }
-
-        void OnChangeGetType(ChangeEventArgs e)
-        {
-            if (e.Value != null)
-            {
-                currency = e.Value?.ToString()!;
-            }
-        }
-
-        async void OnChangeGetFilter(ChangeEventArgs e)
-        {
-            filter = e.Value?.ToString();
-            await OnInitializedAsync();
-        }
-
-        async void OnChangeResetFilter()
-        {
-            filter = "";
-            await OnInitializedAsync();
         }
 
         async Task ChangeCompletion(Cargotruck.Shared.Models.Tasks task)
@@ -126,6 +50,44 @@ namespace Cargotruck.Client.Pages.Tasks
             }
         }
 
+        protected async Task ShowPage()
+        {
+            if (pageSize < 1) { pageSize = 10; }
+            else if (pageSize >= dataRows) { pageSize = dataRows != 0 ? dataRows : 1; }
+            maxPage = (int)Math.Ceiling((decimal)((float)dataRows / (float)pageSize));
+
+            Tasks = await client.GetFromJsonAsync<Cargotruck.Shared.Models.Tasks[]>($"api/tasks/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
+            StateHasChanged();
+        }
+        async void DateStartInput(ChangeEventArgs e)
+        {
+            if (e != null && e.Value?.ToString() != "")
+            {
+                dateFilter!.StartDate = DateTime.Parse(e?.Value?.ToString()!);
+                await OnInitializedAsync();
+            }
+        }
+
+        async void DateEndInput(ChangeEventArgs e)
+        {
+            if (e != null && e.Value?.ToString() != "")
+            {
+                dateFilter!.EndDate = DateTime.Parse(e?.Value?.ToString()!);
+                await OnInitializedAsync();
+            }
+        }
+
+        async void OnChangeGetFilter(ChangeEventArgs e)
+        {
+            filter = e.Value?.ToString();
+            await OnInitializedAsync();
+        }
+
+        async void OnChangeResetFilter()
+        {
+            filter = "";
+            await OnInitializedAsync();
+        }
         void GetById(int? id, string? idType)
         {
             IdForGetById = id;
@@ -143,7 +105,6 @@ namespace Cargotruck.Client.Pages.Tasks
         {
             settings = !settings;
         }
-
 
         public static void SettingsChanged() { }
 
@@ -177,94 +138,6 @@ namespace Cargotruck.Client.Pages.Tasks
         {
             currentPage = CurrentPage;
             await ShowPage();
-        }
-
-        protected async Task ShowPage()
-        {
-            if (pageSize < 1) { pageSize = 10; }
-            else if (pageSize >= dataRows) { pageSize = dataRows != 0 ? dataRows : 1; }
-            maxPage = (int)Math.Ceiling((decimal)((float)dataRows / (float)pageSize));
-
-            Tasks = await client.GetFromJsonAsync<Cargotruck.Shared.Models.Tasks[]>($"api/tasks/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
-            StateHasChanged();
-        }
-
-        private async Task ExportToPdf()
-        {
-            //get base64 string from web api call
-            var Response = await client.GetAsync($"api/tasks/pdf?lang={CultureInfo.CurrentCulture.Name}");
-
-            if (Response.IsSuccessStatusCode)
-            {
-                var base64String = await Response.Content.ReadAsStringAsync();
-
-                Random rnd = new();
-                int random = rnd.Next(1000000, 9999999);
-                string filename = "Tasks" + random + "_" + DateTime.Now.ToString("dd-MM-yyyy") + ".pdf";
-
-                //call javascript function to download the file
-                await js.InvokeVoidAsync(
-                    "downloadFile",
-                    "application/pdf",
-                    base64String,
-                    filename);
-            }
-            else
-            {
-                document_error = localizer["Document_failder_to_create"];
-            }
-        }
-
-        private async Task ExportToExcel()
-        {
-            //get base64 string from web api call
-            var Response = await client.GetAsync($"api/tasks/excel?lang={CultureInfo.CurrentCulture.Name}");
-
-            if (Response.IsSuccessStatusCode)
-            {
-                var base64String = await Response.Content.ReadAsStringAsync();
-
-                Random rnd = new();
-                int random = rnd.Next(1000000, 9999999);
-                string filename = "Tasks" + random + "_" + DateTime.Now.ToString("dd-MM-yyyy") + ".xlsx";
-
-                //call javascript function to download the file
-                await js.InvokeVoidAsync(
-                    "downloadFile",
-                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                    base64String,
-                    filename);
-            }
-            else
-            {
-                document_error = localizer["Document_failder_to_create"];
-            }
-        }
-
-        private async Task ExportToCSV(string format)
-        {
-            //get base64 string from web api call
-            var Response = await client.GetAsync($"api/tasks/csv?lang={CultureInfo.CurrentCulture.Name}");
-
-            if (Response.IsSuccessStatusCode)
-            {
-                var base64String = await Response.Content.ReadAsStringAsync();
-
-                Random rnd = new();
-                int random = rnd.Next(1000000, 9999999);
-                string filename = "Tasks" + random + "_" + DateTime.Now.ToString("dd-MM-yyyy") + format;
-
-                //call javascript function to download the file
-                await js.InvokeVoidAsync(
-                    "downloadFile",
-                    "application/" + format,
-                    base64String,
-                    filename);
-            }
-            else
-            {
-                document_error = localizer["Document_failder_to_create"];
-            }
         }
 
         private async void StateChanged()

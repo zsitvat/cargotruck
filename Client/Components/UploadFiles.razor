@@ -3,16 +3,22 @@
 
 
 <InputFile id="inputfile" class="btn btn-light file-upload custom-file-input" OnChange="@OnInputFileChange" />
-<p class="page-error">@error</p>
+
+@if(error != null && error != "" ){
+    <div class="mb-3 input-group page-error">
+        <div class="div-icon"><span class="icon iconify" style="margin:0;" data-icon="mdi:file-document-error-outline"></span></div>
+        <div class="div-error">@error</div>
+    </div>
+}
+else{}
 
 @code {
     [Parameter] public string? page { get; set; }
     [Parameter] public EventCallback StateChanged { get; set; }
-    string? error;
+    string? error = "";
     private List<File> files = new();
     private List<UploadResult> uploadResults = new();
     private int maxAllowedFiles = 1;
-
 
     private async Task OnInputFileChange(InputFileChangeEventArgs e)
     {
@@ -64,7 +70,7 @@
                 {
                     var datasaved = await Http.GetAsync($"api/{page}/import?file={file.StoredFileName}&lang={CultureInfo.CurrentCulture.Name.ToString()}");
                     error = await datasaved.Content.ReadAsStringAsync();
-                    if (datasaved.IsSuccessStatusCode) { navigationManager.NavigateTo($"/{page}", true); }
+                    if (datasaved.IsSuccessStatusCode && error == "") { navigationManager.NavigateTo($"/{page}", true); }
                     else {
                         await OnInitializedAsync();
                         await StateChanged.InvokeAsync();

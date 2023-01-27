@@ -11,6 +11,8 @@ namespace Cargotruck.Shared.Models
         public string? User_id { get; set; }
         [Display(Name = "Task_id", ResourceType = typeof(Resource))]
         public int? Task_id { get; set; }
+        [Display(Name = "Vehicle_registration_number", ResourceType = typeof(Resource))]
+        public string? Vehicle_registration_number { get; set; }
         [Display(Name = "Id_cargo", ResourceType = typeof(Resource))]
         public int? Id_cargo { get; set; }
         [Required(ErrorMessageResourceName = "Error_purpose_of_the_trip", ErrorMessageResourceType = typeof(Resource))]

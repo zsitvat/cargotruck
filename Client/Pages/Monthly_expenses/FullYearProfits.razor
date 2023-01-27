@@ -17,14 +17,14 @@
                         {
                             @foreach (DataPerYear item in DataPerYearList)
                             {
-                                <tr>
+                                <tr class="full-year-hover">
                                     <td>@item.year</td>
                                     <td>
                                         @if (@item.earning != null)
                                         {
-                                            @if (currency != "HUF" && Rates != null)
+                                            @if (CurrencyExchange.currency != "HUF" && CurrencyExchange.Rates != null)
                                             {
-                                                @(GetCurrency(item.earning)!.Value.ToString("0.##") + " " + currency)
+                                                @(CurrencyExchange.GetCurrency(item.earning, CurrencyExchange.currency)!.Value.ToString("0.##") + " " + CurrencyExchange.currency)
                                             }
                                             else
                                             {
@@ -35,9 +35,9 @@
                                     <td>
                                         @if (@item.expense != null)
                                         {
-                                            @if (currency != "HUF" && Rates != null)
+                                            @if (CurrencyExchange.currency != "HUF" && CurrencyExchange.Rates != null)
                                             {
-                                                @(GetCurrency(item.expense)!.Value.ToString("0.##") + " " + currency)
+                                                @(CurrencyExchange.GetCurrency(item.expense, CurrencyExchange.currency)!.Value.ToString("0.##") + " " + CurrencyExchange.currency)
                                             }
                                             else
                                             {
@@ -48,9 +48,9 @@
                                     <td>
                                         @if (@item.profit != null)
                                         {
-                                            @if (currency != "HUF" && Rates != null)
+                                            @if (CurrencyExchange.currency != "HUF" && CurrencyExchange.Rates != null)
                                             {
-                                                @(GetCurrency(item.profit)!.Value.ToString("0.##") + " " + currency)
+                                                @(CurrencyExchange.GetCurrency(item.profit, CurrencyExchange.currency)!.Value.ToString("0.##") + " " + CurrencyExchange.currency)
                                             }
                                             else
                                             {
@@ -72,12 +72,8 @@
 
 
 @code {
-    [CascadingParameter] Dictionary<string, dynamic>? Rates { get; set; }
-    [Parameter] public bool fullYearProfitWindow { get; set; }
-    [Parameter] public EventCallback OnFullYearWindowClosed { get; set; }
-    [Parameter] public Monthly_expenses[]? Monthly_expenses { get; set; }
+    Monthly_expenses[]? Monthly_expenses { get; set; }
     List<DataPerYear>? DataPerYearList = new();
-    [Parameter] public string currency { get; set; } = "HUF";
 
     public class DataPerYear
     {
@@ -87,30 +83,10 @@
         public int? profit;
     }
 
-    protected async Task FullYearWindowClosed()
+    protected override async Task OnInitializedAsync()
     {
-        await OnFullYearWindowClosed.InvokeAsync();
-    }
+        Monthly_expenses = await client.GetFromJsonAsync<Monthly_expenses[]?>("api/Monthly_expenses/getmonthlyexpenses");
 
-    public float? GetCurrency(int? amount)
-    {
-        float? conversionNum = amount;
-        if (Rates != null && currency != "HUF")
-        {
-            if (currency != "EUR")
-            {
-                conversionNum = (float)((amount / Rates["HUF"]) * Rates[currency]);
-            }
-            else
-            {
-                conversionNum = (float)(amount / Rates["HUF"]);
-            }
-        }
-        return conversionNum;
-    }
-
-    protected override void OnInitialized()
-    {
         if(Monthly_expenses != null){
             @foreach (var item in Monthly_expenses)
             {

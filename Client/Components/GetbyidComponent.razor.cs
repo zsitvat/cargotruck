@@ -8,11 +8,7 @@ namespace Cargotruck.Client.Components
 {
     public partial class GetbyidComponent
     {
-        [CascadingParameter]
-        Dictionary<string, dynamic>? rates { get; set; }
         string currency = "HUF";
-        string? currency_api_error;
-        bool showError = true;
         Cargoes? idDataCargo;
         Tasks? idDataTask;
         Expenses? idDataExpense;
@@ -22,26 +18,6 @@ namespace Cargotruck.Client.Components
         [Parameter] public string? GetById { get; set; }
         [Parameter] public string? GetByIdType { get; set; }
         [Parameter] public EventCallback OnSetToNull { get; set; }
-        protected override async Task OnInitializedAsync()
-        {
-            await base.OnInitializedAsync();
-            if (rates == null && (GetByIdType == "task" || GetByIdType == "expense"))
-            {
-                try
-                {
-                    rates = await CurrencyExchange.GetRatesAsync(client);
-                }
-                catch (Exception ex)
-                {
-
-                    currency_api_error = $"Error - Type: {ex.GetType()}, Message: {ex.Message}";
-                    if (ex.GetType().ToString() == "Microsoft.CSharp.RuntimeBinder.RuntimeBinderException")
-                    {
-                        currency_api_error = "currency_api_is_exceeded";
-                    }
-                }
-            }    
-        }
 
         protected override async Task OnParametersSetAsync()
         {
@@ -87,23 +63,6 @@ namespace Cargotruck.Client.Components
         protected async Task SetToNull()
         {
             await OnSetToNull.InvokeAsync();
-        }
-
-        public float? GetCurrency(int? amount)
-        {
-            float? conversionNum = amount;
-            if (rates != null && currency != "HUF")
-            {
-                if (currency != "EUR")
-                {
-                    conversionNum = (float)((amount / rates["HUF"]) * rates[currency]);
-                }
-                else
-                {
-                    conversionNum = (float)(amount / rates["HUF"]);
-                }
-            }
-            return conversionNum;
         }
 
         void OnChangeGetType(ChangeEventArgs e)

@@ -2,7 +2,7 @@
 
 namespace Cargotruck.Client.Services
 {
-    public static class Pages
+    public static class MouseHoverClass
     {
         public static String? MouseOnHoverClass { get; set; }
         public static String? MouseOnclickClass { get; set; }

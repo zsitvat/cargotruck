@@ -61,8 +61,8 @@ else
                                     {
                                         int i = 0;
                                         i += 1;
-                                        <tr @onclick="@((e) =>Pages.MouseOnclick(e,item.Id))" @onmouseover="@((e) =>Pages.MouseOver(e,item.Id))" @onmouseout="@((e) =>Pages.MouseOut(e))"
-                                    class="@(Pages.MouseOnHoverClass == item.Id || Pages.MouseOnclickClass == item.Id ? "color-on-hover" :"")">
+                                        <tr @onclick="@((e) =>MouseHoverClass.MouseOnclick(e,item.Id))" @onmouseover="@((e) =>MouseHoverClass.MouseOver(e,item.Id))" @onmouseout="@((e) =>MouseHoverClass.MouseOut(e))"
+                                    class="@(MouseHoverClass.MouseOnHoverClass == item.Id || MouseHoverClass.MouseOnclickClass == item.Id ? "color-on-hover" :"")">
                                             <td>@i</td>
                                             @if(claims!=null){
                                                 <td><img class="table-img" src="@claims[$"img/{@item.Id}"]" /></td>
@@ -74,7 +74,7 @@ else
                                             @if (roles!=null) { 
                                                 <td>@roles[item.Id]</td>
                                             }
-                                            <td class="@(Pages.MouseOnHoverClass == item.Id.ToString() || Pages.MouseOnclickClass == item.Id.ToString() ? "show" :"not-show") ">
+                                            <td class="@(MouseHoverClass.MouseOnHoverClass == item.Id.ToString() || MouseHoverClass.MouseOnclickClass == item.Id.ToString() ? "show" :"not-show") ">
                                                 @if(item.UserName == context?.User?.Identity?.Name){
                                                     <a title="@localizer["Edit"]" class="btn fixed" href="/profile"><span class="oi oi-pencil" aria-hidden="true"></span></a>
                                                 }else{

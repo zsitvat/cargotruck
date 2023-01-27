@@ -6,10 +6,12 @@ namespace Cargotruck.Client.Services
 {
     public static class CurrencyExchange
     {
-        [Inject]
-        static HttpClient? Client { get; set; }
+        [CascadingParameter] public static Dictionary<string, dynamic>? Rates { get; set; }
+
+        public static string currency = "HUF";
         public static async Task<dynamic> GetRatesAsync(HttpClient? client)
         {
+            //the api has only 300 attempts per month - its run every start of the application
             var request = new HttpRequestMessage
             {
                 Method = new HttpMethod("GET"),
@@ -30,6 +32,31 @@ namespace Cargotruck.Client.Services
             {
                 var error = response.Content.ReadAsStringAsync();
                 return error;
+            }
+        }
+
+        public static float? GetCurrency(int? amount, string currency)
+        {
+            float? conversionNum = amount;
+            if (CurrencyExchange.Rates != null && currency != "HUF")
+            {
+                if (currency != "EUR")
+                {
+                    conversionNum = (float)((amount / Rates["HUF"]) * Rates[currency]);
+                }
+                else
+                {
+                    conversionNum = (float)(amount / Rates["HUF"]);
+                }
+            }
+            return conversionNum;
+        }
+
+        public static void OnChangeGetType(ChangeEventArgs e)
+        {
+            if (e.Value != null)
+            {
+                currency = e.Value?.ToString()!;
             }
         }
     }

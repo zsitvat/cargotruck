@@ -67,17 +67,17 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="d-inline-block forms-margin">
-                    <div class="form-group ">
+                <div class="form-group ">
+                    <div>
+                        <label>@localizer["Fuel"]:</label>
                         <div>
-                            <label>@localizer["Fuel"]:</label>
-                            <div>
-                                <InputText class="form-control inputs" @bind-Value="@roads.Fuel" />
-                                <ValidationMessage For="@(() => roads.Fuel)" />
-                            </div>
+                            <InputText class="form-control inputs" @bind-Value="@roads.Fuel" />
+                            <ValidationMessage For="@(() => roads.Fuel)" />
                         </div>
                     </div>
+                </div>
+                </div>
+                <div class="d-inline-block forms-margin second-col">
                     <div class="form-group">
                         <div>
                                 <label>@localizer["Direction"]:</label>
@@ -129,6 +129,24 @@
                                 </div>
                             </div>
                         </div>
+                <div class="form-group"> 
+                    <div>
+                        <label>@localizer["Vehicle_registration_number"]:</label>
+                        <div>
+                            <select class="form-control" @bind="@roads.Vehicle_registration_number">
+                                <option selected disabled>@localizer["Select_placeholder"]</option>
+                                @if (trucks != null)
+                                {
+                                    @foreach (var truck in trucks)
+                                    {
+                                        <option value="@truck.Id">@truck.Brand -  @truck.Vehicle_registration_number</option>
+                                    }
+                                }
+                            </select>
+                            <ValidationMessage For="@(() => roads.Task_id)" />
+                        </div>
+                    </div>
+                </div>
                         <div class="form-group">
                             <div>
                                 <label>@localizer["Id_cargo"]:</label>
@@ -162,6 +180,7 @@
     List<Cargoes>? cargoes { get; set; }
     Tasks[]? tasks { get; set; }
     List<Expenses>? expenses { get; set; }
+    List<Trucks>? trucks { get; set; }
 
 
     protected override async Task OnInitializedAsync()
@@ -169,6 +188,7 @@
         cargoes = await client.GetFromJsonAsync<List<Cargoes>?>("api/cargoes/getcargoes");
         tasks = await client.GetFromJsonAsync<Tasks[]?>("api/tasks/gettasks");
         expenses = await client.GetFromJsonAsync<List<Expenses>?>("api/expenses/getexpenses");
+        trucks = await client.GetFromJsonAsync<List<Trucks>?>("api/trucks/gettrucks");
         var roadWithIds = await client.GetFromJsonAsync<List<Roads>>("api/roads/getroads");
         roadWithIds = roadWithIds.Where(x => x.Expenses_id != null || x.Id_cargo != null).ToList();
         foreach (var road in roadWithIds)

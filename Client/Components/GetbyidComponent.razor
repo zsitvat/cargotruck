@@ -3,20 +3,6 @@
     <div class="card-body">
         <div class="ms-0">
             <a class="btn btn-danger x" @onclick="@( ()=> SetToNull())"><i class="oi oi-x"></i></a>
-            @if (currency_api_error != null && currency_api_error != "" && (GetByIdType == "task" || GetByIdType == "expense"))
-            {
-                <div class="d-inline-block mt-3 mb-4">
-                    <button class="no-button currency-api-error-icon error d-inline-block" @onclick="@(() => showError=!showError)">
-                        <span class="icon iconify d-inline" style="color:darkred;" data-icon="material-symbols:error-circle-rounded-outline"></span>
-                    </button>
-                    <p class="error currency-api-error-in-child d-inline-block">
-                        @if (showError)
-                        {
-                            @localizer[@currency_api_error]
-                        }
-                    </p>
-                </div>
-            }
             @if (GetByIdType == "cargo" || GetByIdType == "storage")
             {
                 <NavLink href="Cargoes" data-title="@localizer["go_to_cargoes"]">
@@ -124,12 +110,15 @@
                 <NavLink href="Tasks" data-title="@localizer["go_to_tasks"]">
                     <h2 class="align-center fw-bold">@localizer["Task"]</h2>
                 </NavLink>
-                <select data-title="@localizer["Currency"]" class="form-control currency" @oninput="@((e)=>OnChangeGetType(e))" @bind="currency">
-                    <option value="HUF">HUF</option>
-                    <option value="EUR">EUR</option>
-                    <option value="USD">USD</option>
-                    <option value="CZK">CZK</option>
-                </select>
+                @if (CurrencyExchange.Rates != null)
+                {
+                    <select data-title="@localizer["Currency"]" class="form-control CurrencyExchange.currency" @oninput="@((e)=>OnChangeGetType(e))" @bind="currency">
+                        <option value="HUF">HUF</option>
+                        <option value="EUR">EUR</option>
+                        <option value="USD">USD</option>
+                        <option value="CZK">CZK</option>
+                    </select>
+                }
                 <div id="task" class="row mt-4">
                     <div class="column">
                         <p><b>@localizer["Partner"]:</b></p>
@@ -165,9 +154,9 @@
                         <p>
                             @if (idDataTask?.Payment != null)
                             {
-                                @if (currency != "HUF" && rates != null)
+                                @if (CurrencyExchange.currency != "HUF" && CurrencyExchange.Rates != null)
                                 {
-                                    @(GetCurrency(idDataTask.Payment)!.Value.ToString("0.##") + " " + currency)
+                                    @(CurrencyExchange.GetCurrency(idDataTask.Payment, CurrencyExchange.currency)!.Value.ToString("0.##") + " " + CurrencyExchange.currency)
                                 }
                                 else if (idDataTask.Payment != 0)
                                 {
@@ -183,9 +172,9 @@
                         <p>
                             @if (idDataTask?.Final_Payment != null)
                             {
-                                @if (currency != "HUF" && rates != null)
+                                @if (CurrencyExchange.currency != "HUF" && CurrencyExchange.Rates != null)
                                 {
-                                    @(GetCurrency(idDataTask.Final_Payment)!.Value.ToString("0.##") + " " + currency)
+                                    @(CurrencyExchange.GetCurrency(idDataTask.Final_Payment, CurrencyExchange.currency)!.Value.ToString("0.##") + " " + CurrencyExchange.currency)
                                 }
                                 else if (idDataTask.Final_Payment != 0)
                                 {
@@ -201,9 +190,9 @@
                         <p>
                             @if (idDataTask?.Penalty != null)
                             {
-                                @if (currency != "HUF" && rates != null)
+                                @if (CurrencyExchange.currency != "HUF" && CurrencyExchange.Rates != null)
                                 {
-                                    @(GetCurrency(idDataTask.Penalty)!.Value.ToString("0.##") + " " + currency)
+                                    @(CurrencyExchange.GetCurrency(idDataTask.Penalty, CurrencyExchange.currency)!.Value.ToString("0.##") + " " + CurrencyExchange.currency)
                                 }
                                 else if (idDataTask.Penalty != 0)
                                 {
@@ -225,12 +214,15 @@
                 <NavLink href="Expenses" data-title="@localizer["go_to_expenses"]">
                     <h2 class="align-center fw-bold">@localizer["Expense"]</h2>
                 </NavLink>
-                <select data-title="@localizer["Currency"]" class="form-control currency" @oninput="@((e)=>OnChangeGetType(e))" @bind="currency">
-                    <option value="HUF">HUF</option>
-                    <option value="EUR">EUR</option>
-                    <option value="USD">USD</option>
-                    <option value="CZK">CZK</option>
-                </select>
+                @if (CurrencyExchange.Rates != null)
+                {
+                    <select data-title="@localizer["Currency"]" class="form-control CurrencyExchange.currency" @oninput="@((e)=>OnChangeGetType(e))" @bind="currency">
+                        <option value="HUF">HUF</option>
+                        <option value="EUR">EUR</option>
+                        <option value="USD">USD</option>
+                        <option value="CZK">CZK</option>
+                    </select>
+                }
                 <div id="expense" class="row mt-4">
                     <div class="column">
                         <p><b>@localizer["Type"]:</b></p>
@@ -252,9 +244,9 @@
                         <p>
                             @if (idDataExpense?.Fuel != null)
                             {
-                                @if (currency != "HUF" && rates != null)
+                                @if (CurrencyExchange.currency != "HUF" && CurrencyExchange.Rates != null)
                                 {
-                                    @(GetCurrency(idDataExpense?.Fuel)!.Value.ToString("0.##") + " " + currency)
+                                    @(CurrencyExchange.GetCurrency(idDataExpense?.Fuel, CurrencyExchange.currency)!.Value.ToString("0.##") + " " + CurrencyExchange.currency)
                                 }
                                 else if (idDataExpense?.Fuel != 0)
                                 {
@@ -270,9 +262,9 @@
                         <p>
                             @if (idDataExpense?.Road_fees != null)
                             {
-                                @if (currency != "HUF" && rates != null)
+                                @if (CurrencyExchange.currency != "HUF" && CurrencyExchange.Rates != null)
                                 {
-                                    @(GetCurrency(idDataExpense?.Road_fees)!.Value.ToString("0.##") + " " + currency)
+                                    @(CurrencyExchange.GetCurrency(idDataExpense?.Road_fees, CurrencyExchange.currency)!.Value.ToString("0.##") + " " + CurrencyExchange.currency)
                                 }
                                 else if (idDataExpense?.Road_fees != 0)
                                 {
@@ -288,9 +280,9 @@
                         <p>
                             @if (idDataExpense?.Penalty != null)
                             {
-                                @if (currency != "HUF" && rates != null)
+                                @if (CurrencyExchange.currency != "HUF" && CurrencyExchange.Rates != null)
                                 {
-                                    @(GetCurrency(idDataExpense?.Penalty)!.Value.ToString("0.##") + " " + currency)
+                                    @(CurrencyExchange.GetCurrency(idDataExpense?.Penalty, CurrencyExchange.currency)!.Value.ToString("0.##") + " " + CurrencyExchange.currency)
                                 }
                                 else if (idDataExpense?.Penalty != 0)
                                 {
@@ -306,9 +298,9 @@
                         <p>
                             @if (idDataExpense?.Driver_spending != null)
                             {
-                                @if (currency != "HUF" && rates != null)
+                                @if (CurrencyExchange.currency != "HUF" && CurrencyExchange.Rates != null)
                                 {
-                                    @(GetCurrency(idDataExpense?.Driver_spending)!.Value.ToString("0.##") + " " + currency)
+                                    @(CurrencyExchange.GetCurrency(idDataExpense?.Driver_spending, CurrencyExchange.currency)!.Value.ToString("0.##") + " " + CurrencyExchange.currency)
                                 }
                                 else if (idDataExpense?.Driver_spending != 0)
                                 {
@@ -324,9 +316,9 @@
                         <p>
                             @if (idDataExpense?.Driver_salary != null)
                             {
-                                @if (currency != "HUF" && rates != null)
+                                @if (CurrencyExchange.currency != "HUF" && CurrencyExchange.Rates != null)
                                 {
-                                    @(GetCurrency(idDataExpense?.Driver_salary)!.Value.ToString("0.##") + " " + currency)
+                                    @(CurrencyExchange.GetCurrency(idDataExpense?.Driver_salary, CurrencyExchange.currency)!.Value.ToString("0.##") + " " + CurrencyExchange.currency)
                                 }
                                 else if (idDataExpense?.Driver_salary != 0)
                                 {
@@ -342,9 +334,9 @@
                         <p>
                             @if (idDataExpense?.Repair_cost != null)
                             {
-                                @if (currency != "HUF" && rates != null)
+                                @if (CurrencyExchange.currency != "HUF" && CurrencyExchange.Rates != null)
                                 {
-                                    @(GetCurrency(idDataExpense?.Repair_cost)!.Value.ToString("0.##") + " " + currency)
+                                    @(CurrencyExchange.GetCurrency(idDataExpense?.Repair_cost, CurrencyExchange.currency)!.Value.ToString("0.##") + " " + CurrencyExchange.currency)
                                 }
                                 else if (idDataExpense?.Repair_cost != 0)
                                 {
@@ -361,9 +353,9 @@
                         <p>
                             @if (idDataExpense?.Cost_of_storage != null)
                             {
-                                @if (currency != "HUF" && rates != null)
+                                @if (CurrencyExchange.currency != "HUF" && CurrencyExchange.Rates != null)
                                 {
-                                    @(GetCurrency(idDataExpense?.Cost_of_storage)!.Value.ToString("0.##") + " " + currency)
+                                    @(CurrencyExchange.GetCurrency(idDataExpense?.Cost_of_storage, CurrencyExchange.currency)!.Value.ToString("0.##") + " " + CurrencyExchange.currency)
                                 }
                                 else if (idDataExpense?.Cost_of_storage != 0)
                                 {
@@ -379,9 +371,9 @@
                         <p>
                             @if (idDataExpense?.other != null)
                             {
-                                @if (currency != "HUF" && rates != null)
+                                @if (CurrencyExchange.currency != "HUF" && CurrencyExchange.Rates != null)
                                 {
-                                    @(GetCurrency(idDataExpense?.other)!.Value.ToString("0.##") + " " + currency)
+                                    @(CurrencyExchange.GetCurrency(idDataExpense?.other, CurrencyExchange.currency)!.Value.ToString("0.##") + " " + CurrencyExchange.currency)
                                 }
                                 else if (idDataExpense?.other != 0)
                                 {

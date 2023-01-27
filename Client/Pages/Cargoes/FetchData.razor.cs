@@ -21,7 +21,6 @@ namespace Cargotruck.Client.Pages.Cargoes
         private string sortOrder = "Date";
         private bool desc = true;
         private string? searchString = "";
-        string? document_error;
         string? filter = "";
         DateFilter? dateFilter = new();
 
@@ -138,83 +137,6 @@ namespace Cargotruck.Client.Pages.Cargoes
 
             Cargoes = await client.GetFromJsonAsync<Cargotruck.Shared.Models.Cargoes[]>($"api/cargoes/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
             StateHasChanged();
-        }
-
-        private async Task ExportToPdf()
-        {
-            //get base64 string from web api call
-            var Response = await client.GetAsync($"api/cargoes/pdf?lang={CultureInfo.CurrentCulture.Name}");
-
-            if (Response.IsSuccessStatusCode)
-            {
-                var base64String = await Response.Content.ReadAsStringAsync();
-
-                Random rnd = new();
-                int random = rnd.Next(1000000, 9999999);
-                string filename = "Cargoes" + random + "_" + DateTime.Now.ToString("dd-MM-yyyy") + ".pdf";
-
-                //call javascript function to download the file
-                await js.InvokeVoidAsync(
-                    "downloadFile",
-                    "application/pdf",
-                    base64String,
-                    filename);
-            }
-            else
-            {
-                document_error = localizer["Document_failder_to_create"];
-            }
-        }
-
-        private async Task ExportToExcel()
-        {
-            //get base64 string from web api call
-            var Response = await client.GetAsync($"api/cargoes/excel?lang={CultureInfo.CurrentCulture.Name}");
-
-            if (Response.IsSuccessStatusCode)
-            {
-                var base64String = await Response.Content.ReadAsStringAsync();
-
-                Random rnd = new();
-                int random = rnd.Next(1000000, 9999999);
-                string filename = "Cargoes" + random + "_" + DateTime.Now.ToString("dd-MM-yyyy") + ".xlsx";
-
-                //call javascript function to download the file
-                await js.InvokeVoidAsync(
-                    "downloadFile",
-                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                    base64String,
-                    filename);
-            }
-            else
-            {
-                document_error = localizer["Document_failder_to_create"];
-            }
-        }
-
-        private async Task ExportToCSV(string format)
-        {
-            //get base64 string from web api call
-            var Response = await client.GetAsync($"api/cargoes/csv?lang={CultureInfo.CurrentCulture.Name}");
-
-            if (Response.IsSuccessStatusCode)
-            {
-                var base64String = await Response.Content.ReadAsStringAsync();
-
-                Random rnd = new();
-                int random = rnd.Next(1000000, 9999999);
-                string filename = "Cargoes" + random + "_" + DateTime.Now.ToString("dd-MM-yyyy") + "." + format;
-                //call javascript function to download the file
-                await js.InvokeVoidAsync(
-                    "downloadFile",
-                    "text/" + format + ";charset=utf-8",
-                    base64String,
-                    filename);
-            }
-            else
-            {
-                document_error = localizer["Document_failder_to_create"];
-            }
         }
 
         private async void StateChanged()

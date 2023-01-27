@@ -14,6 +14,7 @@ using DocumentFormat.OpenXml.Spreadsheet;
 using Font = iTextSharp.text.Font;
 using System.Text;
 using DocumentFormat.OpenXml.Office2010.Excel;
+using DocumentFormat.OpenXml.Vml.Office;
 
 namespace Cargotruck.Server.Controllers
 {
@@ -482,6 +483,8 @@ namespace Cargotruck.Server.Controllers
                             else if (haveColumns)
                             {
                                 List<object?> list = new();
+                                int nulls = 0;
+
                                 //Add rows to DataTable.
                                 dt.Rows.Add();
                                 foreach (IXLCell cell in row.Cells(1, dt.Columns.Count))
@@ -490,7 +493,11 @@ namespace Cargotruck.Server.Controllers
                                     {
                                         list.Add(cell.Value);
                                     }
-                                    else { list.Add(System.DBNull.Value); }
+                                    else 
+                                    { 
+                                        list.Add(System.DBNull.Value);
+                                        nulls += 1;
+                                    }
                                 }
 
                                 list[l + 3] = list[l + 3] switch
@@ -503,26 +510,60 @@ namespace Cargotruck.Server.Controllers
                                     "rented" => 5,
                                     _ => System.DBNull.Value,
                                 };
-                                var sql = @"Insert Into Trucks (User_id,Vehicle_registration_number,Brand,Status,Road_id,Max_weight,Date) 
-                                Values (@User_id,@Vehicle_registration_number,@Brand,@Status,@Road_id,@Max_weight,@Date)";
-                                var insert = await _context.Database.ExecuteSqlRawAsync(sql,
-                                    new SqlParameter("@User_id", list[l]),
-                                    new SqlParameter("@Vehicle_registration_number", list[l + 1]),
-                                    new SqlParameter("@Brand", list[l + 2]),
-                                    new SqlParameter("@Status", list[l + 3]),
-                                    new SqlParameter("@Road_id", list[l + 4]),
-                                    new SqlParameter("@Max_weight", list[l + 5]),
-                                    new SqlParameter("@Date", DateTime.Now)
-                                    );
 
-                                if (insert > 0)
+                                if (nulls != list.Count)
                                 {
-                                    error = "";
-                                    await _context.SaveChangesAsync();
-                                }
-                                else if (insert <= 0)
-                                {
-                                    System.IO.File.Delete(path); // delete the file
+                                    var sql = @"Insert Into Trucks (User_id,Vehicle_registration_number,Brand,Status,Road_id,Max_weight,Date) 
+                                    Values (@User_id,@Vehicle_registration_number,@Brand,@Status,@Road_id,@Max_weight,@Date)";
+                                    var insert = await _context.Database.ExecuteSqlRawAsync(sql,
+                                        new SqlParameter("@User_id", list[l]),
+                                        new SqlParameter("@Vehicle_registration_number", list[l + 1]),
+                                        new SqlParameter("@Brand", list[l + 2]),
+                                        new SqlParameter("@Status", list[l + 3]),
+                                        new SqlParameter("@Road_id", list[l + 4]),
+                                        new SqlParameter("@Max_weight", list[l + 5]),
+                                        new SqlParameter("@Date", DateTime.Now)
+                                        );
+
+                                    if (insert > 0)
+                                    {
+                                        var lastId = await _context.Trucks.OrderBy(x => x.Id).LastOrDefaultAsync();
+
+                                        if (lastId != null)
+                                        {
+                                            var WithNewIds = await _context.Trucks.Where(x => x.Road_id == lastId.Road_id).ToListAsync();
+                                            Roads? road = await _context.Roads.FirstOrDefaultAsync(x => x.Vehicle_registration_number == lastId.Vehicle_registration_number);
+
+                                            foreach (var item in WithNewIds)
+                                            {
+                                                if (item != null)
+                                                {
+                                                    if (item.Id == lastId?.Id)
+                                                    {
+
+                                                        if (road == null)
+                                                        {
+                                                            item.Road_id = null;
+                                                        }
+                                                      
+                                                        _context.Entry(item).State = EntityState.Modified;
+                                                        await _context.SaveChangesAsync();
+                                                    }
+                                                }
+                                            }
+
+                                            if (road != null)
+                                            {
+                                                road.Vehicle_registration_number = lastId?.Vehicle_registration_number;
+                                                _context.Entry(road).State = EntityState.Modified;
+                                                await _context.SaveChangesAsync();
+                                            }
+                                        }
+                                    }
+                                    else if (insert <= 0)
+                                    {
+                                        System.IO.File.Delete(path); // delete the file
+                                    }
                                 }
                             }
                             else

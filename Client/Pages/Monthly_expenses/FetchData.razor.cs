@@ -24,11 +24,6 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
         private string sortOrder = "Date";
         private bool desc = true;
         private string? searchString = "";
-        string? document_error;
-        string? currency_api_error;
-        bool showError = false;
-        string currency = "HUF";
-        [CascadingParameter]  Dictionary<string, dynamic>? Rates {get;set;}
         DateFilter? dateFilter = new();
 
         async void DateStartInput(ChangeEventArgs e)
@@ -54,23 +49,6 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
             PageHistoryState.AddPageToHistory("/Monthly_expenses");
             base.OnInitialized();
 
-            if (Rates == null)
-            {
-                try
-                {
-                    Rates = await CurrencyExchange.GetRatesAsync(client);
-                }
-                catch (Exception ex)
-                {
-
-                    currency_api_error = $"Error - Type: {ex.GetType()}, Message: {ex.Message}";
-                    if (ex.GetType().ToString() == "Microsoft.CSharp.RuntimeBinder.RuntimeBinderException")
-                    {
-                        currency_api_error = "currency_api_is_exceeded";
-                    }
-                }
-            }
-
             await client.GetStringAsync("api/Monthly_expenses/createcontable");
             dataRows = await client.GetFromJsonAsync<int>("api/Monthly_expenses/pagecount");
             var checkData = await client.GetAsync("api/Monthly_expenses/checkdata");
@@ -79,36 +57,11 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
             if (checkData.IsSuccessStatusCode)
             {
                 await ShowPage();
-                document_error = "";
+                FileDownload.DocumentError = "";
             }
             else
             {
-                document_error = localizer["CheckFailed"];
-            }
-        }
-
-        public float? GetCurrency(int? amount)
-        {
-            float? conversionNum = amount;
-            if (Rates != null && currency != "HUF")
-            {
-                if (currency != "EUR")
-                {
-                    conversionNum = (float)((amount / Rates["HUF"]) * Rates[currency]);
-                }
-                else
-                {
-                    conversionNum = (float)(amount / Rates["HUF"]);
-                }
-            }
-            return conversionNum;
-        }
-
-        void OnChangeGetType(ChangeEventArgs e)
-        {
-            if (e.Value != null)
-            {
-                currency = e.Value.ToString()!;
+                FileDownload.DocumentError = localizer["CheckFailed"];
             }
         }
 
@@ -135,11 +88,6 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
         {
             IdForGetById = null;
             GetByIdType = null;
-        }
-
-        public void FullYearWindowClosed()
-        {
-            fullYearProfitWindow = !fullYearProfitWindow;
         }
 
         protected async Task GetCurrentPage(int CurrentPage)
@@ -191,81 +139,5 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
             await ShowPage();
         }
 
-        private async Task ExportToPdf()
-        {
-            //get base64 string from web api call
-            var Response = await client.GetAsync($"api/Monthly_expenses/pdf?lang={CultureInfo.CurrentCulture.Name.ToString()}");
-
-            if (Response.IsSuccessStatusCode)
-            {
-                var base64String = await Response.Content.ReadAsStringAsync();
-
-                Random rnd = new();
-                int random = rnd.Next(1000000, 9999999);
-                string filename = "Monthly_expenses" + random + "_" + DateTime.Now.ToString("dd-MM-yyyy") + ".pdf";
-
-                //call javascript function to download the file
-                await js.InvokeVoidAsync(
-                    "downloadFile",
-                    "application/pdf",
-                    base64String,
-                    filename);
-            }
-            else
-            {
-                document_error = localizer["Document_failder_to_create"];
-            }
-        }
-
-        private async Task ExportToExcel()
-        {
-            //get base64 string from web api call
-            var Response = await client.GetAsync($"api/Monthly_expenses/excel?lang={CultureInfo.CurrentCulture.Name.ToString()}");
-
-            if (Response.IsSuccessStatusCode)
-            {
-                var base64String = await Response.Content.ReadAsStringAsync();
-
-                Random rnd = new();
-                int random = rnd.Next(1000000, 9999999);
-                string filename = "Monthly_expenses" + random + "_" + DateTime.Now.ToString("dd-MM-yyyy") + ".xlsx";
-
-                //call javascript function to download the file
-                await js.InvokeVoidAsync(
-                    "downloadFile",
-                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                    base64String,
-                    filename);
-            }
-            else
-            {
-                document_error = localizer["Document_failder_to_create"];
-            }
-        }
-
-        private async Task ExportToCSV(string format)
-        {
-            //get base64 string from web api call
-            var Response = await client.GetAsync($"api/Monthly_expenses/csv?lang={CultureInfo.CurrentCulture.Name.ToString()}");
-
-            if (Response.IsSuccessStatusCode)
-            {
-                var base64String = await Response.Content.ReadAsStringAsync();
-
-                Random rnd = new();
-                int random = rnd.Next(1000000, 9999999);
-                string filename = "Monthly_expenses" + random + "_" + DateTime.Now.ToString("dd-MM-yyyy") + "." + format;
-                //call javascript function to download the file
-                await js.InvokeVoidAsync(
-                    "downloadFile",
-                    "text/" + format + ";charset=utf-8",
-                    base64String,
-                    filename);
-            }
-            else
-            {
-                document_error = localizer["Document_failder_to_create"];
-            }
-        }
     }
 }

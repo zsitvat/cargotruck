@@ -15,6 +15,7 @@ using Font = iTextSharp.text.Font;
 using System.Text;
 using DocumentFormat.OpenXml.Office2021.DocumentTasks;
 using DocumentFormat.OpenXml.Office2010.Excel;
+using DocumentFormat.OpenXml.Vml.Office;
 
 namespace Cargotruck.Server.Controllers
 {
@@ -599,39 +600,101 @@ namespace Cargotruck.Server.Controllers
                             else if (haveColumns)
                             {
                                 List<object?> list = new List<object?>();
+                                int nulls = 0;
+
                                 //Add rows to DataTable.
                                 dt.Rows.Add();
+
                                 foreach (IXLCell cell in row.Cells(1, dt.Columns.Count))
                                 {
                                     if (cell.Value != null && cell.Value.ToString() != "")
                                     {
                                         list.Add(cell.Value);
                                     }
-                                    else { list.Add(System.DBNull.Value); }
+                                    else 
+                                    { 
+                                        list.Add(System.DBNull.Value);
+                                        nulls += 1;
+                                    }
                                 }
-                                var sql = @"Insert Into Cargoes (User_id,Task_id,Weight,Description,Delivery_requirements,Vehicle_registration_number,Warehouse_id,Warehouse_section,Storage_starting_time,Date) 
-                                Values (@User_id,@Task_id,@Weight,@Description,@Delivery_requirements,@Vehicle_registration_number,@Warehouse_id,@Warehouse_section,@Storage_starting_time,@Date)";
-                                var insert = await _context.Database.ExecuteSqlRawAsync(sql,
-                                    new SqlParameter("@User_id", list[l]),
-                                    new SqlParameter("@Task_id", list[l + 1]),
-                                    new SqlParameter("@Weight", list[l + 2]),
-                                    new SqlParameter("@Description", list[l + 3]),
-                                    new SqlParameter("@Delivery_requirements", list[l + 4]),
-                                    new SqlParameter("@Vehicle_registration_number", list[l + 5]),
-                                    new SqlParameter("@Warehouse_id", list[l + 6]),
-                                    new SqlParameter("@Warehouse_section", list[l + 7]),
-                                    new SqlParameter("@Storage_starting_time", list[l + 8] == System.DBNull.Value || list[l + 8] == null ? System.DBNull.Value : DateTime.Parse(list[l + 8].ToString())),
-                                    new SqlParameter("@Date", DateTime.Now)
-                                    );
 
-                                if (insert > 0)
+                                if (nulls != list.Count)
                                 {
-                                    error = "";
-                                    await _context.SaveChangesAsync();
-                                }
-                                else if (insert <= 0)
-                                {
-                                    System.IO.File.Delete(path); // delete the file
+                                    var sql = @"Insert Into Cargoes (User_id,Task_id,Weight,Description,Delivery_requirements,Vehicle_registration_number,Warehouse_id,Warehouse_section,Storage_starting_time,Date) 
+                                    Values (@User_id,@Task_id,@Weight,@Description,@Delivery_requirements,@Vehicle_registration_number,@Warehouse_id,@Warehouse_section,@Storage_starting_time,@Date)";
+                                    var insert = await _context.Database.ExecuteSqlRawAsync(sql,
+                                        new SqlParameter("@User_id", list[l]),
+                                        new SqlParameter("@Task_id", list[l + 1]),
+                                        new SqlParameter("@Weight", list[l + 2]),
+                                        new SqlParameter("@Description", list[l + 3]),
+                                        new SqlParameter("@Delivery_requirements", list[l + 4]),
+                                        new SqlParameter("@Vehicle_registration_number", list[l + 5]),
+                                        new SqlParameter("@Warehouse_id", list[l + 6]),
+                                        new SqlParameter("@Warehouse_section", list[l + 7]),
+                                        new SqlParameter("@Storage_starting_time", list[l + 8] == System.DBNull.Value || list[l + 8] == null ? System.DBNull.Value : DateTime.Parse(list[l + 8].ToString())),
+                                        new SqlParameter("@Date", DateTime.Now)
+                                        );
+
+                                    if (insert > 0)
+                                    {
+                                        var lastId = await _context.Cargoes.OrderBy(x => x.Id).LastOrDefaultAsync();
+
+                                        if (lastId != null)
+                                        {
+                                            var WithNewIds = await _context.Cargoes.Where(x => x.Task_id == lastId.Task_id || x.Warehouse_id == lastId.Warehouse_id || x.Vehicle_registration_number == lastId.Vehicle_registration_number).ToListAsync();
+                                            Shared.Models.Tasks? task = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == lastId.Task_id);
+                                            Warehouses? warehouse = await _context.Warehouses.FirstOrDefaultAsync(x => x.Id == lastId.Warehouse_id);
+                                            Trucks? truck = await _context.Trucks.FirstOrDefaultAsync(x => x.Vehicle_registration_number == lastId.Vehicle_registration_number);
+
+                                            foreach (var item in WithNewIds)
+                                            {
+                                                if (item != null)
+                                                {
+                                                    if (item.Id != lastId?.Id)
+                                                    {
+                                                        if (item.Task_id == lastId?.Task_id)
+                                                        {
+                                                            item.Task_id = default;
+                                                        }
+                                                        if (item.Vehicle_registration_number == lastId?.Vehicle_registration_number)
+                                                        {
+                                                            item.Vehicle_registration_number = null;
+                                                        }
+                                                        _context.Entry(item).State = EntityState.Modified;
+                                                        await _context.SaveChangesAsync();
+                                                    }
+                                                    else
+                                                    {
+                                                        if (warehouse == null)
+                                                        {
+                                                            item.Warehouse_id = null;
+                                                        }
+                                                        if (task == null)
+                                                        {
+                                                            item.Task_id = default;
+                                                        }
+                                                        if (truck == null)
+                                                        {
+                                                            item.Vehicle_registration_number = null;
+                                                        }
+                                                        _context.Entry(item).State = EntityState.Modified;
+                                                        await _context.SaveChangesAsync();
+                                                    }
+                                                }
+                                            }
+
+                                            if (task != null)
+                                            {
+                                                task.Id_cargo = lastId?.Id;
+                                                _context.Entry(task).State = EntityState.Modified;
+                                                await _context.SaveChangesAsync();
+                                            }
+                                        }
+                                    }
+                                    else if (insert <= 0)
+                                    {
+                                        System.IO.File.Delete(path); // delete the file
+                                    }
                                 }
                             }
                             else

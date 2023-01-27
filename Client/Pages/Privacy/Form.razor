@@ -6,8 +6,8 @@
 
 <EditForm class="privacy-form" Model="@privacies" OnValidSubmit="@OnValidSubmit">
     <DataAnnotationsValidator />
-    <div class="form-card mt-3">
-        <div class="card-body mb-3 privacy-form-card">
+    <div class="form-card mt-3 modal-shadow">
+        <div class="card-body mb-3 privacy-form-card ">
                 <div class="d-inline-block ms-5 me-5 center-div">
                     <h1 class="align-center">@localizer["Add_privacy"]</h1>
                     <a class="btn btn-danger x" @onclick="@WindowClosed"><i class="oi oi-x"></i></a>

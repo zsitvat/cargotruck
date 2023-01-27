@@ -15,6 +15,7 @@ using Font = iTextSharp.text.Font;
 using System.Text;
 using Type = Cargotruck.Shared.Models.Type;
 using DocumentFormat.OpenXml.Office2010.Excel;
+using DocumentFormat.OpenXml.Vml.Office;
 
 namespace Cargotruck.Server.Controllers
 {
@@ -656,15 +657,22 @@ namespace Cargotruck.Server.Controllers
                             else if (haveColumns)
                             {
                                 List<object?> list = new();
+                                int nulls = 0;
+
                                 //Add rows to DataTable.
                                 dt.Rows.Add();
+
                                 foreach (IXLCell cell in row.Cells(1, dt.Columns.Count))
                                 {
                                     if (cell.Value != null && cell.Value.ToString() != "")
                                     {
                                         list.Add(cell.Value);
                                     }
-                                    else { list.Add(System.DBNull.Value); }
+                                    else 
+                                    { 
+                                        list.Add(System.DBNull.Value);
+                                        nulls += 1;
+                                    }
                                 }
 
                                 list[l + 1] = list[l + 1] switch
@@ -676,6 +684,7 @@ namespace Cargotruck.Server.Controllers
                                     "other" => 4,
                                     _ => System.DBNull.Value,
                                 };
+
                                 for (int i=l+3; i < list.Count -1; i++)
                                 {
                                     if (i != (l + 9) && list[i]!= null && list[i] != System.DBNull.Value)
@@ -684,32 +693,74 @@ namespace Cargotruck.Server.Controllers
                                     }
                                 }
 
-                                var sql = @"Insert Into Expenses (User_id,Type,Type_id,Fuel,Road_fees,Penalty,Driver_spending,Driver_salary,Repair_cost,Repair_description,Cost_of_storage,other,Date) 
-                                Values (@User_id,@Type,@Type_id,@Fuel,@Road_fees,@Penalty,@Driver_spending,@Driver_salary,@Repair_cost,@Repair_description,@Cost_of_storage,@other,@Date)";
-                                var insert = await _context.Database.ExecuteSqlRawAsync(sql,
-                                    new SqlParameter("@User_id", list[l]),
-                                    new SqlParameter("@Type", list[l + 1]),
-                                    new SqlParameter("@Type_id", list[l + 2]),
-                                    new SqlParameter("@Fuel", list[l + 3]),
-                                    new SqlParameter("@Road_fees", list[l + 4]),
-                                    new SqlParameter("@Penalty", list[l + 5]),
-                                    new SqlParameter("@Driver_spending", list[l + 6]),
-                                    new SqlParameter("@Driver_salary", list[l + 7]),
-                                    new SqlParameter("@Repair_cost", list[l + 8]),
-                                    new SqlParameter("@Repair_description", list[l + 9]),
-                                    new SqlParameter("@Cost_of_storage", list[l + 10]),
-                                    new SqlParameter("@other", list[l + 11]),
-                                    new SqlParameter("@Date", DateTime.Now)
-                                    );
+                                if (nulls != list.Count)
+                                {
+                                    var sql = @"Insert Into Expenses (User_id,Type,Type_id,Fuel,Road_fees,Penalty,Driver_spending,Driver_salary,Repair_cost,Repair_description,Cost_of_storage,other,Date) 
+                                    Values (@User_id,@Type,@Type_id,@Fuel,@Road_fees,@Penalty,@Driver_spending,@Driver_salary,@Repair_cost,@Repair_description,@Cost_of_storage,@other,@Date)";
+                                    var insert = await _context.Database.ExecuteSqlRawAsync(sql,
+                                        new SqlParameter("@User_id", list[l]),
+                                        new SqlParameter("@Type", list[l + 1]),
+                                        new SqlParameter("@Type_id", list[l + 2]),
+                                        new SqlParameter("@Fuel", list[l + 3]),
+                                        new SqlParameter("@Road_fees", list[l + 4]),
+                                        new SqlParameter("@Penalty", list[l + 5]),
+                                        new SqlParameter("@Driver_spending", list[l + 6]),
+                                        new SqlParameter("@Driver_salary", list[l + 7]),
+                                        new SqlParameter("@Repair_cost", list[l + 8]),
+                                        new SqlParameter("@Repair_description", list[l + 9]),
+                                        new SqlParameter("@Cost_of_storage", list[l + 10]),
+                                        new SqlParameter("@other", list[l + 11]),
+                                        new SqlParameter("@Date", DateTime.Now)
+                                        );
 
-                                if (insert > 0)
-                                {
-                                    error = "";
-                                    await _context.SaveChangesAsync();
-                                }
-                                else if (insert <= 0)
-                                {
-                                    System.IO.File.Delete(path); // delete the file
+                                    if (insert > 0)
+                                    {
+                                        var lastId = await _context.Expenses.OrderBy(x => x.Date).LastOrDefaultAsync();
+
+                                        if (lastId != null)
+                                        {
+                                            var WithNewIds = await _context.Expenses.Where(x => x.Type == lastId.Type && x.Type_id == lastId.Type_id).ToListAsync();
+                                            Roads? road = await _context.Roads.FirstOrDefaultAsync(x => x.Id == lastId.Type_id && lastId.Type == Type.repair);
+                                            Tasks? task = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == lastId.Type_id && lastId.Type == Type.task);
+                                            Cargoes? cargo = await _context.Cargoes.FirstOrDefaultAsync(x => x.Id == lastId.Type_id && lastId.Type == Type.storage);
+                                            
+                                            foreach (var item in WithNewIds)
+                                            {
+                                                if (item != null)
+                                                {
+                                                    if (item.Id == lastId?.Id)
+                                                    {
+                                                        if (cargo == null && lastId.Type == Type.storage)
+                                                        {
+                                                            item.Type_id = null;
+                                                        }
+                                                        if (task == null && lastId.Type == Type.task)
+                                                        {
+                                                            item.Type_id = null;
+                                                        }
+                                                        if (road == null && lastId.Type == Type.repair )
+                                                        {
+                                                            item.Type_id = null;
+                                                        }
+                                                        _context.Remove(item);
+                                                        await _context.SaveChangesAsync();
+                                                        error += " // " + (lang == "hu" ? "A " + lastId.Id + " számú azonosítóval rendelkező sor törölve lett, mert nem létezik a megadott típus azonosító. " : "Row with the ID: " + lastId.Id + "deleted, because of wrong Type Id.");
+                                                    }
+                                                }
+                                            }
+
+                                            if (road != null && lastId.Type == Type.repair )
+                                            {
+                                                road.Expenses_id = lastId?.Id;
+                                                _context.Entry(road).State = EntityState.Modified;
+                                                await _context.SaveChangesAsync();
+                                            }
+                                        }
+                                    }
+                                    else if (insert <= 0)
+                                    {
+                                        System.IO.File.Delete(path); // delete the file
+                                    }
                                 }
                             }
                             else
@@ -746,7 +797,7 @@ namespace Cargotruck.Server.Controllers
                 error = lang == "hu" ? @Cargotruck.Shared.Resources.Resource.No_excel : "File not found!";
                 return BadRequest(error);
             }
-            return NoContent();
+            return Ok(error);
         }
     }
 }

@@ -65,7 +65,7 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetMonthly_Expenses()
+        public async Task<IActionResult> GetMonthlyExpenses()
         {
             var data = await _context.Monthly_Expenses.ToListAsync();
             return Ok(data);

@@ -5,17 +5,22 @@
 <div class="form-group buttons">
     <a class="btn btn-success me-4" href="/Monthly_expenses/create"><i class="oi oi-plus"></i> @localizer["Add"]</a>
     <a data-title="@localizer["Settings"]" class="btn btn-light" @onclick="@(() => settings=!settings)"><i class="oi oi-cog"></i></a>
-    <button data-title="@localizer["pdf"]" class="btn btn-light" @onclick="@ExportToPdf"><i class="oi oi-document"></i></button>
-    <button data-title="@localizer["excel"]" class="btn btn-light" @onclick="@ExportToExcel"><i class="oi oi-spreadsheet"></i></button>
-    <button data-title="@localizer["txt"]" class="btn btn-light" @onclick="@(() => ExportToCSV("txt"))"><span class="icon iconify" style="margin:0;" data-icon="material-symbols:text-snippet-outline"></span></button>
-    <button data-title="@localizer["csv"]" class="btn btn-light" @onclick="@(() => ExportToCSV("csv"))"><span class="icon iconify" style="margin:0;" data-icon="bi:filetype-csv"></span></button>
+    <button data-title="@localizer["pdf"]" class="btn btn-light" @onclick="@(() =>FileDownload.Export("Monthly_expenses","pdf", client, js))"><i class="oi oi-document"></i></button>
+    <button data-title="@localizer["excel"]" class="btn btn-light" @onclick="@(() =>FileDownload.Export("Monthly_expenses","xlsx", client, js))"><i class="oi oi-spreadsheet"></i></button>
+    <button data-title="@localizer["txt"]" class="btn btn-light" @onclick="@(() =>FileDownload.Export("Monthly_expenses","txt", client, js))"><span class="icon iconify" style="margin:0;" data-icon="material-symbols:text-snippet-outline"></span></button>
+    <button data-title="@localizer["csv"]" class="btn btn-light" @onclick="@(() =>FileDownload.Export("Monthly_expenses","csv", client, js))"><span class="icon iconify" style="margin:0;" data-icon="bi:filetype-csv"></span></button>
     <input value="@searchString" @oninput="@Search" placeholder="@(searchString != "" ? searchString : localizer["Search"])" class="form-control inputs input_search" type="search" id="search-input" name="SearchString">
-    <select data-title="@localizer["Currency"]" class="form-control currency" @oninput="@((e)=>OnChangeGetType(e))" @bind="currency">
-        <option value="HUF">HUF</option>
-        <option value="EUR">EUR</option>
-        <option value="USD">USD</option>
-        <option value="CZK">CZK</option>
-    </select>
+
+    @if (CurrencyExchange.Rates != null)
+    {
+        <select data-title="@localizer["Currency"]" class="form-control currency" @oninput="@((e)=>CurrencyExchange.OnChangeGetType(e))" @bind="CurrencyExchange.currency">
+            <option value="HUF">HUF</option>
+            <option value="EUR">EUR</option>
+            <option value="USD">USD</option>
+            <option value="CZK">CZK</option>
+        </select>
+    }
+
     <div class="date-filter" data-title="@localizer["date-filter-info"]">
         <Input class="form-control" type="datetime-local" value="@dateFilter?.StartDate.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm", CultureInfo.CurrentCulture)" @oninput="@((e)=>{DateStartInput(e);})">
         <Input class="form-control" type="datetime-local" value="@dateFilter?.EndDate.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm", CultureInfo.CurrentCulture)" @oninput="@((e)=>{DateEndInput(e);})">
@@ -23,21 +28,9 @@
 </div>
 <br>
 
-<p class="error">@document_error</p>
-
-@if (currency_api_error != null && currency_api_error != "")
+@if (FileDownload.DocumentError != null && FileDownload.DocumentError != "")
 {
-    <div class="d-inline-block">
-        <button class="no-button currency-api-error-icon error d-inline-block" @onclick="@(() => showError=!showError)">
-            <span class="icon iconify d-inline" style="color:darkred;" data-icon="material-symbols:error-circle-rounded-outline"></span>
-        </button>
-        <p class="error currency-api-error d-inline-block">
-            @if (showError)
-            {
-                @localizer[@currency_api_error]
-            }
-        </p>
-    </div>
+    <p class="error">@FileDownload.DocumentError</p>
 }
 
 @if (Monthly_expenses == null)
@@ -88,8 +81,8 @@ else
                         <tbody>
                             @foreach (Monthly_expenses item in Monthly_expenses)
                             {
-                                <tr @onclick="@((e) =>Pages.MouseOnclick(e,item.Monthly_expense_id.ToString()))" @onmouseover="@((e) =>Pages.MouseOver(e,item.Monthly_expense_id.ToString()))" @onmouseout="@((e) =>Pages.MouseOut(e))"
-                            class="@(item.Profit <=0 ? "red": "") @(Pages.MouseOnHoverClass == item.Monthly_expense_id.ToString() || Pages.MouseOnclickClass == item.Monthly_expense_id.ToString() ? "color-on-hover" :"")">
+                                <tr @onclick="@((e) =>MouseHoverClass.MouseOnclick(e,item.Monthly_expense_id.ToString()))" @onmouseover="@((e) =>MouseHoverClass.MouseOver(e,item.Monthly_expense_id.ToString()))" @onmouseout="@((e) =>MouseHoverClass.MouseOut(e))"
+                            class="@(item.Profit <=0 ? "red": "") @(MouseHoverClass.MouseOnHoverClass == item.Monthly_expense_id.ToString() || MouseHoverClass.MouseOnclickClass == item.Monthly_expense_id.ToString() ? "color-on-hover" :"")">
                                    @if(item.User_id=="Generated") 
                                    {
                                       <td import-data-title="@localizer["Generated"]">@item.Monthly_expense_id</td>    
@@ -104,9 +97,9 @@ else
                                         <td>
                                             @if (@item.Earning != null)
                                             {
-                                                @if (currency != "HUF" && Rates != null)
+                                                @if (CurrencyExchange.currency != "HUF" && CurrencyExchange.Rates != null)
                                                 {
-                                                    @(GetCurrency(item.Earning)!.Value.ToString("0.##") + " " + currency)
+                                                    @(CurrencyExchange.GetCurrency(item.Earning, CurrencyExchange.currency)!.Value.ToString("0.##") + " " + CurrencyExchange.currency)
                                                 }
                                                 else
                                                 {
@@ -120,9 +113,9 @@ else
                                         <td>
                                             @if (@item.Expense != null)
                                             {
-                                                @if (currency != "HUF" && Rates != null)
+                                                @if (CurrencyExchange.currency != "HUF" && CurrencyExchange.Rates != null)
                                                 {
-                                                    @(GetCurrency(item.Expense)!.Value.ToString("0.##") + " " + currency)
+                                                    @(CurrencyExchange.GetCurrency(item.Expense, CurrencyExchange.currency)!.Value.ToString("0.##") + " " + CurrencyExchange.currency)
                                                 }
                                                 else
                                                 {
@@ -136,9 +129,9 @@ else
                                          <td>
                                             @if (@item.Profit != null)
                                             {
-                                                @if (currency != "HUF" && Rates != null)
+                                                @if (CurrencyExchange.currency != "HUF" && CurrencyExchange.Rates != null)
                                                 {
-                                                    @(GetCurrency(item.Profit)!.Value.ToString("0.##") + " " + currency)
+                                                    @(CurrencyExchange.GetCurrency(item.Profit, CurrencyExchange.currency)!.Value.ToString("0.##") + " " + CurrencyExchange.currency)
                                                 }
                                                 else
                                                 {
@@ -189,7 +182,7 @@ else
                                     {
                                         <td class="last-col">@item.Date</td>
                                     }
-                                    <td class="@(Pages.MouseOnHoverClass == item.Monthly_expense_id.ToString() || Pages.MouseOnclickClass == item.Monthly_expense_id.ToString() ? "show" :"not-show") ">
+                                    <td class="@(MouseHoverClass.MouseOnHoverClass == item.Monthly_expense_id.ToString() || MouseHoverClass.MouseOnclickClass == item.Monthly_expense_id.ToString() ? "show" :"not-show") ">
                                         <a class="btn  fixed" href="Monthly_expenses/edit/@item.Monthly_expense_id"> <span data-title="@localizer["Edit"]" class="oi oi-pencil" aria-hidden="true"></span></a>
                                         <button class="btn fixed2" @onclick="@(() => Delete(item.Monthly_expense_id))"> <span data-title="@localizer["Delete"]" class="oi oi-trash" aria-hidden="true"></span></button>
                                     </td>
@@ -206,7 +199,7 @@ else
     <div class="hideandshow-cards">
         @if (fullYearProfitWindow && Monthly_expenses != null)
         {
-            <FullYearProfits fullYearProfitWindow="@fullYearProfitWindow" OnFullYearWindowClosed="FullYearWindowClosed" Monthly_expenses="@Monthly_expenses" currency="@currency" />
+            <FullYearProfits />
         }
         @if (settings)
         {
@@ -214,7 +207,7 @@ else
         }
         @if (IdForGetById != null)
         {
-            <GetbyidComponent getById="@IdForGetById.ToString()" getByIdType="@GetByIdType" OnSetToNull="SetToNull" />
+            <GetbyidComponent GetById="@IdForGetById.ToString()" GetByIdType="@GetByIdType" OnSetToNull="SetToNull" />
         }
     </div>
 }

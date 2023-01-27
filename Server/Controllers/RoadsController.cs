@@ -15,6 +15,7 @@ using Font = iTextSharp.text.Font;
 using System.Text;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using DocumentFormat.OpenXml.Drawing.Diagrams;
+using DocumentFormat.OpenXml.Vml.Office;
 
 namespace Cargotruck.Server.Controllers
 {
@@ -48,6 +49,7 @@ namespace Cargotruck.Server.Controllers
                 data = data.Where(s => 
                     (s.Task_id != null && s.Task_id.ToString()!.ToLower().Contains(searchString))
                 || (s.Id_cargo != null && s.Id_cargo.ToString()!.ToLower().Contains(searchString))
+                || (s.Vehicle_registration_number != null && s.Vehicle_registration_number.ToString()!.ToLower().Contains(searchString))
                 || (s.Purpose_of_the_trip != null && s.Purpose_of_the_trip.ToLower()!.Contains(searchString))
                 || s.Starting_date.ToString()!.ToLower().Contains(searchString)
                 || s.Ending_date.ToString()!.Contains(searchString)
@@ -60,6 +62,7 @@ namespace Cargotruck.Server.Controllers
             }
 
             sortOrder = sortOrder == "Task_id" ? (desc ? "Task_id_desc" : "Task_id") : (sortOrder);
+            sortOrder = sortOrder == "Vehicle_registration_number" ? (desc ? "Vehicle_registration_number_desc" : "Vehicle_registration_number") : (sortOrder);
             sortOrder = sortOrder == "Id_cargo" ? (desc ? "Id_cargo_desc" : "Id_cargo") : (sortOrder);
             sortOrder = sortOrder == "Purpose_of_the_trip" ? (desc ? "Purpose_of_the_trip_desc" : "Purpose_of_the_trip") : (sortOrder);
             sortOrder = sortOrder == "Starting_date" ? (desc ? "Starting_date_desc" : "Starting_date") : (sortOrder);
@@ -75,6 +78,8 @@ namespace Cargotruck.Server.Controllers
             {
                 "Task_id_desc" => data.OrderByDescending(s => s.Task_id).ToList(),
                 "Task_id" => data.OrderBy(s => s.Task_id).ToList(),
+                "Vehicle_registration_number_desc" => data.OrderByDescending(s => s.Vehicle_registration_number).ToList(),
+                "Vehicle_registration_number" => data.OrderBy(s => s.Vehicle_registration_number).ToList(),
                 "Id_cargo_desc" => data.OrderByDescending(s => s.Id_cargo).ToList(),
                 "Id_cargo" => data.OrderBy(s => s.Id_cargo).ToList(),
                 "Purpose_of_the_trip_desc" => data.OrderByDescending(s => s.Purpose_of_the_trip).ToList(),
@@ -194,6 +199,8 @@ namespace Cargotruck.Server.Controllers
             worksheet.Cell(currentRow, 2).Style.Font.SetBold();
             worksheet.Cell(currentRow, 3).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Task_id : "Task ID";
             worksheet.Cell(currentRow, 3).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 3).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Vehicle_registration_number : "Vehicle registration number";
+            worksheet.Cell(currentRow, 3).Style.Font.SetBold();
             worksheet.Cell(currentRow, 4).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Id_cargo : "Cargo ID";
             worksheet.Cell(currentRow, 4).Style.Font.SetBold();
             worksheet.Cell(currentRow, 5).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Purpose_of_the_trip : "Purpose_of_the_trip";
@@ -221,6 +228,7 @@ namespace Cargotruck.Server.Controllers
                 worksheet.Cell(currentRow, 1).Value = road.Id;
                 worksheet.Cell(currentRow, 2).Value = road.User_id;
                 worksheet.Cell(currentRow, 3).Value = road.Task_id;
+                worksheet.Cell(currentRow, 3).Value = road.Vehicle_registration_number;
                 worksheet.Cell(currentRow, 4).Value = road.Id_cargo;
                 worksheet.Cell(currentRow, 5).Value = road.Purpose_of_the_trip;
                 worksheet.Cell(currentRow, 6).Value = road.Starting_date;
@@ -298,7 +306,17 @@ namespace Cargotruck.Server.Controllers
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 });
+                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID", font1))
+                {
+                    HorizontalAlignment = Element.ALIGN_CENTER,
+                    VerticalAlignment = Element.ALIGN_MIDDLE
+                });
                 table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Task_id : "Task ID", font1))
+                {
+                    HorizontalAlignment = Element.ALIGN_CENTER,
+                    VerticalAlignment = Element.ALIGN_MIDDLE
+                });
+                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Vehicle_registration_number : "Vehicle registration number", font1))
                 {
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
@@ -318,11 +336,6 @@ namespace Cargotruck.Server.Controllers
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 });
-                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Ending_date : "Ending date", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
 
                 foreach (Roads road in roads)
                 {
@@ -334,7 +347,21 @@ namespace Cargotruck.Server.Controllers
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
+                    if (!string.IsNullOrEmpty(road.User_id?.ToString())) { s = road.User_id.ToString(); }
+                    else { s = "-"; }
+                    table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    {
+                        HorizontalAlignment = Element.ALIGN_CENTER,
+                        VerticalAlignment = Element.ALIGN_MIDDLE
+                    });
                     if (!string.IsNullOrEmpty(road.Task_id.ToString())) { s = road.Task_id.ToString(); }
+                    else { s = "-"; }
+                    table.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
+                    {
+                        HorizontalAlignment = Element.ALIGN_CENTER,
+                        VerticalAlignment = Element.ALIGN_MIDDLE
+                    });
+                    if (!string.IsNullOrEmpty(road.Vehicle_registration_number?.ToString())) { s = road.Vehicle_registration_number.ToString(); }
                     else { s = "-"; }
                     table.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
@@ -362,14 +389,6 @@ namespace Cargotruck.Server.Controllers
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(road.Ending_date.ToString())) { s = road.Ending_date.ToString(); }
-                    else { s = "-"; }
-                    table.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
-                    {
-                        HorizontalAlignment = Element.ALIGN_CENTER,
-                        VerticalAlignment = Element.ALIGN_MIDDLE
-                    });
-                    pdfRowIndex++;
                 }
 
 
@@ -377,6 +396,11 @@ namespace Cargotruck.Server.Controllers
                 document.Add(table);
                 document.Add(new Paragraph("\n"));
                 table2.AddCell(new PdfPCell(new Phrase("Id", font1))
+                {
+                    HorizontalAlignment = Element.ALIGN_CENTER,
+                    VerticalAlignment = Element.ALIGN_MIDDLE
+                });
+                table2.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Ending_date : "Ending date", font1))
                 {
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
@@ -412,9 +436,18 @@ namespace Cargotruck.Server.Controllers
                 foreach (Roads road in roads)
                 {
                     var s = "";
+                    pdfRowIndex++;
+                   
                     if (!string.IsNullOrEmpty(road.Id.ToString())) { s = road.Id.ToString(); }
                     else { s = "-"; }
                     table2.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    {
+                        HorizontalAlignment = Element.ALIGN_CENTER,
+                        VerticalAlignment = Element.ALIGN_MIDDLE
+                    }); 
+                    if (!string.IsNullOrEmpty(road.Ending_date.ToString())) { s = road.Ending_date.ToString(); }
+                    else { s = "-"; }
+                    table2.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
@@ -499,6 +532,7 @@ namespace Cargotruck.Server.Controllers
             txt.Write("Id" + ";");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID") + ";");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Task_id : "Task ID") + ";");
+            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Vehicle_registration_number : "Vehicle registration number") + ";");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Id_cargo : "Cargo ID") + ";");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Purpose_of_the_trip : "Purpose of the trip") + ";");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Starting_date : "Starting date") + ";");
@@ -516,6 +550,7 @@ namespace Cargotruck.Server.Controllers
                 txt.Write(road.Id + ";");
                 txt.Write(road.User_id + ";");
                 txt.Write(road.Task_id + ";");
+                txt.Write(road.Vehicle_registration_number + ";");
                 txt.Write(road.Id_cargo + ";");
                 txt.Write(road.Purpose_of_the_trip + ";");
                 txt.Write(road.Starting_date + ";");
@@ -584,6 +619,7 @@ namespace Cargotruck.Server.Controllers
                                 "Id",
                                 lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID",
                                 lang == "hu" ? Cargotruck.Shared.Resources.Resource.Task_id : "Task ID",
+                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Vehicle_registration_number : "Vehicle registration number",
                                 lang == "hu" ? Cargotruck.Shared.Resources.Resource.Id_cargo : "Cargo ID",
                                 lang == "hu" ? Cargotruck.Shared.Resources.Resource.Purpose_of_the_trip : "Purpose of the trip",
                                 lang == "hu" ? Cargotruck.Shared.Resources.Resource.Starting_date : "Starting date",
@@ -626,41 +662,112 @@ namespace Cargotruck.Server.Controllers
                             else if (haveColumns)
                             {
                                 List<object?> list = new();
+                                int nulls = 0;
                                 //Add rows to DataTable.
                                 dt.Rows.Add();
+
                                 foreach (IXLCell cell in row.Cells(1, dt.Columns.Count))
                                 {
                                     if (cell.Value != null && cell.Value.ToString() != "") 
                                     { 
                                         list.Add(cell.Value);
                                     }
-                                    else { list.Add(System.DBNull.Value); }
+                                    else 
+                                    { 
+                                        list.Add(System.DBNull.Value);
+                                        nulls += 1;
+                                    }
                                 }
-                                var sql = @"Insert Into Roads (User_id,Task_id,Id_cargo,Purpose_of_the_trip,Starting_date,Ending_date,Starting_place,Ending_place,Direction,fuel,Expenses_id,Date) 
-                                Values (@User_id,@Task_id,@Id_cargo,@Purpose_of_the_trip,@Starting_date,@Ending_date,@Starting_place,@Ending_place,@Direction,@fuel,@Expenses_id,@Date)";
-                                var insert = await _context.Database.ExecuteSqlRawAsync(sql,
-                                    new SqlParameter("@User_id", list[l]),
-                                    new SqlParameter("@Task_id", list[l + 1]),
-                                    new SqlParameter("@Id_cargo", list[l + 2]),
-                                    new SqlParameter("@Purpose_of_the_trip", list[l + 3]),
-                                    new SqlParameter("@Starting_date", list[l + 4] == System.DBNull.Value ? System.DBNull.Value : DateTime.Parse(list[l + 4]?.ToString()!)),
-                                    new SqlParameter("@Ending_date", list[l + 5] == System.DBNull.Value ? System.DBNull.Value : DateTime.Parse(list[l + 5]?.ToString()!)),
-                                    new SqlParameter("@Starting_place", list[l + 6]),
-                                    new SqlParameter("@Ending_place", list[l + 7]),
-                                    new SqlParameter("@Direction", (list[l + 8]?.ToString() == Cargotruck.Shared.Resources.Resource.to || list[l + 8]?.ToString() == "Go to the direction" ? "TO": "FROM")),
-                                    new SqlParameter("@Fuel", list[l + 9]),
-                                    new SqlParameter("@Expenses_id", list[l + 10]),
-                                    new SqlParameter("@Date", DateTime.Now)
-                                    );
-                               
-                                if (insert > 0)
+
+                                if (nulls != list.Count)
                                 {
-                                    error = "";
-                                    await _context.SaveChangesAsync();
-                                }
-                                else if (insert <= 0)
-                                {
-                                    System.IO.File.Delete(path); // delete the file
+                                    var sql = @"Insert Into Roads (User_id,Task_id,Vehicle_registration_number,Id_cargo,Purpose_of_the_trip,Starting_date,Ending_date,Starting_place,Ending_place,Direction,fuel,Expenses_id,Date) 
+                                    Values (@User_id,@Task_id,@Vehicle_registration_number,@Id_cargo,@Purpose_of_the_trip,@Starting_date,@Ending_date,@Starting_place,@Ending_place,@Direction,@fuel,@Expenses_id,@Date)";
+                                    var insert = await _context.Database.ExecuteSqlRawAsync(sql,
+                                        new SqlParameter("@User_id", list[l]),
+                                        new SqlParameter("@Task_id", list[l + 1]),
+                                        new SqlParameter("@Vehicle_registration_number", list[l + 2]),
+                                        new SqlParameter("@Id_cargo", list[l + 3]),
+                                        new SqlParameter("@Purpose_of_the_trip", list[l + 4]),
+                                        new SqlParameter("@Starting_date", list[l + 5] == System.DBNull.Value ? System.DBNull.Value : DateTime.Parse(list[l + 5]?.ToString()!)),
+                                        new SqlParameter("@Ending_date", list[l + 6] == System.DBNull.Value ? System.DBNull.Value : DateTime.Parse(list[l + 6]?.ToString()!)),
+                                        new SqlParameter("@Starting_place", list[l + 7]),
+                                        new SqlParameter("@Ending_place", list[l + 8]),
+                                        new SqlParameter("@Direction", (list[l + 9]?.ToString() == Cargotruck.Shared.Resources.Resource.to || list[l + 9]?.ToString() == "Go to the direction" ? "TO": "FROM")),
+                                        new SqlParameter("@Fuel", list[l + 10]),
+                                        new SqlParameter("@Expenses_id", list[l + 11]),
+                                        new SqlParameter("@Date", DateTime.Now)
+                                        );
+                                    if (insert > 0)
+                                    {
+                                        error = "";
+                                        var lastId = await _context.Roads.OrderBy(x => x.Date).LastOrDefaultAsync();
+
+                                        if (lastId != null)
+                                        {
+                                            var WithNewIds = await _context.Roads.Where(x => x.Task_id== lastId.Task_id || x.Id_cargo == lastId.Id_cargo || x.Expenses_id == lastId.Expenses_id).ToListAsync();
+                                            Cargoes? cargo = await _context.Cargoes.FirstOrDefaultAsync(x => x.Id == lastId.Id_cargo);
+                                            Tasks? task = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == lastId.Task_id);
+                                            Expenses? expense = await _context.Expenses.FirstOrDefaultAsync(x => x.Id == lastId.Expenses_id);
+                                            Trucks? truck = await _context.Trucks.FirstOrDefaultAsync(x => x.Vehicle_registration_number == lastId.Vehicle_registration_number);
+
+                                            foreach (var item in WithNewIds)
+                                            {
+                                                if (item != null)
+                                                {
+                                                    if (item.Id != lastId?.Id)
+                                                    {
+                                                        if (item.Id_cargo == lastId?.Id_cargo)
+                                                        {
+                                                            item.Id_cargo = null;
+                                                        }
+                                                        if (item.Task_id == lastId?.Task_id)
+                                                        {
+                                                            item.Task_id = null;
+                                                        }
+                                                        if (item.Expenses_id == lastId?.Expenses_id)
+                                                        {
+                                                            item.Expenses_id = null;
+                                                        }
+                                                        _context.Entry(item).State = EntityState.Modified;
+                                                        await _context.SaveChangesAsync();
+                                                    }
+                                                    else
+                                                    {
+                                                        if (cargo == null) { 
+                                                            item.Id_cargo = null;
+                                                        }
+                                                        if (task == null)
+                                                        {
+                                                            item.Task_id = null;
+                                                        }
+                                                        if (expense == null)
+                                                        {
+                                                            item.Expenses_id = null;
+                                                        }
+                                                        if (truck == null)
+                                                        {
+                                                            item.Vehicle_registration_number = null;
+                                                        }
+                                                        _context.Entry(item).State = EntityState.Modified;
+                                                        await _context.SaveChangesAsync();
+                                                    }
+                                                }
+                                            }
+
+                                            if (expense != null)
+                                            {
+                                                expense.Type_id = lastId?.Id;
+                                                expense.Type = Shared.Models.Type.repair;
+                                                _context.Entry(expense).State = EntityState.Modified;
+                                                await _context.SaveChangesAsync();
+                                            }
+                                        }
+                                    }
+                                    else if (insert <= 0)
+                                    {
+                                        System.IO.File.Delete(path); // delete the file
+                                    }
                                 }
                             }
                             else

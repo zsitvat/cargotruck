@@ -3,7 +3,6 @@
 @inherits LayoutComponentBase
 @inject IStringLocalizer<Resource> localizer
 
-
 <div class="page" >
     <div class="sidebar" @onclick="()=>expandSubMenu= false">
         <NavMenu />
@@ -14,6 +13,22 @@
             <NavLink href="/Privacy">
                 <span class="about ms-5" aria-hidden="true">@localizer["Privacy"]</span>
             </NavLink>
+
+            @if (currency_api_error != null && currency_api_error != "")
+            {    
+                <div class="d-inline-block">
+                    <button class="no-button currency-api-error-icon error d-inline-block" @onclick="@(() => showError=!showError)">
+                        <span class="icon iconify d-inline" style="color:darkred;" data-icon="material-symbols:error-circle-rounded-outline"></span>
+                    </button>
+                        <p class="error currency-api-error d-inline-block"> 
+                        @if (showError)
+                        {
+                            @localizer[@currency_api_error]
+                        }
+                    </p> 
+                </div>
+            }
+
             <AuthorizeView>
                 <Authorized>
                     <li class="username" @onclick="()=>expandSubMenu= !expandSubMenu">
@@ -51,9 +66,7 @@
         </div>
 
         <article class="content px-4 mt-3" @onclick="()=>expandSubMenu= false">
-            <CascadingValue Value="@rates">
             @Body
-            </CascadingValue>
         </article>
        
     </main>
@@ -68,9 +81,10 @@
 </footer>
 
 @code{
+    bool showError = false;
     private bool expandSubMenu;
-    Dictionary<string, dynamic>? rates{ get; set; }
-
+    [Inject] static HttpClient? Client { get; set; }
+    string? currency_api_error;
     [CascadingParameter]
     Task<AuthenticationState>? AuthenticationState { get; set; }
 
@@ -81,6 +95,25 @@
             if (!navigationManager.Uri.ToString().Contains("login") && !navigationManager.Uri.ToString().Contains("Privacy"))
             {
                 navigationManager.NavigateTo("/login");
+            }
+        }
+        else
+        {
+            if (CurrencyExchange.Rates  == null)
+            {
+                try
+                {
+                    CurrencyExchange.Rates = await CurrencyExchange.GetRatesAsync(client);
+                }
+                catch (Exception ex)
+                {
+
+                    currency_api_error = $"Error - Type: {ex.GetType()}, Message: {ex.Message}";
+                    if (ex.GetType().ToString() == "Microsoft.CSharp.RuntimeBinder.RuntimeBinderException")
+                    {
+                        currency_api_error = "currency_api_is_exceeded";
+                    }
+                }
             }
         }
     }
