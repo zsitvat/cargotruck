@@ -1,4 +1,5 @@
-﻿using Cargotruck.Shared.Models.Request;
+﻿using Cargotruck.Client.Services;
+using Cargotruck.Shared.Models.Request;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System.Globalization;
@@ -9,6 +10,7 @@ namespace Cargotruck.Client.Pages.Roads
     public partial class FetchData
     {
         public bool settings = false;
+        bool expandExportMenu;
         Cargotruck.Shared.Models.Roads[]? Roads { get; set; }
         string? IdForGetById { get; set; }
         string? GetByIdType { get; set; }
@@ -24,6 +26,35 @@ namespace Cargotruck.Client.Pages.Roads
         string? filter = "";
         DateFilter? dateFilter = new();
 
+        protected override async Task OnInitializedAsync()
+        {
+            PageHistoryState.AddPageToHistory("/Roads");
+            base.OnInitialized();
+            dataRows = await client.GetFromJsonAsync<int>($"api/roads/pagecount?filter{filter}");
+            await ShowPage();
+        }
+
+        protected async Task ShowPage()
+        {
+            pageSize = Page.GetPageSize(pageSize, dataRows);
+            maxPage = Page.GetMaxPage(pageSize, dataRows);
+
+            Roads = await client.GetFromJsonAsync<Cargotruck.Shared.Models.Roads[]>($"api/roads/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
+            StateHasChanged();
+        }
+
+        async Task Delete(int Id)
+        {
+            var r = Roads?.First(x => x.Id == Id);
+            if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {r?.Purpose_of_the_trip} - {r?.Direction} ({r?.Id})"))
+            {
+                await client.DeleteAsync($"api/roads/delete/{Id}");
+                var shouldreload = dataRows % ((currentPage == 1 ? currentPage : currentPage - 1) * pageSize);
+                if (shouldreload == 1 && dataRows > 0) { navigationManager.NavigateTo("/Roads", true); }
+                await OnInitializedAsync();
+            }
+        }
+
         async void DateStartInput(ChangeEventArgs e)
         {
             if (e != null && e.Value?.ToString() != "")
@@ -38,26 +69,6 @@ namespace Cargotruck.Client.Pages.Roads
             if (e != null && e.Value?.ToString() != "")
             {
                 dateFilter!.EndDate = DateTime.Parse(e?.Value?.ToString()!);
-                await OnInitializedAsync();
-            }
-        }
-
-        protected override async Task OnInitializedAsync()
-        {
-            PageHistoryState.AddPageToHistory("/Roads");
-            base.OnInitialized();
-            dataRows = await client.GetFromJsonAsync<int>($"api/roads/pagecount?filter{filter}");
-            await ShowPage();
-        }
-
-        async Task Delete(int Id)
-        {
-            var r = Roads?.First(x => x.Id == Id);
-            if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {r?.Purpose_of_the_trip} - {r?.Direction} ({r?.Id})"))
-            {
-                await client.DeleteAsync($"api/roads/delete/{Id}");
-                var shouldreload = dataRows % ((currentPage == 1 ? currentPage : currentPage - 1) * pageSize);
-                if (shouldreload == 1 && dataRows > 0) { navigationManager.NavigateTo("/Roads", true); }
                 await OnInitializedAsync();
             }
         }
@@ -125,16 +136,6 @@ namespace Cargotruck.Client.Pages.Roads
         {
             currentPage = CurrentPage;
             await ShowPage();
-        }
-
-        protected async Task ShowPage()
-        {
-            if (pageSize < 1) { pageSize = 10; }
-            else if (pageSize >= dataRows) { pageSize = dataRows != 0 ? dataRows : 1; }
-            maxPage = (int)Math.Ceiling((decimal)((float)dataRows / (float)pageSize));
-
-            Roads = await client.GetFromJsonAsync<Cargotruck.Shared.Models.Roads[]>($"api/roads/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
-            StateHasChanged();
         }
 
         private async void StateChanged()

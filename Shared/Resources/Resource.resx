@@ -156,6 +156,9 @@
   <data name="Account" xml:space="preserve">
     <value>Fiók</value>
   </data>
+  <data name="Accountant" xml:space="preserve">
+    <value>Könyvelő</value>
+  </data>
   <data name="Add" xml:space="preserve">
     <value>Létrehozás</value>
   </data>
@@ -428,6 +431,9 @@
   </data>
   <data name="Expense_id:" xml:space="preserve">
     <value>Kiadás azonosító</value>
+  </data>
+  <data name="export" xml:space="preserve">
+    <value>Adatok letöltése</value>
   </data>
   <data name="False" xml:space="preserve">
     <value>Nem</value>

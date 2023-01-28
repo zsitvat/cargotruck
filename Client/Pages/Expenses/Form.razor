@@ -26,7 +26,7 @@
                     <div>
                         <label>@localizer["Type"]:</label>
                         <div>
-                            <select id="Type" class="form-control" @oninput="@((e)=>onChangeGetType(e))" @bind="@expenses.Type">
+                            <select id="Type" class="form-control inputs" @oninput="@((e)=>onChangeGetType(e))" @bind="@expenses.Type">
                                 <option  selected disabled>@localizer["Select_placeholder"]</option>
                                 @foreach (var value in Enum.GetValues<Cargotruck.Shared.Models.Type>())
                                 {
@@ -42,8 +42,8 @@
                         <div>
                         <label>@localizer["Type_id"]:</label>
                             <div>
-                                <select class="form-control" @bind="@expenses.Type_id">
-                                    <option  selected disabled>@localizer["Select_placeholder"]</option>
+                                <InputSelect class="form-control inputs" @bind-Value="@expenses.Type_id">
+                                    <option value="" selected disabled>@localizer["Select_placeholder"]</option>
                                     @switch(type) 
                                         {
                                         case "task":
@@ -74,7 +74,7 @@
                                             }
                                         break;
                                         };
-                                </select>
+                                </InputSelect>
                                 <ValidationMessage For="@(() => expenses.Type_id)" />
                             </div>
                         </div>

@@ -10,6 +10,7 @@ namespace Cargotruck.Client.Pages.Expenses
     public partial class FetchData
     {
         public bool settings = false;
+        bool expandExportMenu;
         Cargotruck.Shared.Models.Expenses[]? expenses;
         int? IdForGetById { get; set; }
         string? GetByIdType { get; set; }
@@ -23,6 +24,36 @@ namespace Cargotruck.Client.Pages.Expenses
         private string? searchString = "";
         Cargotruck.Shared.Models.Type? filter;
         DateFilter dateFilter = new();
+
+        protected override async Task OnInitializedAsync()
+        {
+            PageHistoryState.AddPageToHistory("/Expenses");
+            base.OnInitialized();
+           
+            dataRows = await client.GetFromJsonAsync<int>($"api/expenses/pagecount?filter{filter}");
+            await ShowPage();
+        }
+
+        protected async Task ShowPage()
+        {
+            pageSize = Page.GetPageSize(pageSize, dataRows);
+            maxPage = Page.GetMaxPage(pageSize, dataRows);
+
+            expenses = await client.GetFromJsonAsync<Cargotruck.Shared.Models.Expenses[]>($"api/expenses/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
+            StateHasChanged();
+        }
+
+        async Task Delete(int Id)
+        {
+            var data = expenses?.First(x => x.Id == Id);
+            if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {data?.Type} - {data?.Type_id} - {data?.Date}"))
+            {
+                await client.DeleteAsync($"api/expenses/delete/{Id}");
+                var shouldreload = dataRows % ((currentPage == 1 ? currentPage : currentPage - 1) * pageSize);
+                if (shouldreload == 1 && dataRows > 0) { navigationManager.NavigateTo("/Expenses", true); }
+                await OnInitializedAsync();
+            }
+        }
 
         async void DateStartInput(ChangeEventArgs e)
         {
@@ -38,27 +69,6 @@ namespace Cargotruck.Client.Pages.Expenses
             if (e != null && e.Value?.ToString() != "")
             {
                 dateFilter.EndDate = DateTime.Parse(e?.Value?.ToString()!);
-                await OnInitializedAsync();
-            }
-        }
-
-        protected override async Task OnInitializedAsync()
-        {
-            PageHistoryState.AddPageToHistory("/Expenses");
-            base.OnInitialized();
-           
-            dataRows = await client.GetFromJsonAsync<int>($"api/expenses/pagecount?filter{filter}");
-            await ShowPage();
-        }
-
-        async Task Delete(int Id)
-        {
-            var data = expenses?.First(x => x.Id == Id);
-            if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {data?.Type} - {data?.Type_id} - {data?.Date}"))
-            {
-                await client.DeleteAsync($"api/expenses/delete/{Id}");
-                var shouldreload = dataRows % ((currentPage == 1 ? currentPage : currentPage - 1) * pageSize);
-                if (shouldreload == 1 && dataRows > 0) { navigationManager.NavigateTo("/Expenses", true); }
                 await OnInitializedAsync();
             }
         }
@@ -133,16 +143,6 @@ namespace Cargotruck.Client.Pages.Expenses
         {
             currentPage = CurrentPage;
             await ShowPage();
-        }
-
-        protected async Task ShowPage()
-        {
-            if (pageSize < 1) { pageSize = 10; }
-            else if (pageSize >= dataRows) { pageSize = dataRows != 0 ? dataRows : 1; }
-            maxPage = (int)Math.Ceiling((decimal)((float)dataRows / (float)pageSize));
-
-            expenses = await client.GetFromJsonAsync<Cargotruck.Shared.Models.Expenses[]>($"api/expenses/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
-            StateHasChanged();
         }
 
         private async void StateChanged()

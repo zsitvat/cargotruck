@@ -26,8 +26,8 @@ namespace Cargotruck.Server.Data
                 },
                 new IdentityRole
                 {
-                    Name = "Manager",
-                    NormalizedName = "MANAGER"
+                    Name = "Accountant",
+                    NormalizedName = "ACCOUNTANT"
                 },
                 new IdentityRole
                 {

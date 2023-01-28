@@ -178,6 +178,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Könyvelő.
+        /// </summary>
+        public static string Accountant {
+            get {
+                return ResourceManager.GetString("Accountant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Létrehozás.
         /// </summary>
         public static string Add {
@@ -993,6 +1002,15 @@ namespace Cargotruck.Shared.Resources {
         public static string Expenses_menu {
             get {
                 return ResourceManager.GetString("Expenses_menu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adatok letöltése.
+        /// </summary>
+        public static string export {
+            get {
+                return ResourceManager.GetString("export", resourceCulture);
             }
         }
         

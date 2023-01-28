@@ -5,10 +5,22 @@
 <div class="form-group buttons">
     <a class="btn btn-success me-4" href="/Tasks/create"><i class="oi oi-plus"></i> @localizer["Add"]</a>
     <a data-title="@localizer["Settings"]" class="btn btn-light" @onclick="@(() => settings=!settings)"><i class="oi oi-cog"></i></a>
-    <button data-title="@localizer["pdf"]" class="btn btn-light" @onclick="@(() =>FileDownload.Export("Tasks","pdf", client, js))"><i class="oi oi-document"></i></button>
-    <button data-title="@localizer["excel"]" class="btn btn-light" @onclick="@(() =>FileDownload.Export("Tasks","xlsx", client, js))"><i class="oi oi-spreadsheet"></i></button>
-    <button data-title="@localizer["txt"]" class="btn btn-light" @onclick="@(() =>FileDownload.Export("Tasks","txt", client, js))"><span class="icon iconify" style="margin:0;" data-icon="material-symbols:text-snippet-outline"></span></button>
-    <button data-title="@localizer["csv"]" class="btn btn-light" @onclick="@(() =>FileDownload.Export("Tasks","csv", client, js))"><span class="icon iconify" style="margin:0;" data-icon="bi:filetype-csv"></span></button>
+
+    <li class="d-inline-block" data-title="@localizer["export"]" @onclick="() => expandExportMenu = !expandExportMenu">
+        <div class="btn btn-light d-inline-block" >
+            <span class="icon iconify export-icon" data-icon="oi:data-transfer-download" style="margin:0;"></span>
+        </div>
+        @if (expandExportMenu)
+        {
+            <ul class="nav flex-column export-buttons">
+                <button data-title="@localizer["excel"]" class="btn" @onclick="@(() =>FileDownload.Export("Tasks","xlsx",dateFilter,  client, js))"><span class="icon iconify" data-icon="file-icons:microsoft-excel" />XLSX</button>
+                <button data-title="@localizer["pdf"]" class="btn" @onclick="@(() =>FileDownload.Export("Tasks","pdf",dateFilter,  client, js))"><span class="icon iconify" data-icon="bi:filetype-pdf" />PDF</button>
+                <button data-title="@localizer["txt"]" class="btn" @onclick="@(() =>FileDownload.Export("Tasks","txt",dateFilter,  client, js))"><span class="icon iconify" data-icon="bi:filetype-txt" />TXT</button>
+                <button data-title="@localizer["csv"]" class="btn" @onclick="@(() =>FileDownload.Export("Tasks","csv",dateFilter, client, js))"><span class="icon iconify" data-icon="bi:filetype-csv" />CSV</button>
+            </ul>
+        }
+    </li>
+
     <span class="file-upload-title" import-data-title="@localizer["File_input"]"><UploadFiles page="tasks" StateChanged="StateChanged" /></span>
     <input value="@searchString" @oninput="@Search" placeholder="@(searchString != "" ? searchString : localizer["Search"])" class="form-control inputs input_search" type="search" id="search-input" name="SearchString">
     <!--Filter icon-->
@@ -21,7 +33,7 @@
         <button @onclick="@(()=>OnChangeResetFilter())" class="filter-button not-pointer"><span class="icon iconify filter-icon not-pointer" data-icon="material-symbols:filter-alt"></span></button>
     }
     <!--Filter-->
-    <select class="form-control filter" @oninput="@((e)=>OnChangeGetFilter(e))" @bind="filter">
+    <select class="form-control filter  selectpicker" @oninput="@((e)=>OnChangeGetFilter(e))" @bind="filter">
         <option value="" selected>@localizer["Nothing"]</option>
         <option value="completed">@localizer["Completed"]</option>
         <option value="not_completed">@localizer["Not_completed"]</option>

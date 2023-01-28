@@ -82,7 +82,7 @@
                         <div>
                                 <label>@localizer["Direction"]:</label>
                             <div>
-                                <select class="form-control" @bind="@roads.Direction">
+                            <select class="form-control inputs" @bind="@roads.Direction">
                                     <option  selected disabled>@localizer["Select_placeholder"]</option>
                                     <option value="TO">@localizer["to"]</option>
                                     <option value="FROM">@localizer["from"]</option>
@@ -95,7 +95,7 @@
                         <div>
                             <label>@localizer["Expenses_id"]:</label>
                             <div>
-                            <select class="form-control" @bind="@roads.Expenses_id">
+                            <select class="form-control inputs" @bind="@roads.Expenses_id">
                                         <option  selected disabled>@localizer["Select_placeholder"]</option>
                                         @if (expenses!=null)
                                         {
@@ -113,7 +113,7 @@
                             <div>
                                 <label>@localizer["Task_id"]:</label>
                                 <div>
-                            <select class="form-control" @bind="@roads.Task_id">
+                            <select class="form-control inputs" @bind="@roads.Task_id">
                                         <option selected disabled>@localizer["Select_placeholder"]</option>
                                         @if (tasks != null)
                                         {
@@ -133,7 +133,7 @@
                     <div>
                         <label>@localizer["Vehicle_registration_number"]:</label>
                         <div>
-                            <select class="form-control" @bind="@roads.Vehicle_registration_number">
+                            <select class="form-control inputs" @bind="@roads.Vehicle_registration_number">
                                 <option selected disabled>@localizer["Select_placeholder"]</option>
                                 @if (trucks != null)
                                 {
@@ -151,7 +151,7 @@
                             <div>
                                 <label>@localizer["Id_cargo"]:</label>
                                 <div>
-                            <select class="form-control" @bind="@roads.Id_cargo">
+                                    <select class="form-control inputs" @bind="@roads.Id_cargo">
                                         <option selected disabled>@localizer["Select_placeholder"]</option>
                                         @if (cargoes != null)
                                         {

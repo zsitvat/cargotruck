@@ -5,6 +5,13 @@ html, body {
     background-color: rgba(243, 246, 249, 0.5);
 }
 
+option {
+    z-index: 200;
+    background-color: white;
+    border-radius: 0.25rem;
+    box-shadow: rgb(0 0 0 / 16%) 0px 1px 4px;
+}
+
 .content {
     margin-bottom: 3.5rem;
 }
@@ -240,17 +247,21 @@ a:active {
     position:absolute;
 }
 
-
 .currency-api-error {
     font-size: 14px;
-    position: absolute;
-    margin-top: 4px;
+    position: relative;
+}
+
+.currency-api-error-icon{
+   vertical-align:middle;
+   width:fit-content;
+   height:1.5rem;
 }
 
 .currency-api-error-icon svg {
     width: 15px;
-    cursor:pointer;
-    margin-right:0;
+    cursor: pointer;
+    margin-right: 0;
 }
 
 .currency-api-error-in-child {
@@ -861,6 +872,54 @@ input[type=number] {
     opacity: 0.6;
 }
 
+.oi-cog {
+    padding-right: 2px;
+    padding-left: 2px;
+}
+
+.export-buttons button { 
+    height: 2rem;
+    font-size: 10px;
+    z-index: 200;
+    border-radius: unset;
+}
+
+.export-buttons button:first-child {
+    border-radius: 0.25rem 0.25rem 0 0;
+}
+
+.export-buttons button:last-child {
+    border-radius: 0 0 0.25rem 0.25rem;
+}
+
+.export-buttons button:hover {
+    background-color: rgba(0,0,0,.075) !important;
+}
+
+
+.export-buttons {
+    position: absolute;
+    z-index: 200;
+    background-color: white;
+    border: 1px solid rgba(120,120,120,.1);
+    border-radius:0.25rem;
+    box-shadow: rgb(0 0 0 / 16%) 0px 1px 4px;
+    padding:0rem;
+    width:5rem;
+    left:-1.2rem;
+}
+
+.export-buttons svg {
+    width: 16px;
+    height: 16px;
+    margin-right:5px;
+}
+
+.export-icon {
+    width: 20px;
+    height: 16px;
+}
+
 .top-row[b-ffa6apske8] {
     height: 3.5rem;
     background-color: #19222d !important;
@@ -1125,10 +1184,10 @@ ul, li {
     top: 3.55rem;
     right: 12rem;
     background-color: white;
-    outline: 2px solid rgba(0,0,0,.075);
     border-radius: 2px;
     padding: 0;
-    z-index:250;
+    z-index: 250;
+    box-shadow: rgb(0 0 0 / 16%) 0px 1px 4px;
 }
 
 .username-dropdown li, .username-dropdown span {
@@ -1216,10 +1275,6 @@ ul, li {
     padding:5px 8px;
 }
 
-.culture-selector:hover {
-    background-color: rgba(0,0,0,.075);
-}
-
 tbody td, tbody th{
     height:3rem;
 }
@@ -1295,8 +1350,9 @@ tr td:first-child {
         margin-right: 0.2%;
     }
 
-    .bottom-row a {
+    .bottom-row a:first-child {
         padding-left: 25%;
+        padding-right:2%;
     }
 
     .second-col {
@@ -1317,8 +1373,9 @@ tr td:first-child {
         width: 25rem;
     }
 
-    .bottom-row a {
+    .bottom-row a:first-child {
         padding-left: 20%;
+        padding-right: 2%;
     }
 
     .profile-form input {
@@ -1421,6 +1478,13 @@ tr td:first-child {
 }
 
 @media (max-width: 1024px) {
+    .about {
+        position: absolute;
+        left: 14rem;
+        top: 15px;
+        color: black;
+    }
+
     .profile-form {
         margin-left: 10%;
     }
@@ -1446,8 +1510,9 @@ tr td:first-child {
         margin-right: 5.5%;
     }
 
-    .bottom-row a {
+    .bottom-row a:first-child {
         padding-left: 30%;
+        padding-right: 2%;
     }
 
     .table-width {
@@ -1466,11 +1531,20 @@ tr td:first-child {
     article {
         margin-left: 250px !important;
     }
+
+    .currency-api-error-icon{
+        position:absolute;
+        top:4rem;
+        left:16rem;
+        width:fit-content;
+    }
 }
 
 @media (max-width: 868px) {
-    .bottom-row a {
+
+    .bottom-row a:first-child {
         padding-left: 40%;
+        padding-right: 2%;
     }
 
     .table-width {
@@ -1517,8 +1591,9 @@ tr td:first-child {
         margin-bottom: 5rem;
     }
 
-    .bottom-row a {
+    .bottom-row a:first-child {
         padding-left: 2%;
+        padding-right: 2%;
     }
 
     .table-width {

@@ -1,4 +1,5 @@
-﻿using Cargotruck.Shared.Models;
+﻿using Cargotruck.Client.Services;
+using Cargotruck.Shared.Models;
 using Cargotruck.Shared.Models.Request;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
@@ -10,6 +11,7 @@ namespace Cargotruck.Client.Pages.Trucks
     public partial class FetchData
     {
         public bool settings = false;
+        bool expandExportMenu;
         Cargotruck.Shared.Models.Trucks[]? Trucks { get; set; }
         int? IdForGetById { get; set; }
         string? GetByIdType { get; set; }
@@ -25,6 +27,35 @@ namespace Cargotruck.Client.Pages.Trucks
         Status? filter;
         DateFilter? dateFilter = new();
 
+        protected override async Task OnInitializedAsync()
+        {
+            PageHistoryState.AddPageToHistory("/Trucks");
+            base.OnInitialized();
+            dataRows = await client.GetFromJsonAsync<int>($"api/trucks/pagecount?filter{filter}");
+            await ShowPage();
+        }
+
+        protected async Task ShowPage()
+        {
+            pageSize = Page.GetPageSize(pageSize, dataRows);
+            maxPage = Page.GetMaxPage(pageSize, dataRows);
+
+            Trucks = await client.GetFromJsonAsync<Cargotruck.Shared.Models.Trucks[]>($"api/trucks/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
+            StateHasChanged();
+        }
+
+        async Task Delete(int Id)
+        {
+            var data = Trucks?.First(x => x.Id == Id);
+            if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {data?.Vehicle_registration_number} - {data?.Status} ({data?.Id})"))
+            {
+                await client.DeleteAsync($"api/trucks/delete/{Id}");
+                var shouldreload = dataRows % ((currentPage == 1 ? currentPage : currentPage - 1) * pageSize);
+                if (shouldreload == 1 && dataRows > 0) { navigationManager.NavigateTo("/Trucks", true); }
+                await OnInitializedAsync();
+            }
+        }
+
         async void DateStartInput(ChangeEventArgs e)
         {
             if (e != null && e.Value?.ToString() != "")
@@ -39,26 +70,6 @@ namespace Cargotruck.Client.Pages.Trucks
             if (e != null && e.Value?.ToString() != "")
             {
                 dateFilter!.EndDate = DateTime.Parse(e.Value?.ToString()!);
-                await OnInitializedAsync();
-            }
-        }
-
-        protected override async Task OnInitializedAsync()
-        {
-            PageHistoryState.AddPageToHistory("/Trucks");
-            base.OnInitialized();
-            dataRows = await client.GetFromJsonAsync<int>($"api/trucks/pagecount?filter{filter}");
-            await ShowPage();
-        }
-
-        async Task Delete(int Id)
-        {
-            var data = Trucks?.First(x => x.Id == Id);
-            if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {data?.Vehicle_registration_number} - {data?.Status} ({data?.Id})"))
-            {
-                await client.DeleteAsync($"api/trucks/delete/{Id}");
-                var shouldreload = dataRows % ((currentPage == 1 ? currentPage : currentPage - 1) * pageSize);
-                if (shouldreload == 1 && dataRows > 0) { navigationManager.NavigateTo("/Trucks", true); }
                 await OnInitializedAsync();
             }
         }
@@ -111,7 +122,6 @@ namespace Cargotruck.Client.Pages.Trucks
             await ShowPage();
         }
 
-
         protected async void Sorting(string column)
         {
             if (sortOrder == column)
@@ -135,16 +145,6 @@ namespace Cargotruck.Client.Pages.Trucks
         {
             currentPage = CurrentPage;
             await ShowPage();
-        }
-
-        protected async Task ShowPage()
-        {
-            if (pageSize < 1) { pageSize = 10; }
-            else if (pageSize >= dataRows) { pageSize = dataRows != 0 ? dataRows : 1; }
-            maxPage = (int)Math.Ceiling((decimal)((float)dataRows / (float)pageSize));
-
-            Trucks = await client.GetFromJsonAsync<Cargotruck.Shared.Models.Trucks[]>($"api/trucks/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
-            StateHasChanged();
         }
 
         private async void StateChanged()

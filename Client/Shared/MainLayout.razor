@@ -19,13 +19,13 @@
                 <div class="d-inline-block">
                     <button class="no-button currency-api-error-icon error d-inline-block" @onclick="@(() => showError=!showError)">
                         <span class="icon iconify d-inline" style="color:darkred;" data-icon="material-symbols:error-circle-rounded-outline"></span>
-                    </button>
                         <p class="error currency-api-error d-inline-block"> 
-                        @if (showError)
-                        {
-                            @localizer[@currency_api_error]
-                        }
-                    </p> 
+                            @if (showError)
+                            {
+                                @localizer[@currency_api_error]
+                            }
+                        </p>
+                    </button>
                 </div>
             }
 
@@ -77,14 +77,18 @@
         <NavLink href="/Privacy">
             <span class="footer-text" aria-hidden="true">2023 Cargotruck</span>
         </NavLink>
+        <NavLink href="/Privacy">
+            <span class="footer-text" aria-hidden="true">Privacy</span>
+        </NavLink>
     </div>
 </footer>
 
 @code{
     bool showError = false;
-    private bool expandSubMenu;
+    bool expandSubMenu;
     [Inject] static HttpClient? Client { get; set; }
     string? currency_api_error;
+    DateTime currencyApiDate;
     [CascadingParameter]
     Task<AuthenticationState>? AuthenticationState { get; set; }
 
@@ -99,7 +103,10 @@
         }
         else
         {
-            if (CurrencyExchange.Rates  == null)
+            DateTime date = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, DateTime.Today.Hour, 0, 0);
+            int waitTimeInHour = 1;
+            DateTime dateWithWaitTime = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day + waitTimeInHour, DateTime.Today.Hour, 0, 0);
+            if (CurrencyExchange.Rates == null && currencyApiDate != date && currencyApiDate != dateWithWaitTime)
             {
                 try
                 {
@@ -113,6 +120,11 @@
                     {
                         currency_api_error = "currency_api_is_exceeded";
                     }
+                }
+
+                if (CurrencyExchange.Rates != null)
+                {
+                    currencyApiDate = date;
                 }
             }
         }

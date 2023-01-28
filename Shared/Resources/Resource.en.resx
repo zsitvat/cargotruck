@@ -156,6 +156,9 @@
   <data name="Account" xml:space="preserve">
     <value>Account</value>
   </data>
+  <data name="Accountant" xml:space="preserve">
+    <value>Accountant</value>
+  </data>
   <data name="Add" xml:space="preserve">
     <value>Add new</value>
   </data>
@@ -425,6 +428,9 @@
   </data>
   <data name="Expense_id:" xml:space="preserve">
     <value>Expense ID</value>
+  </data>
+  <data name="export" xml:space="preserve">
+    <value>Export data</value>
   </data>
   <data name="False" xml:space="preserve">
     <value>False</value>

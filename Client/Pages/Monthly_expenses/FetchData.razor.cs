@@ -11,6 +11,7 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
     public partial class FetchData
     {
         public bool settings = false;
+        bool expandExportMenu;
         public bool fullYearProfitWindow = true;
         Cargotruck.Shared.Models.Monthly_expenses[]? Monthly_expenses { get; set; }
         Monthly_expenses_tasks_expenses[]? Connection_ids { get; set; }
@@ -25,24 +26,6 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
         private bool desc = true;
         private string? searchString = "";
         DateFilter? dateFilter = new();
-
-        async void DateStartInput(ChangeEventArgs e)
-        {
-            if (e != null && e.Value?.ToString() != "")
-            {
-                dateFilter!.StartDate = DateTime.Parse(e?.Value?.ToString()!);
-                await OnInitializedAsync();
-            }
-        }
-
-        async void DateEndInput(ChangeEventArgs e)
-        {
-            if (e != null && e.Value?.ToString() != "")
-            {
-                dateFilter!.EndDate = DateTime.Parse(e?.Value?.ToString()!);
-                await OnInitializedAsync();
-            }
-        }
 
         protected override async Task OnInitializedAsync()
         {
@@ -64,6 +47,14 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
                 FileDownload.DocumentError = localizer["CheckFailed"];
             }
         }
+        protected async Task ShowPage()
+        {
+            pageSize = Page.GetPageSize(pageSize, dataRows);
+            maxPage = Page.GetMaxPage(pageSize, dataRows);
+
+            Monthly_expenses = await client.GetFromJsonAsync<Cargotruck.Shared.Models.Monthly_expenses[]>($"api/Monthly_expenses/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
+            StateHasChanged();
+        }
 
         async Task Delete(int Id)
         {
@@ -73,6 +64,24 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
                 await client.DeleteAsync($"api/Monthly_expenses/delete/{Id}");
                 var shouldreload = dataRows % ((currentPage == 1 ? currentPage : currentPage - 1) * pageSize);
                 if (shouldreload == 1 && dataRows > 0) { navigationManager.NavigateTo("/Monthly_expenses", true); }
+                await OnInitializedAsync();
+            }
+        }
+
+        async void DateStartInput(ChangeEventArgs e)
+        {
+            if (e != null && e.Value?.ToString() != "")
+            {
+                dateFilter!.StartDate = DateTime.Parse(e?.Value?.ToString()!);
+                await OnInitializedAsync();
+            }
+        }
+
+        async void DateEndInput(ChangeEventArgs e)
+        {
+            if (e != null && e.Value?.ToString() != "")
+            {
+                dateFilter!.EndDate = DateTime.Parse(e?.Value?.ToString()!);
                 await OnInitializedAsync();
             }
         }
@@ -94,15 +103,6 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
         {
             currentPage = CurrentPage;
             await ShowPage();
-        }
-
-        protected async Task ShowPage()
-        {
-            if (pageSize < 1) { pageSize = 10; }
-            else if (pageSize >= dataRows) { pageSize = dataRows != 0 ? dataRows : 1; }
-            maxPage = (int)Math.Ceiling((decimal)((float)dataRows / (float)pageSize));
-            Monthly_expenses = await client.GetFromJsonAsync<Cargotruck.Shared.Models.Monthly_expenses[]>($"api/Monthly_expenses/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
-            StateHasChanged();
         }
 
         public void SettingsClosed()

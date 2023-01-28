@@ -24,13 +24,13 @@
                 <InputText type="text" id="inputPhoneNumber" class="form-control" @bind-Value="@updateRequest.PhoneNumber" />
                 <ValidationMessage For="@(() => updateRequest.PhoneNumber)" />
                 <AuthorizeView Roles="Admin" Context="admin">
-                    <label for="inputRole" class="input-only">@localizer["Role"]</label>
+                    <label for="inputRole" class="input-only inputs">@localizer["Role"]</label>
                     <select data-placeholder="" for="@updateRequest.Role" class="form-control" name="role" id="role" @bind="@updateRequest.Role">
                         <option value="" selected disabled>@localizer["Select_placeholder"]</option>
                         <option value="Admin">@localizer["Admin"]</option>
                         <option value="User">@localizer["User"]</option>
                         <option value="Driver">@localizer["Driver"]</option>
-                        <option value="Manager">@localizer["Manager"]</option>
+                        <option value="Manager">@localizer["Accountant"]</option>
                         <option value="Storageman">@localizer["Storageman"]</option>
                     </select>
                 </AuthorizeView>

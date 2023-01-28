@@ -1,7 +1,7 @@
 ﻿self.assetsManifest = {
   "assets": [
     {
-      "hash": "sha256-LMalEDY9H3gIFTuG\/gLl6P5Vu33Egkl9hSdywUMzZIY=",
+      "hash": "sha256-ehm61fyL2viJXAIArS0Sv6\/Woo9np5miTr7LI2tEKHk=",
       "url": "css\/app.css"
     },
     {
@@ -11,6 +11,10 @@
     {
       "hash": "sha256-BG4MzKPO94Iq+V7+jFT6xeOdUKnKVammehw+m4FoSgg=",
       "url": "css\/bootstrap\/bootstrap.min.css.map"
+    },
+    {
+      "hash": "sha256-Er0rr7EVMf4iVC8zPPdiRYHRo9UfikRhN\/kJgXquaTg=",
+      "url": "css\/dropdown.css"
     },
     {
       "hash": "sha256-ylYtrOvXYZZLQmP9ZH\/6yJCZ0i6tnqYHJa8Oikpjyz4=",
@@ -109,7 +113,7 @@
       "url": "img\/profiles\/wh1gvarg.jpg"
     },
     {
-      "hash": "sha256-jvSXiiLPbCqUgUdLj6bvJ6Qd4Arbn81OBzJO5lR40iw=",
+      "hash": "sha256-fCtQUhbkN61HLOcialkVJO85g7ElBOQaLg1gGIfiZwE=",
       "url": "index.html"
     },
     {
@@ -1045,23 +1049,23 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-9g2fWdI26vd+T3pCsHRwr7dBBWHthwfAbfkgI0TA+Dw=",
+      "hash": "sha256-x\/QdD7gqfOGsjleb2XoRk1oYEBPcQS6hP1h0AD5S1Xo=",
       "url": "_framework\/Cargotruck.Shared.dll"
     },
     {
-      "hash": "sha256-dhPCS+eFM+9bBIo5rYD72Sb98qm9GwkQze7shibaLsk=",
+      "hash": "sha256-7IPTibW\/\/WzdpBCWJ4NFjbtWjabBQlMyxO5TgRw5kHM=",
       "url": "_framework\/Cargotruck.Shared.pdb"
     },
     {
-      "hash": "sha256-OIGKeG2bsibpIY4uG6Mu5tJ2vAcGnqYilKXvwK+U9Yg=",
+      "hash": "sha256-zLlhc\/wopmNoiEO3hX5CRmVm72rcEXynMnW9GZVVGNU=",
       "url": "_framework\/en\/Cargotruck.Shared.resources.dll"
     },
     {
-      "hash": "sha256-YSqMKOK\/9P+1rkP1AM+ojNqMuxRUg7Q3seF9bcvcMzg=",
+      "hash": "sha256-OVsvydfOvrpIXs21S90CZDwVTT7cvxSCWDB4xYn7\/g8=",
       "url": "_framework\/Cargotruck.Client.dll"
     },
     {
-      "hash": "sha256-dcmhaHcPUO9NmZm6Viupe8qAhtBWrDGDJE46+HxlySc=",
+      "hash": "sha256-eQrpYP48881hrOK2ZiTQHq5SOetSRyRBdcWuhdnBGLA=",
       "url": "_framework\/Cargotruck.Client.pdb"
     },
     {
@@ -1069,7 +1073,7 @@
       "url": "_framework\/blazor.webassembly.js"
     },
     {
-      "hash": "sha256-1FUj8JIjqEgL2Mnefq27vDugj7VgI9osPLOse5URAco=",
+      "hash": "sha256-riu1i7gIaTveYu\/O1Akccv5nUnze8YZvgGzkvoxpfCk=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -1077,5 +1081,5 @@
       "url": "_content\/Microsoft.AspNetCore.Components.WebAssembly.Authentication\/AuthenticationService.js"
     }
   ],
-  "version": "RsFpJGyb"
+  "version": "gmEYkOYT"
 };

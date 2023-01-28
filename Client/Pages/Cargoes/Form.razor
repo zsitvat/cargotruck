@@ -53,7 +53,7 @@
                         <div>
                         <label>@localizer["Vehicle_registration_number"]:</label>
                             <div>
-                            <select class="form-control" @bind="@cargoes.Vehicle_registration_number">
+                            <select class="form-control inputs" @bind="@cargoes.Vehicle_registration_number">
                                     <option value="" selected>@localizer["Select_placeholder"]</option>
                                     @if (trucks != null)
                                     {
@@ -74,8 +74,8 @@
                     <div>
                         <label>@localizer["Task_id"]:</label>
                         <div>
-                            <InputSelect class="form-control" @bind-Value="@cargoes.Task_id">
-                                <option selected disabled>@localizer["Mandatory"]</option>
+                            <InputSelect class="form-control inputs" @bind-Value="@cargoes.Task_id">
+                                <option value="" selected disabled>@localizer["Mandatory"]</option>
                                 @if (tasks != null)
                                 {
                                     @foreach (var task in tasks)
@@ -95,7 +95,7 @@
                         <div>
                             <label>@localizer["Warehouse_id"]:</label>
                             <div>
-                                <select class="form-control" @bind="@cargoes.Warehouse_id">
+                            <select class="form-control inputs" @bind="@cargoes.Warehouse_id">
                                     <option selected>@localizer["Select_placeholder"]</option>
                                     @if (warehouses != null)
                                     {
@@ -150,6 +150,7 @@
         tasks = await client.GetFromJsonAsync < List<Tasks>?>("api/tasks/gettasks");
         trucks = await client.GetFromJsonAsync < List<Trucks>?>("api/trucks/gettrucks");
         var cargoWithIds = await client.GetFromJsonAsync<List<Cargoes>>("api/cargoes/getcargoes");
+
         foreach (var cargo in cargoWithIds)
         {
             trucks?.RemoveAll(x => x.Vehicle_registration_number == cargo.Vehicle_registration_number && x.Vehicle_registration_number != cargoes?.Vehicle_registration_number);

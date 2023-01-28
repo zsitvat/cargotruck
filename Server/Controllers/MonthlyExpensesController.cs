@@ -227,9 +227,9 @@ namespace Cargotruck.Server.Controllers
 
         //closedXML needed !!!
         [HttpGet]
-        public string Excel(string lang)
+        public string Excel(string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
-            var Monthly_Expenses = from data in _context.Monthly_Expenses select data;
+            var Monthly_Expenses = _context.Monthly_Expenses.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
             var Monthly_expenses_tasks_expenses = _context.Monthly_expenses_tasks_expenses.OrderBy(x => x.Id);
 
             using var workbook = new XLWorkbook();
@@ -298,11 +298,10 @@ namespace Cargotruck.Server.Controllers
 
         //iTextSharp needed !!!
         [HttpGet]
-         public async Task<string> PDF(string lang)
+         public async Task<string> PDF(string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
-            var Monthly_Expenses = from data in _context.Monthly_Expenses select data;
+            var Monthly_Expenses = _context.Monthly_Expenses.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
             var Monthly_expenses_tasks_expenses = _context.Monthly_expenses_tasks_expenses.OrderBy(x => x.Id);
-            Monthly_expenses_tasks_expenses.OrderBy(x => x.Id);
 
             int pdfRowIndex = 1;
             Random rnd = new();
@@ -500,11 +499,11 @@ namespace Cargotruck.Server.Controllers
 
         //iTextSharp needed !!!
         [HttpGet]
-        public async Task<string> CSV(string lang)
+        public async Task<string> CSV(string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
-            var Monthly_Expenses = from data in _context.Monthly_Expenses select data;
+            var Monthly_Expenses = _context.Monthly_Expenses.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
             var Monthly_expenses_tasks_expenses = _context.Monthly_expenses_tasks_expenses.OrderBy(x => x.Id);
-            Monthly_expenses_tasks_expenses.OrderBy(x => x.Id);
+
             Random rnd = new();
             int random = rnd.Next(1000000, 9999999);
             string filename = "Monthly_Expenses" + random + "_" + DateTime.Now.ToString("dd-MM-yyyy");

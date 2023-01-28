@@ -10,6 +10,7 @@ namespace Cargotruck.Client.Pages.Tasks
     public partial class FetchData
     {
         private bool settings = false;
+        bool expandExportMenu;
         Cargotruck.Shared.Models.Tasks[]? Tasks { get; set; }
         int? IdForGetById { get; set; }
         string? GetByIdType { get; set; }
@@ -52,9 +53,8 @@ namespace Cargotruck.Client.Pages.Tasks
 
         protected async Task ShowPage()
         {
-            if (pageSize < 1) { pageSize = 10; }
-            else if (pageSize >= dataRows) { pageSize = dataRows != 0 ? dataRows : 1; }
-            maxPage = (int)Math.Ceiling((decimal)((float)dataRows / (float)pageSize));
+            pageSize = Page.GetPageSize(pageSize, dataRows);
+            maxPage = Page.GetMaxPage( pageSize, dataRows);
 
             Tasks = await client.GetFromJsonAsync<Cargotruck.Shared.Models.Tasks[]>($"api/tasks/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
             StateHasChanged();
@@ -106,7 +106,7 @@ namespace Cargotruck.Client.Pages.Tasks
             settings = !settings;
         }
 
-        public static void SettingsChanged() { }
+        public static void SettingsChanged() {}
 
         public async void InputChanged(int ChangedPageSize)
         {

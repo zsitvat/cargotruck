@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Ex7nt7/6tNADHkYDQrxhmt41/1nE9wyWbIDxlK5Wl94=",
+  "Hash": "zQQAH4WlzUzhqoaF05WubnjpuEUn9Cr3fxKoy6j6zcw=",
   "Source": "Cargotruck.Server",
   "BasePath": "_content/Cargotruck.Server",
   "Mode": "Default",
@@ -8187,6 +8187,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\css\\dropdown.css",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Project",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "css/dropdown.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\dropdown.css"
     },
     {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\css\\hexamenu.css",

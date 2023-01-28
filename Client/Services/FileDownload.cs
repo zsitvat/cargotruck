@@ -1,4 +1,5 @@
-﻿using Cargotruck.Shared.Resources;
+﻿using Cargotruck.Shared.Models.Request;
+using Cargotruck.Shared.Resources;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using Microsoft.JSInterop;
@@ -13,7 +14,7 @@ namespace Cargotruck.Client.Services
         [Inject] public static IStringLocalizer<Resource>? Localizer { get; set; }
         public static string? DocumentError { get; set; }
 
-        public static async Task Export(string page, string documentExtension, HttpClient? client, IJSRuntime? js)
+        public static async Task Export(string page, string documentExtension, DateFilter? dateFilter,  HttpClient? client, IJSRuntime? js)
         {
             //get base64 string from web api call
             string action;
@@ -34,7 +35,7 @@ namespace Cargotruck.Client.Services
                 default:
                     return;
             }
-            var Response = await client!.GetAsync($"api/{page.ToLower()}/{action}?lang={CultureInfo.CurrentCulture.Name}");
+            var Response = await client!.GetAsync($"api/{page.ToLower()}/{action}?lang={CultureInfo.CurrentCulture.Name}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
 
             if (Response.IsSuccessStatusCode)
             {

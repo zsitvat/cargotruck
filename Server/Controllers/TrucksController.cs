@@ -144,12 +144,14 @@ namespace Cargotruck.Server.Controllers
 
         //closedXML needed !!!
         [HttpGet]
-        public string Excel(string lang)
+        public string Excel(string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
-            var trucks = from data in _context.Trucks select data;
+            var trucks = _context.Trucks.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
+            
             using var workbook = new XLWorkbook();
             var worksheet = workbook.Worksheets.Add("Trucks");
             var currentRow = 1;
+
             worksheet.Cell(currentRow, 1).Value = "Id";
             worksheet.Cell(currentRow, 1).Style.Font.SetBold();
             worksheet.Cell(currentRow, 2).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID";
@@ -188,9 +190,9 @@ namespace Cargotruck.Server.Controllers
 
         //iTextSharp needed !!!
         [HttpGet]
-         public async Task<string> PDF(string lang)
+         public async Task<string> PDF(string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
-            var trucks = from data in _context.Trucks select data;
+            var trucks = _context.Trucks.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
 
             int pdfRowIndex = 1;
             Random rnd = new();
@@ -357,9 +359,9 @@ namespace Cargotruck.Server.Controllers
 
         //iTextSharp needed !!!
         [HttpGet]
-        public async Task<string> CSV(string lang)
+        public async Task<string> CSV(string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
-            var trucks = from data in _context.Trucks select data;
+            var trucks = _context.Trucks.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
 
             Random rnd = new();
             int random = rnd.Next(1000000, 9999999);

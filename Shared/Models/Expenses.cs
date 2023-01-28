@@ -15,6 +15,7 @@ namespace Cargotruck.Shared.Models
         [Display(Name = "Type", ResourceType = typeof(Resource))]
         public Type? Type { get; set; }
         [Display(Name = "Type_id", ResourceType = typeof(Resource))]
+        [Required(ErrorMessageResourceName = "Error_type_id", ErrorMessageResourceType = typeof(Resource))]
         public int? Type_id { get; set; }
         [Display(Name = "Fuel", ResourceType = typeof(Resource))]
         [Range(0, int.MaxValue, ErrorMessageResourceName = "OnlyPositive", ErrorMessageResourceType = typeof(Resource))]

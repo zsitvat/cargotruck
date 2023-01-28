@@ -9,9 +9,9 @@ namespace Cargotruck.Shared.Models
         [Required]
         public int Id { get; set; }
         public string? User_id { get; set; }
-        [Required(ErrorMessageResourceName = "Error_task_id", ErrorMessageResourceType = typeof(Resource))]
         [Display(Name = "Task_id", ResourceType = typeof(Resource))]
-        public int Task_id { get; set; }
+        [Required(ErrorMessageResourceName = "Error_task_id", ErrorMessageResourceType = typeof(Resource))]
+        public int? Task_id { get; set; }
         [Required(ErrorMessageResourceName = "Error_weight", ErrorMessageResourceType = typeof(Resource))]
         [Display(Name = "Weight", ResourceType = typeof(Resource))]
         public string Weight { get; set; } = String.Empty;
