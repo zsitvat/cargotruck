@@ -89,6 +89,15 @@ namespace Cargotruck.Client.Pages.Cargoes
             settings = !settings;
         }
 
+        public static void SettingsChanged() { }
+
+        public async void InputChanged(int ChangedPageSize)
+        {
+            pageSize = ChangedPageSize;
+            currentPage = 1;
+            await ShowPage();
+        }
+
         async void OnChangeGetFilter(ChangeEventArgs e)
         {
             filter = e.Value?.ToString();
@@ -99,15 +108,6 @@ namespace Cargotruck.Client.Pages.Cargoes
         {
             filter = "";
             await OnInitializedAsync();
-        }
-
-        public static void SettingsChanged() { }
-
-        public async void InputChanged(int ChangedPageSize)
-        {
-            pageSize = ChangedPageSize;
-            currentPage = 1;
-            await ShowPage();
         }
 
         protected async void Sorting(string column)

@@ -246,6 +246,9 @@
   <data name="csv" xml:space="preserve">
     <value>Export to CSV</value>
   </data>
+  <data name="CurrencyExchangeWaitTime" xml:space="preserve">
+    <value>Currency exchange getting time (s)</value>
+  </data>
   <data name="currency_api_is_exceeded" xml:space="preserve">
     <value>You have exceeded your daily monthly API rate limit.</value>
   </data>
@@ -371,6 +374,9 @@
   </data>
   <data name="Error_purpose_of_the_trip" xml:space="preserve">
     <value>The purpose of the trip is required!</value>
+  </data>
+  <data name="Error_setting_value" xml:space="preserve">
+    <value>The setting value is required!</value>
   </data>
   <data name="Error_starting_date" xml:space="preserve">
     <value>The starting time is required!</value>

@@ -24,6 +24,4 @@ namespace Cargotruck.Shared.Models
         public DateTime Date { get; set; } = DateTime.Now;
     
     }
-
-
 }

@@ -88,7 +88,6 @@
     bool expandSubMenu;
     [Inject] static HttpClient? Client { get; set; }
     string? currency_api_error;
-    DateTime currencyApiDate;
     [CascadingParameter]
     Task<AuthenticationState>? AuthenticationState { get; set; }
 
@@ -103,10 +102,13 @@
         }
         else
         {
-            DateTime date = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, DateTime.Today.Hour, 0, 0);
-            int waitTimeInHour = 1;
-            DateTime dateWithWaitTime = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day + waitTimeInHour, DateTime.Today.Hour, 0, 0);
-            if (CurrencyExchange.Rates == null && currencyApiDate != date && currencyApiDate != dateWithWaitTime)
+
+            var settings = (await client.GetFromJsonAsync<Settings>("api/settings/getwaittime"));
+            int waitTimeInSecond = settings != null ? Int32.Parse(settings?.SettingValue!) : 0;
+            DateTime date = DateTime.Now;
+            var dateWithWaitTime = CurrencyExchange.CurrencyApiDate?.AddSeconds(waitTimeInSecond);
+
+            if (CurrencyExchange.Rates == null && dateWithWaitTime <= date)
             {
                 try
                 {
@@ -121,14 +123,15 @@
                         currency_api_error = "currency_api_is_exceeded";
                     }
                 }
-
+               
                 if (CurrencyExchange.Rates != null)
                 {
-                    currencyApiDate = date;
+                    CurrencyExchange.CurrencyApiDate = new(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, 0, 0);
                 }
             }
         }
     }
+
     async Task LogoutClick()
     {
         PageHistoryState.ResetPageToHistory();

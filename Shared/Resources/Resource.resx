@@ -246,6 +246,9 @@
   <data name="csv" xml:space="preserve">
     <value>Letöltés CSV-ként</value>
   </data>
+  <data name="CurrencyExchangeWaitTime" xml:space="preserve">
+    <value>Valuta váltás lekérésének ideje (mp)</value>
+  </data>
   <data name="currency_api_is_exceeded" xml:space="preserve">
     <value>Elfogyott a napi valutaváltás lekérésének a száma a hónapban. </value>
   </data>
@@ -374,6 +377,9 @@
   </data>
   <data name="Error_purpose_of_the_trip" xml:space="preserve">
     <value>Az utazás célját kötelező megadni!</value>
+  </data>
+  <data name="Error_setting_value" xml:space="preserve">
+    <value>A beállítás értékének megadása kötelező!</value>
   </data>
   <data name="Error_starting_date" xml:space="preserve">
     <value>Kezdeti dátumot kötelező megadni!</value>

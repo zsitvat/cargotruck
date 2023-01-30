@@ -7,6 +7,7 @@ namespace Cargotruck.Client.Services
     public static class CurrencyExchange
     {
         [CascadingParameter] public static Dictionary<string, dynamic>? Rates { get; set; }
+        public static DateTime?  CurrencyApiDate = new();
 
         public static string currency = "HUF";
         public static async Task<dynamic> GetRatesAsync(HttpClient? client)

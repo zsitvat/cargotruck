@@ -10,8 +10,6 @@ using Document = iTextSharp.text.Document;
 using Microsoft.Data.SqlClient;
 using System.Text;
 using Cargotruck.Shared.Models;
-using DocumentFormat.OpenXml.Bibliography;
-using Microsoft.ClearScript.JavaScript;
 
 namespace Cargotruck.Server.Controllers
 {

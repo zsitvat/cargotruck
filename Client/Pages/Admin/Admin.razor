@@ -1,13 +1,10 @@
 ﻿@page "/Admin"
-@using Cargotruck.Server.Models
-@using Cargotruck.Shared.Models
-@using Cargotruck.Shared.Resources
-@using Microsoft.AspNetCore.Identity
-@using Microsoft.Extensions.Localization
+
 
 <h3>@localizer["Admin"]</h3>
 <div class="form-group">
     <a class="btn btn-success" href="/Register"><i class="oi oi-plus"></i> @localizer["Create_new"]</a>
+    <a data-title="@localizer["Settings"]" class="btn btn-light" @onclick="@(() => settings=!settings)"><i class="oi oi-cog"></i></a>
     @if (filter != null && filter != "")
     {
         <button @onclick="@(()=>onChangeResetFilter())" class="filter-button"><span class="icon iconify filter-icon" data-icon="material-symbols:filter-alt-off"></span></button>
@@ -64,15 +61,34 @@ else
                                         <tr @onclick="@((e) =>MouseHoverClass.MouseOnclick(e,item.Id))" @onmouseover="@((e) =>MouseHoverClass.MouseOver(e,item.Id))" @onmouseout="@((e) =>MouseHoverClass.MouseOut(e))"
                                     class="@(MouseHoverClass.MouseOnHoverClass == item.Id || MouseHoverClass.MouseOnclickClass == item.Id ? "color-on-hover" :"")">
                                             <td>@i</td>
-                                            @if(claims!=null){
-                                                <td><img class="table-img" src="@claims[$"img/{@item.Id}"]" /></td>
+                                            @if (showColumns[0])
+                                            {
+                                                @if (claims != null)
+                                                {
+                                                    <td><img class="table-img" src="@claims[$"img/{@item.Id}"]" /></td>
+                                                }
                                             }
-                                            <td style="min-width: 18rem;">@item.Id</td>
-                                            <td>@item.UserName</td>
-                                            <td>@item.Email</td>
-                                            <td>@item.PhoneNumber</td>
-                                            @if (roles!=null) { 
-                                                <td>@roles[item.Id]</td>
+                                            @if (showColumns[1])
+                                            {
+                                                <td style="min-width: 18rem;">@item.Id</td>
+                                            }
+                                            @if (showColumns[2])
+                                            {
+                                                <td>@item.UserName</td>
+                                            }
+                                            @if (showColumns[3])
+                                            {
+                                                <td>@item.Email</td>
+                                            }
+                                            @if (showColumns[4])
+                                            {
+                                                <td>@item.PhoneNumber</td>
+                                            }
+                                            @if (showColumns[5])
+                                            {
+                                                @if (roles!=null) { 
+                                                    <td>@roles[item.Id]</td>
+                                                }
                                             }
                                             <td class="@(MouseHoverClass.MouseOnHoverClass == item.Id.ToString() || MouseHoverClass.MouseOnclickClass == item.Id.ToString() ? "show" :"not-show") ">
                                                 @if(item.UserName == context?.User?.Identity?.Name){
@@ -93,59 +109,9 @@ else
             </div>
         </Authorized>
     </AuthorizeView>
-}
-@code {
-    Users[]? users { get; set; }
-    Dictionary<string, string>? claims { get; set; }
-    Dictionary<string, string>? roles { get; set; }
-    string? filter = "";
-    private int currentPage = 1;
-    int pageSize = 10;
-    int dataRows;
-    float maxPage;
 
-    protected override async Task OnInitializedAsync()
+    @if (settings)
     {
-        await ShowPage();
-    }
-
-    protected async Task ShowPage()
-    {
-        dataRows = await client.GetFromJsonAsync<int>($"api/admin/pagecount?filter={filter}");
-        if (pageSize < 1) { pageSize = 10; }
-        else if (pageSize >= dataRows) { pageSize = dataRows != 0 ? dataRows : 1; }
-        maxPage = (int)Math.Ceiling((decimal)((float)dataRows / (float)pageSize));
-        claims = await client.GetFromJsonAsync<Dictionary<string, string>?>("api/admin/claims");
-        roles = await client.GetFromJsonAsync<Dictionary<string, string>?>("api/admin/roles");
-        users = await client.GetFromJsonAsync<Users[]>($"api/admin/get?page={currentPage}&pageSize={pageSize}&filter={filter}");
-        StateHasChanged();
-    }
-
-    async Task Delete(string Id)
-    {
-        var u = users?.First(x => x.Id == Id);
-        if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {u?.UserName} ({u?.Id})"))
-        {
-            await client.DeleteAsync($"api/admin/delete/{Id}");
-            await OnInitializedAsync();
-        }
-    }
-
-    async void onChangeGetFilter(ChangeEventArgs e)
-    {
-        filter = e.Value?.ToString();
-        await OnInitializedAsync();
-    }
-
-    async void onChangeResetFilter()
-    {
-        filter = "";
-        await OnInitializedAsync();
-    }
-
-    protected async Task GetCurrentPage(int CurrentPage)
-    {
-        currentPage = CurrentPage;
-        await OnInitializedAsync();
+        <Settings OnSettingsClosed="SettingsClosed" OnInputChanged="InputChanged" OnSettingsChanged="SettingsChanged" showColumns="@showColumns" settings="@settings" pageSize="@pageSize" />
     }
 }

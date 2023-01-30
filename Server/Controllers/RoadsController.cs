@@ -8,14 +8,8 @@ using ClosedXML.Excel;
 using Document = iTextSharp.text.Document;
 using Microsoft.Data.SqlClient;
 using Cargotruck.Shared.Models;
-using Microsoft.JSInterop;
-using DocumentFormat.OpenXml.Office.CustomUI;
-using DocumentFormat.OpenXml.Spreadsheet;
 using Font = iTextSharp.text.Font;
 using System.Text;
-using DocumentFormat.OpenXml.Office2010.Excel;
-using DocumentFormat.OpenXml.Drawing.Diagrams;
-using DocumentFormat.OpenXml.Vml.Office;
 
 namespace Cargotruck.Server.Controllers
 {

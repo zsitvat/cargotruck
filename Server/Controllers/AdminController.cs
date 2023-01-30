@@ -84,8 +84,8 @@ namespace Cargotruck.Server.Controllers
         {
             //var u = new Users { Id = id };
             var userForDelete = _context.Users.FirstOrDefault(a => a.Id == id);
-            _context?.Remove(userForDelete);
-            await _context.SaveChangesAsync();
+            _context?.RemoveRange(userForDelete!);
+            await _context?.SaveChangesAsync()!;
             return NoContent();
         }
     }

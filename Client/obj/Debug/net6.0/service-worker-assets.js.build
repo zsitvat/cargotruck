@@ -1,7 +1,7 @@
 ﻿self.assetsManifest = {
   "assets": [
     {
-      "hash": "sha256-ehm61fyL2viJXAIArS0Sv6\/Woo9np5miTr7LI2tEKHk=",
+      "hash": "sha256-WXisizilo6yv\/HfbiBmwwyEzMPvWyRP60\/Y\/Q+w0yDY=",
       "url": "css\/app.css"
     },
     {
@@ -113,7 +113,7 @@
       "url": "img\/profiles\/wh1gvarg.jpg"
     },
     {
-      "hash": "sha256-fCtQUhbkN61HLOcialkVJO85g7ElBOQaLg1gGIfiZwE=",
+      "hash": "sha256-MOJxfg0ICt9HO8Hiz4AoDT3JhRBw5umGEX7oiNuD72s=",
       "url": "index.html"
     },
     {
@@ -1049,23 +1049,23 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-x\/QdD7gqfOGsjleb2XoRk1oYEBPcQS6hP1h0AD5S1Xo=",
+      "hash": "sha256-gKe91XGQWVclenUdw3ik6UBf1FQQFUeBFmFfdBICJHo=",
       "url": "_framework\/Cargotruck.Shared.dll"
     },
     {
-      "hash": "sha256-7IPTibW\/\/WzdpBCWJ4NFjbtWjabBQlMyxO5TgRw5kHM=",
+      "hash": "sha256-dC0Oj0L8IOnMwHmBD\/0S5zcyFSIhPDVdhCoGEZSQYcw=",
       "url": "_framework\/Cargotruck.Shared.pdb"
     },
     {
-      "hash": "sha256-zLlhc\/wopmNoiEO3hX5CRmVm72rcEXynMnW9GZVVGNU=",
+      "hash": "sha256-GADx4oBryLgpZU8yOqYK+SkJ1UAxFrnRIyfA9XwQIpQ=",
       "url": "_framework\/en\/Cargotruck.Shared.resources.dll"
     },
     {
-      "hash": "sha256-OVsvydfOvrpIXs21S90CZDwVTT7cvxSCWDB4xYn7\/g8=",
+      "hash": "sha256-WmyvJmTCdvCAoisRjcSGRlQsl54WCKI\/eQxeEldj0Cs=",
       "url": "_framework\/Cargotruck.Client.dll"
     },
     {
-      "hash": "sha256-eQrpYP48881hrOK2ZiTQHq5SOetSRyRBdcWuhdnBGLA=",
+      "hash": "sha256-Z+oRQjFyc2all\/6kwWYLm1BGY4xANnDfX59nCqpRHck=",
       "url": "_framework\/Cargotruck.Client.pdb"
     },
     {
@@ -1073,7 +1073,7 @@
       "url": "_framework\/blazor.webassembly.js"
     },
     {
-      "hash": "sha256-riu1i7gIaTveYu\/O1Akccv5nUnze8YZvgGzkvoxpfCk=",
+      "hash": "sha256-Gk\/bnNLnDUpISBm2YEJpuRXY2FyMkRMTauoBlqee7HY=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -1081,5 +1081,5 @@
       "url": "_content\/Microsoft.AspNetCore.Components.WebAssembly.Authentication\/AuthenticationService.js"
     }
   ],
-  "version": "gmEYkOYT"
+  "version": "BC228AWY"
 };

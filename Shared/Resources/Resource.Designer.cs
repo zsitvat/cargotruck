@@ -457,6 +457,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Valuta váltás lekérésének ideje (mp).
+        /// </summary>
+        public static string CurrencyExchangeWaitTime {
+            get {
+                return ResourceManager.GetString("CurrencyExchangeWaitTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Adatok feltöltése.
         /// </summary>
         public static string Data_import {
@@ -831,6 +840,15 @@ namespace Cargotruck.Shared.Resources {
         public static string Error_purpose_of_the_trip {
             get {
                 return ResourceManager.GetString("Error_purpose_of_the_trip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A beállítás értékének megadása kötelező!.
+        /// </summary>
+        public static string Error_setting_value {
+            get {
+                return ResourceManager.GetString("Error_setting_value", resourceCulture);
             }
         }
         
