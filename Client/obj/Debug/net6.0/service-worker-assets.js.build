@@ -1,7 +1,7 @@
 ﻿self.assetsManifest = {
   "assets": [
     {
-      "hash": "sha256-WXisizilo6yv\/HfbiBmwwyEzMPvWyRP60\/Y\/Q+w0yDY=",
+      "hash": "sha256-pxZ\/lkTs7pDR7zh9siXQ9IE\/gwEZYqiwDOcu\/2lMDts=",
       "url": "css\/app.css"
     },
     {
@@ -113,7 +113,7 @@
       "url": "img\/profiles\/wh1gvarg.jpg"
     },
     {
-      "hash": "sha256-MOJxfg0ICt9HO8Hiz4AoDT3JhRBw5umGEX7oiNuD72s=",
+      "hash": "sha256-Oszz4HOXpJ+4+NgZd19O2sO\/HriPHUzBSAPdasi+Zcs=",
       "url": "index.html"
     },
     {
@@ -1049,23 +1049,23 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-gKe91XGQWVclenUdw3ik6UBf1FQQFUeBFmFfdBICJHo=",
+      "hash": "sha256-qD\/sW\/fkBkrTbJX1EL2reVblJty6lwLf2OMrMRl5N1o=",
       "url": "_framework\/Cargotruck.Shared.dll"
     },
     {
-      "hash": "sha256-dC0Oj0L8IOnMwHmBD\/0S5zcyFSIhPDVdhCoGEZSQYcw=",
+      "hash": "sha256-mXXYaqMRXbE4NB1DjkuyhkdtGd2755s0\/So1tKFfTtc=",
       "url": "_framework\/Cargotruck.Shared.pdb"
     },
     {
-      "hash": "sha256-GADx4oBryLgpZU8yOqYK+SkJ1UAxFrnRIyfA9XwQIpQ=",
+      "hash": "sha256-eP0HLbXYoOnRTaXXIE+6+\/4abO+slh3G4YK72eVks7c=",
       "url": "_framework\/en\/Cargotruck.Shared.resources.dll"
     },
     {
-      "hash": "sha256-WmyvJmTCdvCAoisRjcSGRlQsl54WCKI\/eQxeEldj0Cs=",
+      "hash": "sha256-fCN+f5PvAG+GYt+etQAgl4fAWNGt9275fPXmf2qlry0=",
       "url": "_framework\/Cargotruck.Client.dll"
     },
     {
-      "hash": "sha256-Z+oRQjFyc2all\/6kwWYLm1BGY4xANnDfX59nCqpRHck=",
+      "hash": "sha256-Db1dp+QRTAFpp+aec9OT3WOpmvsMedTS7kVBjSJbmyk=",
       "url": "_framework\/Cargotruck.Client.pdb"
     },
     {
@@ -1073,7 +1073,7 @@
       "url": "_framework\/blazor.webassembly.js"
     },
     {
-      "hash": "sha256-Gk\/bnNLnDUpISBm2YEJpuRXY2FyMkRMTauoBlqee7HY=",
+      "hash": "sha256-UuXGYdPB7rxWZ4c8Vya7wdd+ajMSy+LRwi3oNwTZiTw=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -1081,5 +1081,5 @@
       "url": "_content\/Microsoft.AspNetCore.Components.WebAssembly.Authentication\/AuthenticationService.js"
     }
   ],
-  "version": "BC228AWY"
+  "version": "QrtJC+xJ"
 };

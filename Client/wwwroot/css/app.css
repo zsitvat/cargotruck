@@ -634,7 +634,7 @@ input[type=number] {
     padding-top: 0.8rem;
     padding-bottom: 0.8rem;
     width: 100%;
-    background-color: white;
+    background-color: #fff;
     box-shadow: 0 1px 2px rgb(0 0 0 / 10%), 0 -1px 0 rgb(0 0 0 / 2%);
     z-index: 0;
 }
@@ -1290,6 +1290,106 @@ tbody td:first-child{
 tr td:first-child {
     padding-right: 10px !important;
     padding-left: 12px !important;
+}
+
+/*DARK MODE*/
+
+.darkmode {
+    background-color: rgb(32,42,56) !important;
+}
+
+.darkmode .box, .darkmode .top-row, .darkmode .form-card {
+    background-color: #243140 !important;
+    color: rgba(160,180,200,.85) !important;
+    border-color: #243140 !important;
+}
+
+.darkmode table {
+    color: rgba(160,180,200,.85) !important;
+}
+
+.darkmode a, .darkmode p, .darkmode span, .darkmode h1, .darkmode h2, .darkmode h3 {
+    color: rgba(160,180,200,.85) !important;
+}
+
+.darkmode .btn-light, .darkmode .form-control {
+    border-color: rgba(120,130,140,.2) !important;
+    background-color: #243140 !important;
+    color: rgba(160,180,200,.85) !important;
+}
+
+/*Switch*/
+.switch-icon-light {
+    position: absolute;
+    left: -25px;
+
+}
+
+.switch-icon-dark{
+    position: absolute;
+    left: 54px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 20px;
+    margin-right: 30px;
+    margin-left: 20px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 13px;
+    width: 13px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
 }
 
 /*Scroll bar css*/

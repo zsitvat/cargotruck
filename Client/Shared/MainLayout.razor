@@ -3,7 +3,22 @@
 @inherits LayoutComponentBase
 @inject IStringLocalizer<Resource> localizer
 
-<div class="page" >
+@if (darkmode)
+{
+    <style>
+        html, body {
+            background: #202A38;
+        }
+
+         .bottom-row, .bottom-row span {
+            background-color: #243140 !important;
+            color: rgba(160,180,200,.85) !important;
+            border-color: #243140 !important;
+        }
+    </style>
+}
+
+<div class="page @(darkmode ? "darkmode" :"")" >
     <div class="sidebar" @onclick="()=>expandSubMenu= false">
         <NavMenu />
     </div>
@@ -13,7 +28,7 @@
             <NavLink href="/Privacy">
                 <span class="about ms-5" aria-hidden="true">@localizer["Privacy"]</span>
             </NavLink>
-
+           
             @if (currency_api_error != null && currency_api_error != "")
             {    
                 <div class="d-inline-block">
@@ -29,6 +44,17 @@
                 </div>
             }
 
+            <label class="switch">
+                <i style="@(darkmode ? "visibility: hidden;" : "")">
+                    <span class="icon iconify switch-icon-light" data-icon="emojione-monotone:sun"></span>
+                </i>
+                <input type="checkbox" @onchange="@(async ()=>{darkmode = !darkmode;await OnParametersSetAsync();})">
+                <span class="slider round"></span>
+                <i style="@(darkmode ? "" : "visibility: hidden;")">
+                    <span class="icon iconify switch-icon-dark" data-icon="bi:moon-fill"></span>
+                </i>
+            </label>
+      
             <AuthorizeView>
                 <Authorized>
                     <li class="username" @onclick="()=>expandSubMenu= !expandSubMenu">
@@ -90,9 +116,10 @@
     string? currency_api_error;
     [CascadingParameter]
     Task<AuthenticationState>? AuthenticationState { get; set; }
+    static bool darkmode = false;
 
     protected override async Task OnParametersSetAsync()
-    {
+    {     
         if (!(await AuthenticationState!).User.Identity!.IsAuthenticated)
         {
             if (!navigationManager.Uri.ToString().Contains("login") && !navigationManager.Uri.ToString().Contains("Privacy"))
@@ -103,8 +130,8 @@
         else
         {
 
-            var settings = (await client.GetFromJsonAsync<Settings>("api/settings/getwaittime"));
-            int waitTimeInSecond = settings != null ? Int32.Parse(settings?.SettingValue!) : 0;
+            var getWaitTimeSetting = (await client.GetFromJsonAsync<Settings>("api/settings/getwaittime"));
+            int waitTimeInSecond = getWaitTimeSetting != null ? Int32.Parse(getWaitTimeSetting?.SettingValue!) : 0;
             DateTime date = DateTime.Now;
             var dateWithWaitTime = CurrencyExchange.CurrencyApiDate?.AddSeconds(waitTimeInSecond);
 
