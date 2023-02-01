@@ -12,8 +12,12 @@ option {
     box-shadow: rgb(0 0 0 / 16%) 0px 1px 4px;
 }
 
-label{
-    font-size:14px;
+.input-group {
+    margin-top: 1.5rem;
+}
+
+label {
+    font-size: 14px;
 }
 
 .content {
@@ -142,10 +146,6 @@ a:active {
 
 .content {
     padding-top: 1.1rem;
-}
-
-.valid.modified:not([type=checkbox]) {
-    outline: 1px solid #26b050;
 }
 
 .invalid {
@@ -626,6 +626,8 @@ input[type=number] {
 .validation-message {
     font-size: 13px;
     position: absolute;
+    top:2.2rem;
+    left:2rem;
 }
 
 .bottom-row {
@@ -1022,7 +1024,6 @@ input[type=number] {
 .custom-file-input::before {
     content: url('https://api.iconify.design/oi/data-transfer-upload.svg');
     display: inline-block;
-    background: white;
     white-space: nowrap;
     -webkit-user-select: none;
     cursor: pointer;
@@ -1183,6 +1184,10 @@ ul, li {
     list-style-type: none;
 }
 
+.valid {
+    border: 1px solid #ced4da;
+}
+
 .username-dropdown {
     position: fixed;
     top: 3.55rem;
@@ -1295,34 +1300,74 @@ tr td:first-child {
 /*DARK MODE*/
 
 .darkmode {
-    background-color: rgb(32,42,56) !important;
+    background: #1e2835 !important;
 }
 
-.darkmode .box, .darkmode .top-row, .darkmode .form-card {
-    background-color: #243140 !important;
+.darkmode .sidebar {
+    background: rgb(25,34,45) !important;
+}
+
+.darkmode .validation-message {
+    color: rgb(139,0,0);
+}
+
+.darkmode .invalid {
+    outline: 1px solid rgb(139,0,0);
+}
+
+.darkmode .box, .darkmode .top-row, .darkmode .form-card, .darkmode .login-card, .darkmode .card, .darkmode .card2, .darkmode .settings-card {
+    background-color: rgb(36, 49, 64) !important;
     color: rgba(160,180,200,.85) !important;
     border-color: #243140 !important;
 }
 
-.darkmode table {
-    color: rgba(160,180,200,.85) !important;
+.darkmode table, .darkmode table button {
+    color: #d7d7d7 !important;
 }
 
-.darkmode a, .darkmode p, .darkmode span, .darkmode h1, .darkmode h2, .darkmode h3 {
-    color: rgba(160,180,200,.85) !important;
+.darkmode a, .darkmode p, .darkmode span, .darkmode h1, .darkmode h2, .darkmode h3, .darkmode .custom-file-input::before, .darkmode label {
+    color: #d7d7d7 !important;
 }
 
-.darkmode .btn-light, .darkmode .form-control {
-    border-color: rgba(120,130,140,.2) !important;
+ .darkmode .username-dropdown, .darkmode .username-dropdown li {
     background-color: #243140 !important;
-    color: rgba(160,180,200,.85) !important;
+    color: #d7d7d7 !important;
+}
+
+.darkmode .username-dropdown li:hover, .darkmode top-nav-profile:hover {
+    background-color: rgba(0,0,0,.275) !important;
+}
+
+.darkmode .form-control, .darkmode .inputs, .darkmode .valid, .darkmode .login-input-group-text, .darkmode .btn-light, .darkmode .number-input {
+    background-color: rgba(120,130,140,.2) !important;
+    color: #d7d7d7 !important;
+    border-color: rgba(120,130,140,.2);
+}
+
+.darkmode .btn-light {
+    border-color: rgba(120,130,140,.2) !important;
+}
+
+.darkmode ::-webkit-scrollbar-track {
+    background-color: rgba(120,130,140,.2) !important;
+}
+
+.darkmode .color-on-hover {
+    background-color: rgba(255,255,255,0.1) !important;
+}
+
+.darkmode .top-buttons-card {
+    background: rgb(25,34,45) !important;
+}
+
+.darkmode .red{
+    background-color:red !important;
 }
 
 /*Switch*/
 .switch-icon-light {
     position: absolute;
     left: -25px;
-
 }
 
 .switch-icon-dark{

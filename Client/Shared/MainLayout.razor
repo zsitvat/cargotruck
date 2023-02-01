@@ -7,7 +7,7 @@
 {
     <style>
         html, body {
-            background: #202A38;
+            background: #191c24;
         }
 
          .bottom-row, .bottom-row span {
@@ -48,7 +48,7 @@
                 <i style="@(darkmode ? "visibility: hidden;" : "")">
                     <span class="icon iconify switch-icon-light" data-icon="emojione-monotone:sun"></span>
                 </i>
-                <input type="checkbox" @onchange="@(async ()=>{darkmode = !darkmode;await OnParametersSetAsync();})">
+                <input type="checkbox" @onchange="@(async ()=>await darkMode())" checked="@darkmode">
                 <span class="slider round"></span>
                 <i style="@(darkmode ? "" : "visibility: hidden;")">
                     <span class="icon iconify switch-icon-dark" data-icon="bi:moon-fill"></span>
@@ -116,10 +116,18 @@
     string? currency_api_error;
     [CascadingParameter]
     Task<AuthenticationState>? AuthenticationState { get; set; }
-    static bool darkmode = false;
+    static bool darkmode;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var settings = await client.GetFromJsonAsync<Settings[]>("api/settings/get");
+        var DarkModeSetting = (settings?.Where(x => x.SettingName == "darkmode" && x.SettingValue == (AuthenticationState!).Result.User.Identity?.Name));
+        darkmode = (DarkModeSetting?.Count() > 0 ? true : false);
+        await base.OnInitializedAsync();
+    }
 
     protected override async Task OnParametersSetAsync()
-    {     
+    {
         if (!(await AuthenticationState!).User.Identity!.IsAuthenticated)
         {
             if (!navigationManager.Uri.ToString().Contains("login") && !navigationManager.Uri.ToString().Contains("Privacy"))
@@ -129,7 +137,6 @@
         }
         else
         {
-
             var getWaitTimeSetting = (await client.GetFromJsonAsync<Settings>("api/settings/getwaittime"));
             int waitTimeInSecond = getWaitTimeSetting != null ? Int32.Parse(getWaitTimeSetting?.SettingValue!) : 0;
             DateTime date = DateTime.Now;
@@ -150,7 +157,7 @@
                         currency_api_error = "currency_api_is_exceeded";
                     }
                 }
-               
+
                 if (CurrencyExchange.Rates != null)
                 {
                     CurrencyExchange.CurrencyApiDate = new(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, 0, 0);
@@ -166,5 +173,21 @@
         navigationManager.NavigateTo("/login");
     }
 
-
+    async Task darkMode()
+    {
+        if (darkmode)
+        {
+            var settings = await client.GetFromJsonAsync<Settings[]>("api/settings/get");
+            var DarkModeSetting = (settings?.FirstOrDefault(x => x.SettingName == "darkmode" && x.SettingValue == (AuthenticationState!).Result.User.Identity?.Name));
+            await client.DeleteAsync($"api/settings/delete/{DarkModeSetting?.Id}");
+        }
+        else
+        {
+            Settings setting = new();
+            setting.SettingValue = (AuthenticationState!).Result.User.Identity?.Name;
+            setting.SettingName = "darkmode";
+            await client.PostAsJsonAsync("api/settings/post", setting);
+        }
+        await OnInitializedAsync();
+    }
 }
