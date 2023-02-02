@@ -8,6 +8,7 @@ using System.Globalization;
 using Refit;
 using System.Net.Http.Headers;
 using System.Net.Http;
+using Blazored.SessionStorage;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -22,6 +23,7 @@ builder.Services.AddScoped<CustomStateProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider>(s => s.GetRequiredService<CustomStateProvider>());
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddSingleton<PageHistoryState>(); //back to prievouse page
+builder.Services.AddBlazoredSessionStorage();
 
 var host = builder.Build();
 

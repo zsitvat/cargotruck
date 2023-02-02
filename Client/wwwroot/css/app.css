@@ -553,15 +553,6 @@ table th button {
     color: rgb(229,237,254);
 }
 
-.forms-margin {
-    margin-left: 20%;
-    margin-top: 0.5rem;
-}
-
-.forms-margin label {
-    margin-top: 1rem;
-}
-
 .form-group label{
     margin-bottom:2px;
 }
@@ -653,6 +644,40 @@ input[type=number] {
 
 .card-body {
     padding: 0.5rem 0.5rem;
+}
+
+.forms-margin {
+    margin-left: 12%;
+    margin-top: 0.5rem;
+}
+
+.forms-margin label, .forms-margin-col label {
+    margin-top: 1rem;
+}
+
+.forms-margin-col {
+    margin-left: 6rem;
+    margin-top: 0.5rem;
+}
+
+.form-card input[type=number]{
+    max-width:inherit;
+}
+
+.form-card select {
+    width: 12.6rem;
+}
+
+.form {
+    max-width: 42rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form-col {
+    max-width: 25rem;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .privacy-card {
@@ -773,6 +798,12 @@ input[type=number] {
     padding-bottom: 0.25rem;
 }
 
+.getbyid-card select {
+    position:absolute;
+    left:2rem;
+    top:1rem;
+}
+
 .box-shadow-0, .box-shadow-0 .box, .box-shadow-0 .box-color {
     box-shadow: 0 0 1px rgb(0 0 0 / 15%);
 }
@@ -845,7 +876,7 @@ input[type=number] {
 
 .edit-title {
     position: absolute;
-    left: 5rem;
+    left: 3rem;
     top:1rem;
     color: #F5F7FA;
     font-weight: 300;
@@ -1315,23 +1346,31 @@ tr td:first-child {
     outline: 1px solid rgb(139,0,0);
 }
 
-.darkmode .box, .darkmode .top-row, .darkmode .form-card, .darkmode .login-card, .darkmode .card, .darkmode .card2, .darkmode .settings-card {
+.darkmode .box, .darkmode .top-row, .darkmode .form-card, .darkmode .login-card, .darkmode .card, .darkmode .card2, .darkmode .settings-card, .darkmode .getbyid-card {
     background-color: rgb(36, 49, 64) !important;
     color: rgba(160,180,200,.85) !important;
     border-color: #243140 !important;
 }
 
-.darkmode table, .darkmode table button {
-    color: #d7d7d7 !important;
+.darkmode table, .darkmode table button, .darkmode .export-buttons button {
+    color: #bab3b3 !important;
+}
+
+.darkmode .export-buttons button:hover {
+    background-color: rgba(255,255,255,0.1) !important;
+}
+
+.darkmode .green {
+    background: rgba(129, 238, 136,.2) !important;
 }
 
 .darkmode a, .darkmode p, .darkmode span, .darkmode h1, .darkmode h2, .darkmode h3, .darkmode .custom-file-input::before, .darkmode label {
-    color: #d7d7d7 !important;
+    color: #bab3b3 !important;
 }
 
- .darkmode .username-dropdown, .darkmode .username-dropdown li {
+.darkmode .username-dropdown, .darkmode .username-dropdown li {
     background-color: #243140 !important;
-    color: #d7d7d7 !important;
+    color: #bab3b3 !important;
 }
 
 .darkmode .username-dropdown li:hover, .darkmode top-nav-profile:hover {
@@ -1340,8 +1379,14 @@ tr td:first-child {
 
 .darkmode .form-control, .darkmode .inputs, .darkmode .valid, .darkmode .login-input-group-text, .darkmode .btn-light, .darkmode .number-input {
     background-color: rgba(120,130,140,.2) !important;
-    color: #d7d7d7 !important;
+    color: #bab3b3 !important;
     border-color: rgba(120,130,140,.2);
+}
+
+.darkmode option, .darkmode .export-buttons {
+    background-color: #243140 !important;
+    color: #bab3b3 !important;
+    border: 1px solid #243140 !important;
 }
 
 .darkmode .btn-light {
@@ -1352,6 +1397,10 @@ tr td:first-child {
     background-color: rgba(120,130,140,.2) !important;
 }
 
+.darkmode ::-webkit-scrollbar-thumb {
+    background: rgba(136, 136, 136,.2);
+}
+
 .darkmode .color-on-hover {
     background-color: rgba(255,255,255,0.1) !important;
 }
@@ -1360,9 +1409,23 @@ tr td:first-child {
     background: rgb(25,34,45) !important;
 }
 
-.darkmode .red{
-    background-color:red !important;
+.darkmode .red {
+    background-color: rgba(150, 0, 0,.5) !important;
 }
+
+.darkmode .x {
+    background-color: rgba(150, 0, 0,.5) !important;
+    border-color: rgba(150, 0, 0,.5) !important;
+}
+
+.darkmode .form-check-input:checked {
+    background-color: #2196F3;
+    border-color: #2196F3;
+}
+
+.darkmode .box, .darkmode .form-card, .darkmode .settings-card, .darkmode .getbyid-card {
+    border-radius: 0.25rem;
+    }
 
 /*Switch*/
 .switch-icon-light {
@@ -1382,6 +1445,10 @@ tr td:first-child {
     height: 20px;
     margin-right: 30px;
     margin-left: 20px;
+}
+
+.switch svg {
+    color:#888;
 }
 
 .switch input {
@@ -1506,7 +1573,7 @@ input:checked + .slider:before {
 
     .second-col {
         position: relative;
-        top: -5rem;
+        top: -4.7rem;
     }
     .center-div {
         margin-left: 40%;
@@ -1530,6 +1597,10 @@ input:checked + .slider:before {
     .profile-form input {
         width: 19rem;
         margin-top: 1%;
+    }
+
+    .buttons {
+        margin-top: -12px;
     }
 }
 

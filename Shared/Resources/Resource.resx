@@ -432,6 +432,9 @@
   <data name="Expenses_menu" xml:space="preserve">
     <value>Pénzügyek</value>
   </data>
+  <data name="Expenses_per_year" xml:space="preserve">
+    <value>Éves kiadások</value>
+  </data>
   <data name="Expense_id" xml:space="preserve">
     <value>Kiadás azonosító</value>
   </data>

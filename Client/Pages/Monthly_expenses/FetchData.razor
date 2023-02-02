@@ -208,9 +208,12 @@ else
         </div>
     </div>
 
+
+    <h3 class="mb-3 mt-3">@localizer["Expenses_per_year"]</h3>
     <div class="hideandshow-cards">
         @if (fullYearProfitWindow && Monthly_expenses != null)
         {
+            
             <FullYearProfits />
         }
         @if (settings)

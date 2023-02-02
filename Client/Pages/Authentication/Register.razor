@@ -34,8 +34,8 @@
         <InputText type="password" id="inputPasswordConfirm" class="form-control"  @bind-Value="@registerRequest.PasswordConfirm" />
         <ValidationMessage For="@(() => registerRequest.PasswordConfirm)" />
 
-        <label for="inputRole" class="input-only inputs">@localizer["Role"]</label>
-        <select for="inputRole" class="form-control" name="role" id="role" @bind="@registerRequest.Role">
+        <label for="inputRole" class="input-only">@localizer["Role"]</label>
+        <select for="inputRole" class="form-control inputs" name="role" id="role" @bind="@registerRequest.Role">
             <option value="User">@localizer["User"]</option>
             <option value="Admin">@localizer["Admin"]</option>
             <option value="Driver">@localizer["Driver"]</option>

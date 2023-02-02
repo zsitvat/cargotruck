@@ -158,3 +158,4 @@ F:\Szakdoga app\Cargotruck\Server\bin\Debug\net6.0\runtimes\win-x86\native\libSk
 F:\Szakdoga app\Cargotruck\Server\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
 F:\Szakdoga app\Cargotruck\Server\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
 F:\Szakdoga app\Cargotruck\Server\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Text.Encoding.CodePages.dll
+F:\Szakdoga app\Cargotruck\Server\bin\Debug\net6.0\Blazored.SessionStorage.dll

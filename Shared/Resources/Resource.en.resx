@@ -429,6 +429,9 @@
   <data name="Expenses_menu" xml:space="preserve">
     <value>Financial menu</value>
   </data>
+  <data name="Expenses_per_year" xml:space="preserve">
+    <value>Expenses per year</value>
+  </data>
   <data name="Expense_id" xml:space="preserve">
     <value>Expense ID</value>
   </data>

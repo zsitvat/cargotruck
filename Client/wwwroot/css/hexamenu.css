@@ -1,10 +1,8 @@
 ﻿body {
     font-weight: 400;
     font-size: 16px;
-    line-height: 30px;
-    
+    line-height: 30px;  
     overflow-x: hidden;
-    color: #ababab;
 }
 
 .heading-page {

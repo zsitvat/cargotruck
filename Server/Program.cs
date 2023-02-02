@@ -15,6 +15,7 @@ using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using static Org.BouncyCastle.Math.EC.ECCurve;
 using Cargotruck.Server.Controllers;
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
+using Blazored.SessionStorage;
 
 // create appsettings.json if not exist
 const string File_name = "appsettings.json";
@@ -50,7 +51,6 @@ builder.Services.AddMvc().AddControllersAsServices();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 //localization service
 builder.Services.AddLocalization();
-
 
 CultureInfo[] supportedCultures = new[]
 {

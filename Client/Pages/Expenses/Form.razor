@@ -1,6 +1,6 @@
 ﻿
 
-<EditForm Model="@expenses" OnValidSubmit="@OnValidSubmit">
+<EditForm class="form-col" Model="@expenses" OnValidSubmit="@OnValidSubmit">
     <DataAnnotationsValidator />
     <div class="top-buttons-card">
         <div class="card-body">
@@ -21,7 +21,7 @@
 
     <div class="form-card mb-6" style="border-top-left-radius:unset;border-top-right-radius:unset;">
         <div class="card-body mb-3">
-            <div class="d-inline-block forms-margin center-div">
+            <div class="d-inline-block forms-margin-col">
                 <div class="form-group">
                     <div>
                         <label>@localizer["Type"]:</label>

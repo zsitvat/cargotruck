@@ -1024,6 +1024,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Éves kiadások.
+        /// </summary>
+        public static string Expenses_per_year {
+            get {
+                return ResourceManager.GetString("Expenses_per_year", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Adatok letöltése.
         /// </summary>
         public static string export {

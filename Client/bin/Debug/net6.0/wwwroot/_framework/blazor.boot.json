@@ -7,13 +7,14 @@
   "linkerEnabled": false,
   "resources": {
     "assembly": {
+      "Blazored.SessionStorage.dll": "sha256-l3vyo6fcSWWhGiOMu5\/e4tQzZa7c+U1d1hHPGo74WFc=",
       "EntityFramework.SqlServer.dll": "sha256-vivNycD\/SihlyOUpb2o8h8IkEf8mjl7\/MP3PX4slYeI=",
       "EntityFramework.dll": "sha256-6tusYE7+HqAnLRKF9I41hUGXiqHRmO8EILDlIseTuLQ=",
-      "Microsoft.AspNetCore.Authorization.dll": "sha256-gbA+AujHUUBawZgIGQVo3vLdHlkaD7QLRM0dStUecSM=",
-      "Microsoft.AspNetCore.Components.dll": "sha256-+gNaJML9x0hS\/cLcBimAURDK\/S8nSWJZkTCaP5lgRys=",
+      "Microsoft.AspNetCore.Authorization.dll": "sha256-QoBf8ZUgaWJCUGT3n4SViOqz82zpsFTQBgBR38X0SQM=",
+      "Microsoft.AspNetCore.Components.dll": "sha256-3t65GOJ1de1VQDnrDvkwNxyXORtXOrSScKJat53tcj0=",
       "Microsoft.AspNetCore.Components.Authorization.dll": "sha256-9+8\/yERgTpi3ZfI6AAGlVvAMp+l67mW6GLhfzVwz7KY=",
-      "Microsoft.AspNetCore.Components.Forms.dll": "sha256-uEDGfx46VmVIFGVu1clYPrq64JTRcayMUjUw1cr6Zck=",
-      "Microsoft.AspNetCore.Components.Web.dll": "sha256-w22hRC5++AfKK8AS70s3daNJlRW\/viXntxDuPRM\/+AY=",
+      "Microsoft.AspNetCore.Components.Forms.dll": "sha256-sfS5IbIUmHlbq+IYA0kCaqZP3A4mW9Db27+02FHezQg=",
+      "Microsoft.AspNetCore.Components.Web.dll": "sha256-S1xltauXSvwtrfRfttJgmFlN0Vity8xM7gZyCf1Be+s=",
       "Microsoft.AspNetCore.Components.WebAssembly.dll": "sha256-hLMWN1JTzfCVYXQOq6G1tEFmu+D4tn+hSbJf4nG+7K4=",
       "Microsoft.AspNetCore.Components.WebAssembly.Authentication.dll": "sha256-9ACAy0u\/HxZQee0qsQJEeCpuORI+KJAea2nM7lTkg4w=",
       "Microsoft.AspNetCore.Cors.dll": "sha256-a6fdLU2+pLdxE\/8nxhssfgbn7Zn+9mX5+7R3vdMhHkQ=",
@@ -23,7 +24,7 @@
       "Microsoft.AspNetCore.Http.Extensions.dll": "sha256-dsGZ+sGJdrYngMg72CIF31THFtl6ovcKTjtGtj9orn8=",
       "Microsoft.AspNetCore.Http.Features.dll": "sha256-J2xQUZ4BD6tsrQkvGS5HDQfkTGMzmaS76TA9nJrtCpg=",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll": "sha256-qipfr0xKM+exxPMLzR6SSE1cn66D9+Jo877+mnaxq+8=",
-      "Microsoft.AspNetCore.Metadata.dll": "sha256-\/8AsKpzt2ePKd\/B1\/dolnQ2PeDqEV+rYUcJOnL4\/PXE=",
+      "Microsoft.AspNetCore.Metadata.dll": "sha256-K3FoLKXSEzoky5knG0YNJtSbJeUnWnZojUlEIM7jV8E=",
       "Microsoft.EntityFrameworkCore.dll": "sha256-HAnVpahGlDpGjkRFFavM2v5MeH3AA+9fXQIwuvOBxGE=",
       "Microsoft.EntityFrameworkCore.Abstractions.dll": "sha256-AAtemKKXOwan6aQL5qZAqof+yNTFvocERKYvHh2Zn0g=",
       "Microsoft.EntityFrameworkCore.Relational.dll": "sha256-ii1xaFFSS9BcxKFneNTt9JfGVEmodvFZIuSChcx5GAw=",
@@ -48,7 +49,7 @@
       "Microsoft.Extensions.Logging.Abstractions.dll": "sha256-TeK78LW1mefI\/Ao7uFcK6TBhgjx9HUMSm3nqBsUC6pI=",
       "Microsoft.Extensions.Options.dll": "sha256-eGESyy9mRu8RcCGajAu4E8nxSmeB5nxiZkFPVaZ5Vl0=",
       "Microsoft.Extensions.Primitives.dll": "sha256-jOmoWSfsdQexH\/6QCA56gR1RMEqeix2iDDUBWbpAOQI=",
-      "Microsoft.JSInterop.dll": "sha256-Q4f+LWDtWpXnnYHUde+5rI1mzDPNsZKlAw2vLmj7x1I=",
+      "Microsoft.JSInterop.dll": "sha256-f+J4A5N3h7YHoA6RK6isPqRQBhMgDi4wEGUnCC32ag0=",
       "Microsoft.JSInterop.WebAssembly.dll": "sha256-o6JgCcWyug2MjyXwx54FHRaCf1DjpJzEkG2GKhlSyL4=",
       "Microsoft.Net.Http.Headers.dll": "sha256-P66ftDrXwc6ayND8uYzIk0CPQy1GjNZAPHx9RMhi3V4=",
       "Microsoft.Win32.SystemEvents.dll": "sha256-56MWX7GCuiW+O0EPzkUo0jj6T\/mhpVB6x+UFQtaS2qE=",
@@ -230,15 +231,15 @@
       "mscorlib.dll": "sha256-KqZqU1imWCwJ9UPDElyoolN8s7Yqhjk67wuOohFN5KA=",
       "netstandard.dll": "sha256-kBK\/QJy7\/skP97jqnvXnOFMrhWS8HZ1bsADFK\/gZkyM=",
       "System.Private.CoreLib.dll": "sha256-3webPuyNUXfAFKY5c1tC\/jBVrjZHelBwvXrr1E9VJuk=",
-      "Cargotruck.Shared.dll": "sha256-qD\/sW\/fkBkrTbJX1EL2reVblJty6lwLf2OMrMRl5N1o=",
-      "Cargotruck.Client.dll": "sha256-o3hQBmI9ganRRHb9qhlwyvO7UwuLJrE\/VcvRZa+LyFk="
+      "Cargotruck.Shared.dll": "sha256-QntSTnZh3xTMXJgL6yPRdpo+xhXCVKRTGu8mKsILvH8=",
+      "Cargotruck.Client.dll": "sha256-VPSl5iJd91aVGIgPV3GDQPVqEVaXWwKSWFFzrVKoaaw="
     },
     "extensions": null,
     "lazyAssembly": null,
     "libraryInitializers": null,
     "pdb": {
-      "Cargotruck.Shared.pdb": "sha256-mXXYaqMRXbE4NB1DjkuyhkdtGd2755s0\/So1tKFfTtc=",
-      "Cargotruck.Client.pdb": "sha256-+Iw6MS421Mm7xrLEh4eN\/Xb1aOMCorQCU\/iEQG1QYy8="
+      "Cargotruck.Shared.pdb": "sha256-77Zh2hMfPCCVo9HFdi8W+Dtz9ErWLx2VvDSpaH\/iFvg=",
+      "Cargotruck.Client.pdb": "sha256-nQgT5P0DXEH4H1FJ3A7x0psZNukGnKQxC5X4YYL2mDY="
     },
     "runtime": {
       "dotnet.6.0.13.wyf4pl6fej.js": "sha256-X\/515F1HEzgsDZdY8BJjt8YUwrWngHGZkMnpClhsrpY=",
@@ -257,7 +258,7 @@
     },
     "satelliteResources": {
       "en": {
-        "en\/Cargotruck.Shared.resources.dll": "sha256-eP0HLbXYoOnRTaXXIE+6+\/4abO+slh3G4YK72eVks7c="
+        "en\/Cargotruck.Shared.resources.dll": "sha256-RG2OXHZnhNASOa3vxv3eKMKSOL4SwoR9Y+IB8A0p5R0="
       }
     }
   }
