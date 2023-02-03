@@ -17,18 +17,18 @@ namespace Cargotruck.Data
             Database.EnsureCreated();
             //Database.Migrate();
         }
-        public DbSet<Users> Users { get; set; }
-        public DbSet<Tasks> Tasks { get; set; }
-        public DbSet<Cargoes> Cargoes { get; set; }
-        public DbSet<Expenses> Expenses { get; set; }
-        public DbSet<Monthly_expenses> Monthly_Expenses { get; set; }
-        public DbSet<Monthly_expenses_tasks_expenses> Monthly_expenses_tasks_expenses { get; set; }
-        public DbSet<Roads> Roads { get; set; }
-        public DbSet<Trucks> Trucks { get; set; }
-        public DbSet<Warehouses> Warehouses { get; set; }
-        public DbSet<Privacies> Privacies { get; set; }
-        public DbSet<Logins> Logins { get; set; }
-        public DbSet<Settings> Settings { get; set; }
+        public override DbSet<Users> Users { get; set; } = default!;
+        public DbSet<Tasks> Tasks { get; set; } = default!;
+        public DbSet<Cargoes> Cargoes { get; set; } = default!;
+        public DbSet<Expenses> Expenses { get; set; } = default!;
+        public DbSet<Monthly_expenses> Monthly_Expenses { get; set; } = default!;
+        public DbSet<Monthly_expenses_tasks_expenses> Monthly_expenses_tasks_expenses { get; set; } = default!;
+        public DbSet<Roads> Roads { get; set; } = default!;
+        public DbSet<Trucks> Trucks { get; set; } = default!;
+        public DbSet<Warehouses> Warehouses { get; set; } = default!;
+        public DbSet<Privacies> Privacies { get; set; } = default!;
+        public DbSet<Logins> Logins { get; set; } = default!;
+        public DbSet<Settings> Settings { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

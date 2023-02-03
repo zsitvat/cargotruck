@@ -370,7 +370,7 @@ namespace Cargotruck.Server.Controllers
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(road.Purpose_of_the_trip.ToString())) { s = road.Purpose_of_the_trip.ToString(); }
+                    if (!string.IsNullOrEmpty(road.Purpose_of_the_trip?.ToString())) { s = road.Purpose_of_the_trip.ToString(); }
                     else { s = "-"; }
                     table.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
@@ -461,7 +461,7 @@ namespace Cargotruck.Server.Controllers
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(road.Direction.ToString())) { s = road.Direction.ToString(); }
+                    if (!string.IsNullOrEmpty(road.Direction?.ToString())) { s = road.Direction.ToString(); }
                     else { s = "-"; }
                     table2.AddCell(new PdfPCell(new Phrase(s.ToString() == "TO" ? lang == "hu" ? Cargotruck.Shared.Resources.Resource.to : "Go to the direction" : lang == "hu" ? Cargotruck.Shared.Resources.Resource.from : "Go from the direction", font2))
                     {

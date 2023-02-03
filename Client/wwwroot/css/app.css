@@ -1122,6 +1122,29 @@ input[type=number] {
     font-size: 12px;
 }
 
+.date-filter input:focus {
+    box-shadow: unset;
+    border: 1px solid #ced4da;
+}
+
+.date-filter-icon-div {
+    position: absolute;
+    left: -20px;
+    color: black;
+    background-color: white;
+    padding: 0.5rem 0.7rem 0.4rem 0.7rem;
+    height: 3.85rem;
+    border: 1px solid #ced4da;
+    border-top-left-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
+}
+
+.date-filter-icon {
+    position: absolute;
+    left: 1px;
+    top:1.3rem;
+}
+
 .currency {
     display: inline-block;
     margin-left: 1rem;
@@ -1383,6 +1406,10 @@ tr td:first-child {
     border-color: rgba(120,130,140,.2);
 }
 
+.darkmode .custom-file-input::before {
+    content: url('https://api.iconify.design/oi/data-transfer-upload.svg?color=%23bab3b3');
+}
+
 .darkmode option, .darkmode .export-buttons {
     background-color: #243140 !important;
     color: #bab3b3 !important;
@@ -1414,8 +1441,8 @@ tr td:first-child {
 }
 
 .darkmode .x {
-    background-color: rgba(150, 0, 0,.5) !important;
-    border-color: rgba(150, 0, 0,.5) !important;
+    background-color: rgba(150, 0, 0,.7) !important;
+    border: none !important;
 }
 
 .darkmode .form-check-input:checked {
@@ -1425,7 +1452,14 @@ tr td:first-child {
 
 .darkmode .box, .darkmode .form-card, .darkmode .settings-card, .darkmode .getbyid-card {
     border-radius: 0.25rem;
-    }
+ }
+
+.darkmode .date-filter-icon-div {
+    color: #bab3b3;
+    background-color: #19222D !important;
+    z-index: 500;
+    border: unset;
+}
 
 /*Switch*/
 .switch-icon-light {
@@ -1787,6 +1821,10 @@ input:checked + .slider:before {
 }
 
 @media (max-width: 640px) {
+
+    .date-filter{
+        margin-left:2rem;
+    }
 
     footer {
         position: fixed;

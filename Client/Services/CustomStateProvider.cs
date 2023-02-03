@@ -18,7 +18,7 @@ namespace Cargotruck.Client.Services
             try
             {
                 var userInfo = await GetCurrentUser();
-                if (userInfo.IsAuthenticated)
+                if (userInfo.IsAuthenticated && _currentUser?.UserName != null)
                 {
                     var claims = new[] { new Claim(ClaimTypes.Name, _currentUser.UserName) }.Concat(_currentUser.Claims.Select(c => new Claim(c.Key, c.Value)));
                     identity = new ClaimsIdentity(claims, "Server authentication");

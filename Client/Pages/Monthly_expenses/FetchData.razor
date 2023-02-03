@@ -3,6 +3,7 @@
 
 <h3>@localizer["Monthly_expenses"]</h3>
 <div class="form-group buttons">
+    
     <a class="btn btn-success me-4" href="/Monthly_expenses/create"><i class="oi oi-plus"></i> @localizer["Add"]</a>
     <a data-title="@localizer["Settings"]" class="btn btn-light" @onclick="@(() => settings=!settings)"><i class="oi oi-cog"></i></a>
     
@@ -33,10 +34,13 @@
         </select>
     }
 
+    <!--Date Filter-->
     <div class="date-filter" data-title="@localizer["date-filter-info"]">
-        <Input class="form-control" type="datetime-local" value="@dateFilter?.StartDate.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm", CultureInfo.CurrentCulture)" @oninput="@((e)=>{DateStartInput(e);})">
-        <Input class="form-control" type="datetime-local" value="@dateFilter?.EndDate.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm", CultureInfo.CurrentCulture)" @oninput="@((e)=>{DateEndInput(e);})">
+        <div class="date-filter-icon-div d-inline-block"><span class="icon iconify date-filter-icon" data-icon="carbon:arrows-vertical" /></div>
+        <Input class="form-control" style="border-bottom-right-radius:unset;" type="datetime-local" value="@dateFilter?.StartDate.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm", CultureInfo.CurrentCulture)" @oninput="@((e)=>{DateStartInput(e);})">
+        <Input class="form-control" style="border-top-right-radius:unset;" type="datetime-local" value="@dateFilter?.EndDate.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm", CultureInfo.CurrentCulture)" @oninput="@((e)=>{DateEndInput(e);})">
     </div>
+
 </div>
 <br>
 

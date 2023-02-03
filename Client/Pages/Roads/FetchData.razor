@@ -3,6 +3,7 @@
 
 <h3>@localizer["Roads"]</h3>
 <div class="form-group buttons">
+   
     <a class="btn btn-success me-4" href="/Roads/create"><i class="oi oi-plus"></i> @localizer["Add"]</a>
     <a data-title="@localizer["Settings"]" class="btn btn-light" @onclick="@(() => settings=!settings)"><i class="oi oi-cog"></i></a>
 
@@ -23,6 +24,7 @@
 
     <span class="file-upload-title" import-data-title="@localizer["File_input"]"><UploadFiles page="roads" StateChanged="StateChanged" /></span>
     <input value="@searchString" @oninput="@Search" placeholder="@(searchString != "" ? searchString : localizer["Search"])" class="form-control inputs input_search" type="search" id="search-input" name="SearchString">
+    
     <!--Filter icon-->
     @if (filter == "to" || filter == "from")
     {
@@ -32,16 +34,21 @@
     {
         <button @onclick="@(()=>OnChangeResetFilter())" class="filter-button not-pointer"><span class="icon iconify filter-icon not-pointer" data-icon="material-symbols:filter-alt"></span></button>
     }
+
     <!--Filter-->
     <select class="form-control filter" @oninput="@((e)=>OnChangeGetFilter(e))" @bind="filter">
         <option value="" selected>@localizer["Nothing"]</option>
         <option value="to">@localizer["to"]</option>
         <option value="from">@localizer["from"]</option>
     </select>
+
+    <!--Date Filter-->
     <div class="date-filter" data-title="@localizer["date-filter-info"]">
-        <Input class="form-control" type="datetime-local" value="@dateFilter?.StartDate.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm", CultureInfo.CurrentCulture)" @oninput="@((e)=>{DateStartInput(e);})">
-        <Input class="form-control" type="datetime-local" value="@dateFilter?.EndDate.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm", CultureInfo.CurrentCulture)" @oninput="@((e)=>{DateEndInput(e);})">
+        <div class="date-filter-icon-div d-inline-block"><span class="icon iconify date-filter-icon" data-icon="carbon:arrows-vertical" /></div>
+        <Input class="form-control" style="border-bottom-right-radius:unset;" type="datetime-local" value="@dateFilter?.StartDate.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm", CultureInfo.CurrentCulture)" @oninput="@((e)=>{DateStartInput(e);})">
+        <Input class="form-control" style="border-top-right-radius:unset;" type="datetime-local" value="@dateFilter?.EndDate.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm", CultureInfo.CurrentCulture)" @oninput="@((e)=>{DateEndInput(e);})">
     </div>
+
 </div>
 <br>
 
