@@ -55,6 +55,7 @@
         <Input class="form-control" style="border-bottom-right-radius:unset;border-bottom:unset;" type="datetime-local" value="@dateFilter?.StartDate.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm", CultureInfo.CurrentCulture)" @oninput="@((e)=>{DateStartInput(e);})">
         <Input class="form-control" style="border-top-right-radius:unset;border-top:unset;" type="datetime-local" value="@dateFilter?.EndDate.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm", CultureInfo.CurrentCulture)" @oninput="@((e)=>{DateEndInput(e);})">
     </div>
+
 </div>
 <br>
 
@@ -151,7 +152,7 @@ else
                             @foreach (Tasks item in Tasks)
                             {
                                 <tr 
-                                    @onclick="@((e) =>MouseHoverClass.MouseOnclick(e,item.Id.ToString()))" @onmouseover="@((e) =>MouseHoverClass.MouseOver(e,item.Id.ToString()))" @onmouseout="@((e) =>MouseHoverClass.MouseOut(e))"
+                                    @onclick="@((e) =>MouseHoverClass.MouseOnclick(item.Id.ToString()))" @onmouseover="@((e) =>MouseHoverClass.MouseOver(item.Id.ToString()))" @onmouseout="@((e) =>MouseHoverClass.MouseOut())"
                             class="@(item.Completed ? "green": "") @(MouseHoverClass.MouseOnHoverClass == item.Id.ToString() || MouseHoverClass.MouseOnclickClass == item.Id.ToString() ? "color-on-hover" :"")
                                 ">
                                     <td>@item.Id</td>
@@ -181,7 +182,7 @@ else
                                     }
                                     @if (showColumns[6])
                                     {
-                                        <td>@item.other_stops</td>
+                                        <td>@item.Other_stops</td>
                                     }
                                     @if (showColumns[7])
                                     {

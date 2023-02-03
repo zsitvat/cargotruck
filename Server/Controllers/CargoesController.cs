@@ -1,21 +1,15 @@
 ﻿using Cargotruck.Data;
-using iTextSharp.text.pdf;
+using Cargotruck.Shared.Models;
+using ClosedXML.Excel;
 using iTextSharp.text;
+using iTextSharp.text.pdf;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
-using ClosedXML.Excel;
-using Document = iTextSharp.text.Document;
-using Microsoft.Data.SqlClient;
-using Cargotruck.Shared.Models;
-using Microsoft.JSInterop;
-using DocumentFormat.OpenXml.Office.CustomUI;
-using DocumentFormat.OpenXml.Spreadsheet;
-using Font = iTextSharp.text.Font;
 using System.Text;
-using DocumentFormat.OpenXml.Office2021.DocumentTasks;
-using DocumentFormat.OpenXml.Office2010.Excel;
-using DocumentFormat.OpenXml.Vml.Office;
+using Document = iTextSharp.text.Document;
+using Font = iTextSharp.text.Font;
 
 namespace Cargotruck.Server.Controllers
 {
@@ -32,31 +26,7 @@ namespace Cargotruck.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> Get(int page, int pageSize, string sortOrder, bool desc, string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
-            var data = await _context.Cargoes.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
-
-            if (filter == "InWarehouse")
-            {
-                data = data.Where(data => data.Warehouse_id!=null).ToList();
-            }
-            else if (filter == "NotInWarehouse")
-            {
-                data = data.Where(data => data.Warehouse_id == null).ToList();
-            }
-
-            searchString = searchString?.ToLower();
-            if (searchString != null && searchString != "")
-            {
-                    data = data.Where(s =>
-                   (s.Task_id.ToString().ToLower()!.Contains(searchString))
-                || (s.Weight != null && s.Weight.ToString().ToLower()!.Contains(searchString))
-                || (s.Description != null && s.Description.ToLower()!.Contains(searchString))
-                || (s.Delivery_requirements != null && s.Delivery_requirements.ToString().ToLower()!.Contains(searchString))
-                || (s.Vehicle_registration_number != null && s.Vehicle_registration_number.ToString()!.Contains(searchString))
-                || (s.Warehouse_id != null && s.Warehouse_id.ToString()!.Contains(searchString))
-                || (s.Warehouse_section != null && s.Warehouse_section.ToLower()!.Contains(searchString))
-                || (s.Storage_starting_time != null && s.Storage_starting_time.ToString()!.Contains(searchString))
-                ).ToList();
-            }
+            var data = await GetData(searchString, filter, dateFilterStartDate, dateFilterEndDate);
 
             sortOrder = sortOrder == "Task_id" ? (desc ? "Task_id_desc" : "Task_id") : (sortOrder);
             sortOrder = sortOrder == "Weight" ? (desc ? "Weight_desc" : "Weight") : (sortOrder);
@@ -94,6 +64,38 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
+        public async Task<List<Cargoes>> GetData(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        {
+            var data = await _context.Cargoes.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
+
+            if (filter == "InWarehouse")
+            {
+                data = data.Where(data => data.Warehouse_id != null).ToList();
+            }
+            else if (filter == "NotInWarehouse")
+            {
+                data = data.Where(data => data.Warehouse_id == null).ToList();
+            }
+
+            searchString = searchString?.ToLower();
+            if (searchString != null && searchString != "")
+            {
+                data = data.Where(s =>
+               (s.Task_id.ToString()!.ToLower().Contains(searchString))
+            || (s.Weight != null && s.Weight.ToString().ToLower()!.Contains(searchString))
+            || (s.Description != null && s.Description.ToLower()!.Contains(searchString))
+            || (s.Delivery_requirements != null && s.Delivery_requirements.ToString().ToLower()!.Contains(searchString))
+            || (s.Vehicle_registration_number != null && s.Vehicle_registration_number.ToString()!.Contains(searchString))
+            || (s.Warehouse_id != null && s.Warehouse_id.ToString()!.Contains(searchString))
+            || (s.Warehouse_section != null && s.Warehouse_section.ToLower()!.Contains(searchString))
+            || (s.Storage_starting_time != null && s.Storage_starting_time.ToString()!.Contains(searchString))
+            ).ToList();
+            }
+
+            return data;
+        }
+
+        [HttpGet]
         public async Task<IActionResult> GetCargoes()
         {
             var data = await _context.Cargoes.ToListAsync();
@@ -112,23 +114,24 @@ namespace Cargotruck.Server.Controllers
                 int count = 0;
                 var cargoes = await _context.Cargoes.ToListAsync();
                 var tasks = await _context.Tasks.Where(x => x.Completed == false).ToListAsync();
-                foreach (var cargo in cargoes) {
+                foreach (var cargo in cargoes)
+                {
                     foreach (var task in tasks)
-                    { 
-                        if(cargo.Task_id == task.Id)
+                    {
+                        if (cargo.Task_id == task.Id)
                         {
                             count++;
                         }
                     }
-                }  
+                }
                 return Ok(count);
             }
         }
 
         [HttpGet]
-        public async Task<IActionResult> PageCount()
+        public async Task<IActionResult> PageCount(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
-            var data= await _context.Cargoes.ToListAsync();
+            var data = await GetData(searchString, filter, dateFilterStartDate, dateFilterEndDate);
             int PageCount = data.Count;
             return Ok(PageCount);
         }
@@ -143,12 +146,13 @@ namespace Cargotruck.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(Cargoes data)
         {
-            data.User_id = _context?.Users.FirstOrDefault(a => a.UserName == User.Identity.Name)?.Id;
-            _context.Add(data);
+            data.User_id = _context?.Users.FirstOrDefault(a => a.UserName == User.Identity!.Name)?.Id;
+            _context!.Add(data);
             await _context.SaveChangesAsync();
 
             var task = _context.Tasks.FirstOrDefault(a => a.Id == data.Task_id);
-            if(task != null) { 
+            if (task != null)
+            {
                 task.Id_cargo = data.Id;
                 _context.Entry(task).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
@@ -161,12 +165,13 @@ namespace Cargotruck.Server.Controllers
         {
             _context.Entry(data).State = EntityState.Modified;
             var task = _context.Tasks.FirstOrDefault(a => a.Id == data.Task_id);
-            if (task != null) { 
+            if (task != null)
+            {
                 task.Id_cargo = data.Id;
                 _context.Entry(task).State = EntityState.Modified;
-                
+
             }
-            await _context.SaveChangesAsync(); 
+            await _context.SaveChangesAsync();
             return NoContent();
         }
 
@@ -185,56 +190,52 @@ namespace Cargotruck.Server.Controllers
         public string Excel(string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var cargoes = _context.Cargoes.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
-            using (var workbook = new XLWorkbook())
+            using var workbook = new XLWorkbook();
+            var worksheet = workbook.Worksheets.Add("Cargoes");
+            var currentRow = 1;
+            worksheet.Cell(currentRow, 1).Value = "Id";
+            worksheet.Cell(currentRow, 1).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 2).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID";
+            worksheet.Cell(currentRow, 2).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 3).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Task_id : "Task ID";
+            worksheet.Cell(currentRow, 3).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 4).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Weight : "Weight";
+            worksheet.Cell(currentRow, 4).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 5).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Description : "Description";
+            worksheet.Cell(currentRow, 5).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 6).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Delivery_requirements : "Delivery requirements";
+            worksheet.Cell(currentRow, 6).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 7).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Vehicle_registration_number : "Vehicle registration number";
+            worksheet.Cell(currentRow, 7).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 8).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Warehouse_id : "Warehouse ID";
+            worksheet.Cell(currentRow, 8).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 9).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Warehouse_section : "Warehouse section";
+            worksheet.Cell(currentRow, 9).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 10).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Storage_starting_time : "Storage starting time";
+            worksheet.Cell(currentRow, 10).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 11).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date";
+            worksheet.Cell(currentRow, 11).Style.Font.SetBold();
+
+            foreach (var cargo in cargoes)
             {
-                var worksheet = workbook.Worksheets.Add("Cargoes");
-                var currentRow = 1;
-                worksheet.Cell(currentRow, 1).Value = "Id";
-                worksheet.Cell(currentRow, 1).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 2).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID";
-                worksheet.Cell(currentRow, 2).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 3).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Task_id : "Task ID";
-                worksheet.Cell(currentRow, 3).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 4).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Weight : "Weight";
-                worksheet.Cell(currentRow, 4).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 5).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Description : "Description";
-                worksheet.Cell(currentRow, 5).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 6).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Delivery_requirements : "Delivery requirements";
-                worksheet.Cell(currentRow, 6).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 7).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Vehicle_registration_number : "Vehicle registration number";
-                worksheet.Cell(currentRow, 7).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 8).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Warehouse_id : "Warehouse ID";
-                worksheet.Cell(currentRow, 8).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 9).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Warehouse_section : "Warehouse section";
-                worksheet.Cell(currentRow, 9).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 10).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Storage_starting_time : "Storage starting time";
-                worksheet.Cell(currentRow, 10).Style.Font.SetBold();
-                worksheet.Cell(currentRow, 11).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date";
-                worksheet.Cell(currentRow, 11).Style.Font.SetBold();
-
-                foreach (var cargo in cargoes)
-                {
-                    currentRow++;
-                    worksheet.Cell(currentRow, 1).Value = cargo.Id;
-                    worksheet.Cell(currentRow, 2).Value = cargo.User_id;
-                    worksheet.Cell(currentRow, 3).Value = cargo.Task_id;
-                    worksheet.Cell(currentRow, 4).Value = cargo.Weight;
-                    worksheet.Cell(currentRow, 5).Value = cargo.Description;
-                    worksheet.Cell(currentRow, 6).Value = cargo.Delivery_requirements;
-                    worksheet.Cell(currentRow, 7).Value = cargo.Vehicle_registration_number;
-                    worksheet.Cell(currentRow, 8).Value = cargo.Warehouse_id;
-                    worksheet.Cell(currentRow, 9).Value = cargo.Warehouse_section;
-                    worksheet.Cell(currentRow, 10).Value = cargo.Storage_starting_time;
-                    worksheet.Cell(currentRow, 11).Value = cargo.Date;
-                }
-
-                using (var stream = new MemoryStream())
-                {
-                    workbook.SaveAs(stream);
-                    var content = stream.ToArray();
-                    return Convert.ToBase64String(content);
-                }
+                currentRow++;
+                worksheet.Cell(currentRow, 1).Value = cargo.Id;
+                worksheet.Cell(currentRow, 2).Value = cargo.User_id;
+                worksheet.Cell(currentRow, 3).Value = cargo.Task_id;
+                worksheet.Cell(currentRow, 4).Value = cargo.Weight;
+                worksheet.Cell(currentRow, 5).Value = cargo.Description;
+                worksheet.Cell(currentRow, 6).Value = cargo.Delivery_requirements;
+                worksheet.Cell(currentRow, 7).Value = cargo.Vehicle_registration_number;
+                worksheet.Cell(currentRow, 8).Value = cargo.Warehouse_id;
+                worksheet.Cell(currentRow, 9).Value = cargo.Warehouse_section;
+                worksheet.Cell(currentRow, 10).Value = cargo.Storage_starting_time;
+                worksheet.Cell(currentRow, 11).Value = cargo.Date;
             }
+
+            using var stream = new MemoryStream();
+            workbook.SaveAs(stream);
+            var content = stream.ToArray();
+            return Convert.ToBase64String(content);
         }
 
         //iTextSharp needed !!!
@@ -327,42 +328,42 @@ namespace Cargotruck.Server.Controllers
                     var s = "";
                     if (!string.IsNullOrEmpty(cargo.Id.ToString())) { s = cargo.Id.ToString(); }
                     else { s = "-"; }
-                    table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    table.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
                     if (!string.IsNullOrEmpty(cargo.Task_id.ToString())) { s = cargo.Task_id.ToString(); }
                     else { s = "-"; }
-                    table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    table.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
                     if (!string.IsNullOrEmpty(cargo.Weight.ToString())) { s = cargo.Weight.ToString(); }
                     else { s = "-"; }
-                    table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    table.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
                     if (!string.IsNullOrEmpty(cargo?.Description?.ToString())) { s = cargo.Description.ToString(); }
                     else { s = "-"; }
-                    table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    table.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
                     if (!string.IsNullOrEmpty(cargo?.Delivery_requirements?.ToString())) { s = cargo.Delivery_requirements.ToString(); }
                     else { s = "-"; }
-                    table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    table.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
                     if (!string.IsNullOrEmpty(cargo?.Vehicle_registration_number?.ToString())) { s = cargo.Vehicle_registration_number.ToString(); }
                     else { s = "-"; }
-                    table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    table.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
@@ -470,7 +471,7 @@ namespace Cargotruck.Server.Controllers
         {
             var cargoes = _context.Cargoes.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
 
-            Random rnd = new Random();
+            Random rnd = new();
             int random = rnd.Next(1000000, 9999999);
             string filename = "Cargoes" + random + "_" + DateTime.Now.ToString("dd-MM-yyyy");
             string filepath = "Files/" + filename + ".csv";
@@ -516,8 +517,8 @@ namespace Cargotruck.Server.Controllers
             string convertedCsvFileContentsAsString = utf8Encoding.GetString(convertedCsvFileContents);
             System.IO.File.WriteAllText(filepath, convertedCsvFileContentsAsString, utf8Encoding);
             //filestream for download
-            FileStream sourceFile = new FileStream(filepath, FileMode.Open);
-            MemoryStream memoryStream = new MemoryStream();
+            FileStream sourceFile = new(filepath, FileMode.Open);
+            MemoryStream memoryStream = new();
             await sourceFile.CopyToAsync(memoryStream);
             var buffer = memoryStream.ToArray();
             var file = Convert.ToBase64String(buffer);
@@ -542,11 +543,11 @@ namespace Cargotruck.Server.Controllers
                 {
 
                     //Started reading the Excel file.  
-                    XLWorkbook workbook = new XLWorkbook(path);
+                    XLWorkbook workbook = new(path);
 
                     IXLWorksheet worksheet = workbook.Worksheet(1);
                     //Loop through the Worksheet rows.
-                    DataTable? dt = new DataTable();
+                    DataTable? dt = new();
                     bool firstRow = true;
                     if (worksheet.Row(2).CellsUsed().Count() > 1 && worksheet.Row(2).Cell(worksheet.Row(1).CellsUsed().Count()) != null)
                     {
@@ -556,7 +557,7 @@ namespace Cargotruck.Server.Controllers
                             //Use the first row to add columns to DataTable with column names check.
                             if (firstRow)
                             {
-                                List<string?> titles = new List<string?>() {
+                                List<string?> titles = new() {
                                 "Id",
                                 lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID",
                                 lang == "hu" ? Cargotruck.Shared.Resources.Resource.Task_id : "Task ID",
@@ -599,7 +600,7 @@ namespace Cargotruck.Server.Controllers
                             }
                             else if (haveColumns)
                             {
-                                List<object?> list = new List<object?>();
+                                List<object?> list = new();
                                 int nulls = 0;
 
                                 //Add rows to DataTable.
@@ -611,8 +612,8 @@ namespace Cargotruck.Server.Controllers
                                     {
                                         list.Add(cell.Value);
                                     }
-                                    else 
-                                    { 
+                                    else
+                                    {
                                         list.Add(System.DBNull.Value);
                                         nulls += 1;
                                     }
@@ -631,7 +632,7 @@ namespace Cargotruck.Server.Controllers
                                         new SqlParameter("@Vehicle_registration_number", list[l + 5]),
                                         new SqlParameter("@Warehouse_id", list[l + 6]),
                                         new SqlParameter("@Warehouse_section", list[l + 7]),
-                                        new SqlParameter("@Storage_starting_time", list[l + 8] == System.DBNull.Value || list[l + 8] == null ? System.DBNull.Value : DateTime.Parse(list[l + 8].ToString())),
+                                        new SqlParameter("@Storage_starting_time", list[l + 8] == System.DBNull.Value || list[l + 8] == null ? System.DBNull.Value : DateTime.Parse(list[l + 8]?.ToString()!)),
                                         new SqlParameter("@Date", DateTime.Now)
                                         );
 

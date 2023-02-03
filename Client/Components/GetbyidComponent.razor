@@ -145,7 +145,7 @@
                         <p>@(idDataTask?.Time_of_receipt != null ? idDataTask.Time_of_receipt : "-")</p>
                         <p>@(idDataTask?.Place_of_delivery != null ? idDataTask.Place_of_delivery : "-")</p>
                         <p>@(idDataTask?.Time_of_delivery != null ? idDataTask.Time_of_delivery : "-")</p>
-                        <p>@(idDataTask?.other_stops != null ? idDataTask.other_stops : "-")</p>
+                        <p>@(idDataTask?.Other_stops != null ? idDataTask.Other_stops : "-")</p>
                         <p>@(idDataTask?.Id_cargo != null ? idDataTask.Id_cargo : "-")</p>
                         <p>@(idDataTask?.Storage_time != null ? idDataTask.Storage_time : "-")</p>
                         <p>@(idDataTask?.Completed != null ? (idDataTask.Completed ? localizer["True"] : localizer["False"]) : "-")</p>
@@ -369,15 +369,15 @@
                             }
                         </p>
                         <p>
-                            @if (idDataExpense?.other != null)
+                            @if (idDataExpense?.Other != null)
                             {
                                 @if (CurrencyExchange.currency != "HUF" && CurrencyExchange.Rates != null)
                                 {
-                                    @(CurrencyExchange.GetCurrency(idDataExpense?.other, CurrencyExchange.currency)!.Value.ToString("0.##") + " " + CurrencyExchange.currency)
+                                    @(CurrencyExchange.GetCurrency(idDataExpense?.Other, CurrencyExchange.currency)!.Value.ToString("0.##") + " " + CurrencyExchange.currency)
                                 }
-                                else if (idDataExpense?.other != 0)
+                                else if (idDataExpense?.Other != 0)
                                 {
-                                    @(idDataExpense?.other + " HUF")
+                                    @(idDataExpense?.Other + " HUF")
                                 }
 
                             }

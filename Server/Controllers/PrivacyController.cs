@@ -18,7 +18,7 @@ namespace Cargotruck.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> Get(string lang)
         {
-            var data = await _context.Privacies.Where(x => x.lang==lang).ToListAsync();
+            var data = await _context.Privacies.Where(x => x.Lang == lang).ToListAsync();
             return Ok(data);
         }
 
@@ -40,7 +40,7 @@ namespace Cargotruck.Server.Controllers
         public async Task<IActionResult> Post(Privacies data)
         {
             _context.Add(data);
-            await _context.SaveChangesAsync(); 
+            await _context.SaveChangesAsync();
             return Ok(data.Id);
         }
 

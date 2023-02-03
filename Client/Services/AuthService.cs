@@ -15,7 +15,7 @@ namespace Cargotruck.Client.Services
         public async Task<CurrentUser> CurrentUserInfo()
         {
             var result = await _httpClient.GetFromJsonAsync<CurrentUser>("api/auth/currentuserinfo");
-            return result;
+            return result!;
         }
 
         public async Task Login(LoginRequest loginRequest)

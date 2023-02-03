@@ -1,3 +1,4 @@
+using Blazored.SessionStorage;
 using Cargotruck.Client;
 using Cargotruck.Client.Services;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -5,10 +6,6 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.JSInterop;
 using System.Globalization;
-using Refit;
-using System.Net.Http.Headers;
-using System.Net.Http;
-using Blazored.SessionStorage;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");

@@ -1,7 +1,6 @@
-﻿using System;
+﻿using Cargotruck.Shared.Resources;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Cargotruck.Shared.Resources;
 
 
 
@@ -16,7 +15,7 @@ namespace Cargotruck.Shared.Models
         [Required(ErrorMessageResourceName = "Error_partner", ErrorMessageResourceType = typeof(Resource))]
         [Display(Name = "Partner", ResourceType = typeof(Resource))]
         public string? Partner { get; set; }
-        [Display(Name = "Description", ResourceType = typeof(Resource))] 
+        [Display(Name = "Description", ResourceType = typeof(Resource))]
         public string? Description { get; set; }
         [Required(ErrorMessageResourceName = "Error_place_of_receipt", ErrorMessageResourceType = typeof(Resource))]
         [Display(Name = "Place_of_receipt", ResourceType = typeof(Resource))]
@@ -31,7 +30,7 @@ namespace Cargotruck.Shared.Models
         [Display(Name = "Time_of_delivery", ResourceType = typeof(Resource))]
         public DateTime? Time_of_delivery { get; set; }
         [Display(Name = "other_stops", ResourceType = typeof(Resource))]
-        public string? other_stops { get; set; }
+        public string? Other_stops { get; set; }
         [Display(Name = "Id_cargo", ResourceType = typeof(Resource))]
         public int? Id_cargo { get; set; }
         [Display(Name = "Storage_time", ResourceType = typeof(Resource))]

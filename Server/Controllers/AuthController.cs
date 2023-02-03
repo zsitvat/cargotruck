@@ -1,18 +1,12 @@
-﻿using Cargotruck.Client;
-using Cargotruck.Data;
+﻿using Cargotruck.Data;
 using Cargotruck.Server.Models;
 using Cargotruck.Shared.Models;
 using Cargotruck.Shared.Models.Request;
 using Cargotruck.Shared.Resources;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
-using Microsoft.JSInterop;
-using Newtonsoft.Json.Linq;
-using System.Data.Entity;
-using System.Globalization;
 using System.Security.Claims;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
@@ -27,7 +21,7 @@ namespace Cargotruck.Server.Controllers
         private readonly IStringLocalizer<Resource> _localizer;
         private readonly ApplicationDbContext _context;
 
-        public AuthController(ApplicationDbContext context,IStringLocalizer<Resource> localizer, UserManager<Users> userManager, SignInManager<Users> signInManager)
+        public AuthController(ApplicationDbContext context, IStringLocalizer<Resource> localizer, UserManager<Users> userManager, SignInManager<Users> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -96,21 +90,23 @@ namespace Cargotruck.Server.Controllers
             Dictionary<string, string> roles = new();
             string role = "";
 
-            if (parameters.Id != null) {
+            if (parameters.Id != null)
+            {
                 user = _context.Users.FirstOrDefault(a => a.Id == parameters.Id);
                 roles = _context.Roles.ToDictionary(r => r.Id, r => r.Name);
                 userRoles = _context.UserRoles.ToDictionary(r => r.UserId, r => roles[r.RoleId]);
                 role = userRoles[parameters.Id];
             }
-            else { 
-                user = _context.Users.FirstOrDefault(a => a.UserName == User.Identity.Name);
+            else
+            {
+                user = _context.Users.FirstOrDefault(a => a.UserName == User.Identity!.Name);
                 claims = User.Claims.ToDictionary(c => c.Type, c => c.Value);
                 role = claims["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
             }
-            
+
             if (user == null) return BadRequest();
             user.UserName = parameters.UserName ?? user.UserName;
-            user.PhoneNumber = parameters.PhoneNumber ?? user.PhoneNumber; 
+            user.PhoneNumber = parameters.PhoneNumber ?? user.PhoneNumber;
             user.Email = parameters.Email ?? user.Email;
             var result = await _userManager.UpdateAsync(user);
 
@@ -123,8 +119,8 @@ namespace Cargotruck.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> ChangePassword(ChangePasswordRequest parameters)
         {
-            var user = _context.Users.FirstOrDefault(a => a.UserName == User.Identity.Name);
-            var result = await _userManager.ChangePasswordAsync(user, parameters.PasswordCurrent, parameters.Password);
+            var user = _context.Users.FirstOrDefault(a => a.UserName == User.Identity!.Name);
+            var result = await _userManager.ChangePasswordAsync(user!, parameters.PasswordCurrent, parameters.Password);
             if (!result.Succeeded) return BadRequest(result.Errors.FirstOrDefault()?.Description);
             return Ok();
         }
@@ -142,19 +138,20 @@ namespace Cargotruck.Server.Controllers
         [HttpGet]
         public CurrentUser CurrentUserInfo()
         {
-            var u = _context.Users.FirstOrDefault(a => a.UserName == User.Identity.Name);
-            if (User.Identity.IsAuthenticated && u != null) {
+            var u = _context.Users.FirstOrDefault(a => a.UserName == User.Identity!.Name);
+            if (User.Identity!.IsAuthenticated && u != null)
+            {
                 return new CurrentUser
                 {
                     IsAuthenticated = User.Identity.IsAuthenticated,
                     UserName = User.Identity.Name,
                     Name = User.Identity.Name,
-                    Email =  u.Email,
+                    Email = u.Email,
                     PhoneNumber = u.PhoneNumber,
                     Claims = User.Claims
                         .ToDictionary(c => c.Type, c => c.Value),
                 };
-                 
+
             }
             else
             {

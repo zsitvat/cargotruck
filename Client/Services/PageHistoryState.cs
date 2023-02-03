@@ -34,9 +34,9 @@
         {
             if (previousPages.Count > 0)
             {
-                foreach(var page in previousPages)
+                foreach (var page in previousPages)
                 {
-                    if(page==myPage)
+                    if (page == myPage)
                     {
                         return true;
                     }

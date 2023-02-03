@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Cargotruck.Shared.Models.Request
+﻿namespace Cargotruck.Shared.Models.Request
 {
     public class UploadResult
     {

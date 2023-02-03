@@ -18,7 +18,7 @@ namespace Cargotruck.Client.Components
         protected async Task NextPage()
         {
             CurrentPage++;
-            await ShowPage(); 
+            await ShowPage();
         }
 
         protected async Task SetCurrentPage(int i)

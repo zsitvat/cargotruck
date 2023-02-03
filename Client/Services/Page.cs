@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Components.Web;
-using System.Data;
-
-namespace Cargotruck.Client.Services
+﻿namespace Cargotruck.Client.Services
 {
     public static class Page
     {

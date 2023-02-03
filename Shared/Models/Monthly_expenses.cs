@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Cargotruck.Shared.Resources;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Cargotruck.Shared.Resources;
 
 namespace Cargotruck.Shared.Models
 {

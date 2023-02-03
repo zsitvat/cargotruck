@@ -190,11 +190,11 @@
         expenses = await client.GetFromJsonAsync<List<Expenses>?>("api/expenses/getexpenses");
         trucks = await client.GetFromJsonAsync<List<Trucks>?>("api/trucks/gettrucks");
         var roadWithIds = await client.GetFromJsonAsync<List<Roads>>("api/roads/getroads");
-        roadWithIds = roadWithIds.Where(x => x.Expenses_id != null || x.Id_cargo != null).ToList();
+        roadWithIds = roadWithIds?.Where(x => x.Expenses_id != null || x.Id_cargo != null).ToList();
         foreach (var road in roadWithIds)
         {
-            expenses.RemoveAll(x => x.Id == road.Expenses_id && x.Id != roads?.Expenses_id);
-            cargoes.RemoveAll(x => x.Id == road.Id_cargo && x.Id != roads?.Id_cargo);
+            expenses?.RemoveAll(x => x.Id == road.Expenses_id && x.Id != roads?.Expenses_id);
+            cargoes?.RemoveAll(x => x.Id == road.Id_cargo && x.Id != roads?.Id_cargo);
         }
     }
 }

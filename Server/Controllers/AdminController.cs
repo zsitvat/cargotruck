@@ -1,6 +1,4 @@
 ﻿using Cargotruck.Data;
-using Cargotruck.Server.Models;
-using Cargotruck.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -68,7 +66,7 @@ namespace Cargotruck.Server.Controllers
         }
         public async Task<IActionResult> Claims()
         {
-            var Claims = await  _context.UserClaims.ToDictionaryAsync(c => c.ClaimType + "/" + c.UserId, c => c.ClaimValue);
+            var Claims = await _context.UserClaims.ToDictionaryAsync(c => c.ClaimType + "/" + c.UserId, c => c.ClaimValue);
             return Ok(Claims);
         }
 

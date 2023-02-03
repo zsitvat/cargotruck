@@ -1,16 +1,15 @@
 ﻿using Cargotruck.Data;
-using iTextSharp.text.pdf;
+using Cargotruck.Shared.Models;
+using ClosedXML.Excel;
 using iTextSharp.text;
+using iTextSharp.text.pdf;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
-using ClosedXML.Excel;
-using Document = iTextSharp.text.Document;
-using Microsoft.Data.SqlClient;
-using Cargotruck.Shared.Models;
-using Font = iTextSharp.text.Font;
 using System.Text;
-using Cargotruck.Shared.Resources;
+using Document = iTextSharp.text.Document;
+using Font = iTextSharp.text.Font;
 
 namespace Cargotruck.Server.Controllers
 {
@@ -25,26 +24,9 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(int page, int pageSize, string sortOrder, bool desc, string? searchString,Status? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        public async Task<IActionResult> Get(int page, int pageSize, string sortOrder, bool desc, string? searchString, Status? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
-            var data = await _context.Trucks.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
-
-            if (filter != null)
-            {
-                data = data.Where(data => data.Status == filter).ToList();
-            }
-
-            searchString = searchString == null ? null : searchString.ToLower();
-            if (searchString != null && searchString != "")
-            {
-                data = data.Where(s =>
-               (s.Vehicle_registration_number.ToString().ToLower()!.Contains(searchString))
-            || (s.Brand != null && s.Brand.ToString().ToLower()!.Contains(searchString))
-            || (s.Status.ToString()!.Contains(searchString))
-            || (s.Road_id != null && s.Road_id.ToString()!.ToLower().Contains(searchString))
-            || (s.Max_weight != null && s.Max_weight.ToString()!.Contains(searchString))
-            ).ToList();
-            }
+            var data = await GetData(searchString, filter, dateFilterStartDate, dateFilterEndDate);
 
             sortOrder = sortOrder == "Vehicle_registration_number" ? (desc ? "Vehicle_registration_number_desc" : "Vehicle_registration_number") : (sortOrder);
             sortOrder = sortOrder == "Brand" ? (desc ? "Brand_desc" : "Brand") : (sortOrder);
@@ -73,6 +55,31 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
+        public async Task<List<Trucks>> GetData(string? searchString, Status? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        {
+            var data = await _context.Trucks.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
+
+            if (filter != null)
+            {
+                data = data.Where(data => data.Status == filter).ToList();
+            }
+
+            searchString = searchString?.ToLower();
+            if (searchString != null && searchString != "")
+            {
+                data = data.Where(s =>
+               (s.Vehicle_registration_number!.ToString().ToLower().Contains(searchString))
+            || (s.Brand != null && s.Brand.ToString().ToLower()!.Contains(searchString))
+            || (s.Status.ToString()!.Contains(searchString))
+            || (s.Road_id != null && s.Road_id.ToString()!.ToLower().Contains(searchString))
+            || (s.Max_weight != null && s.Max_weight.ToString()!.Contains(searchString))
+            ).ToList();
+            }
+
+            return data;
+        }
+
+        [HttpGet]
         public async Task<IActionResult> GetTrucks()
         {
             var data = await _context.Trucks.ToListAsync();
@@ -93,13 +100,9 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> PageCount(Status? filter)
+        public async Task<IActionResult> PageCount(string? searchString, Status? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
-            var data = await _context.Trucks.ToListAsync();
-            if (filter != null)
-            {
-                data = data.Where(x => x.Status == filter).ToList();
-            }
+            var data = await GetData(searchString, filter, dateFilterStartDate, dateFilterEndDate);
             int PageCount = data.Count;
             return Ok(PageCount);
         }
@@ -143,7 +146,7 @@ namespace Cargotruck.Server.Controllers
         public string Excel(string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var trucks = _context.Trucks.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
-            
+
             using var workbook = new XLWorkbook();
             var worksheet = workbook.Worksheets.Add("Trucks");
             var currentRow = 1;
@@ -186,7 +189,7 @@ namespace Cargotruck.Server.Controllers
 
         //iTextSharp needed !!!
         [HttpGet]
-         public async Task<string> PDF(string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        public async Task<string> PDF(string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var trucks = _context.Trucks.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
 
@@ -282,14 +285,18 @@ namespace Cargotruck.Server.Controllers
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(truck.Vehicle_registration_number.ToString())) { s = truck.Vehicle_registration_number.ToString(); }
+
+                    if (!string.IsNullOrEmpty(truck.Vehicle_registration_number?.ToString())) { s = truck.Vehicle_registration_number.ToString(); }
+
                     else { s = "-"; }
                     table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(truck.Brand.ToString())) { s = truck.Brand.ToString(); }
+
+                    if (!string.IsNullOrEmpty(truck.Brand?.ToString())) { s = truck.Brand.ToString(); }
+
                     else { s = "-"; }
                     table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
@@ -303,14 +310,16 @@ namespace Cargotruck.Server.Controllers
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(truck.Road_id.ToString())) { s = truck.Road_id.ToString(); }
+                    if (!string.IsNullOrEmpty(truck.Road_id?.ToString())) { s = truck.Road_id.ToString(); }
                     else { s = "-"; }
                     table.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(truck.Max_weight.ToString())) { s = truck.Max_weight.ToString(); }
+
+                    if (!string.IsNullOrEmpty(truck.Max_weight?.ToString())) { s = truck.Max_weight.ToString(); }
+
                     else { s = "-"; }
                     table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
@@ -491,8 +500,8 @@ namespace Cargotruck.Server.Controllers
                                     {
                                         list.Add(cell.Value);
                                     }
-                                    else 
-                                    { 
+                                    else
+                                    {
                                         list.Add(System.DBNull.Value);
                                         nulls += 1;
                                     }
@@ -543,7 +552,7 @@ namespace Cargotruck.Server.Controllers
                                                         {
                                                             item.Road_id = null;
                                                         }
-                                                      
+
                                                         _context.Entry(item).State = EntityState.Modified;
                                                         await _context.SaveChangesAsync();
                                                     }

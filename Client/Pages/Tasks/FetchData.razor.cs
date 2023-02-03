@@ -2,7 +2,6 @@
 using Cargotruck.Shared.Models.Request;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using System.Globalization;
 using System.Net.Http.Json;
 
 namespace Cargotruck.Client.Pages.Tasks
@@ -29,7 +28,7 @@ namespace Cargotruck.Client.Pages.Tasks
         {
             PageHistoryState.AddPageToHistory("/Tasks");
             base.OnInitialized();
-            dataRows = await client.GetFromJsonAsync<int>($"api/tasks/pagecount?filter{filter}");
+            dataRows = await client.GetFromJsonAsync<int>($"api/tasks/pagecount?searchString={searchString}&filter={filter}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
             await ShowPage();
         }
 
@@ -54,7 +53,7 @@ namespace Cargotruck.Client.Pages.Tasks
         protected async Task ShowPage()
         {
             pageSize = Page.GetPageSize(pageSize, dataRows);
-            maxPage = Page.GetMaxPage( pageSize, dataRows);
+            maxPage = Page.GetMaxPage(pageSize, dataRows);
 
             Tasks = await client.GetFromJsonAsync<Cargotruck.Shared.Models.Tasks[]>($"api/tasks/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
             StateHasChanged();
@@ -106,7 +105,7 @@ namespace Cargotruck.Client.Pages.Tasks
             settings = !settings;
         }
 
-        public static void SettingsChanged() {}
+        public static void SettingsChanged() { }
 
         public async void InputChanged(int ChangedPageSize)
         {

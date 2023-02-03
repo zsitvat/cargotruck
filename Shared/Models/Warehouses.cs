@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Cargotruck.Shared.Resources;
-using Microsoft.EntityFrameworkCore;
+﻿using Cargotruck.Shared.Resources;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.ComponentModel.DataAnnotations;
 
 namespace Cargotruck.Shared.Models
 {
@@ -22,6 +18,6 @@ namespace Cargotruck.Shared.Models
         public string? Owner { get; set; }
         [Display(Name = "Date", ResourceType = typeof(Resource))]
         public DateTime Date { get; set; } = DateTime.Now;
-    
+
     }
 }

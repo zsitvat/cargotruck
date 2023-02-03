@@ -51,7 +51,7 @@
                                             {
                                                 @foreach (var task in tasks)
                                                 {
-                                                    <option value="@task.Id">@task.Id - @task.Date - @task.Description.Substring(0, task.Description.Length >= 50 ? 50 : task.Description.Length)</option>
+                                                    <option value="@task.Id">@task.Id - @task.Date - @task.Description?.Substring(0, task.Description.Length >= 50 ? 50 : task.Description.Length)</option>
                                                 }
                                             }
                                         break;
@@ -172,8 +172,8 @@
                         <div>
                             <label>@localizer["other"]:</label>
                             <div>
-                            <InputNumber min="0"  class="form-control inputs" @bind-Value="@expenses.other" />
-                            <ValidationMessage For="@(() => expenses.other)" />
+                            <InputNumber min="0"  class="form-control inputs" @bind-Value="@expenses.Other" />
+                            <ValidationMessage For="@(() => expenses.Other)" />
                             </div>
                         </div>
                     </div>
@@ -219,6 +219,6 @@
 
     void onChangeGetType(ChangeEventArgs e)
     {
-        type = e.Value.ToString();
+        type = e.Value?.ToString();
     }
 }

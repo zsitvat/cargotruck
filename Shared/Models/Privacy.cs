@@ -7,10 +7,10 @@ namespace Cargotruck.Shared.Models
         [Required]
         public int Id { get; set; }
         [Required]
-        public string? lang { get; set; }
-        public string? name { get; set; }
+        public string? Lang { get; set; }
+        public string? Name { get; set; }
         [Required]
-        public string? text { get; set; }
+        public string? Text { get; set; }
 
 
         public DateTime Date { get; set; } = DateTime.Now;

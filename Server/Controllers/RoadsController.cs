@@ -1,15 +1,15 @@
 ﻿using Cargotruck.Data;
-using iTextSharp.text.pdf;
+using Cargotruck.Shared.Models;
+using ClosedXML.Excel;
 using iTextSharp.text;
+using iTextSharp.text.pdf;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
-using ClosedXML.Excel;
-using Document = iTextSharp.text.Document;
-using Microsoft.Data.SqlClient;
-using Cargotruck.Shared.Models;
-using Font = iTextSharp.text.Font;
 using System.Text;
+using Document = iTextSharp.text.Document;
+using Font = iTextSharp.text.Font;
 
 namespace Cargotruck.Server.Controllers
 {
@@ -26,34 +26,7 @@ namespace Cargotruck.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> Get(int page, int pageSize, string sortOrder, bool desc, string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
-            var data = await _context.Roads.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
-
-            if (filter == "to")
-            {
-                data = data.Where(data => data.Direction=="TO").ToList();
-            }
-            else if (filter == "from")
-            {
-                data = data.Where(data => data.Direction =="FROM").ToList();
-            }
-
-            searchString = searchString?.ToLower();
-            if (searchString != null && searchString != "")
-            {
-                data = data.Where(s => 
-                    (s.Task_id != null && s.Task_id.ToString()!.ToLower().Contains(searchString))
-                || (s.Id_cargo != null && s.Id_cargo.ToString()!.ToLower().Contains(searchString))
-                || (s.Vehicle_registration_number != null && s.Vehicle_registration_number.ToString()!.ToLower().Contains(searchString))
-                || (s.Purpose_of_the_trip != null && s.Purpose_of_the_trip.ToLower()!.Contains(searchString))
-                || s.Starting_date.ToString()!.ToLower().Contains(searchString)
-                || s.Ending_date.ToString()!.Contains(searchString)
-                || s.Fuel!.ToString().Contains(searchString)
-                || (s.Starting_place != null && s.Starting_place.ToLower()!.Contains(searchString))
-                || (s.Ending_place != null && s.Ending_place.ToLower()!.Contains(searchString))
-                || (s.Direction != null && s.Direction.ToString()!.Contains(searchString))
-                || (s.Expenses_id != null && s.Expenses_id.ToString()!.Contains(searchString))
-                ).ToList();
-            }
+            var data = await GetData(searchString, filter, dateFilterStartDate, dateFilterEndDate);
 
             sortOrder = sortOrder == "Task_id" ? (desc ? "Task_id_desc" : "Task_id") : (sortOrder);
             sortOrder = sortOrder == "Vehicle_registration_number" ? (desc ? "Vehicle_registration_number_desc" : "Vehicle_registration_number") : (sortOrder);
@@ -100,9 +73,10 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> PageCount(string? filter)
+        public async Task<List<Roads>> GetData(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
-            var data = await _context.Roads.ToListAsync();
+            var data = await _context.Roads.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
+
             if (filter == "to")
             {
                 data = data.Where(data => data.Direction == "TO").ToList();
@@ -111,6 +85,32 @@ namespace Cargotruck.Server.Controllers
             {
                 data = data.Where(data => data.Direction == "FROM").ToList();
             }
+
+            searchString = searchString?.ToLower();
+            if (searchString != null && searchString != "")
+            {
+                data = data.Where(s =>
+                    (s.Task_id != null && s.Task_id.ToString()!.ToLower().Contains(searchString))
+                || (s.Id_cargo != null && s.Id_cargo.ToString()!.ToLower().Contains(searchString))
+                || (s.Vehicle_registration_number != null && s.Vehicle_registration_number.ToString()!.ToLower().Contains(searchString))
+                || (s.Purpose_of_the_trip != null && s.Purpose_of_the_trip.ToLower()!.Contains(searchString))
+                || s.Starting_date.ToString()!.ToLower().Contains(searchString)
+                || s.Ending_date.ToString()!.Contains(searchString)
+                || s.Fuel!.ToString().Contains(searchString)
+                || (s.Starting_place != null && s.Starting_place.ToLower()!.Contains(searchString))
+                || (s.Ending_place != null && s.Ending_place.ToLower()!.Contains(searchString))
+                || (s.Direction != null && s.Direction.ToString()!.Contains(searchString))
+                || (s.Expenses_id != null && s.Expenses_id.ToString()!.Contains(searchString))
+                ).ToList();
+            }
+
+            return data;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> PageCount(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        {
+            var data = await GetData(searchString, filter, dateFilterStartDate, dateFilterEndDate);
             int PageCount = data.Count;
             return Ok(PageCount);
         }
@@ -143,7 +143,7 @@ namespace Cargotruck.Server.Controllers
             _context.Add(data);
             await _context.SaveChangesAsync();
             var expense = _context.Expenses.FirstOrDefault(a => a.Id == data.Expenses_id);
-            if (expense!=null)
+            if (expense != null)
             {
                 expense.Type_id = data.Id;
                 expense.Type = Shared.Models.Type.repair;
@@ -163,7 +163,7 @@ namespace Cargotruck.Server.Controllers
                 expense.Type_id = data.Id;
                 expense.Type = Shared.Models.Type.repair;
                 _context.Entry(expense).State = EntityState.Modified;
-                
+
             }
             await _context.SaveChangesAsync();
             return NoContent();
@@ -184,7 +184,7 @@ namespace Cargotruck.Server.Controllers
         public string Excel(string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var roads = _context.Roads.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
-            
+
             using var workbook = new XLWorkbook();
             var worksheet = workbook.Worksheets.Add("Roads");
             var currentRow = 1;
@@ -244,7 +244,7 @@ namespace Cargotruck.Server.Controllers
 
         //iTextSharp needed !!!
         [HttpGet]
-         public async Task<string> PDF(string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        public async Task<string> PDF(string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var roads = _context.Roads.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
 
@@ -432,14 +432,14 @@ namespace Cargotruck.Server.Controllers
                 {
                     var s = "";
                     pdfRowIndex++;
-                   
+
                     if (!string.IsNullOrEmpty(road.Id.ToString())) { s = road.Id.ToString(); }
                     else { s = "-"; }
                     table2.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
-                    }); 
+                    });
                     if (!string.IsNullOrEmpty(road.Ending_date.ToString())) { s = road.Ending_date.ToString(); }
                     else { s = "-"; }
                     table2.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
@@ -663,12 +663,12 @@ namespace Cargotruck.Server.Controllers
 
                                 foreach (IXLCell cell in row.Cells(1, dt.Columns.Count))
                                 {
-                                    if (cell.Value != null && cell.Value.ToString() != "") 
-                                    { 
+                                    if (cell.Value != null && cell.Value.ToString() != "")
+                                    {
                                         list.Add(cell.Value);
                                     }
-                                    else 
-                                    { 
+                                    else
+                                    {
                                         list.Add(System.DBNull.Value);
                                         nulls += 1;
                                     }
@@ -688,7 +688,7 @@ namespace Cargotruck.Server.Controllers
                                         new SqlParameter("@Ending_date", list[l + 6] == System.DBNull.Value ? System.DBNull.Value : DateTime.Parse(list[l + 6]?.ToString()!)),
                                         new SqlParameter("@Starting_place", list[l + 7]),
                                         new SqlParameter("@Ending_place", list[l + 8]),
-                                        new SqlParameter("@Direction", (list[l + 9]?.ToString() == Cargotruck.Shared.Resources.Resource.to || list[l + 9]?.ToString() == "Go to the direction" ? "TO": "FROM")),
+                                        new SqlParameter("@Direction", (list[l + 9]?.ToString() == Cargotruck.Shared.Resources.Resource.to || list[l + 9]?.ToString() == "Go to the direction" ? "TO" : "FROM")),
                                         new SqlParameter("@Fuel", list[l + 10]),
                                         new SqlParameter("@Expenses_id", list[l + 11]),
                                         new SqlParameter("@Date", DateTime.Now)
@@ -700,7 +700,7 @@ namespace Cargotruck.Server.Controllers
 
                                         if (lastId != null)
                                         {
-                                            var WithNewIds = await _context.Roads.Where(x => x.Task_id== lastId.Task_id || x.Id_cargo == lastId.Id_cargo || x.Expenses_id == lastId.Expenses_id).ToListAsync();
+                                            var WithNewIds = await _context.Roads.Where(x => x.Task_id == lastId.Task_id || x.Id_cargo == lastId.Id_cargo || x.Expenses_id == lastId.Expenses_id).ToListAsync();
                                             Cargoes? cargo = await _context.Cargoes.FirstOrDefaultAsync(x => x.Id == lastId.Id_cargo);
                                             Tasks? task = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == lastId.Task_id);
                                             Expenses? expense = await _context.Expenses.FirstOrDefaultAsync(x => x.Id == lastId.Expenses_id);
@@ -729,7 +729,8 @@ namespace Cargotruck.Server.Controllers
                                                     }
                                                     else
                                                     {
-                                                        if (cargo == null) { 
+                                                        if (cargo == null)
+                                                        {
                                                             item.Id_cargo = null;
                                                         }
                                                         if (task == null)

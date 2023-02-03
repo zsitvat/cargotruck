@@ -1,5 +1,4 @@
 ﻿using Cargotruck.Shared.Resources;
-using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -42,7 +41,7 @@ namespace Cargotruck.Shared.Models
         public int? Cost_of_storage { get; set; }
         [Display(Name = "other", ResourceType = typeof(Resource))]
         [Range(0, int.MaxValue, ErrorMessageResourceName = "OnlyPositive", ErrorMessageResourceType = typeof(Resource))]
-        public int? other { get; set; }
+        public int? Other { get; set; }
         [Display(Name = "Date", ResourceType = typeof(Resource))]
         public DateTime Date { get; set; } = DateTime.Now;
     }

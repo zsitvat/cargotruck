@@ -1,7 +1,5 @@
-﻿using Cargotruck.Client.Services;
-using Cargotruck.Shared.Models;
+﻿using Cargotruck.Shared.Models;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
 using System.Net.Http.Json;
 
 namespace Cargotruck.Client.Components

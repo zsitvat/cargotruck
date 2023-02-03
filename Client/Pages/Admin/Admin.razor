@@ -7,16 +7,16 @@
     <a data-title="@localizer["Settings"]" class="btn btn-light" @onclick="@(() => settings=!settings)"><i class="oi oi-cog"></i></a>
     @if (filter != null && filter != "")
     {
-        <button @onclick="@(()=>onChangeResetFilter())" class="filter-button"><span class="icon iconify filter-icon" data-icon="material-symbols:filter-alt-off"></span></button>
+        <button @onclick="@(()=>OnChangeResetFilter())" class="filter-button"><span class="icon iconify filter-icon" data-icon="material-symbols:filter-alt-off"></span></button>
     }
     else
     {
-        <button @onclick="@(()=>onChangeResetFilter())" class="filter-button not-pointer"><span class="icon iconify filter-icon not-pointer" data-icon="material-symbols:filter-alt"></span></button>
+        <button @onclick="@(()=>OnChangeResetFilter())" class="filter-button not-pointer"><span class="icon iconify filter-icon not-pointer" data-icon="material-symbols:filter-alt"></span></button>
     }
-    @if(roles != null) {
-        <select class="form-control filter" @oninput="@((e)=>onChangeGetFilter(e))" @bind="filter">
+    @if(Roles != null) {
+        <select class="form-control filter" @oninput="@((e)=>OnChangeGetFilter(e))" @bind="filter">
             <option value="" selected>@localizer["Nothing"]</option>
-            @foreach (var role in roles.Values)
+            @foreach (var role in Roles.Values)
             {
                 <option value="@role">@localizer[@role]</option>
             }
@@ -25,11 +25,11 @@
 </div>
 <br>
 
-@if (users == null)
+@if (Users == null)
 {
     <text><p class="text">@localizer["Loading"]</p></text>
 }
-else if (users.Length == 0)
+else if (Users.Length == 0)
 {
     <text><p class="text">@localizer["No_records"]</p></text>
 }
@@ -54,18 +54,18 @@ else
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (Users item in users)
+                                    @foreach (Users item in Users)
                                     {
                                         int i = 0;
                                         i += 1;
-                                        <tr @onclick="@((e) =>MouseHoverClass.MouseOnclick(e,item.Id))" @onmouseover="@((e) =>MouseHoverClass.MouseOver(e,item.Id))" @onmouseout="@((e) =>MouseHoverClass.MouseOut(e))"
+                                        <tr @onclick="@((e) =>MouseHoverClass.MouseOnclick(item.Id))" @onmouseover="@((e) =>MouseHoverClass.MouseOver(item.Id))" @onmouseout="@((e) =>MouseHoverClass.MouseOut())"
                                     class="@(MouseHoverClass.MouseOnHoverClass == item.Id || MouseHoverClass.MouseOnclickClass == item.Id ? "color-on-hover" :"")">
                                             <td>@i</td>
                                             @if (showColumns[0])
                                             {
-                                                @if (claims != null)
+                                                @if (Claims != null)
                                                 {
-                                                    <td><img class="table-img" src="@claims[$"img/{@item.Id}"]" /></td>
+                                                    <td><img class="table-img" src="@Claims[$"img/{@item.Id}"]" /></td>
                                                 }
                                             }
                                             @if (showColumns[1])
@@ -86,8 +86,8 @@ else
                                             }
                                             @if (showColumns[5])
                                             {
-                                                @if (roles!=null) { 
-                                                    <td>@roles[item.Id]</td>
+                                                @if (Roles!=null) { 
+                                                    <td>@Roles[item.Id]</td>
                                                 }
                                             }
                                             <td class="@(MouseHoverClass.MouseOnHoverClass == item.Id.ToString() || MouseHoverClass.MouseOnclickClass == item.Id.ToString() ? "show" :"not-show") ">

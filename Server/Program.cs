@@ -1,32 +1,19 @@
 using Cargotruck.Data;
 using Cargotruck.Server.Models;
-using Cargotruck.Shared.Models;
-using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using Microsoft.JSInterop;
 using System.Globalization;
-using Microsoft.AspNetCore.Mvc.Localization;
-using System.Reflection;
-using System.IdentityModel.Tokens.Jwt;
-using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
-using static Org.BouncyCastle.Math.EC.ECCurve;
-using Cargotruck.Server.Controllers;
-using Microsoft.AspNetCore.Hosting.StaticWebAssets;
-using Blazored.SessionStorage;
 
 // create appsettings.json if not exist
 const string File_name = "appsettings.json";
 if (!File.Exists(File_name) || new FileInfo(File_name).Length == 0)
 {
-    using (StreamWriter writer = new StreamWriter(File_name))
-    {
-        writer.Write("{\r\n  \"ConnectionStrings\": {\r\n    \"DefaultConnection\": \"Server=(localdb)\\\\mssqllocaldb;Database=CargoTruckDatabase");
-        writer.Write(GetRandomString());
-        writer.Write("; Trusted_Connection = True; MultipleActiveResultSets = true\",\r\n  },\r\n  \"Logging\": {\r\n    \"LogLevel\": {\r\n      \"Default\": \"Information\",\r\n      \"Microsoft\": \"Warning\",\r\n      \"Microsoft.Hosting.Lifetime\": \"Information\"\r\n    }\r\n  },\r\n  \"AllowedHosts\": \"*\"\r\n}");
-    }
+    using StreamWriter writer = new(File_name);
+    writer.Write("{\r\n  \"ConnectionStrings\": {\r\n    \"DefaultConnection\": \"Server=(localdb)\\\\mssqllocaldb;Database=CargoTruckDatabase");
+    writer.Write(GetRandomString());
+    writer.Write("; Trusted_Connection = True; MultipleActiveResultSets = true\",\r\n  },\r\n  \"Logging\": {\r\n    \"LogLevel\": {\r\n      \"Default\": \"Information\",\r\n      \"Microsoft\": \"Warning\",\r\n      \"Microsoft.Hosting.Lifetime\": \"Information\"\r\n    }\r\n  },\r\n  \"AllowedHosts\": \"*\"\r\n}");
 }
 
 static string GetRandomString()
@@ -84,7 +71,7 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.Cookie.SameSite = SameSiteMode.None;
     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
     options.Events.OnRedirectToLogin = context =>
-    {  
+    {
         context.Response.StatusCode = 401;
         return Task.CompletedTask;
     };
@@ -114,7 +101,7 @@ else
     app.UseExceptionHandler("/Error");
     app.UseHsts();
 }
-    
+
 
 StaticWebAssetsLoader.UseStaticWebAssets(builder.Environment, builder.Configuration);
 app.UseCookiePolicy(new CookiePolicyOptions

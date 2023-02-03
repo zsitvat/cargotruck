@@ -9,10 +9,10 @@ namespace Cargotruck.Client.Pages.Admin
     {
 
         public bool settings = false;
-        List<bool> showColumns = Enumerable.Repeat(true, 6).ToList();
-        Users[]? users { get; set; }
-        Dictionary<string, string>? claims { get; set; }
-        Dictionary<string, string>? roles { get; set; }
+        readonly List<bool> showColumns = Enumerable.Repeat(true, 6).ToList();
+        Users[]? Users { get; set; }
+        Dictionary<string, string>? Claims { get; set; }
+        Dictionary<string, string>? Roles { get; set; }
         string? filter = "";
         private int currentPage = 1;
         int pageSize = 10;
@@ -26,19 +26,19 @@ namespace Cargotruck.Client.Pages.Admin
 
         protected async Task ShowPage()
         {
-            dataRows = await client.GetFromJsonAsync<int>($"api/admin/pagecount?filter={filter}");
+            dataRows = await client.GetFromJsonAsync<int>("api/admin/pagecount");
             if (pageSize < 1) { pageSize = 10; }
             else if (pageSize >= dataRows) { pageSize = dataRows != 0 ? dataRows : 1; }
             maxPage = (int)Math.Ceiling((decimal)((float)dataRows / (float)pageSize));
-            claims = await client.GetFromJsonAsync<Dictionary<string, string>?>("api/admin/claims");
-            roles = await client.GetFromJsonAsync<Dictionary<string, string>?>("api/admin/roles");
-            users = await client.GetFromJsonAsync<Users[]>($"api/admin/get?page={currentPage}&pageSize={pageSize}&filter={filter}");
+            Claims = await client.GetFromJsonAsync<Dictionary<string, string>?>("api/admin/claims");
+            Roles = await client.GetFromJsonAsync<Dictionary<string, string>?>("api/admin/roles");
+            Users = await client.GetFromJsonAsync<Users[]>($"api/admin/get?page={currentPage}&pageSize={pageSize}&filter={filter}");
             StateHasChanged();
         }
 
         async Task Delete(string Id)
         {
-            var u = users?.First(x => x.Id == Id);
+            var u = Users?.First(x => x.Id == Id);
             if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {u?.UserName} ({u?.Id})"))
             {
                 await client.DeleteAsync($"api/admin/delete/{Id}");
@@ -46,13 +46,13 @@ namespace Cargotruck.Client.Pages.Admin
             }
         }
 
-        async void onChangeGetFilter(ChangeEventArgs e)
+        async void OnChangeGetFilter(ChangeEventArgs e)
         {
             filter = e.Value?.ToString();
             await OnInitializedAsync();
         }
 
-        async void onChangeResetFilter()
+        async void OnChangeResetFilter()
         {
             filter = "";
             await OnInitializedAsync();

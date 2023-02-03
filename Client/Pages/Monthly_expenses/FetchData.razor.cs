@@ -3,7 +3,6 @@ using Cargotruck.Shared.Models;
 using Cargotruck.Shared.Models.Request;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using System.Globalization;
 using System.Net.Http.Json;
 
 namespace Cargotruck.Client.Pages.Monthly_expenses
@@ -33,7 +32,7 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
             base.OnInitialized();
 
             await client.GetStringAsync("api/Monthly_expenses/createcontable");
-            dataRows = await client.GetFromJsonAsync<int>("api/Monthly_expenses/pagecount");
+            dataRows = await client.GetFromJsonAsync<int>($"api/Monthly_expenses/pagecount?searchString={searchString}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
             var checkData = await client.GetAsync("api/Monthly_expenses/checkdata");
             Connection_ids = await client.GetFromJsonAsync<Monthly_expenses_tasks_expenses[]?>("api/Monthly_expenses/getconnectionids");
 

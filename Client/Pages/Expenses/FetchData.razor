@@ -55,8 +55,8 @@
     <!--Date Filter-->
     <div class="date-filter" data-title="@localizer["date-filter-info"]">
         <div class="date-filter-icon-div d-inline-block"><span class="icon iconify date-filter-icon" data-icon="carbon:arrows-vertical" /></div>
-        <Input class="form-control" style="border-bottom-right-radius:unset;" type="datetime-local" value="@dateFilter?.StartDate.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm", CultureInfo.CurrentCulture)" @oninput="@((e)=>{DateStartInput(e);})">
-        <Input class="form-control" style="border-top-right-radius:unset;" type="datetime-local" value="@dateFilter?.EndDate.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm", CultureInfo.CurrentCulture)" @oninput="@((e)=>{DateEndInput(e);})">
+        <Input class="form-control" style="border-bottom-right-radius:unset;border-bottom:unset;" type="datetime-local" value="@dateFilter?.StartDate.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm", CultureInfo.CurrentCulture)" @oninput="@((e)=>{DateStartInput(e);})">
+        <Input class="form-control" style="border-top-right-radius:unset;border-top:unset;" type="datetime-local" value="@dateFilter?.EndDate.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm", CultureInfo.CurrentCulture)" @oninput="@((e)=>{DateEndInput(e);})">
     </div>
 
 </div>
@@ -140,7 +140,7 @@ else
                             @foreach (Expenses item in expenses)
                             {
 
-                                <tr @onclick="@((e) =>MouseHoverClass.MouseOnclick(e,item.Id.ToString()))" @onmouseover="@((e) =>MouseHoverClass.MouseOver(e,item.Id.ToString()))" @onmouseout="@((e) =>MouseHoverClass.MouseOut(e))"
+                                <tr @onclick="@((e) =>MouseHoverClass.MouseOnclick(item.Id.ToString()))" @onmouseover="@((e) =>MouseHoverClass.MouseOver(item.Id.ToString()))" @onmouseout="@((e) =>MouseHoverClass.MouseOut())"
                             class="@(MouseHoverClass.MouseOnHoverClass == item.Id.ToString() || MouseHoverClass.MouseOnclickClass == item.Id.ToString() ? "color-on-hover" :"")">
                                     <td>@item.Id</td>
                                   
@@ -281,15 +281,15 @@ else
                                     @if (showColumns[10])
                                     {
                                         <td>
-                                            @if (@item.other != null)
+                                            @if (@item.Other != null)
                                             {
                                                 @if (CurrencyExchange.currency != "HUF" && CurrencyExchange.Rates != null)
                                                 {
-                                                    @(CurrencyExchange.GetCurrency(item.other, CurrencyExchange.currency)!.Value.ToString("0.##") + " " + CurrencyExchange.currency)
+                                                    @(CurrencyExchange.GetCurrency(item.Other, CurrencyExchange.currency)!.Value.ToString("0.##") + " " + CurrencyExchange.currency)
                                                 }
                                                 else
                                                 {
-                                                    @(item.other + " HUF")
+                                                    @(item.Other + " HUF")
                                                 }
                                             }
                                         </td>

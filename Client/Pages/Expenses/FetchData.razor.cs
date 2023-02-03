@@ -2,7 +2,6 @@
 using Cargotruck.Shared.Models.Request;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using System.Globalization;
 using System.Net.Http.Json;
 
 namespace Cargotruck.Client.Pages.Expenses
@@ -29,8 +28,8 @@ namespace Cargotruck.Client.Pages.Expenses
         {
             PageHistoryState.AddPageToHistory("/Expenses");
             base.OnInitialized();
-           
-            dataRows = await client.GetFromJsonAsync<int>($"api/expenses/pagecount?filter{filter}");
+
+            dataRows = await client.GetFromJsonAsync<int>($"api/expenses/pagecount?searchString={searchString}&filter={filter}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
             await ShowPage();
         }
 

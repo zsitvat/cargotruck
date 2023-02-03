@@ -1,15 +1,15 @@
 ﻿using Cargotruck.Data;
-using Tasks = Cargotruck.Shared.Models.Tasks;
-using iTextSharp.text.pdf;
+using Cargotruck.Shared.Models;
+using ClosedXML.Excel;
 using iTextSharp.text;
+using iTextSharp.text.pdf;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
-using ClosedXML.Excel;
-using Document = iTextSharp.text.Document;
-using Microsoft.Data.SqlClient;
 using System.Text;
-using Cargotruck.Shared.Models;
+using Document = iTextSharp.text.Document;
+using Tasks = Cargotruck.Shared.Models.Tasks;
 
 namespace Cargotruck.Server.Controllers
 {
@@ -18,7 +18,7 @@ namespace Cargotruck.Server.Controllers
     public class TasksController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
-        public TasksController(ApplicationDbContext context )
+        public TasksController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -26,38 +26,10 @@ namespace Cargotruck.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> Get(int page, int pageSize, string sortOrder, bool desc, string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
-            var t = await _context.Tasks.Where(s=>(dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
 
-            if (filter == "completed")
-            {
-                t = t.Where(data => data.Completed).ToList();
-            }
-            else if (filter == "not_completed")
-            {
-                t = t.Where(data => data.Completed == false).ToList();
-            }
+            var t = await GetData(searchString, filter, dateFilterStartDate, dateFilterEndDate);
 
-            searchString = searchString?.ToLower();
-            if (searchString != null && searchString != "") 
-            { 
-                    t = t.Where(s => (
-                    s.Partner != null && s.Partner.ToLower()!.Contains(searchString))
-                || (s.Description != null && s.Description.ToLower()!.Contains(searchString))
-                || (s.Place_of_receipt != null && s.Place_of_receipt.ToLower()!.Contains(searchString))
-                || (s.Place_of_delivery != null && s.Place_of_delivery.ToLower()!.Contains(searchString))
-                || (s.Time_of_delivery.ToString()!.Contains(searchString))
-                || (s.Id_cargo != null && s.Id_cargo.ToString()!.Contains(searchString))
-                || (s.Storage_time != null && s.Storage_time.ToLower()!.Contains(searchString))
-                || (s.Completion_time != null && s.Completion_time.ToString()!.Contains(searchString))
-                || (s.Payment != null && s.Payment.ToString()!.Contains(searchString))
-                || (s.Final_Payment != null && s.Final_Payment.ToString()!.Contains(searchString))
-                || (s.Penalty != null && s.Penalty.ToString()!.Contains(searchString))
-                || (s.Date.ToString()!.Contains(searchString))
-                ).ToList(); 
-            }
-
-            
-            sortOrder = sortOrder == "Partner" ? ( desc ? "Partner_desc" : "Partner" ) : (sortOrder);
+            sortOrder = sortOrder == "Partner" ? (desc ? "Partner_desc" : "Partner") : (sortOrder);
             sortOrder = sortOrder == "Description " ? (desc ? "Description_desc" : "Description") : (sortOrder);
             sortOrder = sortOrder == "Place_of_receipt" ? (desc ? "Place_of_receipt_desc" : "Place_of_receipt") : (sortOrder);
             sortOrder = sortOrder == "Time_of_receipt" ? (desc ? "Time_of_receipt_desc" : "Time_of_receipt") : (sortOrder);
@@ -88,8 +60,8 @@ namespace Cargotruck.Server.Controllers
                 "Place_of_delivery" => t.OrderBy(s => s.Place_of_delivery).ToList(),
                 "Time_of_delivery_desc" => t.OrderByDescending(s => s.Time_of_delivery).ToList(),
                 "Time_of_delivery" => t.OrderBy(s => s.Time_of_delivery).ToList(),
-                "other_stops_desc" => t.OrderByDescending(s => s.other_stops).ToList(),
-                "other_stops" => t.OrderBy(s => s.other_stops).ToList(),
+                "other_stops_desc" => t.OrderByDescending(s => s.Other_stops).ToList(),
+                "other_stops" => t.OrderBy(s => s.Other_stops).ToList(),
                 "Id_cargo_desc" => t.OrderByDescending(s => s.Id_cargo).ToList(),
                 "Id_cargo" => t.OrderBy(s => s.Id_cargo).ToList(),
                 "Storage_time_desc" => t.OrderByDescending(s => s.Storage_time).ToList(),
@@ -123,9 +95,9 @@ namespace Cargotruck.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> Count(bool all)
         {
-            if (all) 
+            if (all)
             {
-                return Ok(await _context.Tasks.CountAsync()); 
+                return Ok(await _context.Tasks.CountAsync());
             }
             else
             {
@@ -133,10 +105,12 @@ namespace Cargotruck.Server.Controllers
             }
         }
 
+
         [HttpGet]
-        public async Task<IActionResult> PageCount(string? filter)
+        public async Task<List<Tasks>> GetData(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
-            var t = await _context.Tasks.ToListAsync();
+            var t = await _context.Tasks.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
+
             if (filter == "completed")
             {
                 t = t.Where(data => data.Completed).ToList();
@@ -145,6 +119,33 @@ namespace Cargotruck.Server.Controllers
             {
                 t = t.Where(data => data.Completed == false).ToList();
             }
+
+            searchString = searchString?.ToLower();
+            if (searchString != null && searchString != "")
+            {
+                t = t.Where(s => (
+                s.Partner != null && s.Partner.ToLower()!.Contains(searchString))
+            || (s.Description != null && s.Description.ToLower()!.Contains(searchString))
+            || (s.Place_of_receipt != null && s.Place_of_receipt.ToLower()!.Contains(searchString))
+            || (s.Place_of_delivery != null && s.Place_of_delivery.ToLower()!.Contains(searchString))
+            || (s.Time_of_delivery.ToString()!.Contains(searchString))
+            || (s.Id_cargo != null && s.Id_cargo.ToString()!.Contains(searchString))
+            || (s.Storage_time != null && s.Storage_time.ToLower()!.Contains(searchString))
+            || (s.Completion_time != null && s.Completion_time.ToString()!.Contains(searchString))
+            || (s.Payment != null && s.Payment.ToString()!.Contains(searchString))
+            || (s.Final_Payment != null && s.Final_Payment.ToString()!.Contains(searchString))
+            || (s.Penalty != null && s.Penalty.ToString()!.Contains(searchString))
+            || (s.Date.ToString()!.Contains(searchString))
+            ).ToList();
+            }
+
+            return t;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> PageCount(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        {
+            var t = await GetData(searchString, filter, dateFilterStartDate, dateFilterEndDate);
             int PageCount = t.Count;
             return Ok(PageCount);
         }
@@ -170,7 +171,8 @@ namespace Cargotruck.Server.Controllers
             await _context.SaveChangesAsync();
 
             var cargo = _context.Cargoes.FirstOrDefault(a => a.Id == t.Id_cargo);
-            if (cargo!=null) { 
+            if (cargo != null)
+            {
                 cargo.Task_id = t.Id;
                 _context.Entry(cargo).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
@@ -182,7 +184,7 @@ namespace Cargotruck.Server.Controllers
         public async Task<IActionResult> Put(Tasks t)
         {
             t.Final_Payment = (t.Payment != null ? t.Payment : 0) - (t.Penalty != null ? t.Penalty : 0);
-            if (t.Completed) 
+            if (t.Completed)
             {
                 t.Completion_time = DateTime.Now;
             }
@@ -229,11 +231,11 @@ namespace Cargotruck.Server.Controllers
         public string Excel(string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var tasks = _context.Tasks.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
-            
+
             using var workbook = new XLWorkbook();
             var worksheet = workbook.Worksheets.Add("Tasks");
             var currentRow = 1;
-            
+
             worksheet.Cell(currentRow, 1).Value = "Id";
             worksheet.Cell(currentRow, 1).Style.Font.SetBold();
             worksheet.Cell(currentRow, 2).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID";
@@ -281,7 +283,7 @@ namespace Cargotruck.Server.Controllers
                 worksheet.Cell(currentRow, 6).Value = task.Time_of_receipt;
                 worksheet.Cell(currentRow, 7).Value = task.Place_of_delivery;
                 worksheet.Cell(currentRow, 8).Value = task.Time_of_delivery;
-                worksheet.Cell(currentRow, 9).Value = task.other_stops;
+                worksheet.Cell(currentRow, 9).Value = task.Other_stops;
                 worksheet.Cell(currentRow, 10).Value = task.Id_cargo;
                 worksheet.Cell(currentRow, 11).Value = task.Storage_time;
                 worksheet.Cell(currentRow, 12).Value = task.Completed;
@@ -452,7 +454,7 @@ namespace Cargotruck.Server.Controllers
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(task.other_stops)) { s = task.other_stops.ToString(); }
+                    if (!string.IsNullOrEmpty(task.Other_stops)) { s = task.Other_stops.ToString(); }
                     else { s = "-"; }
                     table.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
@@ -658,7 +660,7 @@ namespace Cargotruck.Server.Controllers
                 txt.Write(task.Time_of_receipt + ";");
                 txt.Write(task.Place_of_delivery + ";");
                 txt.Write(task.Time_of_delivery + ";");
-                txt.Write(task.other_stops + ";");
+                txt.Write(task.Other_stops + ";");
                 txt.Write(task.Id_cargo + ";");
                 txt.Write(task.Storage_time + ";");
                 txt.Write(task.Completed + ";");
@@ -689,7 +691,8 @@ namespace Cargotruck.Server.Controllers
             var file = Convert.ToBase64String(buffer);
             sourceFile.Dispose();
             sourceFile.Close();
-            if (!sourceFile.CanWrite) {
+            if (!sourceFile.CanWrite)
+            {
                 System.IO.File.Delete(filepath); // delete the file in the app folder
             }
             return file;
@@ -704,22 +707,23 @@ namespace Cargotruck.Server.Controllers
                 string path = Path.Combine("Files/", file);
                 //Checking file content length and Extension must be .xlsx  
                 if (file != null && System.IO.File.Exists(path) && file.ToLower().Contains(".xlsx"))
-                {             
+                {
 
                     //Started reading the Excel file.  
                     XLWorkbook workbook = new(path);
-                    
+
                     IXLWorksheet worksheet = workbook.Worksheet(1);
                     //Loop through the Worksheet rows.
                     DataTable? dt = new();
                     bool firstRow = true;
-                    if (worksheet.Row(2).CellsUsed().Count() > 1 && worksheet.Row(2).Cell(worksheet.Row(1).CellsUsed().Count()) !=null) {
+                    if (worksheet.Row(2).CellsUsed().Count() > 1 && worksheet.Row(2).Cell(worksheet.Row(1).CellsUsed().Count()) != null)
+                    {
                         int l = 0;
                         foreach (IXLRow row in worksheet.Rows())
                         {
 
-                        
-                        
+
+
                             //Use the first row to add columns to DataTable with column names check.
                             if (firstRow)
                             {
@@ -746,31 +750,31 @@ namespace Cargotruck.Server.Controllers
 
                                 foreach (IXLCell cell in row.Cells())
                                 {
-                                    if (titles.Contains(cell.Value.ToString())) 
+                                    if (titles.Contains(cell.Value.ToString()))
                                     {
                                         titles.Remove(cell.Value.ToString());
-                                        dt.Columns.Add(cell.Value.ToString()); 
+                                        dt.Columns.Add(cell.Value.ToString());
                                     }
-                                    else 
+                                    else
                                     {
                                         error = lang == "hu" ? @Cargotruck.Shared.Resources.Resource.Not_match_col : "Wrong column names!";
                                         System.IO.File.Delete(path); // delete the file
                                         return BadRequest(error);
                                     }
-                               
+
                                 }
                                 firstRow = false;
-                                if (titles.Count == 0) 
-                                { 
-                                    haveColumns = true; 
-                                        l += 1;
+                                if (titles.Count == 0)
+                                {
+                                    haveColumns = true;
+                                    l += 1;
                                 }
-                                else if (titles.Count == 1 &&  titles.Contains("Id")) 
+                                else if (titles.Count == 1 && titles.Contains("Id"))
                                 {
                                     haveColumns = true;
                                 }
                             }
-                            else if(haveColumns)
+                            else if (haveColumns)
                             {
                                 List<object?> list = new();
                                 int nulls = 0;
@@ -778,9 +782,9 @@ namespace Cargotruck.Server.Controllers
                                 dt.Rows.Add();
                                 foreach (IXLCell cell in row.Cells(1, dt.Columns.Count))
                                 {
-                                    if (cell.Value != null && cell.Value.ToString()!="") { list.Add(cell.Value); }
-                                    else 
-                                    { 
+                                    if (cell.Value != null && cell.Value.ToString() != "") { list.Add(cell.Value); }
+                                    else
+                                    {
                                         list.Add(System.DBNull.Value);
                                         nulls += 1;
                                     }
@@ -881,14 +885,14 @@ namespace Cargotruck.Server.Controllers
                 else
                 {
                     //If file extension of the uploaded file is different then .xlsx  
-                    error = lang == "hu" ?  @Cargotruck.Shared.Resources.Resource.Not_excel : "Bad format! The file is not an excel.";
+                    error = lang == "hu" ? @Cargotruck.Shared.Resources.Resource.Not_excel : "Bad format! The file is not an excel.";
                     System.IO.File.Delete(path); // delete the file
                     return BadRequest(error);
                 }
             }
             else
             {
-                error = lang == "hu" ?  @Cargotruck.Shared.Resources.Resource.No_excel : "File not found!";
+                error = lang == "hu" ? @Cargotruck.Shared.Resources.Resource.No_excel : "File not found!";
                 return BadRequest(error);
             }
             return NoContent();

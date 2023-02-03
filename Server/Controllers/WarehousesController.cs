@@ -1,18 +1,16 @@
 ﻿using Cargotruck.Data;
-using iTextSharp.text.pdf;
+using Cargotruck.Shared.Models;
+using ClosedXML.Excel;
 using iTextSharp.text;
+using iTextSharp.text.pdf;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
-using ClosedXML.Excel;
-using Document = iTextSharp.text.Document;
-using Microsoft.Data.SqlClient;
-using Cargotruck.Shared.Models;
-using Font = iTextSharp.text.Font;
-using System.Text;
 using System.Linq.Dynamic.Core;
-using DocumentFormat.OpenXml.Spreadsheet;
-using System.Reflection;
+using System.Text;
+using Document = iTextSharp.text.Document;
+using Font = iTextSharp.text.Font;
 
 namespace Cargotruck.Server.Controllers
 {
@@ -29,16 +27,7 @@ namespace Cargotruck.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> Get(int page, int pageSize, string sortOrder, bool desc, string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
-            var data = await _context.Warehouses.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
-
-            searchString = searchString?.ToLower();
-            if (searchString != null && searchString != "")
-            {
-                data = data.Where(s =>
-               (s.Address.ToString().ToLower()!.Contains(searchString))
-            || (s.Owner != null && s.Owner.ToString().ToLower()!.Contains(searchString))
-            ).ToList();
-            }
+            var data = await GetData(searchString, dateFilterStartDate, dateFilterEndDate);
 
             sortOrder = sortOrder == "Address" ? (desc ? "Address_desc" : "Address") : (sortOrder);
             sortOrder = sortOrder == "Owner" ? (desc ? "Owner_desc" : "Owner") : (sortOrder);
@@ -57,6 +46,24 @@ namespace Cargotruck.Server.Controllers
             return Ok(data);
         }
 
+
+        [HttpGet]
+        public async Task<List<Warehouses>> GetData(string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        {
+            var data = await _context.Warehouses.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
+
+            searchString = searchString?.ToLower();
+            if (searchString != null && searchString != "")
+            {
+                data = data.Where(s =>
+               (s.Address!.ToString().ToLower()!.Contains(searchString))
+            || (s.Owner != null && s.Owner.ToString().ToLower()!.Contains(searchString))
+            ).ToList();
+            }
+
+            return data;
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetWarehouses()
         {
@@ -72,9 +79,9 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> PageCount(string? filter)
+        public async Task<IActionResult> PageCount(string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
-            var data = await _context.Warehouses.ToListAsync();
+            var data = await GetData(searchString, dateFilterStartDate, dateFilterEndDate);
             int PageCount = data.Count;
             return Ok(PageCount);
         }
@@ -119,7 +126,7 @@ namespace Cargotruck.Server.Controllers
         {
             var warehouses = _context.Warehouses.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
             var cargoes = _context.Cargoes.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
-                  
+
             using var workbook = new XLWorkbook();
             var worksheet = workbook.Worksheets.Add("Warehouses");
             var currentRow = 1;
@@ -167,7 +174,7 @@ namespace Cargotruck.Server.Controllers
 
         //iTextSharp needed !!!
         [HttpGet]
-         public async Task<string> PDF(string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        public async Task<string> PDF(string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var warehouses = _context.Warehouses.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
             var cargoes = _context.Cargoes.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
@@ -252,14 +259,14 @@ namespace Cargotruck.Server.Controllers
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(warehouse.Address.ToString())) { s = warehouse.Address.ToString(); }
+                    if (!string.IsNullOrEmpty(warehouse.Address?.ToString())) { s = warehouse.Address.ToString(); }
                     else { s = "-"; }
                     table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(warehouse.Owner.ToString())) { s = warehouse.Owner.ToString(); }
+                    if (!string.IsNullOrEmpty(warehouse.Owner?.ToString())) { s = warehouse.Owner.ToString(); }
                     else { s = "-"; }
                     table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
@@ -457,13 +464,15 @@ namespace Cargotruck.Server.Controllers
                                     {
                                         list.Add(cell.Value);
                                     }
-                                    else { 
+                                    else
+                                    {
                                         list.Add(System.DBNull.Value);
                                         nulls += 1;
                                     }
                                 }
 
-                                if (nulls != list.Count) { 
+                                if (nulls != list.Count)
+                                {
                                     var sql = @"Insert Into Warehouses (User_id,Address,Owner,Date) 
                                     Values (@User_id,@Address,@Owner,@Date)";
                                     var insert = await _context.Database.ExecuteSqlRawAsync(sql,
@@ -475,13 +484,14 @@ namespace Cargotruck.Server.Controllers
 
                                     string[]? substrings = list[l + 3]?.ToString()?.Split("]");
 
-                                    if (substrings != null) { 
-                                        for (int s = 0; s < substrings.Length-1;++s) 
+                                    if (substrings != null)
+                                    {
+                                        for (int s = 0; s < substrings.Length - 1; ++s)
                                         {
                                             var CargoId = substrings[s][1..substrings[s].IndexOf("/")];
-                                            var warehouseSection = substrings[s].Substring(substrings[s].IndexOf("/")+1);
+                                            var warehouseSection = substrings[s].Substring(substrings[s].IndexOf("/") + 1);
 
-                                            var greatestId =  _context.Warehouses.OrderBy(s => s.Id).Last().Id;
+                                            var greatestId = _context.Warehouses.OrderBy(s => s.Id).Last().Id;
 
                                             var sql2 = @"Update Cargoes 
                                                         Set Warehouse_id = @Warehouse_id, Warehouse_section = @Warehouse_section
