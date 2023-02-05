@@ -52,6 +52,10 @@
               "target": "Package",
               "version": "[2.3.0, )"
             },
+            "ChartJs.Blazor.Fork": {
+              "target": "Package",
+              "version": "[2.0.2, )"
+            },
             "EntityFramework": {
               "target": "Package",
               "version": "[6.4.4, )"
@@ -231,6 +235,14 @@
             "Microsoft.Extensions.Localization": {
               "target": "Package",
               "version": "[6.0.11, )"
+            },
+            "PSC.Blazor.Components.Chartjs": {
+              "target": "Package",
+              "version": "[6.0.35, )"
+            },
+            "Plotly.Blazor": {
+              "target": "Package",
+              "version": "[2.18.0, )"
             },
             "Refit": {
               "target": "Package",

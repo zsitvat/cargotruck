@@ -924,8 +924,6 @@ F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\build-gz\0kWZQkwH.gz
 F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\build-gz\UevhXiUa.gz
 F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\build-gz\ESWUGG+e.gz
 F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\build-gz\PuRDWyab.gz
-F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\build-gz\uQcRw+nU.gz
-F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\build-gz\rtLoIArf.gz
 F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\build-gz\1WBUZPe7.gz
 F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\build-gz\1Oulz698.gz
 F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\build-gz\5y02WgZZ.gz
@@ -974,3 +972,9 @@ F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\build-gz\h1UxL3kL.gz
 F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\build-gz\ah5KTxMf.gz
 F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\build-gz\4YtrcPar.gz
 F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\build-gz\6KJA4+ER.gz
+F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\ChartJs.Blazor.dll
+F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\wwwroot\_framework\ChartJs.Blazor.dll.gz
+F:\Szakdoga app\Cargotruck\Client\bin\Debug\net6.0\ChartJs.Blazor.dll
+F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\build-gz\0XWddyl0.gz
+F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\build-gz\uQcRw+nU.gz
+F:\Szakdoga app\Cargotruck\Client\obj\Debug\net6.0\build-gz\rtLoIArf.gz

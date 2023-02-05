@@ -16,6 +16,28 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="C:\Users\Zsitva Tamás\.nuget\packages\psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\libman.json" />
+    <Content Remove="C:\Users\Zsitva Tamás\.nuget\packages\psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\psc_ico.ico" />
+    <Content Remove="C:\Users\Zsitva Tamás\.nuget\packages\psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\Chart.js" />
+    <Content Remove="C:\Users\Zsitva Tamás\.nuget\packages\psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\Chart.js\chart.esm.js" />
+    <Content Remove="C:\Users\Zsitva Tamás\.nuget\packages\psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\Chart.js\chart.esm.min.js" />
+    <Content Remove="C:\Users\Zsitva Tamás\.nuget\packages\psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\Chart.js\chart.js" />
+    <Content Remove="C:\Users\Zsitva Tamás\.nuget\packages\psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\Chart.js\chart.min.js" />
+    <Content Remove="C:\Users\Zsitva Tamás\.nuget\packages\psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\Chart.js\chart.mjs" />
+    <Content Remove="C:\Users\Zsitva Tamás\.nuget\packages\psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\Chart.js\helpers.esm.js" />
+    <Content Remove="C:\Users\Zsitva Tamás\.nuget\packages\psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\Chart.js\helpers.esm.min.js" />
+    <Content Remove="C:\Users\Zsitva Tamás\.nuget\packages\psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\Chart.js\helpers.mjs" />
+    <Content Remove="C:\Users\Zsitva Tamás\.nuget\packages\psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\chartjs-plugin-zoom\chartjs-plugin-zoom.esm.js" />
+    <Content Remove="C:\Users\Zsitva Tamás\.nuget\packages\psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\chartjs-plugin-zoom\chartjs-plugin-zoom.esm.min.js" />
+    <Content Remove="C:\Users\Zsitva Tamás\.nuget\packages\psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\chartjs-plugin-zoom\chartjs-plugin-zoom.js" />
+    <Content Remove="C:\Users\Zsitva Tamás\.nuget\packages\psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\chartjs-plugin-zoom\chartjs-plugin-zoom.min.js" />
+    <Content Remove="C:\Users\Zsitva Tamás\.nuget\packages\psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\hammer.js\hammer.js" />
+    <Content Remove="C:\Users\Zsitva Tamás\.nuget\packages\psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\hammer.js\hammer.min.js" />
+    <Content Remove="C:\Users\Zsitva Tamás\.nuget\packages\psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\hammer.js\hammer.min.js.map" />
+    <Content Remove="C:\Users\Zsitva Tamás\.nuget\packages\psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\hammer.js\hammer.min.map" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BlazorPolyfill.Server" Version="6.0.200" />
     <PackageReference Include="ClosedXML" Version="0.97.0" />
     <PackageReference Include="EntityFramework" Version="6.4.4" />
@@ -35,6 +57,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Localization" Version="6.0.11" />
+    <PackageReference Include="Plotly.Blazor" Version="2.18.0" />
+    <PackageReference Include="PSC.Blazor.Components.Chartjs" Version="6.0.35" />
     <PackageReference Include="Refit" Version="6.3.2" />
     <PackageReference Include="Refit.HttpClientFactory" Version="6.3.2" />
     <PackageReference Include="RestSharp" Version="106.15.0" />

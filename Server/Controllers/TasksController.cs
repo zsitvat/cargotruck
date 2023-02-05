@@ -93,6 +93,22 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> GetChartData()
+        {
+            var data = await _context.Tasks.ToListAsync();
+            int[] columnsHeight = new int[24];
+            for (int i=0; i<12;i++)
+            {
+                columnsHeight[i] = data.Where(x=> x.Date.Year == DateTime.Now.Year && x.Date.Month == i && x.Completed == false).Count();
+            }
+            for (int i = 0; i < 12; i++)
+            {
+                columnsHeight[i+12] = data.Where(x => x.Date.Year == DateTime.Now.Year && x.Date.Month == i && x.Completed).Count();
+            }
+            return Ok(columnsHeight);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Count(bool all)
         {
             if (all)

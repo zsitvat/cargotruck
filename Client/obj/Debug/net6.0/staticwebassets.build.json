@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "FHjBjeIKkTLJkhN0thdr16wj3stBrhcPGhH2kZZ7BQQ=",
+  "Hash": "7+Hv87LCITZw4jLsU+W1+TLeE8plmu0pb3trTdINDMQ=",
   "Source": "Cargotruck.Client",
   "BasePath": "/",
   "Mode": "Root",
@@ -16,6 +16,23 @@
     }
   ],
   "Assets": [
+    {
+      "Identity": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\chartjs.blazor.fork\\2.0.2\\staticwebassets\\ChartJsBlazorInterop.js",
+      "SourceId": "ChartJs.Blazor.Fork",
+      "SourceType": "Package",
+      "ContentRoot": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\chartjs.blazor.fork\\2.0.2\\staticwebassets\\",
+      "BasePath": "_content/ChartJs.Blazor.Fork",
+      "RelativePath": "ChartJsBlazorInterop.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\chartjs.blazor.fork\\2.0.2\\staticwebassets\\ChartJsBlazorInterop.js"
+    },
     {
       "Identity": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.aspnetcore.components.webassembly.authentication\\6.0.10\\staticwebassets\\AuthenticationService.js",
       "SourceId": "Microsoft.AspNetCore.Components.WebAssembly.Authentication",
@@ -151,6 +168,23 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Shared\\bin\\Debug\\net6.0\\Cargotruck.Shared.pdb"
+    },
+    {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\ChartJs.Blazor.dll",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/ChartJs.Blazor.dll",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "BlazorWebAssemblyResource",
+      "AssetTraitValue": "runtime",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\chartjs.blazor.fork\\2.0.2\\lib\\netstandard2.1\\ChartJs.Blazor.dll"
     },
     {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\dotnet.6.0.13.wyf4pl6fej.js",
@@ -4216,6 +4250,23 @@
       "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Microsoft.VisualBasic.dll"
     },
     {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\0XWddyl0.gz",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/ChartJs.Blazor.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "RelatedAsset": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\ChartJs.Blazor.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "F:\\Szakdoga app\\Cargotruck\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\ChartJs.Blazor.dll"
+    },
+    {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\obj\\Debug\\net6.0\\build-gz\\13F1ffNd.gz",
       "SourceId": "Cargotruck.Client",
       "SourceType": "Computed",
@@ -8262,6 +8313,23 @@
       "OriginalItemSpec": "wwwroot\\css\\bootstrap\\bootstrap.min.css.map"
     },
     {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\css\\charts.css",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "css/charts.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\charts.css"
+    },
+    {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\css\\dropdown.css",
       "SourceId": "Cargotruck.Client",
       "SourceType": "Discovered",
@@ -8277,23 +8345,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\dropdown.css"
-    },
-    {
-      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\css\\hexamenu.css",
-      "SourceId": "Cargotruck.Client",
-      "SourceType": "Discovered",
-      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\",
-      "BasePath": "/",
-      "RelativePath": "css/hexamenu.css",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\css\\hexamenu.css"
     },
     {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\css\\loading.css",

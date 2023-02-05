@@ -77,6 +77,37 @@
           }
         }
       },
+      "ChartJs.Blazor.Fork/2.0.2": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Components.Web": "3.1.8",
+          "Microsoft.CSharp": "4.7.0",
+          "Newtonsoft.Json": "12.0.3"
+        },
+        "compile": {
+          "lib/netstandard2.1/ChartJs.Blazor.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/ChartJs.Blazor.dll": {
+            "related": ".xml"
+          }
+        },
+        "contentFiles": {
+          "contentFiles/any/any/_._": {
+            "buildAction": "None",
+            "codeLanguage": "any",
+            "copyToOutput": false
+          }
+        },
+        "build": {
+          "buildTransitive/ChartJs.Blazor.Fork.props": {}
+        },
+        "buildMultiTargeting": {
+          "buildMultiTargeting/ChartJs.Blazor.Fork.props": {}
+        }
+      },
       "ClosedXML/0.97.0": {
         "type": "package",
         "dependencies": {
@@ -379,10 +410,10 @@
           }
         }
       },
-      "Microsoft.AspNetCore.Authorization/6.0.12": {
+      "Microsoft.AspNetCore.Authorization/6.0.13": {
         "type": "package",
         "dependencies": {
-          "Microsoft.AspNetCore.Metadata": "6.0.12",
+          "Microsoft.AspNetCore.Metadata": "6.0.13",
           "Microsoft.Extensions.Logging.Abstractions": "6.0.3",
           "Microsoft.Extensions.Options": "6.0.0"
         },
@@ -397,11 +428,11 @@
           }
         }
       },
-      "Microsoft.AspNetCore.Components/6.0.12": {
+      "Microsoft.AspNetCore.Components/6.0.13": {
         "type": "package",
         "dependencies": {
-          "Microsoft.AspNetCore.Authorization": "6.0.12",
-          "Microsoft.AspNetCore.Components.Analyzers": "6.0.12"
+          "Microsoft.AspNetCore.Authorization": "6.0.13",
+          "Microsoft.AspNetCore.Components.Analyzers": "6.0.13"
         },
         "compile": {
           "lib/net6.0/Microsoft.AspNetCore.Components.dll": {
@@ -414,7 +445,7 @@
           }
         }
       },
-      "Microsoft.AspNetCore.Components.Analyzers/6.0.12": {
+      "Microsoft.AspNetCore.Components.Analyzers/6.0.13": {
         "type": "package",
         "build": {
           "buildTransitive/netstandard2.0/Microsoft.AspNetCore.Components.Analyzers.targets": {}
@@ -437,10 +468,10 @@
           }
         }
       },
-      "Microsoft.AspNetCore.Components.Forms/6.0.12": {
+      "Microsoft.AspNetCore.Components.Forms/6.0.13": {
         "type": "package",
         "dependencies": {
-          "Microsoft.AspNetCore.Components": "6.0.12"
+          "Microsoft.AspNetCore.Components": "6.0.13"
         },
         "compile": {
           "lib/net6.0/Microsoft.AspNetCore.Components.Forms.dll": {
@@ -453,13 +484,13 @@
           }
         }
       },
-      "Microsoft.AspNetCore.Components.Web/6.0.12": {
+      "Microsoft.AspNetCore.Components.Web/6.0.13": {
         "type": "package",
         "dependencies": {
-          "Microsoft.AspNetCore.Components": "6.0.12",
-          "Microsoft.AspNetCore.Components.Forms": "6.0.12",
+          "Microsoft.AspNetCore.Components": "6.0.13",
+          "Microsoft.AspNetCore.Components.Forms": "6.0.13",
           "Microsoft.Extensions.DependencyInjection": "6.0.1",
-          "Microsoft.JSInterop": "6.0.12",
+          "Microsoft.JSInterop": "6.0.13",
           "System.IO.Pipelines": "6.0.3"
         },
         "compile": {
@@ -708,7 +739,7 @@
           }
         }
       },
-      "Microsoft.AspNetCore.Metadata/6.0.12": {
+      "Microsoft.AspNetCore.Metadata/6.0.13": {
         "type": "package",
         "compile": {
           "lib/net6.0/Microsoft.AspNetCore.Metadata.dll": {
@@ -1574,7 +1605,7 @@
           }
         }
       },
-      "Microsoft.JSInterop/6.0.12": {
+      "Microsoft.JSInterop/6.0.13": {
         "type": "package",
         "compile": {
           "lib/net6.0/Microsoft.JSInterop.dll": {
@@ -1789,6 +1820,150 @@
           "lib/netstandard2.0/NUglify.dll": {
             "related": ".xml"
           }
+        }
+      },
+      "Plotly.Blazor/2.18.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Components": "6.0.13",
+          "Microsoft.AspNetCore.Components.Web": "6.0.13",
+          "Microsoft.CSharp": "4.7.0",
+          "System.Text.Json": "6.0.7"
+        },
+        "compile": {
+          "lib/net6.0/Plotly.Blazor.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Plotly.Blazor.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/Plotly.Blazor.props": {}
+        },
+        "buildMultiTargeting": {
+          "buildMultiTargeting/Plotly.Blazor.props": {}
+        }
+      },
+      "PSC.Blazor.Components.Chartjs/6.0.35": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.Components.Web": "6.0.10"
+        },
+        "compile": {
+          "lib/net6.0/PSC.Blazor.Components.Chartjs.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/PSC.Blazor.Components.Chartjs.dll": {
+            "related": ".xml"
+          }
+        },
+        "contentFiles": {
+          "contentFiles/any/net6.0/libman.json": {
+            "buildAction": "Content",
+            "codeLanguage": "any",
+            "copyToOutput": false
+          },
+          "contentFiles/any/net6.0/psc_ico.ico": {
+            "buildAction": "Content",
+            "codeLanguage": "any",
+            "copyToOutput": false
+          },
+          "contentFiles/any/net6.0/wwwroot/Chart.js": {
+            "buildAction": "Content",
+            "codeLanguage": "any",
+            "copyToOutput": false
+          },
+          "contentFiles/any/net6.0/wwwroot/lib/Chart.js/chart.esm.js": {
+            "buildAction": "Content",
+            "codeLanguage": "any",
+            "copyToOutput": false
+          },
+          "contentFiles/any/net6.0/wwwroot/lib/Chart.js/chart.esm.min.js": {
+            "buildAction": "Content",
+            "codeLanguage": "any",
+            "copyToOutput": false
+          },
+          "contentFiles/any/net6.0/wwwroot/lib/Chart.js/chart.js": {
+            "buildAction": "Content",
+            "codeLanguage": "any",
+            "copyToOutput": false
+          },
+          "contentFiles/any/net6.0/wwwroot/lib/Chart.js/chart.min.js": {
+            "buildAction": "Content",
+            "codeLanguage": "any",
+            "copyToOutput": false
+          },
+          "contentFiles/any/net6.0/wwwroot/lib/Chart.js/chart.mjs": {
+            "buildAction": "Content",
+            "codeLanguage": "any",
+            "copyToOutput": false
+          },
+          "contentFiles/any/net6.0/wwwroot/lib/Chart.js/helpers.esm.js": {
+            "buildAction": "Content",
+            "codeLanguage": "any",
+            "copyToOutput": false
+          },
+          "contentFiles/any/net6.0/wwwroot/lib/Chart.js/helpers.esm.min.js": {
+            "buildAction": "Content",
+            "codeLanguage": "any",
+            "copyToOutput": false
+          },
+          "contentFiles/any/net6.0/wwwroot/lib/Chart.js/helpers.mjs": {
+            "buildAction": "Content",
+            "codeLanguage": "any",
+            "copyToOutput": false
+          },
+          "contentFiles/any/net6.0/wwwroot/lib/chartjs-plugin-zoom/chartjs-plugin-zoom.esm.js": {
+            "buildAction": "Content",
+            "codeLanguage": "any",
+            "copyToOutput": false
+          },
+          "contentFiles/any/net6.0/wwwroot/lib/chartjs-plugin-zoom/chartjs-plugin-zoom.esm.min.js": {
+            "buildAction": "Content",
+            "codeLanguage": "any",
+            "copyToOutput": false
+          },
+          "contentFiles/any/net6.0/wwwroot/lib/chartjs-plugin-zoom/chartjs-plugin-zoom.js": {
+            "buildAction": "Content",
+            "codeLanguage": "any",
+            "copyToOutput": false
+          },
+          "contentFiles/any/net6.0/wwwroot/lib/chartjs-plugin-zoom/chartjs-plugin-zoom.min.js": {
+            "buildAction": "Content",
+            "codeLanguage": "any",
+            "copyToOutput": false
+          },
+          "contentFiles/any/net6.0/wwwroot/lib/hammer.js/hammer.js": {
+            "buildAction": "Content",
+            "codeLanguage": "any",
+            "copyToOutput": false
+          },
+          "contentFiles/any/net6.0/wwwroot/lib/hammer.js/hammer.min.js": {
+            "buildAction": "Content",
+            "codeLanguage": "any",
+            "copyToOutput": false
+          },
+          "contentFiles/any/net6.0/wwwroot/lib/hammer.js/hammer.min.js.map": {
+            "buildAction": "Content",
+            "codeLanguage": "any",
+            "copyToOutput": false
+          },
+          "contentFiles/any/net6.0/wwwroot/lib/hammer.js/hammer.min.map": {
+            "buildAction": "Content",
+            "codeLanguage": "any",
+            "copyToOutput": false
+          }
+        },
+        "build": {
+          "buildTransitive/PSC.Blazor.Components.Chartjs.props": {}
+        },
+        "buildMultiTargeting": {
+          "buildMultiTargeting/PSC.Blazor.Components.Chartjs.props": {}
         }
       },
       "React.AspNet/5.2.11": {
@@ -3539,7 +3714,7 @@
           }
         }
       },
-      "System.Text.Json/6.0.0": {
+      "System.Text.Json/6.0.7": {
         "type": "package",
         "dependencies": {
           "System.Runtime.CompilerServices.Unsafe": "6.0.0",
@@ -3556,7 +3731,7 @@
           }
         },
         "build": {
-          "buildTransitive/netcoreapp3.1/_._": {}
+          "buildTransitive/netcoreapp3.1/System.Text.Json.targets": {}
         }
       },
       "System.Text.RegularExpressions/4.3.0": {
@@ -3747,6 +3922,7 @@
         "dependencies": {
           "Blazored.SessionStorage": "2.3.0",
           "Cargotruck.Shared": "1.0.0",
+          "ChartJs.Blazor.Fork": "2.0.2",
           "EntityFramework": "6.4.4",
           "Microsoft.AspNetCore.Components.Authorization": "6.0.10",
           "Microsoft.AspNetCore.Components.WebAssembly": "6.0.10",
@@ -3852,6 +4028,26 @@
         "lib/netstandard2.0/BouncyCastle.Cryptography.dll",
         "lib/netstandard2.0/BouncyCastle.Cryptography.xml",
         "packageIcon.png"
+      ]
+    },
+    "ChartJs.Blazor.Fork/2.0.2": {
+      "sha512": "1aJR2uX3Al1OnWsTOIza2UV4oDZcmspOhliXQ2f9rpAOCuwT0BPbN0eFYT3Fzp5aWU9+9tfyhPlQO48UwpfKVQ==",
+      "type": "package",
+      "path": "chartjs.blazor.fork/2.0.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "build/ChartJs.Blazor.Fork.props",
+        "build/Microsoft.AspNetCore.StaticWebAssets.props",
+        "buildMultiTargeting/ChartJs.Blazor.Fork.props",
+        "buildTransitive/ChartJs.Blazor.Fork.props",
+        "chartjs.blazor.fork.2.0.2.nupkg.sha512",
+        "chartjs.blazor.fork.nuspec",
+        "content/wwwroot/ChartJsBlazorInterop.js",
+        "contentFiles/any/netstandard2.1/wwwroot/ChartJsBlazorInterop.js",
+        "lib/netstandard2.1/ChartJs.Blazor.dll",
+        "lib/netstandard2.1/ChartJs.Blazor.xml",
+        "staticwebassets/ChartJsBlazorInterop.js"
       ]
     },
     "ClosedXML/0.97.0": {
@@ -4256,10 +4452,10 @@
         "lib/netstandard2.0/JSPool.xml"
       ]
     },
-    "Microsoft.AspNetCore.Authorization/6.0.12": {
-      "sha512": "BkHiJ7krAgsK/OfIz71ZL/ckrxBbeMtA+CDJwFNn0gq+UlmiPpxLBojBlkQCwExiEA+mnYCbwsHfnhcpq7zOXw==",
+    "Microsoft.AspNetCore.Authorization/6.0.13": {
+      "sha512": "voJUi8+ccHoLb+N2+KPk0YgipRYoUlqo4AsJgz3cb0NfVq+LiGUHHzzXTOk3WdPflSYwR/VUGLBGACuuaLFsSQ==",
       "type": "package",
-      "path": "microsoft.aspnetcore.authorization/6.0.12",
+      "path": "microsoft.aspnetcore.authorization/6.0.13",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -4271,14 +4467,14 @@
         "lib/net6.0/Microsoft.AspNetCore.Authorization.xml",
         "lib/netstandard2.0/Microsoft.AspNetCore.Authorization.dll",
         "lib/netstandard2.0/Microsoft.AspNetCore.Authorization.xml",
-        "microsoft.aspnetcore.authorization.6.0.12.nupkg.sha512",
+        "microsoft.aspnetcore.authorization.6.0.13.nupkg.sha512",
         "microsoft.aspnetcore.authorization.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.Components/6.0.12": {
-      "sha512": "DFzaPaHcqV2IEzOxPDV38lWJrY4SRinwfbxk5MY+oUJ0DyRetJlSdwsuWsAo9nFxgfoRvib/TElMMrOGbO3CLg==",
+    "Microsoft.AspNetCore.Components/6.0.13": {
+      "sha512": "/SIGdxaG/RleeDBXIxA06tk2w94RQh+xPldYuFGcBQE0kbyFhkcPEbiNPmJnd83VA5IZKeQeihooqAbmvtOJLw==",
       "type": "package",
-      "path": "microsoft.aspnetcore.components/6.0.12",
+      "path": "microsoft.aspnetcore.components/6.0.13",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -4286,14 +4482,14 @@
         "THIRD-PARTY-NOTICES.txt",
         "lib/net6.0/Microsoft.AspNetCore.Components.dll",
         "lib/net6.0/Microsoft.AspNetCore.Components.xml",
-        "microsoft.aspnetcore.components.6.0.12.nupkg.sha512",
+        "microsoft.aspnetcore.components.6.0.13.nupkg.sha512",
         "microsoft.aspnetcore.components.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.Components.Analyzers/6.0.12": {
-      "sha512": "Uavhr7DPJLkz320YAMthKZXZlt2dryvmPvMECg7/kgW/9w/XmHDwhoWRG4ztGJmVWK/yzAZKYEdcj4oA9VryoA==",
+    "Microsoft.AspNetCore.Components.Analyzers/6.0.13": {
+      "sha512": "zYaedctAZPFZzxTP0eo4DXeGoE9fh0YfNmtfrCGgkiMTiaOyYnMYTiLIyZmxAJS3PrSnI+TeHUe274Igj9QMnA==",
       "type": "package",
-      "path": "microsoft.aspnetcore.components.analyzers/6.0.12",
+      "path": "microsoft.aspnetcore.components.analyzers/6.0.13",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -4302,7 +4498,7 @@
         "analyzers/dotnet/cs/Microsoft.AspNetCore.Components.Analyzers.dll",
         "build/netstandard2.0/Microsoft.AspNetCore.Components.Analyzers.targets",
         "buildTransitive/netstandard2.0/Microsoft.AspNetCore.Components.Analyzers.targets",
-        "microsoft.aspnetcore.components.analyzers.6.0.12.nupkg.sha512",
+        "microsoft.aspnetcore.components.analyzers.6.0.13.nupkg.sha512",
         "microsoft.aspnetcore.components.analyzers.nuspec"
       ]
     },
@@ -4321,10 +4517,10 @@
         "microsoft.aspnetcore.components.authorization.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.Components.Forms/6.0.12": {
-      "sha512": "xIaviLuWwpLI2+qgc5N5YWlvUPBzPq98SDCVZgl8pEyIpP6TmA8++Ucpl2KTbx+0b+aPjk6x9NNLwKnb99vjYA==",
+    "Microsoft.AspNetCore.Components.Forms/6.0.13": {
+      "sha512": "SvvFdxWK7+bDL50gOXXIdobwbr9xfnhNnbw6dgOAX/xEGSRXiLyl8tdI4DQEJP/OHam+CjCWutqWK/6E/QVQkQ==",
       "type": "package",
-      "path": "microsoft.aspnetcore.components.forms/6.0.12",
+      "path": "microsoft.aspnetcore.components.forms/6.0.13",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -4332,14 +4528,14 @@
         "THIRD-PARTY-NOTICES.txt",
         "lib/net6.0/Microsoft.AspNetCore.Components.Forms.dll",
         "lib/net6.0/Microsoft.AspNetCore.Components.Forms.xml",
-        "microsoft.aspnetcore.components.forms.6.0.12.nupkg.sha512",
+        "microsoft.aspnetcore.components.forms.6.0.13.nupkg.sha512",
         "microsoft.aspnetcore.components.forms.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.Components.Web/6.0.12": {
-      "sha512": "9QwxYp+l/0PQ+vuzv/zQssEFnYSh9fC8EdclAJLj+P5xikT1/iEkn9yVG9S9Y87lW+ZnjsMjWeto0Jab930rpw==",
+    "Microsoft.AspNetCore.Components.Web/6.0.13": {
+      "sha512": "vwedqpMRkEgwgAfg7d+1URKgkMUqVOQqQPO9jfLHKc1ag+FJO85loHf8EUPH0SUHCBubICBqT/N7sGdjRyLmgQ==",
       "type": "package",
-      "path": "microsoft.aspnetcore.components.web/6.0.12",
+      "path": "microsoft.aspnetcore.components.web/6.0.13",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -4347,7 +4543,7 @@
         "THIRD-PARTY-NOTICES.txt",
         "lib/net6.0/Microsoft.AspNetCore.Components.Web.dll",
         "lib/net6.0/Microsoft.AspNetCore.Components.Web.xml",
-        "microsoft.aspnetcore.components.web.6.0.12.nupkg.sha512",
+        "microsoft.aspnetcore.components.web.6.0.13.nupkg.sha512",
         "microsoft.aspnetcore.components.web.nuspec"
       ]
     },
@@ -4561,10 +4757,10 @@
         "microsoft.aspnetcore.jsonpatch.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.Metadata/6.0.12": {
-      "sha512": "5IvdbEG0vKr4AL7+JkKwV5V9Iwt1mWX4/vsbOWmGON3ldP3hb8rXJIhOA9K1NR1Lb6O2URnYyo2jaJw7yulXhw==",
+    "Microsoft.AspNetCore.Metadata/6.0.13": {
+      "sha512": "1QWNlDjeZI/zV4kJDLF/1+lfXUnpw0u7VBzBgVx9lcihpalDucRXcOgOatzMPQlOf3R/VhKXlyLfsTXpqwX0dA==",
       "type": "package",
-      "path": "microsoft.aspnetcore.metadata/6.0.12",
+      "path": "microsoft.aspnetcore.metadata/6.0.13",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -4576,7 +4772,7 @@
         "lib/net6.0/Microsoft.AspNetCore.Metadata.xml",
         "lib/netstandard2.0/Microsoft.AspNetCore.Metadata.dll",
         "lib/netstandard2.0/Microsoft.AspNetCore.Metadata.xml",
-        "microsoft.aspnetcore.metadata.6.0.12.nupkg.sha512",
+        "microsoft.aspnetcore.metadata.6.0.13.nupkg.sha512",
         "microsoft.aspnetcore.metadata.nuspec"
       ]
     },
@@ -5715,10 +5911,10 @@
         "microsoft.identitymodel.tokens.nuspec"
       ]
     },
-    "Microsoft.JSInterop/6.0.12": {
-      "sha512": "kD1GGmLBiKbqxl/4kRm7BporIJY+JibtoaOeR1r+QmkixNmr9qr6pEWx1xDc4BGsMRrL+ruDzplmeWsfE4S4IA==",
+    "Microsoft.JSInterop/6.0.13": {
+      "sha512": "HJtcxT6IPVqwwcZHCQeXVn4A2FEs0CWwRYEsyiTBiEu02joZc/soAKiuvQ3EUQf41rS6Km7cil11yLwSbFVK7w==",
       "type": "package",
-      "path": "microsoft.jsinterop/6.0.12",
+      "path": "microsoft.jsinterop/6.0.13",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -5726,7 +5922,7 @@
         "THIRD-PARTY-NOTICES.TXT",
         "lib/net6.0/Microsoft.JSInterop.dll",
         "lib/net6.0/Microsoft.JSInterop.xml",
-        "microsoft.jsinterop.6.0.12.nupkg.sha512",
+        "microsoft.jsinterop.6.0.13.nupkg.sha512",
         "microsoft.jsinterop.nuspec"
       ]
     },
@@ -5986,6 +6182,101 @@
         "nuglify.1.13.2.nupkg.sha512",
         "nuglify.nuspec",
         "nuglify.png"
+      ]
+    },
+    "Plotly.Blazor/2.18.0": {
+      "sha512": "zMdolzs/UBOkg2rp65iT0gxlbTrx5oMnFm0ecngrLE2GumWeNs0XFNyciKzJk6W+HhVPZue9dHPfhnjUtt2/Tg==",
+      "type": "package",
+      "path": "plotly.blazor/2.18.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "build/Microsoft.AspNetCore.StaticWebAssets.props",
+        "build/Plotly.Blazor.props",
+        "buildMultiTargeting/Plotly.Blazor.props",
+        "buildTransitive/Plotly.Blazor.props",
+        "lib/net6.0/Plotly.Blazor.dll",
+        "lib/net6.0/Plotly.Blazor.xml",
+        "plotly.blazor.2.18.0.nupkg.sha512",
+        "plotly.blazor.nuspec",
+        "staticwebassets/plotly-interop.js",
+        "staticwebassets/plotly-latest.min.js"
+      ]
+    },
+    "PSC.Blazor.Components.Chartjs/6.0.35": {
+      "sha512": "bNK136m00DYOUykk9x0hXTg9QsuBi0WfCeZUxYBtBuDPYNS/JZtHdVUwoD1WxBt50gsKD0L3REgNZ9Gq6QSj0A==",
+      "type": "package",
+      "path": "psc.blazor.components.chartjs/6.0.35",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "README.md",
+        "build/Microsoft.AspNetCore.StaticWebAssets.props",
+        "build/PSC.Blazor.Components.Chartjs.props",
+        "buildMultiTargeting/PSC.Blazor.Components.Chartjs.props",
+        "buildTransitive/PSC.Blazor.Components.Chartjs.props",
+        "content/libman.json",
+        "content/psc_ico.ico",
+        "content/wwwroot/Chart.js",
+        "content/wwwroot/lib/Chart.js/chart.esm.js",
+        "content/wwwroot/lib/Chart.js/chart.esm.min.js",
+        "content/wwwroot/lib/Chart.js/chart.js",
+        "content/wwwroot/lib/Chart.js/chart.min.js",
+        "content/wwwroot/lib/Chart.js/chart.mjs",
+        "content/wwwroot/lib/Chart.js/helpers.esm.js",
+        "content/wwwroot/lib/Chart.js/helpers.esm.min.js",
+        "content/wwwroot/lib/Chart.js/helpers.mjs",
+        "content/wwwroot/lib/chartjs-plugin-zoom/chartjs-plugin-zoom.esm.js",
+        "content/wwwroot/lib/chartjs-plugin-zoom/chartjs-plugin-zoom.esm.min.js",
+        "content/wwwroot/lib/chartjs-plugin-zoom/chartjs-plugin-zoom.js",
+        "content/wwwroot/lib/chartjs-plugin-zoom/chartjs-plugin-zoom.min.js",
+        "content/wwwroot/lib/hammer.js/hammer.js",
+        "content/wwwroot/lib/hammer.js/hammer.min.js",
+        "content/wwwroot/lib/hammer.js/hammer.min.js.map",
+        "content/wwwroot/lib/hammer.js/hammer.min.map",
+        "contentFiles/any/net6.0/libman.json",
+        "contentFiles/any/net6.0/psc_ico.ico",
+        "contentFiles/any/net6.0/wwwroot/Chart.js",
+        "contentFiles/any/net6.0/wwwroot/lib/Chart.js/chart.esm.js",
+        "contentFiles/any/net6.0/wwwroot/lib/Chart.js/chart.esm.min.js",
+        "contentFiles/any/net6.0/wwwroot/lib/Chart.js/chart.js",
+        "contentFiles/any/net6.0/wwwroot/lib/Chart.js/chart.min.js",
+        "contentFiles/any/net6.0/wwwroot/lib/Chart.js/chart.mjs",
+        "contentFiles/any/net6.0/wwwroot/lib/Chart.js/helpers.esm.js",
+        "contentFiles/any/net6.0/wwwroot/lib/Chart.js/helpers.esm.min.js",
+        "contentFiles/any/net6.0/wwwroot/lib/Chart.js/helpers.mjs",
+        "contentFiles/any/net6.0/wwwroot/lib/chartjs-plugin-zoom/chartjs-plugin-zoom.esm.js",
+        "contentFiles/any/net6.0/wwwroot/lib/chartjs-plugin-zoom/chartjs-plugin-zoom.esm.min.js",
+        "contentFiles/any/net6.0/wwwroot/lib/chartjs-plugin-zoom/chartjs-plugin-zoom.js",
+        "contentFiles/any/net6.0/wwwroot/lib/chartjs-plugin-zoom/chartjs-plugin-zoom.min.js",
+        "contentFiles/any/net6.0/wwwroot/lib/hammer.js/hammer.js",
+        "contentFiles/any/net6.0/wwwroot/lib/hammer.js/hammer.min.js",
+        "contentFiles/any/net6.0/wwwroot/lib/hammer.js/hammer.min.js.map",
+        "contentFiles/any/net6.0/wwwroot/lib/hammer.js/hammer.min.map",
+        "lib/net6.0/PSC.Blazor.Components.Chartjs.dll",
+        "lib/net6.0/PSC.Blazor.Components.Chartjs.xml",
+        "psc.blazor.components.chartjs.6.0.35.nupkg.sha512",
+        "psc.blazor.components.chartjs.nuspec",
+        "psc_logo.png",
+        "staticwebassets/Chart.js",
+        "staticwebassets/PSC.Blazor.Components.Chartjs.bundle.scp.css",
+        "staticwebassets/lib/Chart.js/chart.esm.js",
+        "staticwebassets/lib/Chart.js/chart.esm.min.js",
+        "staticwebassets/lib/Chart.js/chart.js",
+        "staticwebassets/lib/Chart.js/chart.min.js",
+        "staticwebassets/lib/Chart.js/chart.mjs",
+        "staticwebassets/lib/Chart.js/helpers.esm.js",
+        "staticwebassets/lib/Chart.js/helpers.esm.min.js",
+        "staticwebassets/lib/Chart.js/helpers.mjs",
+        "staticwebassets/lib/chartjs-plugin-zoom/chartjs-plugin-zoom.esm.js",
+        "staticwebassets/lib/chartjs-plugin-zoom/chartjs-plugin-zoom.esm.min.js",
+        "staticwebassets/lib/chartjs-plugin-zoom/chartjs-plugin-zoom.js",
+        "staticwebassets/lib/chartjs-plugin-zoom/chartjs-plugin-zoom.min.js",
+        "staticwebassets/lib/hammer.js/hammer.js",
+        "staticwebassets/lib/hammer.js/hammer.min.js",
+        "staticwebassets/lib/hammer.js/hammer.min.js.map",
+        "staticwebassets/lib/hammer.js/hammer.min.map"
       ]
     },
     "React.AspNet/5.2.11": {
@@ -10154,10 +10445,10 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "System.Text.Json/6.0.0": {
-      "sha512": "zaJsHfESQvJ11vbXnNlkrR46IaMULk/gHxYsJphzSF+07kTjPHv+Oc14w6QEOfo3Q4hqLJgStUaYB9DBl0TmWg==",
+    "System.Text.Json/6.0.7": {
+      "sha512": "/Tf/9XjprpHolbcDOrxsKVYy/mUG/FS7aGd9YUgBVEiHeQH4kAE0T1sMbde7q6B5xcrNUsJ5iW7D1RvHudQNqA==",
       "type": "package",
-      "path": "system.text.json/6.0.0",
+      "path": "system.text.json/6.0.7",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -10192,9 +10483,9 @@
         "analyzers/dotnet/roslyn4.0/cs/tr/System.Text.Json.SourceGeneration.resources.dll",
         "analyzers/dotnet/roslyn4.0/cs/zh-Hans/System.Text.Json.SourceGeneration.resources.dll",
         "analyzers/dotnet/roslyn4.0/cs/zh-Hant/System.Text.Json.SourceGeneration.resources.dll",
-        "build/System.Text.Json.targets",
         "buildTransitive/netcoreapp2.0/System.Text.Json.targets",
-        "buildTransitive/netcoreapp3.1/_._",
+        "buildTransitive/netcoreapp3.1/System.Text.Json.targets",
+        "buildTransitive/netstandard2.0/System.Text.Json.targets",
         "lib/net461/System.Text.Json.dll",
         "lib/net461/System.Text.Json.xml",
         "lib/net6.0/System.Text.Json.dll",
@@ -10203,7 +10494,7 @@
         "lib/netcoreapp3.1/System.Text.Json.xml",
         "lib/netstandard2.0/System.Text.Json.dll",
         "lib/netstandard2.0/System.Text.Json.xml",
-        "system.text.json.6.0.0.nupkg.sha512",
+        "system.text.json.6.0.7.nupkg.sha512",
         "system.text.json.nuspec",
         "useSharedDesignerContext.txt"
       ]
@@ -10746,6 +11037,8 @@
       "Microsoft.EntityFrameworkCore.SqlServer >= 6.0.10",
       "Microsoft.EntityFrameworkCore.Tools >= 6.0.10",
       "Microsoft.Extensions.Localization >= 6.0.11",
+      "PSC.Blazor.Components.Chartjs >= 6.0.35",
+      "Plotly.Blazor >= 2.18.0",
       "Refit >= 6.3.2",
       "Refit.HttpClientFactory >= 6.3.2",
       "RestSharp >= 106.15.0",
@@ -10856,6 +11149,14 @@
           "Microsoft.Extensions.Localization": {
             "target": "Package",
             "version": "[6.0.11, )"
+          },
+          "PSC.Blazor.Components.Chartjs": {
+            "target": "Package",
+            "version": "[6.0.35, )"
+          },
+          "Plotly.Blazor": {
+            "target": "Package",
+            "version": "[2.18.0, )"
           },
           "Refit": {
             "target": "Package",

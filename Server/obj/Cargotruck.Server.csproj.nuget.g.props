@@ -13,12 +13,169 @@
     <SourceRoot Include="C:\Users\Zsitva Tamás\.nuget\packages\" />
     <SourceRoot Include="C:\Program Files (x86)\Microsoft Visual Studio\Shared\NuGetPackages\" />
   </ItemGroup>
+  <ItemGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <Content Include="$(NuGetPackageRoot)psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\libman.json" Condition="Exists('$(NuGetPackageRoot)psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\libman.json')">
+      <NuGetPackageId>PSC.Blazor.Components.Chartjs</NuGetPackageId>
+      <NuGetPackageVersion>6.0.35</NuGetPackageVersion>
+      <NuGetItemType>Content</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>libman.json</Link>
+    </Content>
+    <Content Include="$(NuGetPackageRoot)psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\psc_ico.ico" Condition="Exists('$(NuGetPackageRoot)psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\psc_ico.ico')">
+      <NuGetPackageId>PSC.Blazor.Components.Chartjs</NuGetPackageId>
+      <NuGetPackageVersion>6.0.35</NuGetPackageVersion>
+      <NuGetItemType>Content</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>psc_ico.ico</Link>
+    </Content>
+    <Content Include="$(NuGetPackageRoot)psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\Chart.js" Condition="Exists('$(NuGetPackageRoot)psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\Chart.js')">
+      <NuGetPackageId>PSC.Blazor.Components.Chartjs</NuGetPackageId>
+      <NuGetPackageVersion>6.0.35</NuGetPackageVersion>
+      <NuGetItemType>Content</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>wwwroot\Chart.js</Link>
+    </Content>
+    <Content Include="$(NuGetPackageRoot)psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\Chart.js\chart.esm.js" Condition="Exists('$(NuGetPackageRoot)psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\Chart.js\chart.esm.js')">
+      <NuGetPackageId>PSC.Blazor.Components.Chartjs</NuGetPackageId>
+      <NuGetPackageVersion>6.0.35</NuGetPackageVersion>
+      <NuGetItemType>Content</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>wwwroot\lib\Chart.js\chart.esm.js</Link>
+    </Content>
+    <Content Include="$(NuGetPackageRoot)psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\Chart.js\chart.esm.min.js" Condition="Exists('$(NuGetPackageRoot)psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\Chart.js\chart.esm.min.js')">
+      <NuGetPackageId>PSC.Blazor.Components.Chartjs</NuGetPackageId>
+      <NuGetPackageVersion>6.0.35</NuGetPackageVersion>
+      <NuGetItemType>Content</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>wwwroot\lib\Chart.js\chart.esm.min.js</Link>
+    </Content>
+    <Content Include="$(NuGetPackageRoot)psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\Chart.js\chart.js" Condition="Exists('$(NuGetPackageRoot)psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\Chart.js\chart.js')">
+      <NuGetPackageId>PSC.Blazor.Components.Chartjs</NuGetPackageId>
+      <NuGetPackageVersion>6.0.35</NuGetPackageVersion>
+      <NuGetItemType>Content</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>wwwroot\lib\Chart.js\chart.js</Link>
+    </Content>
+    <Content Include="$(NuGetPackageRoot)psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\Chart.js\chart.min.js" Condition="Exists('$(NuGetPackageRoot)psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\Chart.js\chart.min.js')">
+      <NuGetPackageId>PSC.Blazor.Components.Chartjs</NuGetPackageId>
+      <NuGetPackageVersion>6.0.35</NuGetPackageVersion>
+      <NuGetItemType>Content</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>wwwroot\lib\Chart.js\chart.min.js</Link>
+    </Content>
+    <Content Include="$(NuGetPackageRoot)psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\Chart.js\chart.mjs" Condition="Exists('$(NuGetPackageRoot)psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\Chart.js\chart.mjs')">
+      <NuGetPackageId>PSC.Blazor.Components.Chartjs</NuGetPackageId>
+      <NuGetPackageVersion>6.0.35</NuGetPackageVersion>
+      <NuGetItemType>Content</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>wwwroot\lib\Chart.js\chart.mjs</Link>
+    </Content>
+    <Content Include="$(NuGetPackageRoot)psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\Chart.js\helpers.esm.js" Condition="Exists('$(NuGetPackageRoot)psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\Chart.js\helpers.esm.js')">
+      <NuGetPackageId>PSC.Blazor.Components.Chartjs</NuGetPackageId>
+      <NuGetPackageVersion>6.0.35</NuGetPackageVersion>
+      <NuGetItemType>Content</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>wwwroot\lib\Chart.js\helpers.esm.js</Link>
+    </Content>
+    <Content Include="$(NuGetPackageRoot)psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\Chart.js\helpers.esm.min.js" Condition="Exists('$(NuGetPackageRoot)psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\Chart.js\helpers.esm.min.js')">
+      <NuGetPackageId>PSC.Blazor.Components.Chartjs</NuGetPackageId>
+      <NuGetPackageVersion>6.0.35</NuGetPackageVersion>
+      <NuGetItemType>Content</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>wwwroot\lib\Chart.js\helpers.esm.min.js</Link>
+    </Content>
+    <Content Include="$(NuGetPackageRoot)psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\Chart.js\helpers.mjs" Condition="Exists('$(NuGetPackageRoot)psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\Chart.js\helpers.mjs')">
+      <NuGetPackageId>PSC.Blazor.Components.Chartjs</NuGetPackageId>
+      <NuGetPackageVersion>6.0.35</NuGetPackageVersion>
+      <NuGetItemType>Content</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>wwwroot\lib\Chart.js\helpers.mjs</Link>
+    </Content>
+    <Content Include="$(NuGetPackageRoot)psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\chartjs-plugin-zoom\chartjs-plugin-zoom.esm.js" Condition="Exists('$(NuGetPackageRoot)psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\chartjs-plugin-zoom\chartjs-plugin-zoom.esm.js')">
+      <NuGetPackageId>PSC.Blazor.Components.Chartjs</NuGetPackageId>
+      <NuGetPackageVersion>6.0.35</NuGetPackageVersion>
+      <NuGetItemType>Content</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>wwwroot\lib\chartjs-plugin-zoom\chartjs-plugin-zoom.esm.js</Link>
+    </Content>
+    <Content Include="$(NuGetPackageRoot)psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\chartjs-plugin-zoom\chartjs-plugin-zoom.esm.min.js" Condition="Exists('$(NuGetPackageRoot)psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\chartjs-plugin-zoom\chartjs-plugin-zoom.esm.min.js')">
+      <NuGetPackageId>PSC.Blazor.Components.Chartjs</NuGetPackageId>
+      <NuGetPackageVersion>6.0.35</NuGetPackageVersion>
+      <NuGetItemType>Content</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>wwwroot\lib\chartjs-plugin-zoom\chartjs-plugin-zoom.esm.min.js</Link>
+    </Content>
+    <Content Include="$(NuGetPackageRoot)psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\chartjs-plugin-zoom\chartjs-plugin-zoom.js" Condition="Exists('$(NuGetPackageRoot)psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\chartjs-plugin-zoom\chartjs-plugin-zoom.js')">
+      <NuGetPackageId>PSC.Blazor.Components.Chartjs</NuGetPackageId>
+      <NuGetPackageVersion>6.0.35</NuGetPackageVersion>
+      <NuGetItemType>Content</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>wwwroot\lib\chartjs-plugin-zoom\chartjs-plugin-zoom.js</Link>
+    </Content>
+    <Content Include="$(NuGetPackageRoot)psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\chartjs-plugin-zoom\chartjs-plugin-zoom.min.js" Condition="Exists('$(NuGetPackageRoot)psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\chartjs-plugin-zoom\chartjs-plugin-zoom.min.js')">
+      <NuGetPackageId>PSC.Blazor.Components.Chartjs</NuGetPackageId>
+      <NuGetPackageVersion>6.0.35</NuGetPackageVersion>
+      <NuGetItemType>Content</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>wwwroot\lib\chartjs-plugin-zoom\chartjs-plugin-zoom.min.js</Link>
+    </Content>
+    <Content Include="$(NuGetPackageRoot)psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\hammer.js\hammer.js" Condition="Exists('$(NuGetPackageRoot)psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\hammer.js\hammer.js')">
+      <NuGetPackageId>PSC.Blazor.Components.Chartjs</NuGetPackageId>
+      <NuGetPackageVersion>6.0.35</NuGetPackageVersion>
+      <NuGetItemType>Content</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>wwwroot\lib\hammer.js\hammer.js</Link>
+    </Content>
+    <Content Include="$(NuGetPackageRoot)psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\hammer.js\hammer.min.js" Condition="Exists('$(NuGetPackageRoot)psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\hammer.js\hammer.min.js')">
+      <NuGetPackageId>PSC.Blazor.Components.Chartjs</NuGetPackageId>
+      <NuGetPackageVersion>6.0.35</NuGetPackageVersion>
+      <NuGetItemType>Content</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>wwwroot\lib\hammer.js\hammer.min.js</Link>
+    </Content>
+    <Content Include="$(NuGetPackageRoot)psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\hammer.js\hammer.min.js.map" Condition="Exists('$(NuGetPackageRoot)psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\hammer.js\hammer.min.js.map')">
+      <NuGetPackageId>PSC.Blazor.Components.Chartjs</NuGetPackageId>
+      <NuGetPackageVersion>6.0.35</NuGetPackageVersion>
+      <NuGetItemType>Content</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>wwwroot\lib\hammer.js\hammer.min.js.map</Link>
+    </Content>
+    <Content Include="$(NuGetPackageRoot)psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\hammer.js\hammer.min.map" Condition="Exists('$(NuGetPackageRoot)psc.blazor.components.chartjs\6.0.35\contentFiles\any\net6.0\wwwroot\lib\hammer.js\hammer.min.map')">
+      <NuGetPackageId>PSC.Blazor.Components.Chartjs</NuGetPackageId>
+      <NuGetPackageVersion>6.0.35</NuGetPackageVersion>
+      <NuGetItemType>Content</NuGetItemType>
+      <Pack>false</Pack>
+      <Private>False</Private>
+      <Link>wwwroot\lib\hammer.js\hammer.min.map</Link>
+    </Content>
+  </ItemGroup>
   <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <Import Project="$(NuGetPackageRoot)refit\6.3.2\buildTransitive\netstandard2.0\refit.props" Condition="Exists('$(NuGetPackageRoot)refit\6.3.2\buildTransitive\netstandard2.0\refit.props')" />
+    <Import Project="$(NuGetPackageRoot)psc.blazor.components.chartjs\6.0.35\buildTransitive\PSC.Blazor.Components.Chartjs.props" Condition="Exists('$(NuGetPackageRoot)psc.blazor.components.chartjs\6.0.35\buildTransitive\PSC.Blazor.Components.Chartjs.props')" />
+    <Import Project="$(NuGetPackageRoot)plotly.blazor\2.18.0\buildTransitive\Plotly.Blazor.props" Condition="Exists('$(NuGetPackageRoot)plotly.blazor\2.18.0\buildTransitive\Plotly.Blazor.props')" />
     <Import Project="$(NuGetPackageRoot)microsoft.entityframeworkcore\6.0.10\buildTransitive\net6.0\Microsoft.EntityFrameworkCore.props" Condition="Exists('$(NuGetPackageRoot)microsoft.entityframeworkcore\6.0.10\buildTransitive\net6.0\Microsoft.EntityFrameworkCore.props')" />
     <Import Project="$(NuGetPackageRoot)microsoft.entityframeworkcore.design\6.0.10\build\net6.0\Microsoft.EntityFrameworkCore.Design.props" Condition="Exists('$(NuGetPackageRoot)microsoft.entityframeworkcore.design\6.0.10\build\net6.0\Microsoft.EntityFrameworkCore.Design.props')" />
     <Import Project="$(NuGetPackageRoot)microsoft.aspnetcore.components.webassembly.authentication\6.0.10\buildTransitive\Microsoft.AspNetCore.Components.WebAssembly.Authentication.props" Condition="Exists('$(NuGetPackageRoot)microsoft.aspnetcore.components.webassembly.authentication\6.0.10\buildTransitive\Microsoft.AspNetCore.Components.WebAssembly.Authentication.props')" />
     <Import Project="$(NuGetPackageRoot)entityframework\6.4.4\buildTransitive\netcoreapp3.0\EntityFramework.props" Condition="Exists('$(NuGetPackageRoot)entityframework\6.4.4\buildTransitive\netcoreapp3.0\EntityFramework.props')" />
+    <Import Project="$(NuGetPackageRoot)chartjs.blazor.fork\2.0.2\buildTransitive\ChartJs.Blazor.Fork.props" Condition="Exists('$(NuGetPackageRoot)chartjs.blazor.fork\2.0.2\buildTransitive\ChartJs.Blazor.Fork.props')" />
   </ImportGroup>
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <PkgMicrosoft_EntityFrameworkCore_Tools Condition=" '$(PkgMicrosoft_EntityFrameworkCore_Tools)' == '' ">C:\Users\Zsitva Tamás\.nuget\packages\microsoft.entityframeworkcore.tools\6.0.10</PkgMicrosoft_EntityFrameworkCore_Tools>

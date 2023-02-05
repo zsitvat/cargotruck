@@ -8,6 +8,7 @@
   "resources": {
     "assembly": {
       "Blazored.SessionStorage.dll": "sha256-l3vyo6fcSWWhGiOMu5\/e4tQzZa7c+U1d1hHPGo74WFc=",
+      "ChartJs.Blazor.dll": "sha256-0ciRJps8EWsbo3zIh4fYA2+QBnZIl1lSu4aydLaQDEo=",
       "EntityFramework.SqlServer.dll": "sha256-vivNycD\/SihlyOUpb2o8h8IkEf8mjl7\/MP3PX4slYeI=",
       "EntityFramework.dll": "sha256-6tusYE7+HqAnLRKF9I41hUGXiqHRmO8EILDlIseTuLQ=",
       "Microsoft.AspNetCore.Authorization.dll": "sha256-QoBf8ZUgaWJCUGT3n4SViOqz82zpsFTQBgBR38X0SQM=",
@@ -232,14 +233,14 @@
       "netstandard.dll": "sha256-kBK\/QJy7\/skP97jqnvXnOFMrhWS8HZ1bsADFK\/gZkyM=",
       "System.Private.CoreLib.dll": "sha256-3webPuyNUXfAFKY5c1tC\/jBVrjZHelBwvXrr1E9VJuk=",
       "Cargotruck.Shared.dll": "sha256-Kc69RTUchxpNj9t51cSEto9E67LYb8UQTtA0U7QNhTk=",
-      "Cargotruck.Client.dll": "sha256-QZQCjWrnJLR3XH\/ikZHcglkMmTwWdHg2gvG8tjFzloY="
+      "Cargotruck.Client.dll": "sha256-tpvFwiD2ay59LX1L7g0RsXY3vg1Rd2e05sQkQ6Pn1dg="
     },
     "extensions": null,
     "lazyAssembly": null,
     "libraryInitializers": null,
     "pdb": {
       "Cargotruck.Shared.pdb": "sha256-sYUyJD4A6c0CFi8X1JO369MRZvc0n\/MeixIfOwaWOJY=",
-      "Cargotruck.Client.pdb": "sha256-o\/Ys1PdXCv5+EAPTpBAaL1SZ1WpFm+p7PHP2ZXcziHo="
+      "Cargotruck.Client.pdb": "sha256-G9XmXBZlOKd3HLnZeBvgy1t+5T4AS7x1uRnoRCb8biE="
     },
     "runtime": {
       "dotnet.6.0.13.wyf4pl6fej.js": "sha256-X\/515F1HEzgsDZdY8BJjt8YUwrWngHGZkMnpClhsrpY=",
@@ -258,7 +259,7 @@
     },
     "satelliteResources": {
       "en": {
-        "en\/Cargotruck.Shared.resources.dll": "sha256-ERenMmL+kk2CGJ6SAxaWkBT\/nqKInvM+RJm412qiWWk="
+        "en\/Cargotruck.Shared.resources.dll": "sha256-I7HXFHBmc1KNgvJj0eEbsXHg1ZY49RSDs\/1hLe4GWBI="
       }
     }
   }

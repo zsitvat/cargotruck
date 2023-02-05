@@ -45,7 +45,6 @@ F:\Szakdoga app\Cargotruck\Server\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.Newt
 F:\Szakdoga app\Cargotruck\Server\bin\Debug\net6.0\ClearScript.Core.dll
 F:\Szakdoga app\Cargotruck\Server\bin\Debug\net6.0\ClearScript.V8.dll
 F:\Szakdoga app\Cargotruck\Server\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
-F:\Szakdoga app\Cargotruck\Server\bin\Debug\net6.0\Microsoft.DotNet.PlatformAbstractions.dll
 F:\Szakdoga app\Cargotruck\Server\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
 F:\Szakdoga app\Cargotruck\Server\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
 F:\Szakdoga app\Cargotruck\Server\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
@@ -159,3 +158,8 @@ F:\Szakdoga app\Cargotruck\Server\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp3
 F:\Szakdoga app\Cargotruck\Server\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
 F:\Szakdoga app\Cargotruck\Server\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Text.Encoding.CodePages.dll
 F:\Szakdoga app\Cargotruck\Server\bin\Debug\net6.0\Blazored.SessionStorage.dll
+F:\Szakdoga app\Cargotruck\Server\bin\Debug\net6.0\Plotly.Blazor.dll
+F:\Szakdoga app\Cargotruck\Server\bin\Debug\net6.0\System.Text.Json.dll
+F:\Szakdoga app\Cargotruck\Server\bin\Debug\net6.0\PSC.Blazor.Components.Chartjs.dll
+F:\Szakdoga app\Cargotruck\Server\bin\Debug\net6.0\ChartJs.Blazor.dll
+F:\Szakdoga app\Cargotruck\Server\bin\Debug\net6.0\Microsoft.DotNet.PlatformAbstractions.dll

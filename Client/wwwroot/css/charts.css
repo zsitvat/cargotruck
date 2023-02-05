@@ -1,0 +1,17 @@
+﻿
+
+.charts {
+    display: flex;
+    align-items: center;
+}
+
+.chart div {
+    flex: 1;
+    margin: auto;
+    border:none;
+}
+
+.charts canvas {
+    width: 588px !important;
+    color: #bab3b3;
+}

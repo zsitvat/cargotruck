@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "4WxueFt1s2kcZwmT37YGJjbD/WTj2w6EZIYYvAs1EvOLeTPcfr6w7KUfNBsCPqOwsnbrg1TGiTTUvsRFzMaCrg==",
+  "dgSpecHash": "6BBztN2/VYsWBGWjlSVVFK7auLDtC1XySvfrTarrFlToe2c0RjwtMz25llySpoVsaP3mwPDQhd4FgERArA1nTg==",
   "success": true,
   "projectFilePath": "F:\\Szakdoga app\\Cargotruck\\Client\\Cargotruck.Client.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\blazored.sessionstorage\\2.3.0\\blazored.sessionstorage.2.3.0.nupkg.sha512",
+    "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\chartjs.blazor.fork\\2.0.2\\chartjs.blazor.fork.2.0.2.nupkg.sha512",
     "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",
     "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.aspnetcore.authorization\\6.0.12\\microsoft.aspnetcore.authorization.6.0.12.nupkg.sha512",
     "C:\\Users\\Zsitva Tamás\\.nuget\\packages\\microsoft.aspnetcore.components\\6.0.12\\microsoft.aspnetcore.components.6.0.12.nupkg.sha512",

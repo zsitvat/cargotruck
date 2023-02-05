@@ -31,6 +31,18 @@
 @using Cargotruck.Server.Models
 @using Microsoft.AspNetCore.Identity
 
+@using ChartJs.Blazor;
+@using ChartJs.Blazor.Common
+@using ChartJs.Blazor.Common.Axes
+@using ChartJs.Blazor.Common.Axes.Ticks
+@using ChartJs.Blazor.Common.Enums
+@using ChartJs.Blazor.Common.Handlers
+@using ChartJs.Blazor.Common.Time
+@using ChartJs.Blazor.BarChart;
+@using ChartJs.Blazor.Util
+@using ChartJs.Blazor.Interop
+@using ChartJs.Blazor.BarChart.Axes;
+
 @inject Cargotruck.Client.Services.PageHistoryState PageHistoryState
 @inject NavigationManager uriHelper
 @inject HttpClient client

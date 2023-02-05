@@ -831,7 +831,8 @@ input[type=number] {
     background-color: #fff;
     position: relative;
     margin-bottom: 0.5rem;
-    min-width:12.2rem;
+    min-width: 12.2rem;
+    box-shadow: 0 0 1px rgb(0 0 0 / 15%);
 }
 
 .text-muted{

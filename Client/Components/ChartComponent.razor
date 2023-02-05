@@ -1,0 +1,270 @@
+﻿@inject Blazored.SessionStorage.ISessionStorageService sessionStorage
+
+@if (_config1 != null)
+{
+    <div class="col-md-6 stretch-card mt-3 mb-3 me-4">
+        <div class="form-card">
+            <div class="card-body">
+                <Chart Config="_config1"></Chart>
+            </div>
+        </div>
+    </div>
+}
+
+@if (_config2 != null)
+{
+    <div class="col-md-6 stretch-card mt-3 mb-3">
+        <div class="form-card">
+            <div class="card-body">
+                <Chart Config="_config2"></Chart>
+            </div>
+        </div>
+    </div>
+}
+
+@code{
+    string lang = CultureInfo.CurrentCulture.Name;
+    private BarConfig? _config1;
+    private BarConfig? _config2;
+    bool darkmode;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Initialize();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        //await Initialize();
+    }
+
+    protected async Task Initialize()
+    {
+        darkmode = await sessionStorage.GetItemAsync<bool>("darkmode");
+        await TasksChart();
+        await CargoesChart();
+    }
+
+    protected async Task TasksChart()
+    {
+        //Tasks
+        _config1 = new BarConfig
+            {
+                Options = new BarOptions
+                {
+                    Responsive = true,
+                    Title = new OptionsTitle
+                    {
+                        Display = true,
+                        Text = (lang == "hu" ? "Megbízások" : "Tasks") + " " + DateTime.Now.Year,
+                        FontSize = 16,
+                        FontColor = (darkmode ? "#bab3b3" : "#000")
+                    },
+                    Tooltips = new Tooltips
+                    {
+                        Mode = InteractionMode.Index,
+                        Intersect = false,
+                        TitleFontColor = "#bab3b3",
+                        BodyFontColor = "#bab3b3"
+                    },
+                    Scales = new BarScales
+                    {
+                        XAxes = new List<CartesianAxis>
+                {
+                    new BarCategoryAxis
+                    {
+                        Stacked = true
+                    }
+                },
+                        YAxes = new List<CartesianAxis>
+                {
+                    new BarLinearCartesianAxis
+                    {
+                        Stacked = true
+                    }
+                }
+                    }
+                }
+            };
+
+        string[] columns = DateTimeFormatInfo.CurrentInfo.MonthNames;
+        foreach (string column in columns.Where(x=> x != null && x != ""))
+        {
+            _config1.Data.Labels.Add(column);
+        }
+
+        var columnHeights = await client.GetFromJsonAsync<int[]>("api/tasks/getchartdata");
+
+        if (columnHeights != null)
+        {
+            int[] datalistAllItems = columnHeights.Take(12).ToArray();
+
+            BarDataset<int> dataset1 = new(datalistAllItems)
+                {
+                    Label = lang == "hu" ? "Összes megbízás" : "All tasks",
+                    BackgroundColor = new[]
+                    {
+                        ColorUtil.ColorHexString(54, 162, 235),
+                        ColorUtil.ColorHexString(54, 162, 235),
+                        ColorUtil.ColorHexString(54, 162, 235),
+                        ColorUtil.ColorHexString(54, 162, 235),
+                        ColorUtil.ColorHexString(54, 162, 235),
+                        ColorUtil.ColorHexString(54, 162, 235),
+                        ColorUtil.ColorHexString(54, 162, 235),
+                        ColorUtil.ColorHexString(54, 162, 235),
+                        ColorUtil.ColorHexString(54, 162, 235),
+                        ColorUtil.ColorHexString(54, 162, 235),
+                        ColorUtil.ColorHexString(54, 162, 235),
+                        ColorUtil.ColorHexString(54, 162, 235)
+                }
+                };
+
+            int[] datalistPartOfItems = columnHeights.Skip(12).Take(12).ToArray();
+            BarDataset<int> dataset2 = new(datalistPartOfItems)
+                {
+                    Label = lang == "hu" ? "Teljesített" : "Completed",
+                    BackgroundColor = new[]
+                    {
+                       ColorUtil.ColorHexString(255, 205, 86),
+                       ColorUtil.ColorHexString(255, 205, 86),
+                       ColorUtil.ColorHexString(255, 205, 86),
+                       ColorUtil.ColorHexString(255, 205, 86),
+                       ColorUtil.ColorHexString(255, 205, 86),
+                       ColorUtil.ColorHexString(255, 205, 86),
+                       ColorUtil.ColorHexString(255, 205, 86),
+                       ColorUtil.ColorHexString(255, 205, 86),
+                       ColorUtil.ColorHexString(255, 205, 86),
+                       ColorUtil.ColorHexString(255, 205, 86),
+                       ColorUtil.ColorHexString(255, 205, 86),
+                       ColorUtil.ColorHexString(255, 205, 86)
+                }
+                };
+
+            _config1.Data.Datasets.Add(dataset1);
+            _config1.Data.Datasets.Add(dataset2);
+        }
+    }
+
+    protected async Task CargoesChart()
+    {
+        //Tasks
+        _config2 = new BarConfig
+        {
+            Options = new BarOptions
+            {
+                Responsive = true,
+                Title = new OptionsTitle
+                {
+                    Display = true,
+                    Text = (lang == "hu" ? "Szállítmányok" : "Cargoes") + " " + DateTime.Now.Year,
+                    FontSize = 16,
+                    FontColor = (darkmode ? "#bab3b3" : "#000")
+                },
+                Tooltips = new Tooltips
+                {
+                    Mode = InteractionMode.Index,
+                    Intersect = false,
+                    TitleFontColor = "#bab3b3",
+                    BodyFontColor = "#bab3b3"
+                },
+                Scales = new BarScales
+                {
+                    XAxes = new List<CartesianAxis>
+                    {
+                        new BarCategoryAxis
+                        {
+                            Stacked = true
+                        }
+                    },
+                    YAxes = new List<CartesianAxis>
+                    {
+                        new BarLinearCartesianAxis
+                        {
+                            Stacked = true
+                        }
+                    }
+                }
+            }
+        };
+
+        string[] columns = DateTimeFormatInfo.CurrentInfo.MonthNames;
+        foreach (string column in columns.Where(x => x != null && x != ""))
+        {
+            _config2.Data.Labels.Add(column);
+        }
+
+        var columnHeights = await client.GetFromJsonAsync<int[]>("api/tasks/getchartdata");
+
+        if ( columnHeights != null)
+        {
+            int[] datalistAllItems = columnHeights.Take(12).ToArray();
+
+            BarDataset<int> dataset1 = new(datalistAllItems)
+                {
+                    Label = lang == "hu" ? "Összes szállítmány" : "All cargoes",
+                    BackgroundColor = new[]
+                    {
+                ColorUtil.ColorHexString(54, 162, 235),
+                ColorUtil.ColorHexString(54, 162, 235),
+                ColorUtil.ColorHexString(54, 162, 235),
+                ColorUtil.ColorHexString(54, 162, 235),
+                ColorUtil.ColorHexString(54, 162, 235),
+                ColorUtil.ColorHexString(54, 162, 235),
+                ColorUtil.ColorHexString(54, 162, 235),
+                ColorUtil.ColorHexString(54, 162, 235),
+                ColorUtil.ColorHexString(54, 162, 235),
+                ColorUtil.ColorHexString(54, 162, 235),
+                ColorUtil.ColorHexString(54, 162, 235),
+                ColorUtil.ColorHexString(54, 162, 235)
+        }
+                };
+
+            int[] datalistPartOfItems = columnHeights.Skip(12).Take(12).ToArray();
+            BarDataset<int> dataset2 = new(datalistPartOfItems)
+                {
+                    Label = lang == "hu" ? "Elszállítva" : "Delivered",
+                    BackgroundColor = new[]
+                    {
+                       ColorUtil.ColorHexString(255, 205, 86),
+                       ColorUtil.ColorHexString(255, 205, 86),
+                       ColorUtil.ColorHexString(255, 205, 86),
+                       ColorUtil.ColorHexString(255, 205, 86),
+                       ColorUtil.ColorHexString(255, 205, 86),
+                       ColorUtil.ColorHexString(255, 205, 86),
+                       ColorUtil.ColorHexString(255, 205, 86),
+                       ColorUtil.ColorHexString(255, 205, 86),
+                       ColorUtil.ColorHexString(255, 205, 86),
+                       ColorUtil.ColorHexString(255, 205, 86),
+                       ColorUtil.ColorHexString(255, 205, 86),
+                       ColorUtil.ColorHexString(255, 205, 86)
+                    }
+                };
+
+            int[] datalistSecondPartOfItems = columnHeights.Skip(24).Take(12).ToArray();
+            BarDataset<int> dataset3 = new(datalistPartOfItems)
+            {
+                Label = lang == "hu" ? "Raktárban" : "In warehouse",
+                BackgroundColor = new[]
+                {
+                    ColorUtil.ColorHexString(130,110,174),
+                    ColorUtil.ColorHexString(130,110,174),
+                    ColorUtil.ColorHexString(130,110,174),
+                    ColorUtil.ColorHexString(130,110,174),
+                    ColorUtil.ColorHexString(130,110,174),
+                    ColorUtil.ColorHexString(130,110,174),
+                    ColorUtil.ColorHexString(130,110,174),
+                    ColorUtil.ColorHexString(130,110,174),
+                    ColorUtil.ColorHexString(130,110,174),
+                    ColorUtil.ColorHexString(130,110,174),
+                    ColorUtil.ColorHexString(130,110,174),
+                    ColorUtil.ColorHexString(130,110,174)
+                }
+            };
+
+            _config2.Data.Datasets.Add(dataset1);
+            _config2.Data.Datasets.Add(dataset2);
+            _config2.Data.Datasets.Add(dataset3);
+        }
+    }
+
+}
