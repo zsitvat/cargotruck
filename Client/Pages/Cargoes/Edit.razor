@@ -14,7 +14,6 @@
     protected async override Task OnParametersSetAsync()
     {
         cargo = await http.GetFromJsonAsync<Cargoes>($"api/cargoes/getById/{Id}");
-        if (cargo != null) { cargo.Task_id = null; }
     }
 
     async Task EditCargo()
@@ -23,7 +22,6 @@
         await http.PutAsJsonAsync("api/cargoes/put", cargo);
         await js.InvokeVoidAsync("alert", $"{text}");
         uriHelper.NavigateTo("/Cargoes");
-
     }
 
     protected override void OnInitialized()

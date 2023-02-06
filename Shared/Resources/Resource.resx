@@ -820,13 +820,13 @@
     <value>Odaút</value>
   </data>
   <data name="truck" xml:space="preserve">
-    <value>jármű</value>
+    <value>gépjármű</value>
   </data>
   <data name="Trucks" xml:space="preserve">
     <value>Járművek</value>
   </data>
   <data name="Trucks_unfinished" xml:space="preserve">
-    <value>jármű van használatban</value>
+    <value>gépjármű van használatban</value>
   </data>
   <data name="True" xml:space="preserve">
     <value>Igen</value>

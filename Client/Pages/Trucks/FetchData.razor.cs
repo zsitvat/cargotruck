@@ -60,6 +60,7 @@ namespace Cargotruck.Client.Pages.Trucks
             if (e != null && e.Value?.ToString() != "")
             {
                 dateFilter!.StartDate = DateTime.Parse(e.Value?.ToString()!);
+                pageSize = 10;
                 await OnInitializedAsync();
             }
         }
@@ -69,6 +70,7 @@ namespace Cargotruck.Client.Pages.Trucks
             if (e != null && e.Value?.ToString() != "")
             {
                 dateFilter!.EndDate = DateTime.Parse(e.Value?.ToString()!);
+                pageSize = 10;
                 await OnInitializedAsync();
             }
         }

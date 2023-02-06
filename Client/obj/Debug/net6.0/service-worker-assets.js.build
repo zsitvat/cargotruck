@@ -1,7 +1,7 @@
 ﻿self.assetsManifest = {
   "assets": [
     {
-      "hash": "sha256-mZtg48UeOa2eX86uW4oFl7nCLAuBpbEgReI5P9iy7hw=",
+      "hash": "sha256-iG4QsKIUAjYOAdK0jbtTZldAwJ7Sb2joRob7M0ctb+s=",
       "url": "css\/app.css"
     },
     {
@@ -13,7 +13,7 @@
       "url": "css\/bootstrap\/bootstrap.min.css.map"
     },
     {
-      "hash": "sha256-B3cerAVn48PgxB96etkn4AjC86UFwBRv7DKpgg1lk3k=",
+      "hash": "sha256-X0Pn4RQCjP8gGFgGqhV1xN6+YknXa9jNYFvl3ccAnlk=",
       "url": "css\/charts.css"
     },
     {
@@ -1057,23 +1057,23 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-Kc69RTUchxpNj9t51cSEto9E67LYb8UQTtA0U7QNhTk=",
+      "hash": "sha256-mTbZ\/73lY6tvqn+1NUAxUuSBk1hqZWXujY6pAaxB66o=",
       "url": "_framework\/Cargotruck.Shared.dll"
     },
     {
-      "hash": "sha256-sYUyJD4A6c0CFi8X1JO369MRZvc0n\/MeixIfOwaWOJY=",
+      "hash": "sha256-AJVr9PJ70JooN5PXBju4h5pQihR49+9xxGDxHxG5oPw=",
       "url": "_framework\/Cargotruck.Shared.pdb"
     },
     {
-      "hash": "sha256-I7HXFHBmc1KNgvJj0eEbsXHg1ZY49RSDs\/1hLe4GWBI=",
+      "hash": "sha256-nHt7bpIkgPDlqgWtu8AlAs7GnYnfR\/gTsQJcRvQ74Pg=",
       "url": "_framework\/en\/Cargotruck.Shared.resources.dll"
     },
     {
-      "hash": "sha256-t5WGxDhD5H47CmbuL7JVirGKqQ\/ljY9EH\/UY+d6X\/EI=",
+      "hash": "sha256-5lpPDi56nBwimTFK17LKLZM+ucoHWVow3apQAkgAqj0=",
       "url": "_framework\/Cargotruck.Client.dll"
     },
     {
-      "hash": "sha256-BsfXP1qo\/v5jLIOLTYBU0A2SbrUKHDkP8NGoRUdKw+M=",
+      "hash": "sha256-Cbez2SfzkMtPH9p\/C\/zV+sqSAmt\/14gYWJhDyx6qOII=",
       "url": "_framework\/Cargotruck.Client.pdb"
     },
     {
@@ -1081,7 +1081,7 @@
       "url": "_framework\/blazor.webassembly.js"
     },
     {
-      "hash": "sha256-pNoHpioL5XA7zFTwe7yzj+5iFVAGKBSg0POllmjM+jA=",
+      "hash": "sha256-CJnx5KyGqwhGI\/TVX3sFdCJJ8YoJV4dUDmS0rjlCJKw=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -1093,5 +1093,5 @@
       "url": "_content\/ChartJs.Blazor.Fork\/ChartJsBlazorInterop.js"
     }
   ],
-  "version": "6uFfWVxH"
+  "version": "uPXDPUGX"
 };

@@ -1,48 +1,70 @@
 ﻿@inject Blazored.SessionStorage.ISessionStorageService sessionStorage
 
-@if (_config1 != null)
-{
-    <div class="col-md-6 stretch-card mt-3 mb-3 me-4">
-        <div class="form-card">
-            <div class="card-body">
-                <Chart Config="_config1"></Chart>
+<div class="left-charts">
+    @if (_config1 != null)
+    {
+        <div class="col-md-6 stretch-card mt-3 mb-3">
+            <div class="form-card">
+                <div class="card-body">
+                    <Chart Config="_config1"></Chart>
+                </div>
             </div>
         </div>
-    </div>
-}
+    }
 
-@if (_config2 != null)
-{
-    <div class="col-md-6 stretch-card mt-3 mb-3">
-        <div class="form-card">
-            <div class="card-body">
-                <Chart Config="_config2"></Chart>
+    @if (_config3 != null)
+    {
+        <div class="col-md-6 stretch-card mt-3 mb-3">
+            <div class="form-card">
+                <div class="card-body">
+                    <Chart Config="_config3"></Chart>
+                </div>
             </div>
         </div>
-    </div>
-}
+    }
+</div>
+<div class="right-charts">
+    @if (_config2 != null)
+    {
+        <div class="col-md-6 stretch-card mt-3 mb-3">
+            <div class="form-card">
+                <div class="card-body">
+                    <Chart Config="_config2"></Chart>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (_config4 != null)
+    {
+        <div class="col-md-6 stretch-card mt-3 mb-3">
+            <div class="form-card">
+                <div class="card-body">
+                    <Chart Config="_config4"></Chart>
+                </div>
+            </div>
+        </div>
+    }
+</div>
 
 @code{
     string lang = CultureInfo.CurrentCulture.Name;
     private BarConfig? _config1;
     private BarConfig? _config2;
-    bool darkmode;
+    private BarConfig? _config3;
+    private BarConfig? _config4;
 
     protected override async Task OnInitializedAsync()
     {
         await Initialize();
     }
 
-    protected override async Task OnParametersSetAsync()
-    {
-        //await Initialize();
-    }
-
     protected async Task Initialize()
     {
-        darkmode = await sessionStorage.GetItemAsync<bool>("darkmode");
         await TasksChart();
         await CargoesChart();
+        await TrucksChart();
+        await ExpensesChart();
     }
 
     protected async Task TasksChart()
@@ -57,8 +79,7 @@
                     {
                         Display = true,
                         Text = (lang == "hu" ? "Megbízások" : "Tasks") + " " + DateTime.Now.Year,
-                        FontSize = 16,
-                        FontColor = (darkmode ? "#bab3b3" : "#000")
+                        FontSize = 16
                     },
                     Tooltips = new Tooltips
                     {
@@ -90,7 +111,10 @@
         string[] columns = DateTimeFormatInfo.CurrentInfo.MonthNames;
         foreach (string column in columns.Where(x=> x != null && x != ""))
         {
-            _config1.Data.Labels.Add(column);
+            string str = column;
+            str = char.ToUpper(str[0]) + str.Substring(1);
+
+            _config1.Data.Labels.Add(str);
         }
 
         var columnHeights = await client.GetFromJsonAsync<int[]>("api/tasks/getchartdata");
@@ -99,9 +123,9 @@
         {
             int[] datalistAllItems = columnHeights.Take(12).ToArray();
 
-            BarDataset<int> dataset1 = new(datalistAllItems)
+            BarDataset<int> datasetNotCompleted = new(datalistAllItems)
                 {
-                    Label = lang == "hu" ? "Összes megbízás" : "All tasks",
+                    Label = lang == "hu" ? "Nem teljesített" : "Not completed",
                     BackgroundColor = new[]
                     {
                         ColorUtil.ColorHexString(54, 162, 235),
@@ -120,7 +144,7 @@
                 };
 
             int[] datalistPartOfItems = columnHeights.Skip(12).Take(12).ToArray();
-            BarDataset<int> dataset2 = new(datalistPartOfItems)
+            BarDataset<int> datasetCompleted = new(datalistPartOfItems)
                 {
                     Label = lang == "hu" ? "Teljesített" : "Completed",
                     BackgroundColor = new[]
@@ -140,8 +164,8 @@
                 }
                 };
 
-            _config1.Data.Datasets.Add(dataset1);
-            _config1.Data.Datasets.Add(dataset2);
+            _config1.Data.Datasets.Add(datasetCompleted);
+            _config1.Data.Datasets.Add(datasetNotCompleted);
         }
     }
 
@@ -157,8 +181,7 @@
                 {
                     Display = true,
                     Text = (lang == "hu" ? "Szállítmányok" : "Cargoes") + " " + DateTime.Now.Year,
-                    FontSize = 16,
-                    FontColor = (darkmode ? "#bab3b3" : "#000")
+                    FontSize = 16
                 },
                 Tooltips = new Tooltips
                 {
@@ -190,18 +213,21 @@
         string[] columns = DateTimeFormatInfo.CurrentInfo.MonthNames;
         foreach (string column in columns.Where(x => x != null && x != ""))
         {
-            _config2.Data.Labels.Add(column);
+            string str = column;
+            str = char.ToUpper(str[0]) + str.Substring(1);
+
+            _config2.Data.Labels.Add(str);
         }
 
-        var columnHeights = await client.GetFromJsonAsync<int[]>("api/tasks/getchartdata");
+        var columnHeights = await client.GetFromJsonAsync<int[]>("api/cargoes/getchartdata");
 
         if ( columnHeights != null)
         {
-            int[] datalistAllItems = columnHeights.Take(12).ToArray();
+            int[] datalistFirstPartOfItems = columnHeights.Take(12).ToArray();
 
-            BarDataset<int> dataset1 = new(datalistAllItems)
+            BarDataset<int> datasetNotDelivered = new(datalistFirstPartOfItems)
                 {
-                    Label = lang == "hu" ? "Összes szállítmány" : "All cargoes",
+                    Label = lang == "hu" ? "Nincs elszállítva" : "Not delivered",
                     BackgroundColor = new[]
                     {
                 ColorUtil.ColorHexString(54, 162, 235),
@@ -219,8 +245,8 @@
         }
                 };
 
-            int[] datalistPartOfItems = columnHeights.Skip(12).Take(12).ToArray();
-            BarDataset<int> dataset2 = new(datalistPartOfItems)
+            int[] datalistSecondPartOfItems = columnHeights.Skip(12).Take(12).ToArray();
+            BarDataset<int> datasetDelivered = new(datalistSecondPartOfItems)
                 {
                     Label = lang == "hu" ? "Elszállítva" : "Delivered",
                     BackgroundColor = new[]
@@ -240,8 +266,8 @@
                     }
                 };
 
-            int[] datalistSecondPartOfItems = columnHeights.Skip(24).Take(12).ToArray();
-            BarDataset<int> dataset3 = new(datalistPartOfItems)
+            int[] datalistThirdPartOfItems = columnHeights.Skip(24).Take(12).ToArray();
+            BarDataset<int> datasetInWarehouse = new(datalistThirdPartOfItems)
             {
                 Label = lang == "hu" ? "Raktárban" : "In warehouse",
                 BackgroundColor = new[]
@@ -261,10 +287,191 @@
                 }
             };
 
-            _config2.Data.Datasets.Add(dataset1);
-            _config2.Data.Datasets.Add(dataset2);
-            _config2.Data.Datasets.Add(dataset3);
+            _config2.Data.Datasets.Add(datasetDelivered);
+            _config2.Data.Datasets.Add(datasetInWarehouse);
+            _config2.Data.Datasets.Add(datasetNotDelivered);
         }
     }
 
+    protected async Task TrucksChart()
+    {
+        //Tasks
+        _config3 = new BarConfig
+            {
+                Options = new BarOptions
+                {
+                    Responsive = true,
+                    Title = new OptionsTitle
+                    {
+                        Display = true,
+                        Text = (lang == "hu" ? "Járművek használata" : "Uses of trucks") + " " + DateTime.Now.Year,
+                        FontSize = 16
+                    },
+                    Tooltips = new Tooltips
+                    {
+                        Mode = InteractionMode.Index,
+                        Intersect = false,
+                        TitleFontColor = "#bab3b3",
+                        BodyFontColor = "#bab3b3"
+                    },
+                    Scales = new BarScales
+                    {
+                        XAxes = new List<CartesianAxis>
+                {
+                    new BarCategoryAxis
+                    {
+                        Stacked = true
+                    }
+                },
+                        YAxes = new List<CartesianAxis>
+                {
+                    new BarLinearCartesianAxis
+                    {
+                        Stacked = true
+                    }
+                }
+                    }
+                }
+            };
+
+        string[] columns = DateTimeFormatInfo.CurrentInfo.MonthNames;
+        foreach (string column in columns.Where(x => x != null && x != ""))
+        {
+            string str = column;
+            str = char.ToUpper(str[0]) + str.Substring(1);
+
+            _config3.Data.Labels.Add(str);
+        }
+
+        var columnHeights = await client.GetFromJsonAsync<int[]>("api/tasks/getchartdata");
+
+        if (columnHeights != null)
+        {
+            int[] datalistAllItems = columnHeights.Take(12).ToArray();
+
+            BarDataset<int> datasetNumberOfRoads = new(datalistAllItems)
+                {
+                    Label = lang == "hu" ? "Utak száma" : "Number of roads",
+                    BackgroundColor = new[]
+                    {
+                         ColorUtil.ColorHexString(130,110,174),
+                        ColorUtil.ColorHexString(130,110,174),
+                        ColorUtil.ColorHexString(130,110,174),
+                        ColorUtil.ColorHexString(130,110,174),
+                        ColorUtil.ColorHexString(130,110,174),
+                        ColorUtil.ColorHexString(130,110,174),
+                        ColorUtil.ColorHexString(130,110,174),
+                        ColorUtil.ColorHexString(130,110,174),
+                        ColorUtil.ColorHexString(130,110,174),
+                        ColorUtil.ColorHexString(130,110,174),
+                        ColorUtil.ColorHexString(130,110,174),
+                        ColorUtil.ColorHexString(130,110,174)
+                    }
+                };
+
+            _config3.Data.Datasets.Add(datasetNumberOfRoads);
+        }
+    }
+
+    protected async Task ExpensesChart()
+    {
+        //Tasks
+        _config4 = new BarConfig
+            {
+                Options = new BarOptions
+                {
+                    Responsive = true,
+                    Title = new OptionsTitle
+                    {
+                        Display = true,
+                        Text = (lang == "hu" ? "Kiadások és jövedelem" : "Expenses and incomes") + " " + DateTime.Now.Year,
+                        FontSize = 16
+                    },
+                    Tooltips = new Tooltips
+                    {
+                        Mode = InteractionMode.Index,
+                        Intersect = false,
+                        TitleFontColor = "#bab3b3",
+                        BodyFontColor = "#bab3b3"
+                    },
+                    Scales = new BarScales
+                    {
+                        XAxes = new List<CartesianAxis>
+                {
+                    new BarCategoryAxis
+                    {
+                        Stacked = true
+                    }
+                },
+                        YAxes = new List<CartesianAxis>
+                {
+                    new BarLinearCartesianAxis
+                    {
+                        Stacked = true
+                    }
+                }
+                    }
+                }
+            };
+
+        string[] columns = DateTimeFormatInfo.CurrentInfo.MonthNames;
+        foreach (string column in columns.Where(x => x != null && x != ""))
+        {
+            string str = column;
+            str = char.ToUpper(str[0]) + str.Substring(1);
+
+            _config4.Data.Labels.Add(str);
+        }
+
+        var columnHeights = await client.GetFromJsonAsync<int[]>("api/tasks/getchartdata");
+
+        if (columnHeights != null)
+        {
+            int[] datalistAllItems = columnHeights.Take(12).ToArray();
+
+            BarDataset<int> datasetExpenses = new(datalistAllItems)
+                {
+                    Label = lang == "hu" ? "Kiadás" : "Expenses",
+                    BackgroundColor = new[]
+                    {
+                        ColorUtil.ColorHexString(130,110,174),
+                        ColorUtil.ColorHexString(130,110,174),
+                        ColorUtil.ColorHexString(130,110,174),
+                        ColorUtil.ColorHexString(130,110,174),
+                        ColorUtil.ColorHexString(130,110,174),
+                        ColorUtil.ColorHexString(130,110,174),
+                        ColorUtil.ColorHexString(130,110,174),
+                        ColorUtil.ColorHexString(130,110,174),
+                        ColorUtil.ColorHexString(130,110,174),
+                        ColorUtil.ColorHexString(130,110,174),
+                        ColorUtil.ColorHexString(130,110,174),
+                        ColorUtil.ColorHexString(130,110,174)
+                    }
+                };
+
+            int[] datalistPartOfItems = columnHeights.Skip(12).Take(12).ToArray();
+            BarDataset<int> datasetIncomes = new(datalistPartOfItems)
+                {
+                    Label = lang == "hu" ? "Jövedelem" : "Income",
+                    BackgroundColor = new[]
+                    {
+                       ColorUtil.ColorHexString(255, 205, 86),
+                       ColorUtil.ColorHexString(255, 205, 86),
+                       ColorUtil.ColorHexString(255, 205, 86),
+                       ColorUtil.ColorHexString(255, 205, 86),
+                       ColorUtil.ColorHexString(255, 205, 86),
+                       ColorUtil.ColorHexString(255, 205, 86),
+                       ColorUtil.ColorHexString(255, 205, 86),
+                       ColorUtil.ColorHexString(255, 205, 86),
+                       ColorUtil.ColorHexString(255, 205, 86),
+                       ColorUtil.ColorHexString(255, 205, 86),
+                       ColorUtil.ColorHexString(255, 205, 86),
+                       ColorUtil.ColorHexString(255, 205, 86)
+            }
+                };
+
+            _config4.Data.Datasets.Add(datasetIncomes);
+            _config4.Data.Datasets.Add(datasetExpenses);
+        }
+    }
 }

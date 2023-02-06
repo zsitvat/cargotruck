@@ -13,7 +13,7 @@
     protected async override Task OnParametersSetAsync()
     {
         expense = await http.GetFromJsonAsync<Expenses>($"api/expenses/getById/{Id}");
-        expense.Type = null;
+        expense!.Type = null;
     }
 
     async Task EditExpense()

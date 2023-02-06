@@ -12,6 +12,133 @@
 }
 
 .charts canvas {
-    width: 588px !important;
+    width: 37vw !important;
     color: #bab3b3;
+    margin-right: 1rem;
+}
+
+.left-charts{
+    margin-right:1rem;
+}
+
+@media (max-width: 1300px) {
+    .charts canvas {
+        width: 36vw !important;
+        color: #bab3b3;
+    }
+}
+
+@media (max-width: 1200px) {
+    .charts canvas {
+        width: 35vw !important;
+        color: #bab3b3;
+        height: 250px !important;
+    }
+}
+
+@media (max-width: 1100px) {
+    .charts canvas {
+        width: 34vw !important;
+        color: #bab3b3;
+        height: 300px !important;
+    }
+
+    .charts .me-4 {
+        margin-right: 5px !important;
+    }
+}
+
+@media (max-width: 1050px) {
+    .charts canvas {
+        width: 70vw !important;
+    }
+
+    .charts .me-4 {
+        margin-right: 0px !important;
+    }
+
+    .charts {
+        display: block;
+    }
+}
+
+@media (max-width: 1020px) {
+    .charts canvas {
+        width: 68.5vw !important;
+    }
+
+    .charts{
+        display:block;
+    }
+}
+
+@media (max-width: 950px) {
+    .charts canvas {
+        width: 67vw !important;
+    }
+}
+
+@media (max-width: 820px) {
+    .charts canvas {
+        width: 62vw !important;
+    }
+}
+
+@media (max-width: 800px) {
+    .charts canvas {
+        width: 59.5vw !important;
+    }
+}
+
+@media (max-width: 730px) {
+    .charts canvas {
+        width: 60vw !important;
+    }
+
+    .px-4{
+        padding-left: 0.8rem !important;
+    }
+
+    article {
+        margin-left:200px !important;
+    }
+}
+
+@media (max-width: 700px) {
+    .charts canvas {
+        width: 54vw !important;
+    }
+}
+
+@media (max-width: 640px) {
+    .charts canvas {
+        width: 88vw !important;
+    }
+
+    .px-4 {
+        padding-left: 0.8rem !important;
+        padding-right:0.8rem !important;
+    }
+
+    article {
+        margin-left: 0 !important;
+    }
+}
+
+@media (max-width: 500px) {
+    .charts canvas {
+        width: 86vw !important;
+        height:250px !important;
+    }
+
+    .px-4{
+        padding-left:0.8rem !important;
+    }
+}
+
+@media (max-width: 450px) {
+    .charts canvas {
+        width: 84vw !important;
+        height: 250px !important;
+    }
 }

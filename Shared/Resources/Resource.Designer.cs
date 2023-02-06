@@ -2167,7 +2167,7 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to jármű.
+        ///   Looks up a localized string similar to gépjármű.
         /// </summary>
         public static string truck {
             get {
@@ -2185,7 +2185,7 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to jármű van használatban.
+        ///   Looks up a localized string similar to gépjármű van használatban.
         /// </summary>
         public static string Trucks_unfinished {
             get {

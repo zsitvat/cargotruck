@@ -971,6 +971,7 @@ input[type=number] {
 .sidebar[b-afudbecg3u] {
     background-image: linear-gradient(180deg, #1e2835 0%, #1e2835 70%) !important;
     z-index:100;
+    min-width:240px !important;
 }
 
 .nav-item[b-ffa6apske8] a.active {
@@ -1310,8 +1311,8 @@ ul, li {
 }
 
 .small_profile_picture {
-    max-width: 50px;
-    max-height: 50px;
+    max-width: 40px;
+    max-height: 40px;
     margin-bottom: 2%;
     border-radius: 100px;
 }
@@ -1370,8 +1371,18 @@ tr td:first-child {
     outline: 1px solid rgb(139,0,0);
 }
 
-.darkmode .box, .darkmode .top-row, .darkmode .form-card, .darkmode .login-card, .darkmode .card, .darkmode .card2, .darkmode .settings-card, .darkmode .getbyid-card {
+.darkmode .box,  .darkmode .form-card, .darkmode .login-card, .darkmode .card, .darkmode .card2, .darkmode .settings-card, .darkmode .getbyid-card {
     background-color: rgb(36, 49, 64) !important;
+    color: rgba(160,180,200,.85) !important;
+    border-color: #243140 !important;
+}
+
+.darkmode .navbar {
+    background-color: rgba(36, 49, 64, 0.5) !important;
+}
+
+.darkmode main .top-row {
+    background-color: rgba(36, 49, 64) !important;
     color: rgba(160,180,200,.85) !important;
     border-color: #243140 !important;
 }
@@ -1401,7 +1412,7 @@ tr td:first-child {
     background-color: rgba(0,0,0,.275) !important;
 }
 
-.darkmode .form-control, .darkmode .inputs, .darkmode .valid, .darkmode .login-input-group-text, .darkmode .btn-light, .darkmode .number-input {
+.darkmode .btn-pagination ,.darkmode .form-control, .darkmode .inputs, .darkmode .valid, .darkmode .login-input-group-text, .darkmode .btn-light, .darkmode .number-input {
     background-color: rgba(120,130,140,.2) !important;
     color: #bab3b3 !important;
     border-color: rgba(120,130,140,.2);
@@ -1653,6 +1664,10 @@ input:checked + .slider:before {
 
 @media (max-width: 1920px) {
 
+    .mobile-top-row-items {
+        display: none;
+    }
+
     .hide {
         display: none;
     }
@@ -1730,6 +1745,11 @@ input:checked + .slider:before {
     .col-lg-3 {
         width: 50%;
     }
+
+    .sidebar[b-afudbecg3u] {
+        min-width: 220px !important;
+        width:220px !important;
+    }
 }
 
 @media (max-width: 1024px) {
@@ -1784,7 +1804,7 @@ input:checked + .slider:before {
     }
 
     article {
-        margin-left: 250px !important;
+        margin-left: 210px !important;
     }
 
     .currency-api-error-icon{
@@ -1821,7 +1841,32 @@ input:checked + .slider:before {
     }
 }
 
+@media (max-width: 750px) {
+    .username, .culture-selector{
+        margin-right:1rem;
+    }
+}
+
 @media (max-width: 640px) {
+
+    .mobile-top-row-items {
+        display: initial;
+        position:absolute;
+        top:1rem;
+        right:8.5rem;
+        z-index:1000;
+    }
+
+    .mobile-top-row-items .culture-selector {
+        position:absolute;
+        top:-0.2rem;
+        right:-4.5rem;
+    }
+
+    .content h3{
+        text-align:center;
+        padding-bottom:0.5rem;
+    }
 
     .date-filter{
         margin-left:2rem;
@@ -1856,7 +1901,7 @@ input:checked + .slider:before {
     }
 
     .table-width {
-        max-width: 90vw;
+        max-width: 94vw;
     }
 
     .input_search {
@@ -1894,10 +1939,10 @@ input:checked + .slider:before {
         display: initial;
     }
 
-        .hideandshow-cards .getbyid-card, .hideandshow-cards .settings-card {
-            max-width: 100%;
-            width: 100%;
-        }
+    .hideandshow-cards .getbyid-card, .hideandshow-cards .settings-card {
+        max-width: 100%;
+        width: 100%;
+    }
 
     .date-filter {
         left: 0rem;
@@ -1921,6 +1966,10 @@ input:checked + .slider:before {
         top:85%;
         overflow:auto;
         max-height:5rem;
+    }
+
+    .row > * {
+        padding-right:0.8rem;
     }
 }
 
@@ -1984,7 +2033,7 @@ input:checked + .slider:before {
     }
 
     .table-width {
-        max-width: 85vw;
+        max-width: 91vw;
     }
 
     .privacy-form {
@@ -2050,7 +2099,7 @@ input:checked + .slider:before {
     }
 
     .table-width {
-        max-width: 85vw;
+        max-width: 90vw;
     }
 
     .privacy-form {

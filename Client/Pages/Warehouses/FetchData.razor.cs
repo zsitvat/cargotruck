@@ -27,7 +27,6 @@ namespace Cargotruck.Client.Pages.Warehouses
         protected override async Task OnInitializedAsync()
         {
             PageHistoryState.AddPageToHistory("/Warehouses");
-            base.OnInitialized();
             dataRows = await client.GetFromJsonAsync<int>($"api/warehouses/pagecount?searchString={searchString}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
             Cargoes = await client.GetFromJsonAsync<Cargotruck.Shared.Models.Cargoes[]?>("api/cargoes/getcargoes");
             await ShowPage();
@@ -58,6 +57,7 @@ namespace Cargotruck.Client.Pages.Warehouses
             if (e != null && e.Value?.ToString() != "")
             {
                 dateFilter!.StartDate = DateTime.Parse(e.Value?.ToString()!);
+                pageSize = 10;
                 await OnInitializedAsync();
             }
         }
@@ -67,6 +67,7 @@ namespace Cargotruck.Client.Pages.Warehouses
             if (e != null && e.Value?.ToString() != "")
             {
                 dateFilter!.EndDate = DateTime.Parse(e.Value?.ToString()!);
+                pageSize = 10;
                 await OnInitializedAsync();
             }
         }
