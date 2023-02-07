@@ -71,6 +71,28 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> GetChartData()
+        {
+            var data = await _context.Monthly_Expenses.ToListAsync();
+            int[] columnsHeight = new int[24];
+            for (int i = 0; i < 12; i++)
+            {
+                foreach(var item in data.Where(x => x.Date.Year == DateTime.Now.Year && x.Date.Month == i + 1))
+                {
+                    columnsHeight[i] += item.Expense != null ? (int)item.Expense : 0;
+                }
+            }
+            for (int i = 0; i < 12; i++)
+            {
+                foreach (var item in data.Where(x => x.Date.Year == DateTime.Now.Year && x.Date.Month == i + 1))
+                {
+                    columnsHeight[i+12] += item.Profit != null ? (int)item.Profit : 0;
+                }
+            }
+            return Ok(columnsHeight);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> GetMonthlyExpenses()
         {
             var data = await _context.Monthly_Expenses.ToListAsync();

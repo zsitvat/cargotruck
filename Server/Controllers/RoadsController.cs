@@ -116,6 +116,23 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> GetChartData()
+        {
+            var data = await _context.Roads.ToListAsync();
+            var trucksCount = data.Where(x=>x.Vehicle_registration_number != null && x.Vehicle_registration_number != "").DistinctBy(x=>x.Vehicle_registration_number).Count();
+            var trucksVRN = data?.DistinctBy(x => x.Vehicle_registration_number).ToList();
+            int[] columnsHeight = new int[12 * trucksCount];
+            int h = 1;
+            for (int i = 0; i < columnsHeight.Length; i++)
+            {
+                h++;
+                if (h==13) h = 1;
+                columnsHeight[i] = data.Where(x => x.Date.Year == DateTime.Now.Year && x.Date.Month == h && x.Vehicle_registration_number != null && x.Vehicle_registration_number == trucksVRN?[i/12].Vehicle_registration_number).Count();
+            }
+            return Ok(columnsHeight);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Count()
         {
             var t = await _context.Roads.CountAsync();
@@ -194,28 +211,28 @@ namespace Cargotruck.Server.Controllers
             worksheet.Cell(currentRow, 2).Style.Font.SetBold();
             worksheet.Cell(currentRow, 3).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Task_id : "Task ID";
             worksheet.Cell(currentRow, 3).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 3).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Vehicle_registration_number : "Vehicle registration number";
-            worksheet.Cell(currentRow, 3).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 4).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Id_cargo : "Cargo ID";
+            worksheet.Cell(currentRow, 4).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Vehicle_registration_number : "Vehicle registration number";
             worksheet.Cell(currentRow, 4).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 5).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Purpose_of_the_trip : "Purpose_of_the_trip";
-            worksheet.Cell(currentRow, 5).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 6).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Starting_date : "Starting_date";
+            worksheet.Cell(currentRow, 5).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Id_cargo : "Cargo ID";
             worksheet.Cell(currentRow, 6).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 7).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Ending_date : "Ending_date";
+            worksheet.Cell(currentRow, 6).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Purpose_of_the_trip : "Purpose_of_the_trip";
+            worksheet.Cell(currentRow, 6).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 7).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Starting_date : "Starting_date";
             worksheet.Cell(currentRow, 7).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 8).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Starting_place : "Starting_place";
+            worksheet.Cell(currentRow, 8).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Ending_date : "Ending_date";
             worksheet.Cell(currentRow, 8).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 9).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Ending_place : "Ending_place";
+            worksheet.Cell(currentRow, 9).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Starting_place : "Starting_place";
             worksheet.Cell(currentRow, 9).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 10).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Direction : "Direction";
+            worksheet.Cell(currentRow, 10).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Ending_place : "Ending_place";
             worksheet.Cell(currentRow, 10).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 11).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Fuel : "Fuel";
+            worksheet.Cell(currentRow, 11).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Direction : "Direction";
             worksheet.Cell(currentRow, 11).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 12).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Expenses_id : "Expenses_id";
+            worksheet.Cell(currentRow, 12).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Fuel : "Fuel";
             worksheet.Cell(currentRow, 12).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 13).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date";
+            worksheet.Cell(currentRow, 13).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Expenses_id : "Expenses_id";
             worksheet.Cell(currentRow, 13).Style.Font.SetBold();
+            worksheet.Cell(currentRow, 14).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date";
+            worksheet.Cell(currentRow, 14).Style.Font.SetBold();
 
             foreach (var road in roads)
             {
@@ -223,17 +240,17 @@ namespace Cargotruck.Server.Controllers
                 worksheet.Cell(currentRow, 1).Value = road.Id;
                 worksheet.Cell(currentRow, 2).Value = road.User_id;
                 worksheet.Cell(currentRow, 3).Value = road.Task_id;
-                worksheet.Cell(currentRow, 3).Value = road.Vehicle_registration_number;
-                worksheet.Cell(currentRow, 4).Value = road.Id_cargo;
-                worksheet.Cell(currentRow, 5).Value = road.Purpose_of_the_trip;
-                worksheet.Cell(currentRow, 6).Value = road.Starting_date;
-                worksheet.Cell(currentRow, 7).Value = road.Ending_date;
-                worksheet.Cell(currentRow, 8).Value = road.Starting_place;
-                worksheet.Cell(currentRow, 9).Value = road.Ending_place;
-                worksheet.Cell(currentRow, 10).Value = (road.ToString() == "TO" ? lang == "hu" ? Cargotruck.Shared.Resources.Resource.to : "Go to the direction" : lang == "hu" ? Cargotruck.Shared.Resources.Resource.from : "Go from the direction");
-                worksheet.Cell(currentRow, 11).Value = road.Fuel;
-                worksheet.Cell(currentRow, 12).Value = road.Expenses_id;
-                worksheet.Cell(currentRow, 13).Value = road.Date;
+                worksheet.Cell(currentRow, 4).Value = road.Vehicle_registration_number;
+                worksheet.Cell(currentRow, 5).Value = road.Id_cargo;
+                worksheet.Cell(currentRow, 6).Value = road.Purpose_of_the_trip;
+                worksheet.Cell(currentRow, 7).Value = road.Starting_date;
+                worksheet.Cell(currentRow, 8).Value = road.Ending_date;
+                worksheet.Cell(currentRow, 9).Value = road.Starting_place;
+                worksheet.Cell(currentRow, 10).Value = road.Ending_place;
+                worksheet.Cell(currentRow, 11).Value = (road.ToString() == "TO" ? lang == "hu" ? Cargotruck.Shared.Resources.Resource.to : "Go to the direction" : lang == "hu" ? Cargotruck.Shared.Resources.Resource.from : "Go from the direction");
+                worksheet.Cell(currentRow, 12).Value = road.Fuel;
+                worksheet.Cell(currentRow, 13).Value = road.Expenses_id;
+                worksheet.Cell(currentRow, 14).Value = road.Date;
             }
 
             using var stream = new MemoryStream();

@@ -617,8 +617,6 @@ input[type=number] {
 .validation-message {
     font-size: 13px;
     position: absolute;
-    top:2.2rem;
-    left:2rem;
 }
 
 .bottom-row {

@@ -112,7 +112,7 @@ namespace Cargotruck.Server.Controllers
             for (int i = 0; i < 12; i++)
             {
                 foreach (var task in tasks.Where(x => x.Completed == false)) {
-                    columnsHeight[i] += data.Where(x => x.Date.Year == DateTime.Now.Year && x.Date.Month == i && x.Warehouse_id == null && x.Task_id == task.Id).Count();
+                    columnsHeight[i] += data.Where(x => x.Date.Year == DateTime.Now.Year && x.Date.Month == i+1 && x.Warehouse_id == null && x.Task_id == task.Id).Count();
                 }
             }
 
@@ -120,13 +120,13 @@ namespace Cargotruck.Server.Controllers
             {
                 foreach (var task in tasks.Where(x => x.Completed))
                 {
-                    columnsHeight[i+12] += data.Where(x => x.Date.Year == DateTime.Now.Year && x.Date.Month == i && x.Task_id == task.Id).Count();
+                    columnsHeight[i+12] += data.Where(x => x.Date.Year == DateTime.Now.Year && x.Date.Month == i+1 && x.Task_id == task.Id).Count();
                 }
             }
 
             for (int i = 0; i < 12; i++)
             {
-                columnsHeight[i+24] = data.Where(x => x.Date.Year == DateTime.Now.Year && x.Date.Month == i && x.Warehouse_id != null).Count();
+                columnsHeight[i+24] = data.Where(x => x.Date.Year == DateTime.Now.Year && x.Date.Month == i+1 && x.Warehouse_id != null).Count();
             }
 
             return Ok(columnsHeight);

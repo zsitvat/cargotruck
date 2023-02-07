@@ -99,11 +99,11 @@ namespace Cargotruck.Server.Controllers
             int[] columnsHeight = new int[24];
             for (int i=0; i<12;i++)
             {
-                columnsHeight[i] = data.Where(x=> x.Date.Year == DateTime.Now.Year && x.Date.Month == i && x.Completed == false).Count();
+                columnsHeight[i] = data.Where(x=> x.Date.Year == DateTime.Now.Year && x.Date.Month == i+1 && x.Completed == false).Count();
             }
             for (int i = 0; i < 12; i++)
             {
-                columnsHeight[i+12] = data.Where(x => x.Date.Year == DateTime.Now.Year && x.Date.Month == i && x.Completed).Count();
+                columnsHeight[i+12] = data.Where(x => x.Date.Year == DateTime.Now.Year && x.Date.Month == i+1 && x.Completed).Count();
             }
             return Ok(columnsHeight);
         }

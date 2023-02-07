@@ -1,50 +1,71 @@
 ﻿@inject Blazored.SessionStorage.ISessionStorageService sessionStorage
 
 <div class="left-charts">
+
     @if (_config1 != null)
     {
-        <div class="col-md-6 stretch-card mt-3 mb-3">
-            <div class="form-card">
-                <div class="card-body">
-                    <Chart Config="_config1"></Chart>
+        <AuthorizeView Roles="Accountant,Storageman,Driver,User,Admin">
+            <Authorized>
+                <div class="col-md-6 stretch-card mt-3 mb-3">
+                    <div class="form-card">
+                        <div class="card-body">
+                            <Chart Config="_config1"></Chart>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+            </Authorized>
+        </AuthorizeView>
     }
 
     @if (_config3 != null)
     {
-        <div class="col-md-6 stretch-card mt-3 mb-3">
-            <div class="form-card">
-                <div class="card-body">
-                    <Chart Config="_config3"></Chart>
+        <AuthorizeView Roles="Driver,User,Admin">
+            <Authorized>
+                <div class="col-md-6 stretch-card mt-3 mb-3">
+                    <div class="form-card">
+                        <div class="card-body">
+                            <Chart Config="_config3"></Chart>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+            </Authorized>
+        </AuthorizeView>
     }
+
 </div>
+
 <div class="right-charts">
+
     @if (_config2 != null)
     {
-        <div class="col-md-6 stretch-card mt-3 mb-3">
-            <div class="form-card">
-                <div class="card-body">
-                    <Chart Config="_config2"></Chart>
+        <AuthorizeView Roles="Storageman,User,Admin">
+            <Authorized>
+                <div class="col-md-6 stretch-card mt-3 mb-3">
+                    <div class="form-card">
+                        <div class="card-body">
+                            <Chart Config="_config2"></Chart>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+            </Authorized>
+        </AuthorizeView>
     }
 
     @if (_config4 != null)
     {
-        <div class="col-md-6 stretch-card mt-3 mb-3">
-            <div class="form-card">
-                <div class="card-body">
-                    <Chart Config="_config4"></Chart>
+        <AuthorizeView Roles="Accountant,User,Admin">
+            <Authorized>
+                <div class="col-md-6 stretch-card mt-3 mb-3">
+                    <div class="form-card">
+                        <div class="card-body">
+                            <Chart Config="_config4"></Chart>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+            </Authorized>
+        </AuthorizeView>
     }
+
 </div>
 
 @code{
@@ -140,7 +161,7 @@
                         ColorUtil.ColorHexString(54, 162, 235),
                         ColorUtil.ColorHexString(54, 162, 235),
                         ColorUtil.ColorHexString(54, 162, 235)
-                }
+    }
                 };
 
             int[] datalistPartOfItems = columnHeights.Skip(12).Take(12).ToArray();
@@ -161,7 +182,7 @@
                        ColorUtil.ColorHexString(255, 205, 86),
                        ColorUtil.ColorHexString(255, 205, 86),
                        ColorUtil.ColorHexString(255, 205, 86)
-                }
+    }
                 };
 
             _config1.Data.Datasets.Add(datasetCompleted);
@@ -242,7 +263,7 @@
                 ColorUtil.ColorHexString(54, 162, 235),
                 ColorUtil.ColorHexString(54, 162, 235),
                 ColorUtil.ColorHexString(54, 162, 235)
-        }
+    }
                 };
 
             int[] datalistSecondPartOfItems = columnHeights.Skip(12).Take(12).ToArray();
@@ -263,7 +284,7 @@
                        ColorUtil.ColorHexString(255, 205, 86),
                        ColorUtil.ColorHexString(255, 205, 86),
                        ColorUtil.ColorHexString(255, 205, 86)
-                    }
+    }
                 };
 
             int[] datalistThirdPartOfItems = columnHeights.Skip(24).Take(12).ToArray();
@@ -284,7 +305,7 @@
                     ColorUtil.ColorHexString(130,110,174),
                     ColorUtil.ColorHexString(130,110,174),
                     ColorUtil.ColorHexString(130,110,174)
-                }
+    }
             };
 
             _config2.Data.Datasets.Add(datasetDelivered);
@@ -343,33 +364,69 @@
             _config3.Data.Labels.Add(str);
         }
 
-        var columnHeights = await client.GetFromJsonAsync<int[]>("api/tasks/getchartdata");
+        var columnHeights = await client.GetFromJsonAsync<int[]>("api/roads/getchartdata");
 
         if (columnHeights != null)
         {
-            int[] datalistAllItems = columnHeights.Take(12).ToArray();
+            var roads = await client.GetFromJsonAsync<Roads[]?>("api/roads/getroads");
+            var trucksVRN = roads?.DistinctBy(x => x.Vehicle_registration_number).ToList();
 
-            BarDataset<int> datasetNumberOfRoads = new(datalistAllItems)
+            if (roads != null && trucksVRN != null && roads.Count() > 0 && trucksVRN.Count > 0)
+            {
+
+                int NumberOfTrucks = columnHeights.Length / 12;
+
+                for (int i = 0; i < NumberOfTrucks; i++)
                 {
-                    Label = lang == "hu" ? "Utak száma" : "Number of roads",
-                    BackgroundColor = new[]
+                    int[] datalistItems = columnHeights.Skip(12 * i).Take(12).ToArray();
+                    List<byte> colorChosen = new();
+                    switch (i)
                     {
-                         ColorUtil.ColorHexString(130,110,174),
-                        ColorUtil.ColorHexString(130,110,174),
-                        ColorUtil.ColorHexString(130,110,174),
-                        ColorUtil.ColorHexString(130,110,174),
-                        ColorUtil.ColorHexString(130,110,174),
-                        ColorUtil.ColorHexString(130,110,174),
-                        ColorUtil.ColorHexString(130,110,174),
-                        ColorUtil.ColorHexString(130,110,174),
-                        ColorUtil.ColorHexString(130,110,174),
-                        ColorUtil.ColorHexString(130,110,174),
-                        ColorUtil.ColorHexString(130,110,174),
-                        ColorUtil.ColorHexString(130,110,174)
+                        case 0:
+                            colorChosen.AddRange(new[] { (byte)130, (byte)110, (byte)174 });     
+                            break;
+                        case 1:
+                            colorChosen.AddRange(new[] { (byte)54, (byte)162, (byte)235 });
+                            break;
+                        case 2:
+                            colorChosen.AddRange(new[] { (byte)255, (byte)205, (byte)86 });
+                            break;
+                        case 3:
+                            colorChosen.AddRange(new[] { (byte)252 , (byte)3, (byte)90 });
+                            break;
+                        case 4:
+                            colorChosen.AddRange(new[] { (byte)25, (byte)135, (byte)84 });
+                            break;
+                        default:
+                            //color picker
+                            Random rnd = new Random();
+                            colorChosen.AddRange(new [] { (byte)rnd.Next(255), (byte)rnd.Next(255), (byte)rnd.Next(255) });
+                            break;
+                            //etc
                     }
-                };
+                    BarDataset<int> datasetNumberOfRoads = new(datalistItems)
+                        {
+                            Label = lang == "hu" ? "Utak száma (Rendszám:" + trucksVRN?[i].Vehicle_registration_number + ")" : "Number of roads (VRN:" + trucksVRN?[i].Vehicle_registration_number + ")",
+                            BackgroundColor = new[]
+                            {
+                                ColorUtil.ColorHexString(colorChosen[0],colorChosen[1],colorChosen[2]),
+                                ColorUtil.ColorHexString(colorChosen[0],colorChosen[1],colorChosen[2]),
+                                ColorUtil.ColorHexString(colorChosen[0],colorChosen[1],colorChosen[2]),
+                                ColorUtil.ColorHexString(colorChosen[0],colorChosen[1],colorChosen[2]),
+                                ColorUtil.ColorHexString(colorChosen[0],colorChosen[1],colorChosen[2]),
+                                ColorUtil.ColorHexString(colorChosen[0],colorChosen[1],colorChosen[2]),
+                                ColorUtil.ColorHexString(colorChosen[0],colorChosen[1],colorChosen[2]),
+                                ColorUtil.ColorHexString(colorChosen[0],colorChosen[1],colorChosen[2]),
+                                ColorUtil.ColorHexString(colorChosen[0],colorChosen[1],colorChosen[2]),
+                                ColorUtil.ColorHexString(colorChosen[0],colorChosen[1],colorChosen[2]),
+                                ColorUtil.ColorHexString(colorChosen[0],colorChosen[1],colorChosen[2]),
+                                ColorUtil.ColorHexString(colorChosen[0],colorChosen[1],colorChosen[2])
+                            }
+                        };
 
-            _config3.Data.Datasets.Add(datasetNumberOfRoads);
+                    _config3.Data.Datasets.Add(datasetNumberOfRoads);
+                }
+            }
         }
     }
 
@@ -423,7 +480,7 @@
             _config4.Data.Labels.Add(str);
         }
 
-        var columnHeights = await client.GetFromJsonAsync<int[]>("api/tasks/getchartdata");
+        var columnHeights = await client.GetFromJsonAsync<int[]>("api/monthly_expenses/getchartdata");
 
         if (columnHeights != null)
         {
