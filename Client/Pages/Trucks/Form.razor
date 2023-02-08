@@ -26,7 +26,7 @@
                         <div>
                         <label>@localizer["Brand"]:</label>
                             <div>
-                                <InputText class="form-control inputs" @bind-Value="@trucks.Brand" />
+                                <InputText class="form-control inputs" @bind-Value="@trucks!.Brand" />
                                 <ValidationMessage For="@(() => trucks.Brand)" />
                             </div>
                         </div>

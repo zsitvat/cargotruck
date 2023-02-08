@@ -1,5 +1,4 @@
 ﻿
-
 <EditForm class="form" Model="@cargoes" OnValidSubmit="@OnValidSubmit">
     <DataAnnotationsValidator />
     <div class="top-buttons-card">
@@ -12,7 +11,7 @@
             </div>
             <p class="edit-title">@localizer[TitleText]</p>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-success">
+                    <button @onclick="OnSaveData" type="submit" class="btn btn-success">
                         <i class="oi oi-circle-check"></i> @localizer[ButtonText]
                     </button>
             </div>
@@ -71,39 +70,38 @@
             </div>
                 <div class="d-inline-block forms-margin" >
                 <div class="form-group">
-                    <div>
-                        <label>@localizer["Task_id"]:</label>
-                        <div>
-                            <InputSelect class="form-control inputs" @bind-Value="@cargoes.Task_id">
-                                <option value="" selected disabled>@localizer["Mandatory"]</option>
-                                @if (tasks != null)
+                    <div class="form-group custom-select">
+                        <input type="text" class="form-control custom-select-input" @bind="cargoes.Task_id" @bind:event="oninput" placeholder="@localizer["Mandatory"]" />
+                        <div class="custom-select-options">
+                            @if (tasks != null)
+                            {
+                                @foreach (var task in tasks)
                                 {
-                                    @foreach (var task in tasks)
+                                    if (!task.Completed)
                                     {
-                                        if (!task.Completed)
-                                        {
-                                            <option value="@task.Id">@task.Id - @task.Date - @task.Description?.Substring(0, task.Description.Length >= 50 ? 50 : task.Description.Length)</option>
-                                        }
+                                        <div class="custom-select-option" @onclick="() => { cargoes.Task_id = task.Id; }">
+                                            @task.Id - @task.Date - @task.Description?.Substring(0, task.Description.Length >= 50 ? 50 : task.Description.Length)
+                                        </div>
                                     }
                                 }
-                            </InputSelect>
-                            <ValidationMessage For="@(() => cargoes.Task_id)" />
+                            }
                         </div>
+                        <ValidationMessage For="@(() => cargoes.Task_id)" />
                     </div>
                 </div>
                     <div class="form-group">
                         <div>
                             <label>@localizer["Warehouse_id"]:</label>
                             <div>
-                            <select class="form-control inputs" @bind="@cargoes.Warehouse_id">
-                                    <option selected>@localizer["Select_placeholder"]</option>
-                                    @if (warehouses != null)
-                                    {
-                                        @foreach (var warehouse in warehouses)
+                                <select class="form-control inputs" @bind="@cargoes.Warehouse_id">
+                                        <option value="" selected>@localizer["Select_placeholder"]</option>
+                                        @if (warehouses != null)
                                         {
-                                            <option value="@warehouse.Id">@warehouse.Id - @warehouse.Owner</option>
+                                            @foreach (var warehouse in warehouses)
+                                            {
+                                                <option value="@warehouse.Id">@warehouse.Id - @warehouse.Owner</option>
+                                            }
                                         }
-                                    }
                                 </select>
                                 <ValidationMessage For="@(() => cargoes.Warehouse_id)" />
                             </div>
@@ -142,19 +140,43 @@
     Warehouses[]? warehouses { get; set; }
     List<Tasks>? tasks { get; set; }
     List<Trucks>? trucks { get; set; }
-
+    List<Cargoes>? cargoWithIds { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         warehouses = await client.GetFromJsonAsync<Warehouses[]?>("api/warehouses/getwarehouses");
         tasks = await client.GetFromJsonAsync < List<Tasks>?>("api/tasks/gettasks");
         trucks = await client.GetFromJsonAsync < List<Trucks>?>("api/trucks/gettrucks");
-        var cargoWithIds = await client.GetFromJsonAsync<List<Cargoes>>("api/cargoes/getcargoes");
+        cargoWithIds = await client.GetFromJsonAsync<List<Cargoes>>("api/cargoes/getcargoes");
 
-        foreach (var cargo in cargoWithIds)
+        foreach (var cargo in cargoWithIds!)
         {
             trucks?.RemoveAll(x => x.Vehicle_registration_number == cargo.Vehicle_registration_number && x.Vehicle_registration_number != cargoes?.Vehicle_registration_number);
             tasks?.RemoveAll(x => x.Id == cargo.Task_id && x.Id != cargoes?.Task_id);
+        }
+    }
+
+    private void OnSaveData()
+    {
+        var invalid = false;
+        @foreach (var task in tasks)
+        {
+            if (!task.Completed)
+            {
+                if (task.Id != cargoes?.Task_id)
+                {
+                    invalid = true;
+                }
+                else
+                {
+                    invalid = false;
+                    break;
+                }
+            }
+        }
+        if (invalid)
+        {
+            cargoes.Task_id = null;
         }
     }
 }

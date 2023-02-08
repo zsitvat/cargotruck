@@ -500,7 +500,6 @@ table th button {
 }
 
 .warehouse-ids {
-    display: block;
     max-width: 30rem;
     max-height: 5rem;
     min-height: 3rem;
@@ -2110,4 +2109,81 @@ input:checked + .slider:before {
     .privacy-form input {
         min-width: 80% !important;
     }
+}
+
+
+
+/*Select + Text input combination css*/
+
+.custom-select {
+    position: relative;
+}
+
+.custom-select-input {
+    width: 100%;
+    padding-right: 30px;
+}
+
+.custom-select-options {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    z-index: 1;
+    font-size:14px;
+}
+
+.darkmode .custom-select-options {
+    background:rgba(120,130,140,.2) !important;
+}
+
+.custom-select:hover .custom-select-options,
+.custom-select:focus-within .custom-select-options {
+    display: block;
+}
+
+.custom-select-option {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.custom-select-option:hover {
+    background-color: #ccc;
+}
+
+.custom-select {
+    position: relative;
+}
+
+.custom-select-input {
+    width: 100%;
+    padding-right: 30px;
+}
+
+.custom-select-options {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    z-index: 1;
+}
+
+.custom-select-input:focus + .custom-select-options,
+.custom-select:hover .custom-select-options {
+    display: block;
+}
+
+.custom-select-option {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.custom-select-option:hover {
+    background-color: #ccc;
 }
