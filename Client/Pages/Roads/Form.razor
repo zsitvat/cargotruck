@@ -12,7 +12,7 @@
             </div>
             <p class="edit-title">@localizer[TitleText]</p>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-success">
+                    <button @onclick="OnSaveData" type="submit" class="btn btn-success">
                         <i class="oi oi-circle-check"></i> @localizer[ButtonText]
                     </button>
             </div>
@@ -21,52 +21,61 @@
 
     <div class="form-card mb-6" style="border-top-left-radius:unset;border-top-right-radius:unset;">
         <div class="card-body mb-3">
-                <div class="d-inline-block forms-margin">
+
+             <!--Error-->@if (error != "")
+            {
+            <p class="error-message ms-3 mb-2">
+                <span class="icon iconify d-inline" style="color:darkred;" data-icon="material-symbols:error-circle-rounded-outline"></span>
+                    @error
+                </p>
+            }
+
+            <div class="d-inline-block forms-margin">
+                <div class="form-group ">
+                    <div>
+                        <label>@localizer["Purpose_of_the_trip"]:</label>
+                        <div>
+                            <InputText class="form-control inputs" @bind-Value="@roads.Purpose_of_the_trip" />
+                            <ValidationMessage For="@(() => roads.Purpose_of_the_trip)" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <div>
+                        <label>@localizer["Starting_date"]:</label>
+                        <div>
+                            <InputDate Type="InputDateType.DateTimeLocal"  class="form-control inputs" @bind-Value="@roads.Starting_date" />
+                            <ValidationMessage For="@(() => roads.Starting_date)" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <div>
+                        <label>@localizer["Ending_date"]:</label>
+                        <div>
+                            <InputDate Type="InputDateType.DateTimeLocal" @bind-Value:format="yyyy.MM.dd. HH:mm" class="form-control inputs" @bind-Value="@roads.Ending_date" />
+                            <ValidationMessage For="@(() => roads.Ending_date)" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <div>
+                        <label>@localizer["Starting_place"]:</label>
+                        <div>
+                            <InputText class="form-control inputs" @bind-Value="@roads.Starting_place" />
+                            <ValidationMessage For="@(() => roads.Starting_place)" />
+                        </div>
+                    </div>
+                </div>
                     <div class="form-group ">
+                    <div>
+                        <label>@localizer["Ending_place"]:</label>
                         <div>
-                            <label>@localizer["Purpose_of_the_trip"]:</label>
-                            <div>
-                                <InputText class="form-control inputs" @bind-Value="@roads.Purpose_of_the_trip" />
-                                <ValidationMessage For="@(() => roads.Purpose_of_the_trip)" />
-                            </div>
+                            <InputText class="form-control inputs" @bind-Value="@roads.Ending_place" />
+                            <ValidationMessage For="@(() => roads.Ending_place)" />
                         </div>
                     </div>
-                    <div class="form-group ">
-                        <div>
-                            <label>@localizer["Starting_date"]:</label>
-                            <div>
-                                <InputDate Type="InputDateType.DateTimeLocal"  class="form-control inputs" @bind-Value="@roads.Starting_date" />
-                                <ValidationMessage For="@(() => roads.Starting_date)" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group ">
-                        <div>
-                            <label>@localizer["Ending_date"]:</label>
-                            <div>
-                                <InputDate Type="InputDateType.DateTimeLocal" @bind-Value:format="yyyy.MM.dd. HH:mm" class="form-control inputs" @bind-Value="@roads.Ending_date" />
-                                <ValidationMessage For="@(() => roads.Ending_date)" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group ">
-                        <div>
-                            <label>@localizer["Starting_place"]:</label>
-                            <div>
-                                <InputText class="form-control inputs" @bind-Value="@roads.Starting_place" />
-                                <ValidationMessage For="@(() => roads.Starting_place)" />
-                            </div>
-                        </div>
-                    </div>
-                      <div class="form-group ">
-                        <div>
-                            <label>@localizer["Ending_place"]:</label>
-                            <div>
-                                <InputText class="form-control inputs" @bind-Value="@roads.Ending_place" />
-                                <ValidationMessage For="@(() => roads.Ending_place)" />
-                            </div>
-                        </div>
-                    </div>
+                </div>
                 <div class="form-group ">
                     <div>
                         <label>@localizer["Fuel"]:</label>
@@ -76,107 +85,111 @@
                         </div>
                     </div>
                 </div>
-                </div>
-                <div class="d-inline-block forms-margin second-col">
-                    <div class="form-group">
-                        <div>
-                                <label>@localizer["Direction"]:</label>
-                            <div>
-                            <select class="form-control inputs" @bind="@roads.Direction">
-                                    <option  selected disabled>@localizer["Select_placeholder"]</option>
-                                    <option value="TO">@localizer["to"]</option>
-                                    <option value="FROM">@localizer["from"]</option>
-                                </select>
-                                <ValidationMessage For="@(() => roads.Direction)" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div>
-                            <label>@localizer["Expenses_id"]:</label>
-                            <div>
-                            <select class="form-control inputs" @bind="@roads.Expenses_id">
-                                        <option  selected disabled>@localizer["Select_placeholder"]</option>
-                                        @if (expenses!=null)
-                                        {
-                                        @foreach (var expense in expenses)
-                                        {
-                                                <option value="@expense.Id">@expense.Id - @expense.Type</option>
-                                        }
-                                    }
-                                </select>
-                                <ValidationMessage For="@(() => roads.Id_cargo)" />
-                            </div>
-                        </div>
-                    </div>
-                        <div class="form-group">
-                            <div>
-                                <label>@localizer["Task_id"]:</label>
-                                <div>
-                            <select class="form-control inputs" @bind="@roads.Task_id">
-                                        <option selected disabled>@localizer["Select_placeholder"]</option>
-                                        @if (tasks != null)
-                                        {
-                                            @foreach (var task in tasks)
-                                            {
-                                                if(!task.Completed){
-                                                    <option value="@task.Id">@task.Id - @task.Date - @task.Description?.Substring(0, task.Description.Length >= 80 ? 80 : task.Description.Length)</option>
-                                                }
-                                            }
-                                        }
-                                    </select>
-                                    <ValidationMessage For="@(() => roads.Task_id)" />
-                                </div>
-                            </div>
-                        </div>
-                <div class="form-group"> 
-                    <div>
-                        <label>@localizer["Vehicle_registration_number"]:</label>
-                        <div>
-                            <select class="form-control inputs" @bind="@roads.Vehicle_registration_number">
-                                <option selected disabled>@localizer["Select_placeholder"]</option>
-                                @if (trucks != null)
-                                {
-                                    @foreach (var truck in trucks)
-                                    {
-                                        <option value="@truck.Vehicle_registration_number">@truck.Brand -  @truck.Vehicle_registration_number</option>
-                                    }
-                                }
-                            </select>
-                            <ValidationMessage For="@(() => roads.Task_id)" />
-                        </div>
-                    </div>
-                </div>
-                        <div class="form-group">
-                            <div>
-                                <label>@localizer["Id_cargo"]:</label>
-                                <div>
-                                    <select class="form-control inputs" @bind="@roads.Id_cargo">
-                                        <option selected disabled>@localizer["Select_placeholder"]</option>
-                                        @if (cargoes != null)
-                                        {
-                                            @foreach (var cargo in cargoes)
-                                            {
-                                                <option value="@cargo.Id">@cargo.Id - @cargo.Description?.ToString().Substring(0,cargo.Description.Length >= 80 ? 80 : cargo.Description.Length)</option>
-                                            }
-                                        }
-                                    </select>
-                                    <ValidationMessage For="@(() => roads.Id_cargo)" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-               </div>
             </div>
-
+            <div class="d-inline-block forms-margin second-col">
+                <div class="form-group custom-select">
+                    <label>@localizer["Direction"]:</label>
+                    <input type="text" class="form-control custom-select-input" @bind="@selectedOption" placeholder="@localizer["Select_placeholder"]" disabled/>
+                        <div class="custom-select-options">
+                            <div class="custom-select-option" @onclick='() => { selectedOption = localizer["to"]; roads.Direction = "TO";}'>
+                                @localizer["to"]
+                            </div>
+                            <div class="custom-select-option" @onclick='() => { selectedOption =  localizer["from"]; roads.Direction = "FROM";}'>
+                                @localizer["from"]
+                            </div>
+                        </div>
+                    <ValidationMessage For="@(() => roads.Direction)" />
+                </div>
+                <div class="form-group custom-select">
+                    <label>@localizer["Expenses_id"]:</label>
+                    <input type="text" class="form-control custom-select-input" @bind="roads.Expenses_id" @bind:event="oninput" placeholder="@localizer["Select_placeholder"]" />
+                    <div class="custom-select-options">
+                        @if (expenses != null)
+                        {
+                            @foreach (var expense in expenses)
+                            {
+                                if (@expense.Id!.ToString().ToLower().Contains(roads.Expenses_id != null ? roads.Expenses_id?.ToString() : ""))
+                                {
+                                    <div class="custom-select-option" @onclick="() => { roads.Expenses_id = expense.Id;}">
+                                        @expense.Id - @expense.Type
+                                    </div>
+                                }
+                            }
+                        }
+                    </div>
+                <ValidationMessage For="@(() => roads.Expenses_id)" />
+                </div>
+                <div class="form-group custom-select">
+                    <label>@localizer["Task_id"]:</label>
+                    <input type="text" class="form-control custom-select-input" @bind="roads.Task_id" @bind:event="oninput" placeholder="@localizer["Mandatory"]" />
+                    <div class="custom-select-options">
+                        @if (tasks != null)
+                        {
+                            @foreach (var task in tasks.Where(x => x.Completed == false))
+                            {
+                                if (task.Id.ToString().ToLower().Contains(roads?.Task_id != null ? roads?.Task_id?.ToString() : ""))
+                                {
+                                    <div class="custom-select-option" @onclick="() => { roads.Task_id = task.Id; }">
+                                        @task.Id - @task.Date - @task.Description?.Substring(0, task.Description.Length >= 50 ? 50 : task.Description.Length)
+                                    </div>
+                                }
+                            }
+                        }
+                    </div>
+                    <ValidationMessage For="@(() => roads.Task_id)" />
+                </div>
+                <div class="form-group custom-select">
+                    <label>@localizer["Vehicle_registration_number"]:</label>
+                    <input type="text" class="form-control custom-select-input" @bind="roads.Vehicle_registration_number" @bind:event="oninput" placeholder="@localizer["Select_placeholder"]" />
+                    <div class="custom-select-options">
+                        @if (trucks != null)
+                        {
+                            @foreach (var truck in trucks)
+                            {
+                                if (truck.Vehicle_registration_number!.ToString().ToLower().Contains(roads?.Vehicle_registration_number != null ? roads?.Vehicle_registration_number?.ToString() : ""))
+                                {
+                                    <div class="custom-select-option" @onclick="() => { roads.Vehicle_registration_number = truck.Vehicle_registration_number; }">
+                                        @truck.Id - @truck.Vehicle_registration_number
+                                    </div>
+                                }
+                            }
+                        }
+                    </div>
+                    <ValidationMessage For="@(() => roads.Vehicle_registration_number)" />
+                </div>
+                <div class="form-group custom-select">
+                    <label>@localizer["Id_cargo"]:</label>
+                    <input type="text" class="form-control custom-select-input" @bind="roads.Id_cargo" @bind:event="oninput" placeholder="@localizer["Select_placeholder"]" />
+                    <div class="custom-select-options">
+                        @if (cargoes != null)
+                        {
+                            @foreach (var cargo in cargoes)
+                            {
+                                if (cargo.Id.ToString().ToLower().Contains(roads.Id_cargo != null ? roads.Id_cargo?.ToString() : ""))
+                                {
+                                    <div class="custom-select-option" @onclick="() => { roads.Id_cargo = cargo.Id; }">
+                                        @cargo.Id - @cargo.Description?.ToString().Substring(0,cargo.Description.Length >= 80 ? 80 : cargo.Description.Length)
+                                    </div>
+                                }
+                            }
+                        }
+                    </div>
+                    <ValidationMessage For="@(() => roads.Id_cargo)" />
+                </div>
+            </div>
+        </div>
+    </div>
 </EditForm>
 
 
 @code {
     [Parameter] public Roads? roads { get; set; }
     [Parameter] public string ButtonText { get; set; } = "Save";
-    [Parameter] public string? TitleText { get; set; }
+    [Parameter] public string TitleText { get; set; } = "";
+    [Parameter] public EventCallback<bool> checkValidSubmit { get; set; } 
     [Parameter] public EventCallback OnValidSubmit { get; set; }
+    string error = "";
+    string? selectedOption; 
     List<Cargoes>? cargoes { get; set; }
     Tasks[]? tasks { get; set; }
     List<Expenses>? expenses { get; set; }
@@ -191,10 +204,189 @@
         trucks = await client.GetFromJsonAsync<List<Trucks>?>("api/trucks/gettrucks");
         var roadWithIds = await client.GetFromJsonAsync<List<Roads>>("api/roads/getroads");
         roadWithIds = roadWithIds?.Where(x => x.Expenses_id != null || x.Id_cargo != null).ToList();
-        foreach (var road in roadWithIds)
+
+        if (roadWithIds != null)
         {
-            expenses?.RemoveAll(x => x.Id == road.Expenses_id && x.Id != roads?.Expenses_id);
-            cargoes?.RemoveAll(x => x.Id == road.Id_cargo && x.Id != roads?.Id_cargo);
+            foreach (var road in roadWithIds)
+            {
+                expenses?.RemoveAll(x => x.Id == road.Expenses_id && x.Id != roads?.Expenses_id);
+                cargoes?.RemoveAll(x => x.Id == road.Id_cargo && x.Id != roads?.Id_cargo);
+            }
+            if (roads?.Direction != null)
+            {
+                selectedOption = localizer[roads?.Direction];
+            }
+        }
+    }
+
+    private async void OnSaveData()
+    {
+        error = "";
+        var invalid = false;
+        bool isValidSubmit = true;
+
+        if (roads?.Id_cargo != null)
+        {
+            invalid = false;
+            if (cargoes?.Count > 0)
+            {
+                @foreach (var cargo in cargoes)
+                {
+                    if (cargo.Id != roads.Id_cargo)
+                    {
+                        invalid = true;
+                    }
+                    else
+                    {
+                        invalid = false;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                invalid = true;
+            }
+
+            if (invalid)
+            {
+                isValidSubmit = false;
+                roads.Id_cargo = null;
+                await checkValidSubmit.InvokeAsync(false);
+                error += CultureInfo.CurrentCulture.Name == "hu" ? "A rakomány azonosító értéke nem érvényes. " : "The cargo id's value is not valid. ";
+            }
+
+        }
+
+        if (roads?.Vehicle_registration_number != null)
+        {
+            invalid = false;
+            if (trucks?.Count() > 0)
+            {
+                @foreach (var truck in trucks)
+                {
+                    if (truck.Vehicle_registration_number != roads.Vehicle_registration_number)
+                    {
+                        invalid = true;
+                    }
+                    else
+                    {
+                        invalid = false;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                invalid = true;
+            }
+
+            if (invalid)
+            {
+                isValidSubmit = false;
+                roads.Vehicle_registration_number = null;
+                await checkValidSubmit.InvokeAsync(false);
+                error += CultureInfo.CurrentCulture.Name == "hu" ? "A rendszám értéke nem érvényes. " : "The vehicle r. number's value is not valid. ";
+            }
+
+        }
+
+        if (roads?.Expenses_id != null)
+        {
+            invalid = false;
+            if (expenses?.Count() > 0)
+            {
+                @foreach (var expense in expenses)
+                {
+                    if (expense.Id != roads.Expenses_id)
+                    {
+                        invalid = true;
+                    }
+                    else
+                    {
+                        invalid = false;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                invalid = true;
+            }
+
+            if (invalid)
+            {
+                isValidSubmit = false;
+                roads.Expenses_id = null;
+                await checkValidSubmit.InvokeAsync(false);
+                error += CultureInfo.CurrentCulture.Name == "hu" ? "A kiadás azonosító értéke nem érvényes. " : "The expense id's value is not valid. ";
+            }
+
+        }
+
+        if (roads?.Task_id != null)
+        {
+            invalid = false;
+            if (tasks?.Length > 0)
+            {
+                @foreach (var task in tasks)
+                {
+                    if (!task.Completed)
+                    {
+                        if (task.Id != roads?.Task_id)
+                        {
+                            invalid = true;
+                        }
+                        else
+                        {
+                            invalid = false;
+                            break;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                invalid = true;
+            }
+
+            if (invalid)
+            {
+                isValidSubmit = false;
+                roads.Task_id = null;
+                await checkValidSubmit.InvokeAsync(false);
+                error += CultureInfo.CurrentCulture.Name == "hu" ? "A megbízás azonosító értéke nem érvényes. " : "The task id's value is not valid. ";
+            }
+
+        }
+
+
+        if (roads?.Direction != null)
+        {
+            invalid = false;
+            if (roads.Direction != "TO" && roads.Direction != "FROM")
+            {
+                invalid = true;
+            }
+            else
+            {
+                invalid = false;
+            }       
+
+            if (invalid)
+            {
+                isValidSubmit = false;
+                selectedOption = null;
+                roads.Direction = null;
+                await checkValidSubmit.InvokeAsync(false);
+                error += CultureInfo.CurrentCulture.Name == "hu" ? "Az irány értéke nem érvényes. " : "The direction's value is not valid. ";
+            }
+
+        }
+
+        if (!invalid && isValidSubmit && (roads?.Direction != null || roads?.Task_id != null || roads?.Vehicle_registration_number != null || roads?.Id_cargo != null))
+        {
+            await checkValidSubmit.InvokeAsync(true);
         }
     }
 }

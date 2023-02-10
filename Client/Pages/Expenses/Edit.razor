@@ -4,10 +4,11 @@
 @inject IJSRuntime js
 
 
-<Form ButtonText="Update" expenses="@expense" OnValidSubmit="@EditExpense" TitleText="Edit_expense"/>
+<Form ButtonText="Update" expenses="@expense" OnValidSubmit="@EditExpense" TitleText="Edit_expense" checkValidSubmit="@CheckValidSubmit" />
 
 @code {
     [Parameter] public int Id { get; set; }
+    bool isValidSubmit = true;
     Expenses? expense = new Expenses();
 
     protected async override Task OnParametersSetAsync()
@@ -18,15 +19,23 @@
 
     async Task EditExpense()
     {
-        var text = @localizer["Succesfull_update"];
-        await http.PutAsJsonAsync("api/expenses/put", expense);
-        await js.InvokeVoidAsync("alert", $"{text}");
-        uriHelper.NavigateTo("/Expenses");
+        if (isValidSubmit)
+        {
+            var text = @localizer["Succesfull_update"];
+            await http.PutAsJsonAsync("api/expenses/put", expense);
+            await js.InvokeVoidAsync("alert", $"{text}");
+            uriHelper.NavigateTo("/Expenses");
+        }
     }
 
     protected override void OnInitialized()
     {
         PageHistoryState.AddPageToHistory("/Expenses/edit/{Id:int}");
         base.OnInitialized();
+    }
+
+    public void CheckValidSubmit(bool valid)
+    {
+        isValidSubmit = valid;
     }
 }

@@ -50,7 +50,7 @@
 @code {
     [Parameter] public Warehouses? warehouses { get; set; }
     [Parameter] public string ButtonText { get; set; } = "Save";
-    [Parameter] public string? TitleText { get; set; } = default!;
+    [Parameter] public string TitleText { get; set; } = "";
     [Parameter] public EventCallback OnValidSubmit { get; set; }
     Cargoes[]? cargoes { get; set; }
 

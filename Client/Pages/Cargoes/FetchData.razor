@@ -35,7 +35,7 @@
     }
 
     <!--Filter-->
-    <select class="form-control filter" @oninput="@((e)=>OnChangeGetFilter(e))" @bind="filter">
+    <select class="form-control filter" @oninput="@((e)=>OnChangeGetFilter(e))" @bind="filter" data-title="@localizer["Filter"]">
         <option value="" selected>@localizer["Nothing"]</option>
         <option value="InWarehouse">@localizer["InWarehouse"]</option>
         <option value="NotInWarehouse">@localizer["NotInWarehouse"]</option>

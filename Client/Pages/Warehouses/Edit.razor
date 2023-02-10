@@ -21,7 +21,6 @@
         await http.PutAsJsonAsync("api/warehouses/put", warehouse);
         await js.InvokeVoidAsync("alert", $"{text}");
         uriHelper.NavigateTo("/Warehouses");
-
     }
 
     protected override void OnInitialized()

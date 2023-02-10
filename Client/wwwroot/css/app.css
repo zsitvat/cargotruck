@@ -1381,6 +1381,10 @@ tr td:first-child {
     outline: 1px solid rgb(139,0,0);
 }
 
+.darkmode .error-message{
+    color:darkred !important;
+}
+
 .darkmode .box,  .darkmode .form-card, .darkmode .login-card, .darkmode .card, .darkmode .card2, .darkmode .settings-card, .darkmode .getbyid-card {
     background-color: rgb(36, 49, 64) !important;
     color: rgba(160,180,200,.85) !important;
@@ -1629,7 +1633,7 @@ input:checked + .slider:before {
 
     .second-col {
         position: relative;
-        top: -4.7rem;
+        top: -5.24rem;
     }
     .center-div {
         margin-left: 40%;

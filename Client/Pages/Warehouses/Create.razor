@@ -7,15 +7,25 @@
 
 @code {
     Warehouses warehouse = new Warehouses();
+    bool isValidSubmit = true;
+
     async Task CreateWarehouse()
     {
-        await http.PostAsJsonAsync("api/warehouses/post", warehouse);
-        uriHelper.NavigateTo("/Warehouses");
+        if (isValidSubmit)
+        {
+            await http.PostAsJsonAsync("api/warehouses/post", warehouse);
+            uriHelper.NavigateTo("/Warehouses");
+        }
     }
 
     protected override void OnInitialized()
     {
         PageHistoryState.AddPageToHistory("/Warehouses/create");
         base.OnInitialized();
+    }
+
+    public void CheckValidSubmit(bool valid)
+    {
+        isValidSubmit = valid;
     }
 }

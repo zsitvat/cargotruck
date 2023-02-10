@@ -4,15 +4,15 @@
     <DataAnnotationsValidator />
     <div class="top-buttons-card">
         <div class="card-body">
-                <div class="form-group">
-                    @if (PageHistoryState.CanGoBack())
+            <div class="form-group">
+                @if (PageHistoryState.CanGoBack())
                 {
                     <a href="@PageHistoryState.GetGoBackPage()"><span class="oi oi-arrow-circle-left" aria-hidden="true" ></span></a>
                 }
             </div>
             <p class="edit-title">@localizer[TitleText]</p>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-success">
+                    <button @onclick="OnSaveData" type="submit" class="btn btn-success">
                         <i class="oi oi-circle-check"></i> @localizer[ButtonText]
                     </button>
             </div>
@@ -21,66 +21,88 @@
 
     <div class="form-card mb-6" style="border-top-left-radius:unset;border-top-right-radius:unset;">
         <div class="card-body mb-3">
+
+             <!--Error-->@if (error != "")
+            {
+            <p class="error-message ms-3 mb-2">
+                <span class="icon iconify d-inline" style="color:darkred;" data-icon="material-symbols:error-circle-rounded-outline"></span>
+                    @error
+                </p>
+            }
+
             <div class="d-inline-block forms-margin-col">
-                <div class="form-group">
-                    <div>
-                        <label>@localizer["Type"]:</label>
-                        <div>
-                            <select id="Type" class="form-control inputs" @oninput="@((e)=>onChangeGetType(e))" @bind="@expenses.Type">
-                                <option  selected disabled>@localizer["Select_placeholder"]</option>
-                                @foreach (var value in Enum.GetValues<Cargotruck.Shared.Models.Type>())
-                                {
-                                    <option value="@value">@localizer[value.ToString()]</option> 
-                                }
-                            </select>
-                            <ValidationMessage For="@(() => expenses.Type)" />
-                        </div>
-                    </div>
-                </div>
-                 @if(type != "salary" && type != "other" && type != null){
-                     <div class="form-group">
-                        <div>
-                        <label>@localizer["Type_id"]:</label>
-                            <div>
-                                <InputSelect class="form-control inputs" @bind-Value="@expenses.Type_id">
-                                    <option value="" selected disabled>@localizer["Select_placeholder"]</option>
-                                    @switch(type) 
-                                        {
-                                        case "task":
-                                            @if (tasks != null)
-                                            {
-                                                @foreach (var task in tasks)
-                                                {
-                                                    <option value="@task.Id">@task.Id - @task.Date - @task.Description?.Substring(0, task.Description.Length >= 50 ? 50 : task.Description.Length)</option>
-                                                }
-                                            }
-                                        break;
-                                        case "repair":
-                                            @if (roads != null)
-                                            {
-                                                @foreach (var road in roads)
-                                                {
-                                                    <option value="@road.Id">@road.Id  - @road.Purpose_of_the_trip - @road.Date </option>
-                                                }
-                                            }
-                                        break;
-                                        case "storage":
-                                             @if (cargoes != null)
-                                            {
-                                                @foreach (var cargo in cargoes)
-                                                {
-                                                    <option value="@cargo.Id">@cargo.Id  - @cargo.Task_id - @cargo.Description </option>
-                                                }
-                                            }
-                                        break;
-                                        };
-                                </InputSelect>
-                                <ValidationMessage For="@(() => expenses.Type_id)" />
+                <div class="form-group custom-select">
+                    <label>@localizer["Type"]:</label>
+                    <input type="text" class="form-control custom-select-input" @bind="selectedOption" @bind:event="oninput" placeholder="@localizer["Select_placeholder"]" disabled />
+                    <div class="custom-select-options">
+                        @foreach (var value in Enum.GetValues<Cargotruck.Shared.Models.Type>())
+                        {
+                           
+                            <div class="custom-select-option" @onclick="() => {selectedOption=localizer[value.ToString()!];expenses.Type = value;}">
+                                @localizer[value.ToString()]
                             </div>
+                            
+                        }
+                    </div>
+                    <ValidationMessage For="@(() => expenses.Type)" />
+                </div>
+                @if (expenses?.Type.ToString() == "task" || expenses?.Type.ToString() == "repair" || expenses?.Type.ToString() == "storage")
+                {
+                    <div class="form-group custom-select">
+                        <label>@localizer["Type_id"]:</label>
+                        <input type="text" class="form-control custom-select-input" @bind="expenses.Type_id" @bind:event="oninput" placeholder="@localizer["Select_placeholder"]" />
+                        <div class="custom-select-options">
+                            @switch (expenses?.Type.ToString())
+                            {
+                                case "task":
+                                    @if (tasks != null)
+                                    {
+                                        @foreach (var task in tasks)
+                                        {
+                                            if (task.Id.ToString().ToLower().Contains(expenses.Type_id != null ? expenses.Type_id?.ToString() : ""))
+                                            {
+                                                <div class="custom-select-option" @onclick="() => { expenses.Type_id = task.Id; }">
+                                                    @task.Id - @task.Date - @task.Description?.Substring(0, task.Description.Length >= 50 ? 50 : task.Description.Length)
+                                                </div>
+                                            }
+                                        }
+                                    }
+                                break;
+                                case "repair":
+                                    @if (roads != null)
+                                    {
+                                        @foreach (var road in roads)
+                                        {
+                                            if (road.Id.ToString().ToLower().Contains(expenses.Type_id != null ? expenses.Type_id?.ToString() : ""))
+                                            {
+                                                <div class="custom-select-option" @onclick="() => { expenses.Type_id = road.Id; }">
+                                                    @road.Id  - @road.Purpose_of_the_trip - @road.Date 
+                                                </div>
+                                            }
+                                        }
+                                    }
+                                break;
+                                case "storage":
+                                    @if (cargoes != null)
+                                    {
+                                        @foreach (var cargo in cargoes)
+                                        {
+                                            if (cargo.Id.ToString().ToLower().Contains(expenses.Type_id != null ? expenses.Type_id?.ToString() : ""))
+                                            {
+                                                <div class="custom-select-option" @onclick="() => { expenses.Type_id = cargo.Id; }">
+                                                    @cargo.Id  - @cargo.Task_id - @cargo.Description
+                                                </div>
+                                            }
+                                        }
+                                    }
+                                break;
+                                }
                         </div>
-                     </div>
+                        <ValidationMessage For="@(() => expenses.Type_id)" />
+                    </div>
                  }
-                 @if(type == "task" || type == "other" ){
+                @if (expenses?.Type.ToString() == "task" || expenses?.Type.ToString() == "other")
+                {
                     <div class="form-group ">
                         <div>
                             <label>@localizer["Fuel"]:</label>
@@ -91,7 +113,8 @@
                         </div>
                     </div>
                  }
-                 @if(type == "task" || type=="other" ){
+                @if (expenses?.Type.ToString() == "task" || expenses?.Type.ToString() == "other")
+                {
                     <div class="form-group ">
                         <div>
                             <label>@localizer["Road_fees"]:</label>
@@ -102,7 +125,8 @@
                         </div>
                     </div>
                  }
-                 @if(type == "task" || type=="other" ){
+                @if (expenses?.Type.ToString() == "task" || expenses?.Type.ToString() == "other")
+                {
                      <div class="form-group ">
                         <div>
                             <label>@localizer["Penalty"]:</label>
@@ -113,7 +137,8 @@
                         </div>
                     </div>
                  }
-                 @if(type == "task" || type=="other"){
+                @if (expenses?.Type.ToString() == "task" || expenses?.Type.ToString() == "other")
+                {
                      <div class="form-group ">
                         <div>
                             <label>@localizer["Driver_spending"]:</label>
@@ -124,7 +149,8 @@
                         </div>
                     </div>
                  }
-                @if(type == "salary"){
+                @if (expenses?.Type.ToString() == "salary")
+                {
                      <div class="form-group ">
                         <div>
                         <label>@localizer["Driver_salary"]:</label>
@@ -135,7 +161,7 @@
                         </div>
                     </div>
                 }
-                @if(type == "repair"){
+                @if(expenses?.Type.ToString() == "repair"){
                     <div class="form-group ">
                         <div>
                         <label>@localizer["Repair_cost"]:</label>
@@ -155,7 +181,8 @@
                         </div>
                     </div>
                 }
-                @if(type == "storage"){
+                @if (expenses?.Type.ToString() == "storage")
+                {
                      <div class="form-group ">
                         <div>
                         <label>@localizer["Cost_of_storage"]:</label>
@@ -166,7 +193,7 @@
                         </div>
                     </div>
                 }
-                @if (type != null)
+                @if (expenses?.Type != null)
                 {
                     <div class="form-group ">
                         <div>
@@ -187,12 +214,14 @@
 @code {
     [Parameter] public Expenses? expenses { get; set; }
     [Parameter] public string ButtonText { get; set; } = "Save";
-    [Parameter] public string? TitleText { get; set; }
+    [Parameter] public string TitleText { get; set; } = "";
     [Parameter] public EventCallback OnValidSubmit { get; set; }
+    [Parameter] public EventCallback<bool> checkValidSubmit { get; set; }
+    string error = "";
+    string? selectedOption="";
     List<Cargoes>? cargoes { get; set; }
     List<Tasks>? tasks { get; set; }
     List<Roads>? roads { get; set; }
-    string? type;
 
 
     protected override async Task OnInitializedAsync()
@@ -217,8 +246,123 @@
         }
     }
 
-    void onChangeGetType(ChangeEventArgs e)
+    private async void OnSaveData()
     {
-        type = e.Value?.ToString();
+        error = "";
+        var invalid = false;
+        bool isValidSubmit = true;
+
+        if (expenses?.Type != null)
+        {
+            invalid = false;
+            @foreach (var value in Enum.GetValues<Cargotruck.Shared.Models.Type>())
+            {
+                if (value != expenses.Type)
+                {
+                    invalid = true;
+                }
+                else
+                {
+                    invalid = false;
+                    break;
+                }
+            }
+
+            if (invalid)
+            {
+                isValidSubmit = false;
+                expenses.Type = null;
+                await checkValidSubmit.InvokeAsync(false);
+                error += CultureInfo.CurrentCulture.Name == "hu" ? "A kiadás típus értéke nem érvényes. " : "The expense type's value is not valid. ";
+            }
+
+        }
+
+        if (expenses?.Type_id != null)
+        {
+            invalid = false;
+
+            switch (expenses?.Type.ToString())
+            {
+                case "task":
+                    if (tasks?.Count > 0)
+                    {
+                        @foreach (var task in tasks)
+                        {
+                            if (task.Id != expenses?.Type_id)
+                            {
+                                invalid = true;
+                            }
+                            else
+                            {
+                                invalid = false;
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        invalid = true;
+                    }
+                    break;
+                case "repair":
+                    if (roads?.Count > 0)
+                    {
+                        @foreach (var road in roads)
+                        {
+                            if (road.Id != expenses?.Type_id)
+                            {
+                                invalid = true;
+                            }
+                            else
+                            {
+                                invalid = false;
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        invalid = true;
+                    }
+                    break;
+                case "storage":
+                    if (cargoes?.Count > 0)
+                    {
+                        @foreach (var cargo in cargoes)
+                        {
+                            if (cargo.Id != expenses?.Type_id)
+                            {
+                                invalid = true;
+                            }
+                            else
+                            {
+                                invalid = false;
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        invalid = true;
+                    }
+                    break;
+            }
+            
+            if (invalid)
+            {
+                isValidSubmit = false;
+                expenses.Type_id = null;
+                await checkValidSubmit.InvokeAsync(false);
+                error += CultureInfo.CurrentCulture.Name == "hu" ? "Az azonosító értéke nem érvényes. " : "The id's value is not valid. ";
+            }
+
+        }
+
+        if (isValidSubmit && expenses?.Type != null)
+        {
+            await checkValidSubmit.InvokeAsync(true);
+        }
     }
+
 }

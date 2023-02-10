@@ -12,7 +12,7 @@
             </div>
             <p class="edit-title">@localizer[TitleText!]</p>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-success">
+                    <button @onclick="OnSaveData" type="submit" class="btn btn-success">
                         <i class="oi oi-circle-check"></i> @localizer[ButtonText]
                     </button>
             </div>
@@ -21,6 +21,15 @@
 
     <div class="form-card mb-6" style="border-top-left-radius:unset;border-top-right-radius:unset;">
         <div class="card-body mb-3">
+
+             <!--Error-->@if (error != "")
+            {
+            <p class="error-message ms-3 mb-2">
+                <span class="icon iconify d-inline" style="color:darkred;" data-icon="material-symbols:error-circle-rounded-outline"></span>
+                    @error
+                </p>
+            }
+
             <div class="d-inline-block forms-margin ">       
                 <div class="form-group">
                     <label>@localizer["Partner"]:</label>
@@ -86,23 +95,25 @@
                         </div>
                     </div>
                 </div>
-                  <div class="form-group">
-                    <div>
-                        <label>@localizer["Id_cargo"]:</label>
-                        <div> 
-                            <select class="form-control inputs"  @bind="@tasks.Id_cargo">
-                                @if (cargoes != null)
+
+                <div class="form-group custom-select">
+                    <label>@localizer["Id_cargo"]:</label>
+                    <input type="text" class="form-control custom-select-input" @bind="tasks.Id_cargo" @bind:event="oninput" placeholder="@localizer["Select_placeholder"]" />
+                    <div class="custom-select-options">
+                        @if (cargoes != null)
+                        {
+                            @foreach (var cargo in cargoes)
+                            {
+                                if (cargo.Id.ToString().ToLower().Contains(tasks.Id_cargo != null ? tasks.Id_cargo?.ToString() : ""))
                                 {
-                                    <option value="" selected disabled>@localizer["Select_placeholder"]</option>
-                                    @foreach (var cargo in cargoes)
-                                    {
-                                        <option value="@cargo.Id">@cargo.Id - @cargo.Description?.Substring(0, cargo.Description.Length >= 80 ? 80 : cargo.Description.Length)</option>
-                                    }
+                                    <div class="custom-select-option" @onclick="() => { tasks.Id_cargo = cargo.Id; }">
+                                        @cargo.Id - @cargo.Description?.Substring(0, cargo.Description.Length >= 80 ? 80 : cargo.Description.Length)
+                                    </div>
                                 }
-                            </select>
-                            <ValidationMessage For="@(() => tasks.Id_cargo)" />
-                        </div>
+                            }
+                        }
                     </div>
+                    <ValidationMessage For="@(() =>tasks.Id_cargo)" />
                 </div>
                   <div class="form-group">
                     <div>
@@ -158,8 +169,10 @@
 @code {
     [Parameter] public Tasks? tasks { get; set; }
     [Parameter] public string ButtonText { get; set; } = "Save";
-    [Parameter] public string? TitleText { get; set; }
+    [Parameter] public string TitleText { get; set; } = "";
     [Parameter] public EventCallback OnValidSubmit { get; set; }
+    [Parameter] public EventCallback<bool> checkValidSubmit { get; set; }
+    string error = "";
     List<Cargoes>? cargoes { get; set; }
     List<Tasks>? taskWithCargo { get; set; }
 
@@ -173,6 +186,47 @@
             {
                 cargoes?.RemoveAll(x => x.Id == task.Id_cargo && x.Id != tasks?.Id_cargo);
             }
+        }
+    }
+
+    private async void OnSaveData()
+    {
+        error = "";
+        var invalid = false;
+
+        if (tasks?.Id_cargo != null)
+        {
+            if(cargoes?.Count > 0)
+            {
+                @foreach (var cargo in cargoes)
+                {
+                    if (cargo.Id != tasks.Id_cargo)
+                    {
+                        invalid = true;
+                    }
+                    else
+                    {
+                        invalid = false;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                invalid = true;
+            }
+
+            if (invalid)
+            {
+                tasks.Id_cargo = null;
+                await checkValidSubmit.InvokeAsync(false);
+                error += CultureInfo.CurrentCulture.Name == "hu" ? "A rakomány azonosító értéke nem érvényes. " : "The cargo id's value is not valid. ";
+            }
+           
+        }
+        if (!invalid)
+        {
+            await checkValidSubmit.InvokeAsync(true);
         }
     }
 }

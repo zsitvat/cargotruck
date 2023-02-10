@@ -54,7 +54,7 @@
 
         for (int i = 0; i < lenght; ++i)
         {
-            if (selectedTaskId?.Length > i &&  selectedTaskId?[i] == "*") { selectedTaskId = null; }
+            if (selectedTaskId?.Length > i && selectedTaskId?[i] == "*") { selectedTaskId = null; }
             if (selectedExpenseId?.Length > i && selectedExpenseId?[i] == "*") { selectedExpenseId = null; }
         }
         Monthly_expenses_tasks_expenses!.Monthly_expense_id = Id;
@@ -63,7 +63,7 @@
         {
             Monthly_expenses_tasks_expenses.Task_id = null;
             Monthly_expenses_tasks_expenses.Expense_id = null;
-            if (i > 0) { IsFirstId = false; }       
+            if (i > 0) { IsFirstId = false; }
             if (selectedTaskId != null && selectedTaskId.Length > i && selectedTaskId[i] != null)
             {
                 Monthly_expenses_tasks_expenses.Task_id = int.Parse(selectedTaskId[i]);
@@ -78,7 +78,6 @@
 
         await js.InvokeVoidAsync("alert", $"{text}");
         uriHelper.NavigateTo("/Monthly_expenses");
-
     }
 
     protected override void OnInitialized()
@@ -86,6 +85,4 @@
         PageHistoryState.AddPageToHistory("/Monthly_expenses/edit/{Id:int}");
         base.OnInitialized();
     }
-
-  
 }

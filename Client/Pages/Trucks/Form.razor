@@ -12,7 +12,7 @@
             </div>
             <p class="edit-title">@localizer[TitleText]</p>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-success">
+                    <button @onclick="OnSaveData" type="submit" class="btn btn-success">
                         <i class="oi oi-circle-check"></i> @localizer[ButtonText]
                     </button>
             </div>
@@ -21,69 +21,80 @@
 
     <div class="form-card mb-6" style="border-top-left-radius:unset;border-top-right-radius:unset;">
         <div class="card-body mb-3">
-                <div class="d-inline-block forms-margin ">
-                    <div class="form-group ">
-                        <div>
-                        <label>@localizer["Brand"]:</label>
-                            <div>
-                                <InputText class="form-control inputs" @bind-Value="@trucks!.Brand" />
-                                <ValidationMessage For="@(() => trucks.Brand)" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group ">
-                        <div>
-                        <label>@localizer["Vehicle_registration_number"]:</label>
-                            <div>
-                                <InputText class="form-control inputs" @bind-Value="@trucks.Vehicle_registration_number" />
-                                <ValidationMessage For="@(() => trucks.Vehicle_registration_number)" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group ">
-                        <div>
-                            <label>@localizer["Max_weight"]:</label>
-                            <div>
-                                <InputText class="form-control inputs" @bind-Value="@trucks.Max_weight" />
-                                <ValidationMessage For="@(() => trucks.Max_weight)" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="d-inline-block forms-margin second-col mt-3" >
-                    <div class="form-group">
-                        <div>
-                            <label>@localizer["Road_id"]:</label>
-                            <div>
-                                <select class="form-control inputs" @bind="@trucks.Road_id">
-                                    <option value="" selected disabled>@localizer["Select_placeholder"]</option>
-                                    @if (roads != null)
-                                    {
-                                        @foreach (var road in roads)
-                                        {
-                                        <option value="@road.Id">@road.Id  - @road.Task_id - @road.Purpose_of_the_trip </option>
-                                        }
-                                    }
-                                </select>
-                            <ValidationMessage For="@(() => trucks.Road_id)" />
-                            </div>
-                        </div>
-                    </div>
-                <div class="form-group">
+
+             <!--Error-->@if (error != "")
+            {
+            <p class="error-message ms-3 mb-2">
+                <span class="icon iconify d-inline" style="color:darkred;" data-icon="material-symbols:error-circle-rounded-outline"></span>
+                    @error
+                </p>
+            }
+
+            <div class="d-inline-block forms-margin ">
+                <div class="form-group ">
                     <div>
-                        <label>@localizer["Road_id"]:</label>
+                    <label>@localizer["Brand"]:</label>
                         <div>
-                            <InputSelect class="form-control inputs" @bind-Value="@trucks.Status">
-                                @foreach (var value in Enum.GetValues<Status>())
-                                {
-                                    <option value="@value">@localizer[value.ToString()]</option>
-                                }
-                            </InputSelect>
-                            <ValidationMessage For="@(() => trucks.Road_id)" />
+                            <InputText class="form-control inputs" @bind-Value="@trucks!.Brand" />
+                            <ValidationMessage For="@(() => trucks.Brand)" />
                         </div>
                     </div>
                 </div>
-               
+                <div class="form-group ">
+                    <div>
+                    <label>@localizer["Vehicle_registration_number"]:</label>
+                        <div>
+                            <InputText class="form-control inputs" @bind-Value="@trucks.Vehicle_registration_number" />
+                            <ValidationMessage For="@(() => trucks.Vehicle_registration_number)" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <div>
+                        <label>@localizer["Max_weight"]:</label>
+                        <div>
+                            <InputText class="form-control inputs" @bind-Value="@trucks.Max_weight" />
+                            <ValidationMessage For="@(() => trucks.Max_weight)" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-inline-block forms-margin second-col mt-3" >
+                <div class="form-group custom-select">
+                    <label>@localizer["Road_id"]:</label>
+                    <input type="text" class="form-control custom-select-input" @bind="trucks.Road_id" @bind:event="oninput" placeholder="@localizer["Select_placeholder"]" />
+                    <div class="custom-select-options">
+                        @if (roads != null)
+                        {
+                        @foreach (var road in roads)
+                            {
+                            if (road.Id.ToString().ToLower().Contains(trucks.Road_id != null ? trucks.Road_id?.ToString() : ""))
+                                {
+                                    <div class="custom-select-option" @onclick="() => {trucks.Road_id = road.Id; }">
+                                        @road.Id  - @road.Task_id - @road.Purpose_of_the_trip
+                                    </div>
+                                }
+                            }
+                        }
+                    </div>
+                    <ValidationMessage For="@(() => trucks.Road_id)" />
+                </div>
+                <div class="form-group custom-select">
+                    <label>@localizer["Status"]:</label>
+                    <input type="text" class="form-control custom-select-input" @bind="@selectedOption" @bind:event="oninput" placeholder="@localizer["Select_placeholder"]" disabled/>
+                    <div class="custom-select-options">
+                        @foreach (var value in Enum.GetValues<Status>())
+                        {
+                            if (value.ToString().ToLower().Contains(value.ToString()))
+                            {
+                                <div class="custom-select-option" @onclick='() => {selectedOption = localizer[value.ToString()];trucks.Status=value; }'>
+                                    @localizer[value.ToString()]
+                                </div>
+                            }
+                        }
+                    </div>
+                    <ValidationMessage For="@(() => trucks.Road_id)" />
+                </div>
             </div>
         </div>
     </div>
@@ -94,12 +105,89 @@
 @code {
     [Parameter] public Trucks? trucks { get; set; }
     [Parameter] public string ButtonText { get; set; } = "Save";
-    [Parameter] public string? TitleText { get; set; }
+    [Parameter] public string TitleText { get; set; } = "";
     [Parameter] public EventCallback OnValidSubmit { get; set; }
+    [Parameter] public EventCallback<bool> checkValidSubmit { get; set; }
+    string error = "";
+    string? selectedOption;
     Roads[]? roads { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         roads = await client.GetFromJsonAsync<Roads[]?>("api/roads/getroads");
+        if (trucks?.Status != null)
+        {
+            selectedOption = localizer[trucks?.Status.ToString()];
+        }  
+    }
+
+    private async void OnSaveData()
+    {
+        error = "";
+        var invalid = false;
+        bool isValidSubmit = true;
+
+        if (trucks?.Road_id  != null)
+        {
+            invalid = false;
+            if (roads?.Length > 0)
+            {
+                @foreach (var road in roads)
+                {
+                    if (road.Id != trucks.Road_id)
+                    {
+                        invalid = true;
+                    }
+                    else
+                    {
+                        invalid = false;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                invalid = true;
+            }
+
+            if (invalid)
+            {
+                isValidSubmit = false;
+                trucks.Road_id = null;
+                await checkValidSubmit.InvokeAsync(false);
+                error += CultureInfo.CurrentCulture.Name == "hu" ? "Az út azonosító értéke nem érvényes. " : "The road id's value is not valid. ";
+            }
+
+        }
+
+        if (true)
+        {
+            invalid = false;
+            @foreach (var value in Enum.GetValues<Status>())
+            {
+                if (value != trucks?.Status)
+                {
+                    invalid = true;
+                }
+                else
+                {
+                    invalid = false;
+                    break;
+                }
+            }
+
+            if (invalid)
+            {
+                isValidSubmit = false;
+                await checkValidSubmit.InvokeAsync(false);
+                error += CultureInfo.CurrentCulture.Name == "hu" ? "A jármű állapotának értéke nem érvényes. " : "The truck's status value is not valid. ";
+            }
+
+        }
+
+        if (isValidSubmit)
+        {
+            await checkValidSubmit.InvokeAsync(true);
+        }
     }
 }

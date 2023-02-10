@@ -23,6 +23,7 @@
 
     async Task CreateMonthlyExpense()
     {
+
         var result = await http.PostAsJsonAsync("api/Monthly_expenses/post", monthly_expense);
         var IsFirstId = true;
 
@@ -48,7 +49,7 @@
         {
             Monthly_expenses_tasks_expenses.Task_id = null;
             Monthly_expenses_tasks_expenses.Expense_id = null;
-            if (i > 0) { IsFirstId = false; }       
+            if (i > 0) { IsFirstId = false; }
             if (selectedTaskId != null && selectedTaskId.Length > i && selectedTaskId[i] != null)
             {
                 Monthly_expenses_tasks_expenses.Task_id = int.Parse(selectedTaskId[i]);

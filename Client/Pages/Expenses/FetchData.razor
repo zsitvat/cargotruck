@@ -34,7 +34,7 @@
         <button @onclick="@(()=>OnChangeResetFilter())" class="filter-button not-pointer"><span class="icon iconify filter-icon not-pointer" data-icon="material-symbols:filter-alt"></span></button>
     }
     <!--Filter-->
-    <select class="form-control filter" @oninput="@((e)=>OnChangeGetFilter(e))" @bind="filter">
+    <select class="form-control filter" @oninput="@((e)=>OnChangeGetFilter(e))" @bind="filter" data-title="@localizer["Filter"]">
         <option value="" selected>@localizer["Nothing"]</option>
         @foreach (var value in Enum.GetValues<Cargotruck.Shared.Models.Type>())
         {

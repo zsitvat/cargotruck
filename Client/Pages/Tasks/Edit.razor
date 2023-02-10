@@ -3,10 +3,11 @@
 @inject NavigationManager uriHelper
 @inject IJSRuntime js
 
-<Form ButtonText="Update" tasks="@task" OnValidSubmit="@EditTasks" TitleText="Edit_task"/>
+<Form ButtonText="Update" tasks="@task" OnValidSubmit="@EditTasks" TitleText="Edit_task" checkValidSubmit="@CheckValidSubmit" />
 
 @code {
     [Parameter] public int Id { get; set; }
+    bool isValidSubmit = true;
     Tasks? task = new Tasks();
 
     protected async override Task OnParametersSetAsync()
@@ -16,10 +17,13 @@
 
     async Task EditTasks()
     {
-        var text = @localizer["Succesfull_update"];
-        await http.PutAsJsonAsync("api/tasks/put", task);
-        await js.InvokeVoidAsync("alert", $"{text}");
-        uriHelper.NavigateTo("/Tasks");
+        if (isValidSubmit)
+        {
+            var text = @localizer["Succesfull_update"];
+            await http.PutAsJsonAsync("api/tasks/put", task);
+            await js.InvokeVoidAsync("alert", $"{text}");
+            uriHelper.NavigateTo("/Tasks");
+        }
 
     }
 
@@ -27,5 +31,10 @@
     {
         PageHistoryState.AddPageToHistory("/Tasks/edit/{Id:int}");
         base.OnInitialized();
+    }
+
+    public void CheckValidSubmit(bool valid)
+    {
+        isValidSubmit = valid;
     }
 }
