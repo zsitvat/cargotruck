@@ -29,13 +29,3 @@ function getSelectedValues(sel) {
     }
     return results;
 }
-
-
-    document.addEventListener("click", function(event) {
-        var select = event.target.closest(".custom-select");
-    if (!select) {
-        document.querySelectorAll(".custom-select-options").forEach(function (options) {
-            options.style.display = "none";
-        });
-        }
-    });

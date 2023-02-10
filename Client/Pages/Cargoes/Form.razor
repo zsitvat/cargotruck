@@ -20,6 +20,15 @@
 
     <div class="form-card mb-6" style="border-top-left-radius:unset;border-top-right-radius:unset;">
         <div class="card-body mb-3">
+
+            <!--Error-->@if (error != "")
+            {
+            <p class="error-message ms-3 mb-2">
+                <span class="icon iconify d-inline" style="color:darkred;" data-icon="material-symbols:error-circle-rounded-outline"></span>
+                    @error
+                </p>
+            }
+           
                 <div class="d-inline-block forms-margin ">
                     <div class="form-group ">
                         <div>
@@ -48,36 +57,36 @@
                             </div>
                         </div>
                     </div>
-                     <div class="form-group">
-                        <div>
-                        <label>@localizer["Vehicle_registration_number"]:</label>
-                            <div>
-                            <select class="form-control inputs" @bind="@cargoes.Vehicle_registration_number">
-                                    <option value="" selected>@localizer["Select_placeholder"]</option>
-                                    @if (trucks != null)
-                                    {
-                                    @foreach (var truck in trucks)
-                                        {
-                                        <option value="@truck.Id">@truck.Id - @truck.Vehicle_registration_number</option>
-                                        }
-                                    }
-                                </select>
-                            <ValidationMessage For="@(() => cargoes.Vehicle_registration_number)" />
-                            </div>
-                        </div>
+                <div class="form-group custom-select">
+                    <label>@localizer["Vehicle_registration_number"]:</label>
+                    <input type="text" class="form-control custom-select-input" @bind="cargoes.Vehicle_registration_number" @bind:event="oninput" placeholder="@localizer["Select_placeholder"]" />
+                    <div class="custom-select-options">
+                        @if (trucks != null)
+                        {
+                            @foreach (var truck in trucks)
+                            {
+                                if (truck.Vehicle_registration_number!.ToString().ToLower().Contains(cargoes?.Vehicle_registration_number != null ? cargoes?.Vehicle_registration_number?.ToString() : ""))
+                                {
+                                    <div class="custom-select-option" @onclick="() => { cargoes.Vehicle_registration_number = truck.Vehicle_registration_number; }">
+                                        @truck.Id - @truck.Vehicle_registration_number
+                                    </div>
+                                }
+                            }
+                        }
                     </div>
-                    
+                    <ValidationMessage For="@(() => cargoes.Vehicle_registration_number)" />
+                </div>        
             </div>
                 <div class="d-inline-block forms-margin" >
-                <div class="form-group">
                     <div class="form-group custom-select">
+                        <label>@localizer["Task_id"]:</label>
                         <input type="text" class="form-control custom-select-input" @bind="cargoes.Task_id" @bind:event="oninput" placeholder="@localizer["Mandatory"]" />
                         <div class="custom-select-options">
                             @if (tasks != null)
                             {
-                                @foreach (var task in tasks)
+                                @foreach (var task in tasks.Where(x=>x.Completed==false))
                                 {
-                                    if (!task.Completed)
+                                if (task.Id.ToString().ToLower().Contains(cargoes?.Task_id != null ? cargoes?.Task_id?.ToString() : ""))
                                     {
                                         <div class="custom-select-option" @onclick="() => { cargoes.Task_id = task.Id; }">
                                             @task.Id - @task.Date - @task.Description?.Substring(0, task.Description.Length >= 50 ? 50 : task.Description.Length)
@@ -88,43 +97,43 @@
                         </div>
                         <ValidationMessage For="@(() => cargoes.Task_id)" />
                     </div>
-                </div>
-                    <div class="form-group">
+                    <div class="form-group custom-select">
+                        <label>@localizer["Warehouse_id"]:</label>
+                        <input type="text" class="form-control custom-select-input" @bind="cargoes.Warehouse_id" @bind:event="oninput" placeholder="@localizer["Select_placeholder"]" />
+                        <div class="custom-select-options">
+                            @if (warehouses != null)
+                            {
+                                @foreach (var warehouse in warehouses)
+                                {
+                                if (warehouse.Id.ToString().ToLower().Contains(cargoes?.Warehouse_id != null ? cargoes?.Warehouse_id?.ToString(): ""))
+                                    {
+                                        <div class="custom-select-option" @onclick="() => { cargoes.Warehouse_id = warehouse.Id; }">
+                                            @warehouse.Id - @warehouse.Owner
+                                        </div>
+                                    }
+                                }
+                            }
+                        </div>
+                        <ValidationMessage For="@(() => cargoes.Warehouse_id)" />
+                    </div>
+                    <div class="form-group ">
                         <div>
-                            <label>@localizer["Warehouse_id"]:</label>
+                            <label>@localizer["Warehouse_section"]:</label>
                             <div>
-                                <select class="form-control inputs" @bind="@cargoes.Warehouse_id">
-                                        <option value="" selected>@localizer["Select_placeholder"]</option>
-                                        @if (warehouses != null)
-                                        {
-                                            @foreach (var warehouse in warehouses)
-                                            {
-                                                <option value="@warehouse.Id">@warehouse.Id - @warehouse.Owner</option>
-                                            }
-                                        }
-                                </select>
-                                <ValidationMessage For="@(() => cargoes.Warehouse_id)" />
+                                <InputText class="form-control inputs" @bind-Value="@cargoes.Warehouse_section" />
+                                <ValidationMessage For="@(() => cargoes.Warehouse_section)" />
                             </div>
                         </div>
                     </div>
-                <div class="form-group ">
-                    <div>
-                        <label>@localizer["Warehouse_section"]:</label>
+                    <div class="form-group ">
                         <div>
-                            <InputText class="form-control inputs" @bind-Value="@cargoes.Warehouse_section" />
-                            <ValidationMessage For="@(() => cargoes.Warehouse_section)" />
+                            <label>@localizer["Storage_starting_time"]:</label>
+                            <div>
+                                <InputDate Type="InputDateType.DateTimeLocal" class="form-control inputs" @bind-Value="@cargoes.Storage_starting_time" />
+                                <ValidationMessage For="@(() => cargoes.Storage_starting_time)" />
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="form-group ">
-                    <div>
-                        <label>@localizer["Storage_starting_time"]:</label>
-                        <div>
-                            <InputDate Type="InputDateType.DateTimeLocal" class="form-control inputs" @bind-Value="@cargoes.Storage_starting_time" />
-                            <ValidationMessage For="@(() => cargoes.Storage_starting_time)" />
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -137,10 +146,12 @@
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public string? TitleText { get; set; }
     [Parameter] public EventCallback OnValidSubmit { get; set; }
+    [Parameter] public EventCallback<bool> checkValidSubmit { get; set; }
     Warehouses[]? warehouses { get; set; }
     List<Tasks>? tasks { get; set; }
     List<Trucks>? trucks { get; set; }
     List<Cargoes>? cargoWithIds { get; set; }
+    string error = "";
 
     protected override async Task OnInitializedAsync()
     {
@@ -156,14 +167,45 @@
         }
     }
 
-    private void OnSaveData()
+    private async  void OnSaveData()
     {
+        error = "";
         var invalid = false;
-        @foreach (var task in tasks)
+
+        if(cargoes?.Task_id != null)
         {
-            if (!task.Completed)
+            invalid = false;
+            @foreach (var task in tasks)
             {
-                if (task.Id != cargoes?.Task_id)
+                if (!task.Completed)
+                {
+                    if (task.Id != cargoes?.Task_id)
+                    {
+                        invalid = true;
+                    }
+                    else
+                    {
+                        invalid = false;
+                        break;
+                    }
+                }
+            }
+
+            if (invalid)
+            {
+                cargoes.Task_id = null;
+                await checkValidSubmit.InvokeAsync(false);
+                error += CultureInfo.CurrentCulture.Name == "hu" ? "A megbízás azonosító értéke nem érvényes. " : "The task id's value is not valid. ";
+            }
+
+        }
+ 
+        if (cargoes?.Warehouse_id != null)
+        {
+            invalid = false;
+            @foreach (var warehouse in warehouses)
+            {
+                if (warehouse.Id != cargoes?.Warehouse_id)
                 {
                     invalid = true;
                 }
@@ -173,10 +215,44 @@
                     break;
                 }
             }
+
+            if (invalid)
+            {
+                cargoes.Warehouse_id = null;
+                await checkValidSubmit.InvokeAsync(false);
+                error += CultureInfo.CurrentCulture.Name == "hu" ? "A raktár azonosító értéke nem érvényes. " : "The warehouse id's value is not valid. ";
+            }
+
         }
-        if (invalid)
+
+        if (cargoes?.Vehicle_registration_number != null)
         {
-            cargoes.Task_id = null;
+            invalid = false;
+            @foreach (var truck in trucks)
+            {
+                if (truck.Vehicle_registration_number != cargoes?.Vehicle_registration_number)
+                {
+                    invalid = true;
+                }
+                else
+                {
+                    invalid = false;
+                    break;
+                }
+            }
+
+            if (invalid)
+            {
+                cargoes.Vehicle_registration_number = null;
+                await checkValidSubmit.InvokeAsync(false);
+                error += CultureInfo.CurrentCulture.Name == "hu" ? "A rendszám azonosító értéke nem érvényes. " : "The Vehicle registration number's value is not valid. ";
+            }
+
+        }
+
+        if (!invalid && (cargoes?.Warehouse_id != null || cargoes?.Task_id != null || cargoes?.Vehicle_registration_number != null))
+        {
+            await checkValidSubmit.InvokeAsync(true);
         }
     }
 }

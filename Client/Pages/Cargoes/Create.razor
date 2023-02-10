@@ -3,19 +3,29 @@
 @inject NavigationManager uriHelper
 @inject IJSRuntime js
 
-<Form ButtonText="Create" cargoes="@cargo" OnValidSubmit="@CreateCargo" TitleText="Create_cargo"/>
+<Form ButtonText="Create" cargoes="@cargo" OnValidSubmit="@CreateCargo" TitleText="Create_cargo" checkValidSubmit="@CheckValidSubmit" />
 
 @code {
     Cargoes cargo = new Cargoes();
+    bool isValidSubmit = true;
+
     async Task CreateCargo()
     {
-        await http.PostAsJsonAsync("api/cargoes/post", cargo);
-        uriHelper.NavigateTo("/Cargoes");
+        if (isValidSubmit)
+        {
+            await http.PostAsJsonAsync("api/cargoes/post", cargo);
+            uriHelper.NavigateTo("/Cargoes");
+        }
     }
 
     protected override void OnInitialized()
     {
         PageHistoryState.AddPageToHistory("/Cargoes/create");
         base.OnInitialized();
+    }
+
+    public void CheckValidSubmit(bool valid)
+    {
+        isValidSubmit = valid;
     }
 }

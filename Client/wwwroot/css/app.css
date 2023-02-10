@@ -154,10 +154,23 @@ a:active {
 
 .validation-message {
     color: red;
+    white-space:nowrap;
 }
 
-.align-left{
-    text-align:left;
+.error-message {
+    position:absolute;
+    color: red;
+    font-size:13px;
+    top:-1px;
+}
+
+.error-message svg{
+    height:15px;
+    margin-right:1px;
+}
+
+.align-left {
+    text-align: left;
 }
 
 .align-center {
@@ -2127,21 +2140,23 @@ input:checked + .slider:before {
 .custom-select-options {
     display: none;
     position: absolute;
-    top: 100%;
+    top: 96%;
     left: 0;
     right: 0;
     background-color: white;
     border: 1px solid #ccc;
     z-index: 1;
-    font-size:14px;
-}
-
-.darkmode .custom-select-options {
-    background:rgba(120,130,140,.2) !important;
+    font-size: 12px;
+    border-bottom-right-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
+    box-shadow: 0 1px 1px hsl(0deg 0% 0% / 8%), 0 2px 2px hsl(0deg 0% 0% / 8%), 0 4px 4px hsl(0deg 0% 0% / 8%), 0 8px 8px hsl(0deg 0% 0% / 8%), 0 16px 16px hsl(0deg 0% 0% / 8%) !important;
+    max-height:250px;
+    overflow:auto;
 }
 
 .custom-select:hover .custom-select-options,
-.custom-select:focus-within .custom-select-options {
+.custom-select:focus-within .custom-select-options
+.custom-select:focus .custom-select-options {
     display: block;
 }
 
@@ -2151,39 +2166,15 @@ input:checked + .slider:before {
 }
 
 .custom-select-option:hover {
-    background-color: #ccc;
-}
-
-.custom-select {
-    position: relative;
-}
-
-.custom-select-input {
-    width: 100%;
-    padding-right: 30px;
-}
-
-.custom-select-options {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background-color: white;
-    border: 1px solid #ccc;
-    z-index: 1;
-}
-
-.custom-select-input:focus + .custom-select-options,
-.custom-select:hover .custom-select-options {
+    background-color: rgba(0,0,0,.075);
     display: block;
 }
 
-.custom-select-option {
-    padding: 10px;
-    cursor: pointer;
+.darkmode .custom-select-options {
+    background: #324152 !important;
+    border: none;
 }
 
-.custom-select-option:hover {
-    background-color: #ccc;
+.darkmode .custom-select-option:hover {
+    background-color: rgba(255,255,255,0.1);
 }

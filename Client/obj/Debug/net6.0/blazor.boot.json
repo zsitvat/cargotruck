@@ -233,14 +233,14 @@
       "netstandard.dll": "sha256-kBK\/QJy7\/skP97jqnvXnOFMrhWS8HZ1bsADFK\/gZkyM=",
       "System.Private.CoreLib.dll": "sha256-3webPuyNUXfAFKY5c1tC\/jBVrjZHelBwvXrr1E9VJuk=",
       "Cargotruck.Shared.dll": "sha256-mTbZ\/73lY6tvqn+1NUAxUuSBk1hqZWXujY6pAaxB66o=",
-      "Cargotruck.Client.dll": "sha256-GT4mOsR\/7rq3VUBtXc5QnrZ\/B0v0S7A+Q4nPZvxkRM8="
+      "Cargotruck.Client.dll": "sha256-M3wxZodJSHVHGaahfJM3ke3W5SpbkReRRjXTzzL6mWI="
     },
     "extensions": null,
     "lazyAssembly": null,
     "libraryInitializers": null,
     "pdb": {
       "Cargotruck.Shared.pdb": "sha256-AJVr9PJ70JooN5PXBju4h5pQihR49+9xxGDxHxG5oPw=",
-      "Cargotruck.Client.pdb": "sha256-4viKNnHF6f5XeBH+IPA4iKIBEu+R0\/muv3VcAe31Ls4="
+      "Cargotruck.Client.pdb": "sha256-Ah9I9mVENeLzYyWHTeacnkDux2M2ZVQENeFtGzkE38M="
     },
     "runtime": {
       "dotnet.6.0.13.wyf4pl6fej.js": "sha256-X\/515F1HEzgsDZdY8BJjt8YUwrWngHGZkMnpClhsrpY=",
