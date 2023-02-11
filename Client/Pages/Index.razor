@@ -5,10 +5,6 @@
 @inject Cargotruck.Client.Services.PageHistoryState PageHistoryState
 @using Cargotruck.Shared.Models
 
-<!--
-    <link rel="stylesheet" href="css/hexamenu.css" type="text/css" />
--->
-
 <div>
 
     <div class="row">
@@ -92,6 +88,8 @@
 
 
 @code{
+    [CascadingParameter]
+    Task<AuthenticationState>? AuthenticationState { get; set; }
     bool afterLogin = true;
     Dictionary<string, int?> counts = new Dictionary<string, int?>(){
     {"numberOfTasksUnFinished",null},
@@ -106,16 +104,18 @@
 
     protected override async Task OnInitializedAsync()
     {
-        if (!PageHistoryState.GetPageIsVisited("/"))
+        if ((await AuthenticationState!).User.Identity!.IsAuthenticated)
         {
-            PageHistoryState.AddPageToHistory("/");
-            afterLogin = false;
+            if (!PageHistoryState.GetPageIsVisited("/"))
+            {
+                //PageHistoryState.AddPageToHistory("/");
+            }
+            else
+            {
+                afterLogin = false;
+            }
+            await GetNumbers();
         }
-        else
-        {
-            afterLogin = false;
-        }
-        await GetNumbers();
     }
 
     protected async Task GetNumbers()

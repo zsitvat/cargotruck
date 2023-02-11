@@ -109,6 +109,7 @@ namespace Cargotruck.Client.Pages.Expenses
         async void OnChangeResetFilter()
         {
             filter = null;
+            pageSize = 10;
             await OnInitializedAsync();
         }
 

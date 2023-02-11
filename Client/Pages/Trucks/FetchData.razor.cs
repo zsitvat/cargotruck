@@ -93,24 +93,10 @@ namespace Cargotruck.Client.Pages.Trucks
             settings = !settings;
         }
 
-        async void OnChangeGetFilter(ChangeEventArgs e)
-        {
-            filter = e.Value switch
-            {
-                "loaned" => (Status?)Status.loaned,
-                "on_road" => (Status?)Status.on_road,
-                "garage" => (Status?)Status.garage,
-                "rented" => (Status?)Status.rented,
-                "under_repair" => (Status?)Status.under_repair,
-                "delivering" => (Status?)Status.delivering,
-                _ => null,
-            };
-            await OnInitializedAsync();
-        }
-
         async void OnChangeResetFilter()
         {
             filter = null;
+            pageSize = 10;
             await OnInitializedAsync();
         }
 

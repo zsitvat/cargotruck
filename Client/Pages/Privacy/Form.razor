@@ -15,11 +15,20 @@
                         <div>
                             <label>@localizer["Language"]:</label>
                             <div>
-                                <select class="form-control" @bind="@privacies.Lang">
-                                    <option selected disabled>@localizer["Nothing"]</option>
-                                    <option value="hu" >@localizer["hu"]</option>
-                                    <option value="en" >@localizer["en"]</option>
-                                </select>
+                                <div data-title="@localizer["Filter"]" class="form-group custom-select d-inline-block">
+                                    <div class="form-control filter">@(privacies?.Lang != null && privacies.Lang.ToString() != "" ? localizer[privacies.Lang?.ToString()!] : localizer["Nothing"])</div>
+                                    <div class="custom-select-options ">
+                                        <div class="custom-select-option" @onclick='() => {privacies.Lang = null;}'>
+                                            @localizer["Nothing"]
+                                        </div>
+                                        <div class="custom-select-option" @onclick='() => {privacies.Lang = "hu"; }'>
+                                            @localizer["hu"]
+                                        </div>
+                                            <div class="custom-select-option" @onclick='() => {privacies.Lang = "en"; }'>
+                                            @localizer["en"]
+                                        </div>
+                                    </div>
+                                </div>
                             <ValidationMessage For="@(() => privacies.Lang)" />
                             </div>
                         </div>

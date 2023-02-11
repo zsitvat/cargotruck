@@ -25,14 +25,17 @@
                 <ValidationMessage For="@(() => updateRequest.PhoneNumber)" />
                 <AuthorizeView Roles="Admin" Context="admin">
                     <label for="inputRole" class="input-only">@localizer["Role"]</label>
-                    <select data-placeholder="" for="@updateRequest.Role" class="form-control inputs" name="role" id="role" @bind="@updateRequest.Role">
-                        <option value="" selected disabled>@localizer["Select_placeholder"]</option>
-                        <option value="Admin">@localizer["Admin"]</option>
-                        <option value="User">@localizer["User"]</option>
-                        <option value="Driver">@localizer["Driver"]</option>
-                        <option value="Manager">@localizer["Accountant"]</option>
-                        <option value="Storageman">@localizer["Storageman"]</option>
-                    </select>
+                    <div for="@updateRequest.Role" name="role" id="role" class="form-group custom-select role-select">
+                        <div class="form-control">@(updateRequest.Role != null && updateRequest.Role.ToString() != "" ? localizer[updateRequest.Role?.ToString()!] : localizer["Nothing"])</div>
+                        <div class="custom-select-options ">
+                            @foreach (var value in roles)
+                            {
+                                <div class="custom-select-option" @onclick='() => {updateRequest.Role = value;}'>
+                                    @localizer[value.ToString()]
+                                </div>
+                            }
+                        </div>
+                    </div>
                 </AuthorizeView>
                  <div class="container">
                     <div class="col-md-12 text-center">
@@ -47,12 +50,24 @@
     </div>
 </div>
 
-
+@if (Id!=null) {
+    <span class="ms-5">
+        <ChangePassword />
+    </span>
+}
 
 @functions {
     [Parameter] public string? Id { get; set; }
     UpdateRequest updateRequest { get; set; } = new UpdateRequest();
     string error { get; set; } = "";
+    private List<string> roles = new()
+    {
+        ("Admin"),
+        ("User"),
+        ("Driver"),
+        ("Accountant"),
+        ("Storageman")
+    };
 
     async Task OnSubmit()
     {

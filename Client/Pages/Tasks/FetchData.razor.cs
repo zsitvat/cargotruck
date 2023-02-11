@@ -81,6 +81,7 @@ namespace Cargotruck.Client.Pages.Tasks
         async void OnChangeResetFilter()
         {
             filter = "";
+            pageSize = 10;
             await OnInitializedAsync();
         }
         void GetById(int? id, string? idType)

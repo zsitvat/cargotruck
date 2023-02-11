@@ -99,15 +99,10 @@ namespace Cargotruck.Client.Pages.Cargoes
             await ShowPage();
         }
 
-        async void OnChangeGetFilter(ChangeEventArgs e)
-        {
-            filter = e.Value?.ToString();
-            await OnInitializedAsync();
-        }
-
         async void OnChangeResetFilter()
         {
             filter = "";
+            pageSize = 10;
             await OnInitializedAsync();
         }
 
@@ -141,7 +136,5 @@ namespace Cargotruck.Client.Pages.Cargoes
             pageSize = 10;
             await OnInitializedAsync();
         }
-
-
     }
 }

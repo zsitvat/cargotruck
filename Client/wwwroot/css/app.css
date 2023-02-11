@@ -429,7 +429,7 @@ table th button {
 
 .successful-login {
     position: fixed;
-    top: 12rem;
+    top: 4rem;
     right: 10rem;
     z-index: 500;
     animation-direction: alternate-reverse;
@@ -1254,7 +1254,6 @@ ul, li {
 .username-dropdown {
     position: fixed;
     top: 3.55rem;
-    right: 12rem;
     background-color: white;
     border-radius: 2px;
     padding: 0;
@@ -1689,6 +1688,14 @@ input:checked + .slider:before {
     }
 }
 
+@media (min-width: 640px) {
+
+    .sidebar[b-afudbecg3u] {
+        min-width: 220px !important;
+        width: 220px !important;
+    }
+}
+
 @media (max-width: 1920px) {
 
     .mobile-top-row-items {
@@ -1773,9 +1780,8 @@ input:checked + .slider:before {
         width: 50%;
     }
 
-    .sidebar[b-afudbecg3u] {
-        min-width: 220px !important;
-        width:220px !important;
+    article {
+        margin-left: -20px !important;
     }
 }
 
@@ -1840,6 +1846,46 @@ input:checked + .slider:before {
         left:16rem;
         width:fit-content;
     }
+
+    @keyframes login-alert {
+        0% {
+            right: 2.2rem;
+            visibility: visible;
+        }
+
+        15% {
+            right: 2.2rem;
+        }
+
+        90% {
+            right: 2.2rem;
+        }
+
+        100% {
+            right: -10rem;
+        }
+    }
+}
+
+@media (max-width: 930px) {
+    @keyframes login-alert {
+        0% {
+            right: 3.8rem;
+            visibility: visible;
+        }
+
+        15% {
+            right: 3.8rem;
+        }
+
+        90% {
+            right: 3.8rem;
+        }
+
+        100% {
+            right: -10rem;
+        }
+    }
 }
 
 @media (max-width: 868px) {
@@ -1866,11 +1912,49 @@ input:checked + .slider:before {
     body {
         overflow-x: auto;
     }
+
+    @keyframes login-alert {
+        0% {
+            right: 5rem;
+            visibility: visible;
+        }
+
+        15% {
+            right: 5rem;
+        }
+
+        90% {
+            right: 5rem;
+        }
+
+        100% {
+            right: -10rem;
+        }
+    }
 }
 
 @media (max-width: 750px) {
     .username, .culture-selector{
         margin-right:1rem;
+    }
+
+    @keyframes login-alert {
+        0% {
+            right: 0rem;
+            visibility: visible;
+        }
+
+        15% {
+            right: 0rem;
+        }
+
+        90% {
+            right: 0rem;
+        }
+
+        100% {
+            right: -10rem;
+        }
     }
 }
 
@@ -1886,8 +1970,9 @@ input:checked + .slider:before {
 
     .mobile-top-row-items .culture-selector {
         position:absolute;
-        top:-0.2rem;
+        top:-0.8rem;
         right:-4.5rem;
+        margin-left:0;
     }
 
     .content h3{
@@ -1997,6 +2082,25 @@ input:checked + .slider:before {
 
     .row > * {
         padding-right:0.8rem;
+    }
+
+    @keyframes login-alert {
+        0% {
+            right: 0rem;
+            visibility: visible;
+        }
+
+        15% {
+            right: 0rem;
+        }
+
+        90% {
+            right: 0rem;
+        }
+
+        100% {
+            right: -10rem;
+        }
     }
 }
 
@@ -2139,6 +2243,25 @@ input:checked + .slider:before {
     .privacy-form input {
         min-width: 80% !important;
     }
+
+    .mobile-top-row-items {
+        display: initial;
+        position: absolute;
+        top: 1rem;
+        right: 7.5rem;
+        z-index: 1000;
+    }
+
+    .mobile-top-row-items .switch{
+        margin-right:25px;
+    }
+
+    .navbar-brand {
+        font-size: 80% !important;
+        position:relative;
+        left:-25px;
+        vertical-align:middle;
+    }
 }
 
 
@@ -2161,7 +2284,7 @@ input:checked + .slider:before {
 .custom-select-options {
     display: none;
     position: absolute;
-    top: 96%;
+    top: 95%;
     left: 0;
     right: 0;
     background-color: white;
@@ -2170,8 +2293,12 @@ input:checked + .slider:before {
     font-size: 12px;
     border-radius: 0.25rem;
     box-shadow: rgb(0 0 0 / 16%) 0px 1px 4px;
-    max-height: 250px;
+    max-height: 192px;
     overflow: auto;
+}
+
+.custom-select-options::-webkit-scrollbar {
+    width: 0.2rem;
 }
 
 .custom-select-options div{
@@ -2201,4 +2328,8 @@ input:checked + .slider:before {
 
 .darkmode .custom-select-option:hover {
     background-color: rgba(255,255,255,0.1);
+}
+
+.role-select{
+    width:6.38rem;
 }

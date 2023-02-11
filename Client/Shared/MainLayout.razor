@@ -104,9 +104,11 @@
             <CultureSelector />
         </div>
 
-        <article class="content px-4 mt-3" @onclick="()=>expandSubMenu= false">
-            @Body
-        </article>
+        <CascadingValue Value="@AuthenticationState">
+            <article class="content px-4 mt-3" @onclick="()=>expandSubMenu= false">
+                @Body
+            </article>
+        </CascadingValue>
        
     </main>
 </div>

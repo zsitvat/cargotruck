@@ -34,15 +34,21 @@
     {
         <button @onclick="@(()=>OnChangeResetFilter())" class="filter-button not-pointer"><span class="icon iconify filter-icon not-pointer" data-icon="material-symbols:filter-alt"></span></button>
     }
-
     <!--Filter-->
-    <select class="form-control filter" @oninput="@((e)=>OnChangeGetFilter(e))" @bind="filter" data-title="@localizer["Filter"]">
-        <option value="" selected>@localizer["Nothing"]</option>
-        @foreach (var value in Enum.GetValues<Status>())
-        {
-            <option value="@value">@localizer[value.ToString()]</option>
-        }
-    </select>
+    <div data-title="@localizer["Filter"]" class="form-group custom-select d-inline-block">
+        <div class="form-control filter">@(filter != null && filter.ToString() != "" ? localizer[filter?.ToString()!] : localizer["Nothing"])</div>
+        <div class="custom-select-options ">
+            <div class="custom-select-option" @onclick='() => {filter = null;StateChanged(); }'>
+                @localizer["Nothing"]
+            </div>
+            @foreach (var value in Enum.GetValues<Status>())
+            {
+                <div class="custom-select-option" @onclick='() => {filter = value;StateChanged(); }'>
+                    @localizer[value.ToString()]
+                </div>
+            }
+        </div>
+    </div>
 
     <!--Date Filter-->
     <div class="date-filter" data-title="@localizer["date-filter-info"]">

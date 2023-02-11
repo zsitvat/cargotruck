@@ -35,6 +35,7 @@
     {
         <button @onclick="@(()=>OnChangeResetFilter())" class="filter-button not-pointer"><span class="icon iconify filter-icon not-pointer" data-icon="material-symbols:filter-alt"></span></button>
     }
+    <!--Filter-->
     <div data-title="@localizer["Filter"]" class="form-group custom-select d-inline-block">
         <div class="form-control filter">@(filter != null && filter != "" ? localizer[filter] : localizer["Nothing"])</div>
         <div class="custom-select-options ">

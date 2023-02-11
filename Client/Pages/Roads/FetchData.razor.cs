@@ -92,16 +92,10 @@ namespace Cargotruck.Client.Pages.Roads
             settings = !settings;
         }
 
-
-        async void OnChangeGetFilter(ChangeEventArgs e)
-        {
-            filter = e.Value?.ToString();
-            await OnInitializedAsync();
-        }
-
         async void OnChangeResetFilter()
         {
             filter = "";
+            pageSize = 10;
             await OnInitializedAsync();
         }
 

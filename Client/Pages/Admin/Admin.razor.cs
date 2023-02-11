@@ -77,5 +77,10 @@ namespace Cargotruck.Client.Pages.Admin
             currentPage = 1;
             await ShowPage();
         }
+        private async void StateChanged()
+        {
+            pageSize = 10;
+            await OnInitializedAsync();
+        }
     }
 }
