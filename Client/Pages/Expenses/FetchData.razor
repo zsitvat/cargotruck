@@ -42,15 +42,7 @@
         }
     </select>
     
-    @if (CurrencyExchange.Rates != null)
-    {
-        <select data-title="@localizer["Currency"]" class="form-control currency" @oninput="@((e)=>CurrencyExchange.OnChangeGetType(e))" @bind="CurrencyExchange.currency">
-            <option value="HUF">HUF</option>
-            <option value="EUR">EUR</option>
-            <option value="USD">USD</option>
-            <option value="CZK">CZK</option>
-        </select>
-    }
+    <CurrencySelectInput OnCurrencyChanged="SettingsChanged" />
 
     <!--Date Filter-->
     <div class="date-filter" data-title="@localizer["date-filter-info"]">

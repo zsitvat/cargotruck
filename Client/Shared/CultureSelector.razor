@@ -3,12 +3,21 @@
 @inject IJSRuntime JS
 @inject NavigationManager Navigation
 
-<select class="form-control culture-selector" @bind="Culture">
-    @foreach (var culture in supportedCultures)
-    {
-        <option value="@culture">@culture.DisplayName.ToUpper()</option>
-    }
-</select>
+
+<div class="form-group custom-select culture-selector">
+    <div class="form-control">@Culture.DisplayName.ToUpper()</div>
+    <div class="custom-select-options">
+        @foreach (var culture in supportedCultures)
+        {
+            @if (culture.DisplayName != Culture.DisplayName)
+            {
+                <div class="custom-select-option" @onclick='() => {Culture = culture; }'>
+                    @culture.DisplayName.ToUpper()
+                </div>
+            }
+        }
+    </div>
+</div>
 
 @code
 {

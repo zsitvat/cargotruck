@@ -127,6 +127,7 @@ namespace Cargotruck.Client.Pages.Warehouses
 
         private async void StateChanged()
         {
+            pageSize = 10;
             await OnInitializedAsync();
         }
     }

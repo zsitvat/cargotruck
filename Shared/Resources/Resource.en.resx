@@ -207,7 +207,7 @@
   <data name="CheckFailed" xml:space="preserve">
     <value>Failed to update the values of monthly expenses!</value>
   </data>
-  <data name="Completed" xml:space="preserve">
+  <data name="completed" xml:space="preserve">
     <value>Completed</value>
   </data>
   <data name="Completion_time" xml:space="preserve">
@@ -588,7 +588,7 @@
   <data name="NotInWarehouse" xml:space="preserve">
     <value>Not in warehouse</value>
   </data>
-  <data name="Not_completed" xml:space="preserve">
+  <data name="not_completed" xml:space="preserve">
     <value>Not completed</value>
   </data>
   <data name="Not_excel" xml:space="preserve">

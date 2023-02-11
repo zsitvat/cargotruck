@@ -2,6 +2,7 @@
 
 
 <h3>@localizer["Tasks"]</h3>
+
 <div class="form-group buttons">
     
     <a class="btn btn-success me-4" href="/Tasks/create"><i class="oi oi-plus"></i> @localizer["Add"]</a>
@@ -24,6 +25,7 @@
 
     <span class="file-upload-title" import-data-title="@localizer["File_input"]"><UploadFiles page="tasks" StateChanged="StateChanged" /></span>
     <input value="@searchString" @oninput="@Search" placeholder="@(searchString != "" ? searchString : localizer["Search"])" class="form-control inputs input_search" type="search" id="search-input" name="SearchString">
+    
     <!--Filter icon-->
     @if (filter == "completed" || filter == "not_completed")
     {
@@ -33,21 +35,23 @@
     {
         <button @onclick="@(()=>OnChangeResetFilter())" class="filter-button not-pointer"><span class="icon iconify filter-icon not-pointer" data-icon="material-symbols:filter-alt"></span></button>
     }
-    <!--Filter-->
-    <select class="form-control filter  selectpicker" @oninput="@((e)=>OnChangeGetFilter(e))" @bind="filter" data-title="@localizer["Filter"]">
-        <option value="" selected>@localizer["Nothing"]</option>
-        <option value="completed">@localizer["Completed"]</option>
-        <option value="not_completed">@localizer["Not_completed"]</option>
-    </select>
+    <div data-title="@localizer["Filter"]" class="form-group custom-select d-inline-block">
+        <div class="form-control filter">@(filter != null && filter != "" ? localizer[filter] : localizer["Nothing"])</div>
+        <div class="custom-select-options ">
+            <div class="custom-select-option" @onclick='() => {filter = null;StateChanged(); }'>
+                @localizer["Nothing"]
+            </div>
+            <div class="custom-select-option" @onclick='() => {filter = "completed";StateChanged(); }'>
+                @localizer["completed"]
+            </div>
+            <div class="custom-select-option" @onclick='() => {filter = "not_completed";StateChanged(); }'>
+                @localizer["not_completed"]
+            </div>
+        </div>
+    </div>
 
-    @if(CurrencyExchange.Rates != null){
-        <select data-title="@localizer["Currency"]" class="form-control currency" @oninput="@((e)=>CurrencyExchange.OnChangeGetType(e))" @bind="CurrencyExchange.currency">
-            <option value="HUF">HUF</option>
-            <option value="EUR">EUR</option>
-            <option value="USD">USD</option>
-            <option value="CZK">CZK</option>
-        </select>
-    }
+    <!--Currency select-->
+    <CurrencySelectInput OnCurrencyChanged="SettingsChanged" />
 
     <!--Date Filter-->
     <div class="date-filter" data-title="@localizer["date-filter-info"]">

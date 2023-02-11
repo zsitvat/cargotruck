@@ -274,7 +274,7 @@ namespace Cargotruck.Server.Controllers
             worksheet.Cell(currentRow, 10).Style.Font.SetBold();
             worksheet.Cell(currentRow, 11).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Storage_time : "Storage time";
             worksheet.Cell(currentRow, 11).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 12).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Completed : "Completed";
+            worksheet.Cell(currentRow, 12).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.completed : "Completed";
             worksheet.Cell(currentRow, 12).Style.Font.SetBold();
             worksheet.Cell(currentRow, 13).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Completion_time : "Completion time";
             worksheet.Cell(currentRow, 13).Style.Font.SetBold();
@@ -499,7 +499,7 @@ namespace Cargotruck.Server.Controllers
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 });
-                table2.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Completed : "Completed", font1))
+                table2.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.completed : "Completed", font1))
                 {
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
@@ -659,7 +659,7 @@ namespace Cargotruck.Server.Controllers
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.other_stops : "other stops") + "; ");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Id_cargo : "Id cargo") + "; ");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Storage_time : "Storage time") + "; ");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Completed : "Completed") + "; ");
+            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.completed : "Completed") + "; ");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Completion_time : "Completion time") + "; ");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_delay : "Time of delay") + "; ");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Payment : "Payment") + "; ");
@@ -755,7 +755,7 @@ namespace Cargotruck.Server.Controllers
                                     lang == "hu" ? Cargotruck.Shared.Resources.Resource.other_stops : "other stops",
                                     lang == "hu" ? Cargotruck.Shared.Resources.Resource.Id_cargo : "Id cargo",
                                     lang == "hu" ? Cargotruck.Shared.Resources.Resource.Storage_time : "Storage time",
-                                    lang == "hu" ? Cargotruck.Shared.Resources.Resource.Completed : "Completed",
+                                    lang == "hu" ? Cargotruck.Shared.Resources.Resource.completed : "Completed",
                                     lang == "hu" ? Cargotruck.Shared.Resources.Resource.Completion_time : "Completion time",
                                     lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_delay : "Time of delay",
                                     lang == "hu" ? Cargotruck.Shared.Resources.Resource.Payment : "Payment",

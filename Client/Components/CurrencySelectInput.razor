@@ -1,0 +1,35 @@
+﻿
+@if (CurrencyExchange.Rates != null)
+{
+    <div data-title="@localizer["Currency"]" class="form-group custom-select d-inline-block">
+        <div class="form-control">@CurrencyExchange.currency</div>
+        <div class="custom-select-options">
+            @foreach (var item in items)
+            {
+                @if (item != CurrencyExchange.currency)
+                {
+                    <div class="custom-select-option" @onclick='async () => {CurrencyExchange.currency = item;await CurrencyChanged(); }'>
+                        @item
+                    </div>
+                }
+            }
+        </div>
+    </div>
+}
+
+@code{
+    [Parameter] public EventCallback OnCurrencyChanged { get; set; }
+
+    private List<string> items = new ()
+    {
+        ("HUF"),
+        ("EUR"),
+        ("USD"),
+        ("CZK")
+    };
+
+    protected async Task CurrencyChanged()
+    {
+        await OnCurrencyChanged.InvokeAsync();
+    }
+}

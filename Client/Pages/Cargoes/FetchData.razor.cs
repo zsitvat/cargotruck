@@ -138,6 +138,7 @@ namespace Cargotruck.Client.Pages.Cargoes
 
         private async void StateChanged()
         {
+            pageSize = 10;
             await OnInitializedAsync();
         }
 

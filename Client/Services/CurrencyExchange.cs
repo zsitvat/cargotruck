@@ -51,13 +51,5 @@ namespace Cargotruck.Client.Services
             }
             return conversionNum;
         }
-
-        public static void OnChangeGetType(ChangeEventArgs e)
-        {
-            if (e.Value != null)
-            {
-                currency = e.Value?.ToString()!;
-            }
-        }
     }
 }

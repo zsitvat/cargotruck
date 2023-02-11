@@ -1081,7 +1081,7 @@ input[type=number] {
     font-size: 10px !important;
     display: inline;
     max-width: 2.8rem;
-    padding: 0.8rem 0.8rem 0.2rem 0.82rem;
+    padding: 0.78rem 0.8rem 0.2rem 0.82rem;
 }
 
 .custom-file-input:hover::before {
@@ -1177,12 +1177,9 @@ input[type=number] {
     max-width:fit-content;
 }
 
-.filter {
-    display: inline-block;
-    margin-left: 0rem;
+.filter  {
+    min-width:8.5rem;
     text-align:center;
-    max-width:fit-content;
-    cursor:pointer;
 }
 
 .privacy-button {
@@ -1350,8 +1347,20 @@ ul, li {
     padding:5px 8px;
 }
 
-tbody td, tbody th{
-    height:3rem;
+.culture-selector .custom-select-options {
+    width: 2.9rem;
+    left:7px;
+    top:88%;
+}
+
+.culture-selector .custom-select-options div {
+    text-align: center;
+    font-size: 14px;
+    padding: 5px 0px;
+}
+
+tbody td, tbody th {
+    height: 3rem;
 }
 
 tbody td:first-child{
@@ -1485,6 +1494,10 @@ tr td:first-child {
     background-color: #19222D !important;
     z-index: 500;
     border: unset;
+}
+
+.darkmode .custom-select-option {
+    color: #bab3b3 !important;
 }
 
 /*Switch*/
@@ -2141,6 +2154,10 @@ input:checked + .slider:before {
     padding-right: 30px;
 }
 
+.custom-select .form-control {
+    padding: 0.5rem 0.7rem 0.4rem 0.7rem;
+}
+
 .custom-select-options {
     display: none;
     position: absolute;
@@ -2148,14 +2165,17 @@ input:checked + .slider:before {
     left: 0;
     right: 0;
     background-color: white;
-    border: 1px solid #ccc;
+    border: 1px solid rgba(120,120,120,.1);
     z-index: 1;
     font-size: 12px;
-    border-bottom-right-radius: 0.25rem;
-    border-bottom-left-radius: 0.25rem;
-    box-shadow: 0 1px 1px hsl(0deg 0% 0% / 8%), 0 2px 2px hsl(0deg 0% 0% / 8%), 0 4px 4px hsl(0deg 0% 0% / 8%), 0 8px 8px hsl(0deg 0% 0% / 8%), 0 16px 16px hsl(0deg 0% 0% / 8%) !important;
-    max-height:250px;
-    overflow:auto;
+    border-radius: 0.25rem;
+    box-shadow: rgb(0 0 0 / 16%) 0px 1px 4px;
+    max-height: 250px;
+    overflow: auto;
+}
+
+.custom-select-options div{
+    text-align:center;
 }
 
 .custom-select:hover .custom-select-options,
