@@ -61,7 +61,10 @@
                             @foreach (var task in tasks)
                             {
                                 <div class="custom-select-option @(SelectedTasks!.Contains(task.Id) ? "contains" : "")" @onclick="() => SetSelectedTasks(task.Id)">
-                                    @task.Id - @task.Description - @task.Final_Payment
+                                    @localizer["Id"]: @task.Id <br>
+                                    @localizer["Description"]: @task.Description <br>
+                                    @localizer["Final_Payment"]: @task.Final_Payment <br>
+                                    @localizer["Date"]: @task.Date
                                 </div>
                             }
                         }
@@ -87,8 +90,11 @@
                         {
                             @foreach (var expense in expenses)
                             {
-                                <div class="custom-select-option @(SelectedExpenses!.Contains(expense.Id) ? "contains" : "")" @onclick="() => SetSelectedExpenses(expense.Id)">
-                                    @expense.Id - @expense.Type_id/@expense.Type
+                                <div class="custom-select-option @(SelectedExpenses!.Contains(expense!.Id) ? "contains" : "")" @onclick="() => SetSelectedExpenses(expense.Id)">
+                                    @localizer["Id"]: @expense.Id <br>
+                                    @localizer["Type"]: @localizer[expense?.Type?.ToString()!] <br>
+                                    @localizer["Type_id"]: @expense?.Type_id <br>
+                                    @localizer["Date"]: @expense?.Date
                                 </div>           
                             }
                         }

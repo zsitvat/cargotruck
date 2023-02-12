@@ -107,7 +107,8 @@
                                 if (cargo.Id.ToString().ToLower().Contains(tasks.Id_cargo != null ? tasks.Id_cargo?.ToString() : ""))
                                 {
                                     <div class="custom-select-option" @onclick="() => { tasks.Id_cargo = cargo.Id; }">
-                                        @cargo.Id - @cargo.Description?.Substring(0, cargo.Description.Length >= 80 ? 80 : cargo.Description.Length)
+                                        @localizer["Id"]: @cargo.Id <br>
+                                        @localizer["Description"]: @cargo.Description?.Substring(0, cargo.Description.Length >= 80 ? 80 : cargo.Description.Length)
                                     </div>
                                 }
                             }

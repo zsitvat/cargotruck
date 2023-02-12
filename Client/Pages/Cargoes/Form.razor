@@ -68,7 +68,10 @@
                                 if (truck.Vehicle_registration_number!.ToString().ToLower().Contains(cargoes?.Vehicle_registration_number != null ? cargoes?.Vehicle_registration_number?.ToString() : ""))
                                 {
                                     <div class="custom-select-option" @onclick="() => { cargoes!.Vehicle_registration_number = truck.Vehicle_registration_number; }">
-                                        @truck.Id - @truck.Vehicle_registration_number
+                                        @localizer["Vehicle_registration_number"]: @truck.Vehicle_registration_number <br>
+                                        @localizer["Brand"]: @truck.Brand <br>
+                                        @localizer["Max_weight"]: @truck.Max_weight <br>
+                                        @localizer["Status"]: @localizer[truck.Status.ToString()]
                                     </div>
                                 }
                             }
@@ -89,7 +92,12 @@
                                     if (task.Id.ToString().ToLower().Contains(cargoes?.Task_id != null ? cargoes?.Task_id?.ToString() : ""))
                                     {
                                         <div class="custom-select-option" @onclick="() => { cargoes!.Task_id = task.Id; }">
-                                            @task.Id - @task.Date - @task.Description?.Substring(0, task.Description.Length >= 50 ? 50 : task.Description.Length)
+                                             @localizer["Id"]: @task.Id <br>
+                                             @localizer["Partner"]: @task.Partner <br>
+                                             @localizer["Place_of_receipt"]: @task.Place_of_receipt <br>
+                                             @localizer["Place_of_delivery"]: @task.Place_of_delivery <br>
+                                             @localizer["Date"]: @task.Date <br>
+                                             @localizer["Description"]: @task.Description?.Substring(0, task.Description.Length >= 50 ? 50 : task.Description.Length)
                                         </div>
                                     }
                                 }
@@ -108,7 +116,9 @@
                                 if (warehouse.Id.ToString().ToLower().Contains(cargoes?.Warehouse_id != null ? cargoes?.Warehouse_id?.ToString(): ""))
                                     {
                                         <div class="custom-select-option" @onclick="() => { cargoes!.Warehouse_id = warehouse.Id; }">
-                                            @warehouse.Id - @warehouse.Owner
+                                             @localizer["Id"]: @warehouse.Id <br>
+                                        @localizer["Address"]: @warehouse.Address <br>
+                                             @localizer["Owner"]: @warehouse.Owner
                                         </div>
                                     }
                                 }

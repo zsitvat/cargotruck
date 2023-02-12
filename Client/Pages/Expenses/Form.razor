@@ -62,7 +62,12 @@
                                             if (task.Id.ToString().ToLower().Contains(expenses.Type_id != null ? expenses.Type_id?.ToString() : ""))
                                             {
                                                 <div class="custom-select-option" @onclick="() => { expenses.Type_id = task.Id; }">
-                                                    @task.Id - @task.Date - @task.Description?.Substring(0, task.Description.Length >= 50 ? 50 : task.Description.Length)
+                                                    @localizer["Id"]: @task.Id <br>
+                                                    @localizer["Partner"]: @task.Partner <br>
+                                                    @localizer["Place_of_receipt"]: @task.Place_of_receipt <br>
+                                                    @localizer["Place_of_delivery"]: @task.Place_of_delivery <br>
+                                                    @localizer["Date"]: @task.Date <br>
+                                                    @localizer["Description"]: @task.Description?.Substring(0, task.Description.Length >= 50 ? 50 : task.Description.Length)
                                                 </div>
                                             }
                                         }
@@ -76,7 +81,10 @@
                                             if (road.Id.ToString().ToLower().Contains(expenses.Type_id != null ? expenses.Type_id?.ToString() : ""))
                                             {
                                                 <div class="custom-select-option" @onclick="() => { expenses.Type_id = road.Id; }">
-                                                    @road.Id  - @road.Purpose_of_the_trip - @road.Date 
+                                                     @localizer["Id"]: @road.Id  <br>
+                                                     @localizer["Purpose_of_the_trip"]: @road.Purpose_of_the_trip  <br>
+                                                     @localizer["Direction"]: @localizer[road?.Direction?.ToLower()!] <br>
+                                                     @localizer["Date"]: @road?.Date 
                                                 </div>
                                             }
                                         }
@@ -90,7 +98,9 @@
                                             if (cargo.Id.ToString().ToLower().Contains(expenses.Type_id != null ? expenses.Type_id?.ToString() : ""))
                                             {
                                                 <div class="custom-select-option" @onclick="() => { expenses.Type_id = cargo.Id; }">
-                                                    @cargo.Id  - @cargo.Task_id - @cargo.Description
+                                                     @localizer["Id"]: @cargo.Id  <br>
+                                                     @localizer["Task_id"]: @cargo.Task_id <br>
+                                                     @localizer["Description"]:@cargo.Description
                                                 </div>
                                             }
                                         }
@@ -98,7 +108,7 @@
                                 break;
                                 }
                         </div>
-                        <ValidationMessage For="@(() => expenses.Type_id)" />
+                        <ValidationMessage For="@(() => expenses!.Type_id)" />
                     </div>
                  }
                 @if (expenses?.Type.ToString() == "task" || expenses?.Type.ToString() == "other")
