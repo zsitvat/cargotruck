@@ -6,17 +6,17 @@
 <Form ButtonText="Create" OnHandleChangeTask="@HandleChangeTask" OnHandleChangeExpense="@HandleChangeExpense" Monthly_expenses="@monthly_expense" OnValidSubmit="@CreateMonthlyExpense" TitleText="Create_monthly_expense" />
 
 @code {
-    string[]? selectedTaskId;
-    string[]? selectedExpenseId;
+    List<int>? selectedTaskId;
+    List<int>? selectedExpenseId;
     Monthly_expenses? monthly_expense = new Monthly_expenses();
     Monthly_expenses_tasks_expenses? Monthly_expenses_tasks_expenses = new Monthly_expenses_tasks_expenses();
 
-    public void HandleChangeTask(string[]? selected)
+    public void HandleChangeTask(List<int>? selected)
     {
         selectedTaskId = selected;
     }
 
-    public void HandleChangeExpense(string[]? selected)
+    public void HandleChangeExpense(List<int>? selected)
     {
         selectedExpenseId = selected;
     }
@@ -30,15 +30,15 @@
         int lenght = 0;
         if (selectedTaskId != null && selectedExpenseId != null)
         {
-            lenght = (selectedTaskId.Length > selectedExpenseId?.Length) ? selectedTaskId.Length : selectedExpenseId!.Length;
+            lenght = (selectedTaskId.Count > selectedExpenseId?.Count) ? selectedTaskId.Count : selectedExpenseId!.Count;
         }
         else if (selectedTaskId == null && selectedExpenseId != null)
         {
-            lenght = selectedExpenseId.Length;
+            lenght = selectedExpenseId.Count;
         }
         else if (selectedTaskId != null && selectedExpenseId == null)
         {
-            lenght = selectedTaskId.Length;
+            lenght = selectedTaskId.Count;
         }
         else
         {
@@ -50,13 +50,13 @@
             Monthly_expenses_tasks_expenses.Task_id = null;
             Monthly_expenses_tasks_expenses.Expense_id = null;
             if (i > 0) { IsFirstId = false; }
-            if (selectedTaskId != null && selectedTaskId.Length > i && selectedTaskId[i] != null)
+            if (selectedTaskId != null && selectedTaskId.Count > i)
             {
-                Monthly_expenses_tasks_expenses.Task_id = int.Parse(selectedTaskId[i]);
+                Monthly_expenses_tasks_expenses.Task_id = selectedTaskId[i];
             }
-            if (selectedExpenseId != null && selectedExpenseId.Length > i && selectedExpenseId[i] != null)
+            if (selectedExpenseId != null && selectedExpenseId.Count > i)
             {
-                Monthly_expenses_tasks_expenses.Expense_id = int.Parse(selectedExpenseId[i]);
+                Monthly_expenses_tasks_expenses.Expense_id = selectedExpenseId[i];
             }
             //Monthly_expenses_tasks_expenses.Monthly_expenses = monthly_expense;
             await http.PostAsJsonAsync($"api/monthly_expenses/postconnectionids?first={IsFirstId}", Monthly_expenses_tasks_expenses);

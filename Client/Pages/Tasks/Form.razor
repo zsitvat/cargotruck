@@ -7,13 +7,13 @@
                 <div class="form-group">
                     @if (PageHistoryState.CanGoBack())
                 {
-                    <a href="@PageHistoryState.GetGoBackPage()"><span class="oi oi-arrow-circle-left" aria-hidden="true" b-ffa6apske8=""></span></a>
+                    <a href="@PageHistoryState.GetGoBackPage()"><span class="oi oi-arrow-circle-left" aria-hidden="true"></span></a>
                 }
             </div>
             <p class="edit-title">@localizer[TitleText!]</p>
-                <div class="form-group">
+                <div class="form-group form-submit">
                     <button @onclick="OnSaveData" type="submit" class="btn btn-success">
-                        <i class="oi oi-circle-check"></i> @localizer[ButtonText]
+                        <i class="oi oi-circle-check"></i><div class="d-inline-block">@localizer[ButtonText]</div>
                     </button>
             </div>
         </div>

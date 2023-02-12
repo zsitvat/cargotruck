@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "7+Hv87LCITZw4jLsU+W1+TLeE8plmu0pb3trTdINDMQ=",
+  "Hash": "DAriXsGLPycG1lNCL2RbsVX2EZvXzF6PEO40qHIIdGw=",
   "Source": "Cargotruck.Client",
   "BasePath": "/",
   "Mode": "Root",
@@ -8330,23 +8330,6 @@
       "OriginalItemSpec": "wwwroot\\css\\charts.css"
     },
     {
-      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\css\\dropdown.css",
-      "SourceId": "Cargotruck.Client",
-      "SourceType": "Discovered",
-      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\",
-      "BasePath": "/",
-      "RelativePath": "css/dropdown.css",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\css\\dropdown.css"
-    },
-    {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\css\\loading.css",
       "SourceId": "Cargotruck.Client",
       "SourceType": "Discovered",
@@ -8362,6 +8345,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\loading.css"
+    },
+    {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\css\\mobile.css",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "css/mobile.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\mobile.css"
     },
     {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",

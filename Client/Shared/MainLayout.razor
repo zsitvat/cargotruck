@@ -142,6 +142,7 @@
     {
         if (!(await AuthenticationState!).User.Identity!.IsAuthenticated)
         {
+            darkmode = await sessionStorage.GetItemAsync<bool>("darkmode");
             if (!navigationManager.Uri.ToString().Contains("login") && !navigationManager.Uri.ToString().Contains("Privacy"))
             {
                 navigationManager.NavigateTo("/login");
@@ -151,8 +152,9 @@
         {
             var settings = await client.GetFromJsonAsync<Settings[]>("api/settings/get");
             var DarkModeSetting = (settings?.Where(x => x.SettingName == "darkmode" && x.SettingValue == (AuthenticationState!).Result.User.Identity?.Name));
-            var darkmode = (DarkModeSetting?.Count() > 0 ? true : false);
-            await sessionStorage.SetItemAsync("darkmode", darkmode);
+            var darkModeFound = (DarkModeSetting?.Count() > 0 ? true : false);
+            await sessionStorage.SetItemAsync("darkmode", darkModeFound);
+            darkmode = darkModeFound;
 
             var getWaitTimeSetting = (await client.GetFromJsonAsync<Settings>("api/settings/getwaittime"));
             int waitTimeInSecond = getWaitTimeSetting != null ? Int32.Parse(getWaitTimeSetting?.SettingValue!) : 0;
@@ -181,10 +183,7 @@
                 }
 
             }
-        }
-
-        darkmode = await sessionStorage.GetItemAsync<bool>("darkmode");
-
+        }   
     }
 
     async Task LogoutClick()

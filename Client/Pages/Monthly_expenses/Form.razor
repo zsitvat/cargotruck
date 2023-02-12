@@ -11,10 +11,10 @@
                 }
             </div>
             <p class="edit-title">@localizer[TitleText]</p>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-success">
-                        <i class="oi oi-circle-check"></i> @localizer[ButtonText]
-                    </button>
+            <div class="form-group form-submit">
+                <button @onclick="OnSaveData" type="submit" class="btn btn-success ">
+                    <i class="oi oi-circle-check"></i><div class="d-inline-block">@localizer[ButtonText]</div>
+                </button>
             </div>
         </div>
     </div>
@@ -22,56 +22,78 @@
     <div class="form-card mb-6" style="border-top-left-radius:unset;border-top-right-radius:unset;">
         <div class="card-body mb-3">
             <div class="d-inline-block forms-margin-col ">
-                    <div class="form-group">
-                        <div>
+                <div class="form-group">
+                    <div>
                         <label>@localizer["Earning"]:</label>
-                            <div>
-                            <InputNumber min="0"  class="form-control inputs" @bind-Value="@Monthly_expenses.Earning" />
+                        <div>
+                            <InputNumber min="0"  class="form-control inputs" @bind-Value="@Monthly_expenses!.Earning" disabled="@disabled"/>
                             <ValidationMessage For="@(() => Monthly_expenses.Earning)" />
-                            </div>
                         </div>
                     </div>
+                </div>
                 <div class="form-group">
                     <div>
                         <label>@localizer["Expense"]:</label>
                         <div>
-                            <InputNumber min="0"  class="form-control inputs" @bind-Value="@Monthly_expenses.Expense" />
+                            <InputNumber min="0"  class="form-control inputs" @bind-Value="@Monthly_expenses.Expense" disabled="@disabled"/>
                             <ValidationMessage For="@(() => Monthly_expenses.Expense)" />
                         </div>
                     </div>
                 </div>
-                     <div class="form-group">
-                        <div>
-                        <label>@localizer["Task_id"]:</label>
-                            <div>
-                            @if (tasks != null){
-                                <select class="form-control inputs" @onchange=HandleChangeTask multiple>
-                                    <option value="*">@localizer["Nothing"]</option>
-                                    @foreach (var task in tasks)
-                                        {
-                                        <option value="@task.Id">@task.Id - @task.Description - @task.Final_Payment  </option>
-                                        }
-                                </select>
+                <div class="form-group custom-select multiselect">
+                    <label>@localizer["Task_id"]:</label>
+                    <div class="form-control">
+                        @if (SelectedTasks != null  && SelectedTasks.Count > 0)
+                        {
+                            @foreach (var id in SelectedTasks)
+                            {
+                                <div class="d-inline-block multiselect-list">@id</div>
                             }
-                            </div>
-                        </div>
+                        }
+                        else
+                        {
+                            @localizer["Nothing"];
+                        }
                     </div>
-                     <div class="form-group">
-                        <div>
-                        <label>@localizer["Expense_id"]:</label>
-                            <div>
-                                @if (expenses != null){
-                                    <select class="form-control inputs" @onchange=HandleChangeExpense multiple>
-                                        <option value="*">@localizer["Nothing"]</option>
-                                        @foreach (var expense in expenses)
-                                            {
-                                            <option value="@expense.Id">@expense.Id - @expense.Type_id/@expense.Type</option>
-                                            } 
-                                    </select>
-                                }
-                            </div>
-                        </div>
+                    <div class="custom-select-options">
+                        @if (tasks != null)
+                        {
+                            @foreach (var task in tasks)
+                            {
+                                <div class="custom-select-option @(SelectedTasks!.Contains(task.Id) ? "contains" : "")" @onclick="() => SetSelectedTasks(task.Id)">
+                                    @task.Id - @task.Description - @task.Final_Payment
+                                </div>
+                            }
+                        }
                     </div>
+                </div>
+                <div class="form-group custom-select multiselect">
+                    <label>@localizer["Expense_id"]:</label>
+                    <div class="form-control">
+                        @if (SelectedExpenses != null && SelectedExpenses.Count > 0)
+                        {
+                            @foreach (var id in SelectedExpenses) 
+                            {
+                                <div class="d-inline-block multiselect-list">@id</div>
+                            }
+                        }
+                        else
+                        {
+                            @localizer["Nothing"];
+                        }
+                    </div>
+                    <div class="custom-select-options">
+                        @if (expenses != null)
+                        {
+                            @foreach (var expense in expenses)
+                            {
+                                <div class="custom-select-option @(SelectedExpenses!.Contains(expense.Id) ? "contains" : "")" @onclick="() => SetSelectedExpenses(expense.Id)">
+                                    @expense.Id - @expense.Type_id/@expense.Type
+                                </div>           
+                            }
+                        }
+                    </div>
+                </div>
               </div>
         </div>
     </div>
@@ -84,24 +106,66 @@
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public string TitleText { get; set; } = "";
     [Parameter] public EventCallback OnValidSubmit { get; set; }
-    [Parameter] public EventCallback<string[]?> OnHandleChangeTask { get; set; }
-    [Parameter] public EventCallback<string[]?> OnHandleChangeExpense { get; set; }
+    [Parameter] public EventCallback<List<int>?> OnHandleChangeTask { get; set; }
+    [Parameter] public EventCallback<List<int>?> OnHandleChangeExpense { get; set; }
     Tasks[]? tasks { get; set; }
     Expenses[]? expenses { get; set; }
+    List<int>? SelectedExpenses { get; set; } = new();
+    List<int>? SelectedTasks { get; set; } = new();
+    bool disabled = false;
 
     protected override async Task OnInitializedAsync()
     {
+        Disabled();
         tasks = await client.GetFromJsonAsync<Tasks[]?>("api/tasks/gettasks");
         expenses = await client.GetFromJsonAsync<Expenses[]?>("api/expenses/getexpenses");
     }
 
-    public async void HandleChangeTask(ChangeEventArgs args)
+    public async void HandleChangeTask()
     {
-        await OnHandleChangeTask.InvokeAsync(args.Value as string[]);
+        await OnHandleChangeTask.InvokeAsync(SelectedTasks);
     }
 
-    public async void HandleChangeExpense(ChangeEventArgs args)
+    public async void HandleChangeExpense()
     {
-        await OnHandleChangeExpense.InvokeAsync(args.Value as string[]);
+        await OnHandleChangeExpense.InvokeAsync(SelectedExpenses);
+    }
+
+
+    private void OnSaveData()
+    {
+        HandleChangeExpense();
+        HandleChangeTask();
+    }
+
+    private void Disabled()
+    {
+        disabled = (SelectedExpenses?.Count > 0 || SelectedTasks?.Count > 0);
+    }
+
+    private void SetSelectedExpenses(int id)
+    {
+        if (SelectedExpenses!.Contains(id))
+        {
+            SelectedExpenses.Remove(id);
+        }
+        else
+        {
+            SelectedExpenses?.Add(id);
+        }
+        Disabled();
+    }
+
+    private void SetSelectedTasks(int id)
+    {
+        if (SelectedTasks!.Contains(id))
+        {
+            SelectedTasks.Remove(id);
+        }
+        else
+        {
+            SelectedTasks?.Add(id);
+        }
+        Disabled();
     }
 }

@@ -849,6 +849,9 @@
   <data name="under_repair" xml:space="preserve">
     <value>Under repair</value>
   </data>
+  <data name="Update" xml:space="preserve">
+    <value>Update</value>
+  </data>
   <data name="User" xml:space="preserve">
     <value>User</value>
   </data>

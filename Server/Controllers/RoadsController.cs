@@ -127,7 +127,13 @@ namespace Cargotruck.Server.Controllers
             {
                 h++;
                 if (h==13) h = 1;
-                columnsHeight[i] = data.Where(x => x.Date.Year == DateTime.Now.Year && x.Date.Month == h && x.Vehicle_registration_number != null && x.Vehicle_registration_number == trucksVRN?[i/12].Vehicle_registration_number).Count();
+                if (data!=null) {
+                    columnsHeight[i] = data.Where(x => x.Date.Year == DateTime.Now.Year && x.Date.Month == h && x.Vehicle_registration_number != null && x.Vehicle_registration_number == trucksVRN?[i / 12].Vehicle_registration_number).Count();
+                }
+                else
+                {
+                    columnsHeight[i] = 0;
+                }
             }
             return Ok(columnsHeight);
         }

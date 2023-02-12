@@ -10,9 +10,9 @@
                 }
             </div>
             <p class="edit-title">@localizer[TitleText]</p>
-                <div class="form-group">
+                <div class="form-group form-submit">
                     <button @onclick="OnSaveData" type="submit" class="btn btn-success">
-                        <i class="oi oi-circle-check"></i> @localizer[ButtonText]
+                        <i class="oi oi-circle-check"></i><div class="d-inline-block">@localizer[ButtonText]</div>
                     </button>
             </div>
         </div>
@@ -34,7 +34,7 @@
                         <div>
                             <label>@localizer["Weight"]:</label>
                             <div>
-                                <InputText class="form-control inputs" @bind-Value="@cargoes.Weight" />
+                                <InputText class="form-control inputs" @bind-Value="@cargoes!.Weight" />
                                 <ValidationMessage For="@(() => cargoes.Weight)" />
                             </div>
                         </div>
@@ -67,7 +67,7 @@
                             {
                                 if (truck.Vehicle_registration_number!.ToString().ToLower().Contains(cargoes?.Vehicle_registration_number != null ? cargoes?.Vehicle_registration_number?.ToString() : ""))
                                 {
-                                    <div class="custom-select-option" @onclick="() => { cargoes.Vehicle_registration_number = truck.Vehicle_registration_number; }">
+                                    <div class="custom-select-option" @onclick="() => { cargoes!.Vehicle_registration_number = truck.Vehicle_registration_number; }">
                                         @truck.Id - @truck.Vehicle_registration_number
                                     </div>
                                 }
@@ -88,7 +88,7 @@
                                 {
                                     if (task.Id.ToString().ToLower().Contains(cargoes?.Task_id != null ? cargoes?.Task_id?.ToString() : ""))
                                     {
-                                        <div class="custom-select-option" @onclick="() => { cargoes.Task_id = task.Id; }">
+                                        <div class="custom-select-option" @onclick="() => { cargoes!.Task_id = task.Id; }">
                                             @task.Id - @task.Date - @task.Description?.Substring(0, task.Description.Length >= 50 ? 50 : task.Description.Length)
                                         </div>
                                     }
@@ -107,7 +107,7 @@
                                 {
                                 if (warehouse.Id.ToString().ToLower().Contains(cargoes?.Warehouse_id != null ? cargoes?.Warehouse_id?.ToString(): ""))
                                     {
-                                        <div class="custom-select-option" @onclick="() => { cargoes.Warehouse_id = warehouse.Id; }">
+                                        <div class="custom-select-option" @onclick="() => { cargoes!.Warehouse_id = warehouse.Id; }">
                                             @warehouse.Id - @warehouse.Owner
                                         </div>
                                     }
@@ -168,22 +168,59 @@
         }
     }
 
-    private async  void OnSaveData()
+    private async void OnSaveData()
     {
         error = "";
         var invalid = false;
         bool isValidSubmit = true;
 
-        if(cargoes?.Task_id != null)
+        if (cargoes != null)
         {
-            invalid = false;
-            if (tasks?.Count > 0)
+            if (cargoes?.Task_id != null)
             {
-                @foreach (var task in tasks)
+                invalid = false;
+                if (tasks?.Count > 0)
                 {
-                    if (!task.Completed)
+                    @foreach (var task in tasks)
                     {
-                        if (task.Id != cargoes?.Task_id)
+                        if (!task.Completed)
+                        {
+                            if (task.Id != cargoes?.Task_id)
+                            {
+                                invalid = true;
+                            }
+                            else
+                            {
+                                invalid = false;
+                                break;
+                            }
+                        }
+                    }
+
+                }
+                else
+                {
+                    invalid = true;
+                }
+
+                if (invalid)
+                {
+                    isValidSubmit = false;
+                    cargoes.Task_id = null;
+                    await checkValidSubmit.InvokeAsync(false);
+                    error += CultureInfo.CurrentCulture.Name == "hu" ? "A megbízás azonosító értéke nem érvényes. " : "The task id's value is not valid. ";
+                }
+
+            }
+
+            if (cargoes?.Warehouse_id != null)
+            {
+                invalid = false;
+                if (warehouses?.Count() > 0)
+                {
+                    @foreach (var warehouse in warehouses)
+                    {
+                        if (warehouse.Id != cargoes?.Warehouse_id)
                         {
                             invalid = true;
                         }
@@ -193,88 +230,56 @@
                             break;
                         }
                     }
-                }   
-            }
-            else
-            {
-                invalid = true;
-            }
 
-            if (invalid)
-            {
-                isValidSubmit = false;
-                cargoes.Task_id = null;
-                await checkValidSubmit.InvokeAsync(false);
-                error += CultureInfo.CurrentCulture.Name == "hu" ? "A megbízás azonosító értéke nem érvényes. " : "The task id's value is not valid. ";
-            }
-
-        }
- 
-        if (cargoes?.Warehouse_id != null)
-        {
-            invalid = false;
-            if (warehouses?.Count() > 0)
-            {
-                @foreach (var warehouse in warehouses)
-                {
-                    if (warehouse.Id != cargoes?.Warehouse_id)
-                    {
-                        invalid = true;
-                    }
-                    else
-                    {
-                        invalid = false;
-                        break;
-                    }
                 }
-            }
-            else
-            {
-                invalid = true;
-            }
-            if (invalid)
-            {
-                isValidSubmit = false;
-                cargoes.Warehouse_id = null;
-                await checkValidSubmit.InvokeAsync(false);
-                error += CultureInfo.CurrentCulture.Name == "hu" ? "A raktár azonosító értéke nem érvényes. " : "The warehouse id's value is not valid. ";
-            }
-
-        }
-
-        if (cargoes?.Vehicle_registration_number != null)
-        {
-            invalid = false;
-            if (trucks?.Count > 0)
-            {
-                @foreach (var truck in trucks)
+                else
                 {
-                    if (truck.Vehicle_registration_number != cargoes?.Vehicle_registration_number)
-                    {
-                        invalid = true;
-                    }
-                    else
-                    {
-                        invalid = false;
-                        break;
-                    }
+                    invalid = true;
                 }
-            }
-            else
-            {
-                invalid = true;
+                if (invalid)
+                {
+                    isValidSubmit = false;
+                    cargoes.Warehouse_id = null;
+                    await checkValidSubmit.InvokeAsync(false);
+                    error += CultureInfo.CurrentCulture.Name == "hu" ? "A raktár azonosító értéke nem érvényes. " : "The warehouse id's value is not valid. ";
+                }
+
             }
 
-            if (invalid)
+            if (cargoes?.Vehicle_registration_number != null)
             {
-                isValidSubmit = false;
-                cargoes.Vehicle_registration_number = null;
-                await checkValidSubmit.InvokeAsync(false);
-                error += CultureInfo.CurrentCulture.Name == "hu" ? "A rendszám azonosító értéke nem érvényes. " : "The Vehicle registration number's value is not valid. ";
-            }
+                invalid = false;
+                if (trucks?.Count > 0)
+                {
+                    @foreach (var truck in trucks)
+                    {
+                        if (truck.Vehicle_registration_number != cargoes?.Vehicle_registration_number)
+                        {
+                            invalid = true;
+                        }
+                        else
+                        {
+                            invalid = false;
+                            break;
+                        }
+                    }
 
+                }
+                else
+                {
+                    invalid = true;
+                }
+
+                if (invalid)
+                {
+                    isValidSubmit = false;
+                    cargoes!.Vehicle_registration_number = null;
+                    await checkValidSubmit.InvokeAsync(false);
+                    error += CultureInfo.CurrentCulture.Name == "hu" ? "A rendszám azonosító értéke nem érvényes. " : "The Vehicle registration number's value is not valid. ";
+                }
+
+            }
         }
-
         if (!invalid && isValidSubmit && (cargoes?.Warehouse_id != null || cargoes?.Task_id != null || cargoes?.Vehicle_registration_number != null))
         {
             await checkValidSubmit.InvokeAsync(true);

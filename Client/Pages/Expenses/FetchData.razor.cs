@@ -92,20 +92,6 @@ namespace Cargotruck.Client.Pages.Expenses
             settings = !settings;
         }
 
-        async void OnChangeGetFilter(ChangeEventArgs e)
-        {
-            filter = e.Value switch
-            {
-                "salary" => (Cargotruck.Shared.Models.Type?)Cargotruck.Shared.Models.Type.salary,
-                "task" => (Cargotruck.Shared.Models.Type?)Cargotruck.Shared.Models.Type.task,
-                "storage" => (Cargotruck.Shared.Models.Type?)Cargotruck.Shared.Models.Type.storage,
-                "repair" => (Cargotruck.Shared.Models.Type?)Cargotruck.Shared.Models.Type.repair,
-                "other" => (Cargotruck.Shared.Models.Type?)Cargotruck.Shared.Models.Type.other,
-                _ => null,
-            };
-            await OnInitializedAsync();
-        }
-
         async void OnChangeResetFilter()
         {
             filter = null;

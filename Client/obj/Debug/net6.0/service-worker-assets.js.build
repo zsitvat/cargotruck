@@ -1,7 +1,7 @@
 ﻿self.assetsManifest = {
   "assets": [
     {
-      "hash": "sha256-lk50AENBBOwlMBhmN4fhDOdp1bBGVmdux8l5zAiFiKQ=",
+      "hash": "sha256-aad\/nG6VaWxWy1hpb9dlDIaTH+w\/c7bC4dp8JFRDERs=",
       "url": "css\/app.css"
     },
     {
@@ -17,12 +17,12 @@
       "url": "css\/charts.css"
     },
     {
-      "hash": "sha256-8ZRc1sGeVrPBx4lD717BgRaQekyh78QKV9SKsdt638U=",
-      "url": "css\/dropdown.css"
-    },
-    {
       "hash": "sha256-5hG0aZjssVkyaaqvDAFtlRklrSnqa39rLP9OhEfdsM4=",
       "url": "css\/loading.css"
+    },
+    {
+      "hash": "sha256-mo+Dxw41M\/yxc5sXWG+uTz7ZF3nKud57oMW06UhrItI=",
+      "url": "css\/mobile.css"
     },
     {
       "hash": "sha256-+Q44zfEaCMmXduni5Td+IgCbk8sSUQwES2nWs+KKQz0=",
@@ -113,7 +113,7 @@
       "url": "img\/profiles\/wh1gvarg.jpg"
     },
     {
-      "hash": "sha256-AK1t2\/FwdYhy1gv6Y8g\/MnbMYVPeeL+58AiHqJtoPWo=",
+      "hash": "sha256-h6gB\/Q1S4KPNDyXgOVMJvf2qdLLt\/cj9Yhb8AjA0flI=",
       "url": "index.html"
     },
     {
@@ -145,11 +145,11 @@
       "url": "_framework\/EntityFramework.dll"
     },
     {
-      "hash": "sha256-mU8wXrw1NaAfoswi7J10exqtK90y6UBTDA8jt1T84BQ=",
+      "hash": "sha256-QoBf8ZUgaWJCUGT3n4SViOqz82zpsFTQBgBR38X0SQM=",
       "url": "_framework\/Microsoft.AspNetCore.Authorization.dll"
     },
     {
-      "hash": "sha256-VEJzgKvwGbPm2I+rYbqDt\/Ret+PXbgWB8pBkqxAHjz4=",
+      "hash": "sha256-3t65GOJ1de1VQDnrDvkwNxyXORtXOrSScKJat53tcj0=",
       "url": "_framework\/Microsoft.AspNetCore.Components.dll"
     },
     {
@@ -157,11 +157,11 @@
       "url": "_framework\/Microsoft.AspNetCore.Components.Authorization.dll"
     },
     {
-      "hash": "sha256-0WJxmwuCKgsNP0fiuA+6gNNYVwhPz4yS+4AfhQS+nms=",
+      "hash": "sha256-sfS5IbIUmHlbq+IYA0kCaqZP3A4mW9Db27+02FHezQg=",
       "url": "_framework\/Microsoft.AspNetCore.Components.Forms.dll"
     },
     {
-      "hash": "sha256-XDCV\/RyeAtdLohEp52Lx\/MOerL0MYMNbl3XDgihnWaQ=",
+      "hash": "sha256-S1xltauXSvwtrfRfttJgmFlN0Vity8xM7gZyCf1Be+s=",
       "url": "_framework\/Microsoft.AspNetCore.Components.Web.dll"
     },
     {
@@ -201,7 +201,7 @@
       "url": "_framework\/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll"
     },
     {
-      "hash": "sha256-On8JxTYoJyxolxI6M57Tot3R89NA4p9nyELBQGkQcv0=",
+      "hash": "sha256-K3FoLKXSEzoky5knG0YNJtSbJeUnWnZojUlEIM7jV8E=",
       "url": "_framework\/Microsoft.AspNetCore.Metadata.dll"
     },
     {
@@ -301,7 +301,7 @@
       "url": "_framework\/Microsoft.Extensions.Primitives.dll"
     },
     {
-      "hash": "sha256-ZMyJ9hhGB\/8OncNBBf+NtPLM17QgBVDUTx3QqpVY1cg=",
+      "hash": "sha256-f+J4A5N3h7YHoA6RK6isPqRQBhMgDi4wEGUnCC32ag0=",
       "url": "_framework\/Microsoft.JSInterop.dll"
     },
     {
@@ -1057,23 +1057,23 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-4t6S5SUh1g9Gw33YhuibDCA\/Ce+2aM6MGkY2mtx859E=",
+      "hash": "sha256-Vk8T5L3WFa+I6+JeDN9WGSWjHdnUHrVTSGSgbm6MR6M=",
       "url": "_framework\/Cargotruck.Shared.dll"
     },
     {
-      "hash": "sha256-VlOOtijHtdzxuQG\/0uyu7jNlp5mpGkAuPlfsMeHLEgs=",
+      "hash": "sha256-AM9B1VHPLIKCNmb2GUoXJgj2kOaZ7fj3I77o+zZ1LX8=",
       "url": "_framework\/Cargotruck.Shared.pdb"
     },
     {
-      "hash": "sha256-8d6qyoi7nANiQgMjhSjcUW8WpqDycg4wDPtcHFyEXMI=",
+      "hash": "sha256-fVAf45YQUeTUoregCYbmKRAD9eTYAdm3X2W2OXThMQ4=",
       "url": "_framework\/en\/Cargotruck.Shared.resources.dll"
     },
     {
-      "hash": "sha256-27UQl1DjI+TN13q0msIiX2naw3YinJTgaQ3bM+khBpU=",
+      "hash": "sha256-AVXCBxX\/UO9hDW6TSm82mlzJI24XPrgWPKoKtftapC8=",
       "url": "_framework\/Cargotruck.Client.dll"
     },
     {
-      "hash": "sha256-xkiE6jkvBxh6ZANVuIGytRBPVmZY3VB+cOIjlVLlAMY=",
+      "hash": "sha256-iBxO16YS81ZhEEGqzJc0PGxWeme\/TWnY9GEDIHXa1nY=",
       "url": "_framework\/Cargotruck.Client.pdb"
     },
     {
@@ -1081,7 +1081,7 @@
       "url": "_framework\/blazor.webassembly.js"
     },
     {
-      "hash": "sha256-g2dN3vKIyje6xah82A74sMkrJRijOiBWCjHxhQTsgT0=",
+      "hash": "sha256-+FR5jR7YuOMFEKMIJpgK1QkEemr6294vr42s4ZYonjU=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -1093,5 +1093,5 @@
       "url": "_content\/ChartJs.Blazor.Fork\/ChartJsBlazorInterop.js"
     }
   ],
-  "version": "I3SMmahA"
+  "version": "NT944lUC"
 };

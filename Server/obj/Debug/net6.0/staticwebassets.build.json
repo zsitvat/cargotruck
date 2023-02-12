@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "kPzHDqG763DDqtlP/n5/U+Kzz3f79A/danODu0uQ6fU=",
+  "Hash": "HNr0NCKxG8Bk6A8e7jRG8GWlCQ3kpo0bUbGOa54h6ZY=",
   "Source": "Cargotruck.Server",
   "BasePath": "_content/Cargotruck.Server",
   "Mode": "Default",
@@ -8631,23 +8631,6 @@
       "OriginalItemSpec": "wwwroot\\css\\charts.css"
     },
     {
-      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\css\\dropdown.css",
-      "SourceId": "Cargotruck.Client",
-      "SourceType": "Project",
-      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\",
-      "BasePath": "/",
-      "RelativePath": "css/dropdown.css",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\css\\dropdown.css"
-    },
-    {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\css\\loading.css",
       "SourceId": "Cargotruck.Client",
       "SourceType": "Project",
@@ -8663,6 +8646,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\loading.css"
+    },
+    {
+      "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\css\\mobile.css",
+      "SourceId": "Cargotruck.Client",
+      "SourceType": "Project",
+      "ContentRoot": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "css/mobile.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\mobile.css"
     },
     {
       "Identity": "F:\\Szakdoga app\\Cargotruck\\Client\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",

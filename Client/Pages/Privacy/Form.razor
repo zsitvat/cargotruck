@@ -18,31 +18,31 @@
                                 <div data-title="@localizer["Filter"]" class="form-group custom-select d-inline-block">
                                     <div class="form-control filter">@(privacies?.Lang != null && privacies.Lang.ToString() != "" ? localizer[privacies.Lang?.ToString()!] : localizer["Nothing"])</div>
                                     <div class="custom-select-options ">
-                                        <div class="custom-select-option" @onclick='() => {privacies.Lang = null;}'>
+                                        <div class="custom-select-option" @onclick='() => {privacies!.Lang = "";}'>
                                             @localizer["Nothing"]
                                         </div>
-                                        <div class="custom-select-option" @onclick='() => {privacies.Lang = "hu"; }'>
-                                            @localizer["hu"]
-                                        </div>
-                                            <div class="custom-select-option" @onclick='() => {privacies.Lang = "en"; }'>
-                                            @localizer["en"]
-                                        </div>
+                                        @foreach (var culture in supportedCultures)
+                                        {
+                                            <div class="custom-select-option" @onclick='() => {privacies!.Lang = culture.DisplayName; }'>
+                                                @localizer[culture.DisplayName]
+                                            </div>
+                                        }
                                     </div>
                                 </div>
-                            <ValidationMessage For="@(() => privacies.Lang)" />
                             </div>
+                            <ValidationMessage For="@(() => privacies!.Lang)" />
                         </div>
                     </div>
                     <div class="form-group">
                         <div>
                         <label>@localizer["Privacy_name"]:</label>
                             <div>
-                            <InputText class="form-control inputs" @bind-Value="@privacies.Name" />
+                            <InputText class="form-control inputs" @bind-Value="@privacies!.Name" />
                             <ValidationMessage For="@(() => privacies.Name)" />
                             </div>
                         </div>
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group">
                         <div>
                         <label>@localizer["Privacy_text"]:</label>
                             <div>
@@ -74,4 +74,10 @@
     {
         await OnWindowClosed.InvokeAsync();
     }
+
+    private CultureInfo[] supportedCultures = new[]
+       {
+        new CultureInfo("hu"),
+        new CultureInfo("en"),
+    };
 }
