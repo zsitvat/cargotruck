@@ -170,19 +170,39 @@ else
                                     }
                                     @if (showColumns[7])
                                     {
-                                        <td><button class="no-button" @onclick="@(()=>GetById(item.Task_id.ToString(),"task"))">@item.Task_id</button></td>
+                                        <td>
+                                            @if(item.Task_id != null)
+                                            {
+                                                <button class="no-button" @onclick="@(()=>GetById(item.Task_id.ToString(),"task"))">@item.Task_id <span class="icon iconify" data-icon="material-symbols:read-more-rounded"></span></button>
+                                            }
+                                        </td>
                                     }
                                     @if (showColumns[8])
                                     {
-                                        <td><button class="no-button" @onclick="@(()=>GetById(item.Vehicle_registration_number,"truck"))">@item.Vehicle_registration_number</button></td>
+                                        <td>
+                                            @if (item.Vehicle_registration_number != null)
+                                            {
+                                                <button class="no-button" @onclick="@(()=>GetById(item.Vehicle_registration_number,"truck"))">@item.Vehicle_registration_number <span class="icon iconify" data-icon="material-symbols:read-more-rounded"></span></button>
+                                            }
+                                        </td>
                                     }
                                     @if (showColumns[9])
                                     {
-                                        <td><button class="no-button" @onclick="@(()=>GetById(item.Id_cargo.ToString(),"cargo"))">@item.Id_cargo</button></td>
+                                        <td>
+                                            @if (item.Id_cargo != null)
+                                            {
+                                                <button class="no-button" @onclick="@(()=>GetById(item.Id_cargo.ToString(),"cargo"))">@item.Id_cargo <span class="icon iconify" data-icon="material-symbols:read-more-rounded"></span></button>
+                                            }
+                                         </td>
                                     }
                                     @if (showColumns[10])
                                     {
-                                        <td><button class="no-button" @onclick="@(()=>GetById(item.Expenses_id.ToString(),"expense"))">@item.Expenses_id</button></td>
+                                        <td>
+                                            @if (item.Expenses_id != null)
+                                            {
+                                                <button class="no-button" @onclick="@(()=>GetById(item.Expenses_id.ToString(),"expense"))">@item.Expenses_id <span class="icon iconify" data-icon="material-symbols:read-more-rounded"></span></button>
+                                            }
+                                        </td>
                                     }
                                     @if (showColumns[11])
                                     {

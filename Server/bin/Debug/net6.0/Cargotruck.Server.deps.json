@@ -8,7 +8,6 @@
     ".NETCoreApp,Version=v6.0": {
       "Cargotruck.Server/1.0.0": {
         "dependencies": {
-          "BlazorPolyfill.Server": "6.0.200",
           "Cargotruck.Client": "1.0.0",
           "Cargotruck.Shared": "1.0.0",
           "ClosedXML": "0.97.0",
@@ -35,14 +34,6 @@
           "Cargotruck.Server.dll": {}
         }
       },
-      "AdvancedStringBuilder/0.1.0": {
-        "runtime": {
-          "lib/netstandard2.0/AdvancedStringBuilder.dll": {
-            "assemblyVersion": "0.1.0.0",
-            "fileVersion": "0.1.0.0"
-          }
-        }
-      },
       "Blazored.SessionStorage/2.3.0": {
         "dependencies": {
           "Microsoft.AspNetCore.Components.Web": "6.0.13"
@@ -51,35 +42,6 @@
           "lib/net6.0/Blazored.SessionStorage.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
-          }
-        }
-      },
-      "BlazorPolyfill.Server/6.0.200": {
-        "dependencies": {
-          "JavaScriptEngineSwitcher.ChakraCore": "3.9.1",
-          "JavaScriptEngineSwitcher.ChakraCore.Native.linux-x64": "3.9.1",
-          "JavaScriptEngineSwitcher.ChakraCore.Native.osx-x64": "3.9.1",
-          "JavaScriptEngineSwitcher.ChakraCore.Native.win-arm": "3.9.1",
-          "JavaScriptEngineSwitcher.ChakraCore.Native.win-arm64": "3.9.1",
-          "JavaScriptEngineSwitcher.ChakraCore.Native.win-x64": "3.9.1",
-          "JavaScriptEngineSwitcher.ChakraCore.Native.win-x86": "3.9.1",
-          "JavaScriptEngineSwitcher.Extensions.MsDependencyInjection": "3.3.0",
-          "JavaScriptEngineSwitcher.V8": "3.10.0",
-          "Microsoft.AspNetCore.Http.Abstractions": "2.2.0",
-          "Microsoft.AspNetCore.StaticFiles": "2.2.0",
-          "Microsoft.ClearScript.V8.Native.linux-arm64": "7.1.0",
-          "Microsoft.ClearScript.V8.Native.linux-x64": "7.1.0",
-          "Microsoft.ClearScript.V8.Native.osx-x64": "7.1.0",
-          "Microsoft.ClearScript.V8.Native.win-arm64": "7.1.0",
-          "Microsoft.ClearScript.V8.Native.win-x64": "7.1.0",
-          "Microsoft.ClearScript.V8.Native.win-x86": "7.1.0",
-          "NUglify": "1.13.2",
-          "React.AspNet": "5.2.11"
-        },
-        "runtime": {
-          "lib/net6.0/Blazor.Polyfill.Server.dll": {
-            "assemblyVersion": "6.0.200.0",
-            "fileVersion": "6.0.200.0"
           }
         }
       },
@@ -201,134 +163,6 @@
           "lib/netstandard2.0/iTextSharp.LGPLv2.Core.dll": {
             "assemblyVersion": "3.1.0.0",
             "fileVersion": "3.1.0.0"
-          }
-        }
-      },
-      "JavaScriptEngineSwitcher.ChakraCore/3.9.1": {
-        "dependencies": {
-          "AdvancedStringBuilder": "0.1.0",
-          "JavaScriptEngineSwitcher.Core": "3.3.0"
-        },
-        "runtime": {
-          "lib/netcoreapp2.1/JavaScriptEngineSwitcher.ChakraCore.dll": {
-            "assemblyVersion": "3.9.1.0",
-            "fileVersion": "3.9.1.0"
-          }
-        },
-        "resources": {
-          "lib/netcoreapp2.1/ru-ru/JavaScriptEngineSwitcher.ChakraCore.resources.dll": {
-            "locale": "ru-RU"
-          }
-        }
-      },
-      "JavaScriptEngineSwitcher.ChakraCore.Native.linux-x64/3.9.1": {
-        "runtimeTargets": {
-          "runtimes/linux-x64/native/libChakraCore.so": {
-            "rid": "linux-x64",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          }
-        }
-      },
-      "JavaScriptEngineSwitcher.ChakraCore.Native.osx-x64/3.9.1": {
-        "runtimeTargets": {
-          "runtimes/osx-x64/native/libChakraCore.dylib": {
-            "rid": "osx-x64",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          }
-        }
-      },
-      "JavaScriptEngineSwitcher.ChakraCore.Native.win-arm/3.9.1": {
-        "runtimeTargets": {
-          "runtimes/win-arm/native/ChakraCore.dll": {
-            "rid": "win-arm",
-            "assetType": "native",
-            "fileVersion": "1.11.24.0"
-          }
-        }
-      },
-      "JavaScriptEngineSwitcher.ChakraCore.Native.win-arm64/3.9.1": {
-        "runtimeTargets": {
-          "runtimes/win-arm64/native/ChakraCore.dll": {
-            "rid": "win-arm64",
-            "assetType": "native",
-            "fileVersion": "1.11.24.0"
-          }
-        }
-      },
-      "JavaScriptEngineSwitcher.ChakraCore.Native.win-x64/3.9.1": {
-        "runtimeTargets": {
-          "runtimes/win-x64/native/ChakraCore.dll": {
-            "rid": "win-x64",
-            "assetType": "native",
-            "fileVersion": "1.11.24.0"
-          }
-        }
-      },
-      "JavaScriptEngineSwitcher.ChakraCore.Native.win-x86/3.9.1": {
-        "runtimeTargets": {
-          "runtimes/win-x86/native/ChakraCore.dll": {
-            "rid": "win-x86",
-            "assetType": "native",
-            "fileVersion": "1.11.24.0"
-          }
-        }
-      },
-      "JavaScriptEngineSwitcher.Core/3.3.0": {
-        "dependencies": {
-          "AdvancedStringBuilder": "0.1.0"
-        },
-        "runtime": {
-          "lib/netstandard2.0/JavaScriptEngineSwitcher.Core.dll": {
-            "assemblyVersion": "3.3.0.0",
-            "fileVersion": "3.3.0.0"
-          }
-        },
-        "resources": {
-          "lib/netstandard2.0/ru-ru/JavaScriptEngineSwitcher.Core.resources.dll": {
-            "locale": "ru-RU"
-          }
-        }
-      },
-      "JavaScriptEngineSwitcher.Extensions.MsDependencyInjection/3.3.0": {
-        "dependencies": {
-          "JavaScriptEngineSwitcher.Core": "3.3.0",
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0"
-        },
-        "runtime": {
-          "lib/netstandard2.0/JavaScriptEngineSwitcher.Extensions.MsDependencyInjection.dll": {
-            "assemblyVersion": "3.3.0.0",
-            "fileVersion": "3.3.0.0"
-          }
-        }
-      },
-      "JavaScriptEngineSwitcher.V8/3.10.0": {
-        "dependencies": {
-          "AdvancedStringBuilder": "0.1.0",
-          "JavaScriptEngineSwitcher.Core": "3.3.0",
-          "Microsoft.ClearScript.V8": "7.1.0"
-        },
-        "runtime": {
-          "lib/net5.0/JavaScriptEngineSwitcher.V8.dll": {
-            "assemblyVersion": "3.10.0.0",
-            "fileVersion": "3.10.0.0"
-          }
-        },
-        "resources": {
-          "lib/net5.0/ru-ru/JavaScriptEngineSwitcher.V8.resources.dll": {
-            "locale": "ru-RU"
-          }
-        }
-      },
-      "JSPool/4.0.0": {
-        "dependencies": {
-          "JavaScriptEngineSwitcher.Core": "3.3.0"
-        },
-        "runtime": {
-          "lib/netstandard2.0/JSPool.dll": {
-            "assemblyVersion": "4.0.0.0",
-            "fileVersion": "4.0.0.0"
           }
         }
       },
@@ -459,19 +293,6 @@
           }
         }
       },
-      "Microsoft.AspNetCore.Hosting.Abstractions/2.2.0": {
-        "dependencies": {
-          "Microsoft.AspNetCore.Hosting.Server.Abstractions": "2.2.0",
-          "Microsoft.AspNetCore.Http.Abstractions": "2.2.0",
-          "Microsoft.Extensions.Hosting.Abstractions": "2.2.0"
-        }
-      },
-      "Microsoft.AspNetCore.Hosting.Server.Abstractions/2.2.0": {
-        "dependencies": {
-          "Microsoft.AspNetCore.Http.Features": "2.2.0",
-          "Microsoft.Extensions.Configuration.Abstractions": "6.0.0"
-        }
-      },
       "Microsoft.AspNetCore.Http.Abstractions/2.2.0": {
         "dependencies": {
           "Microsoft.AspNetCore.Http.Features": "2.2.0",
@@ -536,88 +357,6 @@
           }
         }
       },
-      "Microsoft.AspNetCore.StaticFiles/2.2.0": {
-        "dependencies": {
-          "Microsoft.AspNetCore.Hosting.Abstractions": "2.2.0",
-          "Microsoft.AspNetCore.Http.Extensions": "2.2.0",
-          "Microsoft.Extensions.FileProviders.Abstractions": "6.0.0",
-          "Microsoft.Extensions.Logging.Abstractions": "6.0.3",
-          "Microsoft.Extensions.WebEncoders": "2.2.0"
-        }
-      },
-      "Microsoft.ClearScript.Core/7.1.0": {
-        "runtime": {
-          "lib/net5.0/ClearScript.Core.dll": {
-            "assemblyVersion": "7.1.0.0",
-            "fileVersion": "7.1.0.0"
-          }
-        }
-      },
-      "Microsoft.ClearScript.V8/7.1.0": {
-        "dependencies": {
-          "Microsoft.ClearScript.Core": "7.1.0"
-        },
-        "runtime": {
-          "lib/net5.0/ClearScript.V8.dll": {
-            "assemblyVersion": "7.1.0.0",
-            "fileVersion": "7.1.0.0"
-          }
-        }
-      },
-      "Microsoft.ClearScript.V8.Native.linux-arm64/7.1.0": {
-        "runtimeTargets": {
-          "runtimes/linux-arm64/native/ClearScriptV8.linux-arm64.so": {
-            "rid": "linux-arm64",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          }
-        }
-      },
-      "Microsoft.ClearScript.V8.Native.linux-x64/7.1.0": {
-        "runtimeTargets": {
-          "runtimes/linux-x64/native/ClearScriptV8.linux-x64.so": {
-            "rid": "linux-x64",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          }
-        }
-      },
-      "Microsoft.ClearScript.V8.Native.osx-x64/7.1.0": {
-        "runtimeTargets": {
-          "runtimes/osx-x64/native/ClearScriptV8.osx-x64.dylib": {
-            "rid": "osx-x64",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          }
-        }
-      },
-      "Microsoft.ClearScript.V8.Native.win-arm64/7.1.0": {
-        "runtimeTargets": {
-          "runtimes/win-arm64/native/ClearScriptV8.win-arm64.dll": {
-            "rid": "win-arm64",
-            "assetType": "native",
-            "fileVersion": "7.1.0.0"
-          }
-        }
-      },
-      "Microsoft.ClearScript.V8.Native.win-x64/7.1.0": {
-        "runtimeTargets": {
-          "runtimes/win-x64/native/ClearScriptV8.win-x64.dll": {
-            "rid": "win-x64",
-            "assetType": "native",
-            "fileVersion": "7.1.0.0"
-          }
-        }
-      },
-      "Microsoft.ClearScript.V8.Native.win-x86/7.1.0": {
-        "runtimeTargets": {
-          "runtimes/win-x86/native/ClearScriptV8.win-x86.dll": {
-            "rid": "win-x86",
-            "assetType": "native",
-            "fileVersion": "7.1.0.0"
-          }
-        }
-      },
       "Microsoft.CSharp/4.7.0": {},
       "Microsoft.Data.SqlClient/2.1.4": {
         "dependencies": {
@@ -674,24 +413,6 @@
             "rid": "win-x86",
             "assetType": "native",
             "fileVersion": "2.1.1.0"
-          }
-        }
-      },
-      "Microsoft.DotNet.PlatformAbstractions/2.1.0": {
-        "dependencies": {
-          "System.AppContext": "4.3.0",
-          "System.Collections": "4.3.0",
-          "System.IO": "4.3.0",
-          "System.IO.FileSystem": "4.3.0",
-          "System.Reflection.TypeExtensions": "4.7.0",
-          "System.Runtime.Extensions": "4.3.0",
-          "System.Runtime.InteropServices": "4.3.0",
-          "System.Runtime.InteropServices.RuntimeInformation": "4.3.0"
-        },
-        "runtime": {
-          "lib/netstandard1.3/Microsoft.DotNet.PlatformAbstractions.dll": {
-            "assemblyVersion": "2.1.0.0",
-            "fileVersion": "2.1.0.0"
           }
         }
       },
@@ -829,21 +550,6 @@
         }
       },
       "Microsoft.Extensions.DependencyInjection.Abstractions/6.0.0": {},
-      "Microsoft.Extensions.DependencyModel/2.1.0": {
-        "dependencies": {
-          "Microsoft.DotNet.PlatformAbstractions": "2.1.0",
-          "Newtonsoft.Json": "13.0.2",
-          "System.Diagnostics.Debug": "4.3.0",
-          "System.Dynamic.Runtime": "4.0.11",
-          "System.Linq": "4.3.0"
-        },
-        "runtime": {
-          "lib/netstandard1.6/Microsoft.Extensions.DependencyModel.dll": {
-            "assemblyVersion": "2.1.0.0",
-            "fileVersion": "2.1.0.0"
-          }
-        }
-      },
       "Microsoft.Extensions.FileProviders.Abstractions/6.0.0": {
         "dependencies": {
           "Microsoft.Extensions.Primitives": "6.0.0"
@@ -857,14 +563,6 @@
         }
       },
       "Microsoft.Extensions.FileSystemGlobbing/6.0.0": {},
-      "Microsoft.Extensions.Hosting.Abstractions/2.2.0": {
-        "dependencies": {
-          "Microsoft.Extensions.Configuration.Abstractions": "6.0.0",
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0",
-          "Microsoft.Extensions.FileProviders.Abstractions": "6.0.0",
-          "Microsoft.Extensions.Logging.Abstractions": "6.0.3"
-        }
-      },
       "Microsoft.Extensions.Http/6.0.0": {
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0",
@@ -947,13 +645,6 @@
       "Microsoft.Extensions.Primitives/6.0.0": {
         "dependencies": {
           "System.Runtime.CompilerServices.Unsafe": "6.0.0"
-        }
-      },
-      "Microsoft.Extensions.WebEncoders/2.2.0": {
-        "dependencies": {
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0",
-          "Microsoft.Extensions.Options": "6.0.0",
-          "System.Text.Encodings.Web": "6.0.0"
         }
       },
       "Microsoft.Identity.Client/4.21.1": {
@@ -1146,14 +837,6 @@
           }
         }
       },
-      "NUglify/1.13.2": {
-        "runtime": {
-          "lib/netstandard2.0/NUglify.dll": {
-            "assemblyVersion": "1.13.2.0",
-            "fileVersion": "1.13.2.0"
-          }
-        }
-      },
       "Plotly.Blazor/2.18.0": {
         "dependencies": {
           "Microsoft.AspNetCore.Components": "6.0.13",
@@ -1176,43 +859,6 @@
           "lib/net6.0/PSC.Blazor.Components.Chartjs.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
-          }
-        }
-      },
-      "React.AspNet/5.2.11": {
-        "dependencies": {
-          "React.AspNet.Middleware": "5.2.11",
-          "React.Core": "5.2.11"
-        },
-        "runtime": {
-          "lib/netcoreapp3.0/React.AspNet.dll": {
-            "assemblyVersion": "5.2.0.0",
-            "fileVersion": "5.2.11.39017"
-          }
-        }
-      },
-      "React.AspNet.Middleware/5.2.11": {
-        "dependencies": {
-          "React.Core": "5.2.11"
-        },
-        "runtime": {
-          "lib/netcoreapp3.0/React.AspNet.Middleware.dll": {
-            "assemblyVersion": "5.2.0.0",
-            "fileVersion": "5.2.11.39017"
-          }
-        }
-      },
-      "React.Core/5.2.11": {
-        "dependencies": {
-          "JSPool": "4.0.0",
-          "JavaScriptEngineSwitcher.Core": "3.3.0",
-          "Microsoft.Extensions.DependencyModel": "2.1.0",
-          "Newtonsoft.Json": "13.0.2"
-        },
-        "runtime": {
-          "lib/netstandard2.0/React.Core.dll": {
-            "assemblyVersion": "5.2.0.0",
-            "fileVersion": "5.2.11.39017"
           }
         }
       },
@@ -1526,25 +1172,6 @@
             "assemblyVersion": "4.0.2.0",
             "fileVersion": "4.700.19.56404"
           }
-        }
-      },
-      "System.Dynamic.Runtime/4.0.11": {
-        "dependencies": {
-          "System.Collections": "4.3.0",
-          "System.Diagnostics.Debug": "4.3.0",
-          "System.Globalization": "4.3.0",
-          "System.Linq": "4.3.0",
-          "System.Linq.Expressions": "4.3.0",
-          "System.ObjectModel": "4.3.0",
-          "System.Reflection": "4.3.0",
-          "System.Reflection.Emit": "4.3.0",
-          "System.Reflection.Emit.ILGeneration": "4.3.0",
-          "System.Reflection.Primitives": "4.3.0",
-          "System.Reflection.TypeExtensions": "4.7.0",
-          "System.Resources.ResourceManager": "4.3.0",
-          "System.Runtime": "4.3.0",
-          "System.Runtime.Extensions": "4.3.0",
-          "System.Threading": "4.3.0"
         }
       },
       "System.Globalization/4.3.0": {
@@ -2272,26 +1899,12 @@
       "serviceable": false,
       "sha512": ""
     },
-    "AdvancedStringBuilder/0.1.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-IbN3r5whlJvi8MhCDPVpIb+NVScyUcKSdcJZrnoXFDyzPDISl3AbWouNBYIHRdZdfGuzqCQEhM1vkxbIKqQVaQ==",
-      "path": "advancedstringbuilder/0.1.0",
-      "hashPath": "advancedstringbuilder.0.1.0.nupkg.sha512"
-    },
     "Blazored.SessionStorage/2.3.0": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-mHKG7M5eTlnaZ7LODcApGcUEds9xozU9Af/NIMTiEEsSV9Efsu41zua+zYx/LVDdtVKcSyKP5MzD2z/TNjmNFw==",
       "path": "blazored.sessionstorage/2.3.0",
       "hashPath": "blazored.sessionstorage.2.3.0.nupkg.sha512"
-    },
-    "BlazorPolyfill.Server/6.0.200": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-ASwy0avQdysYhQMqgtBzWyHMce0FNJOGhJHWaIXeu/CkG+3sHlMaan0iwKV0mTIa3PYSRDDG0VzLWA6v1BhGng==",
-      "path": "blazorpolyfill.server/6.0.200",
-      "hashPath": "blazorpolyfill.server.6.0.200.nupkg.sha512"
     },
     "BouncyCastle.Cryptography/2.0.0": {
       "type": "package",
@@ -2355,83 +1968,6 @@
       "sha512": "sha512-TI8CiS+WupFfvkeWPYWf+1JzMU/KWfyVtfOuZ8BwyqBIWFhjXbXM7pQAlNwUr86eFMvCvj5LFNZsvySdM0U8Sw==",
       "path": "itextsharp.lgplv2.core/3.1.0",
       "hashPath": "itextsharp.lgplv2.core.3.1.0.nupkg.sha512"
-    },
-    "JavaScriptEngineSwitcher.ChakraCore/3.9.1": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-e2Sk/5b9iTFYQQdAGimJIcJBQ0XTN/naW8SvOdkctKhGdvOwlARCcksJ8ZXBWa3cRPTcb2elW567NOSAzZWpPA==",
-      "path": "javascriptengineswitcher.chakracore/3.9.1",
-      "hashPath": "javascriptengineswitcher.chakracore.3.9.1.nupkg.sha512"
-    },
-    "JavaScriptEngineSwitcher.ChakraCore.Native.linux-x64/3.9.1": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-NNjpyOTbl7NSG6oxzyVgeWFy9X6u281PZP25QsyU/NB9iUTbfTY+AYYdEojnSbviXjPppQl6wGarV/TST9cWoA==",
-      "path": "javascriptengineswitcher.chakracore.native.linux-x64/3.9.1",
-      "hashPath": "javascriptengineswitcher.chakracore.native.linux-x64.3.9.1.nupkg.sha512"
-    },
-    "JavaScriptEngineSwitcher.ChakraCore.Native.osx-x64/3.9.1": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-mRTJ5t1OV9Y1R8DcctEH45EcvGC1AQIyyETD1ne5YXrypCi2rmRAuMYcE/B0YfIzIGj6DysIn91l6MuoX4YJRw==",
-      "path": "javascriptengineswitcher.chakracore.native.osx-x64/3.9.1",
-      "hashPath": "javascriptengineswitcher.chakracore.native.osx-x64.3.9.1.nupkg.sha512"
-    },
-    "JavaScriptEngineSwitcher.ChakraCore.Native.win-arm/3.9.1": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-Vd3WqbxrUYhP+nzdaHfiYzg0G3rf8qFll2fOB2dG6+iglZ0EfVyO2XFF2aOYbkngcK6lMZdM3cENCez6iRYJMQ==",
-      "path": "javascriptengineswitcher.chakracore.native.win-arm/3.9.1",
-      "hashPath": "javascriptengineswitcher.chakracore.native.win-arm.3.9.1.nupkg.sha512"
-    },
-    "JavaScriptEngineSwitcher.ChakraCore.Native.win-arm64/3.9.1": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-30jCxAyFrtv3ghM4h0T1Foi1LHkMUGTqvjVxcW4HgUso8T89/RQqGtklsw2PqA+ytEuYF9g3Sq8eNsfy0/18Rw==",
-      "path": "javascriptengineswitcher.chakracore.native.win-arm64/3.9.1",
-      "hashPath": "javascriptengineswitcher.chakracore.native.win-arm64.3.9.1.nupkg.sha512"
-    },
-    "JavaScriptEngineSwitcher.ChakraCore.Native.win-x64/3.9.1": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-WxFAV0TqfFFHYX/Fy4IzXVwZ/foaJBV3OTzkGgfyCZYOgnq+yGh9EUfrDz/TE0mmhXTDRdyNtQ+LVepOhWvzUg==",
-      "path": "javascriptengineswitcher.chakracore.native.win-x64/3.9.1",
-      "hashPath": "javascriptengineswitcher.chakracore.native.win-x64.3.9.1.nupkg.sha512"
-    },
-    "JavaScriptEngineSwitcher.ChakraCore.Native.win-x86/3.9.1": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-si/4MXqMpwCjAorn26qbZehbgzekN2HdgF+/aHlR1pW1S3jwahlNGyZwypTYjONW6W7Dh1EzhkqbYtVfFE90Pg==",
-      "path": "javascriptengineswitcher.chakracore.native.win-x86/3.9.1",
-      "hashPath": "javascriptengineswitcher.chakracore.native.win-x86.3.9.1.nupkg.sha512"
-    },
-    "JavaScriptEngineSwitcher.Core/3.3.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-aY5dOsBsB7MO2twVRlRcvHBFdkXptIwjSobjPis+DiUi5Cq2YU6M8ICHzaQ1ZXHl7VyWrBMV7cTn98ZrI5ZMHQ==",
-      "path": "javascriptengineswitcher.core/3.3.0",
-      "hashPath": "javascriptengineswitcher.core.3.3.0.nupkg.sha512"
-    },
-    "JavaScriptEngineSwitcher.Extensions.MsDependencyInjection/3.3.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-3jGJS7bSzXN6r1ejDjfNP2noGJGJYkb5nyIsxn/dRqStGda7kHxFPI2ONMlnWdXyfhFl5CAlseLk37lb54+6Iw==",
-      "path": "javascriptengineswitcher.extensions.msdependencyinjection/3.3.0",
-      "hashPath": "javascriptengineswitcher.extensions.msdependencyinjection.3.3.0.nupkg.sha512"
-    },
-    "JavaScriptEngineSwitcher.V8/3.10.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-ifXukFV+tSKWM7zDDcNs8vH7Ngh0yDV1wG9g8wzVqmLrSa43+TREKsgnNZqQlY1bzSLW8OmRoKEaea18x7Bx2w==",
-      "path": "javascriptengineswitcher.v8/3.10.0",
-      "hashPath": "javascriptengineswitcher.v8.3.10.0.nupkg.sha512"
-    },
-    "JSPool/4.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-r+AeQ9R50HxU+HLqASYvZz6Mvg7RmZwEnCVhQ+xGYVexFjYYqlkW6by9HaflGaHjy+/28YLbb3qxDLRJ3AbZGQ==",
-      "path": "jspool/4.0.0",
-      "hashPath": "jspool.4.0.0.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Authorization/6.0.13": {
       "type": "package",
@@ -2517,20 +2053,6 @@
       "path": "microsoft.aspnetcore.cryptography.keyderivation/6.0.10",
       "hashPath": "microsoft.aspnetcore.cryptography.keyderivation.6.0.10.nupkg.sha512"
     },
-    "Microsoft.AspNetCore.Hosting.Abstractions/2.2.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-ubycklv+ZY7Kutdwuy1W4upWcZ6VFR8WUXU7l7B2+mvbDBBPAcfpi+E+Y5GFe+Q157YfA3C49D2GCjAZc7Mobw==",
-      "path": "microsoft.aspnetcore.hosting.abstractions/2.2.0",
-      "hashPath": "microsoft.aspnetcore.hosting.abstractions.2.2.0.nupkg.sha512"
-    },
-    "Microsoft.AspNetCore.Hosting.Server.Abstractions/2.2.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-1PMijw8RMtuQF60SsD/JlKtVfvh4NORAhF4wjysdABhlhTrYmtgssqyncR0Stq5vqtjplZcj6kbT4LRTglt9IQ==",
-      "path": "microsoft.aspnetcore.hosting.server.abstractions/2.2.0",
-      "hashPath": "microsoft.aspnetcore.hosting.server.abstractions.2.2.0.nupkg.sha512"
-    },
     "Microsoft.AspNetCore.Http.Abstractions/2.2.0": {
       "type": "package",
       "serviceable": true,
@@ -2580,69 +2102,6 @@
       "path": "microsoft.aspnetcore.mvc.newtonsoftjson/6.0.10",
       "hashPath": "microsoft.aspnetcore.mvc.newtonsoftjson.6.0.10.nupkg.sha512"
     },
-    "Microsoft.AspNetCore.StaticFiles/2.2.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-byZDrjir6Co5EoWbraQyG0qbPCUG6XgGYQstipMF9lucOAjq/mqnIyt8B8iMWnin/ghZoOln9Y01af4rUAwOhA==",
-      "path": "microsoft.aspnetcore.staticfiles/2.2.0",
-      "hashPath": "microsoft.aspnetcore.staticfiles.2.2.0.nupkg.sha512"
-    },
-    "Microsoft.ClearScript.Core/7.1.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-5or0a7ynVsfNASl5wjVT+qZXfiI29/hFEgPFNjPB7VdleC4JL+KnUfeMAv+U11ZBYYap1DlYAaty2VnwuLLcYA==",
-      "path": "microsoft.clearscript.core/7.1.0",
-      "hashPath": "microsoft.clearscript.core.7.1.0.nupkg.sha512"
-    },
-    "Microsoft.ClearScript.V8/7.1.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-5mJ/JLDzIbJlFrKg4/z/fu86gHk9QDk/gkrr20Ziy68icqZjG9Jv8PoYR3WE/JTUjoPklT7x/5abDkRlpPrtfQ==",
-      "path": "microsoft.clearscript.v8/7.1.0",
-      "hashPath": "microsoft.clearscript.v8.7.1.0.nupkg.sha512"
-    },
-    "Microsoft.ClearScript.V8.Native.linux-arm64/7.1.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-1nTx5Ybwrngc0R5nSCfwPgzq8hM6SYBELSbLOh5b+Or/DtAkjhvd72Az2pEtlT1MMGerkS9o2LHVlFW8FQ5HRw==",
-      "path": "microsoft.clearscript.v8.native.linux-arm64/7.1.0",
-      "hashPath": "microsoft.clearscript.v8.native.linux-arm64.7.1.0.nupkg.sha512"
-    },
-    "Microsoft.ClearScript.V8.Native.linux-x64/7.1.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-akpiWk/NOCAMIRuzkEEmR2xnSFP61UKrd9UkuT16JBaYOMkTGt8ydP26npvmU3qCrQ87J8Cmn2Pit5pw3jol3Q==",
-      "path": "microsoft.clearscript.v8.native.linux-x64/7.1.0",
-      "hashPath": "microsoft.clearscript.v8.native.linux-x64.7.1.0.nupkg.sha512"
-    },
-    "Microsoft.ClearScript.V8.Native.osx-x64/7.1.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-2Dz530D6OwAdQnyDH8mKPMfRdP+5a9E7m3oFM1Y76F7lA6il2Np7HrecftdKH6PefLLMz1HQK2c3jS2AiABRiw==",
-      "path": "microsoft.clearscript.v8.native.osx-x64/7.1.0",
-      "hashPath": "microsoft.clearscript.v8.native.osx-x64.7.1.0.nupkg.sha512"
-    },
-    "Microsoft.ClearScript.V8.Native.win-arm64/7.1.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-hu0u4uncwaPxXiVJh/Y2+seiTJw+9qsaZJedBfcowtM+v1OLnx0r+YqgJLZuTb8lmSwaroiGI62UCAzfw0baUA==",
-      "path": "microsoft.clearscript.v8.native.win-arm64/7.1.0",
-      "hashPath": "microsoft.clearscript.v8.native.win-arm64.7.1.0.nupkg.sha512"
-    },
-    "Microsoft.ClearScript.V8.Native.win-x64/7.1.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-0Mg6V3KZTYOzJ2lSurnyiK1SONsL/4Wxpid1NxBl8znoRkPFZGAEZl0kmmptdDeu98Rq5NDPFp69gLKp4Udcog==",
-      "path": "microsoft.clearscript.v8.native.win-x64/7.1.0",
-      "hashPath": "microsoft.clearscript.v8.native.win-x64.7.1.0.nupkg.sha512"
-    },
-    "Microsoft.ClearScript.V8.Native.win-x86/7.1.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-HfTgY9pxrohsvKZl4AEIybtfwS7Ik+hdyxWiUSJPi0/ySdpEINOzrfYfBf79U6kbS2Yvni02KgCUO9+olUtvww==",
-      "path": "microsoft.clearscript.v8.native.win-x86/7.1.0",
-      "hashPath": "microsoft.clearscript.v8.native.win-x86.7.1.0.nupkg.sha512"
-    },
     "Microsoft.CSharp/4.7.0": {
       "type": "package",
       "serviceable": true,
@@ -2663,13 +2122,6 @@
       "sha512": "sha512-JwGDWkyZgm7SATJmFLfT2G4teimvNbNtq3lsS9a5DzvhEZnQrZjZhevCU0vdx8MjheLHoG5vocuO03QtioFQxQ==",
       "path": "microsoft.data.sqlclient.sni.runtime/2.1.1",
       "hashPath": "microsoft.data.sqlclient.sni.runtime.2.1.1.nupkg.sha512"
-    },
-    "Microsoft.DotNet.PlatformAbstractions/2.1.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-9KPDwvb/hLEVXYruVHVZ8BkebC8j17DmPb56LnqRF74HqSPLjCkrlFUjOtFpQPA2DeADBRTI/e69aCfRBfrhxw==",
-      "path": "microsoft.dotnet.platformabstractions/2.1.0",
-      "hashPath": "microsoft.dotnet.platformabstractions.2.1.0.nupkg.sha512"
     },
     "Microsoft.EntityFrameworkCore/6.0.10": {
       "type": "package",
@@ -2783,13 +2235,6 @@
       "path": "microsoft.extensions.dependencyinjection.abstractions/6.0.0",
       "hashPath": "microsoft.extensions.dependencyinjection.abstractions.6.0.0.nupkg.sha512"
     },
-    "Microsoft.Extensions.DependencyModel/2.1.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-nS2XKqi+1A1umnYNLX2Fbm/XnzCxs5i+zXVJ3VC6r9t2z0NZr9FLnJN4VQpKigdcWH/iFTbMuX6M6WQJcTjVIg==",
-      "path": "microsoft.extensions.dependencymodel/2.1.0",
-      "hashPath": "microsoft.extensions.dependencymodel.2.1.0.nupkg.sha512"
-    },
     "Microsoft.Extensions.FileProviders.Abstractions/6.0.0": {
       "type": "package",
       "serviceable": true,
@@ -2810,13 +2255,6 @@
       "sha512": "sha512-ip8jnL1aPiaPeKINCqaTEbvBFDmVx9dXQEBZ2HOBRXPD1eabGNqP/bKlsIcp7U2lGxiXd5xIhoFcmY8nM4Hdiw==",
       "path": "microsoft.extensions.filesystemglobbing/6.0.0",
       "hashPath": "microsoft.extensions.filesystemglobbing.6.0.0.nupkg.sha512"
-    },
-    "Microsoft.Extensions.Hosting.Abstractions/2.2.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-+k4AEn68HOJat5gj1TWa6X28WlirNQO9sPIIeQbia+91n03esEtMSSoekSTpMjUzjqtJWQN3McVx0GvSPFHF/Q==",
-      "path": "microsoft.extensions.hosting.abstractions/2.2.0",
-      "hashPath": "microsoft.extensions.hosting.abstractions.2.2.0.nupkg.sha512"
     },
     "Microsoft.Extensions.Http/6.0.0": {
       "type": "package",
@@ -2880,13 +2318,6 @@
       "sha512": "sha512-9+PnzmQFfEFNR9J2aDTfJGGupShHjOuGw4VUv+JB044biSHrnmCIMD+mJHmb2H7YryrfBEXDurxQ47gJZdCKNQ==",
       "path": "microsoft.extensions.primitives/6.0.0",
       "hashPath": "microsoft.extensions.primitives.6.0.0.nupkg.sha512"
-    },
-    "Microsoft.Extensions.WebEncoders/2.2.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-V8XcqYcpcdBAxUhLeyYcuKmxu4CtNQA9IphTnARpQGhkop4A93v2XgM3AtaVVJo3H2cDWxWM6aeO8HxkifREqw==",
-      "path": "microsoft.extensions.webencoders/2.2.0",
-      "hashPath": "microsoft.extensions.webencoders.2.2.0.nupkg.sha512"
     },
     "Microsoft.Identity.Client/4.21.1": {
       "type": "package",
@@ -3007,13 +2438,6 @@
       "path": "newtonsoft.json.bson/1.0.2",
       "hashPath": "newtonsoft.json.bson.1.0.2.nupkg.sha512"
     },
-    "NUglify/1.13.2": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-K10d5tJlcgmqMRqBI+JFuAyK8Q74GF9OxRUqlQZf3bo9or1kRleHF3+f0AgS36iZxf3qd1MDDi5s3TUuzNBqWg==",
-      "path": "nuglify/1.13.2",
-      "hashPath": "nuglify.1.13.2.nupkg.sha512"
-    },
     "Plotly.Blazor/2.18.0": {
       "type": "package",
       "serviceable": true,
@@ -3027,27 +2451,6 @@
       "sha512": "sha512-bNK136m00DYOUykk9x0hXTg9QsuBi0WfCeZUxYBtBuDPYNS/JZtHdVUwoD1WxBt50gsKD0L3REgNZ9Gq6QSj0A==",
       "path": "psc.blazor.components.chartjs/6.0.35",
       "hashPath": "psc.blazor.components.chartjs.6.0.35.nupkg.sha512"
-    },
-    "React.AspNet/5.2.11": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-DdC/TKAQRj+3sw+CNCdhan4qa3GT+ZEsTbtVL6lk0TJtCcvp51q3ZXJdHbll2hCJMK/rqDWY49Qa/CySRb4wNQ==",
-      "path": "react.aspnet/5.2.11",
-      "hashPath": "react.aspnet.5.2.11.nupkg.sha512"
-    },
-    "React.AspNet.Middleware/5.2.11": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-iw1pffftnOMkeK4GSuWI/UpM22t+1VHBQcbeMCzUTFQRg+NMEt9BfqO+9gz5WqarU288tiwjvA2tQ7WT/jb7jg==",
-      "path": "react.aspnet.middleware/5.2.11",
-      "hashPath": "react.aspnet.middleware.5.2.11.nupkg.sha512"
-    },
-    "React.Core/5.2.11": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-+luKVmvLg4joZ+x4t01tTFgyL9TdVdKX4yhoeeShw1A2DmCjAJUy3cZqtjln2bJXO7/7PRgQQe1spykR0l295g==",
-      "path": "react.core/5.2.11",
-      "hashPath": "react.core.5.2.11.nupkg.sha512"
     },
     "Refit/6.3.2": {
       "type": "package",
@@ -3349,13 +2752,6 @@
       "sha512": "sha512-v+XbyYHaZjDfn0ENmJEV1VYLgGgCTx1gnfOBcppowbpOAriglYgGCvFCPr2EEZyBvXlpxbEsTwkOlInl107ahA==",
       "path": "system.drawing.common/4.7.0",
       "hashPath": "system.drawing.common.4.7.0.nupkg.sha512"
-    },
-    "System.Dynamic.Runtime/4.0.11": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-db34f6LHYM0U0JpE+sOmjar27BnqTVkbLJhgfwMpTdgTigG/Hna3m2MYVwnFzGGKnEJk2UXFuoVTr8WUbU91/A==",
-      "path": "system.dynamic.runtime/4.0.11",
-      "hashPath": "system.dynamic.runtime.4.0.11.nupkg.sha512"
     },
     "System.Globalization/4.3.0": {
       "type": "package",

@@ -157,7 +157,7 @@ else
                                         <td>
                                             @if (item.Type_id != null)
                                             {
-                                                <button class="no-button" @onclick="@(()=>GetById(item.Type_id,item.Type?.ToString()!))">@item.Type_id</button>
+                                                <button class="no-button" @onclick="@(()=>GetById(item.Type_id,item.Type?.ToString()!))">@item.Type_id<span class="icon iconify" data-icon="material-symbols:read-more-rounded"></span></button>
                                             }
                                         </td>
                                     }

@@ -184,10 +184,6 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
-            "BlazorPolyfill.Server": {
-              "target": "Package",
-              "version": "[6.0.200, )"
-            },
             "ClosedXML": {
               "target": "Package",
               "version": "[0.97.0, )"

@@ -145,15 +145,30 @@ else
                                     }
                                     @if (showColumns[4])
                                     {
-                                        <td><button class="no-button" @onclick="@(()=>GetById(item.Vehicle_registration_number,"truck"))">@item.Vehicle_registration_number</button></td>
+                                        <td>
+                                            @if (item.Vehicle_registration_number != null)
+                                            {
+                                                <button class="no-button" @onclick="@(()=>GetById(item.Vehicle_registration_number,"truck"))">@item.Vehicle_registration_number <span class="icon iconify" data-icon="material-symbols:read-more-rounded"></span></button>
+                                            }
+                                        </td>
                                     }
                                     @if (showColumns[5])
                                     {
-                                        <td><button class="no-button" @onclick="@(()=>GetById(item.Warehouse_id.ToString(),"warehouse"))">@item.Warehouse_id</button></td>
+                                        <td>
+                                            @if (item.Warehouse_id != null)
+                                            {
+                                                <button class="no-button" @onclick="@(()=>GetById(item.Warehouse_id.ToString(),"warehouse"))">@item.Warehouse_id <span class="icon iconify" data-icon="material-symbols:read-more-rounded"></span></button>
+                                            }
+                                        </td>
                                     }
                                     @if (showColumns[6])
                                     {
-                                        <td><button class="no-button" @onclick="@(()=>GetById(item.Warehouse_id.ToString(),"warehouse"))">@item.Warehouse_section</button></td>
+                                        <td>
+                                            @if (item.Warehouse_section != null)
+                                            {
+                                                <button class="no-button" @onclick="@(()=>GetById(item.Warehouse_id.ToString(),"warehouse"))">@item.Warehouse_section <span class="icon iconify" data-icon="material-symbols:read-more-rounded"></span></button>
+                                            }
+                                        </td>
                                     }
                                     @if (showColumns[7])
                                     {

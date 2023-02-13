@@ -102,7 +102,7 @@ else
                                             {
                                                 @if(cargo.Warehouse_id==item.Id)
                                                 {
-                                                                            <button class="no-button multiselect-list" @onclick="@(()=>GetById(cargo.Id,"cargo"))"> @(cargo.Warehouse_section != null ? (cargo.Id + "/" + cargo.Warehouse_section + " ") : cargo.Id + " ")</button>
+                                                    <button class="no-button multiselect-list" @onclick="@(()=>GetById(cargo.Id,"cargo"))"> @(cargo.Warehouse_section != null ? (cargo.Id + "/" + cargo.Warehouse_section + " ") : cargo.Id + " ")</button>
                                                 }                                      
                                             }
                                         }

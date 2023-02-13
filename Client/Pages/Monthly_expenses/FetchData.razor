@@ -155,14 +155,9 @@ else
                                             {
                                                 @foreach (var ConId in Connection_ids.Where(x => x.Monthly_expense_id == item.Monthly_expense_id && x.Expense_id != null))
                                                 {
-                                                    @if (Connection_ids.Where(x => x.Monthly_expense_id == item.Monthly_expense_id && x.Expense_id != null).Last().Id != ConId.Id)
-                                                    {
-                                                        <button class="no-button" @onclick="@(()=>GetById(ConId.Expense_id,"expense"))">@(ConId.Expense_id + ", ")</button>
-                                                    }
-                                                    else
-                                                    {
-                                                        <button class="no-button" @onclick="@(()=>GetById(ConId.Expense_id,"expense"))">@ConId.Expense_id</button>
-                                                    }
+                                                 
+                                                    <button class="no-button multiselect-list" @onclick="@(()=>GetById(ConId.Expense_id,"expense"))">@ConId.Expense_id</button>
+                                                  
                                                 }
                                             }
                                         </td>
@@ -173,15 +168,9 @@ else
                                         @if (Connection_ids != null){
                                             @foreach (var ConId in Connection_ids.Where(x => x.Monthly_expense_id == item.Monthly_expense_id && x.Task_id != null))
                                             {
-                                                @if (Connection_ids.Where(x => x.Monthly_expense_id == item.Monthly_expense_id && x.Task_id != null ).Last().Id != ConId.Id)
-                                                {
-                                                    <button class="no-button" @onclick="@(()=>GetById(ConId.Task_id,"task"))">@(ConId.Task_id + ", ")</button>
-                                                        
-                                                }
-                                                else
-                                                {
-                                                    <button class="no-button" @onclick="@(()=>GetById(ConId.Task_id,"task"))">@ConId.Task_id</button>
-                                                }
+                                             
+                                                <button class="no-button multiselect-list" @onclick="@(()=>GetById(ConId.Task_id,"task"))">@ConId.Task_id</button>
+                                                
                                             }
                                         }
                                         </td>
