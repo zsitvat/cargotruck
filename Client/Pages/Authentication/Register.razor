@@ -35,15 +35,6 @@
         <ValidationMessage For="@(() => registerRequest.PasswordConfirm)" />
 
         <label for="inputRole" class="input-only">@localizer["Role"]</label>
-        <select for="inputRole" class="form-control inputs" name="role" id="role" @bind="@registerRequest.Role">
-            <option value="User">@localizer["User"]</option>
-            <option value="Admin">@localizer["Admin"]</option>
-            <option value="Driver">@localizer["Driver"]</option>
-            <option value="Manager">@localizer["Accountant"]</option>
-            <option value="Storageman">@localizer["Storageman"]</option>
-        </select>
-
-        <label for="inputRole" class="input-only">@localizer["Role"]</label>
         <div for="@registerRequest.Role" name="role" id="role" class="form-group custom-select role-select">
             <div class="form-control">@(registerRequest.Role != null && registerRequest.Role.ToString() != "" ? localizer[registerRequest.Role?.ToString()!] : localizer["Nothing"])</div>
             <div class="custom-select-options ">
