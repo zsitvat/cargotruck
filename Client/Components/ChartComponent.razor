@@ -421,7 +421,7 @@
                                 ColorUtil.ColorHexString(colorChosen[0],colorChosen[1],colorChosen[2]),
                                 ColorUtil.ColorHexString(colorChosen[0],colorChosen[1],colorChosen[2]),
                                 ColorUtil.ColorHexString(colorChosen[0],colorChosen[1],colorChosen[2])
-                            }
+                        }
                         };
 
                     _config3.Data.Datasets.Add(datasetNumberOfRoads);
@@ -441,7 +441,7 @@
                     Title = new OptionsTitle
                     {
                         Display = true,
-                        Text = (lang == "hu" ? "Kiadások és jövedelem" : "Expenses and incomes") + " " + DateTime.Now.Year,
+                        Text = (lang == "hu" ? "Bevétel" : "Income") + " " + DateTime.Now.Year,
                         FontSize = 16
                     },
                     Tooltips = new Tooltips
@@ -484,9 +484,30 @@
 
         if (columnHeights != null)
         {
-            int[] datalistAllItems = columnHeights.Take(12).ToArray();
+            int[] datalistFirstPartItems = columnHeights.Take(12).ToArray();
 
-            BarDataset<int> datasetExpenses = new(datalistAllItems)
+            BarDataset<int> datasetIncomes = new(datalistFirstPartItems)
+                {
+                    Label = lang == "hu" ? "Nyereség" : "Profit",
+                    BackgroundColor = new[]
+                    {
+                       ColorUtil.ColorHexString(255, 205, 86),
+                       ColorUtil.ColorHexString(255, 205, 86),
+                       ColorUtil.ColorHexString(255, 205, 86),
+                       ColorUtil.ColorHexString(255, 205, 86),
+                       ColorUtil.ColorHexString(255, 205, 86),
+                       ColorUtil.ColorHexString(255, 205, 86),
+                       ColorUtil.ColorHexString(255, 205, 86),
+                       ColorUtil.ColorHexString(255, 205, 86),
+                       ColorUtil.ColorHexString(255, 205, 86),
+                       ColorUtil.ColorHexString(255, 205, 86),
+                       ColorUtil.ColorHexString(255, 205, 86),
+                       ColorUtil.ColorHexString(255, 205, 86)
+                }
+                };
+
+            int[] datalistSecondPartOfItems = columnHeights.Skip(12).Take(12).ToArray();
+            BarDataset<int> datasetExpenses = new(datalistSecondPartOfItems)
                 {
                     Label = lang == "hu" ? "Kiadás" : "Expenses",
                     BackgroundColor = new[]
@@ -503,32 +524,12 @@
                         ColorUtil.ColorHexString(130,110,174),
                         ColorUtil.ColorHexString(130,110,174),
                         ColorUtil.ColorHexString(130,110,174)
-                    }
+                }
                 };
 
-            int[] datalistPartOfItems = columnHeights.Skip(12).Take(12).ToArray();
-            BarDataset<int> datasetIncomes = new(datalistPartOfItems)
-                {
-                    Label = lang == "hu" ? "Jövedelem" : "Income",
-                    BackgroundColor = new[]
-                    {
-                       ColorUtil.ColorHexString(255, 205, 86),
-                       ColorUtil.ColorHexString(255, 205, 86),
-                       ColorUtil.ColorHexString(255, 205, 86),
-                       ColorUtil.ColorHexString(255, 205, 86),
-                       ColorUtil.ColorHexString(255, 205, 86),
-                       ColorUtil.ColorHexString(255, 205, 86),
-                       ColorUtil.ColorHexString(255, 205, 86),
-                       ColorUtil.ColorHexString(255, 205, 86),
-                       ColorUtil.ColorHexString(255, 205, 86),
-                       ColorUtil.ColorHexString(255, 205, 86),
-                       ColorUtil.ColorHexString(255, 205, 86),
-                       ColorUtil.ColorHexString(255, 205, 86)
-            }
-                };
 
             _config4.Data.Datasets.Add(datasetIncomes);
-            _config4.Data.Datasets.Add(datasetExpenses);
+            _config4.Data.Datasets.Add(datasetExpenses); 
         }
     }
 }

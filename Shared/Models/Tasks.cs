@@ -27,6 +27,7 @@ namespace Cargotruck.Shared.Models
         [Display(Name = "Place_of_delivery", ResourceType = typeof(Resource))]
         public string? Place_of_delivery { get; set; }
         [Required(ErrorMessageResourceName = "Error_time_of_delivery", ErrorMessageResourceType = typeof(Resource))]
+        [Range(typeof(DateTime), "1/2/2004", "3/4/2004",ErrorMessage = "Value for {0} must be between {1} and {2}")]
         [Display(Name = "Time_of_delivery", ResourceType = typeof(Resource))]
         public DateTime? Time_of_delivery { get; set; }
         [Display(Name = "other_stops", ResourceType = typeof(Resource))]
@@ -35,7 +36,7 @@ namespace Cargotruck.Shared.Models
         public int? Id_cargo { get; set; }
         [Display(Name = "Storage_time", ResourceType = typeof(Resource))]
         public string? Storage_time { get; set; }
-        [Display(Name = "Completed", ResourceType = typeof(Resource))]
+        [Display(Name = "completed", ResourceType = typeof(Resource))]
         public bool Completed { get; set; } = false;
         [Display(Name = "Completion_time", ResourceType = typeof(Resource))]
         public DateTime? Completion_time { get; set; }

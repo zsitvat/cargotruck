@@ -1,4 +1,5 @@
-﻿using Cargotruck.Data;
+﻿using Cargotruck.Client.Pages.Profile;
+using Cargotruck.Data;
 using Cargotruck.Shared.Models;
 using ClosedXML.Excel;
 using iTextSharp.text;
@@ -79,15 +80,17 @@ namespace Cargotruck.Server.Controllers
             {
                 foreach(var item in data.Where(x => x.Date.Year == DateTime.Now.Year && x.Date.Month == i + 1))
                 {
-                    columnsHeight[i] += item.Expense != null ? (int)item.Expense : 0;
+                    columnsHeight[i] += item.Profit != null ? (int)item.Profit : 0;
                 }
+                if(columnsHeight[i]<0) { columnsHeight[i] = 0; }
             }
             for (int i = 0; i < 12; i++)
             {
                 foreach (var item in data.Where(x => x.Date.Year == DateTime.Now.Year && x.Date.Month == i + 1))
                 {
-                    columnsHeight[i+12] += item.Profit != null ? (int)item.Profit : 0;
+                    columnsHeight[i + 12] += item.Expense != null ? (int)item.Expense : 0;
                 }
+                if (columnsHeight[i + 12] < 0) { columnsHeight[i] = 0; }
             }
             return Ok(columnsHeight);
         }

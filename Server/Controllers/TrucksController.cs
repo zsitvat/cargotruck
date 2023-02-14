@@ -107,10 +107,10 @@ namespace Cargotruck.Server.Controllers
             return Ok(PageCount);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        [HttpGet("{Vehicle_registration_number}")]
+        public async Task<IActionResult> GetById(string Vehicle_registration_number)
         {
-            var data = await _context.Trucks.FirstOrDefaultAsync(a => a.Id == id);
+            var data = await _context.Trucks.FirstOrDefaultAsync(a => a.Vehicle_registration_number == Vehicle_registration_number);
             return Ok(data);
         }
 

@@ -24,8 +24,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.10" />
     <PackageReference Include="Microsoft.Extensions.Localization" Version="6.0.11" />
-    <PackageReference Include="Refit" Version="6.3.2" />
-    <PackageReference Include="Refit.HttpClientFactory" Version="6.3.2" />
     <PackageReference Include="RestSharp" Version="106.15.0" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
   </ItemGroup>
