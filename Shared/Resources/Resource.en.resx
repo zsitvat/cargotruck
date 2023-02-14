@@ -786,6 +786,9 @@
   <data name="Success_upload" xml:space="preserve">
     <value>The upload is successful!</value>
   </data>
+  <data name="Summary" xml:space="preserve">
+    <value>Summary</value>
+  </data>
   <data name="task" xml:space="preserve">
     <value>Task</value>
   </data>

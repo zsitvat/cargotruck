@@ -107,10 +107,17 @@ namespace Cargotruck.Server.Controllers
             return Ok(PageCount);
         }
 
-        [HttpGet("{Vehicle_registration_number}")]
-        public async Task<IActionResult> GetById(string Vehicle_registration_number)
+        [HttpGet("{vehicle_registration_number}")]
+        public async Task<IActionResult> GetByVRN(string vehicle_registration_number)
         {
-            var data = await _context.Trucks.FirstOrDefaultAsync(a => a.Vehicle_registration_number == Vehicle_registration_number);
+            var data = await _context.Trucks.FirstOrDefaultAsync(a => a.Vehicle_registration_number == vehicle_registration_number);
+            return Ok(data);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var data = await _context.Trucks.FirstOrDefaultAsync(a => a.Id == id);
             return Ok(data);
         }
 

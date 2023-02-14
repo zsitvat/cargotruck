@@ -1096,7 +1096,7 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to darab felhasználó létezik..
+        ///   Looks up a localized string similar to darab felhasználó létezik.
         /// </summary>
         public static string From_user {
             get {
@@ -2046,6 +2046,15 @@ namespace Cargotruck.Shared.Resources {
         public static string Success_upload {
             get {
                 return ResourceManager.GetString("Success_upload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Összefoglaló.
+        /// </summary>
+        public static string Summary {
+            get {
+                return ResourceManager.GetString("Summary", resourceCulture);
             }
         }
         

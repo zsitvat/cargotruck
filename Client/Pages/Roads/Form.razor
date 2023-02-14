@@ -89,12 +89,12 @@
             <div class="d-inline-block forms-margin second-col">
                 <div class="form-group custom-select">
                     <label>@localizer["Direction"]:</label>
-                    <input type="text" class="form-control custom-select-input" @bind="@selectedOption" placeholder="@localizer["Select_placeholder"]" disabled/>
+                    <div type="text" class="form-control" placeholder="@localizer["Select_placeholder"]">@localizer[roads?.Direction != null ? roads?.Direction?.ToLower() : "Select_placeholder"]</div>
                         <div class="custom-select-options">
-                            <div class="custom-select-option" @onclick='() => { selectedOption = localizer["to"]; roads.Direction = "TO";}'>
+                            <div class="custom-select-option" @onclick='() => {  roads.Direction = "TO";}'>
                                 @localizer["to"]
                             </div>
-                            <div class="custom-select-option" @onclick='() => { selectedOption =  localizer["from"]; roads.Direction = "FROM";}'>
+                            <div class="custom-select-option" @onclick='() => { roads.Direction = "FROM";}'>
                                 @localizer["from"]
                             </div>
                         </div>
@@ -202,7 +202,6 @@
     [Parameter] public EventCallback<bool> checkValidSubmit { get; set; } 
     [Parameter] public EventCallback OnValidSubmit { get; set; }
     string error = "";
-    string? selectedOption; 
     List<Cargoes>? cargoes { get; set; }
     Tasks[]? tasks { get; set; }
     List<Expenses>? expenses { get; set; }
@@ -224,10 +223,6 @@
             {
                 expenses?.RemoveAll(x => x.Id == road.Expenses_id && x.Id != roads?.Expenses_id);
                 cargoes?.RemoveAll(x => x.Id == road.Id_cargo && x.Id != roads?.Id_cargo);
-            }
-            if (roads?.Direction != null)
-            {
-                selectedOption = localizer[roads?.Direction];
             }
         }
     }
@@ -389,7 +384,6 @@
             if (invalid)
             {
                 isValidSubmit = false;
-                selectedOption = null;
                 roads.Direction = null;
                 await checkValidSubmit.InvokeAsync(false);
                 error += CultureInfo.CurrentCulture.Name == "hu" ? "Az irány értéke nem érvényes. " : "The direction's value is not valid. ";

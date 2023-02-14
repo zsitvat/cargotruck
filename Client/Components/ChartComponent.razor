@@ -72,8 +72,8 @@
     string lang = CultureInfo.CurrentCulture.Name;
     private BarConfig? _config1;
     private BarConfig? _config2;
-    private BarConfig? _config3;
-    private BarConfig? _config4;
+    private LineConfig? _config3;
+    private LineConfig? _config4;
 
     protected override async Task OnInitializedAsync()
     {
@@ -317,9 +317,9 @@
     protected async Task TrucksChart()
     {
         //Tasks
-        _config3 = new BarConfig
+        _config3 = new LineConfig
             {
-                Options = new BarOptions
+                Options = new LineOptions
                 {
                     Responsive = true,
                     Title = new OptionsTitle
@@ -335,22 +335,33 @@
                         TitleFontColor = "#bab3b3",
                         BodyFontColor = "#bab3b3"
                     },
-                    Scales = new BarScales
+                    Hover = new Hover
+                    {
+                        Mode = InteractionMode.Index,
+                        Intersect = true
+                    },
+                    Scales = new Scales
                     {
                         XAxes = new List<CartesianAxis>
-                {
-                    new BarCategoryAxis
-                    {
-                        Stacked = true
-                    }
-                },
+                        {
+                             new CategoryAxis
+                            {
+                                ScaleLabel = new ScaleLabel
+                                {
+                                    LabelString = "Month"
+                                }
+                            }
+                        },
                         YAxes = new List<CartesianAxis>
-                {
-                    new BarLinearCartesianAxis
-                    {
-                        Stacked = true
-                    }
-                }
+                        {
+                            new LinearCartesianAxis
+                            {
+                                ScaleLabel = new ScaleLabel
+                                {
+                                    LabelString = "Value"
+                                }
+                            }
+                        }
                     }
                 }
             };
@@ -404,24 +415,12 @@
                             break;
                             //etc
                     }
-                    BarDataset<int> datasetNumberOfRoads = new(datalistItems)
+                    LineDataset<int> datasetNumberOfRoads = new(datalistItems)
                         {
-                            Label = lang == "hu" ? "Utak száma (Rendszám:" + trucksVRN?[i].Vehicle_registration_number + ")" : "Number of roads (VRN:" + trucksVRN?[i].Vehicle_registration_number + ")",
-                            BackgroundColor = new[]
-                            {
-                                ColorUtil.ColorHexString(colorChosen[0],colorChosen[1],colorChosen[2]),
-                                ColorUtil.ColorHexString(colorChosen[0],colorChosen[1],colorChosen[2]),
-                                ColorUtil.ColorHexString(colorChosen[0],colorChosen[1],colorChosen[2]),
-                                ColorUtil.ColorHexString(colorChosen[0],colorChosen[1],colorChosen[2]),
-                                ColorUtil.ColorHexString(colorChosen[0],colorChosen[1],colorChosen[2]),
-                                ColorUtil.ColorHexString(colorChosen[0],colorChosen[1],colorChosen[2]),
-                                ColorUtil.ColorHexString(colorChosen[0],colorChosen[1],colorChosen[2]),
-                                ColorUtil.ColorHexString(colorChosen[0],colorChosen[1],colorChosen[2]),
-                                ColorUtil.ColorHexString(colorChosen[0],colorChosen[1],colorChosen[2]),
-                                ColorUtil.ColorHexString(colorChosen[0],colorChosen[1],colorChosen[2]),
-                                ColorUtil.ColorHexString(colorChosen[0],colorChosen[1],colorChosen[2]),
-                                ColorUtil.ColorHexString(colorChosen[0],colorChosen[1],colorChosen[2])
-                        }
+                            Label = lang == "hu" ? "Utak száma (Rendszám: " + trucksVRN?[i].Vehicle_registration_number + ")" : "Number of roads (VRN: " + trucksVRN?[i].Vehicle_registration_number + ")",
+                            BorderColor = ColorUtil.ColorHexString(colorChosen[0],colorChosen[1],colorChosen[2]),
+                            Fill = false,
+                            LineTension = 0
                         };
 
                     _config3.Data.Datasets.Add(datasetNumberOfRoads);
@@ -433,10 +432,11 @@
     protected async Task ExpensesChart()
     {
         //Tasks
-        _config4 = new BarConfig
+        _config4 = new LineConfig
             {
-                Options = new BarOptions
+                Options = new LineOptions
                 {
+                    
                     Responsive = true,
                     Title = new OptionsTitle
                     {
@@ -451,24 +451,35 @@
                         TitleFontColor = "#bab3b3",
                         BodyFontColor = "#bab3b3"
                     },
-                    Scales = new BarScales
+                    Hover = new Hover
+                    {
+                        Mode = InteractionMode.Index,
+                        Intersect = true
+                    },
+                    Scales = new Scales
                     {
                         XAxes = new List<CartesianAxis>
-                {
-                    new BarCategoryAxis
-                    {
-                        Stacked = true
-                    }
-                },
+                        {
+                             new CategoryAxis
+                            {
+                                ScaleLabel = new ScaleLabel
+                                {
+                                    LabelString = "Month"
+                                }
+                            }
+                        },
                         YAxes = new List<CartesianAxis>
-                {
-                    new BarLinearCartesianAxis
-                    {
-                        Stacked = true
+                        {
+                            new LinearCartesianAxis
+                            {
+                                ScaleLabel = new ScaleLabel
+                                {
+                                    LabelString = "Value"
+                                }
+                            }
+                        }
                     }
-                }
-                    }
-                }
+                 }
             };
 
         string[] columns = DateTimeFormatInfo.CurrentInfo.MonthNames;
@@ -486,50 +497,35 @@
         {
             int[] datalistFirstPartItems = columnHeights.Take(12).ToArray();
 
-            BarDataset<int> datasetIncomes = new(datalistFirstPartItems)
+            LineDataset<int> datasetIncomes = new(datalistFirstPartItems)
                 {
                     Label = lang == "hu" ? "Nyereség" : "Profit",
-                    BackgroundColor = new[]
-                    {
-                       ColorUtil.ColorHexString(255, 205, 86),
-                       ColorUtil.ColorHexString(255, 205, 86),
-                       ColorUtil.ColorHexString(255, 205, 86),
-                       ColorUtil.ColorHexString(255, 205, 86),
-                       ColorUtil.ColorHexString(255, 205, 86),
-                       ColorUtil.ColorHexString(255, 205, 86),
-                       ColorUtil.ColorHexString(255, 205, 86),
-                       ColorUtil.ColorHexString(255, 205, 86),
-                       ColorUtil.ColorHexString(255, 205, 86),
-                       ColorUtil.ColorHexString(255, 205, 86),
-                       ColorUtil.ColorHexString(255, 205, 86),
-                       ColorUtil.ColorHexString(255, 205, 86)
-                }
+                    BorderColor = ColorUtil.ColorHexString(255, 205, 86),
+                    Fill = false,
+                    LineTension=0
                 };
 
             int[] datalistSecondPartOfItems = columnHeights.Skip(12).Take(12).ToArray();
-            BarDataset<int> datasetExpenses = new(datalistSecondPartOfItems)
+            LineDataset<int> datasetExpenses = new(datalistSecondPartOfItems)
                 {
                     Label = lang == "hu" ? "Kiadás" : "Expenses",
-                    BackgroundColor = new[]
-                    {
-                        ColorUtil.ColorHexString(130,110,174),
-                        ColorUtil.ColorHexString(130,110,174),
-                        ColorUtil.ColorHexString(130,110,174),
-                        ColorUtil.ColorHexString(130,110,174),
-                        ColorUtil.ColorHexString(130,110,174),
-                        ColorUtil.ColorHexString(130,110,174),
-                        ColorUtil.ColorHexString(130,110,174),
-                        ColorUtil.ColorHexString(130,110,174),
-                        ColorUtil.ColorHexString(130,110,174),
-                        ColorUtil.ColorHexString(130,110,174),
-                        ColorUtil.ColorHexString(130,110,174),
-                        ColorUtil.ColorHexString(130,110,174)
-                }
+                    BorderColor = ColorUtil.ColorHexString(130, 110, 174),
+                    Fill = false,
+                    LineTension = 0
+                };
+            int[] datalistThirdPartOfItems = columnHeights.Skip(24).Take(12).ToArray();
+            LineDataset<int> datasetEarning = new(datalistThirdPartOfItems)
+                {
+                    Label = lang == "hu" ? "Kiadás" : "Expenses",
+                    BorderColor = ColorUtil.ColorHexString(54, 162, 235),
+                    Fill = false,
+                    LineTension=0
                 };
 
 
             _config4.Data.Datasets.Add(datasetIncomes);
             _config4.Data.Datasets.Add(datasetExpenses); 
+            _config4.Data.Datasets.Add(datasetEarning);
         }
     }
 }
