@@ -49,6 +49,7 @@ namespace Cargotruck.Server.Controllers
             var password_error = _localizer["Password_error"].Value;
             var user = await _userManager.FindByNameAsync(request.UserName);
             if (user == null) return BadRequest("Not_found");
+
             var singInResult = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
             if (!singInResult.Succeeded) return BadRequest(password_error);
             await _signInManager.SignInAsync(user, request.RememberMe);
@@ -60,6 +61,7 @@ namespace Cargotruck.Server.Controllers
                 UserId = user.Id,
                 LoginDate = DateTime.Now
             };
+
             _context.Add(login);
             await _context.SaveChangesAsync();
 
@@ -133,8 +135,6 @@ namespace Cargotruck.Server.Controllers
             return Ok();
         }
 
-
-
         [HttpGet]
         public CurrentUser CurrentUserInfo()
         {
@@ -148,8 +148,7 @@ namespace Cargotruck.Server.Controllers
                     Name = User.Identity.Name,
                     Email = u.Email,
                     PhoneNumber = u.PhoneNumber,
-                    Claims = User.Claims
-                        .ToDictionary(c => c.Type, c => c.Value),
+                    Claims = User.Claims.ToDictionary(c => c.Type, c => c.Value),
                 };
 
             }

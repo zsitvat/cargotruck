@@ -252,42 +252,33 @@ namespace Cargotruck.Server.Controllers
             var worksheet = workbook.Worksheets.Add("Tasks");
             var currentRow = 1;
 
-            worksheet.Cell(currentRow, 1).Value = "Id";
-            worksheet.Cell(currentRow, 1).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 2).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID";
-            worksheet.Cell(currentRow, 2).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 3).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Partner : "Partner";
-            worksheet.Cell(currentRow, 3).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 4).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Description : "Description";
-            worksheet.Cell(currentRow, 4).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 5).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Place_of_receipt : "Place of receipt";
-            worksheet.Cell(currentRow, 5).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 6).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_receipt : "Time of receipt";
-            worksheet.Cell(currentRow, 6).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 7).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Place_of_delivery : "Place of delivery";
-            worksheet.Cell(currentRow, 7).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 8).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_delivery : "Time of delivery";
-            worksheet.Cell(currentRow, 8).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 9).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.other_stops : "other stops";
-            worksheet.Cell(currentRow, 9).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 10).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Id_cargo : "Id cargo";
-            worksheet.Cell(currentRow, 10).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 11).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Storage_time : "Storage time";
-            worksheet.Cell(currentRow, 11).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 12).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.completed : "Completed";
-            worksheet.Cell(currentRow, 12).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 13).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Completion_time : "Completion time";
-            worksheet.Cell(currentRow, 13).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 14).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_delay : "Time of delay";
-            worksheet.Cell(currentRow, 14).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 15).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Payment : "Payment";
-            worksheet.Cell(currentRow, 15).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 16).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Final_Payment : "Final Payment";
-            worksheet.Cell(currentRow, 16).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 17).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Penalty : "Penalty";
-            worksheet.Cell(currentRow, 17).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 18).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date";
-            worksheet.Cell(currentRow, 18).Style.Font.SetBold();
+            List<string> columnNames = new() {
+                "Id",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Partner : "Partner",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Description : "Description",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Place_of_receipt : "Place of receipt",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_receipt : "Time of receipt",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Place_of_delivery : "Place of delivery",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_delivery : "Time of delivery",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.other_stops : "other stops",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Id_cargo : "Id cargo",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Storage_time : "Storage time",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.completed : "Completed",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Completion_time : "Completion time",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_delay : "Time of delay",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Payment : "Payment",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Final_Payment : "Final Payment",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Penalty : "Penalty",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date"
+            };
+
+            for(var i=0;i<columnNames.Count;i++)
+            {
+                worksheet.Cell(currentRow, i+1).Value = columnNames[i];
+                worksheet.Cell(currentRow, i+1).Style.Font.SetBold();
+            }
+
             foreach (var task in tasks)
             {
                 currentRow++;

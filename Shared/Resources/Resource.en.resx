@@ -246,6 +246,9 @@
   <data name="csv" xml:space="preserve">
     <value>Export to CSV</value>
   </data>
+  <data name="Currency" xml:space="preserve">
+    <value>Currency</value>
+  </data>
   <data name="CurrencyExchangeWaitTime" xml:space="preserve">
     <value>Currency exchange getting time (s)</value>
   </data>
@@ -625,7 +628,7 @@
     <value>On road</value>
   </data>
   <data name="other" xml:space="preserve">
-    <value>other</value>
+    <value>Other</value>
   </data>
   <data name="other_stops" xml:space="preserve">
     <value>other stops</value>
@@ -715,7 +718,7 @@
     <value>Repair description</value>
   </data>
   <data name="road" xml:space="preserve">
-    <value>road</value>
+    <value>Road</value>
   </data>
   <data name="Roads" xml:space="preserve">
     <value>Roads</value>

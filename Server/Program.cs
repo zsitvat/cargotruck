@@ -36,31 +36,9 @@ builder.Services.AddMvc().AddControllersAsServices();
 
 // Add services to the container.
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 //localization service
 builder.Services.AddLocalization();
-
-CultureInfo[] supportedCultures = new[]
-{
-    new CultureInfo("hu"),
-    new CultureInfo("en-US")
-};
-
-builder.Services.Configure<RequestLocalizationOptions>(options =>
-    {
-        options.SetDefaultCulture("hu");
-        options.DefaultRequestCulture = new RequestCulture("hu");
-        options.SupportedCultures = supportedCultures;
-        options.SupportedUICultures = supportedCultures;
-        options.RequestCultureProviders = new List<IRequestCultureProvider>
-        {
-            new QueryStringRequestCultureProvider(),
-            new CookieRequestCultureProvider()
-        };
-        options.FallBackToParentUICultures = true;
-        options.RequestCultureProviders.Clear();
-    });
-CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("hu");
-CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("hu");
 
 builder.Services.AddIdentity<Users, IdentityRole>(options => options.SignIn.RequireConfirmedPhoneNumber = false).AddEntityFrameworkStores<ApplicationDbContext>();
 

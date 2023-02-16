@@ -448,6 +448,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pénznem.
+        /// </summary>
+        public static string Currency {
+            get {
+                return ResourceManager.GetString("Currency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Elfogyott a napi valutaváltás lekérésének a száma a hónapban. .
         /// </summary>
         public static string currency_api_is_exceeded {
@@ -1861,7 +1870,7 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to út.
+        ///   Looks up a localized string similar to Út.
         /// </summary>
         public static string road {
             get {
@@ -2176,7 +2185,7 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to gépjármű.
+        ///   Looks up a localized string similar to Gépjármű.
         /// </summary>
         public static string truck {
             get {

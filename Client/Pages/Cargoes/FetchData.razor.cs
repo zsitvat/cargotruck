@@ -72,9 +72,9 @@ namespace Cargotruck.Client.Pages.Cargoes
             }
         }
 
-        void GetById(string? id, string idType)
+        void GetById(string? VRN, string idType)
         {
-            IdForGetById = id;
+            IdForGetById = VRN;
             GetByIdType = idType;
             StateHasChanged();
         }

@@ -1686,6 +1686,10 @@ input:checked + .slider:before {
     width:6.38rem;
 }
 
+.role-select .custom-select-options {
+    max-height:6rem;
+}
+
 .multiselect .form-control{
     min-width:12.5rem;
 }

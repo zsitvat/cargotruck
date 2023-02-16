@@ -37,7 +37,7 @@
         <label for="inputRole" class="input-only">@localizer["Role"]</label>
         <div for="@registerRequest.Role" name="role" id="role" class="form-group custom-select role-select">
             <div class="form-control">@(registerRequest.Role != null && registerRequest.Role.ToString() != "" ? localizer[registerRequest.Role?.ToString()!] : localizer["Nothing"])</div>
-            <div class="custom-select-options ">
+            <div class="custom-select-options">
                 @foreach (var value in roles)
                 {
                     <div class="custom-select-option" @onclick='() => {registerRequest.Role = value;}'>

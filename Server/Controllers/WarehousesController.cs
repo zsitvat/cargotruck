@@ -131,18 +131,20 @@ namespace Cargotruck.Server.Controllers
             var worksheet = workbook.Worksheets.Add("Warehouses");
             var currentRow = 1;
 
-            worksheet.Cell(currentRow, 1).Value = "Id";
-            worksheet.Cell(currentRow, 1).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 2).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID";
-            worksheet.Cell(currentRow, 2).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 3).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Address : "Address";
-            worksheet.Cell(currentRow, 3).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 4).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Owner : "Owner";
-            worksheet.Cell(currentRow, 4).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 5).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Cargo_id : "Cargo_id";
-            worksheet.Cell(currentRow, 5).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 6).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date";
-            worksheet.Cell(currentRow, 6).Style.Font.SetBold();
+            List<string> columnNames = new() {
+                "Id",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Address : "Address",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Owner : "Owner",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Cargo_id : "Cargo ID",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date"
+            };
+
+            for (var i = 0; i < columnNames.Count; i++)
+            {
+                worksheet.Cell(currentRow, i + 1).Value = columnNames[i];
+                worksheet.Cell(currentRow, i + 1).Style.Font.SetBold();
+            }
 
             foreach (var warehouse in warehouses)
             {

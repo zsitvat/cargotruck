@@ -158,22 +158,22 @@ namespace Cargotruck.Server.Controllers
             var worksheet = workbook.Worksheets.Add("Trucks");
             var currentRow = 1;
 
-            worksheet.Cell(currentRow, 1).Value = "Id";
-            worksheet.Cell(currentRow, 1).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 2).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID";
-            worksheet.Cell(currentRow, 2).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 3).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Vehicle_registration_number : "Task ID";
-            worksheet.Cell(currentRow, 3).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 4).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Brand : "Cargo ID";
-            worksheet.Cell(currentRow, 4).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 5).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Status : "Status";
-            worksheet.Cell(currentRow, 5).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 6).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Road_id : "Road ID";
-            worksheet.Cell(currentRow, 6).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 7).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Max_weight : "Max weight";
-            worksheet.Cell(currentRow, 7).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 8).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date";
-            worksheet.Cell(currentRow, 8).Style.Font.SetBold();
+            List<string> columnNames = new() {
+                "Id",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Vehicle_registration_number : "Task ID",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Brand : "Cargo ID",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Status : "Status",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Road_id : "Road ID",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Max_weight : "Max weight",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date"
+            };
+
+            for (var i = 0; i < columnNames.Count; i++)
+            {
+                worksheet.Cell(currentRow, i + 1).Value = columnNames[i];
+                worksheet.Cell(currentRow, i + 1).Style.Font.SetBold();
+            }
 
             foreach (var truck in trucks)
             {

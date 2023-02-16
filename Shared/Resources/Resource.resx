@@ -246,6 +246,9 @@
   <data name="csv" xml:space="preserve">
     <value>Letöltés CSV-ként</value>
   </data>
+  <data name="Currency" xml:space="preserve">
+    <value>Pénznem</value>
+  </data>
   <data name="CurrencyExchangeWaitTime" xml:space="preserve">
     <value>Valuta váltás lekérésének ideje (mp)</value>
   </data>
@@ -718,7 +721,7 @@
     <value>Leírás a javításról</value>
   </data>
   <data name="road" xml:space="preserve">
-    <value>út</value>
+    <value>Út</value>
   </data>
   <data name="Roads" xml:space="preserve">
     <value>Utak</value>
@@ -823,7 +826,7 @@
     <value>Odaút</value>
   </data>
   <data name="truck" xml:space="preserve">
-    <value>gépjármű</value>
+    <value>Gépjármű</value>
   </data>
   <data name="Trucks" xml:space="preserve">
     <value>Járművek</value>

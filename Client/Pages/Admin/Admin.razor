@@ -103,10 +103,19 @@ else
                                             <td class="@(MouseHoverClass.MouseOnHoverClass == item.Id.ToString() || MouseHoverClass.MouseOnclickClass == item.Id.ToString() ? "show" :"not-show") ">
                                                 @if(item.UserName == context?.User?.Identity?.Name){
                                                     <a title="@localizer["Edit"]" class="btn fixed" href="/profile"><span class="oi oi-pencil" aria-hidden="true"></span></a>
-                                                }else{
+                                                }
+                                                else
+                                                {
                                                     <a title="@localizer["Edit"]" class="btn fixed" href="/profile/Edit/@item.Id"><span class="oi oi-pencil" aria-hidden="true"></span></a>
                                                 }
-                                                <button title="@localizer["Delete"]" class="btn fixed2" @onclick="@(() => Delete(item.Id))"><span class="oi oi-trash" aria-hidden="true"></span></button>
+                                                @if (item.UserName != @context?.User.Identity?.Name)
+                                                {
+                                                    <button title="@localizer["Delete"]" class="btn fixed2" @onclick="@(() => Delete(item.Id))"><span class="oi oi-trash" aria-hidden="true"></span></button>
+                                                }
+                                                else
+                                                {
+                                                    <button title="@localizer["Delete"]" class="btn fixed2" @onclick="@(() => Delete(item.Id))" disabled><span class="oi oi-trash" aria-hidden="true"></span></button>
+                                                }
                                             </td>
                                         </tr>
                                     }

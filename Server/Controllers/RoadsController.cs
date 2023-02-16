@@ -211,6 +211,30 @@ namespace Cargotruck.Server.Controllers
             using var workbook = new XLWorkbook();
             var worksheet = workbook.Worksheets.Add("Roads");
             var currentRow = 1;
+
+            List<string> columnNames = new() {
+                "Id",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Task_id : "Task ID",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Vehicle_registration_number : "Vehicle registration number",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Id_cargo : "Cargo ID",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Purpose_of_the_trip : "Purpose_of_the_trip",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Starting_date : "Starting_date",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Ending_date : "Ending_date",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Starting_place : "Starting_place",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Ending_place : "Ending_place",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Direction : "Direction",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Fuel : "Fuel",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Expenses_id : "Expenses_id",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date"
+             };
+
+            for (var i = 0; i < columnNames.Count; i++)
+            {
+                worksheet.Cell(currentRow, i + 1).Value = columnNames[i];
+                worksheet.Cell(currentRow, i + 1).Style.Font.SetBold();
+            }
+
             worksheet.Cell(currentRow, 1).Value = "Id";
             worksheet.Cell(currentRow, 1).Style.Font.SetBold();
             worksheet.Cell(currentRow, 2).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID";

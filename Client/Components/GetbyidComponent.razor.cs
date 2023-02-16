@@ -43,7 +43,7 @@ namespace Cargotruck.Client.Components
                 }
                 else if (GetByIdType == "truck")
                 {
-                    idDataTruck = await client.GetFromJsonAsync<Trucks?>($"api/trucks/getbyid/{GetById}");
+                    idDataTruck = await client.GetFromJsonAsync<Trucks?>($"api/trucks/getbyvrn/{GetById}");
                 }
                 else
                 {

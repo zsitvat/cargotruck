@@ -190,34 +190,28 @@ namespace Cargotruck.Server.Controllers
             var worksheet = workbook.Worksheets.Add("Expenses");
             var currentRow = 1;
 
-            worksheet.Cell(currentRow, 1).Value = "Id";
-            worksheet.Cell(currentRow, 1).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 2).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID";
-            worksheet.Cell(currentRow, 2).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 3).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Type : "Type";
-            worksheet.Cell(currentRow, 3).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 4).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Type_id : "Type ID";
-            worksheet.Cell(currentRow, 4).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 5).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Fuel : "Fuel";
-            worksheet.Cell(currentRow, 5).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 6).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Road_fees : "Road fees";
-            worksheet.Cell(currentRow, 6).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 7).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Penalty : "Penalty";
-            worksheet.Cell(currentRow, 7).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 8).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Driver_spending : "Driver spending";
-            worksheet.Cell(currentRow, 8).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 9).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Driver_salary : "Driver salary";
-            worksheet.Cell(currentRow, 9).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 10).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Repair_cost : "Repair cost";
-            worksheet.Cell(currentRow, 10).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 11).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Repair_description : "Repair description";
-            worksheet.Cell(currentRow, 11).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 12).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Cost_of_storage : "Cost of storage";
-            worksheet.Cell(currentRow, 12).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 13).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.other : "other";
-            worksheet.Cell(currentRow, 13).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 14).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date";
-            worksheet.Cell(currentRow, 14).Style.Font.SetBold();
+            List<string> columnNames = new() {
+                "Id",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Type_id : "Type ID",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Fuel : "Fuel",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Type : "Type",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Road_fees : "Road fees",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Penalty : "Penalty",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Driver_spending : "Driver spending",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Driver_salary : "Driver salary",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Repair_cost : "Repair cost",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Repair_description : "Repair description",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Cost_of_storage : "Cost of storage",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.other : "Other",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date",
+            };
+
+            for (var i = 0; i < columnNames.Count; i++)
+            {
+                worksheet.Cell(currentRow, i + 1).Value = columnNames[i];
+                worksheet.Cell(currentRow, i + 1).Style.Font.SetBold();
+            }
 
             foreach (var expense in expenses)
             {
@@ -418,7 +412,7 @@ namespace Cargotruck.Server.Controllers
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 });
-                table2.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.other : "other", font1))
+                table2.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.other : "Other", font1))
                 {
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
@@ -537,7 +531,7 @@ namespace Cargotruck.Server.Controllers
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Repair_cost : "Repair cost") + ";");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Repair_description : "Repair description") + ";");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Cost_of_storage : "Cost of storage") + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.other : "other") + ";");
+            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.other : "Other") + ";");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date") + ";");
             txt.Write("\n");
 
@@ -624,7 +618,7 @@ namespace Cargotruck.Server.Controllers
                                 lang == "hu" ? Cargotruck.Shared.Resources.Resource.Repair_cost : "Repair cost",
                                 lang == "hu" ? Cargotruck.Shared.Resources.Resource.Repair_description : "Repair description",
                                 lang == "hu" ? Cargotruck.Shared.Resources.Resource.Cost_of_storage : "Cost of storage",
-                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.other : "other",
+                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.other : "Other",
                                 lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date"
                             };
 

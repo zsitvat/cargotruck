@@ -274,24 +274,23 @@ namespace Cargotruck.Server.Controllers
             var worksheet = workbook.Worksheets.Add("Monthly_Expenses");
             var currentRow = 1;
 
-            worksheet.Cell(currentRow, 1).Value = "Id";
-            worksheet.Cell(currentRow, 1).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 2).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Month : "Month";
-            worksheet.Cell(currentRow, 2).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 3).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID";
-            worksheet.Cell(currentRow, 3).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 4).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Earning : "Earning";
-            worksheet.Cell(currentRow, 4).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 5).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Expense : "Expense";
-            worksheet.Cell(currentRow, 5).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 6).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Profit : "Profit";
-            worksheet.Cell(currentRow, 6).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 7).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Expense_id : "Expenses ID";
-            worksheet.Cell(currentRow, 7).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 8).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Task_id : "Task_id";
-            worksheet.Cell(currentRow, 8).Style.Font.SetBold();
-            worksheet.Cell(currentRow, 9).Value = lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date";
-            worksheet.Cell(currentRow, 9).Style.Font.SetBold();
+            List<string> columnNames = new() {
+                "Id",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Month : "Month",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Earning : "Earning",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Expense : "Expense",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Profit : "Profit",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Expense_id : "Expenses ID",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Task_id : "Task_id",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date"
+            };
+
+            for (var i = 0; i < columnNames.Count; i++)
+            {
+                worksheet.Cell(currentRow, i + 1).Value = columnNames[i];
+                worksheet.Cell(currentRow, i + 1).Style.Font.SetBold();
+            }
 
             foreach (var monthly_expense in Monthly_Expenses)
             {
