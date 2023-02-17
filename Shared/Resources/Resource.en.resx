@@ -288,6 +288,9 @@
   <data name="direction_invalid" xml:space="preserve">
     <value>The direction's value is not valid.</value>
   </data>
+  <data name="Distance" xml:space="preserve">
+    <value>Distance</value>
+  </data>
   <data name="Driver" xml:space="preserve">
     <value>Driver</value>
   </data>
@@ -347,6 +350,9 @@
   </data>
   <data name="Error_direction" xml:space="preserve">
     <value>The direction is empty!</value>
+  </data>
+  <data name="Error_distance" xml:space="preserve">
+    <value>The distance is required!</value>
   </data>
   <data name="Error_email" xml:space="preserve">
     <value>The e-mail is required!</value>

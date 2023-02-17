@@ -78,15 +78,25 @@
                 </div>
                 <div class="form-group ">
                     <div>
-                        <label>@localizer["Fuel"]:</label>
+                        <label>@localizer["Distance"] (km):</label>
                         <div>
-                            <InputText class="form-control inputs" @bind-Value="@roads.Fuel" />
-                            <ValidationMessage For="@(() => roads.Fuel)" />
+                            <InputNumber class="form-control inputs" @bind-Value="@roads.Distance" />
+                            <ValidationMessage For="@(() => roads.Distance)" />
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="d-inline-block forms-margin second-col">
+
+            <div class="d-inline-block forms-margin">
+                <div class="form-group ">
+                    <div>
+                        <label>@localizer["Fuel"] (l):</label>
+                        <div>
+                            <InputNumber class="form-control inputs" @bind-Value="@roads.Fuel" />
+                            <ValidationMessage For="@(() => roads.Fuel)" />
+                        </div>
+                    </div>
+                </div>
                 <div class="form-group custom-select">
                     <label>@localizer["Direction"]:</label>
                     <div type="text" class="form-control" placeholder="@localizer["Select_placeholder"]">@localizer[roads?.Direction != null ? roads?.Direction?.ToLower() : "Select_placeholder"]</div>

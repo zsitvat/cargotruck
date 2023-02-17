@@ -288,6 +288,9 @@
   <data name="direction_invalid" xml:space="preserve">
     <value>Az irány értéke nem érvényes.</value>
   </data>
+  <data name="Distance" xml:space="preserve">
+    <value>Távolság</value>
+  </data>
   <data name="Document_failder_to_create" xml:space="preserve">
     <value>Nem sikerült előállítani a fájlt!</value>
   </data>
@@ -350,6 +353,9 @@
   </data>
   <data name="Error_direction" xml:space="preserve">
     <value>Az irány megadása kötelező</value>
+  </data>
+  <data name="Error_distance" xml:space="preserve">
+    <value>A távolság megadása kötelező!</value>
   </data>
   <data name="Error_email" xml:space="preserve">
     <value>E-mail megadása kötelezõ.</value>

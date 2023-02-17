@@ -14,7 +14,7 @@ namespace Cargotruck.Client.Pages.Roads
         string? IdForGetById { get; set; }
         string? GetByIdType { get; set; }
 
-        readonly List<bool> showColumns = Enumerable.Repeat(true, 12).ToList();
+        readonly List<bool> showColumns = Enumerable.Repeat(true, 13).ToList();
         private int currentPage = 1;
         int pageSize = 10;
         int dataRows;

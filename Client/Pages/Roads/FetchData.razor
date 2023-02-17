@@ -109,25 +109,29 @@ else
                                 }
                                 @if (showColumns[6])
                                 {
-                                    <th><button class="@(sortOrder=="Fuel" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Fuel"))">@localizer["Fuel"]</button></th>
+                                    <th><button class="@(sortOrder=="Distance" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Distance"))">@localizer["Distance"]</button></th>
                                 }
                                 @if (showColumns[7])
                                 {
-                                    <th><button class="@(sortOrder=="Task_id" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Task_id"))">@localizer["Task_id"]</button></th>
+                                    <th><button class="@(sortOrder=="Fuel" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Fuel"))">@localizer["Fuel"]</button></th>
                                 }
                                 @if (showColumns[8])
                                 {
-                                    <th><button class="@(sortOrder=="Vehicle_registration_number" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Vehicle_registration_number"))">@localizer["Vehicle_registration_number"]</button></th>
+                                    <th><button class="@(sortOrder=="Task_id" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Task_id"))">@localizer["Task_id"]</button></th>
                                 }
                                 @if (showColumns[9])
                                 {
-                                    <th><button class="@(sortOrder=="Id_cargo" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Id_cargo"))">@localizer["Id_cargo"]</button></th>
+                                    <th><button class="@(sortOrder=="Vehicle_registration_number" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Vehicle_registration_number"))">@localizer["Vehicle_registration_number"]</button></th>
                                 }
                                 @if (showColumns[10])
                                 {
-                                    <th><button class="@(sortOrder=="Expenses_id" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Expenses_id"))">@localizer["Expenses_id"]</button></th>
+                                    <th><button class="@(sortOrder=="Id_cargo" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Id_cargo"))">@localizer["Id_cargo"]</button></th>
                                 }
                                 @if (showColumns[11])
+                                {
+                                    <th><button class="@(sortOrder=="Expenses_id" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Expenses_id"))">@localizer["Expenses_id"]</button></th>
+                                }
+                                @if (showColumns[12])
                                 {
                                     <th class="last-col"><button class="@(sortOrder=="Date" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Date"))">@localizer["Date"]</button></th>
                                 }
@@ -163,12 +167,17 @@ else
                                     @if (showColumns[5])
                                     {
                                         <td>@(item.Direction == "TO" ? @localizer["to"] : @localizer["from"])</td>
-                                    }
+                                    }  
                                     @if (showColumns[6])
                                     {
-                                        <td>@item.Fuel</td>
+                                        <td>@item.Distance km</td>
                                     }
                                     @if (showColumns[7])
+                                    {
+                                        <td>@item.Fuel l</td>
+                                    }
+                                  
+                                    @if (showColumns[8])
                                     {
                                         <td>
                                             @if(item.Task_id != null)
@@ -177,7 +186,7 @@ else
                                             }
                                         </td>
                                     }
-                                    @if (showColumns[8])
+                                    @if (showColumns[9])
                                     {
                                         <td>
                                             @if (item.Vehicle_registration_number != null)
@@ -186,7 +195,7 @@ else
                                             }
                                         </td>
                                     }
-                                    @if (showColumns[9])
+                                    @if (showColumns[10])
                                     {
                                         <td>
                                             @if (item.Id_cargo != null)
@@ -195,7 +204,7 @@ else
                                             }
                                          </td>
                                     }
-                                    @if (showColumns[10])
+                                    @if (showColumns[11])
                                     {
                                         <td>
                                             @if (item.Expenses_id != null)
@@ -204,7 +213,7 @@ else
                                             }
                                         </td>
                                     }
-                                    @if (showColumns[11])
+                                    @if (showColumns[12])
                                     {
                                         <td>@item.Date</td>
                                     }

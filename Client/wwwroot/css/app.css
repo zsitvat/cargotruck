@@ -1630,7 +1630,7 @@ input:checked + .slider:before {
 }
 
 .custom-select .form-control {
-    padding: 0.5rem 0.7rem 0.4rem 0.7rem;
+    padding: 0.44rem 0.7rem 0.4rem 0.7rem;
 }
 
 .custom-select-options {

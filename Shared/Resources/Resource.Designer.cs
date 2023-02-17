@@ -574,6 +574,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Távolság.
+        /// </summary>
+        public static string Distance {
+            get {
+                return ResourceManager.GetString("Distance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nem sikerült előállítani a fájlt!.
         /// </summary>
         public static string Document_failder_to_create {
@@ -759,6 +768,15 @@ namespace Cargotruck.Shared.Resources {
         public static string Error_direction {
             get {
                 return ResourceManager.GetString("Error_direction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A távolság megadása kötelező!.
+        /// </summary>
+        public static string Error_distance {
+            get {
+                return ResourceManager.GetString("Error_distance", resourceCulture);
             }
         }
         

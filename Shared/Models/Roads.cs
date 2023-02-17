@@ -25,13 +25,19 @@ namespace Cargotruck.Shared.Models
         [Required(ErrorMessageResourceName = "Error_starting_place", ErrorMessageResourceType = typeof(Resource))]
         [Display(Name = "Starting_place", ResourceType = typeof(Resource))]
         public string? Starting_place { get; set; }
+    
         [Display(Name = "Ending_place", ResourceType = typeof(Resource))]
         public string? Ending_place { get; set; }
         [Required(ErrorMessageResourceName = "Error_direction", ErrorMessageResourceType = typeof(Resource))]
         [Display(Name = "Direction", ResourceType = typeof(Resource))]
-        public string? Direction { get; set; }
+        public string? Direction { get; set; }    
+        [Required(ErrorMessageResourceName = "Error_distance", ErrorMessageResourceType = typeof(Resource))]
+        [Display(Name = "Distance", ResourceType = typeof(Resource))]
+        [Range(0, int.MaxValue, ErrorMessageResourceName = "OnlyPositive", ErrorMessageResourceType = typeof(Resource))]
+        public int? Distance { get; set; }
         [Display(Name = "Fuel", ResourceType = typeof(Resource))]
-        public string? Fuel { get; set; }
+        [Range(0, int.MaxValue, ErrorMessageResourceName = "OnlyPositive", ErrorMessageResourceType = typeof(Resource))]
+        public int? Fuel { get; set; }
         [Display(Name = "Expenses_id", ResourceType = typeof(Resource))]
         public int? Expenses_id { get; set; }
         [Display(Name = "Date", ResourceType = typeof(Resource))]
