@@ -285,6 +285,9 @@
   <data name="Direction" xml:space="preserve">
     <value>Irány</value>
   </data>
+  <data name="direction_invalid" xml:space="preserve">
+    <value>Az irány értéke nem érvényes.</value>
+  </data>
   <data name="Document_failder_to_create" xml:space="preserve">
     <value>Nem sikerült előállítani a fájlt!</value>
   </data>
@@ -444,6 +447,12 @@
   <data name="Expense_id:" xml:space="preserve">
     <value>Kiadás azonosító</value>
   </data>
+  <data name="expense_id_invalid" xml:space="preserve">
+    <value>A kiadás azonosító értéke nem érvényes.</value>
+  </data>
+  <data name="expense_type_invalid" xml:space="preserve">
+    <value>A kiadás típus értéke nem érvényes.</value>
+  </data>
   <data name="export" xml:space="preserve">
     <value>Adatok letöltése</value>
   </data>
@@ -521,6 +530,12 @@
   </data>
   <data name="Id_cargo" xml:space="preserve">
     <value>Rakomány azonosító</value>
+  </data>
+  <data name="Id_cargo_not_valid" xml:space="preserve">
+    <value>A rakomány azonosító értéke nem érvényes.</value>
+  </data>
+  <data name="id_invalid" xml:space="preserve">
+    <value>Az azonosító értéke nem érvényes.</value>
   </data>
   <data name="Image" xml:space="preserve">
     <value>Profilkép</value>
@@ -732,6 +747,9 @@
   <data name="Road_id" xml:space="preserve">
     <value>Út azonosító</value>
   </data>
+  <data name="Road_id_invalid" xml:space="preserve">
+    <value>Az út azonosító értéke nem érvényes.</value>
+  </data>
   <data name="Role" xml:space="preserve">
     <value>Jogosultság</value>
   </data>
@@ -801,6 +819,9 @@
   <data name="Task_id" xml:space="preserve">
     <value>Megbízás azonosító</value>
   </data>
+  <data name="task_id_invalid" xml:space="preserve">
+    <value>A megbízás azonosító értéke nem érvényes.</value>
+  </data>
   <data name="Time_of_delay" xml:space="preserve">
     <value>Késés</value>
   </data>
@@ -834,6 +855,9 @@
   <data name="Trucks_unfinished" xml:space="preserve">
     <value>gépjármű van használatban</value>
   </data>
+  <data name="Truck_status_invalid" xml:space="preserve">
+    <value>A jármű állapotának értéke nem érvényes.</value>
+  </data>
   <data name="True" xml:space="preserve">
     <value>Igen</value>
   </data>
@@ -864,6 +888,9 @@
   <data name="Vehicle_registration_number" xml:space="preserve">
     <value>Jármű rendszáma</value>
   </data>
+  <data name="VRN_invalid" xml:space="preserve">
+    <value>A rendszám azonosító értéke nem érvényes.</value>
+  </data>
   <data name="Warehouse" xml:space="preserve">
     <value>Raktár</value>
   </data>
@@ -878,6 +905,9 @@
   </data>
   <data name="Warehouse_id" xml:space="preserve">
     <value>Raktár azonosító</value>
+  </data>
+  <data name="warehouse_id_invalid" xml:space="preserve">
+    <value>A raktár azonosító értéke nem érvényes.</value>
   </data>
   <data name="Warehouse_owner" xml:space="preserve">
     <value>Tulajdonos</value>

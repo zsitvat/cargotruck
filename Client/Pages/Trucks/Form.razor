@@ -169,7 +169,7 @@
                 isValidSubmit = false;
                 trucks.Road_id = null;
                 await checkValidSubmit.InvokeAsync(false);
-                error += CultureInfo.CurrentCulture.Name == "hu" ? "Az út azonosító értéke nem érvényes. " : "The road id's value is not valid. ";
+                error += localizer["Road_id_invalid"] + " ";
             }
 
         }
@@ -194,7 +194,7 @@
             {
                 isValidSubmit = false;
                 await checkValidSubmit.InvokeAsync(false);
-                error += CultureInfo.CurrentCulture.Name == "hu" ? "A jármű állapotának értéke nem érvényes. " : "The truck's status value is not valid. ";
+                error += localizer["Truck_status_invalid"] + " ";
             }
 
         }

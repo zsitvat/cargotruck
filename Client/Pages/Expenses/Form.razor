@@ -283,7 +283,7 @@
                 isValidSubmit = false;
                 expenses.Type = null;
                 await checkValidSubmit.InvokeAsync(false);
-                error += CultureInfo.CurrentCulture.Name == "hu" ? "A kiadás típus értéke nem érvényes. " : "The expense type's value is not valid. ";
+                error += localizer["expense_type_invalid"] + " ";
             }
 
         }
@@ -364,7 +364,7 @@
                 isValidSubmit = false;
                 expenses.Type_id = null;
                 await checkValidSubmit.InvokeAsync(false);
-                error += CultureInfo.CurrentCulture.Name == "hu" ? "Az azonosító értéke nem érvényes. " : "The id's value is not valid. ";
+                error += localizer["id_invalid"] + " ";
             }
 
         }

@@ -218,7 +218,7 @@
                     isValidSubmit = false;
                     cargoes.Task_id = null;
                     await checkValidSubmit.InvokeAsync(false);
-                    error += CultureInfo.CurrentCulture.Name == "hu" ? "A megbízás azonosító értéke nem érvényes. " : "The task id's value is not valid. ";
+                    error += localizer["task_id_invalid"] + " ";
                 }
 
             }
@@ -251,7 +251,7 @@
                     isValidSubmit = false;
                     cargoes.Warehouse_id = null;
                     await checkValidSubmit.InvokeAsync(false);
-                    error += CultureInfo.CurrentCulture.Name == "hu" ? "A raktár azonosító értéke nem érvényes. " : "The warehouse id's value is not valid. ";
+                    error += localizer["warehouse_id_invalid"] + " ";
                 }
 
             }
@@ -285,7 +285,7 @@
                     isValidSubmit = false;
                     cargoes!.Vehicle_registration_number = null;
                     await checkValidSubmit.InvokeAsync(false);
-                    error += CultureInfo.CurrentCulture.Name == "hu" ? "A rendszám azonosító értéke nem érvényes. " : "The Vehicle registration number's value is not valid. ";
+                    error += localizer["VRN_invalid"] + " ";
                 }
 
             }

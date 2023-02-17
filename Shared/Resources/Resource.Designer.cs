@@ -565,6 +565,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Az irány értéke nem érvényes..
+        /// </summary>
+        public static string direction_invalid {
+            get {
+                return ResourceManager.GetString("direction_invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nem sikerült előállítani a fájlt!.
         /// </summary>
         public static string Document_failder_to_create {
@@ -1006,6 +1015,24 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A kiadás azonosító értéke nem érvényes..
+        /// </summary>
+        public static string expense_id_invalid {
+            get {
+                return ResourceManager.GetString("expense_id_invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A kiadás típus értéke nem érvényes..
+        /// </summary>
+        public static string expense_type_invalid {
+            get {
+                return ResourceManager.GetString("expense_type_invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kiadások.
         /// </summary>
         public static string Expenses {
@@ -1272,6 +1299,24 @@ namespace Cargotruck.Shared.Resources {
         public static string Id_cargo {
             get {
                 return ResourceManager.GetString("Id_cargo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A rakomány azonosító értéke nem érvényes..
+        /// </summary>
+        public static string Id_cargo_not_valid {
+            get {
+                return ResourceManager.GetString("Id_cargo_not_valid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Az azonosító értéke nem érvényes..
+        /// </summary>
+        public static string id_invalid {
+            get {
+                return ResourceManager.GetString("id_invalid", resourceCulture);
             }
         }
         
@@ -1897,6 +1942,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Az út azonosító értéke nem érvényes..
+        /// </summary>
+        public static string Road_id_invalid {
+            get {
+                return ResourceManager.GetString("Road_id_invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Utak.
         /// </summary>
         public static string Roads {
@@ -2086,6 +2140,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A megbízás azonosító értéke nem érvényes..
+        /// </summary>
+        public static string task_id_invalid {
+            get {
+                return ResourceManager.GetString("task_id_invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Megbízások.
         /// </summary>
         public static string Tasks {
@@ -2190,6 +2253,15 @@ namespace Cargotruck.Shared.Resources {
         public static string truck {
             get {
                 return ResourceManager.GetString("truck", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A jármű állapotának értéke nem érvényes..
+        /// </summary>
+        public static string Truck_status_invalid {
+            get {
+                return ResourceManager.GetString("Truck_status_invalid", resourceCulture);
             }
         }
         
@@ -2302,6 +2374,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A rendszám azonosító értéke nem érvényes..
+        /// </summary>
+        public static string VRN_invalid {
+            get {
+                return ResourceManager.GetString("VRN_invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Raktár.
         /// </summary>
         public static string Warehouse {
@@ -2325,6 +2406,15 @@ namespace Cargotruck.Shared.Resources {
         public static string Warehouse_id {
             get {
                 return ResourceManager.GetString("Warehouse_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A raktár azonosító értéke nem érvényes..
+        /// </summary>
+        public static string warehouse_id_invalid {
+            get {
+                return ResourceManager.GetString("warehouse_id_invalid", resourceCulture);
             }
         }
         

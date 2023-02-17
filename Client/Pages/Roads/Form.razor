@@ -261,7 +261,7 @@
                 isValidSubmit = false;
                 roads.Id_cargo = null;
                 await checkValidSubmit.InvokeAsync(false);
-                error += CultureInfo.CurrentCulture.Name == "hu" ? "A rakomány azonosító értéke nem érvényes. " : "The cargo id's value is not valid. ";
+                error += localizer["Id_cargo_not_valid"] + " ";
             }
 
         }
@@ -294,7 +294,7 @@
                 isValidSubmit = false;
                 roads.Vehicle_registration_number = null;
                 await checkValidSubmit.InvokeAsync(false);
-                error += CultureInfo.CurrentCulture.Name == "hu" ? "A rendszám értéke nem érvényes. " : "The vehicle r. number's value is not valid. ";
+                error += localizer["VRN_invalid"] + " ";
             }
 
         }
@@ -327,7 +327,7 @@
                 isValidSubmit = false;
                 roads.Expenses_id = null;
                 await checkValidSubmit.InvokeAsync(false);
-                error += CultureInfo.CurrentCulture.Name == "hu" ? "A kiadás azonosító értéke nem érvényes. " : "The expense id's value is not valid. ";
+                error += localizer["expense_id_invalid"] + " ";
             }
 
         }
@@ -363,7 +363,7 @@
                 isValidSubmit = false;
                 roads.Task_id = null;
                 await checkValidSubmit.InvokeAsync(false);
-                error += CultureInfo.CurrentCulture.Name == "hu" ? "A megbízás azonosító értéke nem érvényes. " : "The task id's value is not valid. ";
+                error += localizer["task_id_invalid"] + " ";
             }
 
         }
@@ -386,7 +386,7 @@
                 isValidSubmit = false;
                 roads.Direction = null;
                 await checkValidSubmit.InvokeAsync(false);
-                error += CultureInfo.CurrentCulture.Name == "hu" ? "Az irány értéke nem érvényes. " : "The direction's value is not valid. ";
+                error += localizer["direction_invalid"] + " ";
             }
 
         }
