@@ -55,7 +55,7 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<List<Trucks>> GetData(string? searchString, Status? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        private async Task<List<Trucks>> GetData(string? searchString, Status? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var data = await _context.Trucks.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
 
