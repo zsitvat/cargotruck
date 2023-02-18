@@ -129,6 +129,7 @@
         {"numberOfCargoes",0},
         {"numberOfUsers",0}
         };
+
         numbersDic["numberOfTasks"] = await client.GetFromJsonAsync<int>($"api/tasks/count?all={true}");
         numbersDic["numberOfTrucks"] = await client.GetFromJsonAsync<int>($"api/trucks/count?all={true}");
         numbersDic["numberOfCargoes"] = await client.GetFromJsonAsync<int>($"api/cargoes/count?all={true}");
@@ -171,7 +172,7 @@
             {
                 counts["numberOfTasksUnFinished"] = i;
             }
-             if (i <= MaxNumbers["numberOfTrucksUnFinished"])
+            if (i <= MaxNumbers["numberOfTrucksUnFinished"])
             {
                 counts["numberOfTrucksUnFinished"] = i;
             }

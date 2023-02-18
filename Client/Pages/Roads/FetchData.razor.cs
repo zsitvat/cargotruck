@@ -99,7 +99,7 @@ namespace Cargotruck.Client.Pages.Roads
             await OnInitializedAsync();
         }
 
-        public static void SettingsChanged() { }
+        public static void SettingsChanged() {}
 
         public async void InputChanged(int ChangedPageSize)
         {

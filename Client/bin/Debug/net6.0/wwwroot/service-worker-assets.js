@@ -1057,11 +1057,11 @@
       "url": "_framework\/en\/Cargotruck.Shared.resources.dll"
     },
     {
-      "hash": "sha256-bksEtB8T+aKD7yciZaivYUJutyA6tfjTdE7Ovp6auHc=",
+      "hash": "sha256-OOHb5sctJTFAX+HtRZRK5EJ\/qBijKCCHJtGkol6aG6k=",
       "url": "_framework\/Cargotruck.Client.dll"
     },
     {
-      "hash": "sha256-GlHIdrUCpgNLTjE5jdkmT3xk\/BlgMfbqUy0uG8JREHU=",
+      "hash": "sha256-EtRLZjuDtZPmtP0kdnKJiCn2C9dwqVXSg0KQr5OwOTc=",
       "url": "_framework\/Cargotruck.Client.pdb"
     },
     {
@@ -1069,7 +1069,7 @@
       "url": "_framework\/blazor.webassembly.js"
     },
     {
-      "hash": "sha256-2xUXsPgorofqXeLddDYXqoU0iarRVMN3iFRNLb5NYAQ=",
+      "hash": "sha256-tFqiYydq7WrqskCuxp0bGN49vTLYJ6mfPpdb\/5vqvxM=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -1081,5 +1081,5 @@
       "url": "_content\/ChartJs.Blazor.Fork\/ChartJsBlazorInterop.js"
     }
   ],
-  "version": "NnMGgEI2"
+  "version": "sC6HW0fO"
 };
