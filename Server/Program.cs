@@ -32,6 +32,7 @@ static string GetRandomString()
 
 
 var builder = WebApplication.CreateBuilder(args);
+
 builder.Services.AddMvc().AddControllersAsServices();
 
 // Add services to the container.
@@ -60,7 +61,6 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
-
 
 
 // add the appDbContext service
@@ -102,7 +102,6 @@ app.UseAuthentication();
 app.UseHttpsRedirection();
 app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
-app.UseHttpsRedirection();
 app.UseRouting();
 app.UseAuthorization();
 app.MapRazorPages();
