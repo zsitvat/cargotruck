@@ -11,8 +11,8 @@ namespace Cargotruck.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
             //create the database for mainly testing in local
-            Database.EnsureCreated();
-            //Database.Migrate();
+            //Database.EnsureCreated();
+            Database.Migrate();
         }
         public override DbSet<Users> Users { get; set; } = default!;
         public DbSet<Tasks> Tasks { get; set; } = default!;

@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Newtonsoft.Json;
+using System.Net.Http.Json;
+using Cargotruck.Shared.Models;
 
 namespace Cargotruck.Client.Services
 {
@@ -18,7 +20,13 @@ namespace Cargotruck.Client.Services
                 RequestUri = new Uri("https://api.apilayer.com/exchangerates_data/latest?symbols=EUR,HUF,USD,CZK&base=EUR")
             };
 
-            request.Headers.Add("apikey", "XwSDWGpGqDKu8ZIbOl56Kne74V14oEpC");
+            /*	ExchangeApiKey	XwSDWGpGqDKu8ZIbOl56Kne74V14oEpC */
+            var settings = await client!.GetFromJsonAsync<Settings[]>("api/settings/get");
+            var key = settings?.FirstOrDefault(x => x.SettingName == "ExchangeApiKey");
+
+            if (key != null) { 
+                request.Headers.Add("apikey", key?.SettingValue);
+            }
 
             var response = await client?.SendAsync(request)!;
             var result = response.Content.ReadAsStringAsync().Result;

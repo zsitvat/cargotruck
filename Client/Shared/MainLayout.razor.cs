@@ -10,9 +10,6 @@ namespace Cargotruck.Client.Shared
     {
         bool showError = false;
         bool expandSubMenu;
-        [Inject]
-        static HttpClient? Client { get; set; }
-
         string? currency_api_error;
         [CascadingParameter]
         Task<AuthenticationState>? AuthenticationState { get; set; }
