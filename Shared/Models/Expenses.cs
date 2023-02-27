@@ -41,6 +41,9 @@ namespace Cargotruck.Shared.Models
         [Display(Name = "other", ResourceType = typeof(Resource))]
         [Range(0, int.MaxValue, ErrorMessageResourceName = "OnlyPositive", ErrorMessageResourceType = typeof(Resource))]
         public int? Other { get; set; }
+        [Display(Name = "Total_amount", ResourceType = typeof(Resource))]
+        [Range(0, int.MaxValue, ErrorMessageResourceName = "OnlyPositive", ErrorMessageResourceType = typeof(Resource))]
+        public int? Total_amount { get; set; }
         [Display(Name = "Date", ResourceType = typeof(Resource))]
         public DateTime Date { get; set; } = DateTime.Now;
     }

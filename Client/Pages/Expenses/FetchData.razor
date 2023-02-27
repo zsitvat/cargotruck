@@ -23,7 +23,7 @@
 
     <span class="file-upload-title" import-data-title="@localizer["File_input"]"><UploadFiles page="expenses" StateChanged="StateChanged" /></span>
     <input value="@searchString" @oninput="@Search" placeholder="@(searchString != "" ? searchString : localizer["Search"])" class="form-control inputs input_search" type="search" id="search-input" name="SearchString">
-    
+
     <!--Filter icon-->
     @if (filter == Cargotruck.Shared.Models.Type.salary || filter == Cargotruck.Shared.Models.Type.storage || filter == Cargotruck.Shared.Models.Type.repair || filter == Cargotruck.Shared.Models.Type.task || filter == Cargotruck.Shared.Models.Type.other)
     {
@@ -48,7 +48,7 @@
             }
         </div>
     </div>
-    
+
     <CurrencySelectInput OnCurrencyChanged="SettingsChanged" />
 
     <!--Date Filter-->
@@ -120,29 +120,33 @@ else
                                 {
                                     <th><button class="@(sortOrder=="Repair_description" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Repair_description"))">@localizer["Repair_description"]</button></th>
                                 }
-                                 @if (showColumns[9])
+                                @if (showColumns[9])
                                 {
                                     <th><button class="@(sortOrder=="Cost_of_storage" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Cost_of_storage"))">@localizer["Cost_of_storage"]</button></th>
                                 }
-                                 @if (showColumns[10])
+                                @if (showColumns[10])
                                 {
-                                    <th><button class="@(sortOrder=="other" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("other"))">@localizer["other"]</button></th>
+                                    <th><button class="@(sortOrder=="Other" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Other"))">@localizer["other"]</button></th>
                                 }
                                 @if (showColumns[11])
+                                {
+                                    <th><button class="@(sortOrder=="Total_amount" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Total_amount"))">@localizer["Total_amount"]</button></th>
+                                }
+                                @if (showColumns[12])
                                 {
                                     <th class="last-col"><button class="@(sortOrder=="Date" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Date"))">@localizer["Date"]</button></th>
                                 }
                             </tr>
                         </thead>
                         <tbody>
-                            
+
                             @foreach (Expenses item in expenses)
                             {
 
                                 <tr @onclick="@((e) =>MouseHoverClass.MouseOnclick(item.Id.ToString()))" @onmouseover="@((e) =>MouseHoverClass.MouseOver(item.Id.ToString()))" @onmouseout="@((e) =>MouseHoverClass.MouseOut())"
-                            class="@(MouseHoverClass.MouseOnHoverClass == item.Id.ToString() || MouseHoverClass.MouseOnclickClass == item.Id.ToString() ? "color-on-hover" :"")">
+                                    class="@(MouseHoverClass.MouseOnHoverClass == item.Id.ToString() || MouseHoverClass.MouseOnclickClass == item.Id.ToString() ? "color-on-hover" :"")">
                                     <td>@item.Id</td>
-                                  
+
                                     @if (showColumns[0])
                                     {
                                         <td>
@@ -159,11 +163,14 @@ else
                                             {
                                                 <button class="no-button" @onclick="@(()=>GetById(item.Type_id,item.Type?.ToString()!))">@item.Type_id<span class="icon iconify" data-icon="material-symbols:read-more-rounded"></span></button>
                                             }
+                                            else{
+                                                <span disabled>-</span>
+                                            }
                                         </td>
                                     }
                                     @if (showColumns[2])
                                     {
-                                         <td>
+                                        <td>
                                             @if (@item.Fuel != null)
                                             {
                                                 @if (CurrencyExchange.currency != "HUF" && CurrencyExchange.Rates != null)
@@ -195,9 +202,9 @@ else
                                     }
                                     @if (showColumns[4])
                                     {
-                                         <td>
+                                        <td>
                                             @if (@item.Penalty != null)
-                                                {
+                                            {
                                                 @if (CurrencyExchange.currency != "HUF" && CurrencyExchange.Rates != null)
                                                 {
                                                     @(CurrencyExchange.GetCurrency(item.Penalty, CurrencyExchange.currency)!.Value.ToString("0.##") + " " + CurrencyExchange.currency)
@@ -212,9 +219,9 @@ else
                                     @if (showColumns[5])
                                     {
                                         <td>
-                                            @if(@item.Driver_spending != null)
-                                                {
-                                                @if(CurrencyExchange.currency != "HUF" && CurrencyExchange.Rates != null)
+                                            @if (@item.Driver_spending != null)
+                                            {
+                                                @if (CurrencyExchange.currency != "HUF" && CurrencyExchange.Rates != null)
                                                 {
                                                     @(CurrencyExchange.GetCurrency(item.Driver_spending, CurrencyExchange.currency)!.Value.ToString("0.##") + " " + CurrencyExchange.currency)
                                                 }
@@ -227,7 +234,7 @@ else
                                     }
                                     @if (showColumns[6])
                                     {
-                                         <td>
+                                        <td>
                                             @if (@item.Driver_salary != null)
                                             {
                                                 @if (CurrencyExchange.currency != "HUF" && CurrencyExchange.Rates != null)
@@ -292,8 +299,24 @@ else
                                                 }
                                             }
                                         </td>
-                                    }
+                                    }  
                                     @if (showColumns[11])
+                                    {
+                                        <td>
+                                            @if (@item.Total_amount != null)
+                                            {
+                                                @if (CurrencyExchange.currency != "HUF" && CurrencyExchange.Rates != null)
+                                                {
+                                                    @(CurrencyExchange.GetCurrency(item.Total_amount, CurrencyExchange.currency)!.Value.ToString("0.##") + " " + CurrencyExchange.currency)
+                                                }
+                                                else
+                                                {
+                                                    @(item.Total_amount + " HUF")
+                                                }
+                                            }
+                                        </td>
+                                    }
+                                    @if (showColumns[12])
                                     {
                                         <td>@item.Date</td>
                                     }

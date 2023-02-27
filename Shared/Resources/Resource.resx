@@ -852,6 +852,9 @@
   <data name="to" xml:space="preserve">
     <value>Odaút</value>
   </data>
+  <data name="Total_amount" xml:space="preserve">
+    <value>Összesen</value>
+  </data>
   <data name="truck" xml:space="preserve">
     <value>Gépjármű</value>
   </data>

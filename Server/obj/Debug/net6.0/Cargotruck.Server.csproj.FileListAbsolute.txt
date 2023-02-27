@@ -1,3 +1,11 @@
+F:\Szakdoga app\Cargotruck\Server\obj\Debug\net6.0\Cargotruck.Server.csproj.AssemblyReference.cache
+F:\Szakdoga app\Cargotruck\Server\obj\Debug\net6.0\Cargotruck.Server.GeneratedMSBuildEditorConfig.editorconfig
+F:\Szakdoga app\Cargotruck\Server\obj\Debug\net6.0\Cargotruck.Server.AssemblyInfoInputs.cache
+F:\Szakdoga app\Cargotruck\Server\obj\Debug\net6.0\Cargotruck.Server.AssemblyInfo.cs
+F:\Szakdoga app\Cargotruck\Server\obj\Debug\net6.0\Cargotruck.Server.csproj.CoreCompileInputs.cache
+F:\Szakdoga app\Cargotruck\Server\obj\Debug\net6.0\Cargotruck.Server.MvcApplicationPartsAssemblyInfo.cache
+F:\Szakdoga app\Cargotruck\Server\obj\Debug\net6.0\Cargotruck.Server.RazorAssemblyInfo.cache
+F:\Szakdoga app\Cargotruck\Server\obj\Debug\net6.0\Cargotruck.Server.RazorAssemblyInfo.cs
 F:\Szakdoga app\Cargotruck\Server\bin\Debug\net6.0\Cargotruck.Client.staticwebassets.runtime.json
 F:\Szakdoga app\Cargotruck\Server\bin\Debug\net6.0\appsettings.json
 F:\Szakdoga app\Cargotruck\Server\bin\Debug\net6.0\BlazorDebugProxy\BrowserDebugHost.dll
@@ -106,14 +114,6 @@ F:\Szakdoga app\Cargotruck\Server\bin\Debug\net6.0\Cargotruck.Shared.dll
 F:\Szakdoga app\Cargotruck\Server\bin\Debug\net6.0\Cargotruck.Client.pdb
 F:\Szakdoga app\Cargotruck\Server\bin\Debug\net6.0\Cargotruck.Shared.pdb
 F:\Szakdoga app\Cargotruck\Server\bin\Debug\net6.0\en\Cargotruck.Shared.resources.dll
-F:\Szakdoga app\Cargotruck\Server\obj\Debug\net6.0\Cargotruck.Server.csproj.AssemblyReference.cache
-F:\Szakdoga app\Cargotruck\Server\obj\Debug\net6.0\Cargotruck.Server.GeneratedMSBuildEditorConfig.editorconfig
-F:\Szakdoga app\Cargotruck\Server\obj\Debug\net6.0\Cargotruck.Server.AssemblyInfoInputs.cache
-F:\Szakdoga app\Cargotruck\Server\obj\Debug\net6.0\Cargotruck.Server.AssemblyInfo.cs
-F:\Szakdoga app\Cargotruck\Server\obj\Debug\net6.0\Cargotruck.Server.csproj.CoreCompileInputs.cache
-F:\Szakdoga app\Cargotruck\Server\obj\Debug\net6.0\Cargotruck.Server.MvcApplicationPartsAssemblyInfo.cache
-F:\Szakdoga app\Cargotruck\Server\obj\Debug\net6.0\Cargotruck.Server.RazorAssemblyInfo.cache
-F:\Szakdoga app\Cargotruck\Server\obj\Debug\net6.0\Cargotruck.Server.RazorAssemblyInfo.cs
 F:\Szakdoga app\Cargotruck\Server\obj\Debug\net6.0\staticwebassets\msbuild.Cargotruck.Server.Microsoft.AspNetCore.StaticWebAssets.props
 F:\Szakdoga app\Cargotruck\Server\obj\Debug\net6.0\staticwebassets\msbuild.build.Cargotruck.Server.props
 F:\Szakdoga app\Cargotruck\Server\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.Cargotruck.Server.props

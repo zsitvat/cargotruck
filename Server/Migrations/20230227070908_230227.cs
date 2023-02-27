@@ -5,11 +5,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Cargotruck.Server.Migrations
 {
-    public partial class _230225 : Migration
+    public partial class _230227 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -89,6 +88,7 @@ namespace Cargotruck.Server.Migrations
                     Repair_description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Cost_of_storage = table.Column<int>(type: "int", nullable: true),
                     Other = table.Column<int>(type: "int", nullable: true),
+                    Total_amount = table.Column<int>(type: "int", nullable: true),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -249,6 +249,26 @@ namespace Cargotruck.Server.Migrations
                     table.PrimaryKey("PK_Warehouses", x => x.Id);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "AspNetRoleClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.CreateTable(
                 name: "AspNetUserClaims",
@@ -316,6 +336,26 @@ namespace Cargotruck.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AspNetUserTokens",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserTokens_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Monthly_expenses_tasks_expenses",
                 columns: table => new
                 {
@@ -336,19 +376,28 @@ namespace Cargotruck.Server.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+          
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "11960169-d4ba-47c6-88d1-91fd863b36d4", "53bd6dd5-d1a3-4dc1-9f4b-a3345c8fba06", "Storageman", "STORAGEMAN" },
-                    { "5300ec57-8c43-41f7-b734-b207fbab3bb1", "5c25ea87-0692-46d5-b4e6-9f830c6e9a8a", "User", "USER" },
-                    { "a5f02071-e4fb-4294-8f03-b0257af00756", "0df18ed5-4fbd-4b9f-be28-2bcde6b07280", "Admin", "ADMIN" },
-                    { "c001efce-4d78-41f8-9044-12bf1717f3f8", "ac688381-5f20-4f89-bca5-fd7f6f6d45ea", "Accountant", "ACCOUNTANT" },
-                    { "efa9b389-4626-4dcb-bd9e-596f3e6d29a1", "65f3f192-4b09-4d56-9a3d-283c19328a84", "Driver", "DRIVER" }
+                    { "4b85ea10-1629-42cf-bff7-754cfab11b34", "bc76dd9f-0c30-4e30-b6fc-16f9cb00ceea", "User", "USER" },
+                    { "bc21cdf8-4617-44f7-87e5-b3670a8d35fa", "5abcdeb8-7cdf-4db8-96d8-bbd3427e6b83", "Accountant", "ACCOUNTANT" },
+                    { "d3a697cb-2188-4745-b463-41a9e5183ee9", "4008938c-d3c0-4cf0-b770-f956087a13bf", "Driver", "DRIVER" },
+                    { "f2b4c37a-aaae-41c7-b5de-28a2de89bb66", "484ddac7-529b-433b-966e-b52fdc7a81d1", "Admin", "ADMIN" },
+                    { "f70abf6d-fe85-4f8c-992c-e1914e078181", "4bc3a931-7a64-41d2-b914-051f59ff0527", "Storageman", "STORAGEMAN" }
                 });
 
-            
+
+            //add settings for currency api
+            migrationBuilder.Sql("SET IDENTITY_INSERT [dbo].[Settings] ON\r\nINSERT INTO [dbo].[Settings] ([Id], [SettingName], [SettingValue], [Date]) VALUES (1, N'CurrencyExchangeWaitTime', N'3600', N'2023-02-25 00:00:00')\r\nINSERT INTO [dbo].[Settings] ([Id], [SettingName], [SettingValue], [Date]) VALUES (3, N'ExchangeApiKey', N'XwSDWGpGqDKu8ZIbOl56Kne74V14oEpC', N'2023-02-25 00:00:00')\r\nSET IDENTITY_INSERT [dbo].[Settings] OFF\r\n");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetRoleClaims_RoleId",
+                table: "AspNetRoleClaims",
+                column: "RoleId");
+
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
                 table: "AspNetRoles",
@@ -387,13 +436,12 @@ namespace Cargotruck.Server.Migrations
                 name: "IX_Monthly_expenses_tasks_expenses_Monthly_expense_id",
                 table: "Monthly_expenses_tasks_expenses",
                 column: "Monthly_expense_id");
-
-            //add settings for currency api
-            migrationBuilder.Sql("SET IDENTITY_INSERT [dbo].[Settings] ON\r\nINSERT INTO [dbo].[Settings] ([Id], [SettingName], [SettingValue], [Date]) VALUES (1, N'CurrencyExchangeWaitTime', N'3600', N'2023-02-25 00:00:00')\r\nINSERT INTO [dbo].[Settings] ([Id], [SettingName], [SettingValue], [Date]) VALUES (3, N'ExchangeApiKey', N'XwSDWGpGqDKu8ZIbOl56Kne74V14oEpC', N'2023-02-25 00:00:00')\r\nSET IDENTITY_INSERT [dbo].[Settings] OFF\r\n");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "AspNetRoleClaims");
 
             migrationBuilder.DropTable(
                 name: "AspNetUserClaims");
@@ -403,6 +451,9 @@ namespace Cargotruck.Server.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserRoles");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
                 name: "Cargoes");

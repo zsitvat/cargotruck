@@ -2266,6 +2266,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Összesen.
+        /// </summary>
+        public static string Total_amount {
+            get {
+                return ResourceManager.GetString("Total_amount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Gépjármű.
         /// </summary>
         public static string truck {

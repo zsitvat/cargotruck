@@ -858,6 +858,9 @@
   <data name="to" xml:space="preserve">
     <value>Road to the destination</value>
   </data>
+  <data name="Total_amount" xml:space="preserve">
+    <value>Total amount</value>
+  </data>
   <data name="truck" xml:space="preserve">
     <value>truck</value>
   </data>

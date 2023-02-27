@@ -39,7 +39,8 @@ namespace Cargotruck.Server.Controllers
             sortOrder = sortOrder == "Repair_cost" ? (desc ? "Repair_cost_desc" : "Repair_cost") : (sortOrder);
             sortOrder = sortOrder == "Repair_description" ? (desc ? "Repair_description_desc" : "Repair_description") : (sortOrder);
             sortOrder = sortOrder == "Cost_of_storage" ? (desc ? "Cost_of_storage_desc" : "Cost_of_storage") : (sortOrder);
-            sortOrder = sortOrder == "other" ? (desc ? "other_desc" : "other") : (sortOrder);
+            sortOrder = sortOrder == "Other" ? (desc ? "Other_desc" : "Other") : (sortOrder);
+            sortOrder = sortOrder == "Total_amount" ? (desc ? "Total_amount_desc" : "Total_amount") : (sortOrder);
             sortOrder = sortOrder == "Date" || String.IsNullOrEmpty(sortOrder) ? (desc ? "Date_desc" : "") : (sortOrder);
 
             data = sortOrder switch
@@ -62,10 +63,12 @@ namespace Cargotruck.Server.Controllers
                 "Repair_cost" => data.OrderBy(s => s.Repair_cost).ToList(),
                 "Repair_description_desc" => data.OrderByDescending(s => s.Repair_description).ToList(),
                 "Repair_description" => data.OrderBy(s => s.Repair_description).ToList(),
-                "Cost_of_storage_desc" => data.OrderByDescending(s => s.Repair_description).ToList(),
-                "Cost_of_storage" => data.OrderBy(s => s.Repair_description).ToList(),
-                "other_desc" => data.OrderByDescending(s => s.Repair_description).ToList(),
-                "other" => data.OrderBy(s => s.Repair_description).ToList(),
+                "Cost_of_storage_desc" => data.OrderByDescending(s => s.Cost_of_storage).ToList(),
+                "Cost_of_storage" => data.OrderBy(s => s.Cost_of_storage).ToList(),
+                "Other_desc" => data.OrderByDescending(s => s.Other).ToList(),
+                "Other" => data.OrderBy(s => s.Other).ToList(),
+                "Total_amount_desc" => data.OrderByDescending(s => s.Total_amount).ToList(),
+                "Total_amount" => data.OrderBy(s => s.Total_amount).ToList(),
                 "Date_desc" => data.OrderByDescending(s => s.Date).ToList(),
                 _ => data.OrderBy(s => s.Date).ToList(),
             };
@@ -98,6 +101,7 @@ namespace Cargotruck.Server.Controllers
             || (s.Repair_description != null && s.Repair_description.ToString()!.Contains(searchString))
             || (s.Cost_of_storage != null && s.Cost_of_storage.ToString()!.Contains(searchString))
             || (s.Other != null && s.Other.ToString()!.Contains(searchString))
+            || (s.Total_amount != null && s.Total_amount.ToString()!.Contains(searchString))
             ).ToList();
             }
 
@@ -137,6 +141,7 @@ namespace Cargotruck.Server.Controllers
         public async Task<IActionResult> Post(Expenses data)
         {
             data.User_id = _context?.Users?.FirstOrDefault(a => a.UserName == User.Identity!.Name)?.Id;
+            data.Total_amount = GetTotalAmount(data);
             _context?.Add(data);
             await _context?.SaveChangesAsync()!;
 
@@ -156,6 +161,7 @@ namespace Cargotruck.Server.Controllers
         [HttpPut]
         public async Task<IActionResult> Put(Expenses data)
         {
+            data.Total_amount = GetTotalAmount(data);
             _context.Entry(data).State = EntityState.Modified;
             if (data.Type.ToString() == Type.repair.ToString())
             {
@@ -169,6 +175,15 @@ namespace Cargotruck.Server.Controllers
             await _context.SaveChangesAsync();
             return NoContent();
         }
+
+        private int? GetTotalAmount(Expenses data)
+        {
+            var totalAmount = (data.Fuel != null ? data.Fuel : 0 ) + (data.Road_fees != null ? data.Road_fees : 0) + (data.Penalty != null ? data.Penalty : 0) +
+                (data.Cost_of_storage != null ? data.Cost_of_storage : 0) + (data.Driver_salary != null ? data.Driver_salary : 0) +
+                (data.Driver_spending != null ? data.Driver_spending  : 0) + (data.Other != null ? data.Other : 0) + (data.Repair_cost != null ? data.Repair_cost : 0);
+            return totalAmount != null ? totalAmount : 0;
+        }
+
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
@@ -204,6 +219,7 @@ namespace Cargotruck.Server.Controllers
                 lang == "hu" ? Cargotruck.Shared.Resources.Resource.Repair_description : "Repair description",
                 lang == "hu" ? Cargotruck.Shared.Resources.Resource.Cost_of_storage : "Cost of storage",
                 lang == "hu" ? Cargotruck.Shared.Resources.Resource.other : "Other",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Total_amount : "Total amount",
                 lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date",
             };
 
@@ -220,16 +236,17 @@ namespace Cargotruck.Server.Controllers
                 worksheet.Cell(currentRow, 2).Value = expense.User_id;
                 worksheet.Cell(currentRow, 3).Value = expense.Type;
                 worksheet.Cell(currentRow, 4).Value = expense.Type_id;
-                worksheet.Cell(currentRow, 5).Value += (expense.Fuel != null ? " HUF" : "");
-                worksheet.Cell(currentRow, 6).Value += (expense.Road_fees != null ? " HUF" : "");
-                worksheet.Cell(currentRow, 7).Value += (expense.Penalty != null ? " HUF" : "");
-                worksheet.Cell(currentRow, 8).Value += (expense.Driver_spending != null ? " HUF" : "");
-                worksheet.Cell(currentRow, 9).Value += (expense.Driver_salary != null ? " HUF" : "");
-                worksheet.Cell(currentRow, 10).Value += (expense.Repair_cost != null ? " HUF" : "");
+                worksheet.Cell(currentRow, 5).Value = expense.Fuel + (expense.Fuel != null ? " HUF" : "");
+                worksheet.Cell(currentRow, 6).Value = expense.Road_fees + (expense.Road_fees != null ? " HUF" : "");
+                worksheet.Cell(currentRow, 7).Value = expense.Penalty + (expense.Penalty != null ? " HUF" : "");
+                worksheet.Cell(currentRow, 8).Value = expense.Driver_spending + (expense.Driver_spending != null ? " HUF" : "");
+                worksheet.Cell(currentRow, 9).Value = expense.Driver_salary + (expense.Driver_salary != null ? " HUF" : "");
+                worksheet.Cell(currentRow, 10).Value = expense.Repair_cost + (expense.Repair_cost != null ? " HUF" : "");
                 worksheet.Cell(currentRow, 11).Value = expense.Repair_description;
-                worksheet.Cell(currentRow, 12).Value += (expense.Cost_of_storage != null ? " HUF" : "");
-                worksheet.Cell(currentRow, 13).Value += (expense.Other != null ? " HUF" : "");
-                worksheet.Cell(currentRow, 14).Value = expense.Date;
+                worksheet.Cell(currentRow, 12).Value = expense.Cost_of_storage + (expense.Cost_of_storage != null ? " HUF" : "");
+                worksheet.Cell(currentRow, 13).Value = expense.Other + (expense.Other != null ? " HUF" : "");
+                worksheet.Cell(currentRow, 14).Value = expense.Total_amount + (expense.Total_amount != null ? " HUF" : "");
+                worksheet.Cell(currentRow, 15).Value = expense.Date;
             }
 
             using var stream = new MemoryStream();
@@ -532,6 +549,7 @@ namespace Cargotruck.Server.Controllers
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Repair_description : "Repair description") + ";");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Cost_of_storage : "Cost of storage") + ";");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.other : "Other") + ";");
+            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Total_amount : "Total amount") + ";");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date") + ";");
             txt.Write("\n");
 
@@ -619,6 +637,7 @@ namespace Cargotruck.Server.Controllers
                                 lang == "hu" ? Cargotruck.Shared.Resources.Resource.Repair_description : "Repair description",
                                 lang == "hu" ? Cargotruck.Shared.Resources.Resource.Cost_of_storage : "Cost of storage",
                                 lang == "hu" ? Cargotruck.Shared.Resources.Resource.other : "Other",
+                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Total_amount : "Total amount",
                                 lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date"
                             };
 
@@ -680,18 +699,23 @@ namespace Cargotruck.Server.Controllers
                                     _ => System.DBNull.Value,
                                 };
 
+                                var totalAmount = 0;
                                 for (int i = l + 3; i < list.Count - 1; i++)
                                 {
                                     if (i != (l + 9) && list[i] != null && list[i] != System.DBNull.Value)
                                     {
                                         list[i] = new String(list[i]?.ToString()?.Where(Char.IsDigit).ToArray());
+                                        if(list[i] != null && i < l+12) { 
+                                            totalAmount += Int32.Parse(list[i]?.ToString()!);
+                                        }
                                     }
                                 }
 
                                 if (nulls != list.Count)
                                 {
-                                    var sql = @"Insert Into Expenses (User_id,Type,Type_id,Fuel,Road_fees,Penalty,Driver_spending,Driver_salary,Repair_cost,Repair_description,Cost_of_storage,other,Date) 
-                                    Values (@User_id,@Type,@Type_id,@Fuel,@Road_fees,@Penalty,@Driver_spending,@Driver_salary,@Repair_cost,@Repair_description,@Cost_of_storage,@other,@Date)";
+
+                                    var sql = @"Insert Into Expenses (User_id,Type,Type_id,Fuel,Road_fees,Penalty,Driver_spending,Driver_salary,Repair_cost,Repair_description,Cost_of_storage,Total_amount,other,Date) 
+                                    Values (@User_id,@Type,@Type_id,@Fuel,@Road_fees,@Penalty,@Driver_spending,@Driver_salary,@Repair_cost,@Repair_description,@Cost_of_storage,@Total_amount,@other,@Date)";
                                     var insert = await _context.Database.ExecuteSqlRawAsync(sql,
                                         new SqlParameter("@User_id", list[l]),
                                         new SqlParameter("@Type", list[l + 1]),
@@ -705,6 +729,7 @@ namespace Cargotruck.Server.Controllers
                                         new SqlParameter("@Repair_description", list[l + 9]),
                                         new SqlParameter("@Cost_of_storage", list[l + 10]),
                                         new SqlParameter("@other", list[l + 11]),
+                                        new SqlParameter("@Total_amount", totalAmount),
                                         new SqlParameter("@Date", DateTime.Now)
                                         );
 
@@ -714,7 +739,7 @@ namespace Cargotruck.Server.Controllers
 
                                         if (lastId != null)
                                         {
-                                            var WithNewIds = await _context.Expenses.Where(x => x.Type == lastId.Type && x.Type_id == lastId.Type_id).ToListAsync();
+                                            var WithNewIds = await _context.Expenses.Where(x => x.Type == lastId.Type && x.Type_id == lastId.Type_id && x.Type!= Type.other && x.Type != Type.salary).ToListAsync();
                                             Roads? road = await _context.Roads.FirstOrDefaultAsync(x => x.Id == lastId.Type_id && lastId.Type == Type.repair);
                                             Tasks? task = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == lastId.Type_id && lastId.Type == Type.task);
                                             Cargoes? cargo = await _context.Cargoes.FirstOrDefaultAsync(x => x.Id == lastId.Type_id && lastId.Type == Type.storage);

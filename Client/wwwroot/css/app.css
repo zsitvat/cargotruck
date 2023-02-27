@@ -188,6 +188,7 @@ a:active {
     right: -22.5rem;
     top: 5rem;
     max-width: 25rem;
+    max-height:20rem;
     padding: 0.5rem;
     box-shadow: 0 1px 1px hsl(0deg 0% 0% / 0.075), 0 2px 2px hsl(0deg 0% 0% / 0.075), 0 4px 4px hsl(0deg 0% 0% / 0.075), 0 8px 8px hsl(0deg 0% 0% / 0.075), 0 16px 16px hsl(0deg 0% 0% / 0.075);
     border: 1px solid rgba(120,120,120,.1);
@@ -198,7 +199,14 @@ a:active {
     padding-left: 3.5rem;
     animation-direction: alternate-reverse;
     animation: document_error_alert 8s;
+    overflow-y:auto;
 }
+
+.page-error .p-error {
+    max-width: 20rem;
+    word-wrap: break-word;
+}
+
 
 .page-error:hover {
     animation-direction: alternate-reverse;

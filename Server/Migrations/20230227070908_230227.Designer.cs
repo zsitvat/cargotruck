@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cargotruck.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230225164711_230225")]
-    partial class _230225
+    [Migration("20230227070908_230227")]
+    partial class _230227
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -170,6 +170,9 @@ namespace Cargotruck.Server.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("Road_fees")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Total_amount")
                         .HasColumnType("int");
 
                     b.Property<int>("Type")
@@ -533,36 +536,36 @@ namespace Cargotruck.Server.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "5300ec57-8c43-41f7-b734-b207fbab3bb1",
-                            ConcurrencyStamp = "5c25ea87-0692-46d5-b4e6-9f830c6e9a8a",
+                            Id = "4b85ea10-1629-42cf-bff7-754cfab11b34",
+                            ConcurrencyStamp = "bc76dd9f-0c30-4e30-b6fc-16f9cb00ceea",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "a5f02071-e4fb-4294-8f03-b0257af00756",
-                            ConcurrencyStamp = "0df18ed5-4fbd-4b9f-be28-2bcde6b07280",
+                            Id = "f2b4c37a-aaae-41c7-b5de-28a2de89bb66",
+                            ConcurrencyStamp = "484ddac7-529b-433b-966e-b52fdc7a81d1",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "efa9b389-4626-4dcb-bd9e-596f3e6d29a1",
-                            ConcurrencyStamp = "65f3f192-4b09-4d56-9a3d-283c19328a84",
+                            Id = "d3a697cb-2188-4745-b463-41a9e5183ee9",
+                            ConcurrencyStamp = "4008938c-d3c0-4cf0-b770-f956087a13bf",
                             Name = "Driver",
                             NormalizedName = "DRIVER"
                         },
                         new
                         {
-                            Id = "c001efce-4d78-41f8-9044-12bf1717f3f8",
-                            ConcurrencyStamp = "ac688381-5f20-4f89-bca5-fd7f6f6d45ea",
+                            Id = "bc21cdf8-4617-44f7-87e5-b3670a8d35fa",
+                            ConcurrencyStamp = "5abcdeb8-7cdf-4db8-96d8-bbd3427e6b83",
                             Name = "Accountant",
                             NormalizedName = "ACCOUNTANT"
                         },
                         new
                         {
-                            Id = "11960169-d4ba-47c6-88d1-91fd863b36d4",
-                            ConcurrencyStamp = "53bd6dd5-d1a3-4dc1-9f4b-a3345c8fba06",
+                            Id = "f70abf6d-fe85-4f8c-992c-e1914e078181",
+                            ConcurrencyStamp = "4bc3a931-7a64-41d2-b914-051f59ff0527",
                             Name = "Storageman",
                             NormalizedName = "STORAGEMAN"
                         });
