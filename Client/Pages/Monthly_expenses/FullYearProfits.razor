@@ -3,7 +3,7 @@
     <div class="form-card mb-1 table-width">
         <div class="card-body mb-3">
             <div class="table-responsive fixed-table-body">
-                <table class="table ">
+                <table class="table full-year-table">
                     <thead>
                         <tr>
                             <th>@localizer["Year"]</th>
@@ -74,6 +74,7 @@
 @code {
     Monthly_expenses[]? Monthly_expenses { get; set; }
     List<DataPerYear>? DataPerYearList = new();
+    [Parameter] public string Currency { get; set; } = "HUF";
 
     public class DataPerYear
     {
@@ -88,7 +89,7 @@
         Monthly_expenses = await client.GetFromJsonAsync<Monthly_expenses[]?>("api/Monthly_expenses/getmonthlyexpenses");
 
         if(Monthly_expenses != null){
-            @foreach (var item in Monthly_expenses)
+            @foreach (var item in Monthly_expenses.Where(x => x.Date.Year >= DateTime.Now.Year-2 || x.Date.Year <= DateTime.Now.Year+2))
             {
 
                 bool haveYear = false;

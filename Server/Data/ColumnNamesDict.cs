@@ -19,7 +19,7 @@
                     Cargotruck.Shared.Resources.Resource.other_stops,
                     Cargotruck.Shared.Resources.Resource.Id_cargo,
                     Cargotruck.Shared.Resources.Resource.Storage_time,
-                    Cargotruck.Shared.Resources.Resource.completed,
+                    Cargotruck.Shared.Resources.Resource.Completed,
                     Cargotruck.Shared.Resources.Resource.Completion_time,
                     Cargotruck.Shared.Resources.Resource.Time_of_delay,
                     Cargotruck.Shared.Resources.Resource.Payment,

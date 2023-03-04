@@ -333,9 +333,9 @@ namespace Cargotruck.Shared.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Teljesítve.
         /// </summary>
-        public static string completed {
+        public static string Completed {
             get {
-                return ResourceManager.GetString("completed", resourceCulture);
+                return ResourceManager.GetString("Completed", resourceCulture);
             }
         }
         
@@ -585,9 +585,9 @@ namespace Cargotruck.Shared.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Nem sikerült előállítani a fájlt!.
         /// </summary>
-        public static string Document_failder_to_create {
+        public static string Document_failed_to_create {
             get {
-                return ResourceManager.GetString("Document_failder_to_create", resourceCulture);
+                return ResourceManager.GetString("Document_failed_to_create", resourceCulture);
             }
         }
         

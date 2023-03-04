@@ -28,8 +28,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xDdXJyZW5jeVNlbGVjdElucHV0LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[F:/Szakdoga app/Cargotruck/Client/Components/GetbyidComponent.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xHZXRieWlkQ29tcG9uZW50LnJhem9y
+[F:/Szakdoga app/Cargotruck/Client/Components/GetByIdComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xHZXRCeUlkQ29tcG9uZW50LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [F:/Szakdoga app/Cargotruck/Client/Components/Pagination.razor]

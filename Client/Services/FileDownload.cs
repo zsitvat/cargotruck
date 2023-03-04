@@ -10,7 +10,7 @@ namespace Cargotruck.Client.Services
     public class FileDownload
     {
         [Inject] public static IStringLocalizer<Resource>? Localizer { get; set; }
-        public static string? DocumentError { get; set; }
+        public static string? DocumentError { get; set; } = null;
 
         public static async Task Export(string page, string documentExtension, DateFilter? dateFilter, HttpClient? client, IJSRuntime? js)
         {
@@ -64,7 +64,7 @@ namespace Cargotruck.Client.Services
             }
             else
             {
-                DocumentError = Localizer!["Document_failder_to_create"];
+                DocumentError = Localizer["Document_failed_to_create"];
             }
         }
     }

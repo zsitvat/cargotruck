@@ -207,7 +207,7 @@
   <data name="CheckFailed" xml:space="preserve">
     <value>Failed to update the values of monthly expenses!</value>
   </data>
-  <data name="completed" xml:space="preserve">
+  <data name="Completed" xml:space="preserve">
     <value>Completed</value>
   </data>
   <data name="Completion_time" xml:space="preserve">

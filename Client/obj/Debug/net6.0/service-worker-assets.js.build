@@ -1,7 +1,7 @@
 ﻿self.assetsManifest = {
   "assets": [
     {
-      "hash": "sha256-sgWBOIECpPKLvoNKoOUSBBCxuA17cD465xf7Fq9AaNA=",
+      "hash": "sha256-P9RPbR1rBLttwHipNAWzgO0LinqPGjltU5FiS3JjKlg=",
       "url": "css\/app.css"
     },
     {
@@ -1045,23 +1045,23 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-1h0yX4atmM2HU\/xK1qap\/LnuDMebJ4Zbxpbp84c4XOE=",
+      "hash": "sha256-aij20tWe905pQkLYzRW+M3iqnVqFwac\/oNvAyueVtc4=",
       "url": "_framework\/Cargotruck.Shared.dll"
     },
     {
-      "hash": "sha256-aj9USMvGnC7VmhdVMqe5kVJINjV3D2KUHLEmQkIW+w4=",
+      "hash": "sha256-XunepubwW9uNuu2U\/mKBYWSWm9WJcBNH67m\/VtBE8I4=",
       "url": "_framework\/Cargotruck.Shared.pdb"
     },
     {
-      "hash": "sha256-shVFXqwhLNcnVHJQAMo51GiajDokSTh3dUbea+pR6i4=",
+      "hash": "sha256-FudMFszrN0k3OqGaklnZCulaZoUCGM4BP05Ga1t7fZc=",
       "url": "_framework\/en\/Cargotruck.Shared.resources.dll"
     },
     {
-      "hash": "sha256-UBmWMulqb\/rXqhFwTJFAoCHqw2KxBsCaF4zdvW25M88=",
+      "hash": "sha256-uXoLfz2wu55AseNmloVwpHwa\/ehlGkQ0lJLajtWBdFU=",
       "url": "_framework\/Cargotruck.Client.dll"
     },
     {
-      "hash": "sha256-j8Ty7cEi9BU7h1tWlimrTIgSkUwY0eGQ3vKLi44KWC0=",
+      "hash": "sha256-S5Twn3MOEZfUVkz4RU9r\/WcmNIe4y5tKY\/Fije5URlM=",
       "url": "_framework\/Cargotruck.Client.pdb"
     },
     {
@@ -1069,7 +1069,7 @@
       "url": "_framework\/blazor.webassembly.js"
     },
     {
-      "hash": "sha256-VplyVL1XAmR9xURszglLQjsdNzZojw2+c\/UUnERPQVs=",
+      "hash": "sha256-DUTlvST3AejJpFJGQB2fZZ7GfGHK1WPlQMIQwzB4D4k=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -1081,5 +1081,5 @@
       "url": "_content\/ChartJs.Blazor.Fork\/ChartJsBlazorInterop.js"
     }
   ],
-  "version": "o6Wq0uiV"
+  "version": "\/7nb0aBW"
 };

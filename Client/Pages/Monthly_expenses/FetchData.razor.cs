@@ -26,7 +26,7 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
         private string? searchString = "";
         DateFilter? dateFilter = new();
 
-        protected override async Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
         {
             PageHistoryState.AddPageToHistory("/Monthly_expenses");
             base.OnInitialized();

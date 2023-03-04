@@ -17,7 +17,7 @@
     <Authorized>
     <div class="nav-item px-3">
         <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-            <span class="oi oi-home" aria-hidden="true"></span>@localizer["Summary"]
+             <span class="iconify" data-icon="mdi:graph-bar" aria-hidden="true"></span>@localizer["Summary"]
         </NavLink>
     </div>
     </Authorized>
@@ -77,7 +77,7 @@
     <Authorized>
         <div class="nav-item px-3 hide-on-desktop">
             <NavLink class="nav-link" @onclick="()=>expandSubNav = !expandSubNav">
-                <span class="iconify" data-icon="arcticons:money-manager" aria-hidden="true"></span> @localizer["Expenses_menu"]
+                        <span class="iconify" data-icon="fluent-emoji-high-contrast:money-bag" aria-hidden="true"></span> @localizer["Expenses_menu"]
             </NavLink>
         </div>
         @if (expandSubNav)
@@ -111,7 +111,7 @@
     <Authorized>
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="Admin">
-                <span class="iconify" data-icon="bi:person-square"></span>@localizer["Admin"]
+                <span class="iconify" data-icon="eos-icons:admin-outlined"></span>@localizer["Admin"]
             </NavLink>
         </div>
     </Authorized>

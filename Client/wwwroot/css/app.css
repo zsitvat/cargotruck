@@ -517,6 +517,10 @@ table th button {
     background-color: rgba(0,0,0,.075) !important;
 }
 
+.full-year-table tbody td{
+    height:2.2rem;
+}
+
 .warehouse-ids {
     max-width: 30rem;
     max-height: 5rem;

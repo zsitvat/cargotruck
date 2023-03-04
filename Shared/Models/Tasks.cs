@@ -35,7 +35,7 @@ namespace Cargotruck.Shared.Models
         public int? Id_cargo { get; set; }
         [Display(Name = "Storage_time", ResourceType = typeof(Resource))]
         public string? Storage_time { get; set; }
-        [Display(Name = "completed", ResourceType = typeof(Resource))]
+        [Display(Name = "Completed", ResourceType = typeof(Resource))]
         public bool Completed { get; set; } = false;
         [Display(Name = "Completion_time", ResourceType = typeof(Resource))]
         public DateTime? Completion_time { get; set; }

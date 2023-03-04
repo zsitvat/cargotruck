@@ -9,7 +9,6 @@
         <p class="p-error">@error</p>
     </div>
 }
-else{}
 
 @code {
     [Parameter] public string? page { get; set; }
@@ -21,7 +20,7 @@ else{}
 
     private async Task OnInputFileChange(InputFileChangeEventArgs e)
     {
-        long maxFileSize = 1024 * 3000;
+        long maxFileSize = 1024 * 5000;
         var upload = false;
 
         using var content = new MultipartFormDataContent();
