@@ -392,7 +392,8 @@ namespace Cargotruck.Server.Controllers
             return file;
         }
 
-        public async Task<IActionResult> Import(string file, string lang)
+        [HttpPost]
+        public async Task<IActionResult> Import([FromBody] string file, string lang)
         {
             var error = "";
             var haveColumns = false;

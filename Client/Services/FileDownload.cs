@@ -64,7 +64,7 @@ namespace Cargotruck.Client.Services
             }
             else
             {
-                DocumentError = Localizer["Document_failed_to_create"];
+                DocumentError = Localizer!["Document_failed_to_create"];
             }
         }
     }

@@ -29,7 +29,7 @@ namespace Cargotruck.Server.Controllers
         {
             string? path = null;
             var maxAllowedFiles = 1;
-            long maxFileSize = 1024 * 3000;
+            long maxFileSize = 1024 * 5000;
             var filesProcessed = 0;
             var resourcePath = new Uri($"{Request.Scheme}://{Request.Host}/");
             List<UploadResult> uploadResults = new();

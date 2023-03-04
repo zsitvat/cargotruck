@@ -32,18 +32,13 @@
             {
                 try
                 {
-                    var fileContent = 
-                        new StreamContent(file.OpenReadStream(maxFileSize));
+                    var fileContent = new StreamContent(file.OpenReadStream(maxFileSize));
 
-                    fileContent.Headers.ContentType = 
-                        new MediaTypeHeaderValue(file.ContentType);
+                    fileContent.Headers.ContentType = new MediaTypeHeaderValue(file.ContentType);
 
                     files.Add(new() { Name = file.Name });
 
-                    content.Add(
-                        content: fileContent,
-                        name: "\"files\"",
-                        fileName: file.Name);
+                    content.Add( content: fileContent, name: "\"files\"", fileName: file.Name);
 
                     upload = true;
                 }
@@ -58,17 +53,19 @@
         {
             HttpResponseMessage response = await Http.PostAsync($"api/filesave/page", content);
 
-            var newUploadResults = await response.Content
-                .ReadFromJsonAsync<IList<UploadResult>>();
+            var newUploadResults = await response.Content.ReadFromJsonAsync<IList<UploadResult>>();
 
             if (newUploadResults is not null)
             {
                 uploadResults = uploadResults.Concat(newUploadResults).ToList();
                 foreach (var file in uploadResults)
                 {
-                    var datasaved = await Http.GetAsync($"api/{page}/import?file={file.StoredFileName}&lang={CultureInfo.CurrentCulture.Name.ToString()}");
+                    var datasaved = await Http.PostAsJsonAsync($"api/{page}/import?&lang={CultureInfo.CurrentCulture.Name.ToString()}", file.StoredFileName);
                     error = await datasaved.Content.ReadAsStringAsync();
-                    if (datasaved.IsSuccessStatusCode && error == "") { navigationManager.NavigateTo($"/{page}", true); }
+                    if (datasaved.IsSuccessStatusCode && error == "") 
+                    { 
+                        navigationManager.NavigateTo($"/{page}", true);
+                    }
                     else {
                         await OnInitializedAsync();
                         await StateChanged.InvokeAsync();
@@ -82,6 +79,4 @@
     {
         public string? Name { get; set; }
     }
-
-
 }

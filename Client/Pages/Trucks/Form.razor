@@ -124,7 +124,7 @@
         {
             selectedOption = localizer[trucks?.Status.ToString()!];
         }
-        trucksOnRoad = await client.GetFromJsonAsync<List<Trucks>>("api/tasks/gettrucks");
+        trucksOnRoad = await client.GetFromJsonAsync<List<Trucks>>("api/trucks/gettrucks");
         trucksOnRoad = trucksOnRoad?.Where(x => x.Road_id != null).ToList();
         if (trucksOnRoad != null)
         {

@@ -15,8 +15,10 @@
             link.click();
             document.body.removeChild(link);
         });
-
 }
+
+/*
+//JS fix for Multiple select 
 
 function getSelectedValues(sel) {
 
@@ -29,3 +31,4 @@ function getSelectedValues(sel) {
     }
     return results;
 }
+*/

@@ -4,7 +4,7 @@ using System.Net.Http.Json;
 
 namespace Cargotruck.Client.Components
 {
-    public partial class GetbyidComponent
+    public partial class GetByIdComponent
     {
         string currency = "HUF";
         Cargoes? idDataCargo;
