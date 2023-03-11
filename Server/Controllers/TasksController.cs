@@ -35,7 +35,7 @@ namespace Cargotruck.Server.Controllers
             sortOrder = sortOrder == "Time_of_receipt" ? (desc ? "Time_of_receipt_desc" : "Time_of_receipt") : (sortOrder);
             sortOrder = sortOrder == "Place_of_delivery" ? (desc ? "Place_of_delivery_desc" : "Place_of_delivery") : (sortOrder);
             sortOrder = sortOrder == "Time_of_delivery" ? (desc ? "Time_of_delivery_desc" : "Time_of_delivery") : (sortOrder);
-            sortOrder = sortOrder == "other_stops" ? (desc ? "other_stops_desc" : "other_stops") : (sortOrder);
+            sortOrder = sortOrder == "Other_stops" ? (desc ? "Other_stops_desc" : "Other_stops") : (sortOrder);
             sortOrder = sortOrder == "Id_cargo" ? (desc ? "Id_cargo_desc" : "Id_cargo") : (sortOrder);
             sortOrder = sortOrder == "Storage_time" ? (desc ? "Storage_time_desc" : "Storage_time") : (sortOrder);
             sortOrder = sortOrder == "Completed" ? (desc ? "Completed_desc" : "Completed") : (sortOrder);
@@ -60,8 +60,8 @@ namespace Cargotruck.Server.Controllers
                 "Place_of_delivery" => t.OrderBy(s => s.Place_of_delivery).ToList(),
                 "Time_of_delivery_desc" => t.OrderByDescending(s => s.Time_of_delivery).ToList(),
                 "Time_of_delivery" => t.OrderBy(s => s.Time_of_delivery).ToList(),
-                "other_stops_desc" => t.OrderByDescending(s => s.Other_stops).ToList(),
-                "other_stops" => t.OrderBy(s => s.Other_stops).ToList(),
+                "Other_stops_desc" => t.OrderByDescending(s => s.Other_stops).ToList(),
+                "Other_stops" => t.OrderBy(s => s.Other_stops).ToList(),
                 "Id_cargo_desc" => t.OrderByDescending(s => s.Id_cargo).ToList(),
                 "Id_cargo" => t.OrderBy(s => s.Id_cargo).ToList(),
                 "Storage_time_desc" => t.OrderByDescending(s => s.Storage_time).ToList(),

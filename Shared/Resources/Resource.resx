@@ -891,6 +891,9 @@
   <data name="Username" xml:space="preserve">
     <value>Felhasználónév</value>
   </data>
+  <data name="Users" xml:space="preserve">
+    <value>Felhasználók</value>
+  </data>
   <data name="User_id" xml:space="preserve">
     <value>Felhasználó azonosító</value>
   </data>
