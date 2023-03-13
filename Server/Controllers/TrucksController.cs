@@ -23,6 +23,30 @@ namespace Cargotruck.Server.Controllers
             _context = context;
         }
 
+        private async Task<List<Trucks>> GetData(string? searchString, Status? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        {
+            var data = await _context.Trucks.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
+
+            if (filter != null)
+            {
+                data = data.Where(data => data.Status == filter).ToList();
+            }
+
+            searchString = searchString?.ToLower();
+            if (searchString != null && searchString != "")
+            {
+                data = data.Where(s =>
+               (s.Vehicle_registration_number!.ToString().ToLower().Contains(searchString))
+            || (s.Brand != null && s.Brand.ToString().ToLower()!.Contains(searchString))
+            || (s.Status.ToString()!.Contains(searchString))
+            || (s.Road_id != null && s.Road_id.ToString()!.ToLower().Contains(searchString))
+            || (s.Max_weight != null && s.Max_weight.ToString()!.Contains(searchString))
+            ).ToList();
+            }
+
+            return data;
+        }
+
         [HttpGet]
         public async Task<IActionResult> Get(int page, int pageSize, string sortOrder, bool desc, string? searchString, Status? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
@@ -54,29 +78,11 @@ namespace Cargotruck.Server.Controllers
             return Ok(data);
         }
 
-        [HttpGet]
-        private async Task<List<Trucks>> GetData(string? searchString, Status? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
         {
-            var data = await _context.Trucks.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
-
-            if (filter != null)
-            {
-                data = data.Where(data => data.Status == filter).ToList();
-            }
-
-            searchString = searchString?.ToLower();
-            if (searchString != null && searchString != "")
-            {
-                data = data.Where(s =>
-               (s.Vehicle_registration_number!.ToString().ToLower().Contains(searchString))
-            || (s.Brand != null && s.Brand.ToString().ToLower()!.Contains(searchString))
-            || (s.Status.ToString()!.Contains(searchString))
-            || (s.Road_id != null && s.Road_id.ToString()!.ToLower().Contains(searchString))
-            || (s.Max_weight != null && s.Max_weight.ToString()!.Contains(searchString))
-            ).ToList();
-            }
-
-            return data;
+            var data = await _context.Trucks.FirstOrDefaultAsync(a => a.Id == id);
+            return Ok(data);
         }
 
         [HttpGet]
@@ -111,13 +117,6 @@ namespace Cargotruck.Server.Controllers
         public async Task<IActionResult> GetByVRN(string vehicle_registration_number)
         {
             var data = await _context.Trucks.FirstOrDefaultAsync(a => a.Vehicle_registration_number == vehicle_registration_number);
-            return Ok(data);
-        }
-
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
-        {
-            var data = await _context.Trucks.FirstOrDefaultAsync(a => a.Id == id);
             return Ok(data);
         }
 

@@ -48,10 +48,14 @@ namespace Cargotruck.Server.Controllers
 
             var password_error = _localizer["Password_error"].Value;
             var user = await _userManager.FindByNameAsync(request.UserName);
+            
             if (user == null) return BadRequest("Not_found");
 
             var singInResult = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
-            if (!singInResult.Succeeded) return BadRequest(password_error);
+            
+            if (!singInResult.Succeeded) 
+                return BadRequest(password_error);
+
             await _signInManager.SignInAsync(user, request.RememberMe);
 
             //save login date
@@ -76,10 +80,14 @@ namespace Cargotruck.Server.Controllers
             user.UserName = parameters.UserName;
             user.PhoneNumber = parameters.PhoneNumber ?? user.PhoneNumber;
             user.Email = parameters.Email ?? user.Email;
+
             var result = await _userManager.CreateAsync(user, parameters.Password);
             await _userManager.AddToRoleAsync(user, parameters.Role);
             await _userManager.AddClaimAsync(user, new Claim("img", parameters.Img));
-            if (!result.Succeeded) return BadRequest(result.Errors.FirstOrDefault()?.Description);
+
+            if (!result.Succeeded) 
+                return BadRequest(result.Errors.FirstOrDefault()?.Description);
+            
             return LocalRedirect("/Admin");
         }
 
@@ -114,7 +122,10 @@ namespace Cargotruck.Server.Controllers
 
             await _userManager.RemoveFromRoleAsync(user, role);
             await _userManager.AddToRoleAsync(user, parameters.Role);
-            if (!result.Succeeded) return BadRequest(result.Errors.FirstOrDefault()?.Description);
+            
+            if (!result.Succeeded) 
+                return BadRequest(result.Errors.FirstOrDefault()?.Description);
+            
             return Ok();
         }
 
@@ -123,7 +134,10 @@ namespace Cargotruck.Server.Controllers
         {
             var user = _context.Users.FirstOrDefault(a => a.UserName == User.Identity!.Name);
             var result = await _userManager.ChangePasswordAsync(user!, parameters.PasswordCurrent, parameters.Password);
-            if (!result.Succeeded) return BadRequest(result.Errors.FirstOrDefault()?.Description);
+            
+            if (!result.Succeeded) 
+                return BadRequest(result.Errors.FirstOrDefault()?.Description);
+            
             return Ok();
         }
 
@@ -139,6 +153,7 @@ namespace Cargotruck.Server.Controllers
         public CurrentUser CurrentUserInfo()
         {
             var u = _context.Users.FirstOrDefault(a => a.UserName == User.Identity!.Name);
+            
             if (User.Identity!.IsAuthenticated && u != null)
             {
                 return new CurrentUser
@@ -156,6 +171,7 @@ namespace Cargotruck.Server.Controllers
             {
                 return new CurrentUser { };
             }
+
         }
     }
 

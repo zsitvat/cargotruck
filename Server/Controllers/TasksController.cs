@@ -23,6 +23,41 @@ namespace Cargotruck.Server.Controllers
             _context = context;
         }
 
+        private async Task<List<Tasks>> GetData(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        {
+            var t = await _context.Tasks.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
+
+            if (filter == "completed")
+            {
+                t = t.Where(data => data.Completed).ToList();
+            }
+            else if (filter == "not_completed")
+            {
+                t = t.Where(data => data.Completed == false).ToList();
+            }
+
+            searchString = searchString?.ToLower();
+            if (searchString != null && searchString != "")
+            {
+                t = t.Where(s => (
+                s.Partner != null && s.Partner.ToLower()!.Contains(searchString))
+            || (s.Description != null && s.Description.ToLower()!.Contains(searchString))
+            || (s.Place_of_receipt != null && s.Place_of_receipt.ToLower()!.Contains(searchString))
+            || (s.Place_of_delivery != null && s.Place_of_delivery.ToLower()!.Contains(searchString))
+            || (s.Time_of_delivery.ToString()!.Contains(searchString))
+            || (s.Id_cargo != null && s.Id_cargo.ToString()!.Contains(searchString))
+            || (s.Storage_time != null && s.Storage_time.ToLower()!.Contains(searchString))
+            || (s.Completion_time != null && s.Completion_time.ToString()!.Contains(searchString))
+            || (s.Payment != null && s.Payment.ToString()!.Contains(searchString))
+            || (s.Final_Payment != null && s.Final_Payment.ToString()!.Contains(searchString))
+            || (s.Penalty != null && s.Penalty.ToString()!.Contains(searchString))
+            || (s.Date.ToString()!.Contains(searchString))
+            ).ToList();
+            }
+
+            return t;
+        }
+
         [HttpGet]
         public async Task<IActionResult> Get(int page, int pageSize, string sortOrder, bool desc, string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
@@ -85,6 +120,13 @@ namespace Cargotruck.Server.Controllers
             return Ok(t);
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var t = await _context.Tasks.FirstOrDefaultAsync(a => a.Id == id);
+            return Ok(t);
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetTasks()
         {
@@ -121,43 +163,6 @@ namespace Cargotruck.Server.Controllers
             }
         }
 
-
-        [HttpGet]
-        private async Task<List<Tasks>> GetData(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
-        {
-            var t = await _context.Tasks.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
-
-            if (filter == "completed")
-            {
-                t = t.Where(data => data.Completed).ToList();
-            }
-            else if (filter == "not_completed")
-            {
-                t = t.Where(data => data.Completed == false).ToList();
-            }
-
-            searchString = searchString?.ToLower();
-            if (searchString != null && searchString != "")
-            {
-                t = t.Where(s => (
-                s.Partner != null && s.Partner.ToLower()!.Contains(searchString))
-            || (s.Description != null && s.Description.ToLower()!.Contains(searchString))
-            || (s.Place_of_receipt != null && s.Place_of_receipt.ToLower()!.Contains(searchString))
-            || (s.Place_of_delivery != null && s.Place_of_delivery.ToLower()!.Contains(searchString))
-            || (s.Time_of_delivery.ToString()!.Contains(searchString))
-            || (s.Id_cargo != null && s.Id_cargo.ToString()!.Contains(searchString))
-            || (s.Storage_time != null && s.Storage_time.ToLower()!.Contains(searchString))
-            || (s.Completion_time != null && s.Completion_time.ToString()!.Contains(searchString))
-            || (s.Payment != null && s.Payment.ToString()!.Contains(searchString))
-            || (s.Final_Payment != null && s.Final_Payment.ToString()!.Contains(searchString))
-            || (s.Penalty != null && s.Penalty.ToString()!.Contains(searchString))
-            || (s.Date.ToString()!.Contains(searchString))
-            ).ToList();
-            }
-
-            return t;
-        }
-
         [HttpGet]
         public async Task<IActionResult> PageCount(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
@@ -166,23 +171,21 @@ namespace Cargotruck.Server.Controllers
             return Ok(PageCount);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
-        {
-            var t = await _context.Tasks.FirstOrDefaultAsync(a => a.Id == id);
-            return Ok(t);
-        }
-
         [HttpPost]
         public async Task<IActionResult> Post(Tasks t)
         {
             t.Final_Payment = (t.Payment != null ? t.Payment : 0) - (t.Penalty != null ? t.Penalty : 0);
             t.User_id = _context.Users.FirstOrDefault(a => a.UserName == User.Identity!.Name)?.Id;
+            
             if (t.Completed)
             {
                 t.Completion_time = DateTime.Now;
             }
-            else { t.Completion_time = null; }
+            else 
+            { 
+                t.Completion_time = null;
+            }
+
             _context.Add(t);
             await _context.SaveChangesAsync();
 
@@ -193,6 +196,7 @@ namespace Cargotruck.Server.Controllers
                 _context.Entry(cargo).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
             }
+
             return Ok(t.Id);
         }
 
@@ -200,36 +204,25 @@ namespace Cargotruck.Server.Controllers
         public async Task<IActionResult> Put(Tasks t)
         {
             t.Final_Payment = (t.Payment != null ? t.Payment : 0) - (t.Penalty != null ? t.Penalty : 0);
+            
             if (t.Completed)
             {
                 t.Completion_time = DateTime.Now;
             }
             else { t.Completion_time = null; }
+            
             _context.Entry(t).State = EntityState.Modified;
 
             var cargo = _context.Cargoes.FirstOrDefault(a => a.Id == t.Id_cargo);
+            
             if (cargo != null)
             {
                 cargo.Task_id = t.Id;
                 _context.Entry(cargo).State = EntityState.Modified;
             }
+            
             await _context.SaveChangesAsync();
             return NoContent();
-        }
-
-
-        [HttpPut]
-        public async Task<IActionResult> ChangeCompletion(Tasks t)
-        {
-            t.Completed = !t.Completed;
-            if (t.Completed)
-            {
-                t.Completion_time = DateTime.Now;
-            }
-            else { t.Completion_time = null; }
-            _context.Entry(t).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-            return Ok();
         }
 
         [HttpDelete("{id}")]
@@ -239,6 +232,22 @@ namespace Cargotruck.Server.Controllers
             _context.Remove(t);
             await _context.SaveChangesAsync();
             return NoContent();
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> ChangeCompletion(Tasks t)
+        {
+            t.Completed = !t.Completed;
+
+            if (t.Completed)
+            {
+                t.Completion_time = DateTime.Now;
+            }
+            else { t.Completion_time = null; }
+
+            _context.Entry(t).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return Ok();
         }
 
 
@@ -658,6 +667,7 @@ namespace Cargotruck.Server.Controllers
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Penalty : "Penalty") + "; ");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date") + "; ");
             txt.Write("\n");
+            
             foreach (var task in tasks)
             {
                 txt.Write(task.Id + ";");
@@ -730,8 +740,6 @@ namespace Cargotruck.Server.Controllers
                         int l = 0;
                         foreach (IXLRow row in worksheet.Rows())
                         {
-
-
 
                             //Use the first row to add columns to DataTable with column names check.
                             if (firstRow)

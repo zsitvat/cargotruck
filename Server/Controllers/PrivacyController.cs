@@ -22,18 +22,18 @@ namespace Cargotruck.Server.Controllers
             return Ok(data);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Count()
-        {
-            var t = await _context.Privacies.CountAsync();
-            return Ok(t);
-        }
-
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var data = await _context.Privacies.FirstOrDefaultAsync(a => a.Id == id);
             return Ok(data);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Count()
+        {
+            var t = await _context.Privacies.CountAsync();
+            return Ok(t);
         }
 
         [HttpPost]

@@ -40,8 +40,7 @@ namespace Cargotruck.Server.Controllers
                 string trustedFileNameForFileStorage;
                 var untrustedFileName = file.FileName;
                 uploadResult.FileName = untrustedFileName;
-                var trustedFileNameForDisplay =
-                    WebUtility.HtmlEncode(untrustedFileName);
+                var trustedFileNameForDisplay = WebUtility.HtmlEncode(untrustedFileName);
 
                 if (filesProcessed < maxAllowedFiles)
                 {
@@ -60,7 +59,7 @@ namespace Cargotruck.Server.Controllers
                         {
                             string rootpath, folder;
 
-                            //data upload part
+                            //file upload part
                             if (id == "page")
                             {
                                 rootpath = env.ContentRootPath + "";
@@ -89,7 +88,7 @@ namespace Cargotruck.Server.Controllers
                             uploadResult.Uploaded = true;
                             uploadResult.StoredFileName = trustedFileNameForFileStorage;
 
-                            //data upload part
+                            //image upload part
                             if (id != "page")
                             {
                                 Dictionary<string, string> claims = new();
@@ -99,6 +98,7 @@ namespace Cargotruck.Server.Controllers
                                 //change the image
                                 if (uploadResult.Uploaded)
                                 {
+                                    //get the old image
                                     if (id == "NoId")
                                     {
 
@@ -148,7 +148,5 @@ namespace Cargotruck.Server.Controllers
 
             return new CreatedResult(resourcePath, uploadResults);
         }
-
-
     }
 }

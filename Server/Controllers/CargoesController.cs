@@ -23,6 +23,37 @@ namespace Cargotruck.Server.Controllers
             _context = context;
         }
 
+        private async Task<List<Cargoes>> GetData(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        {
+            var data = await _context.Cargoes.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
+
+            if (filter == "InWarehouse")
+            {
+                data = data.Where(data => data.Warehouse_id != null).ToList();
+            }
+            else if (filter == "NotInWarehouse")
+            {
+                data = data.Where(data => data.Warehouse_id == null).ToList();
+            }
+
+            searchString = searchString?.ToLower();
+            if (searchString != null && searchString != "")
+            {
+                data = data.Where(s =>
+               (s.Task_id.ToString()!.ToLower().Contains(searchString))
+            || (s.Weight != null && s.Weight.ToString().ToLower()!.Contains(searchString))
+            || (s.Description != null && s.Description.ToLower()!.Contains(searchString))
+            || (s.Delivery_requirements != null && s.Delivery_requirements.ToString().ToLower()!.Contains(searchString))
+            || (s.Vehicle_registration_number != null && s.Vehicle_registration_number.ToString()!.Contains(searchString))
+            || (s.Warehouse_id != null && s.Warehouse_id.ToString()!.Contains(searchString))
+            || (s.Warehouse_section != null && s.Warehouse_section.ToLower()!.Contains(searchString))
+            || (s.Storage_starting_time != null && s.Storage_starting_time.ToString()!.Contains(searchString))
+            ).ToList();
+            }
+
+            return data;
+        }
+
         [HttpGet]
         public async Task<IActionResult> Get(int page, int pageSize, string sortOrder, bool desc, string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
@@ -63,36 +94,11 @@ namespace Cargotruck.Server.Controllers
             return Ok(data);
         }
 
-        [HttpGet]
-        private async Task<List<Cargoes>> GetData(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
         {
-            var data = await _context.Cargoes.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
-
-            if (filter == "InWarehouse")
-            {
-                data = data.Where(data => data.Warehouse_id != null).ToList();
-            }
-            else if (filter == "NotInWarehouse")
-            {
-                data = data.Where(data => data.Warehouse_id == null).ToList();
-            }
-
-            searchString = searchString?.ToLower();
-            if (searchString != null && searchString != "")
-            {
-                data = data.Where(s =>
-               (s.Task_id.ToString()!.ToLower().Contains(searchString))
-            || (s.Weight != null && s.Weight.ToString().ToLower()!.Contains(searchString))
-            || (s.Description != null && s.Description.ToLower()!.Contains(searchString))
-            || (s.Delivery_requirements != null && s.Delivery_requirements.ToString().ToLower()!.Contains(searchString))
-            || (s.Vehicle_registration_number != null && s.Vehicle_registration_number.ToString()!.Contains(searchString))
-            || (s.Warehouse_id != null && s.Warehouse_id.ToString()!.Contains(searchString))
-            || (s.Warehouse_section != null && s.Warehouse_section.ToLower()!.Contains(searchString))
-            || (s.Storage_starting_time != null && s.Storage_starting_time.ToString()!.Contains(searchString))
-            ).ToList();
-            }
-
-            return data;
+            var data = await _context.Cargoes.FirstOrDefaultAsync(a => a.Id == id);
+            return Ok(data);
         }
 
         [HttpGet]
@@ -164,13 +170,6 @@ namespace Cargotruck.Server.Controllers
             var data = await GetData(searchString, filter, dateFilterStartDate, dateFilterEndDate);
             int PageCount = data.Count;
             return Ok(PageCount);
-        }
-
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
-        {
-            var data = await _context.Cargoes.FirstOrDefaultAsync(a => a.Id == id);
-            return Ok(data);
         }
 
         [HttpPost]

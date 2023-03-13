@@ -23,6 +23,41 @@ namespace Cargotruck.Server.Controllers
             _context = context;
         }
 
+        private async Task<List<Roads>> GetData(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        {
+            var data = await _context.Roads.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
+
+            if (filter == "to")
+            {
+                data = data.Where(data => data.Direction == "TO").ToList();
+            }
+            else if (filter == "from")
+            {
+                data = data.Where(data => data.Direction == "FROM").ToList();
+            }
+
+            searchString = searchString?.ToLower();
+            if (searchString != null && searchString != "")
+            {
+                data = data.Where(s =>
+                    (s.Task_id != null && s.Task_id.ToString()!.ToLower().Contains(searchString))
+                || (s.Id_cargo != null && s.Id_cargo.ToString()!.ToLower().Contains(searchString))
+                || (s.Vehicle_registration_number != null && s.Vehicle_registration_number.ToString()!.ToLower().Contains(searchString))
+                || (s.Purpose_of_the_trip != null && s.Purpose_of_the_trip.ToLower()!.Contains(searchString))
+                || s.Starting_date.ToString()!.ToLower().Contains(searchString)
+                || s.Ending_date.ToString()!.Contains(searchString)
+                || s.Fuel!.ToString()!.Contains(searchString)
+                || s.Distance!.ToString()!.Contains(searchString)
+                || (s.Starting_place != null && s.Starting_place.ToLower()!.Contains(searchString))
+                || (s.Ending_place != null && s.Ending_place.ToLower()!.Contains(searchString))
+                || (s.Direction != null && s.Direction.ToString()!.Contains(searchString))
+                || (s.Expenses_id != null && s.Expenses_id.ToString()!.Contains(searchString))
+                ).ToList();
+            }
+
+            return data;
+        }
+
         [HttpGet]
         public async Task<IActionResult> Get(int page, int pageSize, string sortOrder, bool desc, string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
@@ -75,80 +110,6 @@ namespace Cargotruck.Server.Controllers
             return Ok(data);
         }
 
-        [HttpGet]
-        private async Task<List<Roads>> GetData(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
-        {
-            var data = await _context.Roads.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
-
-            if (filter == "to")
-            {
-                data = data.Where(data => data.Direction == "TO").ToList();
-            }
-            else if (filter == "from")
-            {
-                data = data.Where(data => data.Direction == "FROM").ToList();
-            }
-
-            searchString = searchString?.ToLower();
-            if (searchString != null && searchString != "")
-            {
-                data = data.Where(s =>
-                    (s.Task_id != null && s.Task_id.ToString()!.ToLower().Contains(searchString))
-                || (s.Id_cargo != null && s.Id_cargo.ToString()!.ToLower().Contains(searchString))
-                || (s.Vehicle_registration_number != null && s.Vehicle_registration_number.ToString()!.ToLower().Contains(searchString))
-                || (s.Purpose_of_the_trip != null && s.Purpose_of_the_trip.ToLower()!.Contains(searchString))
-                || s.Starting_date.ToString()!.ToLower().Contains(searchString)
-                || s.Ending_date.ToString()!.Contains(searchString)
-                || s.Fuel!.ToString()!.Contains(searchString)
-                || s.Distance!.ToString()!.Contains(searchString)
-                || (s.Starting_place != null && s.Starting_place.ToLower()!.Contains(searchString))
-                || (s.Ending_place != null && s.Ending_place.ToLower()!.Contains(searchString))
-                || (s.Direction != null && s.Direction.ToString()!.Contains(searchString))
-                || (s.Expenses_id != null && s.Expenses_id.ToString()!.Contains(searchString))
-                ).ToList();
-            }
-
-            return data;
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> PageCount(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
-        {
-            var data = await GetData(searchString, filter, dateFilterStartDate, dateFilterEndDate);
-            int PageCount = data.Count;
-            return Ok(PageCount);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> GetChartData()
-        {
-            var data = await _context.Roads.ToListAsync();
-            var trucksCount = data.Where(x=>x.Vehicle_registration_number != null && x.Vehicle_registration_number != "").DistinctBy(x=>x.Vehicle_registration_number).Count();
-            var trucksVRN = data?.DistinctBy(x => x.Vehicle_registration_number).ToList();
-            int[] columnsHeight = new int[12 * trucksCount];
-            int h = 1;
-            for (int i = 0; i < columnsHeight.Length; i++)
-            {
-                h++;
-                if (h==13) h = 1;
-                if (data!=null) {
-                    columnsHeight[i] = data.Where(x => x.Date.Year == DateTime.Now.Year && x.Date.Month == h && x.Vehicle_registration_number != null && x.Vehicle_registration_number == trucksVRN?[i / 12].Vehicle_registration_number).Count();
-                }
-                else
-                {
-                    columnsHeight[i] = 0;
-                }
-            }
-            return Ok(columnsHeight);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Count()
-        {
-            var t = await _context.Roads.CountAsync();
-            return Ok(t);
-        }
-
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -162,6 +123,46 @@ namespace Cargotruck.Server.Controllers
             var data = await _context.Roads.ToListAsync();
             return Ok(data);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetChartData()
+        {
+            var data = await _context.Roads.ToListAsync();
+            var trucksCount = data.Where(x => x.Vehicle_registration_number != null && x.Vehicle_registration_number != "").DistinctBy(x => x.Vehicle_registration_number).Count();
+            var trucksVRN = data?.DistinctBy(x => x.Vehicle_registration_number).ToList();
+            int[] columnsHeight = new int[12 * trucksCount];
+            int h = 1;
+            for (int i = 0; i < columnsHeight.Length; i++)
+            {
+                h++;
+                if (h == 13) h = 1;
+                if (data != null)
+                {
+                    columnsHeight[i] = data.Where(x => x.Date.Year == DateTime.Now.Year && x.Date.Month == h && x.Vehicle_registration_number != null && x.Vehicle_registration_number == trucksVRN?[i / 12].Vehicle_registration_number).Count();
+                }
+                else
+                {
+                    columnsHeight[i] = 0;
+                }
+            }
+            return Ok(columnsHeight);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> PageCount(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        {
+            var data = await GetData(searchString, filter, dateFilterStartDate, dateFilterEndDate);
+            int PageCount = data.Count;
+            return Ok(PageCount);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Count()
+        {
+            var t = await _context.Roads.CountAsync();
+            return Ok(t);
+        }
+
 
         [HttpPost]
         public async Task<IActionResult> Post(Roads data)

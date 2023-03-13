@@ -26,7 +26,7 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
         private string? searchString = "";
         DateFilter? dateFilter = new();
 
-    protected override async Task OnInitializedAsync()
+        protected override async Task OnInitializedAsync()
         {
             PageHistoryState.AddPageToHistory("/Monthly_expenses");
             base.OnInitialized();
@@ -46,6 +46,7 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
                 FileDownload.DocumentError = localizer["CheckFailed"];
             }
         }
+
         protected async Task ShowPage()
         {
             pageSize = Page.GetPageSize(pageSize, dataRows);

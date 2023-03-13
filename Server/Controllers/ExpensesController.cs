@@ -24,6 +24,37 @@ namespace Cargotruck.Server.Controllers
             _context = context;
         }
 
+        private async Task<List<Expenses>> GetData(string? searchString, Type? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        {
+            var data = await _context.Expenses.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
+
+            if (filter != null)
+            {
+                data = data.Where(data => data.Type == filter).ToList();
+            }
+
+            searchString = searchString?.ToLower();
+            if (searchString != null && searchString != "")
+            {
+                data = data.Where(s =>
+               s.Type.ToString()!.ToLower().Contains(searchString)
+            || s.Type_id.ToString()!.ToLower().Contains(searchString)
+            || (s.Fuel != null && s.Fuel.ToString()!.Contains(searchString))
+            || (s.Road_fees != null && s.Road_fees.ToString()!.Contains(searchString))
+            || (s.Penalty != null && s.Fuel.ToString()!.Contains(searchString))
+            || (s.Driver_spending != null && s.Driver_spending.ToString()!.Contains(searchString))
+            || (s.Driver_salary != null && s.Driver_salary.ToString()!.Contains(searchString))
+            || (s.Repair_cost != null && s.Repair_cost.ToString()!.Contains(searchString))
+            || (s.Repair_description != null && s.Repair_description.ToString()!.Contains(searchString))
+            || (s.Cost_of_storage != null && s.Cost_of_storage.ToString()!.Contains(searchString))
+            || (s.Other != null && s.Other.ToString()!.Contains(searchString))
+            || (s.Total_amount != null && s.Total_amount.ToString()!.Contains(searchString))
+            ).ToList();
+            }
+
+            return data;
+        }
+
         [HttpGet]
         public async Task<IActionResult> Get(int page, int pageSize, string sortOrder, bool desc, string? searchString, Type? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
@@ -76,36 +107,18 @@ namespace Cargotruck.Server.Controllers
             return Ok(data);
         }
 
-        [HttpGet]
-        private async Task<List<Expenses>> GetData(string? searchString, Type? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
         {
-            var data = await _context.Expenses.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
+            var data = await _context.Expenses.FirstOrDefaultAsync(a => a.Id == id);
+            return Ok(data);
+        }
 
-            if (filter != null)
-            {
-                data = data.Where(data => data.Type == filter).ToList();
-            }
-
-            searchString = searchString?.ToLower();
-            if (searchString != null && searchString != "")
-            {
-                data = data.Where(s =>
-               s.Type.ToString()!.ToLower().Contains(searchString)
-            || s.Type_id.ToString()!.ToLower().Contains(searchString)
-            || (s.Fuel != null && s.Fuel.ToString()!.Contains(searchString))
-            || (s.Road_fees != null && s.Road_fees.ToString()!.Contains(searchString))
-            || (s.Penalty != null && s.Fuel.ToString()!.Contains(searchString))
-            || (s.Driver_spending != null && s.Driver_spending.ToString()!.Contains(searchString))
-            || (s.Driver_salary != null && s.Driver_salary.ToString()!.Contains(searchString))
-            || (s.Repair_cost != null && s.Repair_cost.ToString()!.Contains(searchString))
-            || (s.Repair_description != null && s.Repair_description.ToString()!.Contains(searchString))
-            || (s.Cost_of_storage != null && s.Cost_of_storage.ToString()!.Contains(searchString))
-            || (s.Other != null && s.Other.ToString()!.Contains(searchString))
-            || (s.Total_amount != null && s.Total_amount.ToString()!.Contains(searchString))
-            ).ToList();
-            }
-
-            return data;
+        [HttpGet]
+        public async Task<IActionResult> GetExpenses()
+        {
+            var data = await _context.Expenses.ToListAsync();
+            return Ok(data);
         }
 
         [HttpGet]
@@ -121,20 +134,6 @@ namespace Cargotruck.Server.Controllers
         {
             var t = await _context.Expenses.CountAsync();
             return Ok(t);
-        }
-
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
-        {
-            var data = await _context.Expenses.FirstOrDefaultAsync(a => a.Id == id);
-            return Ok(data);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> GetExpenses()
-        {
-            var data = await _context.Expenses.ToListAsync();
-            return Ok(data);
         }
 
         [HttpPost]
@@ -178,12 +177,11 @@ namespace Cargotruck.Server.Controllers
 
         private int? GetTotalAmount(Expenses data)
         {
-            var totalAmount = (data.Fuel != null ? data.Fuel : 0 ) + (data.Road_fees != null ? data.Road_fees : 0) + (data.Penalty != null ? data.Penalty : 0) +
+            var totalAmount = (data.Fuel != null ? data.Fuel : 0) + (data.Road_fees != null ? data.Road_fees : 0) + (data.Penalty != null ? data.Penalty : 0) +
                 (data.Cost_of_storage != null ? data.Cost_of_storage : 0) + (data.Driver_salary != null ? data.Driver_salary : 0) +
-                (data.Driver_spending != null ? data.Driver_spending  : 0) + (data.Other != null ? data.Other : 0) + (data.Repair_cost != null ? data.Repair_cost : 0);
+                (data.Driver_spending != null ? data.Driver_spending : 0) + (data.Other != null ? data.Other : 0) + (data.Repair_cost != null ? data.Repair_cost : 0);
             return totalAmount != null ? totalAmount : 0;
         }
-
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)

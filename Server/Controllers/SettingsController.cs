@@ -34,12 +34,14 @@ namespace Cargotruck.Server.Controllers
         public async Task<IActionResult> GetWaitTime()
         {
             var waitTime = await _context.Settings.FirstOrDefaultAsync(x => x.SettingName == "CurrencyExchangeWaitTime");
+            
             if (waitTime == null)
             {
                 waitTime = new Settings() { SettingName = "CurrencyExchangeWaitTime", SettingValue = "3600" };
                 _context.Settings.Add(waitTime);
                 await _context.SaveChangesAsync();
             }
+
             return Ok(waitTime);
         }
 
