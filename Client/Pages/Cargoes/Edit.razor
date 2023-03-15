@@ -7,12 +7,12 @@
 
 @code {
     [Parameter] public int Id { get; set; }
-    Cargoes? cargo = new Cargoes();
+    CargoesDto? cargo = new CargoesDto();
     bool isValidSubmit = true;
 
     protected async override Task OnParametersSetAsync()
     {
-        cargo = await http.GetFromJsonAsync<Cargoes>($"api/cargoes/getById/{Id}");
+        cargo = await http.GetFromJsonAsync<CargoesDto>($"api/cargoes/getById/{Id}");
     }
 
     async Task EditCargo()

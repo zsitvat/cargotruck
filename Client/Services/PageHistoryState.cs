@@ -1,6 +1,6 @@
-﻿namespace Cargotruck.Client.Services
+﻿namespace Cargotruck.Client.UtilitiesClasses
 {
-    public class PageHistoryState
+    public class PageHistoryState : IPageHistoryState
     {
         private List<string> previousPages;
 

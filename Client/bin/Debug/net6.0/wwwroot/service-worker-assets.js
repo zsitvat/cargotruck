@@ -1045,23 +1045,23 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-sL1YD4AuTmYUR4Lvq0+Zj8IT8mZrSE73AqLd4KwwLOE=",
+      "hash": "sha256-LRswUheheNm80n\/OLUaPHD9hmxdX8rmELz\/LvQD4kYM=",
       "url": "_framework\/Cargotruck.Shared.dll"
     },
     {
-      "hash": "sha256-QhSHvrwzYzzBxiXxKnsDKLrN43VsGAkSpJmCcyswdEA=",
+      "hash": "sha256-WgIE9QZxnN57AYvevd9nwAVl8sjBSL3Mw6M\/s4NIAls=",
       "url": "_framework\/Cargotruck.Shared.pdb"
     },
     {
-      "hash": "sha256-MKLS65XEfUg7FKsrPWgHIbPZTkod2hNToN\/mofrF6aA=",
+      "hash": "sha256-Z\/8SgoAtx0X3WQowGkOS3wVhBAkT48XBQnUMaz2RmOQ=",
       "url": "_framework\/en\/Cargotruck.Shared.resources.dll"
     },
     {
-      "hash": "sha256-8THiqP2yTFhEo8mHnPNTlyLP39Wy61weerA88+uqo6I=",
+      "hash": "sha256-cW7Io5l5+IZiZwyFQv3JVO7SUwYRs+xR6e1FwylKI\/Y=",
       "url": "_framework\/Cargotruck.Client.dll"
     },
     {
-      "hash": "sha256-PPoR6tMH\/OwcA7l3OCwq\/jACTf0vLjHqOpSZWcpJK+w=",
+      "hash": "sha256-ru3Ef+9NXdXTv67vu6ys7nPzA5Xzz82v\/y38ynA6TNc=",
       "url": "_framework\/Cargotruck.Client.pdb"
     },
     {
@@ -1069,7 +1069,7 @@
       "url": "_framework\/blazor.webassembly.js"
     },
     {
-      "hash": "sha256-DhgPEalJWB9EvA3gh4USZiOGb5hXRRNApgsWqNQENcE=",
+      "hash": "sha256-ZhqR1pYUnijLSFLxAkmrwunac4S+qoy8XQTOZUHZA\/Y=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -1081,5 +1081,5 @@
       "url": "_content\/ChartJs.Blazor.Fork\/ChartJsBlazorInterop.js"
     }
   ],
-  "version": "EhS5QwiL"
+  "version": "Z026QiD\/"
 };

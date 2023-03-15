@@ -1,4 +1,4 @@
-﻿namespace Cargotruck.Client.Services
+﻿namespace Cargotruck.Client.UtilitiesClasses
 {
     public static class Page
     {
@@ -11,7 +11,7 @@
 
         public static int GetMaxPage(int pageSize, int dataRows)
         {
-            return (int)Math.Ceiling((decimal)((float)dataRows / (float)pageSize));
+            return (int)Math.Ceiling((decimal)(dataRows / (float)pageSize));
         }
     }
 }

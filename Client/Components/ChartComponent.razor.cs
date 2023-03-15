@@ -343,7 +343,7 @@ namespace Cargotruck.Client.Components
             var columnHeights = await client.GetFromJsonAsync<int[]>("api/roads/getchartdata");
             if (columnHeights != null)
             {
-                var roads = await client.GetFromJsonAsync<Roads[]?>("api/roads/getroads");
+                var roads = await client.GetFromJsonAsync<RoadsDto[]?>("api/roads/getroads");
                 var trucksVRN = roads?.DistinctBy(x => x.Vehicle_registration_number).ToList();
                 if (roads != null && trucksVRN != null && roads.Count() > 0 && trucksVRN.Count > 0)
                 {

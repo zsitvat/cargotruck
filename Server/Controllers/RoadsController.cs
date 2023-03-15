@@ -1,4 +1,4 @@
-﻿using Cargotruck.Data;
+﻿using Cargotruck.Server.Data;
 using Cargotruck.Shared.Models;
 using ClosedXML.Excel;
 using iTextSharp.text;
@@ -23,7 +23,7 @@ namespace Cargotruck.Server.Controllers
             _context = context;
         }
 
-        private async Task<List<Roads>> GetData(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        private async Task<List<RoadsDto>> GetData(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var data = await _context.Roads.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
 
@@ -165,7 +165,7 @@ namespace Cargotruck.Server.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Post(Roads data)
+        public async Task<IActionResult> Post(RoadsDto data)
         {
             data.User_id = _context.Users.FirstOrDefault(a => a.UserName == User.Identity!.Name)?.Id;
             _context.Add(data);
@@ -182,7 +182,7 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put(Roads data)
+        public async Task<IActionResult> Put(RoadsDto data)
         {
             _context.Entry(data).State = EntityState.Modified;
             var expense = _context.Expenses.FirstOrDefault(a => a.Id == data.Expenses_id);
@@ -200,7 +200,7 @@ namespace Cargotruck.Server.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var data = new Roads { Id = id };
+            var data = new RoadsDto { Id = id };
             _context.Remove(data);
             await _context.SaveChangesAsync();
             return NoContent();
@@ -287,7 +287,7 @@ namespace Cargotruck.Server.Controllers
             Font font1 = FontFactory.GetFont(FontFactory.TIMES_BOLD, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 12);
             Font font2 = FontFactory.GetFont(FontFactory.TIMES_ROMAN, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 10);
 
-            System.Type type = typeof(Roads);
+            System.Type type = typeof(RoadsDto);
             var column_number = (type.GetProperties().Length) / 2;
             var columnDefinitionSize = new float[column_number];
             for (int i = 0; i < column_number; i++) columnDefinitionSize[i] = 1F;
@@ -357,7 +357,7 @@ namespace Cargotruck.Server.Controllers
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 });
 
-                foreach (Roads road in roads)
+                foreach (RoadsDto road in roads)
                 {
                     var s = "";
                     if (!string.IsNullOrEmpty(road.Id.ToString())) { s = road.Id.ToString(); }
@@ -460,7 +460,7 @@ namespace Cargotruck.Server.Controllers
                 table2.HeaderRows = 1;
 
 
-                foreach (Roads road in roads)
+                foreach (RoadsDto road in roads)
                 {
                     var s = "";
                     pdfRowIndex++;
@@ -739,10 +739,10 @@ namespace Cargotruck.Server.Controllers
                                         if (lastId != null)
                                         {
                                             var WithNewIds = await _context.Roads.Where(x => x.Task_id == lastId.Task_id || x.Id_cargo == lastId.Id_cargo || x.Expenses_id == lastId.Expenses_id).ToListAsync();
-                                            Cargoes? cargo = await _context.Cargoes.FirstOrDefaultAsync(x => x.Id == lastId.Id_cargo);
-                                            Tasks? task = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == lastId.Task_id);
-                                            Expenses? expense = await _context.Expenses.FirstOrDefaultAsync(x => x.Id == lastId.Expenses_id);
-                                            Trucks? truck = await _context.Trucks.FirstOrDefaultAsync(x => x.Vehicle_registration_number == lastId.Vehicle_registration_number);
+                                            CargoesDto? cargo = await _context.Cargoes.FirstOrDefaultAsync(x => x.Id == lastId.Id_cargo);
+                                            TasksDto? task = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == lastId.Task_id);
+                                            ExpensesDto? expense = await _context.Expenses.FirstOrDefaultAsync(x => x.Id == lastId.Expenses_id);
+                                            TrucksDto? truck = await _context.Trucks.FirstOrDefaultAsync(x => x.Vehicle_registration_number == lastId.Vehicle_registration_number);
 
                                             foreach (var item in WithNewIds)
                                             {

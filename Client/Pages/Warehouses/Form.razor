@@ -48,14 +48,14 @@
 
 
 @code {
-    [Parameter] public Warehouses? warehouses { get; set; }
+    [Parameter] public WarehousesDto? warehouses { get; set; }
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public string TitleText { get; set; } = "";
     [Parameter] public EventCallback OnValidSubmit { get; set; }
-    Cargoes[]? cargoes { get; set; }
+    CargoesDto[]? cargoes { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        cargoes = await client.GetFromJsonAsync<Cargoes[]?>("api/cargoes/getcargoes");
+        cargoes = await client.GetFromJsonAsync<CargoesDto[]?>("api/cargoes/getcargoes");
     }
 }

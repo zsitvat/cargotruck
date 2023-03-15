@@ -1,4 +1,4 @@
-﻿using Cargotruck.Data;
+﻿using Cargotruck.Server.Data;
 using Cargotruck.Server.Models;
 using Cargotruck.Shared.Models.Request;
 using Microsoft.AspNetCore.Identity;

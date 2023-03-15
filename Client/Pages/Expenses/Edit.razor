@@ -9,11 +9,11 @@
 @code {
     [Parameter] public int Id { get; set; }
     bool isValidSubmit = true;
-    Expenses? expense = new Expenses();
+    ExpensesDto? expense = new ExpensesDto();
 
     protected async override Task OnParametersSetAsync()
     {
-        expense = await http.GetFromJsonAsync<Expenses>($"api/expenses/getById/{Id}");
+        expense = await http.GetFromJsonAsync<ExpensesDto>($"api/expenses/getById/{Id}");
         expense!.Type = null;
     }
 

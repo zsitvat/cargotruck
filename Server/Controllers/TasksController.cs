@@ -1,4 +1,4 @@
-﻿using Cargotruck.Data;
+﻿using Cargotruck.Server.Data;
 using Cargotruck.Shared.Models;
 using ClosedXML.Excel;
 using iTextSharp.text;
@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Text;
 using Document = iTextSharp.text.Document;
-using Tasks = Cargotruck.Shared.Models.Tasks;
+using TasksDto = Cargotruck.Shared.Models.TasksDto;
 
 namespace Cargotruck.Server.Controllers
 {
@@ -23,7 +23,7 @@ namespace Cargotruck.Server.Controllers
             _context = context;
         }
 
-        private async Task<List<Tasks>> GetData(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        private async Task<List<TasksDto>> GetData(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var t = await _context.Tasks.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
 
@@ -172,7 +172,7 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(Tasks t)
+        public async Task<IActionResult> Post(TasksDto t)
         {
             t.Final_Payment = (t.Payment != null ? t.Payment : 0) - (t.Penalty != null ? t.Penalty : 0);
             t.User_id = _context.Users.FirstOrDefault(a => a.UserName == User.Identity!.Name)?.Id;
@@ -201,7 +201,7 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put(Tasks t)
+        public async Task<IActionResult> Put(TasksDto t)
         {
             t.Final_Payment = (t.Payment != null ? t.Payment : 0) - (t.Penalty != null ? t.Penalty : 0);
             
@@ -235,7 +235,7 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> ChangeCompletion(Tasks t)
+        public async Task<IActionResult> ChangeCompletion(TasksDto t)
         {
             t.Completed = !t.Completed;
 
@@ -337,7 +337,7 @@ namespace Cargotruck.Server.Controllers
             Font font1 = FontFactory.GetFont(FontFactory.TIMES_BOLD, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 11);
             Font font2 = FontFactory.GetFont(FontFactory.TIMES_ROMAN, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 10);
 
-            System.Type type = typeof(Tasks);
+            System.Type type = typeof(TasksDto);
             var column_number = (type.GetProperties().Length) / 2;
             var columnDefinitionSize = new float[column_number];
             for (int i = 0; i < column_number; i++) columnDefinitionSize[i] = 1F;
@@ -418,7 +418,7 @@ namespace Cargotruck.Server.Controllers
                 });
 
 
-                foreach (Tasks task in tasks)
+                foreach (TasksDto task in tasks)
                 {
                     var s = "";
                     if (!string.IsNullOrEmpty(task.Id.ToString())) { s = task.Id.ToString(); }
@@ -537,7 +537,7 @@ namespace Cargotruck.Server.Controllers
                 table2.HeaderRows = 1;
 
 
-                foreach (Tasks task in tasks)
+                foreach (TasksDto task in tasks)
                 {
                     var s = "";
                     if (!string.IsNullOrEmpty(task.Id.ToString())) { s = task.Id.ToString(); }
@@ -843,7 +843,7 @@ namespace Cargotruck.Server.Controllers
                                         if (lastId?.Id_cargo != null)
                                         {
                                             var WithNewIds = await _context.Tasks.Where(x => x.Id_cargo == lastId.Id_cargo).ToListAsync();
-                                            Cargoes? cargo = await _context.Cargoes.FirstOrDefaultAsync(x => x.Id == lastId.Id_cargo);
+                                            CargoesDto? cargo = await _context.Cargoes.FirstOrDefaultAsync(x => x.Id == lastId.Id_cargo);
 
                                             foreach (var item in WithNewIds)
                                             {

@@ -1,5 +1,4 @@
 ﻿@page "/Expenses"
-@using Cargotruck.Client.Components
 
 <h3>@localizer["Expenses"]</h3>
 <div class="form-group buttons">
@@ -140,7 +139,7 @@ else
                         </thead>
                         <tbody>
 
-                            @foreach (Expenses item in expenses)
+                            @foreach (ExpensesDto item in expenses)
                             {
 
                                 <tr @onclick="@((e) =>MouseHoverClass.MouseOnclick(item.Id.ToString()))" @onmouseover="@((e) =>MouseHoverClass.MouseOver(item.Id.ToString()))" @onmouseout="@((e) =>MouseHoverClass.MouseOut())"

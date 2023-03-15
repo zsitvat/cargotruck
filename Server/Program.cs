@@ -1,4 +1,4 @@
-using Cargotruck.Data;
+using Cargotruck.Server.Data;
 using Cargotruck.Server.Models;
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 using Microsoft.AspNetCore.Identity;

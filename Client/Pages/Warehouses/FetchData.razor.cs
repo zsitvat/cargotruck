@@ -1,4 +1,5 @@
 ﻿using Cargotruck.Client.Services;
+using Cargotruck.Client.UtilitiesClasses;
 using Cargotruck.Shared.Models.Request;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
@@ -10,8 +11,8 @@ namespace Cargotruck.Client.Pages.Warehouses
     {
         public bool settings = false;
         bool expandExportMenu;
-        Cargotruck.Shared.Models.Warehouses[]? Warehouses { get; set; }
-        Cargotruck.Shared.Models.Cargoes[]? Cargoes { get; set; }
+        Cargotruck.Shared.Models.WarehousesDto[]? Warehouses { get; set; }
+        Cargotruck.Shared.Models.CargoesDto[]? Cargoes { get; set; }
         int? IdForGetById { get; set; }
         string? GetByIdType { get; set; }
         readonly List<bool> showColumns = Enumerable.Repeat(true, 4).ToList();
@@ -28,7 +29,7 @@ namespace Cargotruck.Client.Pages.Warehouses
         {
             PageHistoryState.AddPageToHistory("/Warehouses");
             dataRows = await client.GetFromJsonAsync<int>($"api/warehouses/pagecount?searchString={searchString}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
-            Cargoes = await client.GetFromJsonAsync<Cargotruck.Shared.Models.Cargoes[]?>("api/cargoes/getcargoes");
+            Cargoes = await client.GetFromJsonAsync<Cargotruck.Shared.Models.CargoesDto[]?>("api/cargoes/getcargoes");
             await ShowPage();
         }
 
@@ -37,7 +38,7 @@ namespace Cargotruck.Client.Pages.Warehouses
             pageSize = Page.GetPageSize(pageSize, dataRows);
             maxPage = Page.GetMaxPage(pageSize, dataRows);
 
-            Warehouses = await client.GetFromJsonAsync<Cargotruck.Shared.Models.Warehouses[]>($"api/warehouses/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
+            Warehouses = await client.GetFromJsonAsync<Cargotruck.Shared.Models.WarehousesDto[]>($"api/warehouses/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
             StateHasChanged();
         }
         async Task Delete(int Id)

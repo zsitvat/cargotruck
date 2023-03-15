@@ -1,12 +1,12 @@
-﻿namespace Cargotruck.Client.Services
+﻿namespace Cargotruck.Client.UtilitiesClasses
 {
     public static class MouseHoverClass
     {
-        public static String? MouseOnHoverClass { get; set; }
-        public static String? MouseOnclickClass { get; set; }
-        public static void MouseOver(String? id) { MouseOnHoverClass = id?.ToString(); }
+        public static string? MouseOnHoverClass { get; set; }
+        public static string? MouseOnclickClass { get; set; }
+        public static void MouseOver(string? id) { MouseOnHoverClass = id?.ToString(); }
         public static void MouseOut() { MouseOnHoverClass = null; }
-        public static void MouseOnclick(String? id)
+        public static void MouseOnclick(string? id)
         {
             if (MouseOnclickClass != id?.ToString())
             {

@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using System.Net.Http.Json;
 using Cargotruck.Shared.Models;
 
-namespace Cargotruck.Client.Services
+namespace Cargotruck.Client.UtilitiesClasses
 {
     public static class CurrencyExchange
     {
@@ -24,7 +24,8 @@ namespace Cargotruck.Client.Services
             var settings = await client!.GetFromJsonAsync<Settings[]>("api/settings/get");
             var key = settings?.FirstOrDefault(x => x.SettingName == "ExchangeApiKey");
 
-            if (key != null) { 
+            if (key != null)
+            {
                 request.Headers.Add("apikey", key?.SettingValue);
             }
 
@@ -33,7 +34,7 @@ namespace Cargotruck.Client.Services
             if (response.IsSuccessStatusCode)
             {
                 Dictionary<string, dynamic> dict = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(result)!;
-                var ratesJson = dict["rates"].ToString().Trim(new Char[] { '\n' }).Replace(" ", "");
+                var ratesJson = dict["rates"].ToString().Trim(new char[] { '\n' }).Replace(" ", "");
                 return JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(ratesJson);
             }
             else
@@ -46,11 +47,11 @@ namespace Cargotruck.Client.Services
         public static float? GetCurrency(int? amount, string currency)
         {
             float? conversionNum = amount;
-            if (CurrencyExchange.Rates != null && currency != "HUF")
+            if (Rates != null && currency != "HUF")
             {
                 if (currency != "EUR")
                 {
-                    conversionNum = (float)((amount / Rates["HUF"]) * Rates[currency]);
+                    conversionNum = (float)(amount / Rates["HUF"] * Rates[currency]);
                 }
                 else
                 {

@@ -78,7 +78,7 @@ else
                         </thead>
                         <tbody>
                             
-                            @foreach (Warehouses item in Warehouses)
+                            @foreach (WarehousesDto item in Warehouses)
                             {
 
                                 <tr @onclick="@((e) =>MouseHoverClass.MouseOnclick(item.Id.ToString()))" @onmouseover="@((e) =>MouseHoverClass.MouseOver(item.Id.ToString()))" @onmouseout="@((e) =>MouseHoverClass.MouseOut())"

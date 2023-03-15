@@ -121,7 +121,7 @@ else
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (Cargoes item in Cargoes)
+                            @foreach (CargoesDto item in Cargoes)
                             {
                                 <tr @onclick="@((e) =>MouseHoverClass.MouseOnclick(item.Id.ToString() ))" @onmouseover="@((e) =>MouseHoverClass.MouseOver(item.Id.ToString() ))" @onmouseout="@((e) =>MouseHoverClass.MouseOut())"
                             class="@(MouseHoverClass.MouseOnHoverClass == item.Id.ToString() || MouseHoverClass.MouseOnclickClass == item.Id.ToString()  ? "color-on-hover" :"")">

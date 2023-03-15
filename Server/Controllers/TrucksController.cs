@@ -1,4 +1,4 @@
-﻿using Cargotruck.Data;
+﻿using Cargotruck.Server.Data;
 using Cargotruck.Shared.Models;
 using ClosedXML.Excel;
 using iTextSharp.text;
@@ -23,7 +23,7 @@ namespace Cargotruck.Server.Controllers
             _context = context;
         }
 
-        private async Task<List<Trucks>> GetData(string? searchString, Status? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        private async Task<List<TrucksDto>> GetData(string? searchString, Status? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var data = await _context.Trucks.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
 
@@ -121,7 +121,7 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(Trucks data)
+        public async Task<IActionResult> Post(TrucksDto data)
         {
             data.User_id = _context.Users.FirstOrDefault(a => a.UserName == User.Identity!.Name)?.Id;
             _context.Add(data);
@@ -130,7 +130,7 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put(Trucks data)
+        public async Task<IActionResult> Put(TrucksDto data)
         {
             _context.Entry(data).State = EntityState.Modified;
             await _context.SaveChangesAsync();
@@ -140,7 +140,7 @@ namespace Cargotruck.Server.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var data = new Trucks { Id = id };
+            var data = new TrucksDto { Id = id };
             _context.Remove(data);
             await _context.SaveChangesAsync();
             return NoContent();
@@ -213,7 +213,7 @@ namespace Cargotruck.Server.Controllers
             Font font1 = FontFactory.GetFont(FontFactory.TIMES_BOLD, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 12);
             Font font2 = FontFactory.GetFont(FontFactory.TIMES_ROMAN, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 10);
 
-            System.Type type = typeof(Trucks);
+            System.Type type = typeof(TrucksDto);
             var column_number = (type.GetProperties().Length) - 1;
             var columnDefinitionSize = new float[column_number];
             for (int i = 0; i < column_number; i++) columnDefinitionSize[i] = 1F;
@@ -281,7 +281,7 @@ namespace Cargotruck.Server.Controllers
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 });
 
-                foreach (Trucks truck in trucks)
+                foreach (TrucksDto truck in trucks)
                 {
                     var s = "";
                     if (!string.IsNullOrEmpty(truck.Id.ToString())) { s = truck.Id.ToString(); }
@@ -546,7 +546,7 @@ namespace Cargotruck.Server.Controllers
                                         if (lastId != null)
                                         {
                                             var WithNewIds = await _context.Trucks.Where(x => x.Road_id == lastId.Road_id).ToListAsync();
-                                            Roads? road = await _context.Roads.FirstOrDefaultAsync(x => x.Vehicle_registration_number == lastId.Vehicle_registration_number);
+                                            RoadsDto? road = await _context.Roads.FirstOrDefaultAsync(x => x.Vehicle_registration_number == lastId.Vehicle_registration_number);
 
                                             foreach (var item in WithNewIds)
                                             {

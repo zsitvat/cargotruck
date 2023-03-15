@@ -168,19 +168,19 @@
 
 
 @code {
-    [Parameter] public Tasks? tasks { get; set; }
+    [Parameter] public TasksDto? tasks { get; set; }
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public string TitleText { get; set; } = "";
     [Parameter] public EventCallback OnValidSubmit { get; set; }
     [Parameter] public EventCallback<bool> checkValidSubmit { get; set; }
     string error = "";
-    List<Cargoes>? cargoes { get; set; }
-    List<Tasks>? taskWithCargo { get; set; }
+    List<CargoesDto>? cargoes { get; set; }
+    List<TasksDto>? taskWithCargo { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        cargoes = await client.GetFromJsonAsync < List<Cargoes>>("api/cargoes/getcargoes");
-        taskWithCargo = await client.GetFromJsonAsync<List<Tasks>>("api/tasks/gettasks");
+        cargoes = await client.GetFromJsonAsync < List<CargoesDto>>("api/cargoes/getcargoes");
+        taskWithCargo = await client.GetFromJsonAsync<List<TasksDto>>("api/tasks/gettasks");
         taskWithCargo = taskWithCargo?.Where(x => x.Id_cargo != null).ToList();
         if (taskWithCargo != null) {
             foreach (var task in taskWithCargo)

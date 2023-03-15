@@ -108,14 +108,14 @@
 
 
 @code {
-    [Parameter] public Monthly_expenses? Monthly_expenses { get; set; }
+    [Parameter] public Monthly_expensesDto? Monthly_expenses { get; set; }
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public string TitleText { get; set; } = "";
     [Parameter] public EventCallback OnValidSubmit { get; set; }
     [Parameter] public EventCallback<List<int>?> OnHandleChangeTask { get; set; }
     [Parameter] public EventCallback<List<int>?> OnHandleChangeExpense { get; set; }
-    Tasks[]? tasks { get; set; }
-    Expenses[]? expenses { get; set; }
+    TasksDto[]? tasks { get; set; }
+    ExpensesDto[]? expenses { get; set; }
     List<int>? SelectedExpenses { get; set; } = new();
     List<int>? SelectedTasks { get; set; } = new();
     bool disabled = false;
@@ -123,8 +123,8 @@
     protected override async Task OnInitializedAsync()
     {
         Disabled();
-        tasks = await client.GetFromJsonAsync<Tasks[]?>("api/tasks/gettasks");
-        expenses = await client.GetFromJsonAsync<Expenses[]?>("api/expenses/getexpenses");
+        tasks = await client.GetFromJsonAsync<TasksDto[]?>("api/tasks/gettasks");
+        expenses = await client.GetFromJsonAsync<ExpensesDto[]?>("api/expenses/getexpenses");
     }
 
     public async void HandleChangeTask()

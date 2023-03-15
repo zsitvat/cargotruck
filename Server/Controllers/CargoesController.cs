@@ -1,4 +1,4 @@
-﻿using Cargotruck.Data;
+﻿using Cargotruck.Server.Data;
 using Cargotruck.Shared.Models;
 using ClosedXML.Excel;
 using iTextSharp.text;
@@ -23,7 +23,7 @@ namespace Cargotruck.Server.Controllers
             _context = context;
         }
 
-        private async Task<List<Cargoes>> GetData(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        private async Task<List<CargoesDto>> GetData(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var data = await _context.Cargoes.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
 
@@ -173,7 +173,7 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(Cargoes data)
+        public async Task<IActionResult> Post(CargoesDto data)
         {
             data.User_id = _context?.Users.FirstOrDefault(a => a.UserName == User.Identity!.Name)?.Id;
             _context!.Add(data);
@@ -190,7 +190,7 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put(Cargoes data)
+        public async Task<IActionResult> Put(CargoesDto data)
         {
             _context.Entry(data).State = EntityState.Modified;
             var task = _context.Tasks.FirstOrDefault(a => a.Id == data.Task_id);
@@ -207,7 +207,7 @@ namespace Cargotruck.Server.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var data = new Cargoes { Id = id };
+            var data = new CargoesDto { Id = id };
             _context.Remove(data);
             await _context.SaveChangesAsync();
             return NoContent();
@@ -285,7 +285,7 @@ namespace Cargotruck.Server.Controllers
             Font font1 = FontFactory.GetFont(FontFactory.TIMES_BOLD, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 12);
             Font font2 = FontFactory.GetFont(FontFactory.TIMES_ROMAN, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 10);
 
-            System.Type type = typeof(Cargoes);
+            System.Type type = typeof(CargoesDto);
             var column_number = (type.GetProperties().Length) / 2;
             var columnDefinitionSize = new float[column_number];
             for (int i = 0; i < column_number; i++) columnDefinitionSize[i] = 1F;
@@ -350,7 +350,7 @@ namespace Cargotruck.Server.Controllers
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 });
 
-                foreach (Cargoes cargo in cargoes)
+                foreach (CargoesDto cargo in cargoes)
                 {
                     var s = "";
                     if (!string.IsNullOrEmpty(cargo.Id.ToString())) { s = cargo.Id.ToString(); }
@@ -428,7 +428,7 @@ namespace Cargotruck.Server.Controllers
                 table2.HeaderRows = 1;
 
 
-                foreach (Cargoes cargo in cargoes)
+                foreach (CargoesDto cargo in cargoes)
                 {
                     var s = "";
                     if (!string.IsNullOrEmpty(cargo.Id.ToString())) { s = cargo.Id.ToString(); }
@@ -671,9 +671,9 @@ namespace Cargotruck.Server.Controllers
                                         if (lastId != null)
                                         {
                                             var WithNewIds = await _context.Cargoes.Where(x => x.Task_id == lastId.Task_id || x.Warehouse_id == lastId.Warehouse_id || x.Vehicle_registration_number == lastId.Vehicle_registration_number).ToListAsync();
-                                            Shared.Models.Tasks? task = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == lastId.Task_id);
-                                            Warehouses? warehouse = await _context.Warehouses.FirstOrDefaultAsync(x => x.Id == lastId.Warehouse_id);
-                                            Trucks? truck = await _context.Trucks.FirstOrDefaultAsync(x => x.Vehicle_registration_number == lastId.Vehicle_registration_number);
+                                            Shared.Models.TasksDto? task = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == lastId.Task_id);
+                                            WarehousesDto? warehouse = await _context.Warehouses.FirstOrDefaultAsync(x => x.Id == lastId.Warehouse_id);
+                                            TrucksDto? truck = await _context.Trucks.FirstOrDefaultAsync(x => x.Vehicle_registration_number == lastId.Vehicle_registration_number);
 
                                             foreach (var item in WithNewIds)
                                             {

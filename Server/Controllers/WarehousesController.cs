@@ -1,4 +1,4 @@
-﻿using Cargotruck.Data;
+﻿using Cargotruck.Server.Data;
 using Cargotruck.Shared.Models;
 using ClosedXML.Excel;
 using iTextSharp.text;
@@ -24,7 +24,7 @@ namespace Cargotruck.Server.Controllers
             _context = context;
         }
 
-        private async Task<List<Warehouses>> GetData(string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        private async Task<List<WarehousesDto>> GetData(string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var data = await _context.Warehouses.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
 
@@ -92,7 +92,7 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(Warehouses data)
+        public async Task<IActionResult> Post(WarehousesDto data)
         {
             data.User_id = _context.Users.FirstOrDefault(a => a.UserName == User.Identity!.Name)?.Id;
             _context.Add(data);
@@ -101,7 +101,7 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put(Warehouses data)
+        public async Task<IActionResult> Put(WarehousesDto data)
         {
             _context.Entry(data).State = EntityState.Modified;
             await _context.SaveChangesAsync();
@@ -111,7 +111,7 @@ namespace Cargotruck.Server.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var data = new Warehouses { Id = id };
+            var data = new WarehousesDto { Id = id };
             _context.Remove(data);
             await _context.SaveChangesAsync();
             return NoContent();
@@ -154,7 +154,7 @@ namespace Cargotruck.Server.Controllers
                 worksheet.Cell(currentRow, 3).Value = warehouse.Address;
                 worksheet.Cell(currentRow, 4).Value = warehouse.Owner;
 
-                foreach (Cargoes cargo in cargoes)
+                foreach (CargoesDto cargo in cargoes)
                 {
                     if (cargo.Warehouse_id == warehouse.Id)
                     {
@@ -193,7 +193,7 @@ namespace Cargotruck.Server.Controllers
             Font font1 = FontFactory.GetFont(FontFactory.TIMES_BOLD, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 12);
             Font font2 = FontFactory.GetFont(FontFactory.TIMES_ROMAN, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 10);
 
-            System.Type type = typeof(Warehouses);
+            System.Type type = typeof(WarehousesDto);
             var column_number = (type.GetProperties().Length);
             var columnDefinitionSize = new float[column_number];
             for (int i = 0; i < column_number; i++) columnDefinitionSize[i] = 1F;
@@ -249,7 +249,7 @@ namespace Cargotruck.Server.Controllers
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 });
 
-                foreach (Warehouses warehouse in warehouses)
+                foreach (WarehousesDto warehouse in warehouses)
                 {
                     var s = "";
                     if (!string.IsNullOrEmpty(warehouse.Id.ToString())) { s = warehouse.Id.ToString(); }
@@ -275,7 +275,7 @@ namespace Cargotruck.Server.Controllers
                     });
                     if (cargoes != null)
                     {
-                        foreach (Cargoes cargo in cargoes)
+                        foreach (CargoesDto cargo in cargoes)
                         {
                             if (cargo.Warehouse_id == warehouse.Id)
                             {
@@ -352,7 +352,7 @@ namespace Cargotruck.Server.Controllers
                 txt.Write(warehouse.User_id + ";");
                 txt.Write(warehouse.Address + ";");
                 txt.Write(warehouse.Owner + ";");
-                foreach (Cargoes cargo in cargoes)
+                foreach (CargoesDto cargo in cargoes)
                 {
                     if (cargo.Warehouse_id == warehouse.Id)
                     {

@@ -1,4 +1,5 @@
 ﻿using Cargotruck.Client.Services;
+using Cargotruck.Client.UtilitiesClasses;
 using Cargotruck.Shared.Models.Request;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
@@ -10,7 +11,7 @@ namespace Cargotruck.Client.Pages.Tasks
     {
         private bool settings = false;
         bool expandExportMenu;
-        Cargotruck.Shared.Models.Tasks[]? Tasks { get; set; }
+        Cargotruck.Shared.Models.TasksDto[]? Tasks { get; set; }
         int? IdForGetById { get; set; }
         string? GetByIdType { get; set; }
         private readonly List<bool> showColumns = Enumerable.Repeat(true, 16).ToList();
@@ -32,7 +33,7 @@ namespace Cargotruck.Client.Pages.Tasks
             await ShowPage();
         }
 
-        async Task ChangeCompletion(Cargotruck.Shared.Models.Tasks task)
+        async Task ChangeCompletion(Cargotruck.Shared.Models.TasksDto task)
         {
             await client.PutAsJsonAsync($"api/tasks/changecompletion", task);
             await ShowPage();
@@ -55,7 +56,7 @@ namespace Cargotruck.Client.Pages.Tasks
             pageSize = Page.GetPageSize(pageSize, dataRows);
             maxPage = Page.GetMaxPage(pageSize, dataRows);
 
-            Tasks = await client.GetFromJsonAsync<Cargotruck.Shared.Models.Tasks[]>($"api/tasks/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
+            Tasks = await client.GetFromJsonAsync<Cargotruck.Shared.Models.TasksDto[]>($"api/tasks/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
             StateHasChanged();
         }
         async void DateStartInput(ChangeEventArgs e)

@@ -154,7 +154,7 @@ else
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (Tasks item in Tasks)
+                            @foreach (TasksDto item in Tasks)
                             {
                                 <tr 
                                     @onclick="@((e) =>MouseHoverClass.MouseOnclick(item.Id.ToString()))" @onmouseover="@((e) =>MouseHoverClass.MouseOver(item.Id.ToString()))" @onmouseout="@((e) =>MouseHoverClass.MouseOut())"
