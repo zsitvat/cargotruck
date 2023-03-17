@@ -11,7 +11,7 @@ namespace Cargotruck.Client.Pages.Expenses
     {
         public bool settings = false;
         bool expandExportMenu;
-        Cargotruck.Shared.Models.ExpensesDto[]? expenses;
+        Cargotruck.Shared.Models.Expenses[]? expenses;
         int? IdForGetById { get; set; }
         string? GetByIdType { get; set; }
         readonly List<bool> showColumns = Enumerable.Repeat(true, 13).ToList();
@@ -39,7 +39,7 @@ namespace Cargotruck.Client.Pages.Expenses
             pageSize = Page.GetPageSize(pageSize, dataRows);
             maxPage = Page.GetMaxPage(pageSize, dataRows);
 
-            expenses = await client.GetFromJsonAsync<Cargotruck.Shared.Models.ExpensesDto[]>($"api/expenses/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");            StateHasChanged();
+            expenses = await client.GetFromJsonAsync<Cargotruck.Shared.Models.Expenses[]>($"api/expenses/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");            StateHasChanged();
         }
 
         async Task Delete(int Id)

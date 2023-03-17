@@ -16,7 +16,7 @@
                     Cargotruck.Shared.Resources.Resource.Time_of_receipt,
                     Cargotruck.Shared.Resources.Resource.Place_of_delivery,
                     Cargotruck.Shared.Resources.Resource.Time_of_delivery,
-                    Cargotruck.Shared.Resources.Resource.other_stops,
+                    Cargotruck.Shared.Resources.Resource.Other_stops,
                     Cargotruck.Shared.Resources.Resource.Id_cargo,
                     Cargotruck.Shared.Resources.Resource.Storage_time,
                     Cargotruck.Shared.Resources.Resource.Completed,

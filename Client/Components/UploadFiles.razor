@@ -51,7 +51,7 @@
 
         if (upload)
         {
-            HttpResponseMessage response = await Http.PostAsync($"api/filesave/page", content);
+            HttpResponseMessage response = await Http.PostAsync($"api/filesave/page?lang={CultureInfo.CurrentCulture.Name.ToString()}", content);
 
             var newUploadResults = await response.Content.ReadFromJsonAsync<IList<UploadResult>>();
 

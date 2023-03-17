@@ -87,7 +87,7 @@ else
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (Monthly_expensesDto item in Monthly_expenses)
+                            @foreach (Monthly_expenses item in Monthly_expenses)
                             {
                                 <tr @onclick="@((e) =>MouseHoverClass.MouseOnclick(item.Monthly_expense_id.ToString()))" @onmouseover="@((e) =>MouseHoverClass.MouseOver(item.Monthly_expense_id.ToString()))" @onmouseout="@((e) =>MouseHoverClass.MouseOut())"
                             class="@(item.Profit <=0 ? "red": "") @(MouseHoverClass.MouseOnHoverClass == item.Monthly_expense_id.ToString() || MouseHoverClass.MouseOnclickClass == item.Monthly_expense_id.ToString() ? "color-on-hover" :"")">

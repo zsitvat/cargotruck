@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cargotruck.Shared.Models
 {
-    public class TasksDto
+    public class Tasks
     {
         [Required]
         [ForeignKey("Task_id")]
@@ -29,7 +29,7 @@ namespace Cargotruck.Shared.Models
         [Required(ErrorMessageResourceName = "Error_time_of_delivery", ErrorMessageResourceType = typeof(Resource))]
         [Display(Name = "Time_of_delivery", ResourceType = typeof(Resource))]
         public DateTime? Time_of_delivery { get; set; }
-        [Display(Name = "other_stops", ResourceType = typeof(Resource))]
+        [Display(Name = "Other_stops", ResourceType = typeof(Resource))]
         public string? Other_stops { get; set; }
         [Display(Name = "Id_cargo", ResourceType = typeof(Resource))]
         public int? Id_cargo { get; set; }

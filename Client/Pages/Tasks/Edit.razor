@@ -8,11 +8,11 @@
 @code {
     [Parameter] public int Id { get; set; }
     bool isValidSubmit = true;
-    TasksDto? task = new TasksDto();
+    Tasks? task = new Tasks();
 
     protected async override Task OnParametersSetAsync()
     {
-        task = await http.GetFromJsonAsync<TasksDto>($"api/tasks/getById/{Id}");
+        task = await http.GetFromJsonAsync<Tasks>($"api/tasks/getById/{Id}");
     }
 
     async Task EditTasks()

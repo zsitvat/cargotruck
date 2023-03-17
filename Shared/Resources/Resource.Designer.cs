@@ -529,6 +529,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A következő azonosítóval rendelkező sor törölve lett, mert nem létezik a megadott típus azonosító:.
+        /// </summary>
+        public static string Deleted_wrong_id {
+            get {
+                return ResourceManager.GetString("Deleted_wrong_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Szállít.
         /// </summary>
         public static string delivering {
@@ -727,6 +736,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ez egy üres fájl: .
+        /// </summary>
+        public static string Empty_file {
+            get {
+                return ResourceManager.GetString("Empty_file", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Angol.
         /// </summary>
         public static string en {
@@ -804,6 +822,15 @@ namespace Cargotruck.Shared.Resources {
         public static string Error_max_weight {
             get {
                 return ResourceManager.GetString("Error_max_weight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hiba történt a feltöltésnél:.
+        /// </summary>
+        public static string Error_on_upload {
+            get {
+                return ResourceManager.GetString("Error_on_upload", resourceCulture);
             }
         }
         
@@ -1110,6 +1137,24 @@ namespace Cargotruck.Shared.Resources {
         public static string File_input {
             get {
                 return ResourceManager.GetString("File_input", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A fájl hossza: .
+        /// </summary>
+        public static string File_lenght_is {
+            get {
+                return ResourceManager.GetString("File_lenght_is", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to bájt. Maximum méret: .
+        /// </summary>
+        public static string File_max_lenght {
+            get {
+                return ResourceManager.GetString("File_max_lenght", resourceCulture);
             }
         }
         
@@ -1465,6 +1510,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A feltöltés nem sikerült, mert a hivás túllépte a  megengedett fájlok számát: .
+        /// </summary>
+        public static string Max_file_number {
+            get {
+                return ResourceManager.GetString("Max_file_number", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Terhelés max súlya.
         /// </summary>
         public static string Max_weight {
@@ -1551,6 +1605,15 @@ namespace Cargotruck.Shared.Resources {
         public static string No_records {
             get {
                 return ResourceManager.GetString("No_records", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A fájl nem egy kép: .
+        /// </summary>
+        public static string Not_an_image {
+            get {
+                return ResourceManager.GetString("Not_an_image", resourceCulture);
             }
         }
         
@@ -1674,9 +1737,9 @@ namespace Cargotruck.Shared.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Egyéb megállóhelyek.
         /// </summary>
-        public static string other_stops {
+        public static string Other_stops {
             get {
-                return ResourceManager.GetString("other_stops", resourceCulture);
+                return ResourceManager.GetString("Other_stops", resourceCulture);
             }
         }
         
@@ -2262,6 +2325,15 @@ namespace Cargotruck.Shared.Resources {
         public static string to {
             get {
                 return ResourceManager.GetString("to", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A fájl mérete túl nagy: .
+        /// </summary>
+        public static string Too_big_file {
+            get {
+                return ResourceManager.GetString("Too_big_file", resourceCulture);
             }
         }
         

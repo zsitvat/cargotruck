@@ -107,24 +107,24 @@
 
 
 @code {
-    [Parameter] public TrucksDto? trucks { get; set; }
+    [Parameter] public Trucks? trucks { get; set; }
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public string TitleText { get; set; } = "";
     [Parameter] public EventCallback OnValidSubmit { get; set; }
     [Parameter] public EventCallback<bool> checkValidSubmit { get; set; }
     string error = "";
     string? selectedOption;
-    List<RoadsDto>? roads { get; set; }
-    List<TrucksDto>? trucksOnRoad { get; set; }
+    List<Roads>? roads { get; set; }
+    List<Trucks>? trucksOnRoad { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        roads = await client.GetFromJsonAsync<List<RoadsDto>?>("api/roads/getroads");
+        roads = await client.GetFromJsonAsync<List<Roads>?>("api/roads/getroads");
         if (trucks?.Status != null)
         {
             selectedOption = localizer[trucks?.Status.ToString()!];
         }
-        trucksOnRoad = await client.GetFromJsonAsync<List<TrucksDto>>("api/trucks/gettrucks");
+        trucksOnRoad = await client.GetFromJsonAsync<List<Trucks>>("api/trucks/gettrucks");
         trucksOnRoad = trucksOnRoad?.Where(x => x.Road_id != null).ToList();
         if (trucksOnRoad != null)
         {

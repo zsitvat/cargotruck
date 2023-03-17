@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cargotruck.Shared.Models
 {
-    public class Monthly_expensesDto
+    public class Monthly_expenses
     {
         [Required]
         [Key]
@@ -29,7 +29,7 @@ namespace Cargotruck.Shared.Models
         public int Id { get; set; }
         [ForeignKey("Monthly_expenses")]
         public int Monthly_expense_id { get; set; }
-        public Monthly_expensesDto? Monthly_expenses { get; set; }
+        public Monthly_expenses? Monthly_expenses { get; set; }
         public int? Expense_id { get; set; }
         public int? Task_id { get; set; }
     }

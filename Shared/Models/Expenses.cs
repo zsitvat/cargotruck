@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cargotruck.Shared.Models
 {
-    public class ExpensesDto
+    public class Expenses
     {
         [Required]
         [ForeignKey("Expense_id")]
@@ -46,10 +46,5 @@ namespace Cargotruck.Shared.Models
         public int? Total_amount { get; set; }
         [Display(Name = "Date", ResourceType = typeof(Resource))]
         public DateTime Date { get; set; } = DateTime.Now;
-    }
-
-    public enum Type
-    {
-        task, repair, storage, salary, other
     }
 }

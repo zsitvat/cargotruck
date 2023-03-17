@@ -4,16 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Cargotruck.Shared.Models
 {
-    public enum Status
-    {
-        delivering,
-        on_road,
-        garage,
-        under_repair,
-        loaned,
-        rented
-    };
-    public class TrucksDto
+    public class Trucks
     {
         [Required]
         public int Id { get; set; }

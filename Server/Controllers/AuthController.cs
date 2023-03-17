@@ -3,10 +3,12 @@ using Cargotruck.Server.Models;
 using Cargotruck.Shared.Models;
 using Cargotruck.Shared.Models.Request;
 using Cargotruck.Shared.Resources;
+using iTextSharp.text.xml.xmp;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
+using System.Globalization;
 using System.Security.Claims;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
@@ -30,7 +32,7 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginRequest request)
+        public async Task<IActionResult> Login(LoginRequest request, CultureInfo lang)
         {
             //if no user found, create admin
             if (!_userManager.Users.Any())
@@ -45,7 +47,7 @@ namespace Cargotruck.Server.Controllers
                 await _userManager.AddToRoleAsync(admin, "Admin");
                 await _userManager.AddClaimAsync(admin, new System.Security.Claims.Claim("img", "img/profile.jpg"));
             }
-
+            CultureInfo.CurrentUICulture = lang;
             var password_error = _localizer["Password_error"].Value;
             var user = await _userManager.FindByNameAsync(request.UserName);
             

@@ -1,4 +1,5 @@
 ﻿using Cargotruck.Shared.Models.Request;
+using System.Globalization;
 using System.Net.Http.Json;
 
 namespace Cargotruck.Client.Services
@@ -20,7 +21,7 @@ namespace Cargotruck.Client.Services
 
         public async Task Login(LoginRequest loginRequest)
         {
-            var result = await _httpClient.PostAsJsonAsync("api/auth/login", loginRequest);
+            var result = await _httpClient.PostAsJsonAsync($"api/auth/login?lang={CultureInfo.CurrentCulture}", loginRequest);
             if (result.StatusCode == System.Net.HttpStatusCode.BadRequest) throw new Exception(await result.Content.ReadAsStringAsync());
             result.EnsureSuccessStatusCode();
         }

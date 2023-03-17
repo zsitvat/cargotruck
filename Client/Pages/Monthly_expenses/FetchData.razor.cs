@@ -13,7 +13,7 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
         public bool settings = false;
         bool expandExportMenu;
         public bool fullYearProfitWindow = true;
-        Cargotruck.Shared.Models.Monthly_expensesDto[]? Monthly_expenses { get; set; }
+        Cargotruck.Shared.Models.Monthly_expenses[]? Monthly_expenses { get; set; }
         Monthly_expenses_tasks_expenses[]? Connection_ids { get; set; }
         int? IdForGetById { get; set; }
         string? GetByIdType { get; set; }
@@ -53,7 +53,7 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
             pageSize = Page.GetPageSize(pageSize, dataRows);
             maxPage = Page.GetMaxPage(pageSize, dataRows);
 
-            Monthly_expenses = await client.GetFromJsonAsync<Cargotruck.Shared.Models.Monthly_expensesDto[]>($"api/Monthly_expenses/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
+            Monthly_expenses = await client.GetFromJsonAsync<Cargotruck.Shared.Models.Monthly_expenses[]>($"api/Monthly_expenses/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
             StateHasChanged();
         }
 

@@ -1,12 +1,16 @@
 ﻿using Cargotruck.Server.Data;
 using Cargotruck.Shared.Models;
+using Cargotruck.Shared.Resources;
 using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using System.Data;
+using System.Globalization;
 using System.Text;
 using Document = iTextSharp.text.Document;
 using Font = iTextSharp.text.Font;
@@ -18,12 +22,14 @@ namespace Cargotruck.Server.Controllers
     public class CargoesController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
-        public CargoesController(ApplicationDbContext context)
+        private readonly IStringLocalizer<Resource> _localizer;
+        public CargoesController(ApplicationDbContext context, IStringLocalizer<Resource> localizer)
         {
             _context = context;
+            _localizer = localizer;            
         }
 
-        private async Task<List<CargoesDto>> GetData(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        private async Task<List<Cargoes>> GetData(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var data = await _context.Cargoes.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
 
@@ -173,7 +179,7 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(CargoesDto data)
+        public async Task<IActionResult> Post(Cargoes data)
         {
             data.User_id = _context?.Users.FirstOrDefault(a => a.UserName == User.Identity!.Name)?.Id;
             _context!.Add(data);
@@ -190,7 +196,7 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put(CargoesDto data)
+        public async Task<IActionResult> Put(Cargoes data)
         {
             _context.Entry(data).State = EntityState.Modified;
             var task = _context.Tasks.FirstOrDefault(a => a.Id == data.Task_id);
@@ -207,7 +213,7 @@ namespace Cargotruck.Server.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var data = new CargoesDto { Id = id };
+            var data = new Cargoes { Id = id };
             _context.Remove(data);
             await _context.SaveChangesAsync();
             return NoContent();
@@ -285,7 +291,7 @@ namespace Cargotruck.Server.Controllers
             Font font1 = FontFactory.GetFont(FontFactory.TIMES_BOLD, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 12);
             Font font2 = FontFactory.GetFont(FontFactory.TIMES_ROMAN, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 10);
 
-            System.Type type = typeof(CargoesDto);
+            System.Type type = typeof(Cargoes);
             var column_number = (type.GetProperties().Length) / 2;
             var columnDefinitionSize = new float[column_number];
             for (int i = 0; i < column_number; i++) columnDefinitionSize[i] = 1F;
@@ -350,7 +356,7 @@ namespace Cargotruck.Server.Controllers
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 });
 
-                foreach (CargoesDto cargo in cargoes)
+                foreach (Cargoes cargo in cargoes)
                 {
                     var s = "";
                     if (!string.IsNullOrEmpty(cargo.Id.ToString())) { s = cargo.Id.ToString(); }
@@ -428,7 +434,7 @@ namespace Cargotruck.Server.Controllers
                 table2.HeaderRows = 1;
 
 
-                foreach (CargoesDto cargo in cargoes)
+                foreach (Cargoes cargo in cargoes)
                 {
                     var s = "";
                     if (!string.IsNullOrEmpty(cargo.Id.ToString())) { s = cargo.Id.ToString(); }
@@ -496,6 +502,7 @@ namespace Cargotruck.Server.Controllers
         [HttpGet]
         public async Task<string> CSV(string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
+
             var cargoes = _context.Cargoes.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
 
             Random rnd = new();
@@ -559,10 +566,12 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Import([FromBody] string file, string lang)
+        public async Task<IActionResult> Import([FromBody] string file, CultureInfo lang)
         {
+            CultureInfo.CurrentUICulture = lang;
             var error = "";
             var haveColumns = false;
+
             if (file != null)
             {
                 string path = Path.Combine("Files/", file);
@@ -587,16 +596,16 @@ namespace Cargotruck.Server.Controllers
                             {
                                 List<string?> titles = new() {
                                 "Id",
-                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID",
-                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Task_id : "Task ID",
-                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Weight : "Weight",
-                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Description : "Description",
-                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Delivery_requirements : "Delivery requirements",
-                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Vehicle_registration_number : "Vehicle_registration_number",
-                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Warehouse_id : "Warehouse ID",
-                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Warehouse_section : "Warehouse Section",
-                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Storage_starting_time : "Storage starting time",
-                                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date"
+                                _localizer["User_id"].Value,
+                                _localizer["Task_id"].Value,
+                                _localizer["Weight"].Value,
+                                _localizer["Description"].Value,
+                                _localizer["Delivery_requirements"].Value,
+                                _localizer["Vehicle_registration_number"].Value,
+                                _localizer["Warehouse_id"].Value,
+                                _localizer["Warehouse_section"].Value,
+                                _localizer["Storage_starting_time"].Value,
+                                _localizer["Date"].Value
                             };
 
                                 foreach (IXLCell cell in row.Cells())
@@ -608,7 +617,7 @@ namespace Cargotruck.Server.Controllers
                                     }
                                     else
                                     {
-                                        error = lang == "hu" ? @Cargotruck.Shared.Resources.Resource.Not_match_col : "Wrong column names!";
+                                        error = _localizer["Not_match_col"].Value;
                                         System.IO.File.Delete(path); // delete the file
                                         return BadRequest(error);
                                     }
@@ -671,9 +680,9 @@ namespace Cargotruck.Server.Controllers
                                         if (lastId != null)
                                         {
                                             var WithNewIds = await _context.Cargoes.Where(x => x.Task_id == lastId.Task_id || x.Warehouse_id == lastId.Warehouse_id || x.Vehicle_registration_number == lastId.Vehicle_registration_number).ToListAsync();
-                                            Shared.Models.TasksDto? task = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == lastId.Task_id);
-                                            WarehousesDto? warehouse = await _context.Warehouses.FirstOrDefaultAsync(x => x.Id == lastId.Warehouse_id);
-                                            TrucksDto? truck = await _context.Trucks.FirstOrDefaultAsync(x => x.Vehicle_registration_number == lastId.Vehicle_registration_number);
+                                            Shared.Models.Tasks? task = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == lastId.Task_id);
+                                            Warehouses? warehouse = await _context.Warehouses.FirstOrDefaultAsync(x => x.Id == lastId.Warehouse_id);
+                                            Trucks? truck = await _context.Trucks.FirstOrDefaultAsync(x => x.Vehicle_registration_number == lastId.Vehicle_registration_number);
 
                                             foreach (var item in WithNewIds)
                                             {
@@ -683,14 +692,19 @@ namespace Cargotruck.Server.Controllers
                                                     {
                                                         if (item.Task_id == lastId?.Task_id)
                                                         {
-                                                            item.Task_id = default;
+                                                            error += "\n" + _localizer["Deleted_wrong_id"] + " " + lastId?.Id + ".";
+                                                            _context.Cargoes.Remove(lastId!);
+                                                            await _context?.SaveChangesAsync()!;
+                                                            return BadRequest(error);
                                                         }
                                                         if (item.Vehicle_registration_number == lastId?.Vehicle_registration_number)
                                                         {
                                                             item.Vehicle_registration_number = null;
                                                         }
+
                                                         _context.Entry(item).State = EntityState.Modified;
-                                                        await _context.SaveChangesAsync();
+
+                                                        await _context?.SaveChangesAsync()!;
                                                     }
                                                     else
                                                     {
@@ -710,6 +724,15 @@ namespace Cargotruck.Server.Controllers
                                                         await _context.SaveChangesAsync();
                                                     }
                                                 }
+
+                                                if (item.Task_id == null)
+                                                {
+                                                    error += "\n" + _localizer["Deleted_wrong_id"] + " " + lastId?.Id + ".";
+
+                                                    _context.Remove(item);
+                                                    await _context?.SaveChangesAsync()!;
+                                                    return BadRequest(error);
+                                                }
                                             }
 
                                             if (task != null)
@@ -718,6 +741,7 @@ namespace Cargotruck.Server.Controllers
                                                 _context.Entry(task).State = EntityState.Modified;
                                                 await _context.SaveChangesAsync();
                                             }
+
                                         }
                                     }
                                     else if (insert <= 0)
@@ -728,13 +752,13 @@ namespace Cargotruck.Server.Controllers
                             }
                             else
                             {
-                                error = lang == "hu" ? @Cargotruck.Shared.Resources.Resource.Not_match_col_count : "Missing columns in the datatable";
+                                error = _localizer["Not_match_col_count"];
                                 return BadRequest(error);
                             }
                             //If no data in Excel file  
                             if (firstRow)
                             {
-                                error = lang == "hu" ? @Cargotruck.Shared.Resources.Resource.Empty_excel : "Empty excel file!";
+                                error = _localizer["Empty_excel"];
                                 System.IO.File.Delete(path); // delete the file
                                 return BadRequest(error);
                             }
@@ -742,7 +766,7 @@ namespace Cargotruck.Server.Controllers
                     }
                     else
                     {
-                        error = lang == "hu" ? @Cargotruck.Shared.Resources.Resource.Missing_data_rows : "No datarows in the file!";
+                        error = _localizer["Missing_data_rows"];
                         System.IO.File.Delete(path); // delete the file
                         return BadRequest(error);
                     }
@@ -750,14 +774,14 @@ namespace Cargotruck.Server.Controllers
                 else
                 {
                     //If file extension of the uploaded file is different then .xlsx  
-                    error = lang == "hu" ? @Cargotruck.Shared.Resources.Resource.Not_excel : "Bad format! The file is not an excel.";
+                    error = _localizer["Not_excel"];     
                     System.IO.File.Delete(path); // delete the file
                     return BadRequest(error);
                 }
             }
             else
             {
-                error = lang == "hu" ? @Cargotruck.Shared.Resources.Resource.No_excel : "File not found!";
+                error = _localizer["No_excel"];
                 return BadRequest(error);
             }
             return NoContent();

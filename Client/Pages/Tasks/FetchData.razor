@@ -113,7 +113,7 @@ else
                                 }
                                 @if (showColumns[6])
                                 {
-                                    <th><button class="@(sortOrder=="other_stops" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("other_stops"))">@localizer["other_stops"]</button></th>
+                                    <th><button class="@(sortOrder=="Other_stops" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Other_stops"))">@localizer["Other_stops"]</button></th>
                                 }
                                 @if (showColumns[7])
                                 {
@@ -154,7 +154,7 @@ else
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (TasksDto item in Tasks)
+                            @foreach (Tasks item in Tasks)
                             {
                                 <tr 
                                     @onclick="@((e) =>MouseHoverClass.MouseOnclick(item.Id.ToString()))" @onmouseover="@((e) =>MouseHoverClass.MouseOver(item.Id.ToString()))" @onmouseout="@((e) =>MouseHoverClass.MouseOut())"

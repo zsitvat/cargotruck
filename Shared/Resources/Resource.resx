@@ -270,6 +270,9 @@
   <data name="Delete?" xml:space="preserve">
     <value>Biztosan törölni szeretnéd?</value>
   </data>
+  <data name="Deleted_wrong_id" xml:space="preserve">
+    <value>A következő azonosítóval rendelkező sor törölve lett, mert nem létezik a megadott típus azonosító:</value>
+  </data>
   <data name="Delete_tasks" xml:space="preserve">
     <value>Megbízás törlése</value>
   </data>
@@ -339,6 +342,9 @@
   <data name="Empty_excel" xml:space="preserve">
     <value>Üres excel fájl!</value>
   </data>
+  <data name="Empty_file" xml:space="preserve">
+    <value>Ez egy üres fájl: </value>
+  </data>
   <data name="en" xml:space="preserve">
     <value>Angol</value>
   </data>
@@ -365,6 +371,9 @@
   </data>
   <data name="Error_max_weight" xml:space="preserve">
     <value>A jármű teherbírását kötelező megadni!</value>
+  </data>
+  <data name="Error_on_upload" xml:space="preserve">
+    <value>Hiba történt a feltöltésnél:</value>
   </data>
   <data name="Error_page_text" xml:space="preserve">
     <value>Hiba történt, kérlek próbáld meg később.</value>
@@ -467,6 +476,12 @@
   </data>
   <data name="File_input" xml:space="preserve">
     <value>Adatok feltöltése</value>
+  </data>
+  <data name="File_lenght_is" xml:space="preserve">
+    <value>A fájl hossza: </value>
+  </data>
+  <data name="File_max_lenght" xml:space="preserve">
+    <value>bájt. Maximum méret: </value>
   </data>
   <data name="Filter" xml:space="preserve">
     <value>Szűrés</value>
@@ -585,6 +600,9 @@
   <data name="Mandatory" xml:space="preserve">
     <value>Kötelezően választani kell!</value>
   </data>
+  <data name="Max_file_number" xml:space="preserve">
+    <value>A feltöltés nem sikerült, mert a hivás túllépte a  megengedett fájlok számát: </value>
+  </data>
   <data name="Max_weight" xml:space="preserve">
     <value>Terhelés max súlya</value>
   </data>
@@ -614,6 +632,9 @@
   </data>
   <data name="NotInWarehouse" xml:space="preserve">
     <value>Nincs raktárban</value>
+  </data>
+  <data name="Not_an_image" xml:space="preserve">
+    <value>A fájl nem egy kép: </value>
   </data>
   <data name="not_completed" xml:space="preserve">
     <value>Nincs teljesítve</value>
@@ -654,7 +675,7 @@
   <data name="other" xml:space="preserve">
     <value>Egyéb</value>
   </data>
-  <data name="other_stops" xml:space="preserve">
+  <data name="Other_stops" xml:space="preserve">
     <value>Egyéb megállóhelyek</value>
   </data>
   <data name="Owner" xml:space="preserve">
@@ -851,6 +872,9 @@
   </data>
   <data name="to" xml:space="preserve">
     <value>Odaút</value>
+  </data>
+  <data name="Too_big_file" xml:space="preserve">
+    <value>A fájl mérete túl nagy: </value>
   </data>
   <data name="Total_amount" xml:space="preserve">
     <value>Összesen</value>

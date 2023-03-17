@@ -6,7 +6,7 @@
 <Form ButtonText="Create" cargoes="@cargo" OnValidSubmit="@CreateCargo" TitleText="Create_cargo" checkValidSubmit="@CheckValidSubmit" />
 
 @code {
-    CargoesDto cargo = new CargoesDto();
+    Cargoes cargo = new Cargoes();
     bool isValidSubmit = true;
 
     async Task CreateCargo()

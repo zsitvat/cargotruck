@@ -1,3 +1,4 @@
+using Cargotruck.Client;
 using Cargotruck.Server.Data;
 using Cargotruck.Server.Models;
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 
+/*
 // create appsettings.json if not exist
 const string File_name = "appsettings.json";
 if (!File.Exists(File_name) || new FileInfo(File_name).Length == 0)
@@ -29,19 +31,21 @@ static string GetRandomString()
     var finalString = new String(stringChars);
     return finalString;
 }
-
+*/
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddMvc().AddControllersAsServices();
 
 // Add services to the container.
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<ApplicationDbContext>(options => 
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 //localization service
 builder.Services.AddLocalization();
 
-builder.Services.AddIdentity<Users, IdentityRole>(options => options.SignIn.RequireConfirmedPhoneNumber = false).AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddIdentity<Users, IdentityRole>(options => 
+    options.SignIn.RequireConfirmedPhoneNumber = false).AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
@@ -85,17 +89,6 @@ StaticWebAssetsLoader.UseStaticWebAssets(builder.Environment, builder.Configurat
 app.UseCookiePolicy(new CookiePolicyOptions
 {
     MinimumSameSitePolicy = SameSiteMode.None
-});
-
-app.UseRequestLocalization(new RequestLocalizationOptions
-{
-    DefaultRequestCulture = new RequestCulture("hu"),
-    SupportedCultures = new[] { new CultureInfo("en-US"), new CultureInfo("hu") },
-    SupportedUICultures = new[] { new CultureInfo("en-US"), new CultureInfo("hu") },
-    RequestCultureProviders = new[]
-    {
-        new QueryStringRequestCultureProvider(),
-    }
 });
 
 app.UseAuthentication();

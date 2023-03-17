@@ -23,7 +23,7 @@ namespace Cargotruck.Shared.Models
 
         public List<Monthly_expenses_tasks_expenses>? Monthly_expenses_tasks_expenses { get; set; }
     }
-    public class Monthly_expenses_tasks_expenses
+    public class Monthly_expenses_tasks_expensesDto
     {
         [Required]
         public int Id { get; set; }

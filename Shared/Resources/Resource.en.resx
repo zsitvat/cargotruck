@@ -270,6 +270,9 @@
   <data name="Delete?" xml:space="preserve">
     <value>Are you sure you want to delete it?</value>
   </data>
+  <data name="Deleted_wrong_id" xml:space="preserve">
+    <value>Because of wrong Id the row is deleted:</value>
+  </data>
   <data name="Delete_tasks" xml:space="preserve">
     <value>Delete the task</value>
   </data>
@@ -336,6 +339,9 @@
   <data name="Empty_excel" xml:space="preserve">
     <value>Empty Excel File!</value>
   </data>
+  <data name="Empty_file" xml:space="preserve">
+    <value>The file is empty:</value>
+  </data>
   <data name="en" xml:space="preserve">
     <value>English</value>
   </data>
@@ -362,6 +368,9 @@
   </data>
   <data name="Error_max_weight" xml:space="preserve">
     <value>The vehicle's weight capacity is required!</value>
+  </data>
+  <data name="Error_on_upload" xml:space="preserve">
+    <value>Error on upload: </value>
   </data>
   <data name="Error_page_text" xml:space="preserve">
     <value>An error occurred, please try again later.</value>
@@ -464,6 +473,12 @@
   </data>
   <data name="File_input" xml:space="preserve">
     <value>Import data</value>
+  </data>
+  <data name="File_lenght_is" xml:space="preserve">
+    <value>The file lenght: </value>
+  </data>
+  <data name="File_max_lenght" xml:space="preserve">
+    <value>byte. Max size:</value>
   </data>
   <data name="Filter" xml:space="preserve">
     <value>Filter</value>
@@ -582,6 +597,9 @@
   <data name="Mandatory" xml:space="preserve">
     <value>The input can't be empty!</value>
   </data>
+  <data name="Max_file_number" xml:space="preserve">
+    <value>The file is not uploaded because the request exceeded the allowed file count:</value>
+  </data>
   <data name="Max_weight" xml:space="preserve">
     <value>Max weight of the cargo</value>
   </data>
@@ -611,6 +629,9 @@
   </data>
   <data name="NotInWarehouse" xml:space="preserve">
     <value>Not in warehouse</value>
+  </data>
+  <data name="Not_an_image" xml:space="preserve">
+    <value>The file is not an image:</value>
   </data>
   <data name="not_completed" xml:space="preserve">
     <value>Not completed</value>
@@ -651,7 +672,7 @@
   <data name="other" xml:space="preserve">
     <value>Other</value>
   </data>
-  <data name="other_stops" xml:space="preserve">
+  <data name="Other_stops" xml:space="preserve">
     <value>other stops</value>
   </data>
   <data name="Owner" xml:space="preserve">
@@ -857,6 +878,9 @@
   </data>
   <data name="to" xml:space="preserve">
     <value>Road to the destination</value>
+  </data>
+  <data name="Too_big_file" xml:space="preserve">
+    <value>The file is too big:</value>
   </data>
   <data name="Total_amount" xml:space="preserve">
     <value>Total amount</value>

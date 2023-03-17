@@ -139,7 +139,7 @@ else
                         </thead>
                         <tbody>
 
-                            @foreach (ExpensesDto item in expenses)
+                            @foreach (Expenses item in expenses)
                             {
 
                                 <tr @onclick="@((e) =>MouseHoverClass.MouseOnclick(item.Id.ToString()))" @onmouseover="@((e) =>MouseHoverClass.MouseOver(item.Id.ToString()))" @onmouseout="@((e) =>MouseHoverClass.MouseOut())"

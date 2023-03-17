@@ -1,11 +1,13 @@
 ﻿using Cargotruck.Client.Pages.Profile;
 using Cargotruck.Server.Data;
 using Cargotruck.Shared.Models;
+using Cargotruck.Shared.Resources;
 using ClosedXML.Excel;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using System.Data;
 using System.Linq.Dynamic.Core;
 using System.Text;
@@ -19,12 +21,15 @@ namespace Cargotruck.Server.Controllers
     public class Monthly_ExpensesController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
-        public Monthly_ExpensesController(ApplicationDbContext context)
+        private readonly IStringLocalizer<Resource> _localizer;
+
+        public Monthly_ExpensesController(ApplicationDbContext context, IStringLocalizer<Resource> localizer)
         {
             _context = context;
+            _localizer = localizer;
         }
 
-        private async Task<List<Monthly_expensesDto>> GetData(string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        private async Task<List<Monthly_expenses>> GetData(string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var data = await _context.Monthly_Expenses.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
 
@@ -186,7 +191,7 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put(Monthly_expensesDto data)
+        public async Task<IActionResult> Put(Monthly_expenses data)
         {
             data.User_id = _context?.Users?.FirstOrDefault(a => a.UserName == User.Identity!.Name)?.Id;
             _context!.Entry(data).State = EntityState.Modified;
@@ -195,7 +200,7 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(Monthly_expensesDto data)
+        public async Task<IActionResult> Post(Monthly_expenses data)
         {
             data.User_id = _context?.Users?.FirstOrDefault(a => a.UserName == User.Identity!.Name)?.Id;
             data.Profit = (data.Earning != null ? data.Earning : 0) - (data.Expense != null ? data.Expense : 0);
@@ -222,9 +227,9 @@ namespace Cargotruck.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateMonths()
         {
-            Monthly_expensesDto data = new();
+            Monthly_expenses data = new();
             var currentDate = DateTime.Now;
-            Monthly_expensesDto? hasCurrentMonth = _context.Monthly_Expenses.Where(x => x.Date.Year == currentDate.Year && x.Date.Month == currentDate.Month && x.User_id == "Generated").FirstOrDefault();
+            Monthly_expenses? hasCurrentMonth = _context.Monthly_Expenses.Where(x => x.Date.Year == currentDate.Year && x.Date.Month == currentDate.Month && x.User_id == "Generated").FirstOrDefault();
             
             if (hasCurrentMonth == null)
             {
@@ -276,7 +281,7 @@ namespace Cargotruck.Server.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var data = new Monthly_expensesDto { Monthly_expense_id = id };
+            var data = new Monthly_expenses { Monthly_expense_id = id };
             _context.Remove(data);
             await _context.SaveChangesAsync();
             return NoContent();
@@ -374,7 +379,7 @@ namespace Cargotruck.Server.Controllers
             Font font1 = FontFactory.GetFont(FontFactory.TIMES_BOLD, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 12);
             Font font2 = FontFactory.GetFont(FontFactory.TIMES_ROMAN, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 10);
 
-            System.Type type = typeof(Monthly_expensesDto);
+            System.Type type = typeof(Monthly_expenses);
             var column_number = (type.GetProperties().Length) + 1;
             var columnDefinitionSize = new float[column_number];
             for (int i = 0; i < column_number; i++) columnDefinitionSize[i] = 1F;
@@ -445,7 +450,7 @@ namespace Cargotruck.Server.Controllers
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 });
 
-                foreach (Monthly_expensesDto monthly_expense in Monthly_Expenses)
+                foreach (Monthly_expenses monthly_expense in Monthly_Expenses)
                 {
                     var s = "";
                     if (!string.IsNullOrEmpty(monthly_expense.Monthly_expense_id.ToString())) { s = monthly_expense.Monthly_expense_id.ToString(); }

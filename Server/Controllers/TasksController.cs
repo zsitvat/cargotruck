@@ -1,15 +1,18 @@
 ﻿using Cargotruck.Server.Data;
 using Cargotruck.Shared.Models;
+using Cargotruck.Shared.Resources;
 using ClosedXML.Excel;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using System.Data;
+using System.Globalization;
 using System.Text;
 using Document = iTextSharp.text.Document;
-using TasksDto = Cargotruck.Shared.Models.TasksDto;
+using TasksDto = Cargotruck.Shared.Models.Tasks;
 
 namespace Cargotruck.Server.Controllers
 {
@@ -18,9 +21,12 @@ namespace Cargotruck.Server.Controllers
     public class TasksController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
-        public TasksController(ApplicationDbContext context)
+        private readonly IStringLocalizer<Resource> _localizer;
+
+        public TasksController(ApplicationDbContext context, IStringLocalizer<Resource> localizer)
         {
             _context = context;
+            _localizer = localizer;
         }
 
         private async Task<List<TasksDto>> GetData(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
@@ -270,7 +276,7 @@ namespace Cargotruck.Server.Controllers
                 lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_receipt : "Time of receipt",
                 lang == "hu" ? Cargotruck.Shared.Resources.Resource.Place_of_delivery : "Place of delivery",
                 lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_delivery : "Time of delivery",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.other_stops : "other stops",
+                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Other_stops : "other stops",
                 lang == "hu" ? Cargotruck.Shared.Resources.Resource.Id_cargo : "Id cargo",
                 lang == "hu" ? Cargotruck.Shared.Resources.Resource.Storage_time : "Storage time",
                 lang == "hu" ? Cargotruck.Shared.Resources.Resource.Completed : "Completed",
@@ -406,7 +412,7 @@ namespace Cargotruck.Server.Controllers
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 });
-                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.other_stops : "other stops", font1))
+                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Other_stops : "other stops", font1))
                 {
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
@@ -656,7 +662,7 @@ namespace Cargotruck.Server.Controllers
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_receipt : "Time of receipt") + "; ");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Place_of_delivery : "Place of delivery") + "; ");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_delivery : "Time of delivery") + "; ");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.other_stops : "other stops") + "; ");
+            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Other_stops : "other stops") + "; ");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Id_cargo : "Id cargo") + "; ");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Storage_time : "Storage time") + "; ");
             txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Completed : "Completed") + "; ");
@@ -717,10 +723,12 @@ namespace Cargotruck.Server.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Import([FromBody]string file, string lang)
+        public async Task<IActionResult> Import([FromBody]string file, CultureInfo lang)
         {
+            CultureInfo.CurrentUICulture = lang;
             var error = "";
             var haveColumns = false;
+
             if (file != null)
             {
                 string path = Path.Combine("Files/", file);
@@ -735,6 +743,7 @@ namespace Cargotruck.Server.Controllers
                     //Loop through the Worksheet rows.
                     DataTable? dt = new();
                     bool firstRow = true;
+
                     if (worksheet.Row(2).CellsUsed().Count() > 1 && worksheet.Row(2).Cell(worksheet.Row(1).CellsUsed().Count()) != null)
                     {
                         int l = 0;
@@ -746,23 +755,23 @@ namespace Cargotruck.Server.Controllers
                             {
                                 List<string?> titles = new() {
                                      "Id",
-                                    lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID",
-                                    lang == "hu" ? Cargotruck.Shared.Resources.Resource.Partner : "Partner",
-                                    lang == "hu" ? Cargotruck.Shared.Resources.Resource.Description : "Description",
-                                    lang == "hu" ? Cargotruck.Shared.Resources.Resource.Place_of_receipt : "Place of receipt",
-                                    lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_receipt : "Time of receipt",
-                                    lang == "hu" ? Cargotruck.Shared.Resources.Resource.Place_of_delivery : "Place of delivery",
-                                    lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_delivery : "Time of delivery",
-                                    lang == "hu" ? Cargotruck.Shared.Resources.Resource.other_stops : "other stops",
-                                    lang == "hu" ? Cargotruck.Shared.Resources.Resource.Id_cargo : "Id cargo",
-                                    lang == "hu" ? Cargotruck.Shared.Resources.Resource.Storage_time : "Storage time",
-                                    lang == "hu" ? Cargotruck.Shared.Resources.Resource.Completed : "Completed",
-                                    lang == "hu" ? Cargotruck.Shared.Resources.Resource.Completion_time : "Completion time",
-                                    lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_delay : "Time of delay",
-                                    lang == "hu" ? Cargotruck.Shared.Resources.Resource.Payment : "Payment",
-                                    lang == "hu" ? Cargotruck.Shared.Resources.Resource.Final_Payment : "Final Payment",
-                                    lang == "hu" ? Cargotruck.Shared.Resources.Resource.Penalty : "Penalty",
-                                    lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date"
+                                    _localizer["User_id"].Value,
+                                    _localizer["Partner"].Value,
+                                    _localizer["Description"].Value,
+                                    _localizer["Place_of_receipt"].Value,
+                                    _localizer["Time_of_receipt"].Value,
+                                    _localizer["Place_of_delivery"].Value,
+                                    _localizer["Time_of_delivery"].Value,
+                                    _localizer["Other_stops"].Value,
+                                    _localizer["Id_cargo"].Value,
+                                    _localizer["Storage_time"].Value,
+                                    _localizer["Completed"].Value,
+                                    _localizer["Completion_time"].Value,
+                                    _localizer["Time_of_delay"].Value,
+                                    _localizer["Payment"].Value,
+                                    _localizer["Final_Payment"].Value,
+                                    _localizer["Penalty"].Value,
+                                    _localizer["Date"].Value
                                  };
 
                                 foreach (IXLCell cell in row.Cells())
@@ -774,7 +783,7 @@ namespace Cargotruck.Server.Controllers
                                     }
                                     else
                                     {
-                                        error = lang == "hu" ? @Cargotruck.Shared.Resources.Resource.Not_match_col : "Wrong column names!";
+                                        error = _localizer["Not_match_col"].Value;
                                         System.IO.File.Delete(path); // delete the file
                                         return BadRequest(error);
                                     }
@@ -813,8 +822,8 @@ namespace Cargotruck.Server.Controllers
 
                                 if (nulls != list.Count)
                                 {
-                                    var sql = @"Insert Into Tasks (User_id,Partner,Description,Place_of_receipt,Time_of_receipt,Place_of_delivery,Time_of_delivery,other_stops,Id_cargo,Storage_time,Completed,Completion_time,Time_of_delay,Payment,Final_Payment,Penalty,Date ) 
-                                        Values (@User_id,@Partner,@Description,@Place_of_receipt,@Time_of_receipt, @Place_of_delivery,@Time_of_delivery,@other_stops,@Id_cargo,@Storage_time,@Completed,@Completion_time,@Time_of_delay,@Payment,@Final_Payment,@Penalty,@Date)";
+                                    var sql = @"Insert Into Tasks (User_id,Partner,Description,Place_of_receipt,Time_of_receipt,Place_of_delivery,Time_of_delivery,Other_stops,Id_cargo,Storage_time,Completed,Completion_time,Time_of_delay,Payment,Final_Payment,Penalty,Date ) 
+                                        Values (@User_id,@Partner,@Description,@Place_of_receipt,@Time_of_receipt, @Place_of_delivery,@Time_of_delivery,@Other_stops,@Id_cargo,@Storage_time,@Completed,@Completion_time,@Time_of_delay,@Payment,@Final_Payment,@Penalty,@Date)";
                                     var insert = await _context.Database.ExecuteSqlRawAsync(sql,
                                         new SqlParameter("@User_id", list[l]),
                                         new SqlParameter("@Partner", list[l + 1]),
@@ -823,7 +832,7 @@ namespace Cargotruck.Server.Controllers
                                         new SqlParameter("@Time_of_receipt", list[l + 4] == System.DBNull.Value || list[l + 4] == null ? System.DBNull.Value : DateTime.Parse(list[l + 4]?.ToString()!)),
                                         new SqlParameter("@Place_of_delivery", list[l + 5]),
                                         new SqlParameter("@Time_of_delivery", list[l + 6] == System.DBNull.Value || list[l + 6] == null ? System.DBNull.Value : DateTime.Parse(list[l + 6]?.ToString()!)),
-                                        new SqlParameter("@other_stops", list[l + 7]),
+                                        new SqlParameter("@Other_stops", list[l + 7]),
                                         new SqlParameter("@Id_cargo", list[l + 8]),
                                         new SqlParameter("@Storage_time", list[l + 9]),
                                         new SqlParameter("@Completed", list[l + 10]),
@@ -843,7 +852,7 @@ namespace Cargotruck.Server.Controllers
                                         if (lastId?.Id_cargo != null)
                                         {
                                             var WithNewIds = await _context.Tasks.Where(x => x.Id_cargo == lastId.Id_cargo).ToListAsync();
-                                            CargoesDto? cargo = await _context.Cargoes.FirstOrDefaultAsync(x => x.Id == lastId.Id_cargo);
+                                            Cargoes? cargo = await _context.Cargoes.FirstOrDefaultAsync(x => x.Id == lastId.Id_cargo);
 
                                             foreach (var item in WithNewIds)
                                             {
@@ -880,13 +889,13 @@ namespace Cargotruck.Server.Controllers
                             }
                             else
                             {
-                                error = lang == "hu" ? @Cargotruck.Shared.Resources.Resource.Not_match_col_count : "Missing columns in the datatable";
+                                error = _localizer["Not_match_col_count"];
                                 return BadRequest(error);
                             }
                             //If no data in Excel file  
                             if (firstRow)
                             {
-                                error = lang == "hu" ? @Cargotruck.Shared.Resources.Resource.Empty_excel : "Empty excel file!";
+                                error = _localizer["Empty_excel"];
                                 System.IO.File.Delete(path); // delete the file
                                 return BadRequest(error);
                             }
@@ -894,7 +903,7 @@ namespace Cargotruck.Server.Controllers
                     }
                     else
                     {
-                        error = lang == "hu" ? @Cargotruck.Shared.Resources.Resource.Missing_data_rows : "No datarows in the file!";
+                        error = _localizer["Missing_data_rows"];
                         System.IO.File.Delete(path); // delete the file
                         return BadRequest(error);
                     }
@@ -902,14 +911,14 @@ namespace Cargotruck.Server.Controllers
                 else
                 {
                     //If file extension of the uploaded file is different then .xlsx  
-                    error = lang == "hu" ? @Cargotruck.Shared.Resources.Resource.Not_excel : "Bad format! The file is not an excel.";
+                    error = _localizer["Not_excel"];
                     System.IO.File.Delete(path); // delete the file
                     return BadRequest(error);
                 }
             }
             else
             {
-                error = lang == "hu" ? @Cargotruck.Shared.Resources.Resource.No_excel : "File not found!";
+                error = _localizer["No_excel"];
                 return BadRequest(error);
             }
             return NoContent();

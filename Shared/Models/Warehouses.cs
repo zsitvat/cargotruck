@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Cargotruck.Shared.Models
 {
-    public class WarehousesDto
+    public class Warehouses
     {
         [Required]
         [Key]

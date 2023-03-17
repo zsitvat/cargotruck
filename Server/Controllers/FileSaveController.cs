@@ -1,8 +1,11 @@
 ﻿using Cargotruck.Server.Data;
 using Cargotruck.Server.Models;
 using Cargotruck.Shared.Models.Request;
+using Cargotruck.Shared.Resources;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
+using System.Globalization;
 using System.Net;
 using System.Security.Claims;
 
@@ -16,17 +19,21 @@ namespace Cargotruck.Server.Controllers
         private readonly UserManager<Users> _userManager;
         private readonly ApplicationDbContext _context;
         private readonly SignInManager<Users> _signInManager;
-        public FilesaveController(IWebHostEnvironment env, UserManager<Users> userManager, ApplicationDbContext context, SignInManager<Users> signInManager)
+        private readonly IStringLocalizer<Resource> _localizer;
+
+        public FilesaveController(IWebHostEnvironment env, UserManager<Users> userManager, ApplicationDbContext context, SignInManager<Users> signInManager, IStringLocalizer<Resource> localizer)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             this.env = env;
             _context = context;
+            _localizer = localizer;
         }
 
         [HttpPost("{id}"), HttpPost]
-        public async Task<ActionResult<IList<UploadResult>>> PostFile([FromForm] IEnumerable<IFormFile> files, string id, string? lang)
+        public async Task<ActionResult<IList<UploadResult>>> PostFile([FromForm] IEnumerable<IFormFile> files, string id, CultureInfo lang)
         {
+            CultureInfo.CurrentUICulture = lang;
             string? path = null;
             var maxAllowedFiles = 1;
             long maxFileSize = 1024 * 5000;
@@ -46,12 +53,12 @@ namespace Cargotruck.Server.Controllers
                 {
                     if (file.Length == 0)
                     {
-                        return BadRequest(lang == "hu" ? $"{trustedFileNameForDisplay} hossza 0." : $"{trustedFileNameForDisplay} length is 0.");
+                        return BadRequest(_localizer["Empty_file"].Value + trustedFileNameForDisplay);
                     }
                     else if (file.Length > maxFileSize)
                     {
 
-                        return BadRequest(lang == "hu" ? $"{trustedFileNameForDisplay} hossza {file.Length} bájt, mely túllépi a megengedett {maxFileSize} bájtot." : $"{trustedFileNameForDisplay} of {file.Length} bytes is larger than the limit of {maxFileSize} bytes.");
+                        return BadRequest(_localizer["Empty_file"].Value + " " + trustedFileNameForDisplay + "." + _localizer["File_lenght_is"].Value + " " + file.Length + _localizer["File_max_lenght"].Value + " " + maxFileSize);
                     }
                     else
                     {
@@ -78,7 +85,7 @@ namespace Cargotruck.Server.Controllers
                             }
                             else
                             {
-                                return BadRequest(lang == "hu" ? $"{uploadResult.FileName} nem egy kép." : $"{uploadResult.FileName} is not an image.");
+                                return BadRequest(_localizer["Not_an_image"].Value + " " + uploadResult.FileName);
                             }
                             var image = folder + "/" + trustedFileNameForFileStorage;
                             path = Path.Combine(rootpath, folder, trustedFileNameForFileStorage);
@@ -133,14 +140,14 @@ namespace Cargotruck.Server.Controllers
                         }
                         catch (IOException ex)
                         {
-                            return BadRequest(lang == "hu" ? $"{trustedFileNameForDisplay} hiba a feltöltésnél: {ex.Message}" : $"{trustedFileNameForDisplay} error on upload: {ex.Message}");
+                            return BadRequest(_localizer["Error_on_upload"].Value + " " +  ex.Message);
                         }
                     }
                     filesProcessed++;
                 }
                 else
                 {
-                    return BadRequest(lang == "hu" ? $"{trustedFileNameForDisplay} a feltöltés nem sikerült, mert a hivás túllépte a  {maxAllowedFiles} darab fájlt." : $"{trustedFileNameForDisplay} not uploaded because the request exceeded the allowed {maxAllowedFiles} of files.");
+                    return BadRequest(_localizer["Max_file_number"].Value + " " + maxAllowedFiles);
                 }
 
                 uploadResults.Add(uploadResult);
