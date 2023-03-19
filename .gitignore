@@ -32,3 +32,6 @@ Server/Files
 Server/Files/
 Server/Files/*
 Client/wwwroot/img/profiles/
+bin/
+obj/
+Debug/
