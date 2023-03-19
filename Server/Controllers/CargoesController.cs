@@ -726,11 +726,11 @@ namespace Cargotruck.Server.Controllers
                                                     }
                                                 }
 
-                                                if (item?.Task_id == null)
+                                                if (item != null && item?.Task_id == null)
                                                 {
                                                     error += "\n" + _localizer["Deleted_wrong_id"] + " " + lastId?.Id + ".";
 
-                                                    _context.Remove(item);
+                                                    _context.Remove(new Cargoes() {Id = item!.Id});
                                                     await _context?.SaveChangesAsync()!;
                                                     return BadRequest(error);
                                                 }
