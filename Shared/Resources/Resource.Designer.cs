@@ -493,7 +493,7 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Az időpontok közötti adatok megjelenítve..
+        ///   Looks up a localized string similar to Az időpontok közti adatok megjelenítése.
         /// </summary>
         public static string date_filter_info {
             get {

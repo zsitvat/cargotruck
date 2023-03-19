@@ -1509,12 +1509,20 @@ tr td:first-child {
 .darkmode .date-filter-icon-div {
     color: #bab3b3;
     background-color: #19222D !important;
-    z-index: 500;
+    z-index: 0;
     border: unset;
 }
 
 .darkmode .custom-select-option {
     color: #bab3b3 !important;
+}
+
+.darkmode .oi-media-skip-forward, .darkmode .oi-media-skip-backward{
+    background-color:transparent !important;
+}
+
+.darkmode .currentpage{
+    background-color:rgba(120,130,140,.5) !important;
 }
 
 .darkmode input[disabled] {

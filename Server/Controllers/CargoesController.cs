@@ -680,7 +680,7 @@ namespace Cargotruck.Server.Controllers
                                         if (lastId != null)
                                         {
                                             var WithNewIds = await _context.Cargoes.Where(x => x.Task_id == lastId.Task_id || x.Warehouse_id == lastId.Warehouse_id || x.Vehicle_registration_number == lastId.Vehicle_registration_number).ToListAsync();
-                                            Shared.Models.Tasks? task = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == lastId.Task_id);
+                                            Tasks? task = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == lastId.Task_id);
                                             Warehouses? warehouse = await _context.Warehouses.FirstOrDefaultAsync(x => x.Id == lastId.Warehouse_id);
                                             Trucks? truck = await _context.Trucks.FirstOrDefaultAsync(x => x.Vehicle_registration_number == lastId.Vehicle_registration_number);
 
@@ -711,6 +711,7 @@ namespace Cargotruck.Server.Controllers
                                                         if (warehouse == null)
                                                         {
                                                             item.Warehouse_id = null;
+                                                            item.Warehouse_section = null;
                                                         }
                                                         if (task == null)
                                                         {
@@ -725,7 +726,7 @@ namespace Cargotruck.Server.Controllers
                                                     }
                                                 }
 
-                                                if (item.Task_id == null)
+                                                if (item?.Task_id == null)
                                                 {
                                                     error += "\n" + _localizer["Deleted_wrong_id"] + " " + lastId?.Id + ".";
 

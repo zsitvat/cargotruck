@@ -25,6 +25,7 @@ namespace Cargotruck.Client.Shared
             if (!(await AuthenticationState!).User.Identity!.IsAuthenticated)
             {
                 darkmode = await sessionStorage.GetItemAsync<bool>("darkmode");
+
                 if (!navigationManager.Uri.ToString().Contains("login") && !navigationManager.Uri.ToString().Contains("Privacy"))
                 {
                     navigationManager.NavigateTo("/login");
@@ -32,47 +33,47 @@ namespace Cargotruck.Client.Shared
             }
             else
             {
-                var settings = await client.GetFromJsonAsync<Settings[]>("api/settings/get");
-                var DarkModeSetting = (settings?.Where(x => x.SettingName == "darkmode" && x.SettingValue == (AuthenticationState!).Result.User.Identity?.Name));
-                var darkModeFound = (DarkModeSetting?.Count() > 0 ? true : false);
-                await sessionStorage.SetItemAsync("darkmode", darkModeFound);
-                darkmode = darkModeFound;
-
-                var getWaitTimeSetting = (await client.GetFromJsonAsync<Settings>("api/settings/getwaittime"));
-                int waitTimeInSecond = getWaitTimeSetting != null ? Int32.Parse(getWaitTimeSetting?.SettingValue!) : 0;
-                DateTime date = DateTime.Now;
-                var dateWithWaitTime = CurrencyExchange.CurrencyApiDate?.AddSeconds(waitTimeInSecond);
-                if (CurrencyExchange.Rates == null && dateWithWaitTime <= date)
-                {
-                    try
-                    {
-                        CurrencyExchange.Rates = await CurrencyExchange.GetRatesAsync(client);
-                    }
-                    catch (Exception ex)
-                    {
-                        currency_api_error = $"Error - Type: {ex.GetType()}, Message: {ex.Message}";
-                        if (ex.GetType().ToString() == "Microsoft.CSharp.RuntimeBinder.RuntimeBinderException")
-                        {
-                            currency_api_error = "currency_api_is_exceeded";
-                        }
-                    }
-
-                    if (CurrencyExchange.Rates != null)
-                    {
-                        CurrencyExchange.CurrencyApiDate = new(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, 0, 0);
-                    }
-                }
+                await GetDarkmode();             
+                await GetCurrencyRates();               
             }
         }
 
-        async Task LogoutClick()
+        async Task GetCurrencyRates()
         {
-            PageHistoryState.ResetPageToHistory();
-            await authStateProvider.Logout();
-            navigationManager.NavigateTo("/login");
+            if (CurrencyExchange.Rates == null && await CurrencyExchange.GetNextCurrencyApiDate(client) <= DateTime.Now)
+            {
+                try
+                {
+                    CurrencyExchange.Rates = await CurrencyExchange.GetRatesAsync(client);
+                }
+                catch (Exception ex)
+                {
+                    currency_api_error = $"Error - Type: {ex.GetType()}, Message: {ex.Message}";
+                    if (ex.GetType().ToString() == "Microsoft.CSharp.RuntimeBinder.RuntimeBinderException")
+                    {
+                        currency_api_error = "currency_api_is_exceeded";
+                    }
+                }
+
+                if (CurrencyExchange.Rates != null)
+                {
+                    CurrencyExchange.CurrencyApiDate = new(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, 0, 0);
+                }
+            }
+        }
+      
+
+        async Task GetDarkmode()
+        {
+            var settings = await client.GetFromJsonAsync<Settings[]>("api/settings/get");
+            var DarkModeSetting = (settings?.Where(x => x.SettingName == "darkmode" && x.SettingValue == (AuthenticationState!).Result.User.Identity?.Name));
+            var darkModeFound = (DarkModeSetting?.Count() > 0 ? true : false);
+            
+            await sessionStorage.SetItemAsync("darkmode", darkModeFound);
+            darkmode = darkModeFound;
         }
 
-        async Task darkMode()
+        async Task ChangeDarkMode()
         {
             if ((await AuthenticationState!).User.Identity!.IsAuthenticated)
             {
@@ -97,5 +98,13 @@ namespace Cargotruck.Client.Shared
 
             await OnParametersSetAsync();
         }
+
+        async Task LogoutClick()
+        {
+            PageHistoryState.ResetPageToHistory();
+            await authStateProvider.Logout();
+            navigationManager.NavigateTo("/login");
+        }
+
     }
 }

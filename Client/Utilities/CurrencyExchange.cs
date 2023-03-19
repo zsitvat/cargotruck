@@ -8,9 +8,10 @@ namespace Cargotruck.Client.UtilitiesClasses
     public static class CurrencyExchange
     {
         [CascadingParameter] public static Dictionary<string, dynamic>? Rates { get; set; }
-        public static DateTime? CurrencyApiDate = new();
+        public static DateTime CurrencyApiDate = new();
 
         public static string currency = "HUF";
+
         public static async Task<dynamic> GetRatesAsync(HttpClient? client)
         {
             //the api has only 300 attempts per month - its run every start of the application
@@ -59,6 +60,17 @@ namespace Cargotruck.Client.UtilitiesClasses
                 }
             }
             return conversionNum;
+        }
+
+        public async static Task<int> GetWaitTime(HttpClient client)
+        {
+            var getWaitTimeSetting = (await client.GetFromJsonAsync<Settings>("api/settings/getwaittime"));
+            return (getWaitTimeSetting != null ? Int32.Parse(getWaitTimeSetting?.SettingValue!) : 0);      
+        }
+
+        public async static Task<DateTime> GetNextCurrencyApiDate(HttpClient client)
+        {
+            return CurrencyExchange.CurrencyApiDate.AddSeconds(await GetWaitTime(client));
         }
     }
 }
