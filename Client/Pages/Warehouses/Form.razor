@@ -26,7 +26,7 @@
                         <div>
                         <label>@localizer["Address"]:</label>
                             <div>
-                                <InputText class="form-control inputs" @bind-Value="@warehouses.Address" />
+                                <InputText class="form-control inputs" @bind-Value="@warehouses!.Address" />
                             <ValidationMessage For="@(() => warehouses.Address)" />
                             </div>
                         </div>

@@ -4,8 +4,8 @@
     <DataAnnotationsValidator />
     <div class="top-buttons-card">
         <div class="card-body">
-                <div class="form-group">
-                    @if (PageHistoryState.CanGoBack())
+            <div class="form-group">
+                @if (PageHistoryState.CanGoBack())
                 {
                     <a href="@PageHistoryState.GetGoBackPage()"><span class="oi oi-arrow-circle-left" aria-hidden="true" ></span></a>
                 }
@@ -35,8 +35,8 @@
                     <div>
                         <label>@localizer["Purpose_of_the_trip"]:</label>
                         <div>
-                            <InputText class="form-control inputs" @bind-Value="@roads.Purpose_of_the_trip" />
-                            <ValidationMessage For="@(() => roads.Purpose_of_the_trip)" />
+                            <InputText class="form-control inputs" @bind-Value="@roads!.Purpose_of_the_trip" />
+                            <ValidationMessage For="@(() => roads!.Purpose_of_the_trip)" />
                         </div>
                     </div>
                 </div>
@@ -99,28 +99,28 @@
                 </div>
                 <div class="form-group custom-select">
                     <label>@localizer["Direction"]:</label>
-                    <div type="text" class="form-control" placeholder="@localizer["Select_placeholder"]">@localizer[roads?.Direction != null ? roads?.Direction?.ToLower() : "Select_placeholder"]</div>
+                    <div type="text" class="form-control" placeholder="@localizer["Select_placeholder"]">@localizer[(roads?.Direction != null ? roads?.Direction?.ToLower() : "Select_placeholder")!]</div>
                         <div class="custom-select-options">
-                            <div class="custom-select-option" @onclick='() => {  roads.Direction = "TO";}'>
+                            <div class="custom-select-option" @onclick='() => {  roads!.Direction = "TO";}'>
                                 @localizer["to"]
                             </div>
-                            <div class="custom-select-option" @onclick='() => { roads.Direction = "FROM";}'>
+                            <div class="custom-select-option" @onclick='() => { roads!.Direction = "FROM";}'>
                                 @localizer["from"]
                             </div>
                         </div>
-                    <ValidationMessage For="@(() => roads.Direction)" />
+                    <ValidationMessage For="@(() => roads!.Direction)" />
                 </div>
                 <div class="form-group custom-select">
                     <label>@localizer["Expenses_id"]:</label>
-                    <input type="text" class="form-control custom-select-input" @bind="roads.Expenses_id" @bind:event="oninput" placeholder="@localizer["Select_placeholder"]" />
+                    <input type="text" class="form-control custom-select-input" @bind="roads!.Expenses_id" @bind:event="oninput" placeholder="@localizer["Select_placeholder"]" />
                     <div class="custom-select-options">
                         @if (expenses != null)
                         {
                             @foreach (var expense in expenses)
                             {
-                                if (@expense.Id!.ToString().ToLower().Contains(roads.Expenses_id != null ? roads.Expenses_id?.ToString() : ""))
+                                if (@expense.Id!.ToString().ToLower().Contains((roads.Expenses_id != null ? roads.Expenses_id?.ToString() : "")!))
                                 {
-                                    <div class="custom-select-option" @onclick="() => { roads.Expenses_id = expense.Id;}">
+                                    <div class="custom-select-option" @onclick="() => { roads.Expenses_id = expense?.Id;}">
                                         @localizer["Id"]: @expense.Id <br>
                                         @localizer["Type"]: @localizer[expense?.Type?.ToString()!] <br>
                                         @localizer["Type_id"]: @expense?.Type_id <br>
@@ -140,7 +140,7 @@
                         {
                             @foreach (var task in tasks.Where(x => x.Completed == false))
                             {
-                                if (task.Id.ToString().ToLower().Contains(roads?.Task_id != null ? roads?.Task_id?.ToString() : ""))
+                                if (task.Id.ToString().ToLower().Contains((roads?.Task_id != null ? roads?.Task_id?.ToString() : "")!))
                                 {
                                     <div class="custom-select-option" @onclick="() => { roads!.Task_id = task.Id; }">
                                         @localizer["Id"]: @task.Id <br>
@@ -164,9 +164,9 @@
                         {
                             @foreach (var truck in trucks)
                             {
-                                if (truck.Vehicle_registration_number!.ToString().ToLower().Contains(roads?.Vehicle_registration_number != null ? roads?.Vehicle_registration_number?.ToString() : ""))
+                                if (truck.Vehicle_registration_number!.ToString().ToLower().Contains((roads?.Vehicle_registration_number != null ? roads?.Vehicle_registration_number?.ToString() : "")!))
                                 {
-                                    <div class="custom-select-option" @onclick="() => { roads.Vehicle_registration_number = truck.Vehicle_registration_number; }">
+                                    <div class="custom-select-option" @onclick="() => { roads!.Vehicle_registration_number = truck.Vehicle_registration_number; }">
                                         @localizer["Vehicle_registration_number"]: @truck.Vehicle_registration_number <br>
                                         @localizer["Brand"]: @truck.Brand <br>
                                         @localizer["Max_weight"]: @truck.Max_weight <br>
@@ -186,7 +186,7 @@
                         {
                             @foreach (var cargo in cargoes)
                             {
-                                if (cargo.Id.ToString().ToLower().Contains(roads.Id_cargo != null ? roads.Id_cargo?.ToString() : ""))
+                                if (cargo.Id.ToString().ToLower().Contains((roads.Id_cargo != null ? roads.Id_cargo?.ToString() : "")!))
                                 {
                                     <div class="custom-select-option" @onclick="() => { roads.Id_cargo = cargo.Id; }">
                                         @localizer["Id"]: @cargo.Id <br>

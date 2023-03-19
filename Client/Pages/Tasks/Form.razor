@@ -104,7 +104,7 @@
                         {
                             @foreach (var cargo in cargoes)
                             {
-                                if (cargo.Id.ToString().ToLower().Contains(tasks.Id_cargo != null ? tasks.Id_cargo?.ToString() : ""))
+                                if (cargo.Id.ToString().ToLower().Contains((tasks.Id_cargo != null ? tasks.Id_cargo?.ToString() : "")!))
                                 {
                                     <div class="custom-select-option" @onclick="() => { tasks.Id_cargo = cargo.Id; }">
                                         @localizer["Id"]: @cargo.Id <br>

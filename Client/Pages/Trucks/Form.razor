@@ -68,9 +68,9 @@
                         {
                         @foreach (var road in roads)
                             {
-                                if (road.Id.ToString().ToLower().Contains(trucks.Road_id != null ? trucks.Road_id?.ToString() : ""))
+                                if (road.Id.ToString().ToLower().Contains((trucks.Road_id != null ? trucks.Road_id?.ToString() : "")!))
                                 {
-                                    <div class="custom-select-option" @onclick="() => {trucks.Road_id = road.Id; }">
+                                    <div class="custom-select-option" @onclick="() => {trucks.Road_id = road?.Id; }">
                                         @localizer["Id"]: @road.Id  <br>
                                         @localizer["Starting_place"]: @road.Starting_place <br>
                                         @localizer["Ending_place"]: @road.Ending_place <br>

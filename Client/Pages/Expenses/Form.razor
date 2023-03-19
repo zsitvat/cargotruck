@@ -38,13 +38,13 @@
                         @foreach (var value in Enum.GetValues<Cargotruck.Shared.Models.Type>())
                         {
                            
-                            <div class="custom-select-option" @onclick="() => {selectedOption=localizer[value.ToString()!];expenses.Type = value;}">
+                            <div class="custom-select-option" @onclick="() => {selectedOption=localizer[value.ToString()!];expenses!.Type = value;}">
                                 @localizer[value.ToString()]
                             </div>
                             
                         }
                     </div>
-                    <ValidationMessage For="@(() => expenses.Type)" />
+                    <ValidationMessage For="@(() => expenses!.Type)" />
                 </div>
                 @if (expenses?.Type.ToString() == "task" || expenses?.Type.ToString() == "repair" || expenses?.Type.ToString() == "storage")
                 {
@@ -59,7 +59,7 @@
                                     {
                                         @foreach (var task in tasks)
                                         {
-                                            if (task.Id.ToString().ToLower().Contains(expenses.Type_id != null ? expenses.Type_id?.ToString() : ""))
+                                            if (task.Id.ToString().ToLower().Contains((expenses.Type_id != null ? expenses.Type_id?.ToString() : "")!))
                                             {
                                                 <div class="custom-select-option" @onclick="() => { expenses.Type_id = task.Id; }">
                                                     @localizer["Id"]: @task.Id <br>
@@ -78,9 +78,9 @@
                                     {
                                         @foreach (var road in roads)
                                         {
-                                            if (road.Id.ToString().ToLower().Contains(expenses.Type_id != null ? expenses.Type_id?.ToString() : ""))
+                                            if (road.Id.ToString().ToLower().Contains((expenses.Type_id != null ? expenses.Type_id?.ToString() : "")!))
                                             {
-                                                <div class="custom-select-option" @onclick="() => { expenses.Type_id = road.Id; }">
+                                                <div class="custom-select-option" @onclick="() => { expenses.Type_id = road?.Id; }">
                                                      @localizer["Id"]: @road.Id  <br>
                                                      @localizer["Purpose_of_the_trip"]: @road.Purpose_of_the_trip  <br>
                                                      @localizer["Direction"]: @localizer[road?.Direction?.ToLower()!] <br>
@@ -95,7 +95,7 @@
                                     {
                                         @foreach (var cargo in cargoes)
                                         {
-                                            if (cargo.Id.ToString().ToLower().Contains(expenses.Type_id != null ? expenses.Type_id?.ToString() : ""))
+                                            if (cargo.Id.ToString().ToLower().Contains((expenses.Type_id != null ? expenses.Type_id?.ToString() : "")!))
                                             {
                                                 <div class="custom-select-option" @onclick="() => { expenses.Type_id = cargo.Id; }">
                                                      @localizer["Id"]: @cargo.Id  <br>
@@ -222,7 +222,7 @@
 
 
 @code {
-    [Parameter] public Expenses? expenses { get; set; }
+    [Parameter] public Expenses? expenses { get; set; } = default;
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public string TitleText { get; set; } = "";
     [Parameter] public EventCallback OnValidSubmit { get; set; }
@@ -240,18 +240,21 @@
         tasks = await client.GetFromJsonAsync<List<Tasks>?>("api/tasks/gettasks");
         roads = await client.GetFromJsonAsync<List<Roads>?>("api/roads/getroads");
         var expenseWithIds = await client.GetFromJsonAsync<List<Expenses>>("api/expenses/getexpenses");
-        foreach (var expense in expenseWithIds)
+        if (expenseWithIds != null) 
         {
-            if(expense.Type != null){
-                var value = expense.Type.Value.ToString();
-                roads?.RemoveAll(x => x.Id == expense.Type_id && value == "repair" &&
-                    x.Id != expenses?.Type_id);
+            foreach (var expense in expenseWithIds)
+            {
+                if (expense.Type != null) {
+                    var value = expense.Type.Value.ToString();
+                    roads?.RemoveAll(x => x.Id == expense.Type_id && value == "repair" &&
+                        x.Id != expenses?.Type_id);
 
-                tasks?.RemoveAll(x => x.Id == expense.Type_id && value == "task" &&
-                    x.Id != expenses?.Type_id);
+                    tasks?.RemoveAll(x => x.Id == expense.Type_id && value == "task" &&
+                        x.Id != expenses?.Type_id);
 
-                cargoes?.RemoveAll(x => x.Id == expense.Type_id && value == "storage" &&
-                    x.Id != expenses?.Type_id);
+                    cargoes?.RemoveAll(x => x.Id == expense.Type_id && value == "storage" &&
+                        x.Id != expenses?.Type_id);
+                }
             }
         }
     }
@@ -362,7 +365,7 @@
             if (invalid)
             {
                 isValidSubmit = false;
-                expenses.Type_id = null;
+                expenses!.Type_id = null;
                 await checkValidSubmit.InvokeAsync(false);
                 error += localizer["id_invalid"] + " ";
             }

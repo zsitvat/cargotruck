@@ -36,7 +36,12 @@
                             }
                             <tr>
                                 <td><b>@localizer["Username"]:</b></td>
-                                <td>@context.User.Identity.Name</td>
+                                <td>
+                                    @if (context.User.Identity != null)
+                                    {
+                                        @context.User.Identity.Name
+                                    }
+                                </td>
                             </tr>
                                 <tr>      
                                     <td><b>@localizer["Phone_number"]:</b></td>
@@ -76,13 +81,19 @@
     private bool edit = false;
     private bool changePassword = false;
 
-    public string currentUserPhone { get; set; }
-    public string currentUserEmail { get; set; }
+    public string currentUserPhone { get; set; } = default!;
+    public string currentUserEmail { get; set; } = default!;
+
     protected override async Task OnInitializedAsync()
     {
         var user = await authStateProvider.GetCurrentUser();
-        currentUserPhone = user.PhoneNumber;
-        currentUserEmail = user.Email;
+
+        if (user != null)
+        {
+            currentUserPhone = user.PhoneNumber!;
+            currentUserEmail = user.Email!;
+        }
+        
     }
 }
    

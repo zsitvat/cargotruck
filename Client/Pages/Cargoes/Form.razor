@@ -65,7 +65,7 @@
                         {
                             @foreach (var truck in trucks)
                             {
-                                if (truck.Vehicle_registration_number!.ToString().ToLower().Contains(cargoes?.Vehicle_registration_number != null ? cargoes?.Vehicle_registration_number?.ToString() : ""))
+                                if (truck.Vehicle_registration_number!.ToString().ToLower().Contains((cargoes?.Vehicle_registration_number != null ? cargoes?.Vehicle_registration_number?.ToString() : "")!))
                                 {
                                     <div class="custom-select-option" @onclick="() => { cargoes!.Vehicle_registration_number = truck.Vehicle_registration_number; }">
                                         @localizer["Vehicle_registration_number"]: @truck.Vehicle_registration_number <br>
@@ -89,7 +89,7 @@
                             {
                                 @foreach (var task in tasks.Where(x=>x.Completed==false))
                                 {
-                                    if (task.Id.ToString().ToLower().Contains(cargoes?.Task_id != null ? cargoes?.Task_id?.ToString() : ""))
+                                    if (task.Id.ToString().ToLower().Contains((cargoes?.Task_id != null ? cargoes?.Task_id?.ToString() : "")!))
                                     {
                                         <div class="custom-select-option" @onclick="() => { cargoes!.Task_id = task.Id; }">
                                              @localizer["Id"]: @task.Id <br>
@@ -113,7 +113,7 @@
                             {
                                 @foreach (var warehouse in warehouses)
                                 {
-                                if (warehouse.Id.ToString().ToLower().Contains(cargoes?.Warehouse_id != null ? cargoes?.Warehouse_id?.ToString(): ""))
+                                if (warehouse.Id.ToString().ToLower().Contains((cargoes?.Warehouse_id != null ? cargoes?.Warehouse_id?.ToString(): "")!))
                                     {
                                         <div class="custom-select-option" @onclick="() => { cargoes!.Warehouse_id = warehouse.Id; }">
                                              @localizer["Id"]: @warehouse.Id <br>
