@@ -1,50 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Components;
-using System.Net.Http;
-using System.Net.Http.Json;
-using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Components.Routing;
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.Components.Web.Virtualization;
-using Microsoft.AspNetCore.Components.WebAssembly.Http;
-using Microsoft.JSInterop;
-using Cargotruck.Client;
-using Cargotruck.Client.Shared;
-using Cargotruck.Shared.Resources;
-using Microsoft.Extensions.Localization;
-using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.Extensions.DependencyInjection;
+﻿using System.Net.Http.Json;
 using System.Globalization;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
-using Microsoft.AspNetCore.Authorization;
 using Cargotruck.Shared.Models;
-using Cargotruck.Client.Services;
-using System.Linq;
-using System.Net.Http.Headers;
-using Microsoft.Extensions.Logging;
-using System.IO;
-using System.Xml;
-using Newtonsoft.Json;
-using RestSharp;
-using Cargotruck.Shared.Models.Request;
-using Cargotruck.Client.Components;
-using Cargotruck.Server.Models;
-using Microsoft.AspNetCore.Identity;
-using ChartJs.Blazor;
 using ChartJs.Blazor.Common;
 using ChartJs.Blazor.Common.Axes;
-using ChartJs.Blazor.Common.Axes.Ticks;
 using ChartJs.Blazor.Common.Enums;
-using ChartJs.Blazor.Common.Handlers;
-using ChartJs.Blazor.Common.Time;
 using ChartJs.Blazor.BarChart;
 using ChartJs.Blazor.Util;
-using ChartJs.Blazor.Interop;
 using ChartJs.Blazor.BarChart.Axes;
 using ChartJs.Blazor.LineChart;
+using Cargotruck.Client.UtilitiesClasses;
 
 namespace Cargotruck.Client.Components
 {
@@ -401,7 +365,7 @@ namespace Cargotruck.Client.Components
                     Title = new OptionsTitle
                     {
                         Display = true,
-                        Text = (lang == "hu" ? "Bevétel" : "Income") + " " + DateTime.Now.Year + " (HUF)",
+                        Text = (lang == "hu" ? "Bevétel" : "Income") + " " + DateTime.Now.Year,
                         FontSize = 16
                     },
                     Tooltips = new Tooltips
@@ -449,37 +413,55 @@ namespace Cargotruck.Client.Components
                 _config4.Data.Labels.Add(str);
             }
 
-            var columnHeights = await client.GetFromJsonAsync<int[]>("api/monthly_expenses/getchartdata");
+            await GetExpenseChartData();
+        }
+
+        private async Task GetExpenseChartData()
+        {
+            var columnHeights = await client.GetFromJsonAsync<float?[]>("api/monthly_expenses/getchartdata");
+
+            for (int i = 0; i < columnHeights?.Length; i++)
+            {     
+                columnHeights[i] = CurrencyExchange.GetCurrency((int)columnHeights[i]!, CurrencyExchange.currency);
+            }
+
             if (columnHeights != null)
             {
-                int[] datalistFirstPartItems = columnHeights.Take(12).ToArray();
-                LineDataset<int> datasetIncomes = new(datalistFirstPartItems)
+                float?[] datalistFirstPartItems = columnHeights.Take(12).ToArray();
+                LineDataset<float?> datasetIncomes = new(datalistFirstPartItems)
                 {
                     Label = (lang == "hu" ? "Nyereség" : "Profit"),
                     BorderColor = ColorUtil.ColorHexString(255, 205, 86),
                     Fill = false,
                     LineTension = 0
                 };
-                int[] datalistSecondPartOfItems = columnHeights.Skip(12).Take(12).ToArray();
-                LineDataset<int> datasetExpenses = new(datalistSecondPartOfItems)
+                float?[] datalistSecondPartOfItems = columnHeights.Skip(12).Take(12).ToArray();
+                LineDataset<float?> datasetExpenses = new(datalistSecondPartOfItems)
                 {
                     Label = (lang == "hu" ? "Kiadás" : "Expenses"),
                     BorderColor = ColorUtil.ColorHexString(130, 110, 174),
                     Fill = false,
                     LineTension = 0
                 };
-                int[] datalistThirdPartOfItems = columnHeights.Skip(24).Take(12).ToArray();
-                LineDataset<int> datasetEarning = new(datalistThirdPartOfItems)
+                float?[] datalistThirdPartOfItems = columnHeights.Skip(24).Take(12).ToArray();
+                LineDataset<float?> datasetEarning = new(datalistThirdPartOfItems)
                 {
                     Label = (lang == "hu" ? "Jövedelem" : "Earning"),
                     BorderColor = ColorUtil.ColorHexString(54, 162, 235),
                     Fill = false,
                     LineTension = 0
                 };
-                _config4.Data.Datasets.Add(datasetIncomes);
-                _config4.Data.Datasets.Add(datasetExpenses);
-                _config4.Data.Datasets.Add(datasetEarning);
+                _config4?.Data.Datasets.Add(datasetIncomes);
+                _config4?.Data.Datasets.Add(datasetExpenses);
+                _config4?.Data.Datasets.Add(datasetEarning);
             }
+        }
+
+        public async void CurrencyChanged()
+        {
+            _config4?.Data.Datasets.Clear();
+            await GetExpenseChartData();
+            StateHasChanged();
         }
     }
 }

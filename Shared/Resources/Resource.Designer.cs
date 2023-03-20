@@ -2572,6 +2572,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A súly nagyobb, mint a jármű terhelhetősége..
+        /// </summary>
+        public static string Weight_is_height {
+            get {
+                return ResourceManager.GetString("Weight_is_height", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Év.
         /// </summary>
         public static string Year {

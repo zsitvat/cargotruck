@@ -66,7 +66,9 @@
 
 <AuthorizeView>
     <Authorized>
-        @if(afterLogin){
+
+        @if (greetings)
+        {
             <div class="col-md-3 stretch-card successful-login">
                 <div class="card card2 ps-2">
                     <div class="card-body">
@@ -78,6 +80,7 @@
                 </div>
             </div>
         }
+
     </Authorized>
     <Authorizing>
         <img src="~/css/img/loading.gif" alt="loading" width="500" height="600">
@@ -89,7 +92,7 @@
 @code{
     [CascadingParameter]
     Task<AuthenticationState>? AuthenticationState { get; set; }
-    bool afterLogin = true;
+    bool greetings = true;
     Dictionary<string, int?> counts = new Dictionary<string, int?>(){
     {"numberOfTasksUnFinished",null},
     {"numberOfTrucksUnFinished",null},
@@ -111,9 +114,13 @@
             }
             else
             {
-                afterLogin = false;
+                greetings = false;
             }
             await GetNumbers();
+        }
+        else
+        {
+            PageHistoryState.ResetPageToHistory();
         }
     }
 

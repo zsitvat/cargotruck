@@ -954,6 +954,9 @@
   <data name="Weight" xml:space="preserve">
     <value>Súly</value>
   </data>
+  <data name="Weight_is_height" xml:space="preserve">
+    <value>A súly nagyobb, mint a jármű terhelhetősége.</value>
+  </data>
   <data name="Year" xml:space="preserve">
     <value>Év</value>
   </data>
