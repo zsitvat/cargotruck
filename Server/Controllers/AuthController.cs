@@ -32,7 +32,7 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginRequest request, CultureInfo lang)
+        public async Task<IActionResult> LoginAsync(LoginRequest request, CultureInfo lang)
         {
             //if no user found, create admin
             if (!_userManager.Users.Any())
@@ -76,7 +76,7 @@ namespace Cargotruck.Server.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Register(RegisterRequest parameters)
+        public async Task<IActionResult> RegisterAsync(RegisterRequest parameters)
         {
             Users user = new();
             user.UserName = parameters.UserName;
@@ -94,7 +94,8 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(UpdateRequest parameters)
+        [Authorize]
+        public async Task<IActionResult> UpdateAsync(UpdateRequest parameters)
         {
             var user = new Users();
             Dictionary<string, string> claims = new();
@@ -132,7 +133,8 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ChangePassword(ChangePasswordRequest parameters)
+        [Authorize]
+        public async Task<IActionResult> ChangePasswordAsync(ChangePasswordRequest parameters)
         {
             var user = _context.Users.FirstOrDefault(a => a.UserName == User.Identity!.Name);
             var result = await _userManager.ChangePasswordAsync(user!, parameters.PasswordCurrent, parameters.Password);
@@ -145,7 +147,7 @@ namespace Cargotruck.Server.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Logout()
+        public async Task<IActionResult> LogoutAsync()
         {
             await _signInManager.SignOutAsync();
             return Ok();

@@ -10,7 +10,7 @@
         <div class="card-body mb-3 privacy-form-card ">
                 <div class="d-inline-block ms-5 me-5 center-div">
                     <h1 class="align-center">@localizer["Add_privacy"]</h1>
-                    <a class="btn btn-danger x" @onclick="@WindowClosed"><i class="oi oi-x"></i></a>
+                    <a class="btn btn-danger x" @onclick="@WindowClosedAsync"><i class="oi oi-x"></i></a>
                     <div class="form-group">
                         <div>
                             <label>@localizer["Language"]:</label>
@@ -70,7 +70,7 @@
     [Parameter] public EventCallback OnValidSubmit { get; set; }
     [Parameter] public EventCallback OnWindowClosed { get; set; }
 
-    protected async Task WindowClosed()
+    protected async Task WindowClosedAsync()
     {
         await OnWindowClosed.InvokeAsync();
     }

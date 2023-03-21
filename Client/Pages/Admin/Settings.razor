@@ -2,12 +2,12 @@
 <div class="settings-card mb-6">
     <div class="card-body mb-3">
         <div class="d-inline-block ms-5">
-        <a class="btn btn-danger x" @onclick="@SettingsClosed"><i class="oi oi-x"></i></a>
+        <a class="btn btn-danger x" @onclick="@SettingsClosedAsync"><i class="oi oi-x"></i></a>
             <div class="form-group">
                 <div>
                 <label>
                         @localizer["Profile"]:
-                    <input type="checkbox" @onchange="@(async () =>{ showColumns[0]=!showColumns[0]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[0]" />
+                    <input type="checkbox" @onchange="@(async () =>{ showColumns[0]=!showColumns[0]; await SettingsChangedAsync();})" class="form-check-input" checked="@showColumns[0]" />
                     </label>
                 </div>
             </div>
@@ -15,7 +15,7 @@
                 <div>
                 <label>
                         @localizer["Id"]:
-                    <input type="checkbox" @onchange="@(async () =>{ showColumns[1]=!showColumns[1]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[1]" />
+                    <input type="checkbox" @onchange="@(async () =>{ showColumns[1]=!showColumns[1]; await SettingsChangedAsync();})" class="form-check-input" checked="@showColumns[1]" />
                     </label>
                 </div>
             </div>
@@ -23,7 +23,7 @@
                 <div>
                 <label>
                         @localizer["Username"]:
-                    <input type="checkbox" @onchange="@(async () =>{ showColumns[2]=!showColumns[2]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[2]" />
+                    <input type="checkbox" @onchange="@(async () =>{ showColumns[2]=!showColumns[2]; await SettingsChangedAsync();})" class="form-check-input" checked="@showColumns[2]" />
                     </label>
                 </div>
             </div>
@@ -31,7 +31,7 @@
                 <div>
                     <label>
                         @localizer["Email"]:
-                        <input type="checkbox" @onchange="@(async () =>{ showColumns[3]=!showColumns[3]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[3]" />
+                        <input type="checkbox" @onchange="@(async () =>{ showColumns[3]=!showColumns[3]; await SettingsChangedAsync();})" class="form-check-input" checked="@showColumns[3]" />
                     </label>
                 </div>
             </div>
@@ -39,7 +39,7 @@
                 <div>
                     <label>
                         @localizer["Phone_number"]:
-                        <input type="checkbox" @onchange="@(async () =>{ showColumns[4]=!showColumns[4]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[4]" />
+                        <input type="checkbox" @onchange="@(async () =>{ showColumns[4]=!showColumns[4]; await SettingsChangedAsync();})" class="form-check-input" checked="@showColumns[4]" />
                     </label>
                 </div>
             </div>
@@ -47,7 +47,7 @@
                 <div>
                 <label>
                         @localizer["Role"]:
-                    <input type="checkbox" @onchange="@(async () =>{ showColumns[5]=!showColumns[5]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[5]" />
+                    <input type="checkbox" @onchange="@(async () =>{ showColumns[5]=!showColumns[5]; await SettingsChangedAsync();})" class="form-check-input" checked="@showColumns[5]" />
                     </label>
                 </div>
             </div>
@@ -56,7 +56,7 @@
                 <div>
                     <label>
                         @localizer["PageSize"]:
-                        <input class="number-input" value="@pageSize" @oninput="@InputChange" type="number" />   
+                        <input class="number-input" value="@pageSize" @oninput="@InputChangeAsync" type="number" />   
                     </label>
                 </div>
             </div>
@@ -64,7 +64,7 @@
                 <div>
                     <label>
                         @localizer["CurrencyExchangeWaitTime"]:
-                        <input type ="number" class="number-input" value="@waitTimeSetting?.SettingValue" @oninput="@((e)=>SetWaitTime(e))" min="0"/>
+                        <input type ="number" class="number-input" value="@waitTimeSetting?.SettingValue" @oninput="@((e)=>SetWaitTimeAsync(e))" min="0"/>
                     </label>
                 </div>
             </div>
@@ -89,29 +89,29 @@
         waitTimeSetting = (await client.GetFromJsonAsync<Cargotruck.Shared.Models.Settings>("api/settings/getwaittime"));
     }
 
-    protected async Task SettingsChanged()
+    protected async Task SettingsChangedAsync()
     {
         await OnSettingsChanged.InvokeAsync();
     }
 
-    protected async Task SettingsClosed()
+    protected async Task SettingsClosedAsync()
     {
         await OnSettingsClosed.InvokeAsync();
     }
 
-    private async Task InputChange(ChangeEventArgs e)
+    private async Task InputChangeAsync(ChangeEventArgs e)
     {
         pageSize = string.IsNullOrEmpty(e?.Value?.ToString()) ? pageSize : Int32.Parse(e.Value?.ToString()!);
         await OnInputChanged.InvokeAsync(pageSize);
     }
 
-    protected async Task SetWaitTime(ChangeEventArgs e)
+    protected async Task SetWaitTimeAsync(ChangeEventArgs e)
     {
         if (waitTimeSetting != null)
         {
             waitTimeSetting.SettingValue = e.Value?.ToString();
             await client.PutAsJsonAsync("api/settings/put", waitTimeSetting);
         }
-        await SettingsChanged();
+        await SettingsChangedAsync();
     }
 }

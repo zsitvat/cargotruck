@@ -58,7 +58,7 @@ namespace Cargotruck.Client.Components
             }
         }
 
-        protected async Task SetToNull()
+        protected async Task SetToNullAsync()
         {
             await OnSetToNull.InvokeAsync();
         }

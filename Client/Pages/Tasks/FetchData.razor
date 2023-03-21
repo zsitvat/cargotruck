@@ -15,16 +15,16 @@
         @if (expandExportMenu)
         {
             <ul class="nav flex-column export-buttons">
-                <button data-title="@localizer["excel"]" class="btn" @onclick="@(() =>FileDownload.Export("Tasks","xlsx",dateFilter,  client, js))"><span class="icon iconify" data-icon="file-icons:microsoft-excel" />XLSX</button>
-                <button data-title="@localizer["pdf"]" class="btn" @onclick="@(() =>FileDownload.Export("Tasks","pdf",dateFilter,  client, js))"><span class="icon iconify" data-icon="bi:filetype-pdf" />PDF</button>
-                <button data-title="@localizer["txt"]" class="btn" @onclick="@(() =>FileDownload.Export("Tasks","txt",dateFilter,  client, js))"><span class="icon iconify" data-icon="bi:filetype-txt" />TXT</button>
-                <button data-title="@localizer["csv"]" class="btn" @onclick="@(() =>FileDownload.Export("Tasks","csv",dateFilter, client, js))"><span class="icon iconify" data-icon="bi:filetype-csv" />CSV</button>
+                <button data-title="@localizer["excel"]" class="btn" @onclick="@(() =>FileDownload.ExportAsync("Tasks","xlsx",dateFilter,  client, js))"><span class="icon iconify" data-icon="file-icons:microsoft-excel" />XLSX</button>
+                <button data-title="@localizer["pdf"]" class="btn" @onclick="@(() =>FileDownload.ExportAsync("Tasks","pdf",dateFilter,  client, js))"><span class="icon iconify" data-icon="bi:filetype-pdf" />ExportToPdfAsync</button>
+                <button data-title="@localizer["txt"]" class="btn" @onclick="@(() =>FileDownload.ExportAsync("Tasks","txt",dateFilter,  client, js))"><span class="icon iconify" data-icon="bi:filetype-txt" />TXT</button>
+                <button data-title="@localizer["csv"]" class="btn" @onclick="@(() =>FileDownload.ExportAsync("Tasks","csv",dateFilter, client, js))"><span class="icon iconify" data-icon="bi:filetype-csv" />ExportToCSVAsync</button>
             </ul>
         }
     </li>
 
     <span class="file-upload-title" import-data-title="@localizer["File_input"]"><UploadFiles page="tasks" StateChanged="StateChanged" /></span>
-    <input value="@searchString" @oninput="@Search" placeholder="@(searchString != "" ? searchString : localizer["Search"])" class="form-control inputs input_search" type="search" id="search-input" name="SearchString">
+    <input value="@searchString" @oninput="@SearchAsync" placeholder="@(searchString != "" ? searchString : localizer["SearchAsync"])" class="form-control inputs input_search" type="search" id="search-input" name="SearchString">
     
     <!--Filter icon-->
     @if (filter == "completed" || filter == "not_completed")
@@ -206,11 +206,11 @@ else
                                     {
                                         if (item.Completed == true)
                                         {
-                                            <td><button @onclick="@(()=>ChangeCompletion(item))" class="no-button">@localizer["True"]<span class="icon iconify completed-icon" data-icon="fluent-mdl2:accept-medium"></span></button></td>
+                                            <td><button @onclick="@(()=>ChangeCompletionAsync(item))" class="no-button">@localizer["True"]<span class="icon iconify completed-icon" data-icon="fluent-mdl2:accept-medium"></span></button></td>
                                         }
                                         else
                                         {
-                                            <td><button @onclick="@(()=>ChangeCompletion(item))" class="no-button">@localizer["False"]<span class="icon iconify" style="color:red" data-icon="mdi:alpha-x"></span></button></td>
+                                            <td><button @onclick="@(()=>ChangeCompletionAsync(item))" class="no-button">@localizer["False"]<span class="icon iconify" style="color:red" data-icon="mdi:alpha-x"></span></button></td>
                                         }
                                     }
                                     @if (showColumns[10])
@@ -275,14 +275,14 @@ else
                                     }
                                     <td class="@(MouseHoverClass.MouseOnHoverClass == item.Id.ToString() || MouseHoverClass.MouseOnclickClass == item.Id.ToString() ? "show" :"not-show") ">
                                         <a class="btn  fixed" href="Tasks/edit/@item.Id"> <span data-title="@localizer["Edit"]" class="oi oi-pencil" aria-hidden="true"></span></a>
-                                        <button class="btn fixed2" @onclick="@(() => Delete(item.Id))"> <span data-title="@localizer["Delete"]" class="oi oi-trash" aria-hidden="true"></span></button>
+                                        <button class="btn fixed2" @onclick="@(() => DeleteAsync(item.Id))"> <span data-title="@localizer["DeleteAsync"]" class="oi oi-trash" aria-hidden="true"></span></button>
                                     </td>
                                 </tr>
                             }
                         </tbody>
                     </table>
                 </div>
-                 <Pagination CurrentPage="currentPage" PageSize="pageSize" DataRows="dataRows" MaxPage="maxPage" GetCurrentPage="GetCurrentPage" />
+                 <Pagination CurrentPage="currentPage" PageSize="pageSize" DataRows="dataRows" MaxPage="maxPage" GetCurrentPage="GetCurrentPageAsync" />
             </div>
         </div>
     </div>

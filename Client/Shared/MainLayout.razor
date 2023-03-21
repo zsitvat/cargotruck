@@ -25,7 +25,7 @@
                 <i style="@(darkmode ? "visibility: hidden;" : "")">
                     <span class="icon iconify switch-icon-light" data-icon="emojione-monotone:sun"></span>
                 </i>
-                <input type="checkbox" @onchange="@(async ()=>await ChangeDarkMode())" checked="@darkmode">
+                <input type="checkbox" @onchange="@(async ()=>await ChangeDarkModeAsync())" checked="@darkmode">
                 <span class="slider round"></span>
                 <i style="@(darkmode ? "" : "visibility: hidden;")">
                     <span class="icon iconify switch-icon-dark" data-icon="bi:moon-fill"></span>
@@ -61,7 +61,7 @@
                 <i style="@(darkmode ? "visibility: hidden;" : "")">
                     <span class="icon iconify switch-icon-light" data-icon="emojione-monotone:sun"></span>
                 </i>
-                <input type="checkbox" @onchange="@(async ()=> await ChangeDarkMode())" checked="@darkmode">
+                <input type="checkbox" @onchange="@(async ()=> await ChangeDarkModeAsync())" checked="@darkmode">
                 <span class="slider round"></span>
                 <i style="@(darkmode ? "" : "visibility: hidden;")">
                     <span class="icon iconify switch-icon-dark" data-icon="bi:moon-fill"></span>
@@ -93,7 +93,7 @@
                                 </NavLink>
                                 <NavLink  @onclick="@LogoutClick">
                                     <li class="nav-item px-3">
-                                         <span class="iconify" data-icon="ic:twotone-logout"></span>@localizer["Logout"]
+                                         <span class="iconify" data-icon="ic:twotone-logout"></span>@localizer["LogoutAsync"]
                                     </li>
                                 </NavLink>
                             </ul>

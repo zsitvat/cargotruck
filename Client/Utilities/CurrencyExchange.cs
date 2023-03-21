@@ -62,15 +62,15 @@ namespace Cargotruck.Client.UtilitiesClasses
             return conversionNum;
         }
 
-        public async static Task<int> GetWaitTime(HttpClient client)
+        public async static Task<int> GetWaitTimeAsync(HttpClient client)
         {
             var getWaitTimeSetting = (await client.GetFromJsonAsync<Settings>("api/settings/getwaittime"));
             return (getWaitTimeSetting != null ? Int32.Parse(getWaitTimeSetting?.SettingValue!) : 0);      
         }
 
-        public async static Task<DateTime> GetNextCurrencyApiDate(HttpClient client)
+        public async static Task<DateTime> GetNextCurrencyApiDateAsync(HttpClient client)
         {
-            return CurrencyExchange.CurrencyApiDate.AddSeconds(await GetWaitTime(client));
+            return CurrencyExchange.CurrencyApiDate.AddSeconds(await GetWaitTimeAsync(client));
         }
     }
 }

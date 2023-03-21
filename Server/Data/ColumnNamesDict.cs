@@ -1,6 +1,6 @@
 ﻿namespace Cargotruck.Server.Data
 {
-    //Export-import oszlop nevek ebből a dict-ből fognak majd jönni
+    //ExportAsync-import oszlop nevek ebből a dict-ből fognak majd jönni
     public static class ColumnNamesDict
     {
         public static readonly Dictionary<string, List<string>> tasksColumnNames = new()

@@ -4,7 +4,7 @@
 @inject IJSRuntime js
 
 
-<Form ButtonText="Update" trucks="@truck" OnValidSubmit="@EditCargo" TitleText="Edit_truck" checkValidSubmit="@CheckValidSubmit" />
+<Form ButtonText="Update" trucks="@truck" OnValidSubmit="@EditCargoAsync" TitleText="Edit_truck" checkValidSubmit="@CheckValidSubmit" />
 
 @code {
     [Parameter] public int Id { get; set; }
@@ -16,7 +16,7 @@
         truck = await http.GetFromJsonAsync<Trucks>($"api/trucks/getById/{Id}");
     }
 
-    async Task EditCargo()
+    async Task EditCargoAsync()
     {
         if (isValidSubmit)
         {

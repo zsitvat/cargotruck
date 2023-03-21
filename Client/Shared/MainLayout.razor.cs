@@ -33,14 +33,14 @@ namespace Cargotruck.Client.Shared
             }
             else
             {
-                await GetDarkmode();             
-                await GetCurrencyRates();               
+                await GetDarkmodeAsync();             
+                await GetCurrencyRatesAsync();               
             }
         }
 
-        async Task GetCurrencyRates()
+        async Task GetCurrencyRatesAsync()
         {
-            if (CurrencyExchange.Rates == null && await CurrencyExchange.GetNextCurrencyApiDate(client) <= DateTime.Now)
+            if (CurrencyExchange.Rates == null && await CurrencyExchange.GetNextCurrencyApiDateAsync(client) <= DateTime.Now)
             {
                 try
                 {
@@ -63,7 +63,7 @@ namespace Cargotruck.Client.Shared
         }
       
 
-        async Task GetDarkmode()
+        async Task GetDarkmodeAsync()
         {
             var settings = await client.GetFromJsonAsync<Settings[]>("api/settings/get");
             var DarkModeSetting = (settings?.Where(x => x.SettingName == "darkmode" && x.SettingValue == (AuthenticationState!).Result.User.Identity?.Name));
@@ -73,7 +73,7 @@ namespace Cargotruck.Client.Shared
             darkmode = darkModeFound;
         }
 
-        async Task ChangeDarkMode()
+        async Task ChangeDarkModeAsync()
         {
             if ((await AuthenticationState!).User.Identity!.IsAuthenticated)
             {
@@ -102,7 +102,7 @@ namespace Cargotruck.Client.Shared
         async Task LogoutClick()
         {
             PageHistoryState.ResetPageToHistory();
-            await authStateProvider.Logout();
+            await authStateProvider.LogoutAsync();
             navigationManager.NavigateTo("/login");
         }
 

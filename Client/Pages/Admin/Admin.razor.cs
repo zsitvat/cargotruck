@@ -21,10 +21,10 @@ namespace Cargotruck.Client.Pages.Admin
 
         protected override async Task OnInitializedAsync()
         {
-            await ShowPage();
+            await ShowPageAsync();
         }
 
-        protected async Task ShowPage()
+        protected async Task ShowPageAsync()
         {
             dataRows = await client.GetFromJsonAsync<int>("api/admin/pagecount");
             if (pageSize < 1) { pageSize = 10; }
@@ -36,10 +36,10 @@ namespace Cargotruck.Client.Pages.Admin
             StateHasChanged();
         }
 
-        async Task Delete(string Id)
+        async Task DeleteAsync(string Id)
         {
             var u = Users?.First(x => x.Id == Id);
-            if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {u?.UserName} ({u?.Id})"))
+            if (await js.InvokeAsync<bool>("confirm", $"{@localizer["DeleteAsync?"]} {u?.UserName} ({u?.Id})"))
             {
                 await client.DeleteAsync($"api/admin/delete/{Id}");
                 await OnInitializedAsync();
@@ -52,7 +52,7 @@ namespace Cargotruck.Client.Pages.Admin
             await OnInitializedAsync();
         }
 
-        protected async Task GetCurrentPage(int CurrentPage)
+        protected async Task GetCurrentPageAsync(int CurrentPage)
         {
             currentPage = CurrentPage;
             await OnInitializedAsync();
@@ -69,7 +69,7 @@ namespace Cargotruck.Client.Pages.Admin
         {
             pageSize = ChangedPageSize;
             currentPage = 1;
-            await ShowPage();
+            await ShowPageAsync();
         }
         private async void StateChanged()
         {

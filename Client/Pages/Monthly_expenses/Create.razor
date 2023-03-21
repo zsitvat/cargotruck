@@ -3,7 +3,7 @@
 @inject NavigationManager uriHelper
 @inject IJSRuntime js
 
-<Form ButtonText="Create" OnHandleChangeTask="@HandleChangeTask" OnHandleChangeExpense="@HandleChangeExpense" Monthly_expenses="@monthly_expense" OnValidSubmit="@CreateMonthlyExpense" TitleText="Create_monthly_expense" />
+<Form ButtonText="Create" OnHandleChangeTask="@HandleChangeTask" OnHandleChangeExpense="@HandleChangeExpense" Monthly_expenses="@monthly_expense" OnValidSubmit="@CreateMonthlyExpenseAsync" TitleText="Create_monthly_expense" />
 
 @code {
     List<int>? selectedTaskId;
@@ -21,7 +21,7 @@
         selectedExpenseId = selected;
     }
 
-    async Task CreateMonthlyExpense()
+    async Task CreateMonthlyExpenseAsync()
     {
 
         var result = await http.PostAsJsonAsync("api/Monthly_expenses/post", monthly_expense);

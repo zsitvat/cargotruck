@@ -17,7 +17,7 @@ namespace Cargotruck.Client.Services
             var identity = new ClaimsIdentity();
             try
             {
-                var userInfo = await GetCurrentUser();
+                var userInfo = await GetCurrentUserAsync();
                 if (userInfo.IsAuthenticated && _currentUser?.UserName != null)
                 {
                     var claims = new[] { new Claim(ClaimTypes.Name, _currentUser.UserName) }.Concat(_currentUser.Claims.Select(c => new Claim(c.Key, c.Value)));
@@ -32,36 +32,36 @@ namespace Cargotruck.Client.Services
             return new AuthenticationState(new ClaimsPrincipal(identity));
         }
 
-        public async Task<CurrentUser> GetCurrentUser()
+        public async Task<CurrentUser> GetCurrentUserAsync()
         {
             if (_currentUser != null && _currentUser.IsAuthenticated) return _currentUser;
-            _currentUser = await api.CurrentUserInfo();
+            _currentUser = await api.CurrentUserInfoAsync();
             return _currentUser;
         }
-        public async Task Logout()
+        public async Task LogoutAsync()
         {
-            await api.Logout();
+            await api.LogoutAsync();
             _currentUser = null;
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
         }
-        public async Task Login(LoginRequest loginParameters)
+        public async Task LoginAsync(LoginRequest loginParameters)
         {
-            await api.Login(loginParameters);
+            await api.LoginAsync(loginParameters);
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
         }
-        public async Task Register(RegisterRequest registerParameters)
+        public async Task RegisterAsync(RegisterRequest registerParameters)
         {
-            await api.Register(registerParameters);
+            await api.RegisterAsync(registerParameters);
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
         }
-        public async Task Update(UpdateRequest updateParameters)
+        public async Task UpdateAsync(UpdateRequest updateParameters)
         {
-            await api.Update(updateParameters);
+            await api.UpdateAsync(updateParameters);
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
         }
-        public async Task ChangePassword(ChangePasswordRequest updateParameters)
+        public async Task ChangePasswordAsync(ChangePasswordRequest updateParameters)
         {
-            await api.ChangePassword(updateParameters);
+            await api.ChangePasswordAsync(updateParameters);
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
         }
     }

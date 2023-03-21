@@ -2,12 +2,12 @@
 <div class="settings-card mb-6">
     <div class="card-body mb-3">
         <div class="d-inline-block ms-5">
-        <a class="btn btn-danger x" @onclick="@SettingsClosed"><i class="oi oi-x"></i></a>
+        <a class="btn btn-danger x" @onclick="@SettingsClosedAsync"><i class="oi oi-x"></i></a>
             <div class="form-group">
                 <div>
                 <label>
                         @localizer["Task_id"]:
-                    <input type="checkbox" @onchange="@(async () =>{ showColumns[0]=!showColumns[0]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[0]" />
+                    <input type="checkbox" @onchange="@(async () =>{ showColumns[0]=!showColumns[0]; await SettingsChangedAsync();})" class="form-check-input" checked="@showColumns[0]" />
                     </label>
                 </div>
             </div>
@@ -15,7 +15,7 @@
                 <div>
                 <label>
                         @localizer["Weight"]:
-                    <input type="checkbox" @onchange="@(async () =>{ showColumns[1]=!showColumns[1]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[1]" />
+                    <input type="checkbox" @onchange="@(async () =>{ showColumns[1]=!showColumns[1]; await SettingsChangedAsync();})" class="form-check-input" checked="@showColumns[1]" />
                     </label>
                 </div>
             </div>
@@ -23,7 +23,7 @@
                 <div>
                 <label>
                         @localizer["Description"]:
-                    <input type="checkbox" @onchange="@(async () =>{ showColumns[2]=!showColumns[2]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[2]" />
+                    <input type="checkbox" @onchange="@(async () =>{ showColumns[2]=!showColumns[2]; await SettingsChangedAsync();})" class="form-check-input" checked="@showColumns[2]" />
                     </label>
                 </div>
             </div>
@@ -31,7 +31,7 @@
                 <div>
                     <label>
                         @localizer["Delivery_requirements"]:
-                        <input type="checkbox" @onchange="@(async () =>{ showColumns[3]=!showColumns[3]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[3]" />
+                        <input type="checkbox" @onchange="@(async () =>{ showColumns[3]=!showColumns[3]; await SettingsChangedAsync();})" class="form-check-input" checked="@showColumns[3]" />
                     </label>
                 </div>
             </div>
@@ -39,7 +39,7 @@
                 <div>
                     <label>
                         @localizer["Vehicle_registration_number"]:
-                        <input type="checkbox" @onchange="@(async () =>{ showColumns[4]=!showColumns[4]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[4]" />
+                        <input type="checkbox" @onchange="@(async () =>{ showColumns[4]=!showColumns[4]; await SettingsChangedAsync();})" class="form-check-input" checked="@showColumns[4]" />
                     </label>
                 </div>
             </div>
@@ -47,21 +47,21 @@
                 <div>
                 <label>
                         @localizer["Warehouse_id"]:
-                    <input type="checkbox" @onchange="@(async () =>{ showColumns[5]=!showColumns[5]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[5]" />
+                    <input type="checkbox" @onchange="@(async () =>{ showColumns[5]=!showColumns[5]; await SettingsChangedAsync();})" class="form-check-input" checked="@showColumns[5]" />
                     </label>
                 </div>
             </div>
             <div class="form-group">
                 <label>
                     @localizer["Warehouse_section"]:
-                    <input type="checkbox" @onchange="@(async () => {showColumns[6]=!showColumns[6]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[6]" />
+                    <input type="checkbox" @onchange="@(async () => {showColumns[6]=!showColumns[6]; await SettingsChangedAsync();})" class="form-check-input" checked="@showColumns[6]" />
                 </label>
             </div>
             <div class="form-group ">
                 <div>
                     <label>
                         @localizer["Storage_starting_time"]:
-                        <input type="checkbox" @onchange="@(async () =>{showColumns[7]=!showColumns[7]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[7]" />
+                        <input type="checkbox" @onchange="@(async () =>{showColumns[7]=!showColumns[7]; await SettingsChangedAsync();})" class="form-check-input" checked="@showColumns[7]" />
                     </label>
                 </div>
             </div>
@@ -69,7 +69,7 @@
                     <div>
                         <label>
                         @localizer["Date"]:
-                        <input type="checkbox" @onchange="@(async () =>{ showColumns[8]=!showColumns[8]; await SettingsChanged();})" class="form-check-input" checked="@showColumns[8]" />
+                        <input type="checkbox" @onchange="@(async () =>{ showColumns[8]=!showColumns[8]; await SettingsChangedAsync();})" class="form-check-input" checked="@showColumns[8]" />
                         </label>
                     </div>
                 </div>
@@ -79,7 +79,7 @@
             <div>
                 <label class="ms-5">
                     @localizer["PageSize"]:
-                    <input class="number-input" value="@pageSize" @oninput="@InputChange" type="number" />   
+                    <input class="number-input" value="@pageSize" @oninput="@InputChangeAsync" type="number" />   
                 </label>
             </div>
         </div>
@@ -97,17 +97,17 @@
     [Parameter] public  EventCallback  OnSettingsClosed { get; set; }
     [Parameter] public EventCallback<int> OnInputChanged { get; set; }
 
-    protected async Task SettingsChanged()
+    protected async Task SettingsChangedAsync()
     {
         await OnSettingsChanged.InvokeAsync();
     }
 
-    protected async Task SettingsClosed()
+    protected async Task SettingsClosedAsync()
     {
         await OnSettingsClosed.InvokeAsync();
     }
 
-    private async Task InputChange(ChangeEventArgs args)
+    private async Task InputChangeAsync(ChangeEventArgs args)
     {
         pageSize = string.IsNullOrEmpty(args?.Value?.ToString()) ? pageSize : Int32.Parse(args.Value?.ToString()!);
         await OnInputChanged.InvokeAsync(pageSize);

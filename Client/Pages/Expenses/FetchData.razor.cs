@@ -31,10 +31,10 @@ namespace Cargotruck.Client.Pages.Expenses
             base.OnInitialized();
 
             dataRows = await client.GetFromJsonAsync<int>($"api/expenses/pagecount?searchString={searchString}&filter={filter}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
-            await ShowPage();
+            await ShowPageAsync();
         }
 
-        protected async Task ShowPage()
+        protected async Task ShowPageAsync()
         {
             pageSize = Page.GetPageSize(pageSize, dataRows);
             maxPage = Page.GetMaxPage(pageSize, dataRows);
@@ -45,7 +45,7 @@ namespace Cargotruck.Client.Pages.Expenses
         async Task Delete(int Id)
         {
             var data = expenses?.First(x => x.Id == Id);
-            if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {data?.Type} - {data?.Type_id} - {data?.Date}"))
+            if (await js.InvokeAsync<bool>("confirm", $"{@localizer["DeleteAsync?"]} {data?.Type} - {data?.Type_id} - {data?.Date}"))
             {
                 await client.DeleteAsync($"api/expenses/delete/{Id}");
                 var shouldreload = dataRows % ((currentPage == 1 ? currentPage : currentPage - 1) * pageSize);
@@ -105,7 +105,7 @@ namespace Cargotruck.Client.Pages.Expenses
         {
             pageSize = ChangedPageSize;
             currentPage = 1;
-            await ShowPage();
+            await ShowPageAsync();
         }
 
         protected async void Sorting(string column)
@@ -118,19 +118,19 @@ namespace Cargotruck.Client.Pages.Expenses
             {
                 sortOrder = column;
             }
-            await ShowPage();
+            await ShowPageAsync();
         }
 
-        protected async Task Search(ChangeEventArgs args)
+        protected async Task SearchAsync(ChangeEventArgs args)
         {
             searchString = args.Value?.ToString();
-            await ShowPage();
+            await ShowPageAsync();
         }
 
-        protected async Task GetCurrentPage(int CurrentPage)
+        protected async Task GetCurrentPageAsync(int CurrentPage)
         {
             currentPage = CurrentPage;
-            await ShowPage();
+            await ShowPageAsync();
         }
 
         private async void StateChanged()

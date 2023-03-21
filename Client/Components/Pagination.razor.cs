@@ -10,29 +10,29 @@ namespace Cargotruck.Client.Components
         [Parameter] public float MaxPage { get; set; }
         [Parameter] public EventCallback<int> GetCurrentPage { get; set; }
 
-        protected async Task ShowPage()
+        protected async Task ShowPageAsync()
         {
             await GetCurrentPage.InvokeAsync(CurrentPage);
         }
 
-        protected async Task NextPage()
+        protected async Task NextPageAsync()
         {
             CurrentPage++;
-            await ShowPage();
+            await ShowPageAsync();
         }
 
-        protected async Task SetCurrentPage(int i)
+        protected async Task SetCurrentPageAsync(int i)
         {
             CurrentPage = i;
-            await ShowPage();
+            await ShowPageAsync();
         }
 
-        protected async Task PrevPage()
+        protected async Task PrevPageAsync()
         {
             if (CurrentPage > 1)
             {
                 CurrentPage--;
-                await ShowPage();
+                await ShowPageAsync();
             }
         }
     }

@@ -2,6 +2,7 @@
 using Cargotruck.Server.Models;
 using Cargotruck.Shared.Models.Request;
 using Cargotruck.Shared.Resources;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
@@ -13,6 +14,7 @@ namespace Cargotruck.Server.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class FilesaveController : ControllerBase
     {
         private readonly IWebHostEnvironment env;
@@ -31,7 +33,7 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpPost("{id}"), HttpPost]
-        public async Task<ActionResult<IList<UploadResult>>> PostFile([FromForm] IEnumerable<IFormFile> files, string id, CultureInfo lang)
+        public async Task<ActionResult<IList<UploadResult>>> PostFileAsync([FromForm] IEnumerable<IFormFile> files, string id, CultureInfo lang)
         {
             CultureInfo.CurrentUICulture = lang;
             string? path = null;

@@ -244,7 +244,7 @@
     <value>Create warehouse</value>
   </data>
   <data name="csv" xml:space="preserve">
-    <value>Export to CSV</value>
+    <value>Export to ExportToCSVAsync</value>
   </data>
   <data name="Currency" xml:space="preserve">
     <value>Currency</value>
@@ -337,7 +337,7 @@
     <value>E-mail</value>
   </data>
   <data name="Empty_excel" xml:space="preserve">
-    <value>Empty Excel File!</value>
+    <value>Empty ExportToExcel File!</value>
   </data>
   <data name="Empty_file" xml:space="preserve">
     <value>The file is empty:</value>
@@ -436,7 +436,7 @@
     <value>The weight is required!</value>
   </data>
   <data name="excel" xml:space="preserve">
-    <value>Export to Excel</value>
+    <value>Export to ExportToExcel</value>
   </data>
   <data name="Expense" xml:space="preserve">
     <value>Expense</value>
@@ -562,7 +562,7 @@
     <value>Change profile picture</value>
   </data>
   <data name="Import" xml:space="preserve">
-    <value>Import from Excel</value>
+    <value>Import from ExportToExcel</value>
   </data>
   <data name="InWarehouse" xml:space="preserve">
     <value>In warehouse</value>
@@ -703,7 +703,7 @@
     <value>Payment</value>
   </data>
   <data name="pdf" xml:space="preserve">
-    <value>Export to PDF</value>
+    <value>Export to ExportToPdfAsync</value>
   </data>
   <data name="Penalty" xml:space="preserve">
     <value>Penalty</value>

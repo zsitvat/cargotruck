@@ -439,7 +439,7 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Letöltés CSV-ként.
+        ///   Looks up a localized string similar to Letöltés ExportToCSVAsync-ként.
         /// </summary>
         public static string csv {
             get {
@@ -1024,7 +1024,7 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Letöltés Excel-ként.
+        ///   Looks up a localized string similar to Letöltés ExportToExcel-ként.
         /// </summary>
         public static string excel {
             get {
@@ -1402,7 +1402,7 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Feltöltés Excel-ből.
+        ///   Looks up a localized string similar to Feltöltés ExportToExcel-ből.
         /// </summary>
         public static string Import {
             get {

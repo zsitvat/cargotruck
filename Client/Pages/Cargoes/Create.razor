@@ -3,13 +3,13 @@
 @inject NavigationManager uriHelper
 @inject IJSRuntime js
 
-<Form ButtonText="Create" cargoes="@cargo" OnValidSubmit="@CreateCargo" TitleText="Create_cargo" checkValidSubmit="@CheckValidSubmit" />
+<Form ButtonText="Create" cargoes="@cargo" OnValidSubmit="@CreateCargoAsync" TitleText="Create_cargo" checkValidSubmit="@CheckValidSubmit" />
 
 @code {
     Cargoes cargo = new Cargoes();
     bool isValidSubmit = true;
 
-    async Task CreateCargo()
+    async Task CreateCargoAsync()
     {
         if (isValidSubmit)
         {

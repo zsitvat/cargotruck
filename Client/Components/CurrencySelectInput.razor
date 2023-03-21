@@ -8,7 +8,7 @@
             {
                 @if (item != CurrencyExchange.currency)
                 {
-                    <div class="custom-select-option" @onclick='async () => {CurrencyExchange.currency = item;await CurrencyChanged(); }'>
+                    <div class="custom-select-option" @onclick='async () => {CurrencyExchange.currency = item;await CurrencyChangedAsync(); }'>
                         @item
                     </div>
                 }
@@ -28,7 +28,7 @@
         ("CZK")
     };
 
-    protected async Task CurrencyChanged()
+    protected async Task CurrencyChangedAsync()
     {
         await OnCurrencyChanged.InvokeAsync();
     }

@@ -2,7 +2,7 @@
     <div class="align-center pagination-style mt-2">
         @if (CurrentPage != 1)
         {
-            <i class="oi oi-media-skip-backward btn btn-pagination" id="prev" @onclick="PrevPage"></i>
+            <i class="oi oi-media-skip-backward btn btn-pagination" id="prev" @onclick="PrevPageAsync"></i>
         }
         else
         {
@@ -15,18 +15,18 @@
             {
                 if (i == CurrentPage)
                 {
-                    <span class="btn btn-pagination currentpage" @onclick="() => SetCurrentPage(j)">@i</span>
+                    <span class="btn btn-pagination currentpage" @onclick="() => SetCurrentPageAsync(j)">@i</span>
                 }
                 else
                 {
-                    <span class="btn  btn-pagination" @onclick="() => SetCurrentPage(j)">@i</span>
+                    <span class="btn  btn-pagination" @onclick="() => SetCurrentPageAsync(j)">@i</span>
                 }
             }
 
         }
         @if (CurrentPage < MaxPage)
         {
-            <i class="oi oi-media-skip-forward btn btn-pagination" id="next" @onclick="NextPage"></i>
+            <i class="oi oi-media-skip-forward btn btn-pagination" id="next" @onclick="NextPageAsync"></i>
         }
         else
         {

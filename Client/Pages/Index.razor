@@ -61,11 +61,11 @@
         </div>
     </div>
 
-    <!--Charts-->
-    <div class="charts"><ChartComponent /></div>
-
 <AuthorizeView>
     <Authorized>
+        
+        <!--Charts-->
+        <div class="charts"><ChartComponent /></div>
 
         @if (greetings)
         {
@@ -116,7 +116,7 @@
             {
                 greetings = false;
             }
-            await GetNumbers();
+            await GetNumbersAsync();
         }
         else
         {
@@ -124,7 +124,7 @@
         }
     }
 
-    protected async Task GetNumbers()
+    protected async Task GetNumbersAsync()
     {
         Dictionary<string, int?> numbersDic = new Dictionary<string, int?>(){
         {"numberOfTasksUnFinished",0},
@@ -148,10 +148,10 @@
         numbersDic["numberOfLogins"] = await client.GetFromJsonAsync<int>("api/admin/loginscount");
         numbersDic["numberOfUsers"] = await client.GetFromJsonAsync<int>("api/admin/count");
 
-        await GetNumbersCounter(numbersDic);
+        await GetNumbersCounterAsync(numbersDic);
     }
 
-    protected async Task GetNumbersCounter(Dictionary<string, int?> MaxNumbers)
+    protected async Task GetNumbersCounterAsync(Dictionary<string, int?> MaxNumbers)
     {
         int max = 0;
         foreach(var num in MaxNumbers)

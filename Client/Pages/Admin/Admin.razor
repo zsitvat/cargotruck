@@ -110,11 +110,11 @@ else
                                                 }
                                                 @if (item.UserName != @context?.User.Identity?.Name)
                                                 {
-                                                    <button title="@localizer["Delete"]" class="btn fixed2" @onclick="@(() => Delete(item.Id))"><span class="oi oi-trash" aria-hidden="true"></span></button>
+                                                    <button title="@localizer["DeleteAsync"]" class="btn fixed2" @onclick="@(() => DeleteAsync(item.Id))"><span class="oi oi-trash" aria-hidden="true"></span></button>
                                                 }
                                                 else
                                                 {
-                                                    <button title="@localizer["Delete"]" class="btn fixed2" @onclick="@(() => Delete(item.Id))" disabled><span class="oi oi-trash" aria-hidden="true"></span></button>
+                                                    <button title="@localizer["DeleteAsync"]" class="btn fixed2" @onclick="@(() => DeleteAsync(item.Id))" disabled><span class="oi oi-trash" aria-hidden="true"></span></button>
                                                 }
                                             </td>
                                         </tr>
@@ -122,7 +122,7 @@ else
                                 </tbody>
                             </table>
                         </div>
-                        <Pagination CurrentPage="currentPage" PageSize="pageSize" DataRows="dataRows" MaxPage="maxPage" GetCurrentPage="GetCurrentPage" />
+                        <Pagination CurrentPage="currentPage" PageSize="pageSize" DataRows="dataRows" MaxPage="maxPage" GetCurrentPage="GetCurrentPageAsync" />
                     </div>
                 </div>
             </div>

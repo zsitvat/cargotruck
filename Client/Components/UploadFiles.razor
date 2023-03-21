@@ -1,7 +1,7 @@
 ﻿@inject HttpClient Http
 
 
-<InputFile id="inputfile" class="btn btn-light file-upload custom-file-input" OnChange="@OnInputFileChange" />
+<InputFile id="inputfile" class="btn btn-light file-upload custom-file-input" OnChange="@OnInputFileChangeAsync" />
 
 @if(error != null && error != "" ){
     <div class="mb-3 input-group page-error">
@@ -18,7 +18,7 @@
     private List<UploadResult> uploadResults = new();
     private int maxAllowedFiles = 1;
 
-    private async Task OnInputFileChange(InputFileChangeEventArgs e)
+    private async Task OnInputFileChangeAsync(InputFileChangeEventArgs e)
     {
         long maxFileSize = 1024 * 5000;
         var upload = false;

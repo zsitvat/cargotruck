@@ -2,7 +2,7 @@
 <div class="getbyid-card mb-6">
     <div class="card-body">
         <div class="ms-0">
-            <a class="btn btn-danger x" @onclick="@( ()=> SetToNull())"><i class="oi oi-x"></i></a>
+            <a class="btn btn-danger x" @onclick="@( ()=> SetToNullAsync())"><i class="oi oi-x"></i></a>
             @if (GetByIdType == "cargo" || GetByIdType == "storage")
             {
                 <NavLink href="Cargoes" data-title="@localizer["go_to_cargoes"]">

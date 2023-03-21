@@ -30,19 +30,19 @@ namespace Cargotruck.Client.Pages.Tasks
             PageHistoryState.AddPageToHistory("/Tasks");
             base.OnInitialized();
             dataRows = await client.GetFromJsonAsync<int>($"api/tasks/pagecount?searchString={searchString}&filter={filter}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
-            await ShowPage();
+            await ShowPageAsync();
         }
 
-        async Task ChangeCompletion(Cargotruck.Shared.Models.Tasks task)
+        async Task ChangeCompletionAsync(Cargotruck.Shared.Models.Tasks task)
         {
             await client.PutAsJsonAsync($"api/tasks/changecompletion", task);
-            await ShowPage();
+            await ShowPageAsync();
         }
 
-        async Task Delete(int Id)
+        async Task DeleteAsync(int Id)
         {
             var t = Tasks?.First(x => x.Id == Id);
-            if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {t?.Partner} ({t?.Id})"))
+            if (await js.InvokeAsync<bool>("confirm", $"{@localizer["DeleteAsync?"]} {t?.Partner} ({t?.Id})"))
             {
                 await client.DeleteAsync($"api/tasks/delete/{Id}");
                 var shouldreload = dataRows % ((currentPage == 1 ? currentPage : currentPage - 1) * pageSize);
@@ -51,7 +51,7 @@ namespace Cargotruck.Client.Pages.Tasks
             }
         }
 
-        protected async Task ShowPage()
+        protected async Task ShowPageAsync()
         {
             pageSize = Page.GetPageSize(pageSize, dataRows);
             maxPage = Page.GetMaxPage(pageSize, dataRows);
@@ -109,7 +109,7 @@ namespace Cargotruck.Client.Pages.Tasks
         {
             pageSize = ChangedPageSize;
             currentPage = 1;
-            await ShowPage();
+            await ShowPageAsync();
         }
 
         protected async void Sorting(string column)
@@ -122,19 +122,19 @@ namespace Cargotruck.Client.Pages.Tasks
             {
                 sortOrder = column;
             }
-            await ShowPage();
+            await ShowPageAsync();
         }
 
-        protected async Task Search(ChangeEventArgs args)
+        protected async Task SearchAsync(ChangeEventArgs args)
         {
             searchString = args.Value?.ToString();
-            await ShowPage();
+            await ShowPageAsync();
         }
 
-        protected async Task GetCurrentPage(int CurrentPage)
+        protected async Task GetCurrentPageAsync(int CurrentPage)
         {
             currentPage = CurrentPage;
-            await ShowPage();
+            await ShowPageAsync();
         }
 
         private async void StateChanged()

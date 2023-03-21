@@ -4,7 +4,7 @@
 @inject IJSRuntime js
 
 
-<Form ButtonText="Update" warehouses="@warehouse" OnValidSubmit="@EditWarehouse" TitleText="Edit_warehouse"/>
+<Form ButtonText="Update" warehouses="@warehouse" OnValidSubmit="@EditWarehouseAsync" TitleText="Edit_warehouse"/>
 
 @code {
     [Parameter] public int Id { get; set; }
@@ -15,7 +15,7 @@
         warehouse = await http.GetFromJsonAsync<Warehouses>($"api/warehouses/getById/{Id}");
     }
 
-    async Task EditWarehouse()
+    async Task EditWarehouseAsync()
     {
         var text = @localizer["Succesfull_update"];
         await http.PutAsJsonAsync("api/warehouses/put", warehouse);

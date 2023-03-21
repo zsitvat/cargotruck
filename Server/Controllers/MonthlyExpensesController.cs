@@ -5,6 +5,7 @@ using Cargotruck.Shared.Resources;
 using ClosedXML.Excel;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
@@ -18,6 +19,7 @@ namespace Cargotruck.Server.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [Authorize]
     public class Monthly_ExpensesController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
@@ -29,7 +31,7 @@ namespace Cargotruck.Server.Controllers
             _localizer = localizer;
         }
 
-        private async Task<List<Monthly_expenses>> GetData(string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        private async Task<List<Monthly_expenses>> GetDataAsync(string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var data = await _context.Monthly_Expenses.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
 
@@ -46,10 +48,10 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(int page, int pageSize, string sortOrder, bool desc, string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        public async Task<IActionResult> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
-            await CreateMonths(); // checks and create the monthly expenses data for the current month
-            var data = await GetData(searchString, dateFilterStartDate, dateFilterEndDate);
+            await CreateMonthsAsync(); // checks and create the monthly expenses data for the current month
+            var data = await GetDataAsync(searchString, dateFilterStartDate, dateFilterEndDate);
 
             sortOrder = sortOrder == "Earning" ? (desc ? "Earning_desc" : "Earning") : (sortOrder);
             sortOrder = sortOrder == "Expense" ? (desc ? "Expense_desc" : "Expense") : (sortOrder);
@@ -76,21 +78,21 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetByIdAsync(int id)
         {
             var data = await _context.Monthly_Expenses.FirstOrDefaultAsync(a => a.Monthly_expense_id == id);
             return Ok(data);
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetMonthlyExpenses()
+        public async Task<IActionResult> GetMonthlyExpensesAsync()
         {
             var data = await _context.Monthly_Expenses.ToListAsync();
             return Ok(data);
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetChartData()
+        public async Task<IActionResult> GetChartDataAsync()
         {
             var data = await _context.Monthly_Expenses.ToListAsync();
             int[] columnsHeight = new int[36];
@@ -123,28 +125,28 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetConnectionIds()
+        public async Task<IActionResult> GetConnectionIdsAsync()
         {
             var data = await _context.Monthly_expenses_tasks_expenses.ToListAsync();
             return Ok(data);
         }
 
         [HttpGet]
-        public async Task<IActionResult> Count()
+        public async Task<IActionResult> CountAsync()
         {
             var t = await _context.Monthly_Expenses.CountAsync();
             return Ok(t);
         }
 
         [HttpGet]
-        public async Task<IActionResult> PageCount(string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        public async Task<IActionResult> PageCountAsync(string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
-            var data = await GetData(searchString, dateFilterStartDate, dateFilterEndDate);
+            var data = await GetDataAsync(searchString, dateFilterStartDate, dateFilterEndDate);
             int PageCount = data.Count;
             return Ok(PageCount);
         }
 
-        public async Task CheckData()
+        public async Task CheckDataAsync()
         {
             var monthly_Expenses = await _context.Monthly_Expenses.ToListAsync();
             var conIds = await _context.Monthly_expenses_tasks_expenses.ToListAsync();
@@ -191,7 +193,7 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put(Monthly_expenses data)
+        public async Task<IActionResult> PutAsync(Monthly_expenses data)
         {
             data.User_id = _context?.Users?.FirstOrDefault(a => a.UserName == User.Identity!.Name)?.Id;
             _context!.Entry(data).State = EntityState.Modified;
@@ -200,7 +202,7 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(Monthly_expenses data)
+        public async Task<IActionResult> PostAsync(Monthly_expenses data)
         {
             data.User_id = _context?.Users?.FirstOrDefault(a => a.UserName == User.Identity!.Name)?.Id;
             data.Profit = (data.Earning != null ? data.Earning : 0) - (data.Expense != null ? data.Expense : 0);
@@ -210,7 +212,7 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostConnectionIds(Monthly_expenses_tasks_expenses connectionIds, bool first)
+        public async Task<IActionResult> PostConnectionIdsAsync(Monthly_expenses_tasks_expenses connectionIds, bool first)
         {
             //_context.Entry(connectionIds).State = EntityState.Modified;
             if (first)
@@ -225,7 +227,7 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateMonths()
+        public async Task<IActionResult> CreateMonthsAsync()
         {
             Monthly_expenses data = new();
             var currentDate = DateTime.Now;
@@ -245,7 +247,7 @@ namespace Cargotruck.Server.Controllers
             return NoContent();
         }
 
-        public async Task CreateConTable()
+        public async Task CreateConTableAsync()
         {
             var monthly_expenses = await _context.Monthly_Expenses.Where(x => x.User_id == "Generated").ToListAsync();
             
@@ -279,7 +281,7 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> DeleteAsync(int id)
         {
             var data = new Monthly_expenses { Monthly_expense_id = id };
             _context.Remove(data);
@@ -290,7 +292,7 @@ namespace Cargotruck.Server.Controllers
 
         //closedXML needed !!!
         [HttpGet]
-        public string Excel(string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        public string ExportToExcel(string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var Monthly_Expenses = _context.Monthly_Expenses.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
             var Monthly_expenses_tasks_expenses = _context.Monthly_expenses_tasks_expenses.OrderBy(x => x.Id);
@@ -360,7 +362,7 @@ namespace Cargotruck.Server.Controllers
 
         //iTextSharp needed !!!
         [HttpGet]
-        public async Task<string> PDF(string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        public async Task<string> ExportToPdfAsync(string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var Monthly_Expenses = _context.Monthly_Expenses.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
             var Monthly_expenses_tasks_expenses = _context.Monthly_expenses_tasks_expenses.OrderBy(x => x.Id);
@@ -561,7 +563,7 @@ namespace Cargotruck.Server.Controllers
 
         //iTextSharp needed !!!
         [HttpGet]
-        public async Task<string> CSV(string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        public async Task<string> ExportToCSVAsync(string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var Monthly_Expenses = _context.Monthly_Expenses.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
             var Monthly_expenses_tasks_expenses = _context.Monthly_expenses_tasks_expenses.OrderBy(x => x.Id);

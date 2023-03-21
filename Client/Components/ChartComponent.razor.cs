@@ -21,18 +21,18 @@ namespace Cargotruck.Client.Components
         private LineConfig? _config4;
         protected override async Task OnInitializedAsync()
         {
-            await Initialize();
+            await CreateChartsAsync();
         }
 
-        protected async Task Initialize()
+        protected async Task CreateChartsAsync()
         {
-            await TasksChart();
-            await CargoesChart();
-            await TrucksChart();
-            await ExpensesChart();
+            await TasksChartAsync();
+            await CargoesChartAsync();
+            await TrucksChartAsync();
+            await ExpensesChartAsync();
         }
 
-        protected async Task TasksChart()
+        protected async Task TasksChartAsync()
         {
             //Tasks
             _config1 = new BarConfig
@@ -128,7 +128,7 @@ namespace Cargotruck.Client.Components
             }
         }
 
-        protected async Task CargoesChart()
+        protected async Task CargoesChartAsync()
         {
             //Tasks
             _config2 = new BarConfig
@@ -245,7 +245,7 @@ namespace Cargotruck.Client.Components
             }
         }
 
-        protected async Task TrucksChart()
+        protected async Task TrucksChartAsync()
         {
             //Tasks
             _config3 = new LineConfig
@@ -354,7 +354,7 @@ namespace Cargotruck.Client.Components
             }
         }
 
-        protected async Task ExpensesChart()
+        protected async Task ExpensesChartAsync()
         {
             //Tasks
             _config4 = new LineConfig

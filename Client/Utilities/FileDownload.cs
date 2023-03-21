@@ -12,7 +12,7 @@ namespace Cargotruck.Client.Services
         [Inject] public static IStringLocalizer<Resource>? Localizer { get; set; }
         public static string? DocumentError { get; set; } = null;
 
-        public static async Task Export(string page, string documentExtension, DateFilter? dateFilter, HttpClient? client, IJSRuntime? js)
+        public static async Task ExportAsync(string page, string documentExtension, DateFilter? dateFilter, HttpClient? client, IJSRuntime? js)
         {
             //get base64 string from web api call
             string action;

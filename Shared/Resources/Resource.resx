@@ -244,7 +244,7 @@
     <value>Raktár adatok létrehozása</value>
   </data>
   <data name="csv" xml:space="preserve">
-    <value>Letöltés CSV-ként</value>
+    <value>Letöltés ExportToCSVAsync-ként</value>
   </data>
   <data name="Currency" xml:space="preserve">
     <value>Pénznem</value>
@@ -439,7 +439,7 @@
     <value>A súlyt kötelező megadni!</value>
   </data>
   <data name="excel" xml:space="preserve">
-    <value>Letöltés Excel-ként</value>
+    <value>Letöltés ExportToExcel-ként</value>
   </data>
   <data name="Expense" xml:space="preserve">
     <value>Kiadás</value>
@@ -565,7 +565,7 @@
     <value>Profilkép megváltoztatása</value>
   </data>
   <data name="Import" xml:space="preserve">
-    <value>Feltöltés Excel-ből</value>
+    <value>Feltöltés ExportToExcel-ből</value>
   </data>
   <data name="InWarehouse" xml:space="preserve">
     <value>Raktárban</value>

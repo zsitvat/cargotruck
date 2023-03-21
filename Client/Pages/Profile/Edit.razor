@@ -9,7 +9,7 @@
             <h1 class="h4 font-weight-normal login-title align-center">
                 @localizer["Edit_profile"]
             </h1>
-            <EditForm class="profile-form" OnValidSubmit="OnSubmit" Model="updateRequest">
+            <EditForm class="profile-form" OnValidSubmit="OnSubmitAsync" Model="updateRequest">
                 <DataAnnotationsValidator />
 
                 <label for="inputUsername" class="input-only">@localizer["Username"]</label>
@@ -69,18 +69,18 @@
         ("Storageman")
     };
 
-    async Task OnSubmit()
+    async Task OnSubmitAsync()
     {
         error = "";
         try
         { 
             if(Id != null){
                 updateRequest.Id = Id;
-                await authStateProvider.Update(updateRequest);
+                await authStateProvider.UpdateAsync(updateRequest);
                 navigationManager.NavigateTo("/Admin",true);
             }
             else{
-                await authStateProvider.Update(updateRequest);
+                await authStateProvider.UpdateAsync(updateRequest);
                 navigationManager.NavigateTo("/Profile", true);
             }
         }

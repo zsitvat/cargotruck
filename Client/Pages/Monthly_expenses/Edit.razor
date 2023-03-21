@@ -4,7 +4,7 @@
 @inject IJSRuntime js
 
 
-<Form ButtonText="Update" OnHandleChangeTask="@HandleChangeTask" OnHandleChangeExpense="@HandleChangeExpense" Monthly_expenses="@monthly_expense" OnValidSubmit="@EditMonthlyExpense" TitleText="Edit_monthly_expense" />
+<Form ButtonText="Update" OnHandleChangeTask="@HandleChangeTask" OnHandleChangeExpense="@HandleChangeExpense" Monthly_expenses="@monthly_expense" OnValidSubmit="@EditMonthlyExpenseAsync" TitleText="Edit_monthly_expense" />
 
 @code {
     [Parameter] public int Id { get; set; }
@@ -28,7 +28,7 @@
         monthly_expense = await http.GetFromJsonAsync<Monthly_expenses>($"api/Monthly_expenses/getById/{Id}");
     }
 
-    async Task EditMonthlyExpense()
+    async Task EditMonthlyExpenseAsync()
     {
         var text = @localizer["Succesfull_update"];
         var IsFirstId = true;

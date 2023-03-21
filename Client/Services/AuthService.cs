@@ -13,39 +13,39 @@ namespace Cargotruck.Client.Services
             _httpClient = httpClient;
         }
 
-        public async Task<CurrentUser> CurrentUserInfo()
+        public async Task<CurrentUser> CurrentUserInfoAsync()
         {
             var result = await _httpClient.GetFromJsonAsync<CurrentUser>("api/auth/currentuserinfo");
             return result!;
         }
 
-        public async Task Login(LoginRequest loginRequest)
+        public async Task LoginAsync(LoginRequest loginRequest)
         {
             var result = await _httpClient.PostAsJsonAsync($"api/auth/login?lang={CultureInfo.CurrentCulture}", loginRequest);
             if (result.StatusCode == System.Net.HttpStatusCode.BadRequest) throw new Exception(await result.Content.ReadAsStringAsync());
             result.EnsureSuccessStatusCode();
         }
 
-        public async Task Logout()
+        public async Task LogoutAsync()
         {
             var result = await _httpClient.PostAsync("api/auth/logout", null);
             result.EnsureSuccessStatusCode();
         }
 
-        public async Task Register(RegisterRequest registerRequest)
+        public async Task RegisterAsync(RegisterRequest registerRequest)
         {
             var result = await _httpClient.PostAsJsonAsync("api/auth/register", registerRequest);
             if (result.StatusCode == System.Net.HttpStatusCode.BadRequest) throw new Exception(await result.Content.ReadAsStringAsync());
             result.EnsureSuccessStatusCode();
         }
-        public async Task Update(UpdateRequest updateRequest)
+        public async Task UpdateAsync(UpdateRequest updateRequest)
         {
             var result = await _httpClient.PostAsJsonAsync("api/auth/update", updateRequest);
             if (result.StatusCode == System.Net.HttpStatusCode.BadRequest) throw new Exception(await result.Content.ReadAsStringAsync());
             result.EnsureSuccessStatusCode();
         }
 
-        public async Task ChangePassword(ChangePasswordRequest changePassword)
+        public async Task ChangePasswordAsync(ChangePasswordRequest changePassword)
         {
             var result = await _httpClient.PostAsJsonAsync("api/auth/changepassword", changePassword);
             if (result.StatusCode == System.Net.HttpStatusCode.BadRequest) throw new Exception(await result.Content.ReadAsStringAsync());

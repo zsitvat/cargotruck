@@ -5,6 +5,7 @@ using ClosedXML.Excel;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +20,7 @@ namespace Cargotruck.Server.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [Authorize]
     public class CargoesController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
@@ -29,7 +31,7 @@ namespace Cargotruck.Server.Controllers
             _localizer = localizer;            
         }
 
-        private async Task<List<Cargoes>> GetData(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        private async Task<List<Cargoes>> GetDataAsync(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var data = await _context.Cargoes.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
 
@@ -61,9 +63,9 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(int page, int pageSize, string sortOrder, bool desc, string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        public async Task<IActionResult> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
-            var data = await GetData(searchString, filter, dateFilterStartDate, dateFilterEndDate);
+            var data = await GetDataAsync(searchString, filter, dateFilterStartDate, dateFilterEndDate);
 
             sortOrder = sortOrder == "Task_id" ? (desc ? "Task_id_desc" : "Task_id") : (sortOrder);
             sortOrder = sortOrder == "Weight" ? (desc ? "Weight_desc" : "Weight") : (sortOrder);
@@ -101,21 +103,21 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetByIdAsync(int id)
         {
             var data = await _context.Cargoes.FirstOrDefaultAsync(a => a.Id == id);
             return Ok(data);
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetCargoes()
+        public async Task<IActionResult> GetCargoesAsync()
         {
             var data = await _context.Cargoes.ToListAsync();
             return Ok(data);
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetChartData()
+        public async Task<IActionResult> GetChartDataAsync()
         {
             var data = await _context.Cargoes.ToListAsync();
             var tasks = await _context.Tasks.ToListAsync();
@@ -145,7 +147,7 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Count(bool all)
+        public async Task<IActionResult> CountAsync(bool all)
         {
             if (all)
             {
@@ -171,15 +173,15 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> PageCount(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        public async Task<IActionResult> PageCountAsync(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
-            var data = await GetData(searchString, filter, dateFilterStartDate, dateFilterEndDate);
+            var data = await GetDataAsync(searchString, filter, dateFilterStartDate, dateFilterEndDate);
             int PageCount = data.Count;
             return Ok(PageCount);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(Cargoes data)
+        public async Task<IActionResult> PostAsync(Cargoes data)
         {
             data.User_id = _context?.Users.FirstOrDefault(a => a.UserName == User.Identity!.Name)?.Id;
             _context!.Add(data);
@@ -196,7 +198,7 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put(Cargoes data)
+        public async Task<IActionResult> PutAsync(Cargoes data)
         {
             _context.Entry(data).State = EntityState.Modified;
             var task = _context.Tasks.FirstOrDefault(a => a.Id == data.Task_id);
@@ -211,7 +213,7 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> DeleteAsync(int id)
         {
             var data = new Cargoes { Id = id };
             _context.Remove(data);
@@ -222,7 +224,7 @@ namespace Cargotruck.Server.Controllers
 
         //closedXML needed !!!
         [HttpGet]
-        public string Excel(string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        public string ExportToExcel(string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var cargoes = _context.Cargoes.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
             using var workbook = new XLWorkbook();
@@ -273,7 +275,7 @@ namespace Cargotruck.Server.Controllers
 
         //iTextSharp needed !!!
         [HttpGet]
-        public async Task<string> PDF(string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        public async Task<string> ExportToPdfAsync(string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var cargoes = _context.Cargoes.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
 
@@ -500,7 +502,7 @@ namespace Cargotruck.Server.Controllers
 
         //iTextSharp needed !!!
         [HttpGet]
-        public async Task<string> CSV(string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        public async Task<string> ExportToCSVAsync(string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
 
             var cargoes = _context.Cargoes.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
@@ -566,7 +568,7 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Import([FromBody] string file, CultureInfo lang)
+        public async Task<IActionResult> ImportAsync([FromBody] string file, CultureInfo lang)
         {
             CultureInfo.CurrentUICulture = lang;
             var error = "";
@@ -579,7 +581,7 @@ namespace Cargotruck.Server.Controllers
                 if (file != null && System.IO.File.Exists(path) && file.ToLower().Contains(".xlsx"))
                 {
 
-                    //Started reading the Excel file.  
+                    //Started reading the ExportToExcel file.  
                     XLWorkbook workbook = new(path);
 
                     IXLWorksheet worksheet = workbook.Worksheet(1);
@@ -756,7 +758,7 @@ namespace Cargotruck.Server.Controllers
                                 error = _localizer["Not_match_col_count"];
                                 return BadRequest(error);
                             }
-                            //If no data in Excel file  
+                            //If no data in ExportToExcel file  
                             if (firstRow)
                             {
                                 error = _localizer["Empty_excel"];
