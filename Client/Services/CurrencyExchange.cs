@@ -3,16 +3,16 @@ using Newtonsoft.Json;
 using System.Net.Http.Json;
 using Cargotruck.Shared.Models;
 
-namespace Cargotruck.Client.UtilitiesClasses
+namespace Cargotruck.Client.Services
 {
-    public static class CurrencyExchange
+    public class CurrencyExchange : ICurrencyExchange
     {
-        [CascadingParameter] public static Dictionary<string, dynamic>? Rates { get; set; }
-        public static DateTime CurrencyApiDate = new();
+        private Dictionary<string, dynamic>? Rates { get; set; }
+        private DateTime CurrencyApiDate = new();
 
-        public static string currency = "HUF";
+        private string currency = "HUF";
 
-        public static async Task<dynamic> GetRatesAsync(HttpClient? client)
+        public async Task<dynamic> GetRatesFromApiAsync(HttpClient? client)
         {
             //the api has only 300 attempts per month - its run every start of the application
             var request = new HttpRequestMessage
@@ -45,7 +45,7 @@ namespace Cargotruck.Client.UtilitiesClasses
             }
         }
 
-        public static float? GetCurrency(int? amount, string currency)
+        public float? GetCurrency(int? amount, string currency)
         {
             float? conversionNum = amount;
             if (Rates != null && currency != "HUF")
@@ -62,15 +62,45 @@ namespace Cargotruck.Client.UtilitiesClasses
             return conversionNum;
         }
 
-        public async static Task<int> GetWaitTimeAsync(HttpClient client)
+        public Dictionary<string, dynamic>? GetRates()
         {
-            var getWaitTimeSetting = (await client.GetFromJsonAsync<Settings>("api/settings/getwaittime"));
-            return (getWaitTimeSetting != null ? Int32.Parse(getWaitTimeSetting?.SettingValue!) : 0);      
+            return Rates;
         }
 
-        public async static Task<DateTime> GetNextCurrencyApiDateAsync(HttpClient client)
+        public void SetRates(Dictionary<string, dynamic>? newRates)
         {
-            return CurrencyExchange.CurrencyApiDate.AddSeconds(await GetWaitTimeAsync(client));
+            Rates = newRates;
+        }
+
+        public string GetCurrencyType()
+        {
+            return currency;
+        }
+
+        public void SetCurrencyType(string newCurrency)
+        {
+            currency = newCurrency;
+        }
+
+        public async Task<int> GetWaitTimeAsync(HttpClient client)
+        {
+            var getWaitTimeSetting = await client.GetFromJsonAsync<Settings>("api/settings/getwaittime");
+            return getWaitTimeSetting != null ? int.Parse(getWaitTimeSetting?.SettingValue!) : 0;
+        }
+
+        public void SetCurrencyApiDate(DateTime newDate)
+        {
+            CurrencyApiDate = newDate;
+        }
+
+        public DateTime GetCurrencyApiDate()
+        {
+            return CurrencyApiDate;
+        }
+
+        public async Task<DateTime> GetNextCurrencyApiDateAsync(HttpClient client)
+        {
+            return CurrencyApiDate.AddSeconds(await GetWaitTimeAsync(client));
         }
     }
 }

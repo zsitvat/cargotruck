@@ -1,4 +1,5 @@
 ﻿@page "/Expenses"
+@using Cargotruck.Client.Services;
 
 <h3>@localizer["Expenses"]</h3>
 <div class="form-group buttons">
@@ -13,15 +14,15 @@
         {
             <ul class="nav flex-column export-buttons">
                 <button data-title="@localizer["excel"]" class="btn" @onclick="@(() =>FileDownload.ExportAsync("Expenses","xlsx",dateFilter, client, js))"><span class="icon iconify" data-icon="file-icons:microsoft-excel" />XLSX</button>
-                <button data-title="@localizer["pdf"]" class="btn" @onclick="@(() =>FileDownload.ExportAsync("Expenses","pdf",dateFilter, client, js))"><span class="icon iconify" data-icon="bi:filetype-pdf" />ExportToPdfAsync</button>
+                <button data-title="@localizer["pdf"]" class="btn" @onclick="@(() =>FileDownload.ExportAsync("Expenses","pdf",dateFilter, client, js))"><span class="icon iconify" data-icon="bi:filetype-pdf" />PDF</button>
                 <button data-title="@localizer["txt"]" class="btn" @onclick="@(() =>FileDownload.ExportAsync("Expenses","txt",dateFilter, client, js))"><span class="icon iconify" data-icon="bi:filetype-txt" />TXT</button>
-                <button data-title="@localizer["csv"]" class="btn" @onclick="@(() =>FileDownload.ExportAsync("Expenses","csv",dateFilter, client, js))"><span class="icon iconify" data-icon="bi:filetype-csv" />ExportToCSVAsync</button>
+                <button data-title="@localizer["csv"]" class="btn" @onclick="@(() =>FileDownload.ExportAsync("Expenses","csv",dateFilter, client, js))"><span class="icon iconify" data-icon="bi:filetype-csv" />CSV</button>
             </ul>
         }
     </li>
 
-    <span class="file-upload-title" import-data-title="@localizer["File_input"]"><UploadFiles page="expenses" StateChanged="StateChanged" /></span>
-    <input value="@searchString" @oninput="@SearchAsync" placeholder="@(searchString != "" ? searchString : localizer["SearchAsync"])" class="form-control inputs input_search" type="search" id="search-input" name="SearchString">
+    <span class="file-upload-title" import-data-title="@localizer["File_input"]"><UploadFiles Page="expenses" StateChanged="StateChanged" /></span>
+    <input value="@searchString" @oninput="@SearchAsync" placeholder="@(searchString != "" ? searchString : localizer["Search"])" class="form-control inputs input_search" type="search" id="search-input" name="SearchString">
 
     <!--Filter icon-->
     @if (filter == Cargotruck.Shared.Models.Type.salary || filter == Cargotruck.Shared.Models.Type.storage || filter == Cargotruck.Shared.Models.Type.repair || filter == Cargotruck.Shared.Models.Type.task || filter == Cargotruck.Shared.Models.Type.other)
@@ -172,9 +173,9 @@ else
                                         <td>
                                             @if (@item.Fuel != null)
                                             {
-                                                @if (CurrencyExchange.currency != "HUF" && CurrencyExchange.Rates != null)
+                                                @if (currencyExchange.GetCurrencyType() != "HUF" && currencyExchange.GetRates() != null)
                                                 {
-                                                    @(CurrencyExchange.GetCurrency(item.Fuel, CurrencyExchange.currency)!.Value.ToString("0.##") + " " + CurrencyExchange.currency)
+                                                    @(currencyExchange.GetCurrency(item.Fuel, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
                                                 }
                                                 else
                                                 {
@@ -188,9 +189,9 @@ else
                                         <td>
                                             @if (@item.Road_fees != null)
                                             {
-                                                @if (CurrencyExchange.currency != "HUF" && CurrencyExchange.Rates != null)
+                                                @if (currencyExchange.GetCurrencyType() != "HUF" && currencyExchange.GetRates() != null)
                                                 {
-                                                    @(CurrencyExchange.GetCurrency(item.Road_fees, CurrencyExchange.currency)!.Value.ToString("0.##") + " " + CurrencyExchange.currency)
+                                                    @(currencyExchange.GetCurrency(item.Road_fees, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
                                                 }
                                                 else
                                                 {
@@ -204,9 +205,9 @@ else
                                         <td>
                                             @if (@item.Penalty != null)
                                             {
-                                                @if (CurrencyExchange.currency != "HUF" && CurrencyExchange.Rates != null)
+                                                @if (currencyExchange.GetCurrencyType() != "HUF" && currencyExchange.GetRates() != null)
                                                 {
-                                                    @(CurrencyExchange.GetCurrency(item.Penalty, CurrencyExchange.currency)!.Value.ToString("0.##") + " " + CurrencyExchange.currency)
+                                                    @(currencyExchange.GetCurrency(item.Penalty, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
                                                 }
                                                 else
                                                 {
@@ -220,9 +221,9 @@ else
                                         <td>
                                             @if (@item.Driver_spending != null)
                                             {
-                                                @if (CurrencyExchange.currency != "HUF" && CurrencyExchange.Rates != null)
+                                                @if (currencyExchange.GetCurrencyType() != "HUF" && currencyExchange.GetRates() != null)
                                                 {
-                                                    @(CurrencyExchange.GetCurrency(item.Driver_spending, CurrencyExchange.currency)!.Value.ToString("0.##") + " " + CurrencyExchange.currency)
+                                                    @(currencyExchange.GetCurrency(item.Driver_spending, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
                                                 }
                                                 else
                                                 {
@@ -236,9 +237,9 @@ else
                                         <td>
                                             @if (@item.Driver_salary != null)
                                             {
-                                                @if (CurrencyExchange.currency != "HUF" && CurrencyExchange.Rates != null)
+                                                @if (currencyExchange.GetCurrencyType() != "HUF" && currencyExchange.GetRates() != null)
                                                 {
-                                                    @(CurrencyExchange.GetCurrency(item.Driver_salary, CurrencyExchange.currency)!.Value.ToString("0.##") + " " + CurrencyExchange.currency)
+                                                    @(currencyExchange.GetCurrency(item.Driver_salary, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
                                                 }
                                                 else
                                                 {
@@ -252,9 +253,9 @@ else
                                         <td>
                                             @if (@item.Repair_cost != null)
                                             {
-                                                @if (CurrencyExchange.currency != "HUF" && CurrencyExchange.Rates != null)
+                                                @if (currencyExchange.GetCurrencyType() != "HUF" && currencyExchange.GetRates() != null)
                                                 {
-                                                    @(CurrencyExchange.GetCurrency(item.Repair_cost, CurrencyExchange.currency)!.Value.ToString("0.##") + " " + CurrencyExchange.currency)
+                                                    @(currencyExchange.GetCurrency(item.Repair_cost, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
                                                 }
                                                 else
                                                 {
@@ -272,9 +273,9 @@ else
                                         <td>
                                             @if (@item.Cost_of_storage != null)
                                             {
-                                                @if (CurrencyExchange.currency != "HUF" && CurrencyExchange.Rates != null)
+                                                @if (currencyExchange.GetCurrencyType() != "HUF" && currencyExchange.GetRates() != null)
                                                 {
-                                                    @(CurrencyExchange.GetCurrency(item.Cost_of_storage, CurrencyExchange.currency)!.Value.ToString("0.##") + " " + CurrencyExchange.currency)
+                                                    @(currencyExchange.GetCurrency(item.Cost_of_storage, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
                                                 }
                                                 else
                                                 {
@@ -288,9 +289,9 @@ else
                                         <td>
                                             @if (@item.Other != null)
                                             {
-                                                @if (CurrencyExchange.currency != "HUF" && CurrencyExchange.Rates != null)
+                                                @if (currencyExchange.GetCurrencyType() != "HUF" && currencyExchange.GetRates() != null)
                                                 {
-                                                    @(CurrencyExchange.GetCurrency(item.Other, CurrencyExchange.currency)!.Value.ToString("0.##") + " " + CurrencyExchange.currency)
+                                                    @(currencyExchange.GetCurrency(item.Other, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
                                                 }
                                                 else
                                                 {
@@ -304,9 +305,9 @@ else
                                         <td>
                                             @if (@item.Total_amount != null)
                                             {
-                                                @if (CurrencyExchange.currency != "HUF" && CurrencyExchange.Rates != null)
+                                                @if (currencyExchange.GetCurrencyType() != "HUF" && currencyExchange.GetRates() != null)
                                                 {
-                                                    @(CurrencyExchange.GetCurrency(item.Total_amount, CurrencyExchange.currency)!.Value.ToString("0.##") + " " + CurrencyExchange.currency)
+                                                    @(currencyExchange.GetCurrency(item.Total_amount, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
                                                 }
                                                 else
                                                 {

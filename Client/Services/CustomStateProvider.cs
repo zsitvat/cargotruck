@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Components.Authorization;
 using System.Security.Claims;
 
-namespace Cargotruck.Client.Services
+namespace Cargotruck.Client.UtilitiesClasses
 {
     public class CustomStateProvider : AuthenticationStateProvider
     {

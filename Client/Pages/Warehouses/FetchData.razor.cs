@@ -1,5 +1,4 @@
-﻿using Cargotruck.Client.Services;
-using Cargotruck.Client.UtilitiesClasses;
+﻿using Cargotruck.Client.UtilitiesClasses;
 using Cargotruck.Shared.Models.Request;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;

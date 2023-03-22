@@ -3,6 +3,7 @@ using System.Net.Http.Json;
 using Microsoft.AspNetCore.Components.Authorization;
 using Cargotruck.Shared.Models;
 using Cargotruck.Client.UtilitiesClasses;
+using Cargotruck.Client.Services;
 
 namespace Cargotruck.Client.Shared
 {
@@ -34,17 +35,17 @@ namespace Cargotruck.Client.Shared
             else
             {
                 await GetDarkmodeAsync();             
-                await GetCurrencyRatesAsync();               
+                GetCurrencyRates();               
             }
         }
 
-        async Task GetCurrencyRatesAsync()
+        async void GetCurrencyRates()
         {
-            if (CurrencyExchange.Rates == null && await CurrencyExchange.GetNextCurrencyApiDateAsync(client) <= DateTime.Now)
+            if (currencyExchange.GetRates() == null && await currencyExchange.GetNextCurrencyApiDateAsync(client) <= DateTime.Now)
             {
                 try
                 {
-                    CurrencyExchange.Rates = await CurrencyExchange.GetRatesAsync(client);
+                    currencyExchange.SetRates(await currencyExchange.GetRatesFromApiAsync(client));
                 }
                 catch (Exception ex)
                 {
@@ -55,9 +56,9 @@ namespace Cargotruck.Client.Shared
                     }
                 }
 
-                if (CurrencyExchange.Rates != null)
+                if (currencyExchange.GetRates() != null)
                 {
-                    CurrencyExchange.CurrencyApiDate = new(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, 0, 0);
+                    currencyExchange.SetCurrencyApiDate(new(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, 0, 0));
                 }
             }
         }
@@ -85,9 +86,11 @@ namespace Cargotruck.Client.Shared
                 }
                 else
                 {
-                    Settings setting = new();
-                    setting.SettingValue = (AuthenticationState!).Result.User.Identity?.Name;
-                    setting.SettingName = "darkmode";
+                    Settings setting = new()
+                    {
+                        SettingValue = (AuthenticationState!).Result.User.Identity?.Name,
+                        SettingName = "darkmode"
+                    };
                     await client.PostAsJsonAsync("api/settings/post", setting);
                 }
             }

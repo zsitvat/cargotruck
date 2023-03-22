@@ -1,5 +1,6 @@
 ﻿@page "/Monthly_expenses"
 @using Cargotruck.Client.Components
+@using Cargotruck.Client.Services;
 
 <h3>@localizer["Monthly_expenses"]</h3>
 <div class="form-group buttons">
@@ -15,14 +16,14 @@
         {
             <ul class="nav flex-column export-buttons">
                 <button data-title="@localizer["excel"]" class="btn" @onclick="@(() =>FileDownload.ExportAsync("Monthly_expenses","xlsx",dateFilter, client, js))"><span class="icon iconify" data-icon="file-icons:microsoft-excel" />XLSX</button>
-                <button data-title="@localizer["pdf"]" class="btn" @onclick="@(() =>FileDownload.ExportAsync("Monthly_expenses","pdf",dateFilter, client, js))"><span class="icon iconify" data-icon="bi:filetype-pdf" />ExportToPdfAsync</button>
+                <button data-title="@localizer["pdf"]" class="btn" @onclick="@(() =>FileDownload.ExportAsync("Monthly_expenses","pdf",dateFilter, client, js))"><span class="icon iconify" data-icon="bi:filetype-pdf" />PDF</button>
                 <button data-title="@localizer["txt"]" class="btn" @onclick="@(() =>FileDownload.ExportAsync("Monthly_expenses","txt",dateFilter, client, js))"><span class="icon iconify" data-icon="bi:filetype-txt" />TXT</button>
-                <button data-title="@localizer["csv"]" class="btn" @onclick="@(() =>FileDownload.ExportAsync("Monthly_expenses","csv",dateFilter, client, js))"><span class="icon iconify" data-icon="bi:filetype-csv"/>ExportToCSVAsync</button>
+                <button data-title="@localizer["csv"]" class="btn" @onclick="@(() =>FileDownload.ExportAsync("Monthly_expenses","csv",dateFilter, client, js))"><span class="icon iconify" data-icon="bi:filetype-csv"/>CSV</button>
             </ul>
         }
     </li>
 
-    <input value="@searchString" @oninput="@SearchAsync" placeholder="@(searchString != "" ? searchString : localizer["SearchAsync"])" class="form-control inputs input_search" type="search" id="search-input" name="SearchString">
+    <input value="@searchString" @oninput="@SearchAsync" placeholder="@(searchString != "" ? searchString : localizer["Search"])" class="form-control inputs input_search" type="search" id="search-input" name="SearchString">
 
     <CurrencySelectInput OnCurrencyChanged="SettingsChanged" />
 
@@ -105,9 +106,9 @@ else
                                         <td>
                                             @if (@item.Earning != null)
                                             {
-                                                @if (CurrencyExchange.currency != "HUF" && CurrencyExchange.Rates != null)
+                                                @if (currencyExchange.GetCurrencyType() != "HUF" && currencyExchange.GetRates() != null)
                                                 {
-                                                    @(CurrencyExchange.GetCurrency(item.Earning, CurrencyExchange.currency)!.Value.ToString("0.##") + " " + CurrencyExchange.currency)
+                                                    @(currencyExchange.GetCurrency(item.Earning, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
                                                 }
                                                 else
                                                 {
@@ -121,9 +122,9 @@ else
                                         <td>
                                             @if (@item.Expense != null)
                                             {
-                                                @if (CurrencyExchange.currency != "HUF" && CurrencyExchange.Rates != null)
+                                                @if (currencyExchange.GetCurrencyType() != "HUF" && currencyExchange.GetRates() != null)
                                                 {
-                                                    @(CurrencyExchange.GetCurrency(item.Expense, CurrencyExchange.currency)!.Value.ToString("0.##") + " " + CurrencyExchange.currency)
+                                                    @(currencyExchange.GetCurrency(item.Expense, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
                                                 }
                                                 else
                                                 {
@@ -137,9 +138,9 @@ else
                                          <td>
                                             @if (@item.Profit != null)
                                             {
-                                                @if (CurrencyExchange.currency != "HUF" && CurrencyExchange.Rates != null)
+                                                @if (currencyExchange.GetCurrencyType() != "HUF" && currencyExchange.GetRates() != null)
                                                 {
-                                                    @(CurrencyExchange.GetCurrency(item.Profit, CurrencyExchange.currency)!.Value.ToString("0.##") + " " + CurrencyExchange.currency)
+                                                    @(currencyExchange.GetCurrency(item.Profit, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
                                                 }
                                                 else
                                                 {
@@ -199,7 +200,7 @@ else
         @if (fullYearProfitWindow && Monthly_expenses != null)
         {
             
-            <FullYearProfits Currency="@CurrencyExchange.currency"/>
+            <FullYearProfits Currency="@currencyExchange.GetCurrencyType()"/>
         }
         @if (settings)
         {

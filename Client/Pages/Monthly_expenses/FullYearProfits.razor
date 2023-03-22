@@ -1,4 +1,5 @@
-﻿
+﻿@using Cargotruck.Client.Services;
+
 <div class="col-md-8 stretch-card mb-2 me-3">
     <div class="form-card mb-1 table-width">
         <div class="card-body mb-3">
@@ -22,9 +23,9 @@
                                     <td>
                                         @if (@item.earning != null)
                                         {
-                                            @if (CurrencyExchange.currency != "HUF" && CurrencyExchange.Rates != null)
+                                            @if (currencyExchange.GetCurrencyType() != "HUF" && currencyExchange.GetRates() != null)
                                             {
-                                                @(CurrencyExchange.GetCurrency(item.earning, CurrencyExchange.currency)!.Value.ToString("0.##") + " " + CurrencyExchange.currency)
+                                                @(currencyExchange.GetCurrency(item.earning, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
                                             }
                                             else
                                             {
@@ -35,9 +36,9 @@
                                     <td>
                                         @if (@item.expense != null)
                                         {
-                                            @if (CurrencyExchange.currency != "HUF" && CurrencyExchange.Rates != null)
+                                            @if (currencyExchange.GetCurrencyType() != "HUF" && currencyExchange.GetRates() != null)
                                             {
-                                                @(CurrencyExchange.GetCurrency(item.expense, CurrencyExchange.currency)!.Value.ToString("0.##") + " " + CurrencyExchange.currency)
+                                                @(currencyExchange.GetCurrency(item.expense, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
                                             }
                                             else
                                             {
@@ -48,9 +49,9 @@
                                     <td>
                                         @if (@item.profit != null)
                                         {
-                                            @if (CurrencyExchange.currency != "HUF" && CurrencyExchange.Rates != null)
+                                            @if (currencyExchange.GetCurrencyType() != "HUF" && currencyExchange.GetRates() != null)
                                             {
-                                                @(CurrencyExchange.GetCurrency(item.profit, CurrencyExchange.currency)!.Value.ToString("0.##") + " " + CurrencyExchange.currency)
+                                                @(currencyExchange.GetCurrency(item.profit, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
                                             }
                                             else
                                             {
@@ -74,6 +75,7 @@
 @code {
     Monthly_expenses[]? Monthly_expenses { get; set; }
     List<DataPerYear>? DataPerYearList = new();
+    
     [Parameter] public string Currency { get; set; } = "HUF";
 
     public class DataPerYear

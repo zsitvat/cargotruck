@@ -5,7 +5,7 @@ using Microsoft.Extensions.Localization;
 using Microsoft.JSInterop;
 using System.Globalization;
 
-namespace Cargotruck.Client.Services
+namespace Cargotruck.Client.UtilitiesClasses
 {
     public class FileDownload
     {
@@ -19,25 +19,26 @@ namespace Cargotruck.Client.Services
             switch (documentExtension)
             {
                 case "xlsx":
-                    action = "excel";
+                    action = "exporttoexcel";
                     break;
                 case "txt":
-                    action = "csv";
+                    action = "exporttocsv";
                     break;
                 case "csv":
-                    action = "csv";
+                    action = "exporttocsv";
                     break;
                 case "pdf":
-                    action = "pdf";
+                    action = "exporttopdf";
                     break;
                 default:
                     return;
             }
-            var Response = await client!.GetAsync($"api/{page.ToLower()}/{action}?lang={CultureInfo.CurrentCulture.Name}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
+
+            var Response = await client!.GetAsync($"api/{page.ToLower()}/{action}?lang={CultureInfo.CurrentCulture.Name}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}&isTextDocument={(documentExtension == "txt" ? true : false)}");
 
             if (Response.IsSuccessStatusCode)
             {
-                var base64String = await Response.Content.ReadAsStringAsync();
+                var base64String = await Response.Content.ReadAsStringAsync(); 
 
                 Random rnd = new();
                 int random = rnd.Next(1000000, 9999999);

@@ -268,6 +268,12 @@ a:active {
     position:absolute;
 }
 
+.getbyid-currency-input{
+    position:absolute;
+    left:1.5rem;
+    top:1rem;
+}
+
 .currency-api-error {
     font-size: 14px;
     position: relative;

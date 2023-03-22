@@ -1,12 +1,12 @@
-﻿using Cargotruck.Shared.Models;
+﻿using Cargotruck.Client.Services;
+using Cargotruck.Shared.Models;
 using Microsoft.AspNetCore.Components;
 using System.Net.Http.Json;
 
 namespace Cargotruck.Client.Components
 {
     public partial class GetByIdComponent
-    {
-        string currency = "HUF";
+    {   
         Cargoes? idDataCargo;
         Tasks? idDataTask;
         Expenses? idDataExpense;
@@ -63,9 +63,6 @@ namespace Cargotruck.Client.Components
             await OnSetToNull.InvokeAsync();
         }
 
-        void OnChangeGetType(ChangeEventArgs e)
-        {
-            currency = e.Value?.ToString()!;
-        }
+        public static void SettingsChanged() { }
     }
 }

@@ -26,6 +26,7 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
         private bool desc = true;
         private string? searchString = "";
         DateFilter? dateFilter = new();
+        
 
         protected override async Task OnInitializedAsync()
         {

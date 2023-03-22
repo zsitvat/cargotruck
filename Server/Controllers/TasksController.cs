@@ -12,7 +12,6 @@ using Microsoft.Extensions.Localization;
 using System.Data;
 using System.Globalization;
 using System.Text;
-using Document = iTextSharp.text.Document;
 using TasksDto = Cargotruck.Shared.Models.Tasks;
 
 namespace Cargotruck.Server.Controllers
@@ -261,7 +260,7 @@ namespace Cargotruck.Server.Controllers
 
         //closedXML needed !!!
         [HttpGet]
-        public string ExportToExcel(string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        public string ExportToExcel(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var tasks = _context.Tasks.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
 
@@ -269,28 +268,10 @@ namespace Cargotruck.Server.Controllers
             var worksheet = workbook.Worksheets.Add("Tasks");
             var currentRow = 1;
 
-            List<string> columnNames = new() {
-                "Id",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Partner : "Partner",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Description : "Description",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Place_of_receipt : "Place of receipt",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_receipt : "Time of receipt",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Place_of_delivery : "Place of delivery",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_delivery : "Time of delivery",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Other_stops : "other stops",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Id_cargo : "Id cargo",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Storage_time : "Storage time",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Completed : "Completed",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Completion_time : "Completion time",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_delay : "Time of delay",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Payment : "Payment",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Final_Payment : "Final Payment",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Penalty : "Penalty",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date"
-            };
+            CultureInfo.CurrentUICulture = lang;
+            List<string> columnNames = ColumnNames.GetTaskscolumnNames().Select(x => _localizer[x].Value).ToList();
 
-            for(var i=0;i<columnNames.Count;i++)
+            for (var i=0;i<columnNames.Count;i++)
             {
                 worksheet.Cell(currentRow, i+1).Value = columnNames[i];
                 worksheet.Cell(currentRow, i+1).Style.Font.SetBold();
@@ -327,7 +308,7 @@ namespace Cargotruck.Server.Controllers
 
         //iTextSharp needed !!!
         [HttpGet]
-        public async Task<string> ExportToPdfAsync(string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        public async Task<string> ExportToPdfAsync(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var tasks = _context.Tasks.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
 
@@ -368,63 +349,28 @@ namespace Cargotruck.Server.Controllers
                 HorizontalAlignment = Element.ALIGN_CENTER
             };
 
-            var title = new Paragraph(15, lang == "hu" ? Cargotruck.Shared.Resources.Resource.Tasks : "Tasks")
+            var title = new Paragraph(15, _localizer["Tasks"].Value)
             {
                 Alignment = Element.ALIGN_CENTER
             };
 
+            //copy column names to a list based on language
+            CultureInfo.CurrentUICulture = lang;
+            List<string> columnNames = ColumnNames.GetTaskscolumnNames().Select(x => _localizer[x].Value).ToList();
 
             document.Add(title);
             document.Add(new Paragraph("\n"));
 
             if (tasks.Any())
             {
-                table.AddCell(new PdfPCell(new Phrase("Id", font1))
+                foreach (var name in columnNames.Take(column_number))
                 {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Partner : "Partner", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Description : "Description", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Place_of_receipt : "Place of receipt", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_receipt : "Time of receipt", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Place_of_delivery : "Place of delivery", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_delivery : "Time of delivery", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Other_stops : "other stops", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Id_cargo : "Id cargo", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-
+                    table.AddCell(new PdfPCell(new Phrase(name, font1))
+                    {
+                        HorizontalAlignment = Element.ALIGN_CENTER,
+                        VerticalAlignment = Element.ALIGN_MIDDLE
+                    });
+                }
 
                 foreach (TasksDto task in tasks)
                 {
@@ -497,51 +443,22 @@ namespace Cargotruck.Server.Controllers
 
                 document.Add(table);
                 document.Add(new Paragraph("\n"));
-                table2.AddCell(new PdfPCell(new Phrase("Id", font1))
+
+                table2.AddCell(new PdfPCell(new Phrase(_localizer["Id"].Value, font1))
                 {
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 });
-                table2.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Storage_time : "Storage time", font1))
+
+                foreach (var name in columnNames.Skip(column_number).Take(column_number))
                 {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-                table2.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Completed : "Completed", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-                table2.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Completion_time : "Completion time", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-                table2.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_delay : "Time of delay", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-                table2.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Payment : "Payment", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-                table2.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Final_Payment : "Final Payment", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-                table2.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Penalty : "Penalty", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-                table2.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
+                    table2.AddCell(new PdfPCell(new Phrase(name, font1))
+                    {
+                        HorizontalAlignment = Element.ALIGN_CENTER,
+                        VerticalAlignment = Element.ALIGN_MIDDLE
+                    });
+                }
+
                 table2.HeaderRows = 1;
 
 
@@ -618,7 +535,7 @@ namespace Cargotruck.Server.Controllers
             }
             else
             {
-                var noContent = new Paragraph(lang == "hu" ? "Nem található adat!" : "No content found!")
+                var noContent = new Paragraph(_localizer["No_records"])
                 {
                     Alignment = Element.ALIGN_CENTER
                 };
@@ -644,9 +561,8 @@ namespace Cargotruck.Server.Controllers
             return pdf;
         }
 
-        //iTextSharp needed !!!
         [HttpGet]
-        public async Task<string> ExportToCSVAsync(string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        public async Task<string> ExportToCSVAsync(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate, bool isTextDocument)
         {
             var tasks = _context.Tasks.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
 
@@ -656,46 +572,44 @@ namespace Cargotruck.Server.Controllers
             string filepath = "Files/" + filename + ".txt";
 
             StreamWriter txt = new(filepath);
-            txt.Write("Id" + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID") + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Partner : "Partner") + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Description : "Description") + "; ");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Place_of_receipt : "Place of receipt") + "; ");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_receipt : "Time of receipt") + "; ");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Place_of_delivery : "Place of delivery") + "; ");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_delivery : "Time of delivery") + "; ");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Other_stops : "other stops") + "; ");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Id_cargo : "Id cargo") + "; ");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Storage_time : "Storage time") + "; ");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Completed : "Completed") + "; ");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Completion_time : "Completion time") + "; ");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Time_of_delay : "Time of delay") + "; ");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Payment : "Payment") + "; ");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Final_Payment : "Final Payment") + "; ");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Penalty : "Penalty") + "; ");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date") + "; ");
+
+            //copy column names to a list based on language
+            CultureInfo.CurrentUICulture = lang;
+            List<string> columnNames = ColumnNames.GetTaskscolumnNames().Select(x => _localizer[x].Value).ToList();
+
+            string separator = isTextDocument ? "  " : ";";
+
+            foreach (var name in columnNames)
+            {
+               txt.Write(name + separator);  
+            }
             txt.Write("\n");
             
             foreach (var task in tasks)
             {
-                txt.Write(task.Id + ";");
-                txt.Write(task.Partner + ";");
-                txt.Write(task.Description + ";");
-                txt.Write(task.Place_of_receipt + ";");
-                txt.Write(task.Time_of_receipt + ";");
-                txt.Write(task.Place_of_delivery + ";");
-                txt.Write(task.Time_of_delivery + ";");
-                txt.Write(task.Other_stops + ";");
-                txt.Write(task.Id_cargo + ";");
-                txt.Write(task.Storage_time + ";");
-                txt.Write(task.Completed + ";");
-                txt.Write(task.Completion_time + ";");
-                txt.Write(task.Time_of_delay + ";");
-                txt.Write(task.Payment + (task.Payment != null ? " HUF" : "") + ";");
-                txt.Write(task.Final_Payment + (task.Final_Payment != null ? " HUF" : "") + ";");
-                txt.Write(task.Penalty + (task.Penalty != null ? " HUF" : "") + "; ");
-                txt.Write(task.Date + "; ");
+
+                string ifNull = isTextDocument ? " --- " : "";
+
+                txt.Write(task.Id + separator);
+                txt.Write((task.Partner ?? ifNull) + separator);
+                txt.Write((task.Description ?? ifNull) + separator);
+                txt.Write((task.Place_of_receipt ?? ifNull) + separator);
+                txt.Write((task.Time_of_receipt.ToString() ?? ifNull) + separator);
+                txt.Write((task.Place_of_delivery ?? ifNull) + separator);
+                txt.Write((task.Time_of_delivery.ToString() ?? ifNull) + separator);
+                txt.Write((task.Other_stops ?? ifNull) + separator);
+                txt.Write((task.Id_cargo.ToString() ?? ifNull) + separator);
+                txt.Write((task.Storage_time ?? ifNull) + separator);
+                txt.Write(task.Completed + separator);
+                txt.Write((task.Completion_time.ToString() ?? ifNull) + separator);
+                txt.Write((task.Time_of_delay ?? ifNull) + separator);
+                txt.Write((task.Payment + "HUF" ?? ifNull) + separator);
+                txt.Write((task.Final_Payment + "HUF" ?? ifNull) + separator);
+                txt.Write((task.Penalty + "HUF" ?? ifNull) + separator);
+                txt.Write(task.Date + separator);
+
                 txt.Write("\n");
+
             }
             txt.Close();
             txt.Dispose();
@@ -755,32 +669,14 @@ namespace Cargotruck.Server.Controllers
                             //Use the first row to add columns to DataTable with column names check.
                             if (firstRow)
                             {
-                                List<string?> titles = new() {
-                                     "Id",
-                                    _localizer["User_id"].Value,
-                                    _localizer["Partner"].Value,
-                                    _localizer["Description"].Value,
-                                    _localizer["Place_of_receipt"].Value,
-                                    _localizer["Time_of_receipt"].Value,
-                                    _localizer["Place_of_delivery"].Value,
-                                    _localizer["Time_of_delivery"].Value,
-                                    _localizer["Other_stops"].Value,
-                                    _localizer["Id_cargo"].Value,
-                                    _localizer["Storage_time"].Value,
-                                    _localizer["Completed"].Value,
-                                    _localizer["Completion_time"].Value,
-                                    _localizer["Time_of_delay"].Value,
-                                    _localizer["Payment"].Value,
-                                    _localizer["Final_Payment"].Value,
-                                    _localizer["Penalty"].Value,
-                                    _localizer["Date"].Value
-                                 };
+                                //copy column names to a list
+                                List<string> columnNames = ColumnNames.GetTaskscolumnNames().Select(x => _localizer[x].Value).ToList();
 
                                 foreach (IXLCell cell in row.Cells())
                                 {
-                                    if (titles.Contains(cell.Value.ToString()))
+                                    if (columnNames.Contains(cell.Value.ToString()!))
                                     {
-                                        titles.Remove(cell.Value.ToString());
+                                        columnNames.Remove(cell.Value.ToString()!);
                                         dt.Columns.Add(cell.Value.ToString());
                                     }
                                     else
@@ -792,12 +688,12 @@ namespace Cargotruck.Server.Controllers
 
                                 }
                                 firstRow = false;
-                                if (titles.Count == 0)
+                                if (columnNames.Count == 0)
                                 {
                                     haveColumns = true;
                                     l += 1;
                                 }
-                                else if (titles.Count == 1 && titles.Contains("Id"))
+                                else if (columnNames.Count == 1 && columnNames.Contains(_localizer["Id"].Value))
                                 {
                                     haveColumns = true;
                                 }

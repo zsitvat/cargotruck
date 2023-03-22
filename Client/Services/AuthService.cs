@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Net.Http.Json;
 
-namespace Cargotruck.Client.Services
+namespace Cargotruck.Client.UtilitiesClasses
 {
     public class AuthService : IAuthService
     {

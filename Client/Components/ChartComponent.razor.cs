@@ -8,13 +8,13 @@ using ChartJs.Blazor.BarChart;
 using ChartJs.Blazor.Util;
 using ChartJs.Blazor.BarChart.Axes;
 using ChartJs.Blazor.LineChart;
-using Cargotruck.Client.UtilitiesClasses;
+using Cargotruck.Client.Services;
 
 namespace Cargotruck.Client.Components
 {
     public partial class ChartComponent
     {
-        string lang = CultureInfo.CurrentCulture.Name;
+        readonly string lang = CultureInfo.CurrentCulture.Name;
         private BarConfig? _config1;
         private BarConfig? _config2;
         private LineConfig? _config3;
@@ -76,7 +76,7 @@ namespace Cargotruck.Client.Components
             foreach (string column in columns.Where(x => x != null && x != ""))
             {
                 string str = column;
-                str = char.ToUpper(str[0]) + str.Substring(1);
+                str = char.ToUpper(str[0]) + str[1..];
                 _config1.Data.Labels.Add(str);
             }
 
@@ -172,7 +172,7 @@ namespace Cargotruck.Client.Components
             foreach (string column in columns.Where(x => x != null && x != ""))
             {
                 string str = column;
-                str = char.ToUpper(str[0]) + str.Substring(1);
+                str = char.ToUpper(str[0]) + str[1..];
                 _config2.Data.Labels.Add(str);
             }
 
@@ -300,7 +300,7 @@ namespace Cargotruck.Client.Components
             foreach (string column in columns.Where(x => x != null && x != ""))
             {
                 string str = column;
-                str = char.ToUpper(str[0]) + str.Substring(1);
+                str = char.ToUpper(str[0]) + str[1..];
                 _config3.Data.Labels.Add(str);
             }
 
@@ -309,7 +309,7 @@ namespace Cargotruck.Client.Components
             {
                 var roads = await client.GetFromJsonAsync<Roads[]?>("api/roads/getroads");
                 var trucksVRN = roads?.DistinctBy(x => x.Vehicle_registration_number).ToList();
-                if (roads != null && trucksVRN != null && roads.Count() > 0 && trucksVRN.Count > 0)
+                if (roads != null && trucksVRN != null && roads.Length > 0 && trucksVRN.Count > 0)
                 {
                     int NumberOfTrucks = columnHeights.Length / 12;
                     for (int i = 0; i < NumberOfTrucks; i++)
@@ -335,7 +335,7 @@ namespace Cargotruck.Client.Components
                                 break;
                             default:
                                 //color picker
-                                Random rnd = new Random();
+                                Random rnd = new();
                                 colorChosen.AddRange(new[] { (byte)rnd.Next(255), (byte)rnd.Next(255), (byte)rnd.Next(255) });
                                 break;
                         //etc
@@ -409,7 +409,7 @@ namespace Cargotruck.Client.Components
             foreach (string column in columns.Where(x => x != null && x != ""))
             {
                 string str = column;
-                str = char.ToUpper(str[0]) + str.Substring(1);
+                str = char.ToUpper(str[0]) + str[1..];
                 _config4.Data.Labels.Add(str);
             }
 
@@ -422,7 +422,7 @@ namespace Cargotruck.Client.Components
 
             for (int i = 0; i < columnHeights?.Length; i++)
             {     
-                columnHeights[i] = CurrencyExchange.GetCurrency((int)columnHeights[i]!, CurrencyExchange.currency);
+                columnHeights[i] = currencyExchange.GetCurrency((int)columnHeights[i]!, currencyExchange.GetCurrencyType());
             }
 
             if (columnHeights != null)
