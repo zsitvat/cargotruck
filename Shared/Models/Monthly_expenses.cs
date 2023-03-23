@@ -12,12 +12,12 @@ namespace Cargotruck.Shared.Models
         public string? User_id { get; set; }
         [Display(Name = "Earning", ResourceType = typeof(Resource))]
         [Range(0, int.MaxValue, ErrorMessageResourceName = "OnlyPositive", ErrorMessageResourceType = typeof(Resource))]
-        public int? Earning { get; set; } = 0;
+        public long? Earning { get; set; } = 0;
         [Display(Name = "Expense", ResourceType = typeof(Resource))]
         [Range(0, int.MaxValue, ErrorMessageResourceName = "OnlyPositive", ErrorMessageResourceType = typeof(Resource))]
-        public int? Expense { get; set; } = 0;
+        public long? Expense { get; set; } = 0;
         [Display(Name = "Profit", ResourceType = typeof(Resource))]
-        public int? Profit { get; set; } = 0;
+        public long? Profit { get; set; } = 0;
         [Display(Name = "Date", ResourceType = typeof(Resource))]
         public DateTime Date { get; set; } = DateTime.Now;
 

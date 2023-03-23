@@ -1,5 +1,5 @@
 ﻿@page "/Trucks"
-@using Cargotruck.Client.Components
+
 
 <h3>@localizer["Trucks"]</h3>
 <div class="form-group buttons">
@@ -14,10 +14,10 @@
         @if (expandExportMenu)
         {
             <ul class="nav flex-column export-buttons">
-                <button data-title="@localizer["excel"]" class="btn" @onclick="@(() =>FileDownload.ExportAsync("Trucks","xlsx",dateFilter, client, js))"><span class="icon iconify" data-icon="file-icons:microsoft-excel" />XLSX</button>
-                <button data-title="@localizer["pdf"]" class="btn" @onclick="@(() =>FileDownload.ExportAsync("Trucks","pdf",dateFilter, client, js))"><span class="icon iconify" data-icon="bi:filetype-pdf" />PDF</button>
-                <button data-title="@localizer["txt"]" class="btn" @onclick="@(() =>FileDownload.ExportAsync("Trucks","txt",dateFilter, client, js))"><span class="icon iconify" data-icon="bi:filetype-txt" />TXT</button>
-                <button data-title="@localizer["csv"]" class="btn" @onclick="@(() =>FileDownload.ExportAsync("Trucks","csv",dateFilter, client, js))"><span class="icon iconify" data-icon="bi:filetype-csv" />CSV</button>
+                <button data-title="@localizer["excel"]" class="btn" @onclick="@(() =>fileDownload.ExportAsync("Trucks","xlsx",dateFilter, client, js))"><span class="icon iconify" data-icon="file-icons:microsoft-excel" />XLSX</button>
+                <button data-title="@localizer["pdf"]" class="btn" @onclick="@(() =>fileDownload.ExportAsync("Trucks","pdf",dateFilter, client, js))"><span class="icon iconify" data-icon="bi:filetype-pdf" />PDF</button>
+                <button data-title="@localizer["txt"]" class="btn" @onclick="@(() =>fileDownload.ExportAsync("Trucks","txt",dateFilter, client, js))"><span class="icon iconify" data-icon="bi:filetype-txt" />TXT</button>
+                <button data-title="@localizer["csv"]" class="btn" @onclick="@(() =>fileDownload.ExportAsync("Trucks","csv",dateFilter, client, js))"><span class="icon iconify" data-icon="bi:filetype-csv" />CSV</button>
             </ul>
         }
     </li>
@@ -60,9 +60,9 @@
 </div>
 <br>
 
-@if (FileDownload.DocumentError != null && FileDownload.DocumentError != "")
+@if (fileDownload.DocumentError != null && fileDownload.DocumentError != "")
 {
-    <p class="error">@FileDownload.DocumentError</p>
+    <p class="error">@fileDownload.DocumentError</p>
 }
 
 @if (Trucks == null)

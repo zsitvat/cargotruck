@@ -2,7 +2,7 @@
 {
     public interface ICurrencyExchange
     {
-        float? GetCurrency(int? amount, string currency);
+        float? GetCurrency(long? amount, string currency);
         DateTime GetCurrencyApiDate();
         string GetCurrencyType();
         Task<DateTime> GetNextCurrencyApiDateAsync(HttpClient client);

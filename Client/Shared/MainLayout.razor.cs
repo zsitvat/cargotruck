@@ -3,7 +3,6 @@ using System.Net.Http.Json;
 using Microsoft.AspNetCore.Components.Authorization;
 using Cargotruck.Shared.Models;
 using Cargotruck.Client.UtilitiesClasses;
-using Cargotruck.Client.Services;
 
 namespace Cargotruck.Client.Shared
 {

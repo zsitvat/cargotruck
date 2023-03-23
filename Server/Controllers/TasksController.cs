@@ -281,23 +281,22 @@ namespace Cargotruck.Server.Controllers
             {
                 currentRow++;
                 worksheet.Cell(currentRow, 1).Value = task.Id;
-                worksheet.Cell(currentRow, 2).Value = task.User_id;
-                worksheet.Cell(currentRow, 3).Value = task.Partner;
-                worksheet.Cell(currentRow, 4).Value = task.Description;
-                worksheet.Cell(currentRow, 5).Value = task.Place_of_receipt;
-                worksheet.Cell(currentRow, 6).Value = task.Time_of_receipt;
-                worksheet.Cell(currentRow, 7).Value = task.Place_of_delivery;
-                worksheet.Cell(currentRow, 8).Value = task.Time_of_delivery;
-                worksheet.Cell(currentRow, 9).Value = task.Other_stops;
-                worksheet.Cell(currentRow, 10).Value = task.Id_cargo;
-                worksheet.Cell(currentRow, 11).Value = task.Storage_time;
-                worksheet.Cell(currentRow, 12).Value = task.Completed;
-                worksheet.Cell(currentRow, 13).Value = task.Completion_time;
-                worksheet.Cell(currentRow, 14).Value = task.Time_of_delay;
-                worksheet.Cell(currentRow, 15).Value = task.Payment + (task.Payment != null ? " HUF" : "");
-                worksheet.Cell(currentRow, 16).Value = task.Final_Payment + (task.Final_Payment != null ? " HUF" : "");
-                worksheet.Cell(currentRow, 17).Value = task.Penalty + (task.Penalty != null ? " HUF" : "");
-                worksheet.Cell(currentRow, 18).Value = task.Date;
+                worksheet.Cell(currentRow, 2).Value = task.Partner;
+                worksheet.Cell(currentRow, 3).Value = task.Description;
+                worksheet.Cell(currentRow, 4).Value = task.Place_of_receipt;
+                worksheet.Cell(currentRow, 5).Value = task.Time_of_receipt;
+                worksheet.Cell(currentRow, 6).Value = task.Place_of_delivery;
+                worksheet.Cell(currentRow, 7).Value = task.Time_of_delivery;
+                worksheet.Cell(currentRow, 8).Value = task.Other_stops;
+                worksheet.Cell(currentRow, 9).Value = task.Id_cargo;
+                worksheet.Cell(currentRow, 10).Value = task.Storage_time;
+                worksheet.Cell(currentRow, 11).Value = task.Completed;
+                worksheet.Cell(currentRow, 12).Value = task.Completion_time;
+                worksheet.Cell(currentRow, 13).Value = task.Time_of_delay;
+                worksheet.Cell(currentRow, 14).Value = task.Payment + (task.Payment != null ? " HUF" : "");
+                worksheet.Cell(currentRow, 15).Value = task.Final_Payment + (task.Final_Payment != null ? " HUF" : "");
+                worksheet.Cell(currentRow, 16).Value = task.Penalty + (task.Penalty != null ? " HUF" : "");
+                worksheet.Cell(currentRow, 17).Value = task.Date;
             }
 
             using var stream = new MemoryStream();
@@ -349,14 +348,16 @@ namespace Cargotruck.Server.Controllers
                 HorizontalAlignment = Element.ALIGN_CENTER
             };
 
-            var title = new Paragraph(15, _localizer["Tasks"].Value)
-            {
-                Alignment = Element.ALIGN_CENTER
-            };
+          
 
             //copy column names to a list based on language
             CultureInfo.CurrentUICulture = lang;
             List<string> columnNames = ColumnNames.GetTaskscolumnNames().Select(x => _localizer[x].Value).ToList();
+
+            var title = new Paragraph(15, _localizer["Tasks"].Value)
+            {
+                Alignment = Element.ALIGN_CENTER
+            };
 
             document.Add(title);
             document.Add(new Paragraph("\n"));
@@ -372,7 +373,7 @@ namespace Cargotruck.Server.Controllers
                     });
                 }
 
-                foreach (TasksDto task in tasks)
+                foreach (Tasks task in tasks)
                 {
                     var s = "";
                     if (!string.IsNullOrEmpty(task.Id.ToString())) { s = task.Id.ToString(); }
@@ -462,7 +463,7 @@ namespace Cargotruck.Server.Controllers
                 table2.HeaderRows = 1;
 
 
-                foreach (TasksDto task in tasks)
+                foreach (Tasks task in tasks)
                 {
                     var s = "";
                     if (!string.IsNullOrEmpty(task.Id.ToString())) { s = task.Id.ToString(); }
@@ -578,6 +579,7 @@ namespace Cargotruck.Server.Controllers
             List<string> columnNames = ColumnNames.GetTaskscolumnNames().Select(x => _localizer[x].Value).ToList();
 
             string separator = isTextDocument ? "  " : ";";
+            string ifNull = isTextDocument ? " --- " : "";
 
             foreach (var name in columnNames)
             {
@@ -587,8 +589,6 @@ namespace Cargotruck.Server.Controllers
             
             foreach (var task in tasks)
             {
-
-                string ifNull = isTextDocument ? " --- " : "";
 
                 txt.Write(task.Id + separator);
                 txt.Write((task.Partner ?? ifNull) + separator);
@@ -641,7 +641,6 @@ namespace Cargotruck.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> ImportAsync([FromBody]string file, CultureInfo lang)
         {
-            CultureInfo.CurrentUICulture = lang;
             var error = "";
             var haveColumns = false;
 
@@ -670,6 +669,7 @@ namespace Cargotruck.Server.Controllers
                             if (firstRow)
                             {
                                 //copy column names to a list
+                                CultureInfo.CurrentUICulture = lang;
                                 List<string> columnNames = ColumnNames.GetTaskscolumnNames().Select(x => _localizer[x].Value).ToList();
 
                                 foreach (IXLCell cell in row.Cells())
@@ -714,31 +714,31 @@ namespace Cargotruck.Server.Controllers
                                     }
                                 }
 
-                                list[l + 13] = new String(list[l + 13]?.ToString()?.Where(Char.IsDigit).ToArray());
-                                list[l + 14] = new String(list[l + 14]?.ToString()?.Where(Char.IsDigit).ToArray());
-                                list[l + 15] = new String(list[l + 15]?.ToString()?.Where(Char.IsDigit).ToArray());
+                                list[l + 12] = new String(list[l + 13]?.ToString()?.Where(Char.IsDigit).ToArray());
+                                list[l + 13] = new String(list[l + 14]?.ToString()?.Where(Char.IsDigit).ToArray());
+                                list[l + 14] = new String(list[l + 15]?.ToString()?.Where(Char.IsDigit).ToArray());
 
                                 if (nulls != list.Count)
                                 {
                                     var sql = @"Insert Into Tasks (User_id,Partner,Description,Place_of_receipt,Time_of_receipt,Place_of_delivery,Time_of_delivery,Other_stops,Id_cargo,Storage_time,Completed,Completion_time,Time_of_delay,Payment,Final_Payment,Penalty,Date ) 
                                         Values (@User_id,@Partner,@Description,@Place_of_receipt,@Time_of_receipt, @Place_of_delivery,@Time_of_delivery,@Other_stops,@Id_cargo,@Storage_time,@Completed,@Completion_time,@Time_of_delay,@Payment,@Final_Payment,@Penalty,@Date)";
                                     var insert = await _context.Database.ExecuteSqlRawAsync(sql,
-                                        new SqlParameter("@User_id", list[l]),
-                                        new SqlParameter("@Partner", list[l + 1]),
-                                        new SqlParameter("@Description", list[l + 2]),
-                                        new SqlParameter("@Place_of_receipt", list[l + 3]),
-                                        new SqlParameter("@Time_of_receipt", list[l + 4] == System.DBNull.Value || list[l + 4] == null ? System.DBNull.Value : DateTime.Parse(list[l + 4]?.ToString()!)),
-                                        new SqlParameter("@Place_of_delivery", list[l + 5]),
-                                        new SqlParameter("@Time_of_delivery", list[l + 6] == System.DBNull.Value || list[l + 6] == null ? System.DBNull.Value : DateTime.Parse(list[l + 6]?.ToString()!)),
-                                        new SqlParameter("@Other_stops", list[l + 7]),
-                                        new SqlParameter("@Id_cargo", list[l + 8]),
-                                        new SqlParameter("@Storage_time", list[l + 9]),
-                                        new SqlParameter("@Completed", list[l + 10]),
-                                        new SqlParameter("@Completion_time", list[l + 11]),
-                                        new SqlParameter("@Time_of_delay", list[l + 12]),
-                                        new SqlParameter("@Payment", list[l + 13]),
-                                        new SqlParameter("@Final_Payment", list[l + 14]),
-                                        new SqlParameter("@Penalty", list[l + 15]),
+                                        new SqlParameter("@User_id", "Imported"),
+                                        new SqlParameter("@Partner", list[l]),
+                                        new SqlParameter("@Description", list[l + 1]),
+                                        new SqlParameter("@Place_of_receipt", list[l + 2]),
+                                        new SqlParameter("@Time_of_receipt", list[l + 3] == System.DBNull.Value || list[l + 3] == null ? System.DBNull.Value : DateTime.Parse(list[l + 3]?.ToString()!)),
+                                        new SqlParameter("@Place_of_delivery", list[l + 4]),
+                                        new SqlParameter("@Time_of_delivery", list[l + 5] == System.DBNull.Value || list[l + 5] == null ? System.DBNull.Value : DateTime.Parse(list[l + 5]?.ToString()!)),
+                                        new SqlParameter("@Other_stops", list[l + 6]),
+                                        new SqlParameter("@Id_cargo", list[l + 7]),
+                                        new SqlParameter("@Storage_time", list[l + 8]),
+                                        new SqlParameter("@Completed", list[l + 9]),
+                                        new SqlParameter("@Completion_time", list[l + 10]),
+                                        new SqlParameter("@Time_of_delay", list[l + 11]),
+                                        new SqlParameter("@Payment", list[l + 12]),
+                                        new SqlParameter("@Final_Payment", list[l + 13]),
+                                        new SqlParameter("@Penalty", list[l + 14]),
                                         new SqlParameter("@Date", DateTime.Now)
                                         );
 

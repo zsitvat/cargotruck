@@ -5,14 +5,14 @@ using Microsoft.Extensions.Localization;
 using Microsoft.JSInterop;
 using System.Globalization;
 
-namespace Cargotruck.Client.UtilitiesClasses
+namespace Cargotruck.Client.Services
 {
-    public class FileDownload
+    public class FileDownload : IFileDownload
     {
         [Inject] public static IStringLocalizer<Resource>? Localizer { get; set; }
-        public static string? DocumentError { get; set; } = null;
+        public string? DocumentError { get; set; } = null;
 
-        public static async Task ExportAsync(string page, string documentExtension, DateFilter? dateFilter, HttpClient? client, IJSRuntime? js)
+        public async Task ExportAsync(string page, string documentExtension, DateFilter? dateFilter, HttpClient? client, IJSRuntime? js)
         {
             //get base64 string from web api call
             string action;
@@ -38,7 +38,7 @@ namespace Cargotruck.Client.UtilitiesClasses
 
             if (Response.IsSuccessStatusCode)
             {
-                var base64String = await Response.Content.ReadAsStringAsync(); 
+                var base64String = await Response.Content.ReadAsStringAsync();
 
                 Random rnd = new();
                 int random = rnd.Next(1000000, 9999999);

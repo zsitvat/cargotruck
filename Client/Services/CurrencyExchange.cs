@@ -45,7 +45,7 @@ namespace Cargotruck.Client.Services
             }
         }
 
-        public float? GetCurrency(int? amount, string currency)
+        public float? GetCurrency(long? amount, string currency)
         {
             float? conversionNum = amount;
             if (Rates != null && currency != "HUF")

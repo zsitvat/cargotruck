@@ -9,7 +9,7 @@ namespace Cargotruck.Server.Data
         private static readonly List<string> TasksColumnNames;
         private static readonly List<string> CargoesColumnNames;
         private static readonly List<string> ExpensesColumnNames;
-        private static readonly List<string> MonthlyColumnNames;
+        private static readonly List<string> MonthlyExpensesColumnNames;
         private static readonly List<string> RoadsColumnNames;
         private static readonly List<string> TrucksColumnNames;
         private static readonly List<string> WarehousessColumnNames;
@@ -38,28 +38,86 @@ namespace Cargotruck.Server.Data
             };
 
             CargoesColumnNames = new List<string>
-            { 
-                "Id", 
+            {
+                "Id",
+                "User_id",
+                "Task_id",
+                "Weight",
+                "Description",
+                "Delivery_requirements",
+                "Vehicle_registration_number",
+                "Warehouse_id",
+                "Warehouse_section",
+                "Storage_starting_time",
+                "Date"
             };
             ExpensesColumnNames = new List<string>
             {
-                "Id",
+                 "Id",
+                 "User_id",
+                 "Type",
+                 "Type_id",
+                 "Fuel",
+                 "Road_fees",
+                 "Penalty",
+                 "Driver_spending",
+                 "Driver_salary",
+                 "Repair_cost",
+                 "Repair_description",
+                 "Cost_of_storage",
+                 "other",
+                 "Total_amount",
+                 "Date"
             };
-            MonthlyColumnNames = new List<string>
+            MonthlyExpensesColumnNames = new List<string>
             {
                 "Id",
+                "Month",
+                "User_id",
+                "Earning",
+                "Expense",
+                "vProfit",
+                "Expense_id",
+                "Task_id",
+                "Date"
             };
             RoadsColumnNames = new List<string>
             {
-                "Id",
+                 "Id",
+                "User_id",
+                "Task_id",
+                "Vehicle_registration_number",
+                "Id_cargo",
+                "Purpose_of_the_trip",
+                "Starting_date",
+                "Ending_date",
+                "Starting_place",
+                "Ending_place",
+                "Direction",
+                "Distance",
+                "Fuel",
+                "Expenses_id",
+                "Date"
             };
             TrucksColumnNames = new List<string>
             {
-                "Id",
+                 "Id",
+                 "User_id",
+                 "Vehicle_registration_number",
+                 "Brand",
+                 "Status",
+                 "Road_id",
+                 "Max_weight",
+                 "Date"
             };
             WarehousessColumnNames = new List<string>
             {
-                "Id",
+                  "Id",
+                "User_id",
+                 "Address",
+                 "Owner",
+                 "Cargo_id",
+                 "Date"
             };
         }
 
@@ -80,7 +138,7 @@ namespace Cargotruck.Server.Data
 
         public static List<string> GetMonthlyExpensescolumnNames()
         {
-            return MonthlyColumnNames;
+            return MonthlyExpensesColumnNames;
         }
 
         public static List<string> GetRoadscolumnNames()

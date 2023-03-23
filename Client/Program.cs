@@ -15,13 +15,18 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
 builder.Services.AddLocalization();
+
 builder.Services.AddOptions();
+
 builder.Services.AddAuthorizationCore();
+
 builder.Services.AddScoped<CustomStateProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider>(s => s.GetRequiredService<CustomStateProvider>());
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<PageHistoryState>(); //back to prievouse page
 builder.Services.AddSingleton<ICurrencyExchange, CurrencyExchange>();
+builder.Services.AddSingleton<IFileDownload, FileDownload>();
+
 builder.Services.AddBlazoredSessionStorage();
 
 var host = builder.Build();

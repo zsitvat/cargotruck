@@ -41,11 +41,11 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
             if (checkData.IsSuccessStatusCode)
             {
                 await ShowPageAsync();
-                FileDownload.DocumentError = "";
+                fileDownload.DocumentError = "";
             }
             else
             {
-                FileDownload.DocumentError = localizer["CheckFailed"];
+                fileDownload.DocumentError = localizer["CheckFailed"];
             }
         }
 
