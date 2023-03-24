@@ -367,13 +367,6 @@ namespace Cargotruck.Server.Controllers
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(cargo?.Vehicle_registration_number?.ToString())) { s = cargo.Vehicle_registration_number.ToString(); }
-                    else { s = "-"; }
-                    table.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
-                    {
-                        HorizontalAlignment = Element.ALIGN_CENTER,
-                        VerticalAlignment = Element.ALIGN_MIDDLE
-                    });
                     pdfRowIndex++;
                 }
 
@@ -388,11 +381,21 @@ namespace Cargotruck.Server.Controllers
 
                 foreach (var name in columnNames.Skip(column_number).Take(column_number))
                 {
-                    table2.AddCell(new PdfPCell(new Phrase(name, font1))
+                    if (name == _localizer["Warehouse_id"]) {
+                        table2.AddCell(new PdfPCell(new Phrase(name+"/"+ _localizer["W_section"], font1))
+                        {
+                            HorizontalAlignment = Element.ALIGN_CENTER,
+                            VerticalAlignment = Element.ALIGN_MIDDLE
+                        });
+                    }
+                    else if (name != _localizer["Warehouse_section"] && name != _localizer["Warehouse_id"])
                     {
-                        HorizontalAlignment = Element.ALIGN_CENTER,
-                        VerticalAlignment = Element.ALIGN_MIDDLE
-                    });
+                        table2.AddCell(new PdfPCell(new Phrase(name, font1))
+                        {
+                            HorizontalAlignment = Element.ALIGN_CENTER,
+                            VerticalAlignment = Element.ALIGN_MIDDLE
+                        });
+                    }
                 }
 
                 table2.HeaderRows = 1;
@@ -408,28 +411,28 @@ namespace Cargotruck.Server.Controllers
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(cargo.Warehouse_id.ToString())) { s = cargo.Warehouse_id.ToString(); }
+                    if (!string.IsNullOrEmpty(cargo?.Vehicle_registration_number?.ToString())) { s = cargo.Vehicle_registration_number.ToString(); }
                     else { s = "-"; }
                     table2.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(cargo.Warehouse_section)) { s = cargo.Warehouse_section.ToString(); }
+                    if (!string.IsNullOrEmpty(cargo?.Warehouse_id.ToString())) { s = cargo.Warehouse_id.ToString() +"/" + cargo.Warehouse_section; }
                     else { s = "-"; }
                     table2.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(cargo.Storage_starting_time.ToString())) { s = cargo.Storage_starting_time.ToString(); }
+                    if (!string.IsNullOrEmpty(cargo?.Storage_starting_time.ToString())) { s = cargo.Storage_starting_time.ToString(); }
                     else { s = "-"; }
                     table2.AddCell(new PdfPCell(new Phrase(s?.ToString() == "TO" ? _localizer["to"] : _localizer["from"], font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(cargo.Date.ToString())) { s = cargo.Date.ToString(); }
+                    if (!string.IsNullOrEmpty(cargo?.Date.ToString())) { s = cargo.Date.ToString(); }
                     else { s = "-"; }
                     table2.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
@@ -483,18 +486,17 @@ namespace Cargotruck.Server.Controllers
             CultureInfo.CurrentUICulture = lang;
             List<string> columnNames = _columnNameLists.GetCargoesColumnNames().Select(x => _localizer[x].Value).ToList();
 
-            string separator = isTextDocument ? "  " : ";";
+            string separator = isTextDocument ? "\t" : ";";
             string ifNull = isTextDocument ? " --- " : "";
 
             foreach (var name in columnNames)
             {
-                txt.Write(name + separator);
+                txt.Write(name + "  ");
             }
             txt.Write("\n");
 
             foreach (var cargo in cargoes)
             {
-
                 txt.Write((cargo.Id + separator));
                 txt.Write((cargo.Task_id != null ? cargo.Task_id : ifNull) + separator);
                 txt.Write((cargo.Weight ?? ifNull) + separator);

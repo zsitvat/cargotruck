@@ -164,7 +164,7 @@ namespace Cargotruck.Server.Controllers
                 {
                     if (cargo.Warehouse_id == warehouse.Id)
                     {
-                        cellValue = "[" + cargo.Id + "/" + cargo.Warehouse_section + "]";
+                        cellValue = "[" + cargo.Id + (cargo.Warehouse_section!=null ? "/" : "") + cargo.Warehouse_section + "]";
                     }
                 }
 
@@ -267,13 +267,14 @@ namespace Cargotruck.Server.Controllers
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
+                    s = "";
                     if (cargoes != null)
                     {
                         foreach (Cargoes cargo in cargoes)
                         {
                             if (cargo.Warehouse_id == warehouse.Id)
                             {
-                                s = (s + "[" + cargo.Id + "/" + cargo.Warehouse_section + "]");
+                                s = (s + "[" + cargo.Id + (cargo.Warehouse_section != null ? "/" : "") + cargo.Warehouse_section + "]");
                             }
                         }
                     }
@@ -338,7 +339,7 @@ namespace Cargotruck.Server.Controllers
             CultureInfo.CurrentUICulture = lang;
             List<string> columnNames = _columnNameLists.GetWarehousesColumnNames().Select(x => _localizer[x].Value).ToList();
 
-            string separator = isTextDocument ? "  " : ";";
+            string separator = isTextDocument ? "\t" : ";";
             string ifNull = isTextDocument ? " --- " : "";
 
             foreach (var name in columnNames)
@@ -358,7 +359,7 @@ namespace Cargotruck.Server.Controllers
                     {
                         if (cargo.Warehouse_id == warehouse.Id)
                         {
-                            txt.Write("[" + cargo.Id + "/" + cargo.Warehouse_section + "]");
+                            txt.Write("[" + cargo.Id + (cargo.Warehouse_section != null ? "/" : "") + cargo.Warehouse_section + "]");
                         }
                     }
                 }
@@ -492,7 +493,7 @@ namespace Cargotruck.Server.Controllers
 
                                     if (substrings != null)
                                     {
-                                        for (int s = 0; s < substrings.Length - 1; ++s)
+                                        for (int s = 0; s < (substrings.Length > 0 ? substrings.Length - 1 : 0); ++s)
                                         {
                                             var CargoId = substrings[s][1..substrings[s].IndexOf("/")];
                                             var warehouseSection = substrings[s].Substring(substrings[s].IndexOf("/") + 1);

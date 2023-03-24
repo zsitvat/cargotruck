@@ -548,7 +548,7 @@ namespace Cargotruck.Server.Controllers
             CultureInfo.CurrentUICulture = lang;
             List<string> columnNames = _columnNameLists.GetMonthlyExpensesColumnNames().Select(x => _localizer[x].Value).ToList();
 
-            string separator = isTextDocument ? "  " : ";";
+            string separator = isTextDocument ? "\t" : ";";
             string ifNull = isTextDocument ? " --- " : "";
 
             foreach (var name in columnNames)
@@ -563,9 +563,9 @@ namespace Cargotruck.Server.Controllers
                 var s = "";
                 txt.Write(monthly_expense.Monthly_expense_id + separator);
                 txt.Write(monthly_expense.Date.Month + separator);
-                txt.Write(monthly_expense.Earning != null ? monthly_expense.Earning : ifNull + separator);
-                txt.Write(monthly_expense.Expense != null ? monthly_expense.Expense : ifNull + separator);
-                txt.Write(monthly_expense.Profit != null ? monthly_expense.Profit : ifNull + separator);
+                txt.Write((monthly_expense.Earning != null ? monthly_expense.Earning : ifNull) + separator);
+                txt.Write((monthly_expense.Expense != null ? monthly_expense.Expense : ifNull) + separator);
+                txt.Write((monthly_expense.Profit != null ? monthly_expense.Profit : ifNull) + separator);
                 s = "";
                 foreach (var row in Monthly_expenses_tasks_expenses.Where(x => x.Monthly_expense_id == monthly_expense.Monthly_expense_id && x.Expense_id != null))
                 {

@@ -3,9 +3,4 @@
   <PropertyGroup>
     <_LastSelectedProfileId>F:\Szakdoga app\Cargotruck\Shared\Properties\PublishProfiles\FolderProfile.pubxml</_LastSelectedProfileId>
   </PropertyGroup>
-  <ItemGroup>
-    <EmbeddedResource Update="Resources\Resource.en.resx">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
 </Project>

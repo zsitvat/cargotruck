@@ -580,12 +580,12 @@ namespace Cargotruck.Server.Controllers
             CultureInfo.CurrentUICulture = lang;
             List<string> columnNames = _columnNameLists.GetTasksColumnNames().Select(x => _localizer[x].Value).ToList();
 
-            string separator = isTextDocument ? "  " : ";";
+            string separator = isTextDocument ? "\t" : ";";
             string ifNull = isTextDocument ? " --- " : "";
 
             foreach (var name in columnNames)
             {
-               txt.Write(name + separator);  
+               txt.Write(name + "  ");  
             }
 
             txt.Write("\n");

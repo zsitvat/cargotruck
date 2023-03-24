@@ -73,7 +73,7 @@ namespace Cargotruck.Server.Services
                 "Month",
                 "Earning",
                 "Expense",
-                "vProfit",
+                "Profit",
                 "Expense_id",
                 "Task_id",
                 "Date"
@@ -81,7 +81,6 @@ namespace Cargotruck.Server.Services
             RoadsColumnNames = new List<string>
             {
                 "Id",
-                "User_id",
                 "Task_id",
                 "Vehicle_registration_number",
                 "Id_cargo",

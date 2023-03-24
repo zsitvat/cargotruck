@@ -2491,6 +2491,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Szekció.
+        /// </summary>
+        public static string W_section {
+            get {
+                return ResourceManager.GetString("W_section", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Raktár.
         /// </summary>
         public static string Warehouse {

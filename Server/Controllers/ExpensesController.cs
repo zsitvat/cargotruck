@@ -293,7 +293,7 @@ namespace Cargotruck.Server.Controllers
 
             //copy column names to a list based on language
             CultureInfo.CurrentUICulture = lang;
-            List<string> columnNames = _columnNameLists.GetExpensesColumnNames().Select(x => _localizer[x].Value).ToList();
+            List<string> columnNames = _columnNameLists.GetExpensesColumnNames().Where(x=> x!= "Repair_description").Select(x => _localizer[x].Value).ToList();
 
             var title = new Paragraph(15, _localizer["Expenses"].Value)
             {
@@ -415,13 +415,6 @@ namespace Cargotruck.Server.Controllers
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(expense.Repair_description)) { s = expense.Repair_description.ToString() + " HUF"; }
-                    else { s = "-"; }
-                    table2.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
-                    {
-                        HorizontalAlignment = Element.ALIGN_CENTER,
-                        VerticalAlignment = Element.ALIGN_MIDDLE
-                    });
                     if (!string.IsNullOrEmpty(expense.Cost_of_storage.ToString())) { s = expense.Cost_of_storage.ToString() + " HUF"; }
                     else { s = "-"; }
                     table2.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
@@ -430,6 +423,13 @@ namespace Cargotruck.Server.Controllers
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
                     if (!string.IsNullOrEmpty(expense.Other.ToString())) { s = expense.Other.ToString() + " HUF"; }
+                    else { s = "-"; }
+                    table2.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
+                    {
+                        HorizontalAlignment = Element.ALIGN_CENTER,
+                        VerticalAlignment = Element.ALIGN_MIDDLE
+                    });
+                    if (!string.IsNullOrEmpty(expense.Other.ToString())) { s = expense.Total_amount.ToString() + " HUF"; }
                     else { s = "-"; }
                     table2.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
@@ -487,9 +487,9 @@ namespace Cargotruck.Server.Controllers
             StreamWriter txt = new(filepath);
             //copy column names to a list based on language
             CultureInfo.CurrentUICulture = lang;
-            List<string> columnNames = _columnNameLists.GetTasksColumnNames().Select(x => _localizer[x].Value).ToList();
+            List<string> columnNames = _columnNameLists.GetExpensesColumnNames().Select(x => _localizer[x].Value).ToList();
 
-            string separator = isTextDocument ? "  " : ";";
+            string separator = isTextDocument ? "\t" : ";";
             string ifNull = isTextDocument ? " --- " : "";
 
             foreach (var name in columnNames)
@@ -513,6 +513,7 @@ namespace Cargotruck.Server.Controllers
                 txt.Write((expense.Repair_description != null ? expense.Repair_description : ifNull) + separator);
                 txt.Write(expense.Cost_of_storage + (expense.Cost_of_storage != null ? " HUF" : ifNull) + separator);
                 txt.Write(expense.Other + (expense.Other != null ? " HUF" : ifNull) + separator);
+                txt.Write(expense.Other + (expense.Total_amount != null ? " HUF" : ifNull) + separator);
                 txt.Write(expense.Date + separator);
                 txt.Write("\n");
             }
@@ -575,7 +576,7 @@ namespace Cargotruck.Server.Controllers
                             {
                                 //copy column names to a list
                                 CultureInfo.CurrentUICulture = lang;
-                                List<string> columnNames = _columnNameLists.GetTasksColumnNames().Select(x => _localizer[x].Value).ToList();
+                                List<string> columnNames = _columnNameLists.GetExpensesColumnNames().Select(x => _localizer[x].Value).ToList();
 
                                 foreach (IXLCell cell in row.Cells())
                                 {
@@ -698,9 +699,11 @@ namespace Cargotruck.Server.Controllers
                                                         {
                                                             item.Type_id = null;
                                                         }
-                                                        _context.Remove(item);
-                                                        await _context.SaveChangesAsync();
-                                                        error += "\n" + _localizer["Deleted_wrong_id"] + " " +lastId.Id + ".";
+                                                        if(item.Type_id == null){ 
+                                                            _context.Remove(item);
+                                                            await _context.SaveChangesAsync();
+                                                            error += "\n" + _localizer["Deleted_wrong_id"] + " " +lastId.Id + ".";
+                                                        }
                                                     }
                                                 }
                                             }

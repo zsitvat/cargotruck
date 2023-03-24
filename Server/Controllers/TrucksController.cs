@@ -365,7 +365,7 @@ namespace Cargotruck.Server.Controllers
             CultureInfo.CurrentUICulture = lang;
             List<string> columnNames = _columnNameLists.GetTrucksColumnNames().Select(x => _localizer[x].Value).ToList();
 
-            string separator = isTextDocument ? "  " : ";";
+            string separator = isTextDocument ? "\t" : ";";
             string ifNull = isTextDocument ? " --- " : "";
 
             foreach (var name in columnNames)
@@ -445,7 +445,7 @@ namespace Cargotruck.Server.Controllers
                             {
                                 //copy column names to a list
                                 CultureInfo.CurrentUICulture = lang;
-                                List<string> columnNames = _columnNameLists.GetTasksColumnNames().Select(x => _localizer[x].Value).ToList();
+                                List<string> columnNames = _columnNameLists.GetTrucksColumnNames().Select(x => _localizer[x].Value).ToList();
 
                                 foreach (IXLCell cell in row.Cells())
                                 {

@@ -966,6 +966,9 @@
   <data name="Weight_is_height" xml:space="preserve">
     <value>The weight is higher than the trucks's max weight.</value>
   </data>
+  <data name="W_section" xml:space="preserve">
+    <value>Section</value>
+  </data>
   <data name="Year" xml:space="preserve">
     <value>Year</value>
   </data>

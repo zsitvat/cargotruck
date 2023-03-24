@@ -229,7 +229,7 @@ namespace Cargotruck.Server.Controllers
             var currentRow = 1;
 
             CultureInfo.CurrentUICulture = lang;
-            List<string> columnNames = _columnNameLists.GetRoadsColumnNames().Where(x => x != "User_id").Select(x => _localizer[x].Value).ToList();
+            List<string> columnNames = _columnNameLists.GetRoadsColumnNames().Where(x=>x != "User_id").Select(x => _localizer[x].Value).ToList();
 
             for (var i = 0; i < columnNames.Count; i++)
             {
@@ -308,7 +308,7 @@ namespace Cargotruck.Server.Controllers
 
             //copy column names to a list based on language
             CultureInfo.CurrentUICulture = lang;
-            List<string> columnNames = _columnNameLists.GetRoadsColumnNames().Select(x => _localizer[x].Value).ToList();
+            List<string> columnNames = _columnNameLists.GetRoadsColumnNames().Where(x=> x != "Expenses_id").Select(x => _localizer[x].Value).ToList();
 
             var title = new Paragraph(15, _localizer["Roads"].Value)
             {
@@ -333,13 +333,6 @@ namespace Cargotruck.Server.Controllers
                 {
                     var s = "";
                     if (!string.IsNullOrEmpty(road.Id.ToString())) { s = road.Id.ToString(); }
-                    else { s = "-"; }
-                    table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
-                    {
-                        HorizontalAlignment = Element.ALIGN_CENTER,
-                        VerticalAlignment = Element.ALIGN_MIDDLE
-                    });
-                    if (!string.IsNullOrEmpty(road.User_id?.ToString())) { s = road.User_id.ToString(); }
                     else { s = "-"; }
                     table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
@@ -423,7 +416,6 @@ namespace Cargotruck.Server.Controllers
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                   
                     if (!string.IsNullOrEmpty(road.Starting_place)) { s = road.Starting_place.ToString(); }
                     else { s = "-"; }
                     table2.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
@@ -445,13 +437,6 @@ namespace Cargotruck.Server.Controllers
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(road.Expenses_id.ToString())) { s = road.Expenses_id.ToString(); }
-                    else { s = "-"; }
-                    table2.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
-                    {
-                        HorizontalAlignment = Element.ALIGN_CENTER,
-                        VerticalAlignment = Element.ALIGN_MIDDLE
-                    });
                     if (!string.IsNullOrEmpty(road?.Distance?.ToString())) { s = road.Distance.ToString(); }
                     else { s = "-"; }
                     table2.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
@@ -460,6 +445,13 @@ namespace Cargotruck.Server.Controllers
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
                     if (!string.IsNullOrEmpty(road?.Fuel?.ToString())) { s = road.Fuel.ToString(); }
+                    else { s = "-"; }
+                    table2.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
+                    {
+                        HorizontalAlignment = Element.ALIGN_CENTER,
+                        VerticalAlignment = Element.ALIGN_MIDDLE
+                    });
+                    if (!string.IsNullOrEmpty(road?.Date.ToString())) { s = road?.Date.ToString(); }
                     else { s = "-"; }
                     table2.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
@@ -511,9 +503,9 @@ namespace Cargotruck.Server.Controllers
             StreamWriter txt = new(filepath);
             //copy column names to a list based on language
             CultureInfo.CurrentUICulture = lang;
-            List<string> columnNames = _columnNameLists.GetRoadsColumnNames().Select(x => _localizer[x].Value).ToList();
+            List<string> columnNames = _columnNameLists.GetRoadsColumnNames().Where(x => x != "User_id").Select(x => _localizer[x].Value).ToList();
 
-            string separator = isTextDocument ? "  " : ";";
+            string separator = isTextDocument ? "\t" : ";";
             string ifNull = isTextDocument ? " --- " : "";
 
             foreach (var name in columnNames)
@@ -600,7 +592,7 @@ namespace Cargotruck.Server.Controllers
                             {
                                 //copy column names to a list
                                 CultureInfo.CurrentUICulture = lang;
-                                List<string> columnNames = _columnNameLists.GetRoadsColumnNames().Where(x=> x != "User_id").Select(x => _localizer[x].Value).ToList();
+                                List<string> columnNames = _columnNameLists.GetRoadsColumnNames().Where(x => x != "User_id").Select(x => _localizer[x].Value).ToList();
 
                                 foreach (IXLCell cell in row.Cells())
                                 {
