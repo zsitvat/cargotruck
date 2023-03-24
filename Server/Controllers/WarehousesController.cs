@@ -1,7 +1,9 @@
 ﻿using Cargotruck.Server.Data;
+using Cargotruck.Server.Services;
 using Cargotruck.Shared.Models;
 using Cargotruck.Shared.Resources;
 using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Drawing.Diagrams;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using Microsoft.AspNetCore.Authorization;
@@ -25,11 +27,13 @@ namespace Cargotruck.Server.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IStringLocalizer<Resource> _localizer;
+        private readonly IColumnNamesService _columnNameLists;
 
-        public WarehousesController(ApplicationDbContext context, IStringLocalizer<Resource> localizer)
+        public WarehousesController(ApplicationDbContext context, IStringLocalizer<Resource> localizer, IColumnNamesService columnNameLists)
         {
             _context = context;
             _localizer = localizer;
+            _columnNameLists = columnNameLists;
         }
 
         private async Task<List<Warehouses>> GetDataAsync(string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
@@ -128,7 +132,7 @@ namespace Cargotruck.Server.Controllers
 
         //closedXML needed !!!
         [HttpGet]
-        public string ExportToExcel(string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        public string ExportToExcel(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var warehouses = _context.Warehouses.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
             var cargoes = _context.Cargoes.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
@@ -137,14 +141,9 @@ namespace Cargotruck.Server.Controllers
             var worksheet = workbook.Worksheets.Add("Warehouses");
             var currentRow = 1;
 
-            List<string> columnNames = new() {
-                "Id",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Address : "Address",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Owner : "Owner",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Cargo_id : "Cargo ID",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date"
-            };
+
+            CultureInfo.CurrentUICulture = lang;
+            List<string> columnNames = _columnNameLists.GetWarehousesColumnNames().Select(x => _localizer[x].Value).ToList();
 
             for (var i = 0; i < columnNames.Count; i++)
             {
@@ -158,9 +157,8 @@ namespace Cargotruck.Server.Controllers
                 currentRow++;
 
                 worksheet.Cell(currentRow, 1).Value = warehouse.Id;
-                worksheet.Cell(currentRow, 2).Value = warehouse.User_id;
-                worksheet.Cell(currentRow, 3).Value = warehouse.Address;
-                worksheet.Cell(currentRow, 4).Value = warehouse.Owner;
+                worksheet.Cell(currentRow, 2).Value = warehouse.Address;
+                worksheet.Cell(currentRow, 3).Value = warehouse.Owner;
 
                 foreach (Cargoes cargo in cargoes)
                 {
@@ -170,19 +168,20 @@ namespace Cargotruck.Server.Controllers
                     }
                 }
 
-                worksheet.Cell(currentRow, 5).Value = cellValue;
-                worksheet.Cell(currentRow, 6).Value = warehouse.Date;
+                worksheet.Cell(currentRow, 4).Value = cellValue;
+                worksheet.Cell(currentRow, 5).Value = warehouse.Date;
             }
 
             using var stream = new MemoryStream();
             workbook.SaveAs(stream);
             var content = stream.ToArray();
+
             return Convert.ToBase64String(content);
         }
 
         //iTextSharp needed !!!
         [HttpGet]
-        public async Task<string> ExportToPdfAsync(string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        public async Task<string> ExportToPdfAsync(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var warehouses = _context.Warehouses.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
             var cargoes = _context.Cargoes.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
@@ -220,42 +219,29 @@ namespace Cargotruck.Server.Controllers
                 HorizontalAlignment = Element.ALIGN_CENTER
             };
 
-            var title = new Paragraph(15, lang == "hu" ? Cargotruck.Shared.Resources.Resource.Warehouses : "Warehouses")
+
+            //copy column names to a list based on language
+            CultureInfo.CurrentUICulture = lang;
+            List<string> columnNames = _columnNameLists.GetWarehousesColumnNames().Select(x => _localizer[x].Value).ToList();
+
+            var title = new Paragraph(15, _localizer["Warehouses"].Value)
             {
                 Alignment = Element.ALIGN_CENTER
             };
-
 
             document.Add(title);
             document.Add(new Paragraph("\n"));
 
             if (warehouses.Any())
             {
-                table.AddCell(new PdfPCell(new Phrase("Id", font1))
+                foreach (var name in columnNames.Take(column_number))
                 {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Address : "Vehicle registration number", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Owner : "Owner", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Cargo_id : "Cargo ID", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
+                    table.AddCell(new PdfPCell(new Phrase(name, font1))
+                    {
+                        HorizontalAlignment = Element.ALIGN_CENTER,
+                        VerticalAlignment = Element.ALIGN_MIDDLE
+                    });
+                }
 
                 foreach (Warehouses warehouse in warehouses)
                 {
@@ -310,10 +296,11 @@ namespace Cargotruck.Server.Controllers
             }
             else
             {
-                var noContent = new Paragraph(lang == "hu" ? "Nem található adat!" : "No content found!")
+                var noContent = new Paragraph(_localizer["No_records"])
                 {
                     Alignment = Element.ALIGN_CENTER
                 };
+
                 document.Add(noContent);
             }
             document.Close();
@@ -335,7 +322,7 @@ namespace Cargotruck.Server.Controllers
 
         //iTextSharp needed !!!
         [HttpGet]
-        public async Task<string> ExportToCSVAsync(string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        public async Task<string> ExportToCSVAsync(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate, bool isTextDocument)
         {
             var warehouses = _context.Warehouses.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
             var cargoes = _context.Cargoes.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
@@ -346,29 +333,40 @@ namespace Cargotruck.Server.Controllers
             string filepath = "Files/" + filename + ".csv";
 
             StreamWriter txt = new(filepath);
-            txt.Write("Id" + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID") + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Address : "Address") + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Owner : "Owner") + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Cargo_id : "Cargo ID") + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date") + ";");
+
+            //copy column names to a list based on language
+            CultureInfo.CurrentUICulture = lang;
+            List<string> columnNames = _columnNameLists.GetWarehousesColumnNames().Select(x => _localizer[x].Value).ToList();
+
+            string separator = isTextDocument ? "  " : ";";
+            string ifNull = isTextDocument ? " --- " : "";
+
+            foreach (var name in columnNames)
+            {
+                txt.Write(name + separator);
+            }
+
             txt.Write("\n");
 
             foreach (var warehouse in warehouses)
             {
-                txt.Write(warehouse.Id + ";");
-                txt.Write(warehouse.User_id + ";");
-                txt.Write(warehouse.Address + ";");
-                txt.Write(warehouse.Owner + ";");
-                foreach (Cargoes cargo in cargoes)
-                {
-                    if (cargo.Warehouse_id == warehouse.Id)
+                txt.Write(warehouse.Id + separator);
+                txt.Write((warehouse.Address ?? ifNull) + separator);
+                txt.Write((warehouse.Owner ?? ifNull) + separator);
+                if (cargoes.Any()) { 
+                    foreach (Cargoes cargo in cargoes)
                     {
-                        txt.Write("[" + cargo.Id + "/" + cargo.Warehouse_section + "]");
+                        if (cargo.Warehouse_id == warehouse.Id)
+                        {
+                            txt.Write("[" + cargo.Id + "/" + cargo.Warehouse_section + "]");
+                        }
                     }
                 }
-                txt.Write(";");
-                txt.Write(warehouse.Date + ";");
+                else {
+                    txt.Write(ifNull);
+                }
+                txt.Write(separator);
+                txt.Write(warehouse.Date + separator);
                 txt.Write("\n");
             }
             txt.Close();
@@ -391,10 +389,12 @@ namespace Cargotruck.Server.Controllers
             var file = Convert.ToBase64String(buffer);
             sourceFile.Dispose();
             sourceFile.Close();
+
             if (!sourceFile.CanWrite)
             {
                 System.IO.File.Delete(filepath); // delete the file in the app folder
             }
+
             return file;
         }
 
@@ -427,20 +427,15 @@ namespace Cargotruck.Server.Controllers
                             //Use the first row to add columns to DataTable with column names check.
                             if (firstRow)
                             {
-                                List<string?> titles = new() {
-                                "Id",
-                                _localizer["User_id"].Value,
-                                 _localizer["Address"].Value,
-                                 _localizer["Owner"].Value,
-                                 _localizer["Cargo_id"].Value,
-                                 _localizer["Date"].Value
-                            };
+                                //copy column names to a list
+                                CultureInfo.CurrentUICulture = lang;
+                                List<string> columnNames = _columnNameLists.GetWarehousesColumnNames().Select(x => _localizer[x].Value).ToList();
 
                                 foreach (IXLCell cell in row.Cells())
                                 {
-                                    if (titles.Contains(cell.Value.ToString()))
+                                    if (columnNames.Contains(cell.Value.ToString()!))
                                     {
-                                        titles.Remove(cell.Value.ToString());
+                                        columnNames.Remove(cell.Value.ToString()!);
                                         dt.Columns.Add(cell.Value.ToString());
                                     }
                                     else
@@ -452,12 +447,12 @@ namespace Cargotruck.Server.Controllers
 
                                 }
                                 firstRow = false;
-                                if (titles.Count == 0)
+                                if (columnNames.Count == 0)
                                 {
                                     haveColumns = true;
                                     l += 1;
                                 }
-                                else if (titles.Count == 1 && titles.Contains("Id"))
+                                else if (columnNames.Count == 1 && columnNames.Contains("Id"))
                                 {
                                     haveColumns = true;
 
@@ -487,13 +482,13 @@ namespace Cargotruck.Server.Controllers
                                     var sql = @"Insert Into Warehouses (User_id,Address,Owner,Date) 
                                     Values (@User_id,@Address,@Owner,@Date)";
                                     var insert = await _context.Database.ExecuteSqlRawAsync(sql,
-                                        new SqlParameter("@User_id", list[l]?.ToString()),
-                                        new SqlParameter("@Address", list[l + 1]),
-                                        new SqlParameter("@Owner", list[l + 2]),
+                                        new SqlParameter("@User_id", "Imported"),
+                                        new SqlParameter("@Address", list[l]),
+                                        new SqlParameter("@Owner", list[l + 1]),
                                         new SqlParameter("@Date", DateTime.Now)
                                         );
 
-                                    string[]? substrings = list[l + 3]?.ToString()?.Split("]");
+                                    string[]? substrings = list[l + 2]?.ToString()?.Split("]");
 
                                     if (substrings != null)
                                     {
@@ -504,7 +499,7 @@ namespace Cargotruck.Server.Controllers
 
                                             var greatestId = _context.Warehouses.OrderBy(s => s.Id).Last().Id;
 
-                                            var sql2 = @"UpdateAsync Cargoes 
+                                            var sql2 = @"Update Cargoes 
                                                         Set Warehouse_id = @Warehouse_id, Warehouse_section = @Warehouse_section
                                                          Where Id = @Id";
                                             var insert2 = await _context.Database.ExecuteSqlRawAsync(sql2,

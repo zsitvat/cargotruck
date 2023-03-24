@@ -636,7 +636,7 @@
   <data name="Not_an_image" xml:space="preserve">
     <value>A fájl nem egy kép: </value>
   </data>
-  <data name="not_completed" xml:space="preserve">
+  <data name="Not_completed" xml:space="preserve">
     <value>Nincs teljesítve</value>
   </data>
   <data name="Not_excel" xml:space="preserve">

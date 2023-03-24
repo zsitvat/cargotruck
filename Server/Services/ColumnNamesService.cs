@@ -2,19 +2,19 @@
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 
-namespace Cargotruck.Server.Data
+namespace Cargotruck.Server.Services
 {
-    public class ColumnNames
+    public class ColumnNamesService : IColumnNamesService
     {
-        private static readonly List<string> TasksColumnNames;
-        private static readonly List<string> CargoesColumnNames;
-        private static readonly List<string> ExpensesColumnNames;
-        private static readonly List<string> MonthlyExpensesColumnNames;
-        private static readonly List<string> RoadsColumnNames;
-        private static readonly List<string> TrucksColumnNames;
-        private static readonly List<string> WarehousessColumnNames;
+        private readonly List<string> TasksColumnNames;
+        private readonly List<string> CargoesColumnNames;
+        private readonly List<string> ExpensesColumnNames;
+        private readonly List<string> MonthlyExpensesColumnNames;
+        private readonly List<string> RoadsColumnNames;
+        private readonly List<string> TrucksColumnNames;
+        private readonly List<string> WarehousessColumnNames;
 
-        static ColumnNames()
+        public ColumnNamesService()
         {
             TasksColumnNames = new List<string>
             {
@@ -40,7 +40,6 @@ namespace Cargotruck.Server.Data
             CargoesColumnNames = new List<string>
             {
                 "Id",
-                "User_id",
                 "Task_id",
                 "Weight",
                 "Description",
@@ -54,7 +53,6 @@ namespace Cargotruck.Server.Data
             ExpensesColumnNames = new List<string>
             {
                  "Id",
-                 "User_id",
                  "Type",
                  "Type_id",
                  "Fuel",
@@ -73,7 +71,6 @@ namespace Cargotruck.Server.Data
             {
                 "Id",
                 "Month",
-                "User_id",
                 "Earning",
                 "Expense",
                 "vProfit",
@@ -83,7 +80,7 @@ namespace Cargotruck.Server.Data
             };
             RoadsColumnNames = new List<string>
             {
-                 "Id",
+                "Id",
                 "User_id",
                 "Task_id",
                 "Vehicle_registration_number",
@@ -102,7 +99,6 @@ namespace Cargotruck.Server.Data
             TrucksColumnNames = new List<string>
             {
                  "Id",
-                 "User_id",
                  "Vehicle_registration_number",
                  "Brand",
                  "Status",
@@ -113,7 +109,6 @@ namespace Cargotruck.Server.Data
             WarehousessColumnNames = new List<string>
             {
                   "Id",
-                "User_id",
                  "Address",
                  "Owner",
                  "Cargo_id",
@@ -121,37 +116,37 @@ namespace Cargotruck.Server.Data
             };
         }
 
-        public static List<string> GetTaskscolumnNames()
+        public List<string> GetTasksColumnNames()
         {
             return TasksColumnNames;
         }
 
-        public static List<string> GetCargoescolumnNames()
+        public List<string> GetCargoesColumnNames()
         {
             return CargoesColumnNames;
         }
 
-        public static List<string> GetExpensescolumnNames()
+        public List<string> GetExpensesColumnNames()
         {
             return ExpensesColumnNames;
         }
 
-        public static List<string> GetMonthlyExpensescolumnNames()
+        public List<string> GetMonthlyExpensesColumnNames()
         {
             return MonthlyExpensesColumnNames;
         }
 
-        public static List<string> GetRoadscolumnNames()
+        public List<string> GetRoadsColumnNames()
         {
             return RoadsColumnNames;
         }
 
-        public static List<string> GetTruckscolumnNames()
+        public List<string> GetTrucksColumnNames()
         {
             return TrucksColumnNames;
         }
 
-        public static List<string> GetWarehousescolumnNames()
+        public List<string> GetWarehousesColumnNames()
         {
             return WarehousessColumnNames;
         }

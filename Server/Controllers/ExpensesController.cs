@@ -1,4 +1,5 @@
 ﻿using Cargotruck.Server.Data;
+using Cargotruck.Server.Services;
 using Cargotruck.Shared.Models;
 using Cargotruck.Shared.Resources;
 using ClosedXML.Excel;
@@ -25,10 +26,12 @@ namespace Cargotruck.Server.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IStringLocalizer<Resource> _localizer;
-        public ExpensesController(ApplicationDbContext context, IStringLocalizer<Resource> localizer)
+        private readonly IColumnNamesService _columnNameLists;
+        public ExpensesController(ApplicationDbContext context, IStringLocalizer<Resource> localizer, IColumnNamesService columnNameLists)
         {
             _context = context;
             _localizer = localizer;
+            _columnNameLists = columnNameLists;
         }
 
         private async Task<List<Expenses>> GetDataAsync(string? searchString, Type? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
@@ -202,7 +205,7 @@ namespace Cargotruck.Server.Controllers
 
         //closedXML needed !!!
         [HttpGet]
-        public string ExportToExcel(string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        public string ExportToExcel(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var expenses = _context.Expenses.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
 
@@ -210,23 +213,9 @@ namespace Cargotruck.Server.Controllers
             var worksheet = workbook.Worksheets.Add("Expenses");
             var currentRow = 1;
 
-            List<string> columnNames = new() {
-                "Id",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Type_id : "Type ID",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Fuel : "Fuel",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Type : "Type",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Road_fees : "Road fees",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Penalty : "Penalty",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Driver_spending : "Driver spending",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Driver_salary : "Driver salary",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Repair_cost : "Repair cost",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Repair_description : "Repair description",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Cost_of_storage : "Cost of storage",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.other : "Other",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Total_amount : "Total amount",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date",
-            };
+
+            CultureInfo.CurrentUICulture = lang;
+            List<string> columnNames = _columnNameLists.GetExpensesColumnNames().Select(x => _localizer[x].Value).ToList();
 
             for (var i = 0; i < columnNames.Count; i++)
             {
@@ -238,20 +227,19 @@ namespace Cargotruck.Server.Controllers
             {
                 currentRow++;
                 worksheet.Cell(currentRow, 1).Value = expense.Id;
-                worksheet.Cell(currentRow, 2).Value = expense.User_id;
-                worksheet.Cell(currentRow, 3).Value = expense.Type;
-                worksheet.Cell(currentRow, 4).Value = expense.Type_id;
-                worksheet.Cell(currentRow, 5).Value = expense.Fuel + (expense.Fuel != null ? " HUF" : "");
-                worksheet.Cell(currentRow, 6).Value = expense.Road_fees + (expense.Road_fees != null ? " HUF" : "");
-                worksheet.Cell(currentRow, 7).Value = expense.Penalty + (expense.Penalty != null ? " HUF" : "");
-                worksheet.Cell(currentRow, 8).Value = expense.Driver_spending + (expense.Driver_spending != null ? " HUF" : "");
-                worksheet.Cell(currentRow, 9).Value = expense.Driver_salary + (expense.Driver_salary != null ? " HUF" : "");
-                worksheet.Cell(currentRow, 10).Value = expense.Repair_cost + (expense.Repair_cost != null ? " HUF" : "");
-                worksheet.Cell(currentRow, 11).Value = expense.Repair_description;
-                worksheet.Cell(currentRow, 12).Value = expense.Cost_of_storage + (expense.Cost_of_storage != null ? " HUF" : "");
-                worksheet.Cell(currentRow, 13).Value = expense.Other + (expense.Other != null ? " HUF" : "");
-                worksheet.Cell(currentRow, 14).Value = expense.Total_amount + (expense.Total_amount != null ? " HUF" : "");
-                worksheet.Cell(currentRow, 15).Value = expense.Date;
+                worksheet.Cell(currentRow, 2).Value = expense.Type;
+                worksheet.Cell(currentRow, 3).Value = expense.Type_id;
+                worksheet.Cell(currentRow, 4).Value = expense.Fuel + (expense.Fuel != null ? " HUF" : "");
+                worksheet.Cell(currentRow, 5).Value = expense.Road_fees + (expense.Road_fees != null ? " HUF" : "");
+                worksheet.Cell(currentRow, 6).Value = expense.Penalty + (expense.Penalty != null ? " HUF" : "");
+                worksheet.Cell(currentRow, 7).Value = expense.Driver_spending + (expense.Driver_spending != null ? " HUF" : "");
+                worksheet.Cell(currentRow, 8).Value = expense.Driver_salary + (expense.Driver_salary != null ? " HUF" : "");
+                worksheet.Cell(currentRow, 9).Value = expense.Repair_cost + (expense.Repair_cost != null ? " HUF" : "");
+                worksheet.Cell(currentRow, 10).Value = expense.Repair_description;
+                worksheet.Cell(currentRow, 11).Value = expense.Cost_of_storage + (expense.Cost_of_storage != null ? " HUF" : "");
+                worksheet.Cell(currentRow, 12).Value = expense.Other + (expense.Other != null ? " HUF" : "");
+                worksheet.Cell(currentRow, 13).Value = expense.Total_amount + (expense.Total_amount != null ? " HUF" : "");
+                worksheet.Cell(currentRow, 14).Value = expense.Date;
             }
 
             using var stream = new MemoryStream();
@@ -262,7 +250,7 @@ namespace Cargotruck.Server.Controllers
 
         //iTextSharp needed !!!
         [HttpGet]
-        public async Task<string> ExportToPdfAsync(string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        public async Task<string> ExportToPdfAsync(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var expenses = _context.Expenses.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
 
@@ -303,7 +291,11 @@ namespace Cargotruck.Server.Controllers
                 HorizontalAlignment = Element.ALIGN_CENTER
             };
 
-            var title = new Paragraph(15, lang == "hu" ? Cargotruck.Shared.Resources.Resource.Expenses : "Expenses")
+            //copy column names to a list based on language
+            CultureInfo.CurrentUICulture = lang;
+            List<string> columnNames = _columnNameLists.GetExpensesColumnNames().Select(x => _localizer[x].Value).ToList();
+
+            var title = new Paragraph(15, _localizer["Expenses"].Value)
             {
                 Alignment = Element.ALIGN_CENTER
             };
@@ -314,41 +306,14 @@ namespace Cargotruck.Server.Controllers
 
             if (expenses.Any())
             {
-                table.AddCell(new PdfPCell(new Phrase("Id", font1))
+                foreach (var name in columnNames.Take(column_number))
                 {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Type : "Type", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Type_id : "Type ID", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Fuel : "Fuel", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Road_fees : "Road fees", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Penalty : "Penalty", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Driver_spending : "Driver spending", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
+                    table.AddCell(new PdfPCell(new Phrase(name, font1))
+                    {
+                        HorizontalAlignment = Element.ALIGN_CENTER,
+                        VerticalAlignment = Element.ALIGN_MIDDLE
+                    });
+                }
 
                 foreach (Expenses expense in expenses)
                 {
@@ -405,45 +370,24 @@ namespace Cargotruck.Server.Controllers
                     pdfRowIndex++;
                 }
 
-
-
                 document.Add(table);
                 document.Add(new Paragraph("\n"));
-                table2.AddCell(new PdfPCell(new Phrase("Id", font1))
+
+                table2.AddCell(new PdfPCell(new Phrase(_localizer["Id"].Value, font1))
                 {
                     HorizontalAlignment = Element.ALIGN_CENTER,
                     VerticalAlignment = Element.ALIGN_MIDDLE
                 });
-                table2.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Driver_salary : "Driver salary", font1))
+
+                foreach (var name in columnNames.Skip(column_number).Take(column_number))
                 {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-                table2.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Repair_cost : "Repair cost", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-                table2.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Repair_description : "Repair description", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-                table2.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Cost_of_storage : "Cost of storage", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-                table2.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.other : "Other", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-                table2.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
+                    table2.AddCell(new PdfPCell(new Phrase(name, font1))
+                    {
+                        HorizontalAlignment = Element.ALIGN_CENTER,
+                        VerticalAlignment = Element.ALIGN_MIDDLE
+                    });
+                }
+
                 table2.HeaderRows = 1;
 
 
@@ -506,7 +450,7 @@ namespace Cargotruck.Server.Controllers
             }
             else
             {
-                var noContent = new Paragraph(lang == "hu" ? "Nem található adat!" : "No content found!")
+                var noContent = new Paragraph(_localizer["No_records"])
                 {
                     Alignment = Element.ALIGN_CENTER
                 };
@@ -531,7 +475,7 @@ namespace Cargotruck.Server.Controllers
 
         //iTextSharp needed !!!
         [HttpGet]
-        public async Task<string> ExportToCSVAsync(string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        public async Task<string> ExportToCSVAsync(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate, bool isTextDocument)
         {
             var expenses = _context.Expenses.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
 
@@ -541,39 +485,35 @@ namespace Cargotruck.Server.Controllers
             string filepath = "Files/" + filename + ".csv";
 
             StreamWriter txt = new(filepath);
-            txt.Write("Id" + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID") + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Type : "Type") + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Type_id : "Type ID") + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Fuel : "Fuel") + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Road_fees : "Road fees") + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Penalty : "Penalty") + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Driver_spending : "Driver spending") + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Driver_salary : "Driver salary") + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Repair_cost : "Repair cost") + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Repair_description : "Repair description") + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Cost_of_storage : "Cost of storage") + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.other : "Other") + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Total_amount : "Total amount") + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date") + ";");
+            //copy column names to a list based on language
+            CultureInfo.CurrentUICulture = lang;
+            List<string> columnNames = _columnNameLists.GetTasksColumnNames().Select(x => _localizer[x].Value).ToList();
+
+            string separator = isTextDocument ? "  " : ";";
+            string ifNull = isTextDocument ? " --- " : "";
+
+            foreach (var name in columnNames)
+            {
+                txt.Write(name + separator);
+            }
+
             txt.Write("\n");
 
             foreach (var expense in expenses)
             {
-                txt.Write(expense.Id + ";");
-                txt.Write(expense.User_id + ";");
-                txt.Write(expense.Type + ";");
-                txt.Write(expense.Type_id + ";");
-                txt.Write(expense.Fuel + (expense.Fuel != null ? " HUF" : "") + ";");
-                txt.Write(expense.Road_fees + (expense.Road_fees != null ? " HUF" : "") + ";");
-                txt.Write(expense.Penalty + (expense.Penalty != null ? " HUF" : "") + ";");
-                txt.Write(expense.Driver_spending + (expense.Driver_spending != null ? " HUF" : "") + ";");
-                txt.Write(expense.Driver_salary + (expense.Driver_salary != null ? " HUF" : "") + ";");
-                txt.Write(expense.Repair_cost + (expense.Repair_cost != null ? " HUF" : "") + ";");
-                txt.Write(expense.Repair_description + ";");
-                txt.Write(expense.Cost_of_storage + (expense.Cost_of_storage != null ? " HUF" : "") + ";");
-                txt.Write(expense.Other + (expense.Other != null ? " HUF" : "") + ";");
-                txt.Write(expense.Date + ";");
+                txt.Write(expense.Id + separator);
+                txt.Write((expense.Type != null ? expense.Type : ifNull) + separator);
+                txt.Write((expense.Type_id != null ? expense.Type_id : ifNull) + separator);
+                txt.Write(expense.Fuel + (expense.Fuel != null ? " HUF" : ifNull) + separator);
+                txt.Write(expense.Road_fees + (expense.Road_fees != null ? " HUF" : ifNull) + separator);
+                txt.Write(expense.Penalty + (expense.Penalty != null ? " HUF" : ifNull) + separator);
+                txt.Write(expense.Driver_spending + (expense.Driver_spending != null ? " HUF" : ifNull) + separator);
+                txt.Write(expense.Driver_salary + (expense.Driver_salary != null ? " HUF" : ifNull) + separator);
+                txt.Write(expense.Repair_cost + (expense.Repair_cost != null ? " HUF" : ifNull) + separator);
+                txt.Write((expense.Repair_description != null ? expense.Repair_description : ifNull) + separator);
+                txt.Write(expense.Cost_of_storage + (expense.Cost_of_storage != null ? " HUF" : ifNull) + separator);
+                txt.Write(expense.Other + (expense.Other != null ? " HUF" : ifNull) + separator);
+                txt.Write(expense.Date + separator);
                 txt.Write("\n");
             }
             txt.Close();
@@ -587,6 +527,7 @@ namespace Cargotruck.Server.Controllers
             byte[] convertedCsvFileContents = Encoding.Convert(Encoding.Default, utf8Encoding, csvFileContentsAsBytes);
             string convertedCsvFileContentsAsString = utf8Encoding.GetString(convertedCsvFileContents);
             System.IO.File.WriteAllText(filepath, convertedCsvFileContentsAsString, utf8Encoding);
+
             //filestream for download
             FileStream sourceFile = new(filepath, FileMode.Open);
             MemoryStream memoryStream = new();
@@ -595,6 +536,7 @@ namespace Cargotruck.Server.Controllers
             var file = Convert.ToBase64String(buffer);
             sourceFile.Dispose();
             sourceFile.Close();
+
             if (!sourceFile.CanWrite)
             {
                 System.IO.File.Delete(filepath); // delete the file in the app folder
@@ -631,29 +573,15 @@ namespace Cargotruck.Server.Controllers
                             //Use the first row to add columns to DataTable with column names check.
                             if (firstRow)
                             {
-                                List<string?> titles = new() {
-                                "Id",
-                                 _localizer["User_id"].Value,
-                                 _localizer["Type"].Value,
-                                 _localizer["Type_id"].Value,
-                                 _localizer["Fuel"].Value,
-                                 _localizer["Road_fees"].Value,
-                                 _localizer["Penalty"].Value,
-                                 _localizer["Driver_spending"].Value,
-                                 _localizer["Driver_salary"].Value,
-                                 _localizer["Repair_cost"].Value,
-                                 _localizer["Repair_description"].Value,
-                                 _localizer["Cost_of_storage"].Value,
-                                 _localizer["other"].Value,
-                                 _localizer["Total_amount"].Value,
-                                 _localizer["Date"].Value
-                            };
+                                //copy column names to a list
+                                CultureInfo.CurrentUICulture = lang;
+                                List<string> columnNames = _columnNameLists.GetTasksColumnNames().Select(x => _localizer[x].Value).ToList();
 
                                 foreach (IXLCell cell in row.Cells())
                                 {
-                                    if (titles.Contains(cell.Value.ToString()))
+                                    if (columnNames.Contains(cell.Value.ToString()!))
                                     {
-                                        titles.Remove(cell.Value.ToString());
+                                        columnNames.Remove(cell.Value.ToString()!);
                                         dt.Columns.Add(cell.Value.ToString());
                                     }
                                     else
@@ -665,12 +593,12 @@ namespace Cargotruck.Server.Controllers
 
                                 }
                                 firstRow = false;
-                                if (titles.Count == 0)
+                                if (columnNames.Count == 0)
                                 {
                                     haveColumns = true;
                                     l += 1;
                                 }
-                                else if (titles.Count == 1 && titles.Contains("Id"))
+                                else if (columnNames.Count == 1 && columnNames.Contains("Id"))
                                 {
                                     haveColumns = true;
 
@@ -697,7 +625,7 @@ namespace Cargotruck.Server.Controllers
                                     }
                                 }
 
-                                list[l + 1] = list[l + 1] switch
+                                list[l] = list[l] switch
                                 {
                                     "task" => 0,
                                     "repair" => 1,
@@ -708,12 +636,12 @@ namespace Cargotruck.Server.Controllers
                                 };
 
                                 var totalAmount = 0;
-                                for (int i = l + 3; i < list.Count - 1; i++)
+                                for (int i = l + 2; i < list.Count - 1; i++)
                                 {
-                                    if (i != (l + 9) && list[i] != null && list[i] != System.DBNull.Value)
+                                    if (i != (l + 8) && list[i] != null && list[i] != System.DBNull.Value)
                                     {
                                         list[i] = new String(list[i]?.ToString()?.Where(Char.IsDigit).ToArray());
-                                        if(list[i] != null && i < l+12) { 
+                                        if(list[i] != null && i < l+11) { 
                                             totalAmount += Int32.Parse(list[i]?.ToString()!);
                                         }
                                     }
@@ -725,18 +653,18 @@ namespace Cargotruck.Server.Controllers
                                     var sql = @"Insert Into Expenses (User_id,Type,Type_id,Fuel,Road_fees,Penalty,Driver_spending,Driver_salary,Repair_cost,Repair_description,Cost_of_storage,Total_amount,other,Date) 
                                     Values (@User_id,@Type,@Type_id,@Fuel,@Road_fees,@Penalty,@Driver_spending,@Driver_salary,@Repair_cost,@Repair_description,@Cost_of_storage,@Total_amount,@other,@Date)";
                                     var insert = await _context.Database.ExecuteSqlRawAsync(sql,
-                                        new SqlParameter("@User_id", list[l]),
-                                        new SqlParameter("@Type", list[l + 1]),
-                                        new SqlParameter("@Type_id", list[l + 2]),
-                                        new SqlParameter("@Fuel", list[l + 3]),
-                                        new SqlParameter("@Road_fees", list[l + 4]),
-                                        new SqlParameter("@Penalty", list[l + 5]),
-                                        new SqlParameter("@Driver_spending", list[l + 6]),
-                                        new SqlParameter("@Driver_salary", list[l + 7]),
-                                        new SqlParameter("@Repair_cost", list[l + 8]),
-                                        new SqlParameter("@Repair_description", list[l + 9]),
-                                        new SqlParameter("@Cost_of_storage", list[l + 10]),
-                                        new SqlParameter("@other", list[l + 11]),
+                                        new SqlParameter("@User_id", "Imported"),
+                                        new SqlParameter("@Type", list[l]),
+                                        new SqlParameter("@Type_id", list[l + 1]),
+                                        new SqlParameter("@Fuel", list[l + 2]),
+                                        new SqlParameter("@Road_fees", list[l + 3]),
+                                        new SqlParameter("@Penalty", list[l + 4]),
+                                        new SqlParameter("@Driver_spending", list[l + 5]),
+                                        new SqlParameter("@Driver_salary", list[l + 6]),
+                                        new SqlParameter("@Repair_cost", list[l + 7]),
+                                        new SqlParameter("@Repair_description", list[l + 8]),
+                                        new SqlParameter("@Cost_of_storage", list[l + 9]),
+                                        new SqlParameter("@other", list[l + 10]),
                                         new SqlParameter("@Total_amount", totalAmount),
                                         new SqlParameter("@Date", DateTime.Now)
                                         );

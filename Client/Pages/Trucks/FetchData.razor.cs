@@ -24,7 +24,7 @@ namespace Cargotruck.Client.Pages.Trucks
         private bool desc = true;
         private string? searchString = "";
         Status? filter;
-        DateFilter? dateFilter = new();
+        readonly DateFilter? dateFilter = new();
 
         protected override async Task OnInitializedAsync()
         {

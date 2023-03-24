@@ -27,7 +27,7 @@
     <input value="@searchString" @oninput="@SearchAsync" placeholder="@(searchString != "" ? searchString : localizer["Search"])" class="form-control inputs input_search" type="search" id="search-input" name="SearchString">
     
     <!--Filter icon-->
-    @if (filter == "completed" || filter == "not_completed")
+    @if (filter == "Completed" || filter == "Not_completed")
     {
          <button @onclick="@(()=>OnChangeResetFilter())" class="filter-button"><span class="icon iconify filter-icon" data-icon="material-symbols:filter-alt-off"></span></button>
     }
@@ -42,11 +42,11 @@
             <div class="custom-select-option" @onclick='() => {filter = null;StateChanged(); }'>
                 @localizer["Nothing"]
             </div>
-            <div class="custom-select-option" @onclick='() => {filter = "completed";StateChanged(); }'>
+            <div class="custom-select-option" @onclick='() => {filter = "Completed";StateChanged(); }'>
                 @localizer["Completed"]
             </div>
-            <div class="custom-select-option" @onclick='() => {filter = "not_completed";StateChanged(); }'>
-                @localizer["not_completed"]
+            <div class="custom-select-option" @onclick='() => {filter = "Not_completed";StateChanged(); }'>
+                @localizer["Not_completed"]
             </div>
         </div>
     </div>

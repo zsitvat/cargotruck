@@ -2,7 +2,7 @@
 {
     public class PageHistoryState : IPageHistoryState
     {
-        private List<string> previousPages;
+        private readonly List<string> previousPages;
 
         public PageHistoryState()
         {

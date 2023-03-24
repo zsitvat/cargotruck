@@ -1,4 +1,5 @@
 ﻿using Cargotruck.Server.Data;
+using Cargotruck.Server.Services;
 using Cargotruck.Shared.Models;
 using Cargotruck.Shared.Resources;
 using ClosedXML.Excel;
@@ -23,22 +24,24 @@ namespace Cargotruck.Server.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IStringLocalizer<Resource> _localizer;
+        private readonly IColumnNamesService _columnNameLists;
 
-        public TasksController(ApplicationDbContext context, IStringLocalizer<Resource> localizer)
+        public TasksController(ApplicationDbContext context, IStringLocalizer<Resource> localizer, IColumnNamesService columnNameLists)
         {
             _context = context;
             _localizer = localizer;
+            _columnNameLists = columnNameLists;
         }
 
         private async Task<List<TasksDto>> GetDataAsync(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var t = await _context.Tasks.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
 
-            if (filter == "completed")
+            if (filter == "Completed")
             {
                 t = t.Where(data => data.Completed).ToList();
             }
-            else if (filter == "not_completed")
+            else if (filter == "Not_completed")
             {
                 t = t.Where(data => data.Completed == false).ToList();
             }
@@ -269,7 +272,7 @@ namespace Cargotruck.Server.Controllers
             var currentRow = 1;
 
             CultureInfo.CurrentUICulture = lang;
-            List<string> columnNames = ColumnNames.GetTaskscolumnNames().Select(x => _localizer[x].Value).ToList();
+            List<string> columnNames = _columnNameLists.GetTasksColumnNames().Select(x => _localizer[x].Value).ToList();
 
             for (var i=0;i<columnNames.Count;i++)
             {
@@ -352,7 +355,7 @@ namespace Cargotruck.Server.Controllers
 
             //copy column names to a list based on language
             CultureInfo.CurrentUICulture = lang;
-            List<string> columnNames = ColumnNames.GetTaskscolumnNames().Select(x => _localizer[x].Value).ToList();
+            List<string> columnNames = _columnNameLists.GetTasksColumnNames().Select(x => _localizer[x].Value).ToList();
 
             var title = new Paragraph(15, _localizer["Tasks"].Value)
             {
@@ -540,13 +543,12 @@ namespace Cargotruck.Server.Controllers
                 {
                     Alignment = Element.ALIGN_CENTER
                 };
+
                 document.Add(noContent);
             }
+
             document.Close();
-            //document.CloseDocument();
-            //document.Dispose();
             writer.Close();
-            //writer.Dispose();
             fs.Close();
             fs.Dispose();
 
@@ -576,7 +578,7 @@ namespace Cargotruck.Server.Controllers
 
             //copy column names to a list based on language
             CultureInfo.CurrentUICulture = lang;
-            List<string> columnNames = ColumnNames.GetTaskscolumnNames().Select(x => _localizer[x].Value).ToList();
+            List<string> columnNames = _columnNameLists.GetTasksColumnNames().Select(x => _localizer[x].Value).ToList();
 
             string separator = isTextDocument ? "  " : ";";
             string ifNull = isTextDocument ? " --- " : "";
@@ -585,6 +587,7 @@ namespace Cargotruck.Server.Controllers
             {
                txt.Write(name + separator);  
             }
+
             txt.Write("\n");
             
             foreach (var task in tasks)
@@ -594,14 +597,14 @@ namespace Cargotruck.Server.Controllers
                 txt.Write((task.Partner ?? ifNull) + separator);
                 txt.Write((task.Description ?? ifNull) + separator);
                 txt.Write((task.Place_of_receipt ?? ifNull) + separator);
-                txt.Write((task.Time_of_receipt.ToString() ?? ifNull) + separator);
+                txt.Write((task.Time_of_receipt != null ? task.Time_of_receipt : ifNull) + separator);
                 txt.Write((task.Place_of_delivery ?? ifNull) + separator);
-                txt.Write((task.Time_of_delivery.ToString() ?? ifNull) + separator);
+                txt.Write((task.Time_of_delivery != null ? task.Time_of_delivery : ifNull) + separator);
                 txt.Write((task.Other_stops ?? ifNull) + separator);
-                txt.Write((task.Id_cargo.ToString() ?? ifNull) + separator);
+                txt.Write((task.Id_cargo != null ? task.Id_cargo : ifNull) + separator);
                 txt.Write((task.Storage_time ?? ifNull) + separator);
                 txt.Write(task.Completed + separator);
-                txt.Write((task.Completion_time.ToString() ?? ifNull) + separator);
+                txt.Write((task.Completion_time != null ? task.Completion_time : ifNull) + separator);
                 txt.Write((task.Time_of_delay ?? ifNull) + separator);
                 txt.Write((task.Payment + "HUF" ?? ifNull) + separator);
                 txt.Write((task.Final_Payment + "HUF" ?? ifNull) + separator);
@@ -611,6 +614,7 @@ namespace Cargotruck.Server.Controllers
                 txt.Write("\n");
 
             }
+
             txt.Close();
             txt.Dispose();
 
@@ -622,7 +626,6 @@ namespace Cargotruck.Server.Controllers
             string convertedCsvFileContentsAsString = utf8Encoding.GetString(convertedCsvFileContents);
             System.IO.File.WriteAllText(filepath, convertedCsvFileContentsAsString, utf8Encoding);
 
-
             FileStream sourceFile = new(filepath, FileMode.Open);
             MemoryStream memoryStream = new();
             await sourceFile.CopyToAsync(memoryStream);
@@ -630,10 +633,12 @@ namespace Cargotruck.Server.Controllers
             var file = Convert.ToBase64String(buffer);
             sourceFile.Dispose();
             sourceFile.Close();
+
             if (!sourceFile.CanWrite)
             {
                 System.IO.File.Delete(filepath); // delete the file in the app folder
             }
+
             return file;
         }
 
@@ -670,7 +675,7 @@ namespace Cargotruck.Server.Controllers
                             {
                                 //copy column names to a list
                                 CultureInfo.CurrentUICulture = lang;
-                                List<string> columnNames = ColumnNames.GetTaskscolumnNames().Select(x => _localizer[x].Value).ToList();
+                                List<string> columnNames = _columnNameLists.GetTasksColumnNames().Select(x => _localizer[x].Value).ToList();
 
                                 foreach (IXLCell cell in row.Cells())
                                 {

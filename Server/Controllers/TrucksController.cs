@@ -1,4 +1,5 @@
 ﻿using Cargotruck.Server.Data;
+using Cargotruck.Server.Services;
 using Cargotruck.Shared.Models;
 using Cargotruck.Shared.Resources;
 using ClosedXML.Excel;
@@ -24,11 +25,13 @@ namespace Cargotruck.Server.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IStringLocalizer<Resource> _localizer;
+        private readonly IColumnNamesService _columnNameLists;
 
-        public TrucksController(ApplicationDbContext context, IStringLocalizer<Resource> localizer)
+        public TrucksController(ApplicationDbContext context, IStringLocalizer<Resource> localizer, IColumnNamesService columnNameLists)
         {
             _context = context;
             _localizer = localizer;
+            _columnNameLists = columnNameLists;
         }
 
         private async Task<List<Trucks>> GetDataAsync(string? searchString, Status? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
@@ -157,7 +160,7 @@ namespace Cargotruck.Server.Controllers
 
         //closedXML needed !!!
         [HttpGet]
-        public string ExportToExcel(string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        public string ExportToExcel(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var trucks = _context.Trucks.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
 
@@ -165,16 +168,9 @@ namespace Cargotruck.Server.Controllers
             var worksheet = workbook.Worksheets.Add("Trucks");
             var currentRow = 1;
 
-            List<string> columnNames = new() {
-                "Id",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Vehicle_registration_number : "Task ID",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Brand : "Cargo ID",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Status : "Status",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Road_id : "Road ID",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Max_weight : "Max weight",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date"
-            };
+
+            CultureInfo.CurrentUICulture = lang;
+            List<string> columnNames = _columnNameLists.GetTrucksColumnNames().Select(x => _localizer[x].Value).ToList();
 
             for (var i = 0; i < columnNames.Count; i++)
             {
@@ -186,13 +182,12 @@ namespace Cargotruck.Server.Controllers
             {
                 currentRow++;
                 worksheet.Cell(currentRow, 1).Value = truck.Id;
-                worksheet.Cell(currentRow, 2).Value = truck.User_id;
-                worksheet.Cell(currentRow, 3).Value = truck.Vehicle_registration_number;
-                worksheet.Cell(currentRow, 4).Value = truck.Brand;
-                worksheet.Cell(currentRow, 5).Value = truck.Status;
-                worksheet.Cell(currentRow, 6).Value = truck.Road_id;
-                worksheet.Cell(currentRow, 7).Value = truck.Max_weight;
-                worksheet.Cell(currentRow, 8).Value = truck.Date;
+                worksheet.Cell(currentRow, 2).Value = truck.Vehicle_registration_number;
+                worksheet.Cell(currentRow, 3).Value = truck.Brand;
+                worksheet.Cell(currentRow, 4).Value = truck.Status;
+                worksheet.Cell(currentRow, 5).Value = truck.Road_id;
+                worksheet.Cell(currentRow, 6).Value = truck.Max_weight;
+                worksheet.Cell(currentRow, 7).Value = truck.Date;
             }
 
             using var stream = new MemoryStream();
@@ -203,7 +198,7 @@ namespace Cargotruck.Server.Controllers
 
         //iTextSharp needed !!!
         [HttpGet]
-        public async Task<string> ExportToPdfAsync(string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        public async Task<string> ExportToPdfAsync(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var trucks = _context.Trucks.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
 
@@ -242,52 +237,28 @@ namespace Cargotruck.Server.Controllers
                 HorizontalAlignment = Element.ALIGN_CENTER
             };
 
-            var title = new Paragraph(15, lang == "hu" ? Cargotruck.Shared.Resources.Resource.Trucks : "Trucks")
+            //copy column names to a list based on language
+            CultureInfo.CurrentUICulture = lang;
+            List<string> columnNames = _columnNameLists.GetTrucksColumnNames().Select(x => _localizer[x].Value).ToList();
+
+            var title = new Paragraph(15, _localizer["Trucks"].Value)
             {
                 Alignment = Element.ALIGN_CENTER
             };
-
 
             document.Add(title);
             document.Add(new Paragraph("\n"));
 
             if (trucks.Any())
             {
-                table.AddCell(new PdfPCell(new Phrase("Id", font1))
+                foreach (var name in columnNames.Take(column_number))
                 {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Vehicle_registration_number : "Vehicle registration number", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Brand : "Brand", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Status : "Status", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Road_id : "Road ID", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Max_weight : "Max weight", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
+                    table.AddCell(new PdfPCell(new Phrase(name, font1))
+                    {
+                        HorizontalAlignment = Element.ALIGN_CENTER,
+                        VerticalAlignment = Element.ALIGN_MIDDLE
+                    });
+                }
 
                 foreach (Trucks truck in trucks)
                 {
@@ -353,10 +324,11 @@ namespace Cargotruck.Server.Controllers
             }
             else
             {
-                var noContent = new Paragraph(lang == "hu" ? "Nem található adat!" : "No content found!")
+                var noContent = new Paragraph(_localizer["No_records"])
                 {
                     Alignment = Element.ALIGN_CENTER
                 };
+
                 document.Add(noContent);
             }
             document.Close();
@@ -378,7 +350,7 @@ namespace Cargotruck.Server.Controllers
 
         //iTextSharp needed !!!
         [HttpGet]
-        public async Task<string> ExportToCSVAsync(string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        public async Task<string> ExportToCSVAsync(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate, bool isTextDocument)
         {
             var trucks = _context.Trucks.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
 
@@ -388,26 +360,30 @@ namespace Cargotruck.Server.Controllers
             string filepath = "Files/" + filename + ".csv";
 
             StreamWriter txt = new(filepath);
-            txt.Write("Id" + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID") + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Vehicle_registration_number : "Vehicle registration number") + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Brand : "Brand") + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Status : "Status") + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Road_id : "Road ID") + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Max_weight : "Max weight") + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date") + ";");
+
+            //copy column names to a list based on language
+            CultureInfo.CurrentUICulture = lang;
+            List<string> columnNames = _columnNameLists.GetTrucksColumnNames().Select(x => _localizer[x].Value).ToList();
+
+            string separator = isTextDocument ? "  " : ";";
+            string ifNull = isTextDocument ? " --- " : "";
+
+            foreach (var name in columnNames)
+            {
+                txt.Write(name + separator);
+            }
+
             txt.Write("\n");
 
             foreach (var truck in trucks)
             {
-                txt.Write(truck.Id + ";");
-                txt.Write(truck.User_id + ";");
-                txt.Write(truck.Vehicle_registration_number + ";");
-                txt.Write(truck.Brand + ";");
-                txt.Write(truck.Status + ";");
-                txt.Write(truck.Road_id + ";");
-                txt.Write(truck.Max_weight + ";");
-                txt.Write(truck.Date + ";");
+                txt.Write(truck.Id + separator);
+                txt.Write((truck.Vehicle_registration_number ?? ifNull) + separator);
+                txt.Write((truck.Brand ?? ifNull) + separator);
+                txt.Write((truck.Status + separator));
+                txt.Write((truck.Road_id != null ? truck.Road_id : ifNull) + separator);
+                txt.Write((truck.Max_weight ?? ifNull) + separator);
+                txt.Write(truck.Date + separator);
                 txt.Write("\n");
             }
             txt.Close();
@@ -430,6 +406,7 @@ namespace Cargotruck.Server.Controllers
             var file = Convert.ToBase64String(buffer);
             sourceFile.Dispose();
             sourceFile.Close();
+
             if (!sourceFile.CanWrite)
             {
                 System.IO.File.Delete(filepath); // delete the file in the app folder
@@ -466,22 +443,15 @@ namespace Cargotruck.Server.Controllers
                             //Use the first row to add columns to DataTable with column names check.
                             if (firstRow)
                             {
-                                List<string?> titles = new() {
-                                "Id",
-                                 _localizer["User_id"].Value,
-                                 _localizer["Vehicle_registration_number"].Value,
-                                 _localizer["Brand"].Value,
-                                 _localizer["Status"].Value,
-                                 _localizer["Road_id"].Value,
-                                 _localizer["Max_weight"].Value,
-                                 _localizer["Date"].Value
-                            };
+                                //copy column names to a list
+                                CultureInfo.CurrentUICulture = lang;
+                                List<string> columnNames = _columnNameLists.GetTasksColumnNames().Select(x => _localizer[x].Value).ToList();
 
                                 foreach (IXLCell cell in row.Cells())
                                 {
-                                    if (titles.Contains(cell.Value.ToString()))
+                                    if (columnNames.Contains(cell.Value.ToString()!))
                                     {
-                                        titles.Remove(cell.Value.ToString());
+                                        columnNames.Remove(cell.Value.ToString()!);
                                         dt.Columns.Add(cell.Value.ToString());
                                     }
                                     else
@@ -493,12 +463,12 @@ namespace Cargotruck.Server.Controllers
 
                                 }
                                 firstRow = false;
-                                if (titles.Count == 0)
+                                if (columnNames.Count == 0)
                                 {
                                     haveColumns = true;
                                     l += 1;
                                 }
-                                else if (titles.Count == 1 && titles.Contains("Id"))
+                                else if (columnNames.Count == 1 && columnNames.Contains("Id"))
                                 {
                                     haveColumns = true;
 
@@ -524,7 +494,7 @@ namespace Cargotruck.Server.Controllers
                                     }
                                 }
 
-                                list[l + 3] = list[l + 3] switch
+                                list[l + 2] = list[l + 2] switch
                                 {
                                     "delivering" => 0,
                                     "on_road" => 1,
@@ -540,12 +510,12 @@ namespace Cargotruck.Server.Controllers
                                     var sql = @"Insert Into Trucks (User_id,Vehicle_registration_number,Brand,Status,Road_id,Max_weight,Date) 
                                     Values (@User_id,@Vehicle_registration_number,@Brand,@Status,@Road_id,@Max_weight,@Date)";
                                     var insert = await _context.Database.ExecuteSqlRawAsync(sql,
-                                        new SqlParameter("@User_id", list[l]),
-                                        new SqlParameter("@Vehicle_registration_number", list[l + 1]),
-                                        new SqlParameter("@Brand", list[l + 2]),
-                                        new SqlParameter("@Status", list[l + 3]),
-                                        new SqlParameter("@Road_id", list[l + 4]),
-                                        new SqlParameter("@Max_weight", list[l + 5]),
+                                        new SqlParameter("@User_id", "Imported"),
+                                        new SqlParameter("@Vehicle_registration_number", list[l]),
+                                        new SqlParameter("@Brand", list[l + 1]),
+                                        new SqlParameter("@Status", list[l + 2]),
+                                        new SqlParameter("@Road_id", list[l + 3]),
+                                        new SqlParameter("@Max_weight", list[l + 4]),
                                         new SqlParameter("@Date", DateTime.Now)
                                         );
 

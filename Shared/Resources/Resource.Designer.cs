@@ -1620,9 +1620,9 @@ namespace Cargotruck.Shared.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Nincs teljesítve.
         /// </summary>
-        public static string not_completed {
+        public static string Not_completed {
             get {
-                return ResourceManager.GetString("not_completed", resourceCulture);
+                return ResourceManager.GetString("Not_completed", resourceCulture);
             }
         }
         

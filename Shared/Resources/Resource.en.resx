@@ -633,7 +633,7 @@
   <data name="Not_an_image" xml:space="preserve">
     <value>The file is not an image:</value>
   </data>
-  <data name="not_completed" xml:space="preserve">
+  <data name="Not_completed" xml:space="preserve">
     <value>Not completed</value>
   </data>
   <data name="Not_excel" xml:space="preserve">

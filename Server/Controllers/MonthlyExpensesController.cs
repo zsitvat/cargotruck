@@ -1,4 +1,4 @@
-﻿using Cargotruck.Client.Pages.Profile;
+﻿using System.Globalization;
 using Cargotruck.Server.Data;
 using Cargotruck.Shared.Models;
 using Cargotruck.Shared.Resources;
@@ -14,6 +14,9 @@ using System.Linq.Dynamic.Core;
 using System.Text;
 using Document = iTextSharp.text.Document;
 using Font = iTextSharp.text.Font;
+using Cargotruck.Client.Services;
+using System;
+using Cargotruck.Server.Services;
 
 namespace Cargotruck.Server.Controllers
 {
@@ -24,11 +27,13 @@ namespace Cargotruck.Server.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IStringLocalizer<Resource> _localizer;
+        private readonly IColumnNamesService _columnNameLists;
 
-        public Monthly_ExpensesController(ApplicationDbContext context, IStringLocalizer<Resource> localizer)
+        public Monthly_ExpensesController(ApplicationDbContext context, IStringLocalizer<Resource> localizer, IColumnNamesService columnNameLists)
         {
             _context = context;
             _localizer = localizer;
+            _columnNameLists = columnNameLists;
         }
 
         private async Task<List<Monthly_expenses>> GetDataAsync(string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
@@ -292,7 +297,7 @@ namespace Cargotruck.Server.Controllers
 
         //closedXML needed !!!
         [HttpGet]
-        public string ExportToExcel(string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        public string ExportToExcel(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var Monthly_Expenses = _context.Monthly_Expenses.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
             var Monthly_expenses_tasks_expenses = _context.Monthly_expenses_tasks_expenses.OrderBy(x => x.Id);
@@ -301,17 +306,8 @@ namespace Cargotruck.Server.Controllers
             var worksheet = workbook.Worksheets.Add("Monthly_Expenses");
             var currentRow = 1;
 
-            List<string> columnNames = new() {
-                "Id",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Month : "Month",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Earning : "Earning",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Expense : "Expense",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Profit : "Profit",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Expense_id : "Expenses ID",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Task_id : "Task_id",
-                lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date"
-            };
+            CultureInfo.CurrentUICulture = lang;
+            List<string> columnNames = _columnNameLists.GetMonthlyExpensesColumnNames().Select(x => _localizer[x].Value).ToList();
 
             for (var i = 0; i < columnNames.Count; i++)
             {
@@ -325,33 +321,32 @@ namespace Cargotruck.Server.Controllers
 
                 worksheet.Cell(currentRow, 1).Value = monthly_expense.Monthly_expense_id;
                 worksheet.Cell(currentRow, 2).Value = monthly_expense.Date.Month;
-                worksheet.Cell(currentRow, 3).Value = monthly_expense.User_id;
-                worksheet.Cell(currentRow, 4).Value = monthly_expense.Earning;
-                worksheet.Cell(currentRow, 5).Value = monthly_expense.Expense;
-                worksheet.Cell(currentRow, 6).Value = monthly_expense.Profit;
+                worksheet.Cell(currentRow, 3).Value = monthly_expense.Earning;
+                worksheet.Cell(currentRow, 4).Value = monthly_expense.Expense;
+                worksheet.Cell(currentRow, 5).Value = monthly_expense.Profit;
                 foreach (var row in Monthly_expenses_tasks_expenses.Where(x => x.Monthly_expense_id == monthly_expense.Monthly_expense_id && x.Expense_id != null))
                 {
                     if (Monthly_expenses_tasks_expenses.Where(x => x.Monthly_expense_id == monthly_expense.Monthly_expense_id && x.Expense_id != null).Last().Id != row.Id)
                     {
-                        worksheet.Cell(currentRow, 7).Value = worksheet.Cell(currentRow, 7).Value + (row.Expense_id + "; ");
+                        worksheet.Cell(currentRow, 6).Value = worksheet.Cell(currentRow, 6).Value + (row.Expense_id + "; ");
                     }
                     else
                     {
-                        worksheet.Cell(currentRow, 7).Value = worksheet.Cell(currentRow, 7).Value + row.Expense_id.ToString();
+                        worksheet.Cell(currentRow, 6).Value = worksheet.Cell(currentRow, 6).Value + row.Expense_id.ToString();
                     }
                 }
                 foreach (var row in Monthly_expenses_tasks_expenses.Where(x => x.Monthly_expense_id == monthly_expense.Monthly_expense_id && x.Task_id != null))
                 {
                     if (Monthly_expenses_tasks_expenses.Where(x => x.Monthly_expense_id == monthly_expense.Monthly_expense_id && x.Task_id != null).Last().Id != row.Id)
                     {
-                        worksheet.Cell(currentRow, 8).Value = worksheet.Cell(currentRow, 8).Value + (row.Task_id + "; ");
+                        worksheet.Cell(currentRow, 7).Value = worksheet.Cell(currentRow, 7).Value + (row.Task_id + "; ");
                     }
                     else
                     {
-                        worksheet.Cell(currentRow, 8).Value = worksheet.Cell(currentRow, 8).Value + row.Task_id.ToString();
+                        worksheet.Cell(currentRow, 7).Value = worksheet.Cell(currentRow, 7).Value + row.Task_id.ToString();
                     }
                 }
-                worksheet.Cell(currentRow, 9).Value = monthly_expense.Date;
+                worksheet.Cell(currentRow, 8).Value = monthly_expense.Date;
             }
 
             using var stream = new MemoryStream();
@@ -362,7 +357,7 @@ namespace Cargotruck.Server.Controllers
 
         //iTextSharp needed !!!
         [HttpGet]
-        public async Task<string> ExportToPdfAsync(string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        public async Task<string> ExportToPdfAsync(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var Monthly_Expenses = _context.Monthly_Expenses.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
             var Monthly_expenses_tasks_expenses = _context.Monthly_expenses_tasks_expenses.OrderBy(x => x.Id);
@@ -400,10 +395,15 @@ namespace Cargotruck.Server.Controllers
                 HorizontalAlignment = Element.ALIGN_CENTER
             };
 
-            var title = new Paragraph(15, lang == "hu" ? Cargotruck.Shared.Resources.Resource.Monthly_expenses : "Monthly expenses")
+             //copy column names to a list based on language
+            CultureInfo.CurrentUICulture = lang;
+            List<string> columnNames = _columnNameLists.GetMonthlyExpensesColumnNames().Select(x => _localizer[x].Value).ToList();
+
+            var title = new Paragraph(15, _localizer["Monthly_expenses"].Value)
             {
                 Alignment = Element.ALIGN_CENTER
             };
+
 
 
             document.Add(title);
@@ -411,46 +411,14 @@ namespace Cargotruck.Server.Controllers
 
             if (Monthly_Expenses.Any())
             {
-                table.AddCell(new PdfPCell(new Phrase("Id", font1))
+                foreach (var name in columnNames.Take(column_number))
                 {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Month : "Month", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Earning : "Earning", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Expense : "Expense", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Profit : "Profit", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Expenses : "Expenses", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Task_id : "Task ID", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
-                table.AddCell(new PdfPCell(new Phrase(lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date", font1))
-                {
-                    HorizontalAlignment = Element.ALIGN_CENTER,
-                    VerticalAlignment = Element.ALIGN_MIDDLE
-                });
+                    table.AddCell(new PdfPCell(new Phrase(name, font1))
+                    {
+                        HorizontalAlignment = Element.ALIGN_CENTER,
+                        VerticalAlignment = Element.ALIGN_MIDDLE
+                    });
+                }
 
                 foreach (Monthly_expenses monthly_expense in Monthly_Expenses)
                 {
@@ -538,12 +506,13 @@ namespace Cargotruck.Server.Controllers
             }
             else
             {
-                var noContent = new Paragraph(lang == "hu" ? "Nem található adat!" : "No content found!")
+                var noContent = new Paragraph(_localizer["No_records"])
                 {
                     Alignment = Element.ALIGN_CENTER
                 };
                 document.Add(noContent);
             }
+
             document.Close();
             writer.Close();
             fs.Close();
@@ -563,7 +532,7 @@ namespace Cargotruck.Server.Controllers
 
         //iTextSharp needed !!!
         [HttpGet]
-        public async Task<string> ExportToCSVAsync(string lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        public async Task<string> ExportToCSVAsync(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate, bool isTextDocument)
         {
             var Monthly_Expenses = _context.Monthly_Expenses.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
             var Monthly_expenses_tasks_expenses = _context.Monthly_expenses_tasks_expenses.OrderBy(x => x.Id);
@@ -574,26 +543,29 @@ namespace Cargotruck.Server.Controllers
             string filepath = "Files/" + filename + ".csv";
 
             StreamWriter txt = new(filepath);
-            txt.Write("Id" + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.User_id : "User ID") + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Month : "Month") + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Earning : "Earning") + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Expense : "Expense") + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Profit : "Profit") + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Expenses : "Expenses") + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Task_id : "Task ID") + ";");
-            txt.Write((lang == "hu" ? Cargotruck.Shared.Resources.Resource.Date : "Date") + ";");
+
+            //copy column names to a list based on language
+            CultureInfo.CurrentUICulture = lang;
+            List<string> columnNames = _columnNameLists.GetMonthlyExpensesColumnNames().Select(x => _localizer[x].Value).ToList();
+
+            string separator = isTextDocument ? "  " : ";";
+            string ifNull = isTextDocument ? " --- " : "";
+
+            foreach (var name in columnNames)
+            {
+                txt.Write(name + separator);
+            }
+
             txt.Write("\n");
 
             foreach (var monthly_expense in Monthly_Expenses)
             {
                 var s = "";
-                txt.Write(monthly_expense.Monthly_expense_id + ";");
-                txt.Write(monthly_expense.User_id + ";");
-                txt.Write(monthly_expense.Date.Month + ";");
-                txt.Write(monthly_expense.Earning + ";");
-                txt.Write(monthly_expense.Expense + ";");
-                txt.Write(monthly_expense.Profit + ";");
+                txt.Write(monthly_expense.Monthly_expense_id + separator);
+                txt.Write(monthly_expense.Date.Month + separator);
+                txt.Write(monthly_expense.Earning != null ? monthly_expense.Earning : ifNull + separator);
+                txt.Write(monthly_expense.Expense != null ? monthly_expense.Expense : ifNull + separator);
+                txt.Write(monthly_expense.Profit != null ? monthly_expense.Profit : ifNull + separator);
                 s = "";
                 foreach (var row in Monthly_expenses_tasks_expenses.Where(x => x.Monthly_expense_id == monthly_expense.Monthly_expense_id && x.Expense_id != null))
                 {
@@ -606,7 +578,14 @@ namespace Cargotruck.Server.Controllers
                         s += row.Expense_id.ToString();
                     }
                 }
-                txt.Write(s + ";");
+
+                if(s == "")
+                {
+                    s = ifNull;
+                }
+
+                txt.Write(s + separator);
+
                 s = "";
                 foreach (var row in Monthly_expenses_tasks_expenses.Where(x => x.Monthly_expense_id == monthly_expense.Monthly_expense_id && x.Task_id != null))
                 {
@@ -619,8 +598,15 @@ namespace Cargotruck.Server.Controllers
                         s += row.Task_id.ToString();
                     }
                 }
-                txt.Write(s + ";");
-                txt.Write(monthly_expense.Date + ";");
+
+                if (s == "")
+                {
+                    s = ifNull;
+                }
+
+                txt.Write(s + separator);
+                txt.Write(monthly_expense.Date + separator);
+
                 txt.Write("\n");
             }
             txt.Close();

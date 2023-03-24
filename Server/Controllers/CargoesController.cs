@@ -1,8 +1,8 @@
 ﻿using Cargotruck.Server.Data;
+using Cargotruck.Server.Services;
 using Cargotruck.Shared.Models;
 using Cargotruck.Shared.Resources;
 using ClosedXML.Excel;
-using DocumentFormat.OpenXml.Office2010.Excel;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using Microsoft.AspNetCore.Authorization;
@@ -25,10 +25,12 @@ namespace Cargotruck.Server.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IStringLocalizer<Resource> _localizer;
-        public CargoesController(ApplicationDbContext context, IStringLocalizer<Resource> localizer)
+        private readonly IColumnNamesService _columnNameLists;
+        public CargoesController(ApplicationDbContext context, IStringLocalizer<Resource> localizer, IColumnNamesService columnNameLists)
         {
             _context = context;
-            _localizer = localizer;            
+            _localizer = localizer;
+            _columnNameLists = columnNameLists;
         }
 
         private async Task<List<Cargoes>> GetDataAsync(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
@@ -232,7 +234,7 @@ namespace Cargotruck.Server.Controllers
             var currentRow = 1;
 
             CultureInfo.CurrentUICulture = lang;
-            List<string> columnNames = ColumnNames.GetCargoescolumnNames().Select(x => _localizer[x].Value).ToList();
+            List<string> columnNames = _columnNameLists.GetCargoesColumnNames().Select(x => _localizer[x].Value).ToList();
 
             for (var i = 0; i < columnNames.Count; i++)
             {
@@ -306,7 +308,7 @@ namespace Cargotruck.Server.Controllers
 
             //copy column names to a list based on language
             CultureInfo.CurrentUICulture = lang;
-            List<string> columnNames = ColumnNames.GetCargoescolumnNames().Select(x => _localizer[x].Value).ToList();
+            List<string> columnNames = _columnNameLists.GetCargoesColumnNames().Select(x => _localizer[x].Value).ToList();
 
             var title = new Paragraph(15, _localizer["Cargoes"])
             {
@@ -479,7 +481,7 @@ namespace Cargotruck.Server.Controllers
 
             //copy column names to a list based on language
             CultureInfo.CurrentUICulture = lang;
-            List<string> columnNames = ColumnNames.GetCargoescolumnNames().Select(x => _localizer[x].Value).ToList();
+            List<string> columnNames = _columnNameLists.GetCargoesColumnNames().Select(x => _localizer[x].Value).ToList();
 
             string separator = isTextDocument ? "  " : ";";
             string ifNull = isTextDocument ? " --- " : "";
@@ -564,7 +566,7 @@ namespace Cargotruck.Server.Controllers
                             {
                                 //copy column names to a list
                                 CultureInfo.CurrentUICulture = lang;
-                                List<string> columnNames = ColumnNames.GetCargoescolumnNames().Select(x => _localizer[x].Value).ToList();
+                                List<string> columnNames = _columnNameLists.GetCargoesColumnNames().Select(x => _localizer[x].Value).ToList();
 
                                 foreach (IXLCell cell in row.Cells())
                                 {

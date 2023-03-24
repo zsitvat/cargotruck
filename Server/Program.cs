@@ -1,11 +1,10 @@
-using Cargotruck.Client;
 using Cargotruck.Server.Data;
 using Cargotruck.Server.Models;
+using Cargotruck.Server.Services;
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
-using System.Globalization;
+
 
 /*
 // create appsettings.json if not exist
@@ -59,6 +58,9 @@ builder.Services.ConfigureApplicationCookie(options =>
         return Task.CompletedTask;
     };
 });
+
+//My services
+builder.Services.AddSingleton<IColumnNamesService, ColumnNamesService>();
 
 builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddControllersWithViews();
