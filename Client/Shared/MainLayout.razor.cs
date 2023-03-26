@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using System.Net.Http.Json;
 using Microsoft.AspNetCore.Components.Authorization;
-using Cargotruck.Shared.Models;
+using Cargotruck.Shared.Model;
 using Cargotruck.Client.UtilitiesClasses;
 
 namespace Cargotruck.Client.Shared

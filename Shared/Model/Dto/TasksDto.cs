@@ -2,14 +2,11 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-
-
-namespace Cargotruck.Shared.Models
+namespace Cargotruck.Shared.Model.Dto
 {
-    public class Tasks
+    public class TasksDto
     {
         [Required]
-        [ForeignKey("Task_id")]
         public int Id { get; set; }
         public string? User_id { get; set; }
         [Required(ErrorMessageResourceName = "Error_partner", ErrorMessageResourceType = typeof(Resource))]

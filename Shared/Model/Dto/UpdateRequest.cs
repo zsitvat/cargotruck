@@ -1,4 +1,4 @@
-﻿namespace Cargotruck.Shared.Models.Request
+﻿namespace Cargotruck.Shared.Model.Dto
 {
     public class UpdateRequest
     {

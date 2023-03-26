@@ -1,9 +1,9 @@
 ﻿using Cargotruck.Shared.Resources;
 using System.ComponentModel.DataAnnotations;
 
-namespace Cargotruck.Shared.Models
+namespace Cargotruck.Shared.Model.Dto
 {
-    public class Roads
+    public class RoadsDto
     {
         [Required]
         public int Id { get; set; }

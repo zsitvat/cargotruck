@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Newtonsoft.Json;
 using System.Net.Http.Json;
-using Cargotruck.Shared.Models;
+using Cargotruck.Shared.Model;
 
 namespace Cargotruck.Client.Services
 {

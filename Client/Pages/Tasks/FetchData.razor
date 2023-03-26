@@ -69,11 +69,11 @@
     <p class="error">@fileDownload.DocumentError</p>
 }
 
-@if (Tasks == null)
+@if ( Tasks == null)
 {
     <text><p class="text">@localizer["Loading"]</p></text>
 }
-else if (Tasks.Length == 0)
+else if (Tasks?.Count == 0)
 {
     <text><p class="text">@localizer["No_records"]</p></text>
 }
@@ -154,7 +154,7 @@ else
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (Tasks item in Tasks)
+                            @foreach ( TasksDto item in Tasks)
                             {
                                 <tr 
                                     @onclick="@((e) =>MouseHoverClass.MouseOnclick(item.Id.ToString()))" @onmouseover="@((e) =>MouseHoverClass.MouseOver(item.Id.ToString()))" @onmouseout="@((e) =>MouseHoverClass.MouseOut())"

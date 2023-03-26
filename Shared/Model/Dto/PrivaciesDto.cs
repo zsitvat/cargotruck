@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Cargotruck.Shared.Models
+namespace Cargotruck.Shared.Model.Dto
 {
-    public class Privacies
+    public class PrivaciesDto
     {
         [Required]
         public int Id { get; set; }

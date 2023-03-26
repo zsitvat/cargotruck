@@ -23,7 +23,10 @@
 
     async Task CreateMonthlyExpenseAsync()
     {
-
+        if (monthly_expense != null)
+        {
+            monthly_expense.User_id = authStateProvider.GetCurrentUserAsync().Result.Id;
+        }
         var result = await http.PostAsJsonAsync("api/Monthly_expenses/post", monthly_expense);
         var IsFirstId = true;
 

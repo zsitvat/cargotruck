@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 
 
-namespace Cargotruck.Shared.Models
+namespace Cargotruck.Shared.Model
 {
     public class Trucks
     {
@@ -25,4 +25,13 @@ namespace Cargotruck.Shared.Models
         [Display(Name = "Date", ResourceType = typeof(Resource))]
         public DateTime Date { get; set; } = DateTime.Now;
     }
+    public enum Status
+    {
+        delivering,
+        on_road,
+        garage,
+        under_repair,
+        loaned,
+        rented
+    };
 }

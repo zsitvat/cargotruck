@@ -8,17 +8,21 @@
 @code {
     [Parameter] public int Id { get; set; }
     bool isValidSubmit = true;
-    Tasks? task = new Tasks();
+    TasksDto? task = new TasksDto();
 
     protected async override Task OnParametersSetAsync()
     {
-        task = await http.GetFromJsonAsync<Tasks>($"api/tasks/getById/{Id}");
+        task = await http.GetFromJsonAsync<TasksDto>($"api/tasks/getById/{Id}");
     }
 
     async Task EditTasksAsync()
     {
         if (isValidSubmit)
         {
+            if (task != null)
+            {
+                task.User_id = authStateProvider.GetCurrentUserAsync().Result.Id;
+            }
             var text = @localizer["Succesfull_update"];
             await http.PutAsJsonAsync("api/tasks/put", task);
             await js.InvokeVoidAsync("alert", $"{text}");

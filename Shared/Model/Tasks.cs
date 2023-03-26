@@ -2,14 +2,11 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-
-
-namespace Cargotruck.Shared.Models
+namespace Cargotruck.Shared.Model
 {
-    public class TasksDto
+    public class Tasks
     {
         [Required]
-        [ForeignKey("Task_id")]
         public int Id { get; set; }
         public string? User_id { get; set; }
         [Required(ErrorMessageResourceName = "Error_partner", ErrorMessageResourceType = typeof(Resource))]
@@ -43,12 +40,12 @@ namespace Cargotruck.Shared.Models
         public string? Time_of_delay { get; set; }
         [Display(Name = "Payment", ResourceType = typeof(Resource))]
         [Range(0, int.MaxValue, ErrorMessageResourceName = "OnlyPositive", ErrorMessageResourceType = typeof(Resource))]
-        public int? Payment { get; set; }
+        public long? Payment { get; set; }
         [Display(Name = "Final_Payment", ResourceType = typeof(Resource))]
-        public int? Final_Payment { get; set; }
+        public long? Final_Payment { get; set; }
         [Display(Name = "Penalty", ResourceType = typeof(Resource))]
         [Range(0, int.MaxValue, ErrorMessageResourceName = "OnlyPositive", ErrorMessageResourceType = typeof(Resource))]
-        public int? Penalty { get; set; }
+        public long? Penalty { get; set; }
         [Display(Name = "Date", ResourceType = typeof(Resource))]
         public DateTime Date { get; set; } = DateTime.Now;
     }

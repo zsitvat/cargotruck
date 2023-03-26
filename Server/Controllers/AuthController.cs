@@ -1,7 +1,7 @@
 ﻿using Cargotruck.Server.Data;
 using Cargotruck.Server.Models;
-using Cargotruck.Shared.Models;
-using Cargotruck.Shared.Models.Request;
+using Cargotruck.Shared.Model;
+using Cargotruck.Shared.Model.Dto;
 using Cargotruck.Shared.Resources;
 using iTextSharp.text.xml.xmp;
 using Microsoft.AspNetCore.Authorization;
@@ -168,6 +168,7 @@ namespace Cargotruck.Server.Controllers
                     Email = u.Email,
                     PhoneNumber = u.PhoneNumber,
                     Claims = User.Claims.ToDictionary(c => c.Type, c => c.Value),
+                    Id = u.Id,
                 };
 
             }

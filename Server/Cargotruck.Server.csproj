@@ -39,6 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
     <PackageReference Include="ClosedXML" Version="0.97.0" />
     <PackageReference Include="EntityFramework" Version="6.4.4" />
     <PackageReference Include="iTextSharp.LGPLv2.Core" Version="3.1.0" />
@@ -69,7 +70,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Repositories\" />
     <Folder Include="Files\" />
   </ItemGroup>
 

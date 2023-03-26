@@ -1,7 +1,7 @@
 ﻿using Cargotruck.Shared.Resources;
 using System.ComponentModel.DataAnnotations;
 
-namespace Cargotruck.Shared.Models.Request
+namespace Cargotruck.Shared.Model.Dto
 {
     public class LoginRequest
     {

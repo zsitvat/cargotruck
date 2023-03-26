@@ -13,6 +13,10 @@
     {
         if (isValidSubmit)
         {
+            if (truck != null)
+            {
+                truck.User_id = authStateProvider.GetCurrentUserAsync().Result.Id;
+            }
             await http.PostAsJsonAsync("api/trucks/post", truck);
             uriHelper.NavigateTo("/Trucks");
         }

@@ -1,6 +1,6 @@
 ﻿using Cargotruck.Server.Data;
 using Cargotruck.Server.Services;
-using Cargotruck.Shared.Models;
+using Cargotruck.Shared.Model;
 using Cargotruck.Shared.Resources;
 using ClosedXML.Excel;
 using iTextSharp.text;

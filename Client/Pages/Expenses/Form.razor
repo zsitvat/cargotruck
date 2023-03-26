@@ -35,7 +35,7 @@
                     <label>@localizer["Type"]:</label>
                     <input type="text" class="form-control custom-select-input" @bind="selectedOption" @bind:event="oninput" placeholder="@localizer["Select_placeholder"]" disabled />
                     <div class="custom-select-options">
-                        @foreach (var value in Enum.GetValues<Cargotruck.Shared.Models.Type>())
+                        @foreach (var value in Enum.GetValues<Cargotruck.Shared.Model.Type>())
                         {
                            
                             <div class="custom-select-option" @onclick="() => {selectedOption=localizer[value.ToString()!];expenses!.Type = value;}">
@@ -230,14 +230,14 @@
     string error = "";
     string? selectedOption="";
     List<Cargoes>? cargoes { get; set; }
-    List<Tasks>? tasks { get; set; }
+    List<TasksDto>? tasks { get; set; }
     List<Roads>? roads { get; set; }
 
 
     protected override async Task OnInitializedAsync()
     {
         cargoes = await client.GetFromJsonAsync<List<Cargoes>?>("api/cargoes/getcargoes");
-        tasks = await client.GetFromJsonAsync<List<Tasks>?>("api/tasks/gettasks");
+        tasks = await client.GetFromJsonAsync<List<TasksDto>?>("api/tasks/gettasks");
         roads = await client.GetFromJsonAsync<List<Roads>?>("api/roads/getroads");
         var expenseWithIds = await client.GetFromJsonAsync<List<Expenses>>("api/expenses/getexpenses");
         if (expenseWithIds != null) 
@@ -268,7 +268,7 @@
         if (expenses?.Type != null)
         {
             invalid = false;
-            @foreach (var value in Enum.GetValues<Cargotruck.Shared.Models.Type>())
+            @foreach (var value in Enum.GetValues<Cargotruck.Shared.Model.Type>())
             {
                 if (value != expenses.Type)
                 {

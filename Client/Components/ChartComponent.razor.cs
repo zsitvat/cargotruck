@@ -1,6 +1,6 @@
 ﻿using System.Net.Http.Json;
 using System.Globalization;
-using Cargotruck.Shared.Models;
+using Cargotruck.Shared.Model;
 using ChartJs.Blazor.Common;
 using ChartJs.Blazor.Common.Axes;
 using ChartJs.Blazor.Common.Enums;

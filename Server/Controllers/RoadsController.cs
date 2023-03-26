@@ -1,6 +1,6 @@
 ﻿using Cargotruck.Server.Data;
 using Cargotruck.Server.Services;
-using Cargotruck.Shared.Models;
+using Cargotruck.Shared.Model;
 using Cargotruck.Shared.Resources;
 using ClosedXML.Excel;
 using iTextSharp.text;
@@ -185,7 +185,7 @@ namespace Cargotruck.Server.Controllers
             if (expense != null)
             {
                 expense.Type_id = data.Id;
-                expense.Type = Shared.Models.Type.repair;
+                expense.Type = Shared.Model.Type.repair;
                 _context.Entry(expense).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
             }
@@ -200,7 +200,7 @@ namespace Cargotruck.Server.Controllers
             if (expense != null)
             {
                 expense.Type_id = data.Id;
-                expense.Type = Shared.Models.Type.repair;
+                expense.Type = Shared.Model.Type.repair;
                 _context.Entry(expense).State = EntityState.Modified;
 
             }
@@ -723,7 +723,7 @@ namespace Cargotruck.Server.Controllers
                                             if (expense != null)
                                             {
                                                 expense.Type_id = lastId?.Id;
-                                                expense.Type = Shared.Models.Type.repair;
+                                                expense.Type = Shared.Model.Type.repair;
                                                 _context.Entry(expense).State = EntityState.Modified;
                                                 await _context.SaveChangesAsync();
                                             }

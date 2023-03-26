@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Components.Forms;
 using System.Globalization;
 using System.Net.Http.Headers;
 using RestSharp;
-using Cargotruck.Shared.Models.Request;
+using Cargotruck.Shared.Model.Dto;
 
 namespace Cargotruck.Client.Components
 {

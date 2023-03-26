@@ -9,8 +9,6 @@ Cargotruck/.vs
 ../.vs/
 *.code-workspace
 *.o
-*appsettings.json
-App/appsettings.json
 *.json
 obj/
 *obj/

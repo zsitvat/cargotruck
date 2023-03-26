@@ -1,4 +1,4 @@
-﻿using Cargotruck.Shared.Models.Request;
+﻿using Cargotruck.Shared.Model.Dto;
 using Cargotruck.Shared.Resources;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;

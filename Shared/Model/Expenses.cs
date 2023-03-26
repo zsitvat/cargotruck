@@ -2,9 +2,9 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Cargotruck.Shared.Models
+namespace Cargotruck.Shared.Model
 {
-    public class ExpensesDto
+    public class Expenses
     {
         [Required]
         [ForeignKey("Expense_id")]
@@ -47,7 +47,6 @@ namespace Cargotruck.Shared.Models
         [Display(Name = "Date", ResourceType = typeof(Resource))]
         public DateTime Date { get; set; } = DateTime.Now;
     }
-
     public enum Type
     {
         task, repair, storage, salary, other

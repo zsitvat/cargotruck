@@ -21,6 +21,10 @@
     {
         if (isValidSubmit)
         {
+            if (expense != null)
+            {
+                expense.User_id = authStateProvider.GetCurrentUserAsync().Result.Id;
+            }
             var text = @localizer["Succesfull_update"];
             await http.PutAsJsonAsync("api/expenses/put", expense);
             await js.InvokeVoidAsync("alert", $"{text}");

@@ -2,17 +2,19 @@
 @inject HttpClient http
 @inject NavigationManager uriHelper
 @inject IJSRuntime js
+@inject CustomStateProvider authStateProvider
 
 <Form ButtonText="Create" tasks="@task" OnValidSubmit="@CreateTasksAsync" TitleText="Create_task" checkValidSubmit="@CheckValidSubmit" />
 
 @code {
     bool isValidSubmit = true;
-    Tasks task = new Tasks();
+     TasksDto task = new TasksDto();
 
     async Task CreateTasksAsync()
     {
         if (isValidSubmit)
         {
+            task.User_id = authStateProvider.GetCurrentUserAsync().Result.Id;
             await http.PostAsJsonAsync("api/tasks/post", task);
             uriHelper.NavigateTo("/Tasks");
         }

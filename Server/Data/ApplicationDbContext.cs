@@ -1,5 +1,5 @@
 ﻿using Cargotruck.Server.Models;
-using Cargotruck.Shared.Models;
+using Cargotruck.Shared.Model;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

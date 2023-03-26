@@ -3,7 +3,7 @@
 @using Microsoft.Extensions.Localization
 @inject IStringLocalizer<Resource> localizer
 @inject PageHistoryState PageHistoryState
-@using Cargotruck.Shared.Models
+@using Cargotruck.Shared.Model
 
 <div>
     <div class="row">
@@ -82,9 +82,6 @@
         }
 
     </Authorized>
-    <Authorizing>
-        <img src="~/css/img/loading.gif" alt="loading" width="500" height="600">
-    </Authorizing>
 </AuthorizeView>
 </div>
 

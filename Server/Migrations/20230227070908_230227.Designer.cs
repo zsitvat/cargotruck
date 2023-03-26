@@ -24,7 +24,7 @@ namespace Cargotruck.Server.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("Cargotruck.Server.Models.Users", b =>
+            modelBuilder.Entity("Cargotruck.Server.Model.Users", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -89,7 +89,7 @@ namespace Cargotruck.Server.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("Cargotruck.Shared.Models.Cargoes", b =>
+            modelBuilder.Entity("Cargotruck.Shared.Model.Cargoes", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -134,7 +134,7 @@ namespace Cargotruck.Server.Migrations
                     b.ToTable("Cargoes");
                 });
 
-            modelBuilder.Entity("Cargotruck.Shared.Models.Expenses", b =>
+            modelBuilder.Entity("Cargotruck.Shared.Model.Expenses", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -189,7 +189,7 @@ namespace Cargotruck.Server.Migrations
                     b.ToTable("Expenses");
                 });
 
-            modelBuilder.Entity("Cargotruck.Shared.Models.Logins", b =>
+            modelBuilder.Entity("Cargotruck.Shared.Model.Logins", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -211,7 +211,7 @@ namespace Cargotruck.Server.Migrations
                     b.ToTable("Logins");
                 });
 
-            modelBuilder.Entity("Cargotruck.Shared.Models.Monthly_expenses", b =>
+            modelBuilder.Entity("Cargotruck.Shared.Model.Monthly_expenses", b =>
                 {
                     b.Property<int>("Monthly_expense_id")
                         .ValueGeneratedOnAdd()
@@ -239,7 +239,7 @@ namespace Cargotruck.Server.Migrations
                     b.ToTable("Monthly_Expenses");
                 });
 
-            modelBuilder.Entity("Cargotruck.Shared.Models.Monthly_expenses_tasks_expenses", b =>
+            modelBuilder.Entity("Cargotruck.Shared.Model.Monthly_expenses_tasks_expenses", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -263,7 +263,7 @@ namespace Cargotruck.Server.Migrations
                     b.ToTable("Monthly_expenses_tasks_expenses");
                 });
 
-            modelBuilder.Entity("Cargotruck.Shared.Models.Privacies", b =>
+            modelBuilder.Entity("Cargotruck.Shared.Model.Privacies", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -290,7 +290,7 @@ namespace Cargotruck.Server.Migrations
                     b.ToTable("Privacies");
                 });
 
-            modelBuilder.Entity("Cargotruck.Shared.Models.Roads", b =>
+            modelBuilder.Entity("Cargotruck.Shared.Model.Roads", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -350,7 +350,7 @@ namespace Cargotruck.Server.Migrations
                     b.ToTable("Roads");
                 });
 
-            modelBuilder.Entity("Cargotruck.Shared.Models.Settings", b =>
+            modelBuilder.Entity("Cargotruck.Shared.Model.Settings", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -374,7 +374,7 @@ namespace Cargotruck.Server.Migrations
                     b.ToTable("Settings");
                 });
 
-            modelBuilder.Entity("Cargotruck.Shared.Models.Tasks", b =>
+            modelBuilder.Entity("Cargotruck.Shared.Model.Tasks", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -443,7 +443,7 @@ namespace Cargotruck.Server.Migrations
                     b.ToTable("Tasks");
                 });
 
-            modelBuilder.Entity("Cargotruck.Shared.Models.Trucks", b =>
+            modelBuilder.Entity("Cargotruck.Shared.Model.Trucks", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -480,7 +480,7 @@ namespace Cargotruck.Server.Migrations
                     b.ToTable("Trucks");
                 });
 
-            modelBuilder.Entity("Cargotruck.Shared.Models.Warehouses", b =>
+            modelBuilder.Entity("Cargotruck.Shared.Model.Warehouses", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -677,9 +677,9 @@ namespace Cargotruck.Server.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Cargotruck.Shared.Models.Monthly_expenses_tasks_expenses", b =>
+            modelBuilder.Entity("Cargotruck.Shared.Model.Monthly_expenses_tasks_expenses", b =>
                 {
-                    b.HasOne("Cargotruck.Shared.Models.Monthly_expenses", "Monthly_expenses")
+                    b.HasOne("Cargotruck.Shared.Model.Monthly_expenses", "Monthly_expenses")
                         .WithMany("Monthly_expenses_tasks_expenses")
                         .HasForeignKey("Monthly_expense_id")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -699,7 +699,7 @@ namespace Cargotruck.Server.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Cargotruck.Server.Models.Users", null)
+                    b.HasOne("Cargotruck.Server.Model.Users", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -708,7 +708,7 @@ namespace Cargotruck.Server.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Cargotruck.Server.Models.Users", null)
+                    b.HasOne("Cargotruck.Server.Model.Users", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -723,7 +723,7 @@ namespace Cargotruck.Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Cargotruck.Server.Models.Users", null)
+                    b.HasOne("Cargotruck.Server.Model.Users", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -732,14 +732,14 @@ namespace Cargotruck.Server.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Cargotruck.Server.Models.Users", null)
+                    b.HasOne("Cargotruck.Server.Model.Users", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Cargotruck.Shared.Models.Monthly_expenses", b =>
+            modelBuilder.Entity("Cargotruck.Shared.Model.Monthly_expenses", b =>
                 {
                     b.Navigation("Monthly_expenses_tasks_expenses");
                 });

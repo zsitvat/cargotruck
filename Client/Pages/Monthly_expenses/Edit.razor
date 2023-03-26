@@ -30,6 +30,10 @@
 
     async Task EditMonthlyExpenseAsync()
     {
+        if (monthly_expense != null)
+        {
+            monthly_expense.User_id = authStateProvider.GetCurrentUserAsync().Result.Id;
+        }
         var text = @localizer["Succesfull_update"];
         var IsFirstId = true;
         await http.PutAsJsonAsync("api/monthly_expenses/put", monthly_expense);

@@ -2,17 +2,8 @@
 using System.ComponentModel.DataAnnotations;
 
 
-namespace Cargotruck.Shared.Models
+namespace Cargotruck.Shared.Model.Dto
 {
-    public enum Status
-    {
-        delivering,
-        on_road,
-        garage,
-        under_repair,
-        loaned,
-        rented
-    };
     public class TrucksDto
     {
         [Required]

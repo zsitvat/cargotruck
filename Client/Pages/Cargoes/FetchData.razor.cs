@@ -1,5 +1,5 @@
 ﻿using Cargotruck.Client.UtilitiesClasses;
-using Cargotruck.Shared.Models.Request;
+using Cargotruck.Shared.Model.Dto;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System.Net.Http.Json;
@@ -10,7 +10,7 @@ namespace Cargotruck.Client.Pages.Cargoes
     {
         public bool settings = false;
         bool expandExportMenu;
-        Cargotruck.Shared.Models.Cargoes[]? Cargoes { get; set; }
+        Cargotruck.Shared.Model.Cargoes[]? Cargoes { get; set; }
         string? IdForGetById { get; set; }
         string? GetByIdType { get; set; }
         readonly List<bool> showColumns = Enumerable.Repeat(true, 9).ToList();
@@ -36,7 +36,7 @@ namespace Cargotruck.Client.Pages.Cargoes
             pageSize = Page.GetPageSize(pageSize, dataRows);
             maxPage = Page.GetMaxPage(pageSize, dataRows);
 
-            Cargoes = await client.GetFromJsonAsync<Cargotruck.Shared.Models.Cargoes[]>($"api/cargoes/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
+            Cargoes = await client.GetFromJsonAsync<Cargotruck.Shared.Model.Cargoes[]>($"api/cargoes/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
             StateHasChanged();
         }
 

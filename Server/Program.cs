@@ -1,9 +1,17 @@
+using AutoMapper;
+using Cargotruck.Client;
 using Cargotruck.Server.Data;
 using Cargotruck.Server.Models;
+using Cargotruck.Server.Repositories;
 using Cargotruck.Server.Services;
+using Cargotruck.Shared.Model;
+using Cargotruck.Shared.Model.Dto;
+using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 
 /*
@@ -36,6 +44,40 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddMvc().AddControllersAsServices();
 
+builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+var configuration = new MapperConfiguration(cfg =>
+{
+    cfg.CreateMap<Cargoes, CargoesDto>();
+    cfg.CreateMap<Expenses, ExpensesDto>();
+    cfg.CreateMap<Logins, LoginsDto>();
+    cfg.CreateMap<Monthly_expenses, Monthly_expensesDto>();
+    cfg.CreateMap<Privacies, PrivaciesDto>();
+    cfg.CreateMap<Roads, RoadsDto>();
+    cfg.CreateMap<Settings, SettingsDto>();
+    cfg.CreateMap<Tasks, TasksDto>();
+    cfg.CreateMap<Trucks, TrucksDto>();
+    cfg.CreateMap<Warehouses, WarehousesDto>();
+
+    cfg.CreateMap<CargoesDto, Cargoes>();
+    cfg.CreateMap<ExpensesDto, Expenses>();
+    cfg.CreateMap<LoginsDto, Logins>();
+    cfg.CreateMap<Monthly_expensesDto, Monthly_expenses>();
+    cfg.CreateMap<PrivaciesDto, Privacies>();
+    cfg.CreateMap<RoadsDto, Roads>();
+    cfg.CreateMap<SettingsDto, Settings>();
+    cfg.CreateMap<TasksDto, Tasks>();
+    cfg.CreateMap<TrucksDto, Trucks>();
+    cfg.CreateMap<WarehousesDto, Warehouses>();
+});
+var mapper = configuration.CreateMapper();
+builder.Services.AddSingleton(mapper);
+
+//My services
+builder.Services.AddSingleton<IColumnNamesService, ColumnNamesService>();
+builder.Services.AddScoped<ITaskService, TaskService>();
+builder.Services.AddScoped<ITaskRepository, TaskRepository>();
+
 // Add services to the container.
 builder.Services.AddDbContext<ApplicationDbContext>(options => 
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -59,11 +101,9 @@ builder.Services.ConfigureApplicationCookie(options =>
     };
 });
 
-//My services
-builder.Services.AddSingleton<IColumnNamesService, ColumnNamesService>();
-
 builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddControllersWithViews();
+
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
@@ -79,6 +119,7 @@ using (var scope = app.Services.CreateAsyncScope())
 if (app.Environment.IsDevelopment())
 {
     app.UseWebAssemblyDebugging();
+    configuration.AssertConfigurationIsValid();
 }
 else
 {

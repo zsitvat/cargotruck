@@ -82,11 +82,11 @@
     [Parameter] public  EventCallback  OnSettingsChanged { get; set; }
     [Parameter] public  EventCallback  OnSettingsClosed { get; set; }
     [Parameter] public EventCallback<int> OnInputChanged { get; set; }
-    Cargotruck.Shared.Models.Settings? waitTimeSetting;
+    Cargotruck.Shared.Model.Settings? waitTimeSetting;
 
     protected override async Task OnInitializedAsync()
     {
-        waitTimeSetting = (await client.GetFromJsonAsync<Cargotruck.Shared.Models.Settings>("api/settings/getwaittime"));
+        waitTimeSetting = (await client.GetFromJsonAsync<Cargotruck.Shared.Model.Settings>("api/settings/getwaittime"));
     }
 
     protected async Task SettingsChangedAsync()

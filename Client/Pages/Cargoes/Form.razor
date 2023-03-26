@@ -160,7 +160,7 @@
     [Parameter] public EventCallback<bool> checkValidSubmit { get; set; }
     string error = "";
     Warehouses[]? warehouses { get; set; }
-    List<Tasks>? tasks { get; set; }
+    List<TasksDto>? tasks { get; set; }
     List<Trucks>? trucks { get; set; }
     List<Cargoes>? cargoWithIds { get; set; }
 
@@ -168,7 +168,7 @@
     protected override async Task OnInitializedAsync()
     {
         warehouses = await client.GetFromJsonAsync<Warehouses[]?>("api/warehouses/getwarehouses");
-        tasks = await client.GetFromJsonAsync < List<Tasks>?>("api/tasks/gettasks");
+        tasks = await client.GetFromJsonAsync < List<TasksDto>?>("api/tasks/gettasks");
         trucks = await client.GetFromJsonAsync < List<Trucks>?>("api/trucks/gettrucks");
         cargoWithIds = await client.GetFromJsonAsync<List<Cargoes>>("api/cargoes/getcargoes");
 

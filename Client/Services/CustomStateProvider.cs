@@ -1,4 +1,4 @@
-﻿using Cargotruck.Shared.Models.Request;
+﻿using Cargotruck.Shared.Model.Dto;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.Security.Claims;
 
@@ -26,7 +26,7 @@ namespace Cargotruck.Client.UtilitiesClasses
             }
             catch (HttpRequestException ex)
             {
-                Console.WriteLine("Request failed:" + ex.ToString());
+                Console.WriteLine("Dto failed:" + ex.ToString());
             }
 
             return new AuthenticationState(new ClaimsPrincipal(identity));

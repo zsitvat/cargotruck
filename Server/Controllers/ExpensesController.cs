@@ -1,6 +1,6 @@
 ﻿using Cargotruck.Server.Data;
 using Cargotruck.Server.Services;
-using Cargotruck.Shared.Models;
+using Cargotruck.Shared.Model;
 using Cargotruck.Shared.Resources;
 using ClosedXML.Excel;
 using iTextSharp.text;
@@ -15,7 +15,7 @@ using System.Globalization;
 using System.Text;
 using Document = iTextSharp.text.Document;
 using Font = iTextSharp.text.Font;
-using Type = Cargotruck.Shared.Models.Type;
+using Type = Cargotruck.Shared.Model.Type;
 
 namespace Cargotruck.Server.Controllers
 {
