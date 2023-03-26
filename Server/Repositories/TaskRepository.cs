@@ -166,8 +166,7 @@ namespace Cargotruck.Server.Repositories
         public async Task<int> PageCountAsync(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var t = await GetDataAsync(searchString, filter, dateFilterStartDate, dateFilterEndDate);
-            int PageCount = t.Count;
-            return PageCount;
+            return t.Count;
         }
 
         public async Task PostAsync(Tasks t)
@@ -623,7 +622,7 @@ namespace Cargotruck.Server.Repositories
             return file;
         }
 
-        public async Task<string> ImportAsync([FromBody] string file, CultureInfo lang)
+        public async Task<string?> ImportAsync([FromBody] string file, CultureInfo lang)
         {
             var error = "";
             var haveColumns = false;

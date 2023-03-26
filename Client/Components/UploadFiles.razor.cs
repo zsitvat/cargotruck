@@ -53,7 +53,7 @@ namespace Cargotruck.Client.Components
                     uploadResults = uploadResults.Concat(newUploadResults).ToList();
                     foreach (var file in uploadResults)
                     {
-                        var datasaved = await Http.PostAsJsonAsync($"api/{Page}/import?&lang={CultureInfo.CurrentCulture.Name}", file.StoredFileName);
+                        var datasaved = await Http.PostAsJsonAsync<string?>($"api/{Page}/import?&lang={CultureInfo.CurrentCulture.Name}", file.StoredFileName);
                         error = await datasaved.Content.ReadAsStringAsync();
                         if (datasaved.IsSuccessStatusCode && error == "")
                         {

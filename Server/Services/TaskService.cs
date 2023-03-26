@@ -80,7 +80,7 @@ namespace Cargotruck.Server.Services
         {
             return await _taskRepository.ExportToPdfAsync(lang, dateFilterStartDate, dateFilterEndDate);
         }
-        public async Task<ActionResult<string>> ImportAsync([FromBody] string file, CultureInfo lang)
+        public async Task<ActionResult<string?>> ImportAsync([FromBody] string file, CultureInfo lang)
         {
             return await _taskRepository.ImportAsync(file, lang);
         }

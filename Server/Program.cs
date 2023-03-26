@@ -45,9 +45,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddMvc().AddControllersAsServices();
 
 builder.Services.AddAutoMapper(typeof(Program));
-builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
 var configuration = new MapperConfiguration(cfg =>
 {
+    //Entity to  Dto
     cfg.CreateMap<Cargoes, CargoesDto>();
     cfg.CreateMap<Expenses, ExpensesDto>();
     cfg.CreateMap<Logins, LoginsDto>();
@@ -59,6 +60,7 @@ var configuration = new MapperConfiguration(cfg =>
     cfg.CreateMap<Trucks, TrucksDto>();
     cfg.CreateMap<Warehouses, WarehousesDto>();
 
+    //Dto to entity
     cfg.CreateMap<CargoesDto, Cargoes>();
     cfg.CreateMap<ExpensesDto, Expenses>();
     cfg.CreateMap<LoginsDto, Logins>();
@@ -73,11 +75,6 @@ var configuration = new MapperConfiguration(cfg =>
 var mapper = configuration.CreateMapper();
 builder.Services.AddSingleton(mapper);
 
-//My services
-builder.Services.AddSingleton<IColumnNamesService, ColumnNamesService>();
-builder.Services.AddScoped<ITaskService, TaskService>();
-builder.Services.AddScoped<ITaskRepository, TaskRepository>();
-
 // Add services to the container.
 builder.Services.AddDbContext<ApplicationDbContext>(options => 
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -87,6 +84,15 @@ builder.Services.AddLocalization();
 
 builder.Services.AddIdentity<Users, IdentityRole>(options => 
     options.SignIn.RequireConfirmedPhoneNumber = false).AddEntityFrameworkStores<ApplicationDbContext>();
+
+//Services
+builder.Services.AddSingleton<IColumnNamesService, ColumnNamesService>();
+builder.Services.AddScoped<ITaskService, TaskService>();
+builder.Services.AddScoped<IWarehouseService, WarehouseService>();
+
+//Repositories
+builder.Services.AddScoped<ITaskRepository, TaskRepository>();
+builder.Services.AddScoped<IWarehouseRepository, WarehouseRepository>();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {

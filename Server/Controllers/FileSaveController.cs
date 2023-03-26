@@ -72,8 +72,9 @@ namespace Cargotruck.Server.Controllers
                             if (id == "page")
                             {
                                 rootpath = env.ContentRootPath + "";
+                                var extension = Path.GetExtension(uploadResult.FileName);
                                 trustedFileNameForFileStorage = Path.GetRandomFileName();
-                                trustedFileNameForFileStorage = Path.ChangeExtension(trustedFileNameForFileStorage, ".xlsx");
+                                trustedFileNameForFileStorage = Path.ChangeExtension(trustedFileNameForFileStorage, extension);
                                 folder = "Files/";
                             }
                             // image upload part

@@ -4,17 +4,15 @@ using System.Globalization;
 
 namespace Cargotruck.Server.Repositories
 {
-    public interface ITaskRepository
+    public interface IWarehouseRepository
     {
-        Task<List<Tasks>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);
-        Task<List<Tasks>> GetTasksAsync();
-        Task<Tasks?> GetByIdAsync(int id);
-        Task<int[]> GetChartDataAsync();
-        Task<int> PageCountAsync(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);
+        Task<List<Warehouses>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);
+        Task<List<Warehouses>> GetWarehousesAsync();
+        Task<Warehouses?> GetByIdAsync(int id);
+        Task<int> PageCountAsync(string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);
         Task<int> CountAsync(bool all);
-        Task ChangeCompletionAsync(Tasks t);
-        Task PostAsync(Tasks t);
-        Task PutAsync(Tasks t);
+        Task PostAsync(Warehouses data);
+        Task PutAsync(Warehouses data);
         Task<bool> DeleteAsync(int id);
         string ExportToExcel(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);
         Task<string> ExportToPdfAsync(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);

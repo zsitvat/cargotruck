@@ -102,9 +102,10 @@ namespace Cargotruck.Server.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult<string>> ImportAsync([FromBody] string file, CultureInfo lang)
+        public async Task<ActionResult<string?>> ImportAsync([FromBody] string file, CultureInfo lang)
         {
-            return await _taskService.ImportAsync(file,lang);
+            var result = await _taskService.ImportAsync(file, lang);
+            return (result != null ? result.Value : Ok());
         }
     }
 }
