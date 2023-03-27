@@ -1,5 +1,8 @@
 ﻿using Cargotruck.Server.Data;
+using Cargotruck.Server.Services;
 using Cargotruck.Shared.Model;
+using Cargotruck.Shared.Model.Dto;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,64 +15,46 @@ namespace Cargotruck.Server.Controllers
     [Authorize]
     public class SettingsController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
-        public SettingsController(ApplicationDbContext context)
+        private readonly ISettingService _settingService;
+        public SettingsController(ISettingService settingService)
         {
-            this._context = context;
+            _settingService = settingService;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAsync()
+        public async Task<ActionResult<List<SettingsDto>>> GetAsync()
         {
-            var data = await _context.Settings.ToListAsync();
-            return Ok(data);
+            return Ok(await _settingService.GetAsync());
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetAsync(int id)
+        public async Task<ActionResult<SettingsDto>> GetAsync(int id)
         {
-            var data = await _context.Settings.FirstOrDefaultAsync(a => a.Id == id);
-            return Ok(data);
+            return Ok(await _settingService.GetAsync(id));
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetWaitTimeAsync()
+        public async Task<ActionResult<SettingsDto>> GetWaitTimeAsync()
         {
-            var waitTime = await _context.Settings.FirstOrDefaultAsync(x => x.SettingName == "CurrencyExchangeWaitTime");
-            
-            if (waitTime == null)
-            {
-                waitTime = new Settings() { SettingName = "CurrencyExchangeWaitTime", SettingValue = "3600" };
-                _context.Settings.Add(waitTime);
-                await _context.SaveChangesAsync();
-            }
-
-            return Ok(waitTime);
+            return Ok(await _settingService.GetWaitTimeAsync());
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostAsync(Settings data)
+        public async Task PostAsync(SettingsDto data)
         {
-            _context.Add(data);
-            await _context.SaveChangesAsync();
-            return Ok(data.Id);
+            await _settingService.PostAsync(data);
         }
 
         [HttpPut]
-        public async Task<IActionResult> PutAsync(Settings data)
+        public async Task PutAsync(SettingsDto data)
         {
-            _context.Entry(data).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-            return NoContent();
+            await _settingService.PostAsync(data);
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAsync(int id)
+        public async Task<ActionResult<bool>> DeleteAsync(int id)
         {
-            var data = new Settings { Id = id };
-            _context.Remove(data);
-            await _context.SaveChangesAsync();
-            return NoContent();
+            return Ok(await _settingService.DeleteAsync(id));
         }
     }
 }

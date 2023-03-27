@@ -29,9 +29,9 @@ namespace Cargotruck.Server.Services
         }
         public async Task<WarehousesDto?> GetByIdAsync(int id)
         {
-            var task = await _warehouseRepository.GetByIdAsync(id);
+            var warehouse = await _warehouseRepository.GetByIdAsync(id);
 
-            return _mapper.Map<WarehousesDto>(task);
+            return _mapper.Map<WarehousesDto>(warehouse);
         }
         public async Task<int> PageCountAsync(string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
@@ -39,19 +39,19 @@ namespace Cargotruck.Server.Services
 
             return count;
         }
-        public async Task<int> CountAsync(bool all)
+        public async Task<int> CountAsync()
         {
-            var count = await _warehouseRepository.CountAsync(all);
+            var count = await _warehouseRepository.CountAsync();
 
             return count;
         }
-        public async Task PostAsync(WarehousesDto task)
+        public async Task PostAsync(WarehousesDto warehouse)
         {
-            await _warehouseRepository.PostAsync(_mapper.Map<Warehouses>(task));
+            await _warehouseRepository.PostAsync(_mapper.Map<Warehouses>(warehouse));
         }
-        public async Task PutAsync(WarehousesDto task)
+        public async Task PutAsync(WarehousesDto warehouse)
         {
-            await _warehouseRepository.PutAsync(_mapper.Map<Warehouses>(task));
+            await _warehouseRepository.PutAsync(_mapper.Map<Warehouses>(warehouse));
         }
         public async Task<bool> DeleteAsync(int id)
         {
@@ -69,7 +69,7 @@ namespace Cargotruck.Server.Services
         {
             return await _warehouseRepository.ExportToPdfAsync(lang, dateFilterStartDate, dateFilterEndDate);
         }
-        public async Task<ActionResult<string?>> ImportAsync([FromBody] string file, CultureInfo lang)
+        public async Task<string?> ImportAsync([FromBody] string file, CultureInfo lang)
         {
             return await _warehouseRepository.ImportAsync(file, lang);
         }

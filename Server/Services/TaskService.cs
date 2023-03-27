@@ -48,9 +48,7 @@ namespace Cargotruck.Server.Services
         }
         public async Task<int> CountAsync(bool all)
         {
-            var count = await _taskRepository.CountAsync(all);
-
-            return count;
+            return await _taskRepository.CountAsync(all);
         }
         public async Task ChangeCompletionAsync(TasksDto task)
         {
@@ -80,7 +78,7 @@ namespace Cargotruck.Server.Services
         {
             return await _taskRepository.ExportToPdfAsync(lang, dateFilterStartDate, dateFilterEndDate);
         }
-        public async Task<ActionResult<string?>> ImportAsync([FromBody] string file, CultureInfo lang)
+        public async Task<string?> ImportAsync([FromBody] string file, CultureInfo lang)
         {
             return await _taskRepository.ImportAsync(file, lang);
         }

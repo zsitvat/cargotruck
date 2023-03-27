@@ -53,9 +53,9 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<int>> CountAsync(bool all)
+        public async Task<ActionResult<int>> CountAsync()
         {
-            return Ok(await _warehouseService.CountAsync(all));
+            return Ok(await _warehouseService.CountAsync());
         }
 
         [HttpGet]
@@ -107,7 +107,7 @@ namespace Cargotruck.Server.Controllers
         public async Task<ActionResult<string?>> ImportAsync([FromBody] string file, CultureInfo lang)
         {
             var result = await _warehouseService.ImportAsync(file, lang);
-            return (result != null ? result.Value : Ok());
+            return (result != null ? result : Ok());
         }
     }
 }

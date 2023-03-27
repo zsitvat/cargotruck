@@ -1,5 +1,4 @@
 using AutoMapper;
-using Cargotruck.Client;
 using Cargotruck.Server.Data;
 using Cargotruck.Server.Models;
 using Cargotruck.Server.Repositories;
@@ -89,10 +88,28 @@ builder.Services.AddIdentity<Users, IdentityRole>(options =>
 builder.Services.AddSingleton<IColumnNamesService, ColumnNamesService>();
 builder.Services.AddScoped<ITaskService, TaskService>();
 builder.Services.AddScoped<IWarehouseService, WarehouseService>();
+builder.Services.AddScoped<ITruckService, TruckService>();
+builder.Services.AddScoped<ISettingService, SettingService>();
+builder.Services.AddScoped<PrivacyService, IPrivacyService>();
+builder.Services.AddScoped<IMonthlyExpenseService, MonthlyExpenseService>();
+builder.Services.AddScoped<IFileSaveService, FileSaveService>();
+builder.Services.AddScoped<IExpenseService, ExpenseService>();
+builder.Services.AddScoped<ICargoService, CargoService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IAdminService, AdminService>();
 
 //Repositories
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 builder.Services.AddScoped<IWarehouseRepository, WarehouseRepository>();
+builder.Services.AddScoped<ITruckService, TruckService>();
+builder.Services.AddScoped<ISettingRepository, SettingRepository>();
+builder.Services.AddScoped<IPrivacyRepository, PrivacyRepository>();
+builder.Services.AddScoped<IMonthlyExpenseRepository, MonthlyExpenseRepository>();
+builder.Services.AddScoped<IFileSaveRepository, FileSaveRepository>();
+builder.Services.AddScoped<IExpenseRepository, ExpenseRepository>();
+builder.Services.AddScoped<ICargoRepository, CargoRepository>();
+builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+builder.Services.AddScoped<IAdminRepository, AdminRepository>();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {

@@ -68,7 +68,7 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAsync(int id)
+        public async Task<ActionResult<bool>> DeleteAsync(int id)
         {
             return Ok(await _taskService.DeleteAsync(id));
         }
@@ -105,7 +105,7 @@ namespace Cargotruck.Server.Controllers
         public async Task<ActionResult<string?>> ImportAsync([FromBody] string file, CultureInfo lang)
         {
             var result = await _taskService.ImportAsync(file, lang);
-            return (result != null ? result.Value : Ok());
+            return (result != null ? result : Ok());
         }
     }
 }

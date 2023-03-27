@@ -1,20 +1,9 @@
-﻿using Cargotruck.Server.Data;
-using Cargotruck.Server.Services;
+﻿using Cargotruck.Server.Services;
 using Cargotruck.Shared.Model;
-using Cargotruck.Shared.Resources;
-using ClosedXML.Excel;
-using iTextSharp.text;
-using iTextSharp.text.pdf;
+using Cargotruck.Shared.Model.Dto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Localization;
-using System.Data;
 using System.Globalization;
-using System.Text;
-using Document = iTextSharp.text.Document;
-using Font = iTextSharp.text.Font;
 
 namespace Cargotruck.Server.Controllers
 {
@@ -23,112 +12,94 @@ namespace Cargotruck.Server.Controllers
     [Authorize]
     public class TrucksController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
-        private readonly IStringLocalizer<Resource> _localizer;
-        private readonly IColumnNamesService _columnNameLists;
+        private readonly ITruckService _truckService;
 
-        public TrucksController(ApplicationDbContext context, IStringLocalizer<Resource> localizer, IColumnNamesService columnNameLists)
+        public TrucksController(ITruckService truckService)
         {
-            _context = context;
-            _localizer = localizer;
-            _columnNameLists = columnNameLists;
-        }
-
-        private async Task<List<Trucks>> GetDataAsync(string? searchString, Status? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
-        {
-           
+            _truckService = truckService;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, Status? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        public async Task<ActionResult<List<TrucksDto>>> GetAsync(int page, int pageSize, string sortOrder,
+            bool desc, string? searchString, Status? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
-           
+            return Ok(await _truckService.GetAsync(page, pageSize, sortOrder, desc, searchString, filter, dateFilterStartDate, dateFilterEndDate));
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetByIdAsync(int id)
+        public async Task<ActionResult<TrucksDto>> GetByIdAsync(int id)
         {
-            var data = 
-            return Ok(data);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> GetTrucksAsync()
-        {
-            var data = 
-            return Ok(data);
+            return Ok(await _truckService.GetByIdAsync(id));
         }
 
         [HttpGet("{vehicle_registration_number}")]
-        public async Task<IActionResult> GetByVRNAsync(string vehicle_registration_number)
+        public async Task<ActionResult<TrucksDto>> GetByVRNAsync(string vehicle_registration_number)
         {
-            var data = await _context.Trucks.FirstOrDefaultAsync(a => a.Vehicle_registration_number == vehicle_registration_number);
-            return Ok(data);
+            return Ok(await _truckService.GetByVRNAsync(vehicle_registration_number));
         }
 
         [HttpGet]
-        public async Task<IActionResult> CountAsync(bool all)
+        public async Task<ActionResult<List<TrucksDto>>> GetTrucksAsync()
         {
-            
+            return Ok(await _truckService.GetTrucksAsync());
         }
 
         [HttpGet]
-        public async Task<IActionResult> PageCountAsync(string? searchString, Status? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        public async Task<ActionResult<int>> CountAsync(bool all)
         {
-           
+            return Ok(await _truckService.CountAsync(all));
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<int>> PageCountAsync(string? searchString, Status? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        {
+            return Ok(await _truckService.PageCountAsync(searchString,filter, dateFilterStartDate, dateFilterEndDate));
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostAsync(Trucks data)
+        public async Task PostAsync(TrucksDto task)
         {
-            data.User_id = _context.Users.FirstOrDefault(a => a.UserName == User.Identity!.Name)?.Id;
-            _context.Add(data);
-            await _context.SaveChangesAsync();
-            return Ok(data.Id);
+            await _truckService.PostAsync(task);
         }
 
         [HttpPut]
-        public async Task<IActionResult> PutAsync(Trucks data)
+        public async Task PutAsync(TrucksDto task)
         {
-            _context.Entry(data).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-            return NoContent();
+            await _truckService.PutAsync(task);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(int id)
         {
-            var data = new Trucks { Id = id };
-            _context.Remove(data);
-            await _context.SaveChangesAsync();
-            return NoContent();
+            return Ok(await _truckService.DeleteAsync(id));
         }
-
 
         //closedXML needed !!!
         [HttpGet]
         public string ExportToExcel(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
-            
+            return _truckService.ExportToExcel(lang, dateFilterStartDate, dateFilterEndDate);
         }
 
         //iTextSharp needed !!!
         [HttpGet]
         public async Task<string> ExportToPdfAsync(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
-            
+            return await _truckService.ExportToPdfAsync(lang, dateFilterStartDate, dateFilterEndDate);
         }
 
-        //iTextSharp needed !!!
         [HttpGet]
         public async Task<string> ExportToCSVAsync(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate, bool isTextDocument)
         {
-            
+            return await _truckService.ExportToCSVAsync(lang, dateFilterStartDate, dateFilterEndDate, isTextDocument);
         }
 
+
         [HttpPost]
-        public async Task<IActionResult> ImportAsync([FromBody] string file, CultureInfo lang)
+        public async Task<ActionResult<string?>> ImportAsync([FromBody] string file, CultureInfo lang)
         {
-            
+            var result = await _truckService.ImportAsync(file, lang);
+            return (result != null ? result : Ok());
+        }
     }
 }

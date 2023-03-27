@@ -1,68 +1,56 @@
-﻿using Cargotruck.Server.Data;
-using Cargotruck.Shared.Model;
+﻿using Cargotruck.Server.Services;
+using Cargotruck.Shared.Model.Dto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Cargotruck.Server.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class PrivacyController : Controller
+    [Authorize]
+    public class PrivaciesController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
-        public PrivacyController(ApplicationDbContext context)
+        private readonly IPrivacyService _privacyService;
+
+        public PrivaciesController(IPrivacyService privacyService)
         {
-            _context = context;
+            _privacyService = privacyService;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAsync(string lang)
+        public async Task<ActionResult<List<PrivaciesDto>>> GetAsync()
         {
-            var data = await _context.Privacies.Where(x => x.Lang == lang).ToListAsync();
-            return Ok(data);
+            return Ok(await _privacyService.GetAsync());
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetByIdAsync(int id)
+        public async Task<ActionResult<PrivaciesDto>> GetByIdAsync(int id)
         {
-            var data = await _context.Privacies.FirstOrDefaultAsync(a => a.Id == id);
-            return Ok(data);
+            return Ok(await _privacyService.GetByIdAsync(id));
         }
 
         [HttpGet]
-        public async Task<IActionResult> CountAsync()
+        public async Task<ActionResult<int>> CountAsync()
         {
-            var t = await _context.Privacies.CountAsync();
-            return Ok(t);
+            return Ok(await _privacyService.CountAsync());
         }
 
         [HttpPost]
-        [Authorize]
-        public async Task<IActionResult> PostAsync(Privacies data)
+        public async Task PostAsync(PrivaciesDto privacy)
         {
-            _context.Add(data);
-            await _context.SaveChangesAsync();
-            return Ok(data.Id);
+            await _privacyService.PostAsync(privacy);
         }
 
         [HttpPut]
-        [Authorize]
-        public async Task<IActionResult> PutAsync(Privacies data)
+        public async Task PutAsync(PrivaciesDto privacy)
         {
-            _context.Entry(data).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-            await _context.SaveChangesAsync();
-            return NoContent();
+            await _privacyService.PutAsync(privacy);
         }
 
         [HttpDelete("{id}")]
-        [Authorize]
-        public async Task<IActionResult> DeleteAsync(int id)
+        public async Task<ActionResult<bool>> DeleteAsync(int id)
         {
-            var data = new Privacies { Id = id };
-            _context.Remove(data);
-            await _context.SaveChangesAsync();
-            return NoContent();
+            return Ok(await _privacyService.DeleteAsync(id));
         }
     }
 }

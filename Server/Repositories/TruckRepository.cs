@@ -88,8 +88,7 @@ namespace Cargotruck.Server.Repositories
             return await _context.Trucks.FirstOrDefaultAsync(a => a.Id == id);
         }
 
-        [HttpGet("{vehicle_registration_number}")]
-        public async Task<Trucks> GetByVRNAsync(string vehicle_registration_number)
+        public async Task<Trucks?> GetByVRNAsync(string vehicle_registration_number)
         {
             return await _context.Trucks.FirstOrDefaultAsync(a => a.Vehicle_registration_number == vehicle_registration_number);
         }
