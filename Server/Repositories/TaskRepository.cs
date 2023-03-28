@@ -132,8 +132,7 @@ namespace Cargotruck.Server.Repositories
 
         public async Task<List<Tasks>> GetTasksAsync()
         {
-            var t = await _context.Tasks.ToListAsync();
-            return t;
+            return await _context.Tasks.ToListAsync();
         }
 
         public async Task<int[]> GetChartDataAsync()

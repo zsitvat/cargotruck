@@ -36,15 +36,11 @@ namespace Cargotruck.Server.Services
         }
         public async Task<int[]> GetChartDataAsync()
         {
-            var chartdata = await _taskRepository.GetChartDataAsync();
-
-            return chartdata;
+            return await _taskRepository.GetChartDataAsync();
         }
         public async Task<int> PageCountAsync(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
-            var count = await _taskRepository.PageCountAsync(searchString, filter, dateFilterStartDate, dateFilterEndDate);
-
-            return count;
+            return await _taskRepository.PageCountAsync(searchString, filter, dateFilterStartDate, dateFilterEndDate);
         }
         public async Task<int> CountAsync(bool all)
         {

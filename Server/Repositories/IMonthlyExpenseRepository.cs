@@ -4,7 +4,7 @@ using System.Globalization;
 
 namespace Cargotruck.Server.Repositories
 {
-    public interface IMonthlyExpensesRepository
+    public interface IMonthlyExpenseRepository
     {
         Task<List<Monthly_expenses>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);
         Task<List<Monthly_expenses>> GetMonthlyExpensesAsync();
@@ -16,6 +16,7 @@ namespace Cargotruck.Server.Repositories
         Task PutAsync(Monthly_expenses data); 
         Task<bool> DeleteAsync(int id);
         Task CheckDataAsync();
+        Task<List<Monthly_expenses_tasks_expenses>> GetConnectionIdsAsync();
         Task PostConnectionIdsAsync(Monthly_expenses_tasks_expenses connectionIds, bool first);
         Task CreateMonthsAsync();
         Task CreateConTableAsync();

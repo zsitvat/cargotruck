@@ -17,9 +17,9 @@ namespace Cargotruck.Server.Services
             _privacyRepository = privacyRepository;
             _mapper = mapper;
         }
-        public async Task<List<PrivaciesDto>> GetAsync()
+        public async Task<List<PrivaciesDto>> GetAsync(string lang)
         {
-            var privacies = await _privacyRepository.GetAsync();
+            var privacies = await _privacyRepository.GetAsync(lang);
             return _mapper.Map<List<PrivaciesDto>>(privacies);
         }
         public async Task<PrivaciesDto?> GetByIdAsync(int id)

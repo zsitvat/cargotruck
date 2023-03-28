@@ -4,7 +4,7 @@ namespace Cargotruck.Server.Services
 {
     public interface IPrivacyService
     {
-        Task<List<PrivaciesDto>> GetAsync();
+        Task<List<PrivaciesDto>> GetAsync(string lang);
         Task<PrivaciesDto?> GetByIdAsync(int id);
         Task<int> CountAsync();
         Task PostAsync(PrivaciesDto data);

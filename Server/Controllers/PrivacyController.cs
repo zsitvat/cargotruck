@@ -18,9 +18,9 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<PrivaciesDto>>> GetAsync()
+        public async Task<ActionResult<List<PrivaciesDto>>> GetAsync(string lang)
         {
-            return Ok(await _privacyService.GetAsync());
+            return Ok(await _privacyService.GetAsync(lang));
         }
 
         [HttpGet("{id}")]

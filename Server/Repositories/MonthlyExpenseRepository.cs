@@ -17,13 +17,13 @@ using System.Text;
 
 namespace Cargotruck.Server.Repositories
 {
-    public class MonthlyExpensesRepository: IMonthlyExpensesRepository
+    public class MonthlyExpenseRepository: IMonthlyExpenseRepository
     {
         private readonly ApplicationDbContext _context;
         private readonly IStringLocalizer<Resource> _localizer;
         private readonly IColumnNamesService _columnNameLists;
 
-        public MonthlyExpensesRepository(ApplicationDbContext context, IStringLocalizer<Resource> localizer, IColumnNamesService columnNameLists)
+        public MonthlyExpenseRepository(ApplicationDbContext context, IStringLocalizer<Resource> localizer, IColumnNamesService columnNameLists)
         {
             _context = context;
             _localizer = localizer;
@@ -186,6 +186,12 @@ namespace Cargotruck.Server.Repositories
 
             await _context.SaveChangesAsync();
         }
+
+        public async Task<List<Monthly_expenses_tasks_expenses>> GetConnectionIdsAsync()
+        {
+            return await _context.Monthly_expenses_tasks_expenses.ToListAsync();
+        }
+
         public async Task PostConnectionIdsAsync(Monthly_expenses_tasks_expenses connectionIds, bool first)
         {
             if (first)
@@ -210,8 +216,6 @@ namespace Cargotruck.Server.Repositories
 
                 _context.Add(data);
                 await _context.SaveChangesAsync();
-
-                return Ok(data.Monthly_expense_id);
             }
         }
         public async Task CreateConTableAsync()
