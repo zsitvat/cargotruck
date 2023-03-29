@@ -418,7 +418,7 @@ namespace Cargotruck.Client.Components
 
         private async Task GetExpenseChartData()
         {
-            var columnHeights = await client.GetFromJsonAsync<float?[]>("api/monthly_expenses/getchartdata");
+            var columnHeights = await client.GetFromJsonAsync<float?[]>("api/monthlyexpenses/getchartdata");
 
             for (int i = 0; i < columnHeights?.Length; i++)
             {     

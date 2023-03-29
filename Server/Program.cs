@@ -2,7 +2,9 @@ using AutoMapper;
 using Cargotruck.Server.Data;
 using Cargotruck.Server.Models;
 using Cargotruck.Server.Repositories;
+using Cargotruck.Server.Repositories.Interfaces;
 using Cargotruck.Server.Services;
+using Cargotruck.Server.Services.Interfaces;
 using Cargotruck.Shared.Model;
 using Cargotruck.Shared.Model.Dto;
 using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
@@ -94,18 +96,20 @@ builder.Services.AddScoped<IPrivacyService,PrivacyService>();
 builder.Services.AddScoped<IMonthlyExpenseService, MonthlyExpenseService>();
 builder.Services.AddScoped<IExpenseService, ExpenseService>();
 builder.Services.AddScoped<ICargoService, CargoService>();
+builder.Services.AddScoped<IRoadService, RoadService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IAdminService, AdminService>();
 
 //Repositories
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 builder.Services.AddScoped<IWarehouseRepository, WarehouseRepository>();
-builder.Services.AddScoped<ITruckService, TruckService>();
+builder.Services.AddScoped<ITruckRepository, TruckRepository>();
 builder.Services.AddScoped<ISettingRepository, SettingRepository>();
 builder.Services.AddScoped<IPrivacyRepository, PrivacyRepository>();
 builder.Services.AddScoped<IMonthlyExpenseRepository, MonthlyExpenseRepository>();
 builder.Services.AddScoped<IExpenseRepository, ExpenseRepository>();
 builder.Services.AddScoped<ICargoRepository, CargoRepository>();
+builder.Services.AddScoped<IRoadRepository, RoadRepository>();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<IAdminRepository, AdminRepository>();
 
@@ -148,8 +152,8 @@ else
     app.UseHsts();
 }
 
-
 StaticWebAssetsLoader.UseStaticWebAssets(builder.Environment, builder.Configuration);
+
 app.UseCookiePolicy(new CookiePolicyOptions
 {
     MinimumSameSitePolicy = SameSiteMode.None

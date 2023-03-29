@@ -39,12 +39,13 @@ namespace Cargotruck.Shared.Model
         [Display(Name = "Time_of_delay", ResourceType = typeof(Resource))]
         public string? Time_of_delay { get; set; }
         [Display(Name = "Payment", ResourceType = typeof(Resource))]
-        [Range(0, int.MaxValue, ErrorMessageResourceName = "OnlyPositive", ErrorMessageResourceType = typeof(Resource))]
+        [Range(0, long.MaxValue, ErrorMessageResourceName = "OnlyPositive", ErrorMessageResourceType = typeof(Resource))]
         public long? Payment { get; set; }
         [Display(Name = "Final_Payment", ResourceType = typeof(Resource))]
+        [Range(long.MinValue, long.MaxValue, ErrorMessageResourceName = "OnlyPositive", ErrorMessageResourceType = typeof(Resource))]
         public long? Final_Payment { get; set; }
         [Display(Name = "Penalty", ResourceType = typeof(Resource))]
-        [Range(0, int.MaxValue, ErrorMessageResourceName = "OnlyPositive", ErrorMessageResourceType = typeof(Resource))]
+        [Range(0, long.MaxValue, ErrorMessageResourceName = "OnlyPositive", ErrorMessageResourceType = typeof(Resource))]
         public long? Penalty { get; set; }
         [Display(Name = "Date", ResourceType = typeof(Resource))]
         public DateTime Date { get; set; } = DateTime.Now;

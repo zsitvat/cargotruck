@@ -8,11 +8,11 @@
 @code {
     [Parameter] public int Id { get; set; }
     bool isValidSubmit = true;
-    Roads? road = new Roads();
+    RoadsDto? road = new RoadsDto();
 
     protected async override Task OnParametersSetAsync()
     {
-        road = await http.GetFromJsonAsync<Roads>($"api/roads/getById/{Id}");
+        road = await http.GetFromJsonAsync<RoadsDto>($"api/roads/getById/{Id}");
     }
 
     async Task EditRoadAsync()

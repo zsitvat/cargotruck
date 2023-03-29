@@ -21,7 +21,7 @@ namespace Cargotruck.Shared.Model
         public int? Road_id { get; set; }
         [Display(Name = "Max_weight", ResourceType = typeof(Resource))]
         [Required(ErrorMessageResourceName = "Error_max_weight", ErrorMessageResourceType = typeof(Resource))]
-        public string? Max_weight { get; set; }
+        public int? Max_weight { get; set; }
         [Display(Name = "Date", ResourceType = typeof(Resource))]
         public DateTime Date { get; set; } = DateTime.Now;
     }

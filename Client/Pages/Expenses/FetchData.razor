@@ -24,7 +24,8 @@
     <input value="@searchString" @oninput="@SearchAsync" placeholder="@(searchString != "" ? searchString : localizer["Search"])" class="form-control inputs input_search" type="search" id="search-input" name="SearchString">
 
     <!--Filter icon-->
-    @if (filter == Cargotruck.Shared.Model.Type.salary || filter == Cargotruck.Shared.Model.Type.storage || filter == Cargotruck.Shared.Model.Type.repair || filter == Cargotruck.Shared.Model.Type.task || filter == Cargotruck.Shared.Model.Type.other)
+    @if (filter == Cargotruck.Shared.Model.Type.salary || filter == Cargotruck.Shared.Model.Type.storage || 
+    filter == Cargotruck.Shared.Model.Type.repair || filter == Cargotruck.Shared.Model.Type.task || filter == Cargotruck.Shared.Model.Type.other)
     {
         <button @onclick="@(()=>OnChangeResetFilter())" class="filter-button"><span class="icon iconify filter-icon" data-icon="material-symbols:filter-alt-off"></span></button>
     }
@@ -139,7 +140,7 @@ else
                         </thead>
                         <tbody>
 
-                            @foreach (Expenses item in expenses)
+                            @foreach (var item in expenses)
                             {
 
                                 <tr @onclick="@((e) =>MouseHoverClass.MouseOnclick(item.Id.ToString()))" @onmouseover="@((e) =>MouseHoverClass.MouseOver(item.Id.ToString()))" @onmouseout="@((e) =>MouseHoverClass.MouseOut())"

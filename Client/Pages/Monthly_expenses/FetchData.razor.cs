@@ -1,6 +1,4 @@
-﻿using Cargotruck.Client.Services;
-using Cargotruck.Client.UtilitiesClasses;
-using Cargotruck.Shared.Model;
+﻿using Cargotruck.Client.UtilitiesClasses;
 using Cargotruck.Shared.Model.Dto;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
@@ -13,8 +11,8 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
         public bool settings = false;
         bool expandExportMenu;
         public bool fullYearProfitWindow = true;
-        Cargotruck.Shared.Model.Monthly_expenses[]? Monthly_expenses { get; set; }
-        Monthly_expenses_tasks_expenses[]? Connection_ids { get; set; }
+        Monthly_expensesDto[]? Monthly_expenses { get; set; }
+        Monthly_expenses_tasks_expensesDto[]? Connection_ids { get; set; }
         int? IdForGetById { get; set; }
         string? GetByIdType { get; set; }
         readonly List<bool> showColumns = Enumerable.Repeat(true, 6).ToList();
@@ -33,10 +31,10 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
             PageHistoryState.AddPageToHistory("/Monthly_expenses");
             base.OnInitialized();
 
-            await client.PostAsync("api/Monthly_expenses/createcontable", null);
-            dataRows = await client.GetFromJsonAsync<int>($"api/Monthly_expenses/pagecount?searchString={searchString}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
-            var checkData = await client.PostAsync("api/Monthly_expenses/checkdata", null);
-            Connection_ids = await client.GetFromJsonAsync<Monthly_expenses_tasks_expenses[]?>("api/Monthly_expenses/getconnectionids");
+            await client.PostAsync("api/Monthlyexpenses/createcontable", null);
+            dataRows = await client.GetFromJsonAsync<int>($"api/Monthlyexpenses/pagecount?searchString={searchString}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
+            var checkData = await client.PostAsync("api/Monthlyexpenses/checkdata", null);
+            Connection_ids = await client.GetFromJsonAsync<Monthly_expenses_tasks_expensesDto[]?>("api/Monthlyexpenses/getconnectionids");
 
             if (checkData.IsSuccessStatusCode)
             {
@@ -54,7 +52,7 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
             pageSize = Page.GetPageSize(pageSize, dataRows);
             maxPage = Page.GetMaxPage(pageSize, dataRows);
 
-            Monthly_expenses = await client.GetFromJsonAsync<Cargotruck.Shared.Model.Monthly_expenses[]>($"api/Monthly_expenses/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
+            Monthly_expenses = await client.GetFromJsonAsync<Monthly_expensesDto[]>($"api/Monthlyexpenses/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
             StateHasChanged();
         }
 
@@ -63,7 +61,7 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
             var data = Monthly_expenses?.First(x => x.Monthly_expense_id == Id);
             if (await js.InvokeAsync<bool>("confirm", $"{@localizer["DeleteAsync?"]} {data?.Earning} - {data?.Profit} ({data?.Monthly_expense_id})"))
             {
-                await client.DeleteAsync($"api/Monthly_expenses/delete/{Id}");
+                await client.DeleteAsync($"api/Monthlyexpenses/delete/{Id}");
                 var shouldreload = dataRows % ((currentPage == 1 ? currentPage : currentPage - 1) * pageSize);
                 if (shouldreload == 1 && dataRows > 0) { navigationManager.NavigateTo("/Monthly_expenses", true); }
                 await OnInitializedAsync();

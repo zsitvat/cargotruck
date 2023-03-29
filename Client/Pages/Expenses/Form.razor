@@ -222,24 +222,24 @@
 
 
 @code {
-    [Parameter] public Expenses? expenses { get; set; } = default;
+    [Parameter] public ExpensesDto? expenses { get; set; } = default;
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public string TitleText { get; set; } = "";
     [Parameter] public EventCallback OnValidSubmit { get; set; }
     [Parameter] public EventCallback<bool> checkValidSubmit { get; set; }
     string error = "";
     string? selectedOption="";
-    List<Cargoes>? cargoes { get; set; }
+    List<CargoesDto>? cargoes { get; set; }
     List<TasksDto>? tasks { get; set; }
-    List<Roads>? roads { get; set; }
+    List<RoadsDto>? roads { get; set; }
 
 
     protected override async Task OnInitializedAsync()
     {
-        cargoes = await client.GetFromJsonAsync<List<Cargoes>?>("api/cargoes/getcargoes");
+        cargoes = await client.GetFromJsonAsync<List<CargoesDto>?>("api/cargoes/getcargoes");
         tasks = await client.GetFromJsonAsync<List<TasksDto>?>("api/tasks/gettasks");
-        roads = await client.GetFromJsonAsync<List<Roads>?>("api/roads/getroads");
-        var expenseWithIds = await client.GetFromJsonAsync<List<Expenses>>("api/expenses/getexpenses");
+        roads = await client.GetFromJsonAsync<List<RoadsDto>?>("api/roads/getroads");
+        var expenseWithIds = await client.GetFromJsonAsync<List<ExpensesDto>>("api/expenses/getexpenses");
         if (expenseWithIds != null) 
         {
             foreach (var expense in expenseWithIds)

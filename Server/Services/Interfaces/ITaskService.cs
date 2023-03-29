@@ -1,18 +1,20 @@
-﻿using Cargotruck.Shared.Model;
+﻿using Cargotruck.Shared.Model.Dto;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 
-namespace Cargotruck.Server.Repositories
+namespace Cargotruck.Server.Services.Interfaces
 {
-    public interface IExpenseRepository
+    public interface ITaskService
     {
-        Task<List<Expenses>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);
-        Task<List<Expenses>> GetExpensesAsync();
-        Task<Expenses?> GetByIdAsync(int id);
+        Task<List<TasksDto>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);
+        Task<List<TasksDto>> GetTasksAsync();
+        Task<TasksDto?> GetByIdAsync(int id);
+        Task<int[]> GetChartDataAsync();
         Task<int> PageCountAsync(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);
-        Task<int> CountAsync();
-        Task PostAsync(Expenses data);
-        Task PutAsync(Expenses data);
+        Task<int> CountAsync(bool all);
+        Task ChangeCompletionAsync(TasksDto task);
+        Task PostAsync(TasksDto task);
+        Task PutAsync(TasksDto task);
         Task<bool> DeleteAsync(int id);
         string ExportToExcel(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);
         Task<string> ExportToPdfAsync(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);

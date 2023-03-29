@@ -53,7 +53,7 @@
                     <div>
                         <label>@localizer["Max_weight"]:</label>
                         <div>
-                            <InputText class="form-control inputs" @bind-Value="@trucks.Max_weight" />
+                            <InputNumber class="form-control inputs" min="0" @bind-Value="@trucks.Max_weight" />
                             <ValidationMessage For="@(() => trucks.Max_weight)" />
                         </div>
                     </div>
@@ -87,7 +87,7 @@
                     <label>@localizer["Status"]:</label>
                     <input type="text" class="form-control custom-select-input" @bind="@selectedOption" @bind:event="oninput" placeholder="@localizer["Select_placeholder"]" disabled/>
                     <div class="custom-select-options">
-                        @foreach (var value in Enum.GetValues<Status>())
+                        @foreach (var value in Enum.GetValues<Cargotruck.Shared.Model.Status>())
                         {
                             if (value.ToString().ToLower().Contains(value.ToString()))
                             {
@@ -107,24 +107,24 @@
 
 
 @code {
-    [Parameter] public Trucks? trucks { get; set; }
+    [Parameter] public TrucksDto? trucks { get; set; }
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public string TitleText { get; set; } = "";
     [Parameter] public EventCallback OnValidSubmit { get; set; }
     [Parameter] public EventCallback<bool> checkValidSubmit { get; set; }
     string error = "";
     string? selectedOption;
-    List<Roads>? roads { get; set; }
-    List<Trucks>? trucksOnRoad { get; set; }
+    List<RoadsDto>? roads { get; set; }
+    List<TrucksDto>? trucksOnRoad { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        roads = await client.GetFromJsonAsync<List<Roads>?>("api/roads/getroads");
+        roads = await client.GetFromJsonAsync<List<RoadsDto>?>("api/roads/getroads");
         if (trucks?.Status != null)
         {
             selectedOption = localizer[trucks?.Status.ToString()!];
         }
-        trucksOnRoad = await client.GetFromJsonAsync<List<Trucks>>("api/trucks/gettrucks");
+        trucksOnRoad = await client.GetFromJsonAsync<List<TrucksDto>>("api/trucks/gettrucks");
         trucksOnRoad = trucksOnRoad?.Where(x => x.Road_id != null).ToList();
         if (trucksOnRoad != null)
         {
@@ -177,7 +177,7 @@
         if (true)
         {
             invalid = false;
-            @foreach (var value in Enum.GetValues<Status>())
+            @foreach (var value in Enum.GetValues<Cargotruck.Shared.Model.Status>())
             {
                 if (value != trucks?.Status)
                 {

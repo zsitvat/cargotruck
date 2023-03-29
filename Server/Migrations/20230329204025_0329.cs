@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Cargotruck.Server.Migrations
 {
-    public partial class _230227 : Migration
+    public partial class _0329 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -56,7 +56,7 @@ namespace Cargotruck.Server.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     User_id = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Task_id = table.Column<int>(type: "int", nullable: false),
-                    Weight = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Weight = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Delivery_requirements = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Vehicle_registration_number = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -118,9 +118,9 @@ namespace Cargotruck.Server.Migrations
                     Monthly_expense_id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     User_id = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Earning = table.Column<int>(type: "int", nullable: true),
-                    Expense = table.Column<int>(type: "int", nullable: true),
-                    Profit = table.Column<int>(type: "int", nullable: true),
+                    Earning = table.Column<long>(type: "bigint", nullable: true),
+                    Expense = table.Column<long>(type: "bigint", nullable: true),
+                    Profit = table.Column<long>(type: "bigint", nullable: true),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -204,9 +204,9 @@ namespace Cargotruck.Server.Migrations
                     Completed = table.Column<bool>(type: "bit", nullable: false),
                     Completion_time = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Time_of_delay = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Payment = table.Column<int>(type: "int", nullable: true),
-                    Final_Payment = table.Column<int>(type: "int", nullable: true),
-                    Penalty = table.Column<int>(type: "int", nullable: true),
+                    Payment = table.Column<long>(type: "bigint", nullable: true),
+                    Final_Payment = table.Column<long>(type: "bigint", nullable: true),
+                    Penalty = table.Column<long>(type: "bigint", nullable: true),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -225,7 +225,7 @@ namespace Cargotruck.Server.Migrations
                     Brand = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     Road_id = table.Column<int>(type: "int", nullable: true),
-                    Max_weight = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Max_weight = table.Column<int>(type: "int", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -376,22 +376,22 @@ namespace Cargotruck.Server.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-          
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "4b85ea10-1629-42cf-bff7-754cfab11b34", "bc76dd9f-0c30-4e30-b6fc-16f9cb00ceea", "User", "USER" },
-                    { "bc21cdf8-4617-44f7-87e5-b3670a8d35fa", "5abcdeb8-7cdf-4db8-96d8-bbd3427e6b83", "Accountant", "ACCOUNTANT" },
-                    { "d3a697cb-2188-4745-b463-41a9e5183ee9", "4008938c-d3c0-4cf0-b770-f956087a13bf", "Driver", "DRIVER" },
-                    { "f2b4c37a-aaae-41c7-b5de-28a2de89bb66", "484ddac7-529b-433b-966e-b52fdc7a81d1", "Admin", "ADMIN" },
-                    { "f70abf6d-fe85-4f8c-992c-e1914e078181", "4bc3a931-7a64-41d2-b914-051f59ff0527", "Storageman", "STORAGEMAN" }
+                    { "0427d085-5566-40f4-a9e8-6a3cfed46b3e", "1952e362-31cb-4081-a6f2-75a122d2d2f9", "Driver", "DRIVER" },
+                    { "0681486d-dca1-47bf-b879-9625b6969e2e", "c7b9ecb6-c58b-42e1-8bb0-608ebe66579f", "User", "USER" },
+                    { "3356aca3-ab4a-4e69-9a55-2e63ef93402d", "239e8cb3-7251-4fd3-8794-47b094e101c7", "Admin", "ADMIN" },
+                    { "c05a64d1-8d20-49ab-8e47-ffc2a3708c58", "1d7cf1e2-14c3-4cec-8db2-b6de48fa5088", "Accountant", "ACCOUNTANT" },
+                    { "c43d5fef-a348-4b9e-bbd8-d8682c0f8aa8", "428d1d02-c1dc-42d8-8273-fa2f9def71dc", "Storageman", "STORAGEMAN" }
                 });
 
 
             //add settings for currency api
             migrationBuilder.Sql("SET IDENTITY_INSERT [dbo].[Settings] ON\r\nINSERT INTO [dbo].[Settings] ([Id], [SettingName], [SettingValue], [Date]) VALUES (1, N'CurrencyExchangeWaitTime', N'3600', N'2023-02-25 00:00:00')\r\nINSERT INTO [dbo].[Settings] ([Id], [SettingName], [SettingValue], [Date]) VALUES (3, N'ExchangeApiKey', N'05NabWkvhpEG1pI2IOX2n2fJsdK2zjUO', N'2023-02-25 00:00:00')\r\nSET IDENTITY_INSERT [dbo].[Settings] OFF\r\n");
+
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

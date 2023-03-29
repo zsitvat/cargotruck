@@ -154,24 +154,24 @@ else
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ( TasksDto item in Tasks)
+                            @foreach ( var item in Tasks)
                             {
                                 <tr 
                                     @onclick="@((e) =>MouseHoverClass.MouseOnclick(item.Id.ToString()))" @onmouseover="@((e) =>MouseHoverClass.MouseOver(item.Id.ToString()))" @onmouseout="@((e) =>MouseHoverClass.MouseOut())"
-                            class="@(item.Completed ? "green": "") @(MouseHoverClass.MouseOnHoverClass == item.Id.ToString() || MouseHoverClass.MouseOnclickClass == item.Id.ToString() ? "color-on-hover" :"")
+                                        class="@(item.Completed ? "green": "") @(MouseHoverClass.MouseOnHoverClass == item.Id.ToString() || MouseHoverClass.MouseOnclickClass == item.Id.ToString() ? "color-on-hover" :"")
                                 ">
-                                    <td>@item.Id</td>
+                                    <td>@item?.Id</td>
                                     @if (showColumns[0])
                                     {
-                                        <td>@item.Partner</td>
+                                        <td>@item?.Partner</td>
                                     }
                                     @if (showColumns[1])
                                     {
-                                        <td>@item.Description</td>
+                                        <td>@item?.Description</td>
                                     }
                                     @if (showColumns[2])
                                     {
-                                        <td>@item.Place_of_receipt</td>
+                                        <td>@item?.Place_of_receipt</td>
                                     }
                                     @if (showColumns[3])
                                     {
@@ -179,7 +179,7 @@ else
                                     }
                                     @if (showColumns[4])
                                     {
-                                        <td>@item.Place_of_delivery</td>
+                                        <td>@item?.Place_of_delivery</td>
                                     }
                                     @if (showColumns[5])
                                     {
@@ -187,12 +187,12 @@ else
                                     }
                                     @if (showColumns[6])
                                     {
-                                        <td>@item.Other_stops</td>
+                                        <td>@item?.Other_stops</td>
                                     }
                                     @if (showColumns[7])
                                     {
                                         <td>
-                                            @if(item.Id_cargo != null)
+                                            @if (item?.Id_cargo != null)
                                             {
                                                 <button class="no-button" @onclick="@(()=>GetById(item.Id_cargo,"cargo"))">@item.Id_cargo <span class="icon iconify" data-icon="material-symbols:read-more-rounded"></span></button>
                                             }
@@ -200,11 +200,11 @@ else
                                     }
                                     @if (showColumns[8])
                                     {
-                                        <td>@item.Storage_time</td>
+                                        <td>@item?.Storage_time</td>
                                     }
                                     @if (showColumns[9])
                                     {
-                                        if (item.Completed == true)
+                                        if (item?.Completed == true)
                                         {
                                             <td><button @onclick="@(()=>ChangeCompletionAsync(item))" class="no-button">@localizer["True"]<span class="icon iconify completed-icon" data-icon="fluent-mdl2:accept-medium"></span></button></td>
                                         }
@@ -219,12 +219,12 @@ else
                                     }
                                     @if (showColumns[11])
                                     {
-                                        <td>@item.Time_of_delay</td>
+                                        <td>@item?.Time_of_delay</td>
                                     }
                                     @if (showColumns[12])
                                     {
                                         <td>
-                                            @if (@item.Payment != null)
+                                            @if (@item?.Payment != null)
                                             {
                                                 @if (currencyExchange.GetCurrencyType() != "HUF" && currencyExchange.GetRates() != null && item.Final_Payment != 0)
                                                 {
@@ -240,7 +240,7 @@ else
                                     @if (showColumns[13])
                                     {
                                           <td>
-                                            @if (@item.Final_Payment != null)
+                                            @if (@item?.Final_Payment != null)
                                             {
                                                 @if (currencyExchange.GetCurrencyType() != "HUF" && currencyExchange.GetRates() != null && item.Final_Payment != 0)
                                                 {
@@ -256,7 +256,7 @@ else
                                     @if (showColumns[14])
                                     {
                                         <td>
-                                            @if (@item.Penalty != null)
+                                            @if (@item?.Penalty != null)
                                             {
                                                 @if (currencyExchange.GetCurrencyType() != "HUF" && currencyExchange.GetRates() != null && item.Final_Payment != 0)
                                                 {
@@ -271,7 +271,7 @@ else
                                     }
                                     @if (showColumns[15])
                                     {
-                                        <td>@item.Date</td>
+                                        <td>@item?.Date</td>
                                     }
                                     <td class="@(MouseHoverClass.MouseOnHoverClass == item.Id.ToString() || MouseHoverClass.MouseOnclickClass == item.Id.ToString() ? "show" :"not-show") ">
                                         <a class="btn  fixed" href="Tasks/edit/@item.Id"> <span data-title="@localizer["Edit"]" class="oi oi-pencil" aria-hidden="true"></span></a>

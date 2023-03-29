@@ -1,4 +1,5 @@
 ﻿using Cargotruck.Server.Data;
+using Cargotruck.Server.Repositories.Interfaces;
 using Cargotruck.Shared.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

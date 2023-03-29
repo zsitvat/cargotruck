@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 
-namespace Cargotruck.Server.Repositories
+namespace Cargotruck.Server.Repositories.Interfaces
 {
     public interface IMonthlyExpenseRepository
     {
@@ -13,7 +13,7 @@ namespace Cargotruck.Server.Repositories
         Task<int> PageCountAsync(string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);
         Task<int> CountAsync();
         Task PostAsync(Monthly_expenses data);
-        Task PutAsync(Monthly_expenses data); 
+        Task PutAsync(Monthly_expenses data);
         Task<bool> DeleteAsync(int id);
         Task CheckDataAsync();
         Task<List<Monthly_expenses_tasks_expenses>> GetConnectionIdsAsync();

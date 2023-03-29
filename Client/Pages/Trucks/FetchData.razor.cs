@@ -11,7 +11,7 @@ namespace Cargotruck.Client.Pages.Trucks
     {
         public bool settings = false;
         bool expandExportMenu;
-        Cargotruck.Shared.Model.Trucks[]? Trucks { get; set; }
+        TrucksDto[]? Trucks { get; set; }
         int? IdForGetById { get; set; }
         string? GetByIdType { get; set; }
 
@@ -39,7 +39,7 @@ namespace Cargotruck.Client.Pages.Trucks
             pageSize = Page.GetPageSize(pageSize, dataRows);
             maxPage = Page.GetMaxPage(pageSize, dataRows);
 
-            Trucks = await client.GetFromJsonAsync<Cargotruck.Shared.Model.Trucks[]>($"api/trucks/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
+            Trucks = await client.GetFromJsonAsync<TrucksDto[]>($"api/trucks/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
             StateHasChanged();
         }
 

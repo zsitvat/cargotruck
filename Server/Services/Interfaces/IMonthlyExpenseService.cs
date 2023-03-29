@@ -2,7 +2,7 @@
 using Cargotruck.Shared.Model.Dto;
 using System.Globalization;
 
-namespace Cargotruck.Server.Services
+namespace Cargotruck.Server.Services.Interfaces
 {
     public interface IMonthlyExpenseService
     {

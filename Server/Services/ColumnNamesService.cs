@@ -1,4 +1,5 @@
-﻿using Cargotruck.Shared.Resources;
+﻿using Cargotruck.Server.Services.Interfaces;
+using Cargotruck.Shared.Resources;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 

@@ -8,12 +8,12 @@
 
 @code {
     [Parameter] public int Id { get; set; }
-    Trucks? truck = new Trucks();
+    TrucksDto? truck = new TrucksDto();
     bool isValidSubmit = true;
 
     protected async override Task OnParametersSetAsync()
     {
-        truck = await http.GetFromJsonAsync<Trucks>($"api/trucks/getById/{Id}");
+        truck = await http.GetFromJsonAsync<TrucksDto>($"api/trucks/getById/{Id}");
     }
 
     async Task EditCargoAsync()

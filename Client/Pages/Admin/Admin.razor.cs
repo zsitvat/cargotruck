@@ -1,5 +1,4 @@
-﻿using Cargotruck.Server.Models;
-using Microsoft.AspNetCore.Components;
+﻿using Cargotruck.Shared.Model.Dto;
 using Microsoft.JSInterop;
 using System.Net.Http.Json;
 
@@ -10,7 +9,7 @@ namespace Cargotruck.Client.Pages.Admin
 
         public bool settings = false;
         readonly List<bool> showColumns = Enumerable.Repeat(true, 6).ToList();
-        Users[]? Users { get; set; }
+        UserDto[]? Users { get; set; }
         Dictionary<string, string>? Claims { get; set; }
         Dictionary<string, string>? Roles { get; set; }
         string? filter = "";
@@ -32,7 +31,7 @@ namespace Cargotruck.Client.Pages.Admin
             maxPage = (int)Math.Ceiling((decimal)((float)dataRows / (float)pageSize));
             Claims = await client.GetFromJsonAsync<Dictionary<string, string>?>("api/admin/claims");
             Roles = await client.GetFromJsonAsync<Dictionary<string, string>?>("api/admin/roles");
-            Users = await client.GetFromJsonAsync<Users[]>($"api/admin/get?page={currentPage}&pageSize={pageSize}&filter={filter}");
+            Users = await client.GetFromJsonAsync<UserDto[]>($"api/admin/get?page={currentPage}&pageSize={pageSize}&filter={filter}");
             StateHasChanged();
         }
 

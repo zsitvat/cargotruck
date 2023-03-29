@@ -1,4 +1,4 @@
-﻿namespace Cargotruck.Server.Services
+﻿namespace Cargotruck.Server.Services.Interfaces
 {
     public interface IColumnNamesService
     {

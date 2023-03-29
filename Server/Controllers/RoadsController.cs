@@ -1,4 +1,4 @@
-﻿using Cargotruck.Server.Services;
+﻿using Cargotruck.Server.Services.Interfaces;
 using Cargotruck.Shared.Model.Dto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -98,7 +98,7 @@ namespace Cargotruck.Server.Controllers
         public async Task<ActionResult<string?>> ImportAsync([FromBody] string file, CultureInfo lang)
         {
             var result = await _roadService.ImportAsync(file, lang);
-            return (result != null ? result : Ok());
+            return (result != null ? BadRequest(result) : Ok());
         }
     }
 }

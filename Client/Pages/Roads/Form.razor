@@ -206,25 +206,25 @@
 
 
 @code {
-    [Parameter] public Roads? roads { get; set; }
+    [Parameter] public RoadsDto? roads { get; set; }
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public string TitleText { get; set; } = "";
     [Parameter] public EventCallback<bool> checkValidSubmit { get; set; } 
     [Parameter] public EventCallback OnValidSubmit { get; set; }
     string error = "";
-    List<Cargoes>? cargoes { get; set; }
+    List<CargoesDto>? cargoes { get; set; }
     TasksDto[]? tasks { get; set; }
-    List<Expenses>? expenses { get; set; }
-    List<Trucks>? trucks { get; set; }
+    List<ExpensesDto>? expenses { get; set; }
+    List<TrucksDto>? trucks { get; set; }
 
 
     protected override async Task OnInitializedAsync()
     {
-        cargoes = await client.GetFromJsonAsync<List<Cargoes>?>("api/cargoes/getcargoes");
+        cargoes = await client.GetFromJsonAsync<List<CargoesDto>?>("api/cargoes/getcargoes");
         tasks = await client.GetFromJsonAsync<TasksDto[]?>("api/tasks/gettasks");
-        expenses = await client.GetFromJsonAsync<List<Expenses>?>("api/expenses/getexpenses");
-        trucks = await client.GetFromJsonAsync<List<Trucks>?>("api/trucks/gettrucks");
-        var roadWithIds = await client.GetFromJsonAsync<List<Roads>>("api/roads/getroads");
+        expenses = await client.GetFromJsonAsync<List<ExpensesDto>?>("api/expenses/getexpenses");
+        trucks = await client.GetFromJsonAsync<List<TrucksDto>?>("api/trucks/gettrucks");
+        var roadWithIds = await client.GetFromJsonAsync<List<RoadsDto>>("api/roads/getroads");
         roadWithIds = roadWithIds?.Where(x => x.Expenses_id != null || x.Id_cargo != null).ToList();
 
         if (roadWithIds != null)

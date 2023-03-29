@@ -13,7 +13,7 @@ namespace Cargotruck.Shared.Model.Dto
         public int? Task_id { get; set; }
         [Required(ErrorMessageResourceName = "Error_weight", ErrorMessageResourceType = typeof(Resource))]
         [Display(Name = "Weight", ResourceType = typeof(Resource))]
-        public string Weight { get; set; } = String.Empty;
+        public int? Weight { get; set; }
         [Display(Name = "Description", ResourceType = typeof(Resource))]
         public string? Description { get; set; }
         [Display(Name = "Shipping_requirements", ResourceType = typeof(Resource))]

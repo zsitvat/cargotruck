@@ -3,6 +3,7 @@ using System.Net.Http.Json;
 using Microsoft.AspNetCore.Components.Authorization;
 using Cargotruck.Shared.Model;
 using Cargotruck.Client.UtilitiesClasses;
+using Cargotruck.Shared.Model.Dto;
 
 namespace Cargotruck.Client.Shared
 {
@@ -10,7 +11,7 @@ namespace Cargotruck.Client.Shared
     {
         bool showError = false;
         bool expandSubMenu;
-        string? currency_api_error;
+        string currency_api_error = "";
         [CascadingParameter]
         Task<AuthenticationState>? AuthenticationState { get; set; }
 
@@ -24,8 +25,6 @@ namespace Cargotruck.Client.Shared
         {
             if (!(await AuthenticationState!).User.Identity!.IsAuthenticated)
             {
-                darkmode = await sessionStorage.GetItemAsync<bool>("darkmode");
-
                 if (!navigationManager.Uri.ToString().Contains("login") && !navigationManager.Uri.ToString().Contains("Privacy"))
                 {
                     navigationManager.NavigateTo("/login");
@@ -33,14 +32,15 @@ namespace Cargotruck.Client.Shared
             }
             else
             {
-                await GetDarkmodeAsync();             
-                GetCurrencyRates();               
+                await GetDarkmodeAsync();
+                await GetCurrencyRates();
             }
+            darkmode = await sessionStorage.GetItemAsync<bool>("darkmode");
         }
 
-        async void GetCurrencyRates()
+        async Task GetCurrencyRates()
         {
-            if (currencyExchange.GetRates() == null && await currencyExchange.GetNextCurrencyApiDateAsync(client) <= DateTime.Now)
+            if ((await AuthenticationState!).User.Identity!.IsAuthenticated && currencyExchange.GetRates() == null && await currencyExchange.GetNextCurrencyApiDateAsync(client) <= DateTime.Now)
             {
                 try
                 {
@@ -70,27 +70,30 @@ namespace Cargotruck.Client.Shared
             var darkModeFound = (DarkModeSetting?.Count() > 0 ? true : false);
             
             await sessionStorage.SetItemAsync("darkmode", darkModeFound);
-            darkmode = darkModeFound;
         }
 
         async Task ChangeDarkModeAsync()
         {
             if ((await AuthenticationState!).User.Identity!.IsAuthenticated)
             {
-                if (darkmode)
+                var settings = await client.GetFromJsonAsync<Settings[]>("api/settings/get");
+                var darkModeSetting = (settings?.FirstOrDefault(x => x.SettingName == "darkmode" && x.SettingValue == (AuthenticationState!).Result.User.Identity?.Name));
+                
+                if (darkModeSetting != null)
                 {
-                    var settings = await client.GetFromJsonAsync<Settings[]>("api/settings/get");
-                    var DarkModeSetting = (settings?.FirstOrDefault(x => x.SettingName == "darkmode" && x.SettingValue == (AuthenticationState!).Result.User.Identity?.Name));
-                    await client.DeleteAsync($"api/settings/delete/{DarkModeSetting?.Id}");
+                   
+                    await client.DeleteAsync($"api/settings/delete/{darkModeSetting?.Id}");
+                    await sessionStorage.SetItemAsync("darkmode", false);
                 }
                 else
                 {
-                    Settings setting = new()
+                    SettingsDto setting = new()
                     {
                         SettingValue = (AuthenticationState!).Result.User.Identity?.Name,
                         SettingName = "darkmode"
                     };
                     await client.PostAsJsonAsync("api/settings/post", setting);
+                    await sessionStorage.SetItemAsync("darkmode", await sessionStorage.GetItemAsync<bool>("darkmode"));
                 }
             }
             else

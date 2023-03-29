@@ -35,7 +35,7 @@
                         <div>
                             <label>@localizer["Weight"]:</label>
                             <div>
-                                <InputText class="form-control inputs" @bind-Value="@cargoes!.Weight" />
+                                <InputNumber class="form-control inputs" min="0" @bind-Value="@cargoes!.Weight" />
                                 <ValidationMessage For="@(() => cargoes.Weight)" />
                             </div>
                         </div>
@@ -153,24 +153,24 @@
 
 
 @code {
-    [Parameter] public Cargoes? cargoes { get; set; }
+    [Parameter] public CargoesDto? cargoes { get; set; }
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public string TitleText { get; set; } = "";
     [Parameter] public EventCallback OnValidSubmit { get; set; }
     [Parameter] public EventCallback<bool> checkValidSubmit { get; set; }
     string error = "";
-    Warehouses[]? warehouses { get; set; }
+    WarehousesDto[]? warehouses { get; set; }
     List<TasksDto>? tasks { get; set; }
-    List<Trucks>? trucks { get; set; }
-    List<Cargoes>? cargoWithIds { get; set; }
+    List<TrucksDto>? trucks { get; set; }
+    List<CargoesDto>? cargoWithIds { get; set; }
 
 
     protected override async Task OnInitializedAsync()
     {
-        warehouses = await client.GetFromJsonAsync<Warehouses[]?>("api/warehouses/getwarehouses");
+        warehouses = await client.GetFromJsonAsync<WarehousesDto[]?>("api/warehouses/getwarehouses");
         tasks = await client.GetFromJsonAsync < List<TasksDto>?>("api/tasks/gettasks");
-        trucks = await client.GetFromJsonAsync < List<Trucks>?>("api/trucks/gettrucks");
-        cargoWithIds = await client.GetFromJsonAsync<List<Cargoes>>("api/cargoes/getcargoes");
+        trucks = await client.GetFromJsonAsync<List<TrucksDto>?>("api/trucks/gettrucks");
+        cargoWithIds = await client.GetFromJsonAsync<List<CargoesDto>>("api/cargoes/getcargoes");
 
         foreach (var cargo in cargoWithIds!)
         {
@@ -264,7 +264,7 @@
                 {
                     @foreach (var truck in trucks)
                     {
-                        if (Int32.Parse(Regex.Match(truck?.Max_weight!, @"\d+").Value) < Int32.Parse(Regex.Match(cargoes?.Weight!, @"\d+").Value))
+                        if (truck?.Max_weight < cargoes?.Weight)
                         {
                             invalid = true;
                             error += localizer["Weight_is_height"] + " ";

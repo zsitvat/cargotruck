@@ -2,19 +2,18 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 
-namespace Cargotruck.Server.Repositories
+namespace Cargotruck.Server.Repositories.Interfaces
 {
-    public interface ITaskRepository
+    public interface ICargoRepository
     {
-        Task<List<Tasks>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);
-        Task<List<Tasks>> GetTasksAsync();
-        Task<Tasks?> GetByIdAsync(int id);
+        Task<List<Cargoes>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);
+        Task<List<Cargoes>> GetCargoesAsync();
+        Task<Cargoes?> GetByIdAsync(int id);
         Task<int[]> GetChartDataAsync();
         Task<int> PageCountAsync(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);
         Task<int> CountAsync(bool all);
-        Task ChangeCompletionAsync(Tasks t);
-        Task PostAsync(Tasks t);
-        Task PutAsync(Tasks t);
+        Task PostAsync(Cargoes data);
+        Task PutAsync(Cargoes data);
         Task<bool> DeleteAsync(int id);
         string ExportToExcel(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);
         Task<string> ExportToPdfAsync(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);

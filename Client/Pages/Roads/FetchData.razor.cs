@@ -10,7 +10,7 @@ namespace Cargotruck.Client.Pages.Roads
     {
         public bool settings = false;
         bool expandExportMenu;
-        Cargotruck.Shared.Model.Roads[]? Roads { get; set; }
+        RoadsDto[]? Roads { get; set; }
         string? IdForGetById { get; set; }
         string? GetByIdType { get; set; }
 
@@ -38,7 +38,7 @@ namespace Cargotruck.Client.Pages.Roads
             pageSize = Page.GetPageSize(pageSize, dataRows);
             maxPage = Page.GetMaxPage(pageSize, dataRows);
 
-            Roads = await client.GetFromJsonAsync<Cargotruck.Shared.Model.Roads[]>($"api/roads/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
+            Roads = await client.GetFromJsonAsync<RoadsDto[]>($"api/roads/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
             StateHasChanged();
         }
 

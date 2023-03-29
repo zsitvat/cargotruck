@@ -1,4 +1,5 @@
 ﻿using Cargotruck.Server.Data;
+using Cargotruck.Server.Repositories.Interfaces;
 using Cargotruck.Server.Services;
 using Cargotruck.Shared.Model;
 using Cargotruck.Shared.Resources;
@@ -63,11 +64,11 @@ namespace Cargotruck.Server.Repositories
 
         public async Task<bool> DeleteAsync(int id)
         {
-            var data = _context.Tasks.FirstOrDefault(x => x.Id == id);
+            var data = _context.Settings.FirstOrDefault(x => x.Id == id);
 
             if (data != null)
             {
-                _context.Tasks.Remove(data);
+                _context.Settings.Remove(data);
                 await _context.SaveChangesAsync();
                 return true;
             }

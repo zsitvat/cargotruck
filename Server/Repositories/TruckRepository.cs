@@ -1,5 +1,6 @@
 ﻿using Cargotruck.Server.Data;
-using Cargotruck.Server.Services;
+using Cargotruck.Server.Repositories.Interfaces;
+using Cargotruck.Server.Services.Interfaces;
 using Cargotruck.Shared.Model;
 using Cargotruck.Shared.Resources;
 using ClosedXML.Excel;
@@ -360,7 +361,7 @@ namespace Cargotruck.Server.Repositories
                 txt.Write((truck.Brand ?? ifNull) + separator);
                 txt.Write((truck.Status + separator));
                 txt.Write((truck.Road_id != null ? truck.Road_id : ifNull) + separator);
-                txt.Write((truck.Max_weight ?? ifNull) + separator);
+                txt.Write((truck.Max_weight != null ? truck.Max_weight : ifNull) + separator);
                 txt.Write(truck.Date + separator);
                 txt.Write("\n");
             }

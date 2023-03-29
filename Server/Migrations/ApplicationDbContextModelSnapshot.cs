@@ -22,7 +22,7 @@ namespace Cargotruck.Server.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("Cargotruck.Server.Model.Users", b =>
+            modelBuilder.Entity("Cargotruck.Server.Models.Users", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -123,9 +123,9 @@ namespace Cargotruck.Server.Migrations
                     b.Property<string>("Warehouse_section")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Weight")
+                    b.Property<int?>("Weight")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -456,9 +456,9 @@ namespace Cargotruck.Server.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Max_weight")
+                    b.Property<int?>("Max_weight")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("int");
 
                     b.Property<int?>("Road_id")
                         .HasColumnType("int");
@@ -534,36 +534,36 @@ namespace Cargotruck.Server.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "fd5059c3-b398-43b7-b30a-5a8190b69b19",
-                            ConcurrencyStamp = "87ab9e44-60c4-4b57-bd0f-77effd753d55",
+                            Id = "0681486d-dca1-47bf-b879-9625b6969e2e",
+                            ConcurrencyStamp = "c7b9ecb6-c58b-42e1-8bb0-608ebe66579f",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "65f85d12-0557-48c2-94e4-d96895cf1144",
-                            ConcurrencyStamp = "08779b80-0a82-4be7-8138-57fd4bc0802c",
+                            Id = "3356aca3-ab4a-4e69-9a55-2e63ef93402d",
+                            ConcurrencyStamp = "239e8cb3-7251-4fd3-8794-47b094e101c7",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "e93d2d41-3e4f-4a7e-abaf-7ab87b5bc1eb",
-                            ConcurrencyStamp = "51caaac6-be72-451d-a8f1-b51a232239bd",
+                            Id = "0427d085-5566-40f4-a9e8-6a3cfed46b3e",
+                            ConcurrencyStamp = "1952e362-31cb-4081-a6f2-75a122d2d2f9",
                             Name = "Driver",
                             NormalizedName = "DRIVER"
                         },
                         new
                         {
-                            Id = "06090eee-8458-4c3d-bb0d-759b1757b200",
-                            ConcurrencyStamp = "d8307b56-b117-4353-9c24-97d592e61237",
+                            Id = "c05a64d1-8d20-49ab-8e47-ffc2a3708c58",
+                            ConcurrencyStamp = "1d7cf1e2-14c3-4cec-8db2-b6de48fa5088",
                             Name = "Accountant",
                             NormalizedName = "ACCOUNTANT"
                         },
                         new
                         {
-                            Id = "5d6b6125-2cef-4152-a416-1a40af7feecf",
-                            ConcurrencyStamp = "ef52bbc8-0bb1-4ab3-8ebe-0fb7082c447d",
+                            Id = "c43d5fef-a348-4b9e-bbd8-d8682c0f8aa8",
+                            ConcurrencyStamp = "428d1d02-c1dc-42d8-8273-fa2f9def71dc",
                             Name = "Storageman",
                             NormalizedName = "STORAGEMAN"
                         });
@@ -697,7 +697,7 @@ namespace Cargotruck.Server.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Cargotruck.Server.Model.Users", null)
+                    b.HasOne("Cargotruck.Server.Models.Users", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -706,7 +706,7 @@ namespace Cargotruck.Server.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Cargotruck.Server.Model.Users", null)
+                    b.HasOne("Cargotruck.Server.Models.Users", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -721,7 +721,7 @@ namespace Cargotruck.Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Cargotruck.Server.Model.Users", null)
+                    b.HasOne("Cargotruck.Server.Models.Users", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -730,7 +730,7 @@ namespace Cargotruck.Server.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Cargotruck.Server.Model.Users", null)
+                    b.HasOne("Cargotruck.Server.Models.Users", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

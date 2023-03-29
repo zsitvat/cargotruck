@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
-using Cargotruck.Server.Repositories;
 using Cargotruck.Shared.Model.Dto;
 using Cargotruck.Shared.Model;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 using DocumentFormat.OpenXml.Office2010.Excel;
+using Cargotruck.Server.Repositories.Interfaces;
+using Cargotruck.Server.Services.Interfaces;
 
 namespace Cargotruck.Server.Services
 {

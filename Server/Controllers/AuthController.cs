@@ -1,13 +1,16 @@
 ﻿using Cargotruck.Server.Data;
 using Cargotruck.Server.Models;
+using Cargotruck.Server.Services.Interfaces;
 using Cargotruck.Shared.Model;
 using Cargotruck.Shared.Model.Dto;
 using Cargotruck.Shared.Resources;
-using iTextSharp.text.xml.xmp;
+using DocumentFormat.OpenXml.Office2016.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
+using Org.BouncyCastle.Asn1.Ocsp;
 using System.Globalization;
 using System.Security.Claims;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
@@ -18,165 +21,89 @@ namespace Cargotruck.Server.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly UserManager<Users> _userManager;
-        private readonly SignInManager<Users> _signInManager;
-        private readonly IStringLocalizer<Resource> _localizer;
-        private readonly ApplicationDbContext _context;
+        private readonly IAuthService _authService;
 
-        public AuthController(ApplicationDbContext context, IStringLocalizer<Resource> localizer, UserManager<Users> userManager, SignInManager<Users> signInManager)
+        public AuthController(IAuthService authService)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _localizer = localizer;
-            _context = context;
+            _authService = authService;
         }
 
         [HttpPost]
-        public async Task<IActionResult> LoginAsync(LoginRequest request, CultureInfo lang)
+        public async Task<ActionResult> LoginAsync(LoginRequest request, CultureInfo lang)
         {
-            //if no user found, create admin
-            if (!_userManager.Users.Any())
+            var result = await _authService.LoginAsync(request, lang);
+
+            if (result == null)
             {
-                var admin = new Users
-                {
-                    UserName = "admin",
-                    Email = "admin@cargotruck.com",
-                    PhoneNumber = "+421123456789"
-                };
-                await _userManager.CreateAsync(admin, "Admin123*");
-                await _userManager.AddToRoleAsync(admin, "Admin");
-                await _userManager.AddClaimAsync(admin, new System.Security.Claims.Claim("img", "img/profile.jpg"));
+                return Ok();
             }
-            CultureInfo.CurrentUICulture = lang;
-            var password_error = _localizer["Password_error"].Value;
-            var user = await _userManager.FindByNameAsync(request.UserName);
-            
-            if (user == null) return BadRequest("Not_found");
-
-            var singInResult = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
-            
-            if (!singInResult.Succeeded) 
-                return BadRequest(password_error);
-
-            await _signInManager.SignInAsync(user, request.RememberMe);
-
-            //save login date
-            Logins login = new()
+            else
             {
-                UserName = user.UserName,
-                UserId = user.Id,
-                LoginDate = DateTime.Now
-            };
-
-            _context.Add(login);
-            await _context.SaveChangesAsync();
-
-            return Ok();
+                return BadRequest(result);
+            }
         }
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> RegisterAsync(RegisterRequest parameters)
+        public async Task<ActionResult> RegisterAsync(RegisterRequest parameters)
         {
-            Users user = new();
-            user.UserName = parameters.UserName;
-            user.PhoneNumber = parameters.PhoneNumber ?? user.PhoneNumber;
-            user.Email = parameters.Email ?? user.Email;
+            var result = await _authService.RegisterAsync(parameters);
 
-            var result = await _userManager.CreateAsync(user, parameters.Password);
-            await _userManager.AddToRoleAsync(user, parameters.Role);
-            await _userManager.AddClaimAsync(user, new Claim("img", parameters.Img));
-
-            if (!result.Succeeded) 
-                return BadRequest(result.Errors.FirstOrDefault()?.Description);
-            
-            return LocalRedirect("/Admin");
-        }
-
-        [HttpPost]
-        [Authorize]
-        public async Task<IActionResult> UpdateAsync(UpdateRequest parameters)
-        {
-            var user = new Users();
-            Dictionary<string, string> claims = new();
-            Dictionary<string, string> userRoles = new();
-            Dictionary<string, string> roles = new();
-            string role = "";
-
-            if (parameters.Id != null)
+            if (result == null)
             {
-                user = _context.Users.FirstOrDefault(a => a.Id == parameters.Id);
-                roles = _context.Roles.ToDictionary(r => r.Id, r => r.Name);
-                userRoles = _context.UserRoles.ToDictionary(r => r.UserId, r => roles[r.RoleId]);
-                role = userRoles[parameters.Id];
+                return LocalRedirect("/Admin");
             }
             else
             {
-                user = _context.Users.FirstOrDefault(a => a.UserName == User.Identity!.Name);
-                claims = User.Claims.ToDictionary(c => c.Type, c => c.Value);
-                role = claims["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+                return BadRequest(result);
             }
 
-            if (user == null) return BadRequest();
-            user.UserName = parameters.UserName ?? user.UserName;
-            user.PhoneNumber = parameters.PhoneNumber ?? user.PhoneNumber;
-            user.Email = parameters.Email ?? user.Email;
-            var result = await _userManager.UpdateAsync(user);
-
-            await _userManager.RemoveFromRoleAsync(user, role);
-            await _userManager.AddToRoleAsync(user, parameters.Role);
-            
-            if (!result.Succeeded) 
-                return BadRequest(result.Errors.FirstOrDefault()?.Description);
-            
-            return Ok();
         }
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> ChangePasswordAsync(ChangePasswordRequest parameters)
+        public async Task<ActionResult> UpdateAsync(UpdateRequest parameters)
         {
-            var user = _context.Users.FirstOrDefault(a => a.UserName == User.Identity!.Name);
-            var result = await _userManager.ChangePasswordAsync(user!, parameters.PasswordCurrent, parameters.Password);
-            
-            if (!result.Succeeded) 
-                return BadRequest(result.Errors.FirstOrDefault()?.Description);
-            
-            return Ok();
+            var result = await _authService.UpdateAsync(parameters);
+
+            if (result == null)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(result);
+            }
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<ActionResult> ChangePasswordAsync(ChangePasswordRequest parameters)
+        {
+            var result = await _authService.ChangePasswordAsync(parameters);
+
+            if (result == null)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(result);
+            }
         }
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> LogoutAsync()
+        public async Task<ActionResult> LogoutAsync()
         {
-            await _signInManager.SignOutAsync();
+            await _authService.LogoutAsync();
             return Ok();
         }
 
         [HttpGet]
         public CurrentUser CurrentUserInfo()
         {
-            var u = _context.Users.FirstOrDefault(a => a.UserName == User.Identity!.Name);
-            
-            if (User.Identity!.IsAuthenticated && u != null)
-            {
-                return new CurrentUser
-                {
-                    IsAuthenticated = User.Identity.IsAuthenticated,
-                    UserName = User.Identity.Name,
-                    Name = User.Identity.Name,
-                    Email = u.Email,
-                    PhoneNumber = u.PhoneNumber,
-                    Claims = User.Claims.ToDictionary(c => c.Type, c => c.Value),
-                    Id = u.Id,
-                };
-
-            }
-            else
-            {
-                return new CurrentUser { };
-            }
-
+           return _authService.CurrentUserInfo();
         }
     }
 

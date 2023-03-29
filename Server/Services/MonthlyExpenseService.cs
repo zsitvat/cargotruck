@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using Cargotruck.Server.Repositories;
+using Cargotruck.Server.Repositories.Interfaces;
+using Cargotruck.Server.Services.Interfaces;
 using Cargotruck.Shared.Model;
 using Cargotruck.Shared.Model.Dto;
 using Microsoft.AspNetCore.Mvc;

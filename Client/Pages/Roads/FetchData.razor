@@ -136,8 +136,8 @@ else
                                 }
                             </tr>
                         </thead>
-                        <tbody> 
-                            @foreach (Roads item in Roads)
+                        <tbody>
+                            @foreach (var item in Roads)
                             {
                                 <tr @onclick="@((e) =>MouseHoverClass.MouseOnclick(item.Id.ToString()))" @onmouseover="@((e) =>MouseHoverClass.MouseOver(item.Id.ToString()))" @onmouseout="@((e) =>MouseHoverClass.MouseOut())"
                             class="@(MouseHoverClass.MouseOnHoverClass == item.Id.ToString() || MouseHoverClass.MouseOnclickClass == item.Id.ToString() ? "color-on-hover" :"")">

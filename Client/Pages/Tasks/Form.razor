@@ -147,7 +147,7 @@
                     <div>
                         <label>@localizer["Penalty"]:</label>
                         <div>
-                            <InputNumber min="0"   class="form-control inputs" @bind-Value="@tasks.Penalty" />
+                            <InputNumber min="0"  class="form-control inputs" @bind-Value="@tasks.Penalty" />
                             <ValidationMessage For="@(() => tasks.Penalty)" />
                         </div>
                     </div>
@@ -174,12 +174,12 @@
     [Parameter] public EventCallback OnValidSubmit { get; set; }
     [Parameter] public EventCallback<bool> checkValidSubmit { get; set; }
     string error = "";
-    List<Cargoes>? cargoes { get; set; }
+    List<CargoesDto>? cargoes { get; set; }
     List<TasksDto>? taskWithCargo { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        cargoes = await client.GetFromJsonAsync < List<Cargoes>>("api/cargoes/getcargoes");
+        cargoes = await client.GetFromJsonAsync<List<CargoesDto>>("api/cargoes/getcargoes");
         taskWithCargo = await client.GetFromJsonAsync<List<TasksDto>>("api/tasks/gettasks");
         taskWithCargo = taskWithCargo?.Where(x => x.Id_cargo != null).ToList();
         if (taskWithCargo != null) {

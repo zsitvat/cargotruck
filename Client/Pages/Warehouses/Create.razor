@@ -6,7 +6,7 @@
 <Form ButtonText="Create" warehouses="@warehouse" OnValidSubmit="@CreateWarehouseAsync" TitleText="Create_warehouse"/>
 
 @code {
-    Warehouses warehouse = new Warehouses();
+    WarehousesDto warehouse = new WarehousesDto();
     bool isValidSubmit = true;
 
     async Task CreateWarehouseAsync()

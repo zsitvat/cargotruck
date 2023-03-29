@@ -19,7 +19,7 @@ else
 {
     <div>
         <div class="col-md-6 stretch-card">
-            @foreach(Privacies item in privacies)
+            @foreach(var item in privacies)
             {
                 @if(item.Text != null){
                     <div class="card card2 mt-2 pe-4 ps-2">
@@ -65,15 +65,15 @@ else
 
 @code{
     private bool addNewWindow = false;
-    Privacies[]? privacies { get; set; }
-    Privacies privacy = new Privacies();
+    PrivaciesDto[]? privacies { get; set; }
+    PrivaciesDto privacy = new PrivaciesDto();
     Dictionary<dynamic, bool> showtext = new Dictionary<dynamic, bool>();
 
     protected override async Task OnInitializedAsync()
     {
         PageHistoryState.AddPageToHistory("/Privacy");
         base.OnInitialized();
-        privacies = await client.GetFromJsonAsync<Privacies[]>($"api/privacy/get?lang={CultureInfo.CurrentCulture.ToString()}");
+        privacies = await client.GetFromJsonAsync<PrivaciesDto[]>($"api/privacy/get?lang={CultureInfo.CurrentCulture.ToString()}");
         showtext.Clear();
         if(privacies != null){
             foreach (var item in privacies)

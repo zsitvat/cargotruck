@@ -1,5 +1,5 @@
 ﻿using Cargotruck.Server.Data;
-using Cargotruck.Server.Services;
+using Cargotruck.Server.Services.Interfaces;
 using Cargotruck.Shared.Model;
 using Cargotruck.Shared.Model.Dto;
 using DocumentFormat.OpenXml.Office2010.Excel;

@@ -1,7 +1,7 @@
 ﻿using Cargotruck.Shared.Model;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Cargotruck.Server.Repositories
+namespace Cargotruck.Server.Repositories.Interfaces
 {
     public interface IPrivacyRepository
     {

@@ -1,5 +1,6 @@
 ﻿using Cargotruck.Server.Data;
-using Cargotruck.Server.Services;
+using Cargotruck.Server.Repositories.Interfaces;
+using Cargotruck.Server.Services.Interfaces;
 using Cargotruck.Shared.Model;
 using Cargotruck.Shared.Resources;
 using ClosedXML.Excel;

@@ -10,8 +10,8 @@
     [Parameter] public int Id { get; set; }
     List<int>? selectedTaskId;
     List<int>? selectedExpenseId;
-    Monthly_expenses? monthly_expense = new Monthly_expenses();
-    Monthly_expenses_tasks_expenses? Monthly_expenses_tasks_expenses = new Monthly_expenses_tasks_expenses();
+    Monthly_expensesDto? monthly_expense = new Monthly_expensesDto();
+    Monthly_expenses_tasks_expensesDto? Monthly_expenses_tasks_expenses = new Monthly_expenses_tasks_expensesDto();
 
     public void HandleChangeTask(List<int>? selected)
     {
@@ -25,7 +25,7 @@
 
     protected async override Task OnParametersSetAsync()
     {
-        monthly_expense = await http.GetFromJsonAsync<Monthly_expenses>($"api/Monthly_expenses/getById/{Id}");
+        monthly_expense = await http.GetFromJsonAsync<Monthly_expensesDto>($"api/Monthly_expenses/getById/{Id}");
     }
 
     async Task EditMonthlyExpenseAsync()
@@ -36,7 +36,7 @@
         }
         var text = @localizer["Succesfull_update"];
         var IsFirstId = true;
-        await http.PutAsJsonAsync("api/monthly_expenses/put", monthly_expense);
+        await http.PutAsJsonAsync("api/monthlyexpenses/put", monthly_expense);
 
         int lenght = 0;
         if (selectedTaskId != null && selectedExpenseId != null)
@@ -72,7 +72,7 @@
                 Monthly_expenses_tasks_expenses.Expense_id = selectedExpenseId[i];
             }
             //Monthly_expenses_tasks_expenses.Monthly_expenses = monthly_expense;
-            await http.PostAsJsonAsync($"api/monthly_expenses/postconnectionids?first={IsFirstId}", Monthly_expenses_tasks_expenses);
+            await http.PostAsJsonAsync($"api/monthlyexpenses/postconnectionids?first={IsFirstId}", Monthly_expenses_tasks_expenses);
         }
 
         await js.InvokeVoidAsync("alert", $"{text}");

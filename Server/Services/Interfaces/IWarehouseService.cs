@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 
-namespace Cargotruck.Server.Services
+namespace Cargotruck.Server.Services.Interfaces
 {
     public interface IWarehouseService
     {

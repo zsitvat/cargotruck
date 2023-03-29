@@ -1,4 +1,5 @@
 ﻿@page "/Trucks"
+@using Cargotruck.Shared.Model;
 
 
 <h3>@localizer["Trucks"]</h3>
@@ -111,7 +112,7 @@ else
                         </thead>
                         <tbody>
                             
-                            @foreach (Trucks item in Trucks)
+                            @foreach (var item in Trucks)
                             {
 
                                 <tr @onclick="@((e) =>MouseHoverClass.MouseOnclick(item.Id.ToString()))" @onmouseover="@((e) =>MouseHoverClass.MouseOver(item.Id.ToString()))" @onmouseout="@((e) =>MouseHoverClass.MouseOut())"
@@ -141,7 +142,7 @@ else
                                     }
                                     @if (showColumns[4])
                                     {
-                                        <td>@item.Max_weight</td>
+                                        <td>@item.Max_weight kg</td>
                                     }
                                     @if (showColumns[5])
                                     {
