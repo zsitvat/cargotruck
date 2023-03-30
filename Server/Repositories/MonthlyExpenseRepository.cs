@@ -501,7 +501,7 @@ namespace Cargotruck.Server.Repositories
 
             foreach (var name in columnNames)
             {
-                txt.Write(name + separator);
+                 txt.Write(name + (isTextDocument ? "  " : separator));
             }
 
             txt.Write("\n");

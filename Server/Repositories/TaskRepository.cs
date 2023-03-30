@@ -22,12 +22,14 @@ namespace Cargotruck.Server.Repositories
         private readonly ApplicationDbContext _context;
         private readonly IStringLocalizer<Resource> _localizer;
         private readonly IColumnNamesService _columnNameLists;
+        private readonly IErrorHandlerService _errorHandler;
 
-        public TaskRepository(ApplicationDbContext context, IStringLocalizer<Resource> localizer, IColumnNamesService columnNameLists)
+        public TaskRepository(ApplicationDbContext context, IStringLocalizer<Resource> localizer, IColumnNamesService columnNameLists, IErrorHandlerService errorHandler)
         {
             _context = context;
             _localizer = localizer;
             _columnNameLists = columnNameLists;
+            _errorHandler = errorHandler;
         }
 
         private async Task<List<Tasks>> GetDataAsync(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
@@ -565,7 +567,7 @@ namespace Cargotruck.Server.Repositories
 
             foreach (var name in columnNames)
             {
-                txt.Write(name + "  ");
+                txt.Write(name + (isTextDocument ? "  " : separator));
             }
 
             txt.Write("\n");
@@ -701,72 +703,85 @@ namespace Cargotruck.Server.Repositories
                                 list[l + 13] = new String(list[l + 14]?.ToString()?.Where(Char.IsDigit).ToArray());
                                 list[l + 14] = new String(list[l + 15]?.ToString()?.Where(Char.IsDigit).ToArray());
 
-                                if (nulls != list.Count)
+                                try
                                 {
-                                    var sql = @"Insert Into Tasks (User_id,Partner,Description,Place_of_receipt,Time_of_receipt,Place_of_delivery,Time_of_delivery,Other_stops,Id_cargo,Storage_time,Completed,Completion_time,Time_of_delay,Payment,Final_Payment,Penalty,Date ) 
-                                        Values (@User_id,@Partner,@Description,@Place_of_receipt,@Time_of_receipt, @Place_of_delivery,@Time_of_delivery,@Other_stops,@Id_cargo,@Storage_time,@Completed,@Completion_time,@Time_of_delay,@Payment,@Final_Payment,@Penalty,@Date)";
-                                    var insert = await _context.Database.ExecuteSqlRawAsync(sql,
-                                        new SqlParameter("@User_id", "Imported"),
-                                        new SqlParameter("@Partner", list[l]),
-                                        new SqlParameter("@Description", list[l + 1]),
-                                        new SqlParameter("@Place_of_receipt", list[l + 2]),
-                                        new SqlParameter("@Time_of_receipt", list[l + 3] == System.DBNull.Value || list[l + 3] == null ? System.DBNull.Value : DateTime.Parse(list[l + 3]?.ToString()!)),
-                                        new SqlParameter("@Place_of_delivery", list[l + 4]),
-                                        new SqlParameter("@Time_of_delivery", list[l + 5] == System.DBNull.Value || list[l + 5] == null ? System.DBNull.Value : DateTime.Parse(list[l + 5]?.ToString()!)),
-                                        new SqlParameter("@Other_stops", list[l + 6]),
-                                        new SqlParameter("@Id_cargo", list[l + 7]),
-                                        new SqlParameter("@Storage_time", list[l + 8]),
-                                        new SqlParameter("@Completed", list[l + 9]),
-                                        new SqlParameter("@Completion_time", list[l + 10]),
-                                        new SqlParameter("@Time_of_delay", list[l + 11]),
-                                        new SqlParameter("@Payment", list[l + 12]),
-                                        new SqlParameter("@Final_Payment", list[l + 13]),
-                                        new SqlParameter("@Penalty", list[l + 14]),
-                                        new SqlParameter("@Date", DateTime.Now)
-                                        );
 
-                                    if (insert > 0)
+                                    if (nulls != list.Count)
                                     {
-                                        error = "";
-                                        var lastId = await _context.Tasks.OrderBy(x => x.Id).LastOrDefaultAsync();
+                                        var sql = @"Insert Into Tasks (User_id,Partner,Description,Place_of_receipt,Time_of_receipt,Place_of_delivery,Time_of_delivery,Other_stops,Id_cargo,Storage_time,Completed,Completion_time,Time_of_delay,Payment,Final_Payment,Penalty,Date ) 
+                                            Values (@User_id,@Partner,@Description,@Place_of_receipt,@Time_of_receipt, @Place_of_delivery,@Time_of_delivery,@Other_stops,@Id_cargo,@Storage_time,@Completed,@Completion_time,@Time_of_delay,@Payment,@Final_Payment,@Penalty,@Date)";
+                                        var insert = await _context.Database.ExecuteSqlRawAsync(sql,
+                                            new SqlParameter("@User_id", "Imported"),
+                                            new SqlParameter("@Partner", list[l]),
+                                            new SqlParameter("@Description", list[l + 1]),
+                                            new SqlParameter("@Place_of_receipt", list[l + 2]),
+                                            new SqlParameter("@Time_of_receipt", list[l + 3] == System.DBNull.Value || list[l + 3] == null ? System.DBNull.Value : DateTime.Parse(list[l + 3]?.ToString()!)),
+                                            new SqlParameter("@Place_of_delivery", list[l + 4]),
+                                            new SqlParameter("@Time_of_delivery", list[l + 5] == System.DBNull.Value || list[l + 5] == null ? System.DBNull.Value : DateTime.Parse(list[l + 5]?.ToString()!)),
+                                            new SqlParameter("@Other_stops", list[l + 6]),
+                                            new SqlParameter("@Id_cargo", list[l + 7]),
+                                            new SqlParameter("@Storage_time", list[l + 8]),
+                                            new SqlParameter("@Completed", list[l + 9]),
+                                            new SqlParameter("@Completion_time", list[l + 10]),
+                                            new SqlParameter("@Time_of_delay", list[l + 11]),
+                                            new SqlParameter("@Payment", list[l + 12]),
+                                            new SqlParameter("@Final_Payment", list[l + 13]),
+                                            new SqlParameter("@Penalty", list[l + 14]),
+                                            new SqlParameter("@Date", DateTime.Now)
+                                            );
 
-                                        if (lastId?.Id_cargo != null)
+                                        if (insert > 0)
                                         {
-                                            var WithNewIds = await _context.Tasks.Where(x => x.Id_cargo == lastId.Id_cargo).ToListAsync();
-                                            Cargoes? cargo = await _context.Cargoes.FirstOrDefaultAsync(x => x.Id == lastId.Id_cargo);
+                                            error = "";
+                                            var lastId = await _context.Tasks.OrderBy(x => x.Id).LastOrDefaultAsync();
 
-                                            foreach (var item in WithNewIds)
+                                            if (lastId?.Id_cargo != null)
                                             {
-                                                if (item != null)
+                                                var WithNewIds = await _context.Tasks.Where(x => x.Id_cargo == lastId.Id_cargo).ToListAsync();
+                                                Cargoes? cargo = await _context.Cargoes.FirstOrDefaultAsync(x => x.Id == lastId.Id_cargo);
+
+                                                foreach (var item in WithNewIds)
                                                 {
-                                                    if (item.Id != lastId?.Id)
+                                                    if (item != null)
                                                     {
-                                                        item.Id_cargo = null;
-                                                        _context.Entry(item).State = EntityState.Modified;
-                                                        await _context.SaveChangesAsync();
-                                                    }
-                                                    else if (cargo == null)
-                                                    {
-                                                        item.Id_cargo = null;
-                                                        _context.Entry(item).State = EntityState.Modified;
-                                                        await _context.SaveChangesAsync();
+                                                        if (item.Id != lastId?.Id)
+                                                        {
+                                                            item.Id_cargo = null;
+                                                            _context.Entry(item).State = EntityState.Modified;
+                                                            await _context.SaveChangesAsync();
+                                                        }
+                                                        else if (cargo == null)
+                                                        {
+                                                            item.Id_cargo = null;
+                                                            _context.Entry(item).State = EntityState.Modified;
+                                                            await _context.SaveChangesAsync();
+                                                        }
                                                     }
                                                 }
-                                            }
 
-                                            if (cargo != null)
-                                            {
-                                                cargo.Task_id = lastId.Id;
-                                                _context.Entry(cargo).State = EntityState.Modified;
-                                                await _context.SaveChangesAsync();
+                                                if (cargo != null)
+                                                {
+                                                    cargo.Task_id = lastId.Id;
+                                                    _context.Entry(cargo).State = EntityState.Modified;
+                                                    await _context.SaveChangesAsync();
+                                                }
                                             }
                                         }
-                                    }
-                                    else if (insert <= 0)
-                                    {
-                                        System.IO.File.Delete(path); // delete the file
+                                        else if (insert <= 0)
+                                        {
+                                            System.IO.File.Delete(path); // delete the file
+                                        }
                                     }
                                 }
+                                catch (SqlException ex)
+                                {
+                                    return _errorHandler.GetErrorMessageAsString(ex);
+                                }
+                                catch (FormatException ex)
+                                {
+                                    return _errorHandler.GetErrorMessageAsString(ex);
+                                }
+
                             }
                             else
                             {

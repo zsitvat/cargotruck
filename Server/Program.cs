@@ -99,6 +99,7 @@ builder.Services.AddScoped<ICargoService, CargoService>();
 builder.Services.AddScoped<IRoadService, RoadService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IAdminService, AdminService>();
+builder.Services.AddSingleton<IErrorHandlerService, ErrorHandlerService>();
 
 //Repositories
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();

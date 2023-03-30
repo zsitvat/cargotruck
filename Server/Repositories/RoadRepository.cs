@@ -1,5 +1,6 @@
 ﻿using Cargotruck.Server.Data;
 using Cargotruck.Server.Repositories.Interfaces;
+using Cargotruck.Server.Services;
 using Cargotruck.Server.Services.Interfaces;
 using Cargotruck.Shared.Model;
 using Cargotruck.Shared.Resources;
@@ -13,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using System.Data;
 using System.Globalization;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace Cargotruck.Server.Repositories
@@ -22,12 +24,14 @@ namespace Cargotruck.Server.Repositories
         private readonly ApplicationDbContext _context;
         private readonly IStringLocalizer<Resource> _localizer;
         private readonly IColumnNamesService _columnNameLists;
+        private readonly IErrorHandlerService _errorHandler;
 
-        public RoadRepository(ApplicationDbContext context, IStringLocalizer<Resource> localizer, IColumnNamesService columnNameLists)
+        public RoadRepository(ApplicationDbContext context, IStringLocalizer<Resource> localizer, IColumnNamesService columnNameLists, IErrorHandlerService errorHandler)
         {
             _context = context;
             _localizer = localizer;
             _columnNameLists = columnNameLists;
+            _errorHandler = errorHandler;
         }
 
         private async Task<List<Roads>> GetDataAsync(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
@@ -492,7 +496,7 @@ namespace Cargotruck.Server.Repositories
 
             foreach (var name in columnNames)
             {
-                txt.Write(name + separator);
+                 txt.Write(name + (isTextDocument ? "  " : separator));
             }
 
             txt.Write("\n");
@@ -622,98 +626,110 @@ namespace Cargotruck.Server.Repositories
                                     }
                                 }
 
-                                if (nulls != list.Count)
+                                try
                                 {
-                                    var sql = @"Insert Into Roads (User_id,Task_id,Vehicle_registration_number,Id_cargo,Purpose_of_the_trip,Starting_date,Ending_date,Starting_place,Ending_place,Direction,Distance,Fuel,Expenses_id,Date) 
-                                    Values (@User_id,@Task_id,@Vehicle_registration_number,@Id_cargo,@Purpose_of_the_trip,@Starting_date,@Ending_date,@Starting_place,@Ending_place,@Direction,@Distance,@Fuel,@Expenses_id,@Date)";
-                                    var insert = await _context.Database.ExecuteSqlRawAsync(sql,
-                                        new SqlParameter("@User_id", "Imported"),
-                                        new SqlParameter("@Task_id", list[l]),
-                                        new SqlParameter("@Vehicle_registration_number", list[l + 1]),
-                                        new SqlParameter("@Id_cargo", list[l + 2]),
-                                        new SqlParameter("@Purpose_of_the_trip", list[l + 3]),
-                                        new SqlParameter("@Starting_date", list[l + 4] == System.DBNull.Value ? System.DBNull.Value : DateTime.Parse(list[l + 4]?.ToString()!)),
-                                        new SqlParameter("@Ending_date", list[l + 5] == System.DBNull.Value ? System.DBNull.Value : DateTime.Parse(list[l + 5]?.ToString()!)),
-                                        new SqlParameter("@Starting_place", list[l + 6]),
-                                        new SqlParameter("@Ending_place", list[l + 7]),
-                                        new SqlParameter("@Direction", (list[l + 8]?.ToString() == _localizer["to"] ? "TO" : "FROM")),
-                                        new SqlParameter("@Distance", list[l + 9]),
-                                        new SqlParameter("@Fuel", list[l + 10]),
-                                        new SqlParameter("@Expenses_id", list[l + 11]),
-                                        new SqlParameter("@Date", DateTime.Now)
-                                        );
-
-                                    if (insert > 0)
+                                    if (nulls != list.Count)
                                     {
-                                        error = "";
-                                        var lastId = await _context.Roads.OrderBy(x => x.Date).LastOrDefaultAsync();
 
-                                        if (lastId != null)
+                                        var sql = @"Insert Into Roads (User_id,Task_id,Vehicle_registration_number,Id_cargo,Purpose_of_the_trip,Starting_date,Ending_date,Starting_place,Ending_place,Direction,Distance,Fuel,Expenses_id,Date) 
+                                        Values (@User_id,@Task_id,@Vehicle_registration_number,@Id_cargo,@Purpose_of_the_trip,@Starting_date,@Ending_date,@Starting_place,@Ending_place,@Direction,@Distance,@Fuel,@Expenses_id,@Date)";
+                                        var insert = await _context.Database.ExecuteSqlRawAsync(sql,
+                                            new SqlParameter("@User_id", "Imported"),
+                                            new SqlParameter("@Task_id", list[l]),
+                                            new SqlParameter("@Vehicle_registration_number", list[l + 1]),
+                                            new SqlParameter("@Id_cargo", list[l + 2]),
+                                            new SqlParameter("@Purpose_of_the_trip", list[l + 3]),
+                                            new SqlParameter("@Starting_date", list[l + 4] == System.DBNull.Value ? System.DBNull.Value : DateTime.Parse(list[l + 4]?.ToString()!)),
+                                            new SqlParameter("@Ending_date", list[l + 5] == System.DBNull.Value ? System.DBNull.Value : DateTime.Parse(list[l + 5]?.ToString()!)),
+                                            new SqlParameter("@Starting_place", list[l + 6]),
+                                            new SqlParameter("@Ending_place", list[l + 7]),
+                                            new SqlParameter("@Direction", (list[l + 8]?.ToString() == _localizer["to"] ? "TO" : "FROM")),
+                                            new SqlParameter("@Distance", list[l + 9]),
+                                            new SqlParameter("@Fuel", list[l + 10]),
+                                            new SqlParameter("@Expenses_id", list[l + 11]),
+                                            new SqlParameter("@Date", DateTime.Now)
+                                            );
+
+                                        if (insert > 0)
                                         {
-                                            var WithNewIds = await _context.Roads.Where(x => x.Task_id == lastId.Task_id || x.Id_cargo == lastId.Id_cargo || x.Expenses_id == lastId.Expenses_id).ToListAsync();
-                                            Cargoes? cargo = await _context.Cargoes.FirstOrDefaultAsync(x => x.Id == lastId.Id_cargo);
-                                            Tasks? task = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == lastId.Task_id);
-                                            Expenses? expense = await _context.Expenses.FirstOrDefaultAsync(x => x.Id == lastId.Expenses_id);
-                                            Trucks? truck = await _context.Trucks.FirstOrDefaultAsync(x => x.Vehicle_registration_number == lastId.Vehicle_registration_number);
+                                            error = "";
+                                            var lastId = await _context.Roads.OrderBy(x => x.Date).LastOrDefaultAsync();
 
-                                            foreach (var item in WithNewIds)
+                                            if (lastId != null)
                                             {
-                                                if (item != null)
+                                                var WithNewIds = await _context.Roads.Where(x => x.Task_id == lastId.Task_id || x.Id_cargo == lastId.Id_cargo || x.Expenses_id == lastId.Expenses_id).ToListAsync();
+                                                Cargoes? cargo = await _context.Cargoes.FirstOrDefaultAsync(x => x.Id == lastId.Id_cargo);
+                                                Tasks? task = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == lastId.Task_id);
+                                                Expenses? expense = await _context.Expenses.FirstOrDefaultAsync(x => x.Id == lastId.Expenses_id);
+                                                Trucks? truck = await _context.Trucks.FirstOrDefaultAsync(x => x.Vehicle_registration_number == lastId.Vehicle_registration_number);
+
+                                                foreach (var item in WithNewIds)
                                                 {
-                                                    if (item.Id != lastId?.Id)
+                                                    if (item != null)
                                                     {
-                                                        if (item.Id_cargo == lastId?.Id_cargo)
+                                                        if (item.Id != lastId?.Id)
                                                         {
-                                                            item.Id_cargo = null;
+                                                            if (item.Id_cargo == lastId?.Id_cargo)
+                                                            {
+                                                                item.Id_cargo = null;
+                                                            }
+                                                            if (item.Task_id == lastId?.Task_id)
+                                                            {
+                                                                item.Task_id = null;
+                                                            }
+                                                            if (item.Expenses_id == lastId?.Expenses_id)
+                                                            {
+                                                                item.Expenses_id = null;
+                                                            }
+                                                            _context.Entry(item).State = EntityState.Modified;
+                                                            await _context.SaveChangesAsync();
                                                         }
-                                                        if (item.Task_id == lastId?.Task_id)
+                                                        else
                                                         {
-                                                            item.Task_id = null;
+                                                            if (cargo == null)
+                                                            {
+                                                                item.Id_cargo = null;
+                                                            }
+                                                            if (task == null)
+                                                            {
+                                                                item.Task_id = null;
+                                                            }
+                                                            if (expense == null)
+                                                            {
+                                                                item.Expenses_id = null;
+                                                            }
+                                                            if (truck == null)
+                                                            {
+                                                                item.Vehicle_registration_number = null;
+                                                            }
+                                                            _context.Entry(item).State = EntityState.Modified;
+                                                            await _context.SaveChangesAsync();
                                                         }
-                                                        if (item.Expenses_id == lastId?.Expenses_id)
-                                                        {
-                                                            item.Expenses_id = null;
-                                                        }
-                                                        _context.Entry(item).State = EntityState.Modified;
-                                                        await _context.SaveChangesAsync();
-                                                    }
-                                                    else
-                                                    {
-                                                        if (cargo == null)
-                                                        {
-                                                            item.Id_cargo = null;
-                                                        }
-                                                        if (task == null)
-                                                        {
-                                                            item.Task_id = null;
-                                                        }
-                                                        if (expense == null)
-                                                        {
-                                                            item.Expenses_id = null;
-                                                        }
-                                                        if (truck == null)
-                                                        {
-                                                            item.Vehicle_registration_number = null;
-                                                        }
-                                                        _context.Entry(item).State = EntityState.Modified;
-                                                        await _context.SaveChangesAsync();
                                                     }
                                                 }
-                                            }
 
-                                            if (expense != null)
-                                            {
-                                                expense.Type_id = lastId?.Id;
-                                                expense.Type = Shared.Model.Type.repair;
-                                                _context.Entry(expense).State = EntityState.Modified;
-                                                await _context.SaveChangesAsync();
+                                                if (expense != null)
+                                                {
+                                                    expense.Type_id = lastId?.Id;
+                                                    expense.Type = Shared.Model.Type.repair;
+                                                    _context.Entry(expense).State = EntityState.Modified;
+                                                    await _context.SaveChangesAsync();
+                                                }
                                             }
                                         }
+                                        else if (insert <= 0)
+                                        {
+                                            System.IO.File.Delete(path); // delete the file
+                                        }
                                     }
-                                    else if (insert <= 0)
-                                    {
-                                        System.IO.File.Delete(path); // delete the file
-                                    }
+                                }
+                                catch (SqlException ex)
+                                {
+                                    return _errorHandler.GetErrorMessageAsString(ex);
+                                }
+                                catch (FormatException ex)
+                                {
+                                    return _errorHandler.GetErrorMessageAsString(ex);
                                 }
                             }
                             else

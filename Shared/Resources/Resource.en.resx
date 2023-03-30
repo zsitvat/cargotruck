@@ -186,6 +186,18 @@
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="Cant_convert_datetime_to_int" xml:space="preserve">
+    <value>Can't convert datetime to int!</value>
+  </data>
+  <data name="Cant_convert_int_to_datetime" xml:space="preserve">
+    <value>Can't convert int to datetime!</value>
+  </data>
+  <data name="Cant_convert_string_to_datetime" xml:space="preserve">
+    <value>Can't convert string to datetime!</value>
+  </data>
+  <data name="Cant_convert_string_to_int" xml:space="preserve">
+    <value>Can't convert string to int!</value>
+  </data>
   <data name="cargo" xml:space="preserve">
     <value>Cargo</value>
   </data>
@@ -965,6 +977,9 @@
   </data>
   <data name="Weight_is_height" xml:space="preserve">
     <value>The weight is higher than the trucks's max weight.</value>
+  </data>
+  <data name="Wrong_values" xml:space="preserve">
+    <value>The wrong values:</value>
   </data>
   <data name="W_section" xml:space="preserve">
     <value>Section</value>

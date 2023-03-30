@@ -186,6 +186,18 @@
   <data name="Cancel" xml:space="preserve">
     <value>Mégse</value>
   </data>
+  <data name="Cant_convert_datetime_to_int" xml:space="preserve">
+    <value>Dátum adat nem kerülhet szám adat helyére!</value>
+  </data>
+  <data name="Cant_convert_int_to_datetime" xml:space="preserve">
+    <value>Szám nem kerülhet dátum helyére!</value>
+  </data>
+  <data name="Cant_convert_string_to_datetime" xml:space="preserve">
+    <value>Szöveg nem kerülhet dátum helyére!</value>
+  </data>
+  <data name="Cant_convert_string_to_int" xml:space="preserve">
+    <value>Szöveg nem kerülhet szám adat helyére!</value>
+  </data>
   <data name="cargo" xml:space="preserve">
     <value>Rakomány</value>
   </data>
@@ -956,6 +968,9 @@
   </data>
   <data name="Weight_is_height" xml:space="preserve">
     <value>A súly nagyobb, mint a jármű terhelhetősége.</value>
+  </data>
+  <data name="Wrong_values" xml:space="preserve">
+    <value>A rossz értékek:</value>
   </data>
   <data name="W_section" xml:space="preserve">
     <value>Szekció</value>

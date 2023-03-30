@@ -268,6 +268,42 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dátum adat nem kerülhet szám adat helyére!.
+        /// </summary>
+        public static string Cant_convert_datetime_to_int {
+            get {
+                return ResourceManager.GetString("Cant_convert_datetime_to_int", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Szám nem kerülhet dátum helyére!.
+        /// </summary>
+        public static string Cant_convert_int_to_datetime {
+            get {
+                return ResourceManager.GetString("Cant_convert_int_to_datetime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Szöveg nem kerülhet dátum helyére!.
+        /// </summary>
+        public static string Cant_convert_string_to_datetime {
+            get {
+                return ResourceManager.GetString("Cant_convert_string_to_datetime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Szöveg nem kerülhet szám adat helyére!.
+        /// </summary>
+        public static string Cant_convert_string_to_int {
+            get {
+                return ResourceManager.GetString("Cant_convert_string_to_int", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rakomány.
         /// </summary>
         public static string cargo {
@@ -2586,6 +2622,15 @@ namespace Cargotruck.Shared.Resources {
         public static string Weight_is_height {
             get {
                 return ResourceManager.GetString("Weight_is_height", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A rossz értékek:.
+        /// </summary>
+        public static string Wrong_values {
+            get {
+                return ResourceManager.GetString("Wrong_values", resourceCulture);
             }
         }
         

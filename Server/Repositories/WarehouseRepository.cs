@@ -22,12 +22,13 @@ namespace Cargotruck.Server.Repositories
         private readonly ApplicationDbContext _context;
         private readonly IStringLocalizer<Resource> _localizer;
         private readonly IColumnNamesService _columnNameLists;
-
-        public WarehouseRepository(ApplicationDbContext context, IStringLocalizer<Resource> localizer, IColumnNamesService columnNameLists)
+        private readonly IErrorHandlerService _errorHandler;
+        public WarehouseRepository(ApplicationDbContext context, IStringLocalizer<Resource> localizer, IColumnNamesService columnNameLists, IErrorHandlerService errorHandler)
         {
             _context = context;
             _localizer = localizer;
             _columnNameLists = columnNameLists;
+            _errorHandler = errorHandler;
         }
 
         private async Task<List<Warehouses>> GetDataAsync(string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
@@ -321,7 +322,7 @@ namespace Cargotruck.Server.Repositories
 
             foreach (var name in columnNames)
             {
-                txt.Write(name + separator);
+                 txt.Write(name + (isTextDocument ? "  " : separator));
             }
 
             txt.Write("\n");
@@ -456,55 +457,67 @@ namespace Cargotruck.Server.Repositories
                                     }
                                 }
 
-                                if (nulls != list.Count)
+                                try
                                 {
-
-                                    var sql = @"Insert Into Warehouses (User_id,Address,Owner,Date) 
-                                Values (@User_id,@Address,@Owner,@Date)";
-                                    var insert = await _context.Database.ExecuteSqlRawAsync(sql,
-                                        new SqlParameter("@User_id", "Imported"),
-                                        new SqlParameter("@Address", list[l]),
-                                        new SqlParameter("@Owner", list[l + 1]),
-                                        new SqlParameter("@Date", DateTime.Now)
-                                        );
-
-                                    string[]? substrings = list[l + 2]?.ToString()?.Split("]");
-
-                                    if (substrings != null)
+                                    if (nulls != list.Count)
                                     {
-                                        for (int s = 0; s < (substrings.Length > 0 ? substrings.Length - 1 : 0); ++s)
+
+                                        var sql = @"Insert Into Warehouses (User_id,Address,Owner,Date) 
+                                            Values (@User_id,@Address,@Owner,@Date)";
+                                        var insert = await _context.Database.ExecuteSqlRawAsync(sql,
+                                            new SqlParameter("@User_id", "Imported"),
+                                            new SqlParameter("@Address", list[l]),
+                                            new SqlParameter("@Owner", list[l + 1]),
+                                            new SqlParameter("@Date", DateTime.Now)
+                                            );
+
+                                        string[]? substrings = list[l + 2]?.ToString()?.Split("]");
+
+                                        if (substrings != null)
                                         {
-                                            if (substrings[s] != "") {
+                                            for (int s = 0; s < (substrings.Length > 0 ? substrings.Length - 1 : 0); ++s)
+                                            {
+                                                if (substrings[s] != "") {
 
-                                                int CargoId = Int32.Parse(substrings[s][0..substrings[s].IndexOf("/")].Replace("[",""));
-                                                var warehouseSection = substrings[s].Substring(substrings[s].IndexOf("/") + 1);
+                                                    int CargoId = Int32.Parse(substrings[s][0..substrings[s].IndexOf("/")].Replace("[",""));
+                                                    var warehouseSection = substrings[s].Substring(substrings[s].IndexOf("/") + 1);
 
-                                                int? greatestId = _context.Warehouses.OrderBy(s => s.Id).LastOrDefaultAsync().Id;
+                                                    int? greatestId = _context.Warehouses.OrderBy(s => s.Id).LastOrDefaultAsync().Id;
 
-                                                if (greatestId != null) { 
-                                                    var sql2 = @"Update Cargoes 
-                                                            Set Warehouse_id = @Warehouse_id, Warehouse_section = @Warehouse_section
-                                                                Where Id = @Id";
-                                                    var insert2 = await _context.Database.ExecuteSqlRawAsync(sql2,
-                                                        new SqlParameter("@Warehouse_id", greatestId),
-                                                        new SqlParameter("@Warehouse_section", warehouseSection),
-                                                        new SqlParameter("@Id", CargoId)
-                                                        );
+                                                    if (greatestId != null) { 
+                                                        var sql2 = @"Update Cargoes 
+                                                                Set Warehouse_id = @Warehouse_id, Warehouse_section = @Warehouse_section
+                                                                    Where Id = @Id";
+                                                        var insert2 = await _context.Database.ExecuteSqlRawAsync(sql2,
+                                                            new SqlParameter("@Warehouse_id", greatestId),
+                                                            new SqlParameter("@Warehouse_section", warehouseSection),
+                                                            new SqlParameter("@Id", CargoId)
+                                                            );
+                                                    }
                                                 }
                                             }
                                         }
-                                    }
 
-                                    if (insert > 0)
-                                    {
-                                        error = "";
-                                        await _context.SaveChangesAsync();
-                                    }
-                                    else if (insert <= 0)
-                                    {
-                                        System.IO.File.Delete(path); // delete the file
+                                        if (insert > 0)
+                                        {
+                                            error = "";
+                                            await _context.SaveChangesAsync();
+                                        }
+                                        else if (insert <= 0)
+                                        {
+                                            System.IO.File.Delete(path); // delete the file
+                                        }
                                     }
                                 }
+                                catch (SqlException ex)
+                                {
+                                    return _errorHandler.GetErrorMessageAsString(ex);
+                                }
+                                catch (FormatException ex)
+                                {
+                                    return _errorHandler.GetErrorMessageAsString(ex);
+                                }
+
                             }
                             else
                             {

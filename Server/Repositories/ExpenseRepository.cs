@@ -23,12 +23,14 @@ namespace Cargotruck.Server.Repositories
         private readonly ApplicationDbContext _context;
         private readonly IStringLocalizer<Resource> _localizer;
         private readonly IColumnNamesService _columnNameLists;
+        private readonly IErrorHandlerService _errorHandler;
 
-        public ExpenseRepository(ApplicationDbContext context, IStringLocalizer<Resource> localizer, IColumnNamesService columnNameLists)
+        public ExpenseRepository(ApplicationDbContext context, IStringLocalizer<Resource> localizer, IColumnNamesService columnNameLists, IErrorHandlerService errorHandler)
         {
             _context = context;
             _localizer = localizer;
             _columnNameLists = columnNameLists;
+            _errorHandler = errorHandler;
         }
 
         private async Task<List<Expenses>> GetDataAsync(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
@@ -477,7 +479,7 @@ namespace Cargotruck.Server.Repositories
 
             foreach (var name in columnNames)
             {
-                txt.Write(name + separator);
+                 txt.Write(name + (isTextDocument ? "  " : separator));
             }
 
             txt.Write("\n");
@@ -632,80 +634,93 @@ namespace Cargotruck.Server.Repositories
                                     }
                                 }
 
-                                if (nulls != list.Count)
+
+                                try
                                 {
-
-                                    var sql = @"Insert Into Expenses (User_id,Type,Type_id,Fuel,Road_fees,Penalty,Driver_spending,Driver_salary,Repair_cost,Repair_description,Cost_of_storage,Total_amount,other,Date) 
-                                    Values (@User_id,@Type,@Type_id,@Fuel,@Road_fees,@Penalty,@Driver_spending,@Driver_salary,@Repair_cost,@Repair_description,@Cost_of_storage,@Total_amount,@other,@Date)";
-                                    var insert = await _context.Database.ExecuteSqlRawAsync(sql,
-                                        new SqlParameter("@User_id", "Imported"),
-                                        new SqlParameter("@Type", list[l]),
-                                        new SqlParameter("@Type_id", list[l + 1]),
-                                        new SqlParameter("@Fuel", list[l + 2]),
-                                        new SqlParameter("@Road_fees", list[l + 3]),
-                                        new SqlParameter("@Penalty", list[l + 4]),
-                                        new SqlParameter("@Driver_spending", list[l + 5]),
-                                        new SqlParameter("@Driver_salary", list[l + 6]),
-                                        new SqlParameter("@Repair_cost", list[l + 7]),
-                                        new SqlParameter("@Repair_description", list[l + 8]),
-                                        new SqlParameter("@Cost_of_storage", list[l + 9]),
-                                        new SqlParameter("@other", list[l + 10]),
-                                        new SqlParameter("@Total_amount", totalAmount),
-                                        new SqlParameter("@Date", DateTime.Now)
-                                        );
-
-                                    if (insert > 0)
+                                    if (nulls != list.Count)
                                     {
-                                        var lastId = await _context.Expenses.OrderBy(x => x.Date).LastOrDefaultAsync();
 
-                                        if (lastId != null)
+                                        var sql = @"Insert Into Expenses (User_id,Type,Type_id,Fuel,Road_fees,Penalty,Driver_spending,Driver_salary,Repair_cost,Repair_description,Cost_of_storage,Total_amount,other,Date) 
+                                        Values (@User_id,@Type,@Type_id,@Fuel,@Road_fees,@Penalty,@Driver_spending,@Driver_salary,@Repair_cost,@Repair_description,@Cost_of_storage,@Total_amount,@other,@Date)";
+                                        var insert = await _context.Database.ExecuteSqlRawAsync(sql,
+                                            new SqlParameter("@User_id", "Imported"),
+                                            new SqlParameter("@Type", list[l]),
+                                            new SqlParameter("@Type_id", list[l + 1]),
+                                            new SqlParameter("@Fuel", list[l + 2]),
+                                            new SqlParameter("@Road_fees", list[l + 3]),
+                                            new SqlParameter("@Penalty", list[l + 4]),
+                                            new SqlParameter("@Driver_spending", list[l + 5]),
+                                            new SqlParameter("@Driver_salary", list[l + 6]),
+                                            new SqlParameter("@Repair_cost", list[l + 7]),
+                                            new SqlParameter("@Repair_description", list[l + 8]),
+                                            new SqlParameter("@Cost_of_storage", list[l + 9]),
+                                            new SqlParameter("@other", list[l + 10]),
+                                            new SqlParameter("@Total_amount", totalAmount),
+                                            new SqlParameter("@Date", DateTime.Now)
+                                            );
+
+                                        if (insert > 0)
                                         {
-                                            var WithNewIds = await _context.Expenses.Where(x => x.Type == lastId.Type && x.Type_id == lastId.Type_id && x.Type != Type.other && x.Type != Type.salary).ToListAsync();
-                                            Roads? road = await _context.Roads.FirstOrDefaultAsync(x => x.Id == lastId.Type_id && lastId.Type == Type.repair);
-                                            Tasks? task = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == lastId.Type_id && lastId.Type == Type.task);
-                                            Cargoes? cargo = await _context.Cargoes.FirstOrDefaultAsync(x => x.Id == lastId.Type_id && lastId.Type == Type.storage);
+                                            var lastId = await _context.Expenses.OrderBy(x => x.Date).LastOrDefaultAsync();
 
-                                            foreach (var item in WithNewIds)
+                                            if (lastId != null)
                                             {
-                                                if (item != null)
+                                                var WithNewIds = await _context.Expenses.Where(x => x.Type == lastId.Type && x.Type_id == lastId.Type_id && x.Type != Type.other && x.Type != Type.salary).ToListAsync();
+                                                Roads? road = await _context.Roads.FirstOrDefaultAsync(x => x.Id == lastId.Type_id && lastId.Type == Type.repair);
+                                                Tasks? task = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == lastId.Type_id && lastId.Type == Type.task);
+                                                Cargoes? cargo = await _context.Cargoes.FirstOrDefaultAsync(x => x.Id == lastId.Type_id && lastId.Type == Type.storage);
+
+                                                foreach (var item in WithNewIds)
                                                 {
-                                                    if (item.Id == lastId?.Id)
+                                                    if (item != null)
                                                     {
-                                                        if (cargo == null && lastId.Type == Type.storage)
+                                                        if (item.Id == lastId?.Id)
                                                         {
-                                                            item.Type_id = null;
-                                                        }
-                                                        if (task == null && lastId.Type == Type.task)
-                                                        {
-                                                            item.Type_id = null;
-                                                        }
-                                                        if (road == null && lastId.Type == Type.repair)
-                                                        {
-                                                            item.Type_id = null;
-                                                        }
-                                                        if (item.Type_id == null)
-                                                        {
-                                                            _context.Remove(item);
-                                                            await _context.SaveChangesAsync();
-                                                            error += "\n" + _localizer["Deleted_wrong_id"] + " " + lastId.Id + ".";
+                                                            if (cargo == null && lastId.Type == Type.storage)
+                                                            {
+                                                                item.Type_id = null;
+                                                            }
+                                                            if (task == null && lastId.Type == Type.task)
+                                                            {
+                                                                item.Type_id = null;
+                                                            }
+                                                            if (road == null && lastId.Type == Type.repair)
+                                                            {
+                                                                item.Type_id = null;
+                                                            }
+                                                            if (item.Type_id == null)
+                                                            {
+                                                                _context.Remove(item);
+                                                                await _context.SaveChangesAsync();
+                                                                error += "\n" + _localizer["Deleted_wrong_id"] + " " + lastId.Id + ".";
+                                                            }
                                                         }
                                                     }
                                                 }
-                                            }
 
-                                            if (road != null && lastId.Type == Type.repair)
-                                            {
-                                                road.Expenses_id = lastId?.Id;
-                                                _context.Entry(road).State = EntityState.Modified;
-                                                await _context.SaveChangesAsync();
+                                                if (road != null && lastId.Type == Type.repair)
+                                                {
+                                                    road.Expenses_id = lastId?.Id;
+                                                    _context.Entry(road).State = EntityState.Modified;
+                                                    await _context.SaveChangesAsync();
+                                                }
                                             }
                                         }
-                                    }
-                                    else if (insert <= 0)
-                                    {
-                                        System.IO.File.Delete(path); // delete the file
+                                        else if (insert <= 0)
+                                        {
+                                            System.IO.File.Delete(path); // delete the file
+                                        }
                                     }
                                 }
+                                catch (SqlException ex)
+                                {
+                                    return _errorHandler.GetErrorMessageAsString(ex);
+                                }
+                                catch (FormatException ex)
+                                {
+                                    return _errorHandler.GetErrorMessageAsString(ex);
+                                }
+
                             }
                             else
                             {

@@ -22,12 +22,13 @@ namespace Cargotruck.Server.Repositories
         private readonly ApplicationDbContext _context;
         private readonly IStringLocalizer<Resource> _localizer;
         private readonly IColumnNamesService _columnNameLists;
-
-        public TruckRepository(ApplicationDbContext context, IStringLocalizer<Resource> localizer, IColumnNamesService columnNameLists)
+        private readonly IErrorHandlerService _errorHandler;
+        public TruckRepository(ApplicationDbContext context, IStringLocalizer<Resource> localizer, IColumnNamesService columnNameLists, IErrorHandlerService errorHandler)
         {
             _context = context;
             _localizer = localizer;
             _columnNameLists = columnNameLists;
+            _errorHandler = errorHandler;
         }
 
         private async Task<List<Trucks>> GetDataAsync(string? searchString, Status? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
@@ -287,14 +288,14 @@ namespace Cargotruck.Server.Repositories
                     if (!string.IsNullOrEmpty(truck.Max_weight?.ToString())) { s = truck.Max_weight.ToString(); }
 
                     else { s = "-"; }
-                    table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    table.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
                     if (!string.IsNullOrEmpty(truck.Date.ToString())) { s = truck.Date.ToString(); }
                     else { s = "-"; }
-                    table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
+                    table.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
@@ -349,7 +350,7 @@ namespace Cargotruck.Server.Repositories
 
             foreach (var name in columnNames)
             {
-                txt.Write(name + separator);
+                 txt.Write(name + (isTextDocument ? "  " : separator));
             }
 
             txt.Write("\n");
@@ -483,60 +484,73 @@ namespace Cargotruck.Server.Repositories
                                     _ => System.DBNull.Value,
                                 };
 
-                                if (nulls != list.Count)
+                                try
                                 {
-                                    var sql = @"Insert Into Trucks (User_id,Vehicle_registration_number,Brand,Status,Road_id,Max_weight,Date) 
-                                    Values (@User_id,@Vehicle_registration_number,@Brand,@Status,@Road_id,@Max_weight,@Date)";
-                                    var insert = await _context.Database.ExecuteSqlRawAsync(sql,
-                                        new SqlParameter("@User_id", "Imported"),
-                                        new SqlParameter("@Vehicle_registration_number", list[l]),
-                                        new SqlParameter("@Brand", list[l + 1]),
-                                        new SqlParameter("@Status", list[l + 2]),
-                                        new SqlParameter("@Road_id", list[l + 3]),
-                                        new SqlParameter("@Max_weight", list[l + 4]),
-                                        new SqlParameter("@Date", DateTime.Now)
-                                        );
-
-                                    if (insert > 0)
+                                    if (nulls != list.Count)
                                     {
-                                        var lastId = await _context.Trucks.OrderBy(x => x.Id).LastOrDefaultAsync();
+                                        var sql = @"Insert Into Trucks (User_id,Vehicle_registration_number,Brand,Status,Road_id,Max_weight,Date) 
+                                        Values (@User_id,@Vehicle_registration_number,@Brand,@Status,@Road_id,@Max_weight,@Date)";
+                                        var insert = await _context.Database.ExecuteSqlRawAsync(sql,
+                                            new SqlParameter("@User_id", "Imported"),
+                                            new SqlParameter("@Vehicle_registration_number", list[l]),
+                                            new SqlParameter("@Brand", list[l + 1]),
+                                            new SqlParameter("@Status", list[l + 2]),
+                                            new SqlParameter("@Road_id", list[l + 3]),
+                                            new SqlParameter("@Max_weight", list[l + 4]),
+                                            new SqlParameter("@Date", DateTime.Now)
+                                            );
 
-                                        if (lastId != null)
+                                        if (insert > 0)
                                         {
-                                            var WithNewIds = await _context.Trucks.Where(x => x.Road_id == lastId.Road_id).ToListAsync();
-                                            Roads? road = await _context.Roads.FirstOrDefaultAsync(x => x.Vehicle_registration_number == lastId.Vehicle_registration_number);
+                                            var lastId = await _context.Trucks.OrderBy(x => x.Id).LastOrDefaultAsync();
 
-                                            foreach (var item in WithNewIds)
+                                            if (lastId != null)
                                             {
-                                                if (item != null)
+                                                var WithNewIds = await _context.Trucks.Where(x => x.Road_id == lastId.Road_id).ToListAsync();
+                                                Roads? road = await _context.Roads.FirstOrDefaultAsync(x => x.Vehicle_registration_number == lastId.Vehicle_registration_number);
+
+                                                foreach (var item in WithNewIds)
                                                 {
-                                                    if (item.Id == lastId?.Id)
+                                                    if (item != null)
                                                     {
-
-                                                        if (road == null)
+                                                        if (item.Id == lastId?.Id)
                                                         {
-                                                            item.Road_id = null;
-                                                        }
 
-                                                        _context.Entry(item).State = EntityState.Modified;
-                                                        await _context.SaveChangesAsync();
+                                                            if (road == null)
+                                                            {
+                                                                item.Road_id = null;
+                                                            }
+
+                                                            _context.Entry(item).State = EntityState.Modified;
+                                                            await _context.SaveChangesAsync();
+                                                        }
                                                     }
                                                 }
-                                            }
 
-                                            if (road != null)
-                                            {
-                                                road.Vehicle_registration_number = lastId?.Vehicle_registration_number;
-                                                _context.Entry(road).State = EntityState.Modified;
-                                                await _context.SaveChangesAsync();
+                                                if (road != null)
+                                                {
+                                                    road.Vehicle_registration_number = lastId?.Vehicle_registration_number;
+                                                    _context.Entry(road).State = EntityState.Modified;
+                                                    await _context.SaveChangesAsync();
+                                                }
                                             }
                                         }
+                                        else if (insert <= 0)
+                                        {
+                                            System.IO.File.Delete(path); // delete the file
+                                        }
                                     }
-                                    else if (insert <= 0)
-                                    {
-                                        System.IO.File.Delete(path); // delete the file
-                                    }
+
                                 }
+                                catch (SqlException ex)
+                                {
+                                    return _errorHandler.GetErrorMessageAsString(ex);
+                                }
+                                catch (FormatException ex)
+                                {
+                                    return _errorHandler.GetErrorMessageAsString(ex);
+                                }
+
                             }
                             else
                             {

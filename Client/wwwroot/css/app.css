@@ -1417,7 +1417,8 @@ tr td:first-child {
     color:darkred !important;
 }
 
-.darkmode .box,  .darkmode .form-card, .darkmode .login-card, .darkmode .card, .darkmode .card2, .darkmode .settings-card, .darkmode .getbyid-card {
+.darkmode .box, .darkmode .form-card, .darkmode .login-card, .darkmode .card,
+.darkmode .card2, .darkmode .settings-card, .darkmode .getbyid-card, .darkmode .page-error {
     background-color: rgb(36, 49, 64) !important;
     color: rgba(160,180,200,.85) !important;
     border-color: #243140 !important;
@@ -1445,7 +1446,8 @@ tr td:first-child {
     background: rgba(129, 238, 136,.2) !important;
 }
 
-.darkmode a, .darkmode p, .darkmode span, .darkmode h1, .darkmode h2, .darkmode h3, .darkmode .custom-file-input::before, .darkmode label {
+.darkmode a, .darkmode p, .darkmode span, .darkmode h1, .darkmode h2, 
+.darkmode h3, .darkmode .custom-file-input::before, .darkmode label {
     color: #bab3b3 !important;
 }
 
@@ -1458,7 +1460,8 @@ tr td:first-child {
     background-color: rgba(0,0,0,.275) !important;
 }
 
-.darkmode .btn-pagination ,.darkmode .form-control, .darkmode .inputs, .darkmode .valid, .darkmode .login-input-group-text, .darkmode .btn-light, .darkmode .number-input {
+.darkmode .btn-pagination ,.darkmode .form-control, .darkmode .inputs, .darkmode 
+.valid, .darkmode .login-input-group-text, .darkmode .btn-light, .darkmode .number-input {
     background-color: rgba(120,130,140,.2) !important;
     color: #bab3b3 !important;
     border-color: rgba(120,130,140,.2);

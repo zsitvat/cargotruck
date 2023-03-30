@@ -22,11 +22,13 @@ namespace Cargotruck.Server.Repositories
         private readonly ApplicationDbContext _context;
         private readonly IStringLocalizer<Resource> _localizer;
         private readonly IColumnNamesService _columnNameLists;
-        public CargoRepository(ApplicationDbContext context, IStringLocalizer<Resource> localizer, IColumnNamesService columnNameLists)
+        private readonly IErrorHandlerService _errorHandler;
+        public CargoRepository(ApplicationDbContext context, IStringLocalizer<Resource> localizer, IColumnNamesService columnNameLists, IErrorHandlerService errorHandler)
         {
             _context = context;
             _localizer = localizer;
             _columnNameLists = columnNameLists;
+            _errorHandler = errorHandler;
         }
 
         private async Task<List<Cargoes>> GetDataAsync(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
@@ -47,7 +49,7 @@ namespace Cargotruck.Server.Repositories
             {
                 data = data.Where(s =>
                (s.Task_id.ToString()!.ToLower().Contains(searchString))
-            || (s.Weight != null && s.Weight.ToString().ToLower()!.Contains(searchString))
+            || (s.Weight != null && s.Weight.ToString()!.ToLower()!.Contains(searchString))
             || (s.Description != null && s.Description.ToLower()!.Contains(searchString))
             || (s.Delivery_requirements != null && s.Delivery_requirements.ToString().ToLower()!.Contains(searchString))
             || (s.Vehicle_registration_number != null && s.Vehicle_registration_number.ToString()!.Contains(searchString))
@@ -461,7 +463,7 @@ namespace Cargotruck.Server.Repositories
 
             foreach (var name in columnNames)
             {
-                txt.Write(name + "  ");
+                txt.Write(name + (isTextDocument ? "  " : separator));
             }
             txt.Write("\n");
 
@@ -586,11 +588,15 @@ namespace Cargotruck.Server.Repositories
                                     }
                                 }
 
-                                if (nulls != list.Count)
+
+
+                                try
                                 {
-                                    var sql = @"Insert Into Cargoes (User_id,Task_id,Weight,Description,Delivery_requirements,Vehicle_registration_number,Warehouse_id,Warehouse_section,Storage_starting_time,Date) 
-                                    Values (@User_id,@Task_id,@Weight,@Description,@Delivery_requirements,@Vehicle_registration_number,@Warehouse_id,@Warehouse_section,@Storage_starting_time,@Date)";
-                                    var insert = await _context.Database.ExecuteSqlRawAsync(sql,
+                                    if (nulls != list.Count)
+                                    {
+                                        var sql = @"Insert Into Cargoes (User_id,Task_id,Weight,Description,Delivery_requirements,Vehicle_registration_number,Warehouse_id,Warehouse_section,Storage_starting_time,Date) 
+                                            Values (@User_id,@Task_id,@Weight,@Description,@Delivery_requirements,@Vehicle_registration_number,@Warehouse_id,@Warehouse_section,@Storage_starting_time,@Date)";
+                                        var insert = await _context.Database.ExecuteSqlRawAsync(sql,
                                         new SqlParameter("@User_id", "Imported"),
                                         new SqlParameter("@Task_id", list[l]),
                                         new SqlParameter("@Weight", list[l + 1]),
@@ -603,83 +609,97 @@ namespace Cargotruck.Server.Repositories
                                         new SqlParameter("@Date", DateTime.Now)
                                         );
 
-                                    if (insert > 0)
-                                    {
-                                        var lastId = await _context.Cargoes.OrderBy(x => x.Id).LastOrDefaultAsync();
-
-                                        if (lastId != null)
+                                        if (insert > 0)
                                         {
-                                            var WithNewIds = await _context.Cargoes.Where(x => x.Task_id == lastId.Task_id || x.Warehouse_id == lastId.Warehouse_id || x.Vehicle_registration_number == lastId.Vehicle_registration_number).ToListAsync();
-                                            Tasks? task = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == lastId.Task_id);
-                                            Warehouses? warehouse = await _context.Warehouses.FirstOrDefaultAsync(x => x.Id == lastId.Warehouse_id);
-                                            Trucks? truck = await _context.Trucks.FirstOrDefaultAsync(x => x.Vehicle_registration_number == lastId.Vehicle_registration_number);
+                                            var lastId = await _context.Cargoes.OrderBy(x => x.Id).LastOrDefaultAsync();
 
-                                            foreach (var item in WithNewIds)
+                                            if (lastId != null)
                                             {
-                                                if (item != null)
+                                                var WithNewIds = await _context.Cargoes.Where(x => x.Task_id == lastId.Task_id || x.Warehouse_id == lastId.Warehouse_id || x.Vehicle_registration_number == lastId.Vehicle_registration_number).ToListAsync();
+                                                Tasks? task = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == lastId.Task_id);
+                                                Warehouses? warehouse = await _context.Warehouses.FirstOrDefaultAsync(x => x.Id == lastId.Warehouse_id);
+                                                Trucks? truck = await _context.Trucks.FirstOrDefaultAsync(x => x.Vehicle_registration_number == lastId.Vehicle_registration_number);
+
+                                                foreach (var item in WithNewIds)
                                                 {
-                                                    if (item.Id != lastId?.Id)
+                                                    if (item != null)
                                                     {
-                                                        if (item.Task_id == lastId?.Task_id)
+                                                        if (item.Id != lastId?.Id)
                                                         {
-                                                            error += "\n" + _localizer["Deleted_wrong_id"] + " " + lastId?.Id + ".";
-                                                            _context.Cargoes.Remove(lastId!);
+                                                            if (item.Task_id == lastId?.Task_id)
+                                                            {
+                                                                error += "\n" + _localizer["Deleted_wrong_id"] + " " + lastId?.Id + ".";
+                                                                _context.Cargoes.Remove(lastId!);
+                                                                await _context?.SaveChangesAsync()!;
+                                                                return error;
+                                                            }
+                                                            if (item.Vehicle_registration_number == lastId?.Vehicle_registration_number)
+                                                            {
+                                                                item.Vehicle_registration_number = null;
+                                                            }
+
+                                                            _context.Entry(item).State = EntityState.Modified;
+
                                                             await _context?.SaveChangesAsync()!;
-                                                            return error;
                                                         }
-                                                        if (item.Vehicle_registration_number == lastId?.Vehicle_registration_number)
+                                                        else
                                                         {
-                                                            item.Vehicle_registration_number = null;
+                                                            if (warehouse == null)
+                                                            {
+                                                                item.Warehouse_id = null;
+                                                                item.Warehouse_section = null;
+                                                            }
+                                                            if (task == null)
+                                                            {
+                                                                item.Task_id = default;
+                                                                error += "\n" + _localizer["Deleted_wrong_id"] + " " + lastId?.Id + ".";
+                                                                _context.Cargoes.Remove(lastId!);
+                                                                await _context?.SaveChangesAsync()!;
+                                                                return error;
+                                                            }
+                                                            if (truck == null)
+                                                            {
+                                                                item.Vehicle_registration_number = null;
+                                                            }
+                                                            _context.Entry(item).State = EntityState.Modified;
+                                                            await _context.SaveChangesAsync();
                                                         }
-
-                                                        _context.Entry(item).State = EntityState.Modified;
-
-                                                        await _context?.SaveChangesAsync()!;
                                                     }
-                                                    else
+
+                                                    if (item != null && item?.Task_id == null)
                                                     {
-                                                        if (warehouse == null)
-                                                        {
-                                                            item.Warehouse_id = null;
-                                                            item.Warehouse_section = null;
-                                                        }
-                                                        if (task == null)
-                                                        {
-                                                            item.Task_id = default;
-                                                        }
-                                                        if (truck == null)
-                                                        {
-                                                            item.Vehicle_registration_number = null;
-                                                        }
-                                                        _context.Entry(item).State = EntityState.Modified;
-                                                        await _context.SaveChangesAsync();
+                                                        error += "\n" + _localizer["Deleted_wrong_id"] + " " + lastId?.Id + ".";
+
+                                                        _context.Remove(new Cargoes() { Id = item!.Id });
+                                                        await _context?.SaveChangesAsync()!;
+                                                        return error;
                                                     }
                                                 }
 
-                                                if (item != null && item?.Task_id == null)
+                                                if (task != null)
                                                 {
-                                                    error += "\n" + _localizer["Deleted_wrong_id"] + " " + lastId?.Id + ".";
-
-                                                    _context.Remove(new Cargoes() { Id = item!.Id });
-                                                    await _context?.SaveChangesAsync()!;
-                                                    return error;
+                                                    task.Id_cargo = lastId?.Id;
+                                                    _context.Entry(task).State = EntityState.Modified;
+                                                    await _context.SaveChangesAsync();
                                                 }
-                                            }
 
-                                            if (task != null)
-                                            {
-                                                task.Id_cargo = lastId?.Id;
-                                                _context.Entry(task).State = EntityState.Modified;
-                                                await _context.SaveChangesAsync();
                                             }
-
+                                        }
+                                        else if (insert <= 0)
+                                        {
+                                            System.IO.File.Delete(path); // delete the file
                                         }
                                     }
-                                    else if (insert <= 0)
-                                    {
-                                        System.IO.File.Delete(path); // delete the file
-                                    }
                                 }
+                                catch (SqlException ex)
+                                {
+                                    return _errorHandler.GetErrorMessageAsString(ex);
+                                }
+                                catch (FormatException ex)
+                                {
+                                    return _errorHandler.GetErrorMessageAsString(ex);
+                                }
+
                             }
                             else
                             {
