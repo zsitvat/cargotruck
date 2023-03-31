@@ -67,7 +67,7 @@
 
 
 @if(edit){
-    <Edit />
+    <Edit User="user" />
 }
 @if (changePassword)
 {
@@ -81,9 +81,11 @@
     public string currentUserPhone { get; set; } = default!;
     public string currentUserEmail { get; set; } = default!;
 
+    CurrentUser? user;
+
     protected override async Task OnInitializedAsync()
     {
-        var user = await authStateProvider.GetCurrentUserAsync();
+         user = await authStateProvider.GetCurrentUserAsync();
 
         if (user != null)
         {

@@ -189,6 +189,9 @@
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="Cant_change_your_role" xml:space="preserve">
+    <value>You cannot change your own role.</value>
+  </data>
   <data name="Cant_convert_datetime_to_int" xml:space="preserve">
     <value>Can't convert datetime to int!</value>
   </data>

@@ -2,6 +2,7 @@
 @inject HttpClient http
 @inject NavigationManager uriHelper
 @inject IJSRuntime js
+@using Microsoft.AspNetCore.Identity
 
 <div class="col-md-6 stretch-card d-inline-block">
     <div class="card ps-2">
@@ -12,33 +13,48 @@
             <EditForm class="profile-form" OnValidSubmit="OnSubmitAsync" Model="updateRequest">
                 <DataAnnotationsValidator />
 
-                <label for="inputUsername" class="input-only">@localizer["Username"]</label>
+                <label for="inputUsername" class="input-only">@localizer["Username"]:</label>
                 <InputText id="inputUsername" class="form-control" autofocus @bind-Value="@updateRequest.UserName" />
                 <ValidationMessage For="@(() => updateRequest.UserName)" />
 
-                <label for="inputEmail" class="input-only">@localizer["Email"]</label>
+                <label for="inputEmail" class="input-only">@localizer["Email"]:</label>
                 <InputText type="text" id="inputEmail" class="form-control" @bind-Value="@updateRequest.Email" />
                 <ValidationMessage For="@(() => updateRequest.Email)" />
 
-                <label for="inputPhoneNumber" class="input-only">@localizer["Phone_number"]</label>
+                <label for="inputPhoneNumber" class="input-only">@localizer["Phone_number"]:</label>
                 <InputText type="text" id="inputPhoneNumber" class="form-control" @bind-Value="@updateRequest.PhoneNumber" />
                 <ValidationMessage For="@(() => updateRequest.PhoneNumber)" />
+
                 <AuthorizeView Roles="Admin" Context="admin">
-                    @if(){
-                        <label for="inputRole" class="input-only">@localizer["Role"]</label>
-                        <div for="@updateRequest.Role" name="role" id="role" class="form-group custom-select role-select">
-                            <div class="form-control">@(updateRequest.Role != null && updateRequest.Role.ToString() != "" ? localizer[updateRequest.Role?.ToString()!] : localizer["Nothing"])</div>
-                            <div class="custom-select-options ">
-                                @foreach (var value in roles)
-                                {
-                                    <div class="custom-select-option" @onclick='() => {updateRequest.Role = value;}'>
-                                        @localizer[value.ToString()]
-                                    </div>
-                                }
-                            </div>
-                        </div>
-                    }
+                    <label for="inputRole" class="input-only">@localizer["Role"]:</label>
+                    <div for="@updateRequest.Role" name="role" id="role" 
+                        class="form-group custom-select role-select @(Id != null && User?.Id != Id  ? "" : "disabled-style")" 
+                        disabled="@(Id != null && User?.Id != Id ? false : true)">
+                       
+                            @if (Id != null && User?.Id != Id)
+                            {
+                                <div class="form-control">
+                                @(updateRequest.Role != null && updateRequest.Role.ToString() != "" ? localizer[updateRequest.Role?.ToString()!] : localizer["Nothing"])
+                                </div>
+                                <div class="custom-select-options ">
+                                    @foreach (var value in roles)
+                                    {
+                                        <div class="custom-select-option" @onclick='() => {updateRequest.Role = value;}'>
+                                            @localizer[value.ToString()]
+                                        </div>
+                                    }
+                                 </div>
+                            }
+                            else
+                            {
+                            <div class="form-control custom-select-option">
+                                    @localizer["Cant_change_your_role"]
+                                </div>
+                            }
+                        
+                    </div>
                 </AuthorizeView>
+
                  <div class="container">
                     <div class="col-md-12 text-center">
                         <button class="btn btn-primary btn-block mt-4  center-button" type="submit">@localizer["Edit"]</button>
@@ -60,6 +76,7 @@
 
 @functions {
     [Parameter] public string? Id { get; set; }
+    [Parameter] public CurrentUser? User { get; set; }
     UpdateRequest updateRequest { get; set; } = new UpdateRequest();
     string error { get; set; } = "";
     private List<string> roles = new()

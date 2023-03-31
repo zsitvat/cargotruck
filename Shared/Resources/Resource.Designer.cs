@@ -277,6 +277,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nem változtathatod meg a saját szereped..
+        /// </summary>
+        public static string Cant_change_your_role {
+            get {
+                return ResourceManager.GetString("Cant_change_your_role", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dátum adat nem kerülhet szám adat helyére!.
         /// </summary>
         public static string Cant_convert_datetime_to_int {

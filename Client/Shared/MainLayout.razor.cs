@@ -33,9 +33,13 @@ namespace Cargotruck.Client.Shared
             else
             {
                 await GetDarkmodeAsync();
-                await GetCurrencyRates();
             }
             darkmode = await sessionStorage.GetItemAsync<bool>("darkmode");
+
+            if ((await AuthenticationState!).User.Identity!.IsAuthenticated)
+            {
+                await GetCurrencyRates();
+            }
         }
 
         async Task GetCurrencyRates()

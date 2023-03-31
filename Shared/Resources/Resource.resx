@@ -189,6 +189,9 @@
   <data name="Cancel" xml:space="preserve">
     <value>Mégse</value>
   </data>
+  <data name="Cant_change_your_role" xml:space="preserve">
+    <value>Nem változtathatod meg a saját szereped.</value>
+  </data>
   <data name="Cant_convert_datetime_to_int" xml:space="preserve">
     <value>Dátum adat nem kerülhet szám adat helyére!</value>
   </data>

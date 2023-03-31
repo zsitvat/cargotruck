@@ -55,12 +55,30 @@ else
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>@localizer["Profile"]</th>
-                                        <th>@localizer["Id"]</th>
-                                        <th>@localizer["Username"]</th>
-                                        <th>@localizer["Email"]</th>
-                                        <th>@localizer["Phone_number"]</th>
-                                        <th>@localizer["Role"]</th>
+                                        @if (showColumns[0])
+                                        {
+                                            <th>@localizer["Profile"]</th>
+                                        }
+                                        @if (showColumns[1])
+                                        {
+                                            <th>@localizer["Id"]</th>
+                                        }
+                                        @if (showColumns[2])
+                                        {
+                                            <th>@localizer["Username"]</th>
+                                        }
+                                        @if (showColumns[3])
+                                        {
+                                            <th>@localizer["Email"]</th>
+                                        }
+                                        @if (showColumns[4])
+                                        {
+                                            <th>@localizer["Phone_number"]</th>
+                                        }
+                                        @if (showColumns[5])
+                                        {
+                                            <th>@localizer["Role"]</th>
+                                        }
                                     </tr>
                                 </thead>
                                 <tbody>

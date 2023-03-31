@@ -1382,6 +1382,14 @@ ul, li {
     padding: 5px 0px;
 }
 
+.disabled-style {
+    width: 10rem! important;
+}
+
+.disabled-style .form-control {
+    font-size: small !important;
+}
+
 tbody td, tbody th {
     height: 3rem;
 }
