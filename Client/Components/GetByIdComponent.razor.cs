@@ -22,7 +22,17 @@ namespace Cargotruck.Client.Components
 
         protected override async Task OnParametersSetAsync()
         {
-            if (GetById != null && GetById != _previousId && GetByIdType != _previousIdType)
+            await GetDataByIdAndType();
+        }
+
+        protected async Task SetToNullAsync()
+        {
+            await OnSetToNull.InvokeAsync();
+        }
+
+        protected async Task GetDataByIdAndType() 
+        {
+            if (GetById != null && ( GetById != _previousId || GetByIdType != _previousIdType))
             {
                 _previousId = GetById;
                 _previousIdType = GetByIdType;
@@ -61,11 +71,6 @@ namespace Cargotruck.Client.Components
                     GetById = null;
                 }
             }
-        }
-
-        protected async Task SetToNullAsync()
-        {
-            await OnSetToNull.InvokeAsync();
         }
 
         public static void SettingsChanged() { }

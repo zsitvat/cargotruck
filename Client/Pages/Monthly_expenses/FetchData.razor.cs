@@ -31,10 +31,10 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
             PageHistoryState.AddPageToHistory("/Monthly_expenses");
             base.OnInitialized();
 
-            await client.PostAsync("api/Monthlyexpenses/createcontable", null);
-            dataRows = await client.GetFromJsonAsync<int>($"api/Monthlyexpenses/pagecount?searchString={searchString}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
-            var checkData = await client.PostAsync("api/Monthlyexpenses/checkdata", null);
-            Connection_ids = await client.GetFromJsonAsync<Monthly_expenses_tasks_expensesDto[]?>("api/Monthlyexpenses/getconnectionids");
+            await client.PostAsync("api/monthlyexpenses/createcontable", null);
+            dataRows = await client.GetFromJsonAsync<int>($"api/monthlyexpenses/pagecount?searchString={searchString}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
+            var checkData = await client.PostAsync("api/monthlyexpenses/checkdata", null);
+            Connection_ids = await client.GetFromJsonAsync<Monthly_expenses_tasks_expensesDto[]?>("api/monthlyexpenses/getconnectionids");
 
             if (checkData.IsSuccessStatusCode)
             {
@@ -52,7 +52,7 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
             pageSize = Page.GetPageSize(pageSize, dataRows);
             maxPage = Page.GetMaxPage(pageSize, dataRows);
 
-            Monthly_expenses = await client.GetFromJsonAsync<Monthly_expensesDto[]>($"api/Monthlyexpenses/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
+            Monthly_expenses = await client.GetFromJsonAsync<Monthly_expensesDto[]>($"api/monthlyexpenses/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
             StateHasChanged();
         }
 
@@ -61,7 +61,7 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
             var data = Monthly_expenses?.First(x => x.Monthly_expense_id == Id);
             if (await js.InvokeAsync<bool>("confirm", $"{@localizer["DeleteAsync?"]} {data?.Earning} - {data?.Profit} ({data?.Monthly_expense_id})"))
             {
-                await client.DeleteAsync($"api/Monthlyexpenses/delete/{Id}");
+                await client.DeleteAsync($"api/monthlyexpenses/delete/{Id}");
                 var shouldreload = dataRows % ((currentPage == 1 ? currentPage : currentPage - 1) * pageSize);
                 if (shouldreload == 1 && dataRows > 0) { navigationManager.NavigateTo("/Monthly_expenses", true); }
                 await OnInitializedAsync();
@@ -92,7 +92,6 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
         {
             IdForGetById = id;
             GetByIdType = idType;
-            StateHasChanged();
         }
 
         public void SetToNull()

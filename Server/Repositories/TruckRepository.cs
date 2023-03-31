@@ -542,15 +542,10 @@ namespace Cargotruck.Server.Repositories
                                     }
 
                                 }
-                                catch (SqlException ex)
+                                catch (Exception ex)
                                 {
                                     return _errorHandler.GetErrorMessageAsString(ex);
                                 }
-                                catch (FormatException ex)
-                                {
-                                    return _errorHandler.GetErrorMessageAsString(ex);
-                                }
-
                             }
                             else
                             {

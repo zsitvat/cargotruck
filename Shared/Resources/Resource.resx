@@ -177,6 +177,9 @@
   <data name="Admin_title" xml:space="preserve">
     <value>Adminisztrátor felület</value>
   </data>
+  <data name="ArrayTypeMismatchException" xml:space="preserve">
+    <value>Nem egyezik a tömbtípus.</value>
+  </data>
   <data name="Bad_username" xml:space="preserve">
     <value>Rossz felhasználónév vagy jelszó.</value>
   </data>
@@ -305,6 +308,9 @@
   </data>
   <data name="Distance" xml:space="preserve">
     <value>Távolság</value>
+  </data>
+  <data name="DivideByZeroException" xml:space="preserve">
+    <value>Nem lehet 0-val osztani.</value>
   </data>
   <data name="Document_failed_to_create" xml:space="preserve">
     <value>Nem sikerült előállítani a fájlt!</value>
@@ -579,8 +585,17 @@
   <data name="Import" xml:space="preserve">
     <value>Feltöltés ExportToExcel-ből</value>
   </data>
+  <data name="IndexOutOfRangeException" xml:space="preserve">
+    <value>Az indexelés kiment a tartományból.</value>
+  </data>
+  <data name="InvalidCastException" xml:space="preserve">
+    <value>Típus váltás nem lehetséges.</value>
+  </data>
   <data name="InWarehouse" xml:space="preserve">
     <value>Raktárban</value>
+  </data>
+  <data name="IOException" xml:space="preserve">
+    <value>I/O hiba történt.</value>
   </data>
   <data name="Language" xml:space="preserve">
     <value>Nyelv</value>
@@ -678,6 +693,9 @@
   <data name="No_records" xml:space="preserve">
     <value>Nem található adat!</value>
   </data>
+  <data name="NullReferenceException" xml:space="preserve">
+    <value>Null hiba történt.</value>
+  </data>
   <data name="OnlyPositive" xml:space="preserve">
     <value>Nem lehet negatív szám!</value>
   </data>
@@ -689,6 +707,9 @@
   </data>
   <data name="Other_stops" xml:space="preserve">
     <value>Egyéb megállóhelyek</value>
+  </data>
+  <data name="OutOfMemoryException" xml:space="preserve">
+    <value>Elfogyott a memória.</value>
   </data>
   <data name="Owner" xml:space="preserve">
     <value>Tulajdonos</value>
@@ -812,6 +833,9 @@
   </data>
   <data name="Shipping_requirements" xml:space="preserve">
     <value>Szállítási követelmények</value>
+  </data>
+  <data name="StackOverflowException" xml:space="preserve">
+    <value>Verem túlcsordulás történt.</value>
   </data>
   <data name="Starting_date" xml:space="preserve">
     <value>Kezdő dátum</value>

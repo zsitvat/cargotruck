@@ -24,10 +24,6 @@ namespace Cargotruck.Server.Services
             {
                 return _localizer["Cant_convert_string_to_int"];
             }
-            else if (ex.Message.Contains("string to int"))
-            {
-                return _localizer["Cant_convert_string_to_int"];
-            }
             else if (ex.Message.Contains("int to datetime"))
             {
                 return _localizer["Cant_convert_int_to_datetime"];
@@ -35,6 +31,38 @@ namespace Cargotruck.Server.Services
             else if (ex.Message.Contains("valid DateTime"))
             {
                 return _localizer["Cant_convert_string_to_datetime"];
+            }
+            else if (ex is IndexOutOfRangeException)
+            {
+                return _localizer["IndexOutOfRangeException"];
+            }
+            else if (ex is NullReferenceException)
+            {
+                return _localizer["NullReferenceException"];
+            }
+            else if (ex is DivideByZeroException)
+            {
+                return _localizer["DivideByZeroException"];
+            }
+            else if (ex is InvalidCastException)
+            {
+                return _localizer["InvalidCastException"];
+            }
+            else if (ex is OutOfMemoryException)
+            {
+                return _localizer["OutOfMemoryException"];
+            }
+            else if (ex is StackOverflowException)
+            {
+                return _localizer["StackOverflowException"];
+            }
+            else if (ex is ArrayTypeMismatchException)
+            {
+                return _localizer["ArrayTypeMismatchException"];
+            }
+            else if (ex is IOException)
+            {
+                return _localizer["IOException"];
             }
             else
             {

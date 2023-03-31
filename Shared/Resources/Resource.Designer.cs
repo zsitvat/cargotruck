@@ -241,6 +241,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nem egyezik a tömbtípus..
+        /// </summary>
+        public static string ArrayTypeMismatchException {
+            get {
+                return ResourceManager.GetString("ArrayTypeMismatchException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rossz felhasználónév vagy jelszó..
         /// </summary>
         public static string Bad_username {
@@ -624,6 +633,15 @@ namespace Cargotruck.Shared.Resources {
         public static string Distance {
             get {
                 return ResourceManager.GetString("Distance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nem lehet 0-val osztani..
+        /// </summary>
+        public static string DivideByZeroException {
+            get {
+                return ResourceManager.GetString("DivideByZeroException", resourceCulture);
             }
         }
         
@@ -1447,11 +1465,38 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Az indexelés kiment a tartományból..
+        /// </summary>
+        public static string IndexOutOfRangeException {
+            get {
+                return ResourceManager.GetString("IndexOutOfRangeException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Típus váltás nem lehetséges..
+        /// </summary>
+        public static string InvalidCastException {
+            get {
+                return ResourceManager.GetString("InvalidCastException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Raktárban.
         /// </summary>
         public static string InWarehouse {
             get {
                 return ResourceManager.GetString("InWarehouse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I/O hiba történt..
+        /// </summary>
+        public static string IOException {
+            get {
+                return ResourceManager.GetString("IOException", resourceCulture);
             }
         }
         
@@ -1744,6 +1789,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Null hiba történt..
+        /// </summary>
+        public static string NullReferenceException {
+            get {
+                return ResourceManager.GetString("NullReferenceException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Úton.
         /// </summary>
         public static string on_road {
@@ -1776,6 +1830,15 @@ namespace Cargotruck.Shared.Resources {
         public static string Other_stops {
             get {
                 return ResourceManager.GetString("Other_stops", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Elfogyott a memória..
+        /// </summary>
+        public static string OutOfMemoryException {
+            get {
+                return ResourceManager.GetString("OutOfMemoryException", resourceCulture);
             }
         }
         
@@ -2145,6 +2208,15 @@ namespace Cargotruck.Shared.Resources {
         public static string Shipping_requirements {
             get {
                 return ResourceManager.GetString("Shipping_requirements", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verem túlcsordulás történt..
+        /// </summary>
+        public static string StackOverflowException {
+            get {
+                return ResourceManager.GetString("StackOverflowException", resourceCulture);
             }
         }
         

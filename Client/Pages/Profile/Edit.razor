@@ -24,18 +24,20 @@
                 <InputText type="text" id="inputPhoneNumber" class="form-control" @bind-Value="@updateRequest.PhoneNumber" />
                 <ValidationMessage For="@(() => updateRequest.PhoneNumber)" />
                 <AuthorizeView Roles="Admin" Context="admin">
-                    <label for="inputRole" class="input-only">@localizer["Role"]</label>
-                    <div for="@updateRequest.Role" name="role" id="role" class="form-group custom-select role-select">
-                        <div class="form-control">@(updateRequest.Role != null && updateRequest.Role.ToString() != "" ? localizer[updateRequest.Role?.ToString()!] : localizer["Nothing"])</div>
-                        <div class="custom-select-options ">
-                            @foreach (var value in roles)
-                            {
-                                <div class="custom-select-option" @onclick='() => {updateRequest.Role = value;}'>
-                                    @localizer[value.ToString()]
-                                </div>
-                            }
+                    @if(){
+                        <label for="inputRole" class="input-only">@localizer["Role"]</label>
+                        <div for="@updateRequest.Role" name="role" id="role" class="form-group custom-select role-select">
+                            <div class="form-control">@(updateRequest.Role != null && updateRequest.Role.ToString() != "" ? localizer[updateRequest.Role?.ToString()!] : localizer["Nothing"])</div>
+                            <div class="custom-select-options ">
+                                @foreach (var value in roles)
+                                {
+                                    <div class="custom-select-option" @onclick='() => {updateRequest.Role = value;}'>
+                                        @localizer[value.ToString()]
+                                    </div>
+                                }
+                            </div>
                         </div>
-                    </div>
+                    }
                 </AuthorizeView>
                  <div class="container">
                     <div class="col-md-12 text-center">

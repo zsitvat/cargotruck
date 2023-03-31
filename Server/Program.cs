@@ -54,6 +54,7 @@ var configuration = new MapperConfiguration(cfg =>
     cfg.CreateMap<Expenses, ExpensesDto>();
     cfg.CreateMap<Logins, LoginsDto>();
     cfg.CreateMap<Monthly_expenses, Monthly_expensesDto>();
+    cfg.CreateMap<Monthly_expenses_tasks_expenses, Monthly_expenses_tasks_expensesDto>();
     cfg.CreateMap<Privacies, PrivaciesDto>();
     cfg.CreateMap<Roads, RoadsDto>();
     cfg.CreateMap<Settings, SettingsDto>();
@@ -66,6 +67,7 @@ var configuration = new MapperConfiguration(cfg =>
     cfg.CreateMap<ExpensesDto, Expenses>();
     cfg.CreateMap<LoginsDto, Logins>();
     cfg.CreateMap<Monthly_expensesDto, Monthly_expenses>();
+    cfg.CreateMap<Monthly_expenses_tasks_expensesDto, Monthly_expenses_tasks_expenses>();
     cfg.CreateMap<PrivaciesDto, Privacies>();
     cfg.CreateMap<RoadsDto, Roads>();
     cfg.CreateMap<SettingsDto, Settings>();

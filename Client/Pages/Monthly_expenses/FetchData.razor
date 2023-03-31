@@ -13,10 +13,10 @@
         @if (expandExportMenu)
         {
             <ul class="nav flex-column export-buttons">
-                <button data-title="@localizer["excel"]" class="btn" @onclick="@(() =>fileDownload.ExportAsync("Monthly_expenses","xlsx",dateFilter, client, js))"><span class="icon iconify" data-icon="file-icons:microsoft-excel" />XLSX</button>
-                <button data-title="@localizer["pdf"]" class="btn" @onclick="@(() =>fileDownload.ExportAsync("Monthly_expenses","pdf",dateFilter, client, js))"><span class="icon iconify" data-icon="bi:filetype-pdf" />PDF</button>
-                <button data-title="@localizer["txt"]" class="btn" @onclick="@(() =>fileDownload.ExportAsync("Monthly_expenses","txt",dateFilter, client, js))"><span class="icon iconify" data-icon="bi:filetype-txt" />TXT</button>
-                <button data-title="@localizer["csv"]" class="btn" @onclick="@(() =>fileDownload.ExportAsync("Monthly_expenses","csv",dateFilter, client, js))"><span class="icon iconify" data-icon="bi:filetype-csv"/>CSV</button>
+                <button data-title="@localizer["excel"]" class="btn" @onclick="@(() =>fileDownload.ExportAsync("monthlyexpenses","xlsx",dateFilter, client, js))"><span class="icon iconify" data-icon="file-icons:microsoft-excel" />XLSX</button>
+                <button data-title="@localizer["pdf"]" class="btn" @onclick="@(() =>fileDownload.ExportAsync("monthlyexpenses","pdf",dateFilter, client, js))"><span class="icon iconify" data-icon="bi:filetype-pdf" />PDF</button>
+                <button data-title="@localizer["txt"]" class="btn" @onclick="@(() =>fileDownload.ExportAsync("monthlyexpenses","txt",dateFilter, client, js))"><span class="icon iconify" data-icon="bi:filetype-txt" />TXT</button>
+                <button data-title="@localizer["csv"]" class="btn" @onclick="@(() =>fileDownload.ExportAsync("monthlyexpenses","csv",dateFilter, client, js))"><span class="icon iconify" data-icon="bi:filetype-csv" />CSV</button>
             </ul>
         }
     </li>

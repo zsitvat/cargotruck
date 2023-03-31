@@ -100,7 +100,7 @@ namespace Cargotruck.Server.Controllers
         [HttpPost]
         public async Task CreateConTableAsync()
         {
-            await _monthlyExpenseService.CreateMonthsAsync();
+            await _monthlyExpenseService.CreateConTableAsync();
         }
 
         //closedXML needed !!!
