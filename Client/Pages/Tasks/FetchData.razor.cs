@@ -41,7 +41,7 @@ namespace Cargotruck.Client.Pages.Tasks
 
         async Task DeleteAsync(int Id)
         {
-            var t = Tasks?.First(x => x.Id == Id);
+            var t = Tasks?.First(x => x?.Id == Id);
             if (await js.InvokeAsync<bool>("confirm", $"{@localizer["DeleteAsync?"]} {t?.Partner} ({t?.Id})"))
             {
                 await client.DeleteAsync($"api/tasks/delete/{Id}");
