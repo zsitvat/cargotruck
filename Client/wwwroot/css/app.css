@@ -1426,10 +1426,21 @@ tr td:first-child {
 }
 
 .darkmode .box, .darkmode .form-card, .darkmode .login-card, .darkmode .card,
-.darkmode .card2, .darkmode .settings-card, .darkmode .getbyid-card, .darkmode .page-error {
+.darkmode .card2, .darkmode .settings-card, .darkmode .getbyid-card {
     background-color: rgb(36, 49, 64) !important;
     color: rgba(160,180,200,.85) !important;
     border-color: #243140 !important;
+}
+
+.darkmode .page-error {
+    background-color: rgb(36, 49, 64) !important;
+    border-color: #243140 !important;
+    color: darkred !important;
+}
+
+.darkmode .p-error {
+    color: rgba(220, 0, 32, 1) !important;
+    font-weight: 400;
 }
 
 .darkmode .navbar {
