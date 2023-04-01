@@ -8,29 +8,29 @@ namespace Cargotruck.Client.Components
 {
     public partial class GetByIdComponent
     {   
-        Cargoes? idDataCargo;
-        TasksDto? idDataTask;
-        Expenses? idDataExpense;
-        Roads? idDataRoad;
-        Warehouses? idDataWarehouse;
-        Trucks? idDataTruck;
+        Cargo? idDataCargo;
+        TaskDto? idDataTask;
+        Expense? idDataExpense;
+        Road? idDataRoad;
+        Warehouse? idDataWarehouse;
+        Truck? idDataTruck;
         [Parameter] public string? GetById { get; set; }
         [Parameter] public string? GetByIdType { get; set; }
         [Parameter] public EventCallback OnSetToNull { get; set; }
         private string? _previousId;
         private string? _previousIdType;
 
-        protected override async Task OnParametersSetAsync()
+        protected override async System.Threading.Tasks.Task OnParametersSetAsync()
         {
             await GetDataByIdAndType();
         }
 
-        protected async Task SetToNullAsync()
+        protected async System.Threading.Tasks.Task SetToNullAsync()
         {
             await OnSetToNull.InvokeAsync();
         }
 
-        protected async Task GetDataByIdAndType() 
+        protected async System.Threading.Tasks.Task GetDataByIdAndType() 
         {
             if (GetById != null && ( GetById != _previousId || GetByIdType != _previousIdType))
             {
@@ -38,27 +38,27 @@ namespace Cargotruck.Client.Components
                 _previousIdType = GetByIdType;
                 if (GetByIdType == "cargo" || GetByIdType == "storage")
                 {
-                    idDataCargo = await client.GetFromJsonAsync<Cargoes?>($"api/cargoes/getbyid/{GetById}");
+                    idDataCargo = await client.GetFromJsonAsync<Cargo?>($"api/cargoes/getbyid/{GetById}");
                 }
                 else if (GetByIdType == "task")
                 {
-                    idDataTask = await client.GetFromJsonAsync<TasksDto?>($"api/tasks/getbyid/{GetById}");
+                    idDataTask = await client.GetFromJsonAsync<TaskDto?>($"api/tasks/getbyid/{GetById}");
                 }
                 else if (GetByIdType == "expense")
                 {
-                    idDataExpense = await client.GetFromJsonAsync<Expenses?>($"api/expenses/getbyid/{GetById}");
+                    idDataExpense = await client.GetFromJsonAsync<Expense?>($"api/expenses/getbyid/{GetById}");
                 }
                 else if (GetByIdType == "road" || GetByIdType == "repair")
                 {
-                    idDataRoad = await client.GetFromJsonAsync<Roads?>($"api/roads/getbyid/{GetById}");
+                    idDataRoad = await client.GetFromJsonAsync<Road?>($"api/roads/getbyid/{GetById}");
                 }
                 else if (GetByIdType == "warehouse")
                 {
-                    idDataWarehouse = await client.GetFromJsonAsync<Warehouses?>($"api/warehouses/getbyid/{GetById}");
+                    idDataWarehouse = await client.GetFromJsonAsync<Warehouse?>($"api/warehouses/getbyid/{GetById}");
                 }
                 else if (GetByIdType == "truck")
                 {
-                    idDataTruck = await client.GetFromJsonAsync<Trucks?>($"api/trucks/getbyvrn/{GetById}");
+                    idDataTruck = await client.GetFromJsonAsync<Truck?>($"api/trucks/getbyvrn/{GetById}");
                 }
                 else
                 {

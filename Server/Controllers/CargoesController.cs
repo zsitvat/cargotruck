@@ -19,20 +19,20 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<CargoesDto>>> GetAsync(int page, int pageSize, string sortOrder,
+        public async Task<ActionResult<List<CargoDto>>> GetAsync(int page, int pageSize, string sortOrder,
             bool desc, string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             return Ok(await _cargoService.GetAsync(page, pageSize, sortOrder, desc, searchString, filter, dateFilterStartDate, dateFilterEndDate));
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<CargoesDto>> GetByIdAsync(int id)
+        public async Task<ActionResult<CargoDto>> GetByIdAsync(int id)
         {
             return Ok(await _cargoService.GetByIdAsync(id));
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<CargoesDto>>> GetCargoesAsync()
+        public async Task<ActionResult<List<CargoDto>>> GetCargoesAsync()
         {
             return Ok(await _cargoService.GetCargoesAsync());
         }
@@ -56,13 +56,13 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpPost]
-        public async Task PostAsync(CargoesDto task)
+        public async Task PostAsync(CargoDto task)
         {
             await _cargoService.PostAsync(task);
         }
 
         [HttpPut]
-        public async Task PutAsync(CargoesDto task)
+        public async Task PutAsync(CargoDto task)
         {
             await _cargoService.PutAsync(task);
         }

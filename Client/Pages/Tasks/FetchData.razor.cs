@@ -10,7 +10,7 @@ namespace Cargotruck.Client.Pages.Tasks
     {
         private bool settings = false;
         bool expandExportMenu;
-        List<TasksDto?>?  Tasks { get; set; }
+        List<TaskDto?>?  Tasks { get; set; }
         int? IdForGetById { get; set; }
         string? GetByIdType { get; set; }
         private readonly List<bool> showColumns = Enumerable.Repeat(true, 16).ToList();
@@ -32,7 +32,7 @@ namespace Cargotruck.Client.Pages.Tasks
             await ShowPageAsync();
         }
 
-        async Task ChangeCompletionAsync(TasksDto task)
+        async Task ChangeCompletionAsync(TaskDto task)
         {
             await client.PutAsJsonAsync($"api/tasks/changecompletion", task);
             await ShowPageAsync();
@@ -55,7 +55,7 @@ namespace Cargotruck.Client.Pages.Tasks
             pageSize = Page.GetPageSize(pageSize, dataRows);
             maxPage = Page.GetMaxPage(pageSize, dataRows);
 
-            Tasks = await client.GetFromJsonAsync<List<TasksDto?>?>($"api/tasks/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
+            Tasks = await client.GetFromJsonAsync<List<TaskDto?>?>($"api/tasks/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
             StateHasChanged();
         }
         async void DateStartInput(ChangeEventArgs e)

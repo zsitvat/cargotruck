@@ -8,14 +8,14 @@
 @code {
     [Parameter] public int Id { get; set; }
     bool isValidSubmit = true;
-    RoadsDto? road = new RoadsDto();
+    RoadDto? road = new RoadDto();
 
-    protected async override Task OnParametersSetAsync()
+    protected async override System.Threading.Tasks.Task OnParametersSetAsync()
     {
-        road = await http.GetFromJsonAsync<RoadsDto>($"api/roads/getById/{Id}");
+        road = await http.GetFromJsonAsync<RoadDto>($"api/roads/getById/{Id}");
     }
 
-    async Task EditRoadAsync()
+    async System.Threading.Tasks.Task EditRoadAsync()
     {
         if (isValidSubmit)
         {

@@ -16,28 +16,28 @@ namespace Cargotruck.Server.Services
             _settingRepository = settingRepository;
             _mapper = mapper;
         }
-        public async Task<List<SettingsDto>> GetAsync()
+        public async Task<List<SettingDto>> GetAsync()
         {
             var settings = await _settingRepository.GetAsync();
-            return _mapper.Map<List<SettingsDto>>(settings);
+            return _mapper.Map<List<SettingDto>>(settings);
         }
-        public async Task<SettingsDto?> GetAsync(int id)
+        public async Task<SettingDto?> GetAsync(int id)
         {
             var setting = await _settingRepository.GetAsync(id);
-            return _mapper.Map<SettingsDto>(setting);
+            return _mapper.Map<SettingDto>(setting);
         }
-        public async Task<SettingsDto> GetWaitTimeAsync()
+        public async Task<SettingDto> GetWaitTimeAsync()
         {
             var setting = await _settingRepository.GetWaitTimeAsync();
-            return _mapper.Map<SettingsDto>(setting);
+            return _mapper.Map<SettingDto>(setting);
         }
-        public async Task PostAsync(SettingsDto data)
+        public async Task PostAsync(SettingDto data)
         {
-            await _settingRepository.PostAsync(_mapper.Map<Settings>(data));
+            await _settingRepository.PostAsync(_mapper.Map<Setting>(data));
         }
-        public async Task PutAsync(SettingsDto data)
+        public async Task PutAsync(SettingDto data)
         {
-            await _settingRepository.PutAsync(_mapper.Map<Settings>(data));
+            await _settingRepository.PutAsync(_mapper.Map<Setting>(data));
         }
         public async Task<bool> DeleteAsync(int id)
         {

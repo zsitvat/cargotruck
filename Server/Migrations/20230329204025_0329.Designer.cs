@@ -239,7 +239,7 @@ namespace Cargotruck.Server.Migrations
                     b.ToTable("Monthly_Expenses");
                 });
 
-            modelBuilder.Entity("Cargotruck.Shared.Model.Monthly_expenses_tasks_expenses", b =>
+            modelBuilder.Entity("Cargotruck.Shared.Model.Monthly_expense_task_expense", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -260,7 +260,7 @@ namespace Cargotruck.Server.Migrations
 
                     b.HasIndex("Monthly_expense_id");
 
-                    b.ToTable("Monthly_expenses_tasks_expenses");
+                    b.ToTable("Monthly_expense_task_expense");
                 });
 
             modelBuilder.Entity("Cargotruck.Shared.Model.Privacies", b =>
@@ -677,10 +677,10 @@ namespace Cargotruck.Server.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Cargotruck.Shared.Model.Monthly_expenses_tasks_expenses", b =>
+            modelBuilder.Entity("Cargotruck.Shared.Model.Monthly_expense_task_expense", b =>
                 {
                     b.HasOne("Cargotruck.Shared.Model.Monthly_expenses", "Monthly_expenses")
-                        .WithMany("Monthly_expenses_tasks_expenses")
+                        .WithMany("Monthly_expense_task_expense")
                         .HasForeignKey("Monthly_expense_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -741,7 +741,7 @@ namespace Cargotruck.Server.Migrations
 
             modelBuilder.Entity("Cargotruck.Shared.Model.Monthly_expenses", b =>
                 {
-                    b.Navigation("Monthly_expenses_tasks_expenses");
+                    b.Navigation("Monthly_expense_task_expense");
                 });
 #pragma warning restore 612, 618
         }

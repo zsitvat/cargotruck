@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Cargotruck.Server.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<Users>
+    public class ApplicationDbContext : IdentityDbContext<User>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -13,18 +13,18 @@ namespace Cargotruck.Server.Data
             //Database.EnsureCreated();
             Database.Migrate();
         }
-        public override DbSet<Users> Users { get; set; } = default!;
-        public DbSet<Tasks> Tasks { get; set; } = default!;
-        public DbSet<Cargoes> Cargoes { get; set; } = default!;
-        public DbSet<Expenses> Expenses { get; set; } = default!;
-        public DbSet<Monthly_expenses> Monthly_Expenses { get; set; } = default!;
-        public DbSet<Monthly_expenses_tasks_expenses> Monthly_expenses_tasks_expenses { get; set; } = default!;
-        public DbSet<Roads> Roads { get; set; } = default!;
-        public DbSet<Trucks> Trucks { get; set; } = default!;
-        public DbSet<Warehouses> Warehouses { get; set; } = default!;
+        public override DbSet<User> Users { get; set; } = default!;
+        public DbSet<Shared.Model.Task> Tasks { get; set; } = default!;
+        public DbSet<Cargo> Cargoes { get; set; } = default!;
+        public DbSet<Expense> Expenses { get; set; } = default!;
+        public DbSet<Monthly_expense> Monthly_Expenses { get; set; } = default!;
+        public DbSet<Monthly_expense_task_expense> Monthly_expenses_tasks_expenses { get; set; } = default!;
+        public DbSet<Road> Roads { get; set; } = default!;
+        public DbSet<Truck> Trucks { get; set; } = default!;
+        public DbSet<Warehouse> Warehouses { get; set; } = default!;
         public DbSet<Privacies> Privacies { get; set; } = default!;
-        public DbSet<Logins> Logins { get; set; } = default!;
-        public DbSet<Settings> Settings { get; set; } = default!;
+        public DbSet<Login> Logins { get; set; } = default!;
+        public DbSet<Setting> Settings { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -19,20 +19,20 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<RoadsDto>>> GetAsync(int page, int pageSize, string sortOrder,
+        public async Task<ActionResult<List<RoadDto>>> GetAsync(int page, int pageSize, string sortOrder,
             bool desc, string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             return Ok(await _roadService.GetAsync(page, pageSize, sortOrder, desc, searchString, filter, dateFilterStartDate, dateFilterEndDate));
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<RoadsDto>> GetByIdAsync(int id)
+        public async Task<ActionResult<RoadDto>> GetByIdAsync(int id)
         {
             return Ok(await _roadService.GetByIdAsync(id));
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<RoadsDto>>> GetRoadsAsync()
+        public async Task<ActionResult<List<RoadDto>>> GetRoadsAsync()
         {
             return Ok(await _roadService.GetRoadsAsync());
         }
@@ -56,13 +56,13 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpPost]
-        public async Task PostAsync(RoadsDto road)
+        public async Task PostAsync(RoadDto road)
         {
             await _roadService.PostAsync(road);
         }
 
         [HttpPut]
-        public async Task PutAsync(RoadsDto road)
+        public async Task PutAsync(RoadDto road)
         {
             await _roadService.PutAsync(road);
         }

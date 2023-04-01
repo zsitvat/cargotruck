@@ -18,29 +18,29 @@ namespace Cargotruck.Server.Services
             _truckRepository = truckRepository;
             _mapper = mapper;
         }
-        public async Task<List<TrucksDto>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, Status? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        public async Task<List<TruckDto>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, Status? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var trucks = await _truckRepository.GetAsync(page, pageSize, sortOrder, desc, searchString, filter, dateFilterStartDate, dateFilterEndDate);
-            return _mapper.Map<List<TrucksDto>>(trucks);
+            return _mapper.Map<List<TruckDto>>(trucks);
         }
-        public async Task<List<TrucksDto>> GetTrucksAsync()
+        public async Task<List<TruckDto>> GetTrucksAsync()
         {
             var trucks = await _truckRepository.GetTrucksAsync();
 
-            return _mapper.Map<List<TrucksDto>>(trucks);
+            return _mapper.Map<List<TruckDto>>(trucks);
         }
-        public async Task<TrucksDto?> GetByIdAsync(int id)
+        public async Task<TruckDto?> GetByIdAsync(int id)
         {
             var truck = await _truckRepository.GetByIdAsync(id);
 
-            return _mapper.Map<TrucksDto>(truck);
+            return _mapper.Map<TruckDto>(truck);
         }
 
-        public async Task<TrucksDto> GetByVRNAsync(string vehicle_registration_number)
+        public async Task<TruckDto> GetByVRNAsync(string vehicle_registration_number)
         {
             var truck = await _truckRepository.GetByVRNAsync(vehicle_registration_number);
 
-            return _mapper.Map<TrucksDto>(truck);
+            return _mapper.Map<TruckDto>(truck);
         }
         public async Task<int> PageCountAsync(string? searchString, Status? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
@@ -54,13 +54,13 @@ namespace Cargotruck.Server.Services
 
             return count;
         }
-        public async Task PostAsync(TrucksDto truck)
+        public async Task PostAsync(TruckDto truck)
         {
-            await _truckRepository.PostAsync(_mapper.Map<Trucks>(truck));
+            await _truckRepository.PostAsync(_mapper.Map<Truck>(truck));
         }
-        public async Task PutAsync(TrucksDto truck)
+        public async Task PutAsync(TruckDto truck)
         {
-            await _truckRepository.PutAsync(_mapper.Map<Trucks>(truck));
+            await _truckRepository.PutAsync(_mapper.Map<Truck>(truck));
         }
         public async Task<bool> DeleteAsync(int id)
         {

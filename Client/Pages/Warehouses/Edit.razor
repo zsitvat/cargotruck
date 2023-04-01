@@ -8,14 +8,14 @@
 
 @code {
     [Parameter] public int Id { get; set; }
-    WarehousesDto? warehouse = new WarehousesDto();
+    WarehouseDto? warehouse = new WarehouseDto();
 
-    protected async override Task OnParametersSetAsync()
+    protected async override System.Threading.Tasks.Task OnParametersSetAsync()
     {
-        warehouse = await http.GetFromJsonAsync<WarehousesDto>($"api/warehouses/getById/{Id}");
+        warehouse = await http.GetFromJsonAsync<WarehouseDto>($"api/warehouses/getById/{Id}");
     }
 
-    async Task EditWarehouseAsync()
+    async System.Threading.Tasks.Task EditWarehouseAsync()
     {
         if (warehouse != null)
         {

@@ -59,17 +59,17 @@
     [Parameter] public  EventCallback  OnSettingsClosed { get; set; }
     [Parameter] public EventCallback<int> OnInputChanged { get; set; }
 
-    protected async Task SettingsChangedAsync()
+    protected async System.Threading.Tasks.Task SettingsChangedAsync()
     {
         await OnSettingsChanged.InvokeAsync();
     }
 
-    protected async Task SettingsClosedAsync()
+    protected async System.Threading.Tasks.Task SettingsClosedAsync()
     {
         await OnSettingsClosed.InvokeAsync();
     }
 
-    private async Task InputChangeAsync(ChangeEventArgs args)
+    private async System.Threading.Tasks.Task InputChangeAsync(ChangeEventArgs args)
     {
         pageSize = string.IsNullOrEmpty(args.Value?.ToString()) ? pageSize : Int32.Parse(args.Value?.ToString()!);
         await OnInputChanged.InvokeAsync(pageSize);

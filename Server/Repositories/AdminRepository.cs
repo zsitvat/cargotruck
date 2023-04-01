@@ -15,7 +15,7 @@ namespace Cargotruck.Server.Repositories
             _context = context;
         }
 
-        public async Task<List<Users>> GetAsync(int page, int pageSize, string? filter)
+        public async Task<List<User>> GetAsync(int page, int pageSize, string? filter)
         {
             var u = await _context.Users.ToListAsync();
 
@@ -29,7 +29,7 @@ namespace Cargotruck.Server.Repositories
 
             return  u.Skip((page - 1) * pageSize).Take(pageSize).ToList();
         }
-        public async Task<Users?> GetAsync(string id)
+        public async Task<User?> GetAsync(string id)
         {
             return await _context.Users.FirstOrDefaultAsync(a => a.Id == id);
         }

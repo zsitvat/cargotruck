@@ -2,9 +2,9 @@
 using System.ComponentModel.DataAnnotations;
 
 
-namespace Cargotruck.Shared.Model
+namespace Cargotruck.Shared.Model.Dto
 {
-    public class Trucks
+    public class TruckDto
     {
         [Required]
         public int Id { get; set; }
@@ -25,13 +25,4 @@ namespace Cargotruck.Shared.Model
         [Display(Name = "Date", ResourceType = typeof(Resource))]
         public DateTime Date { get; set; } = DateTime.Now;
     }
-    public enum Status
-    {
-        delivering,
-        on_road,
-        garage,
-        under_repair,
-        loaned,
-        rented
-    };
 }

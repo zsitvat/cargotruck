@@ -5,8 +5,8 @@ namespace Cargotruck.Server.Repositories.Interfaces
 {
     public interface IAdminRepository
     {
-        Task<List<Users>> GetAsync(int page, int pageSize, string? filter);
-        Task<Users?> GetAsync(string id);
+        Task<List<User>> GetAsync(int page, int pageSize, string? filter);
+        Task<User?> GetAsync(string id);
         Task<bool> DeleteAsync(string id);
         Task<int> PageCountAsync(string? filter);
         Task<int> CountAsync();

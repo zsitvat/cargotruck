@@ -18,12 +18,12 @@ namespace Cargotruck.Server.Controllers
     public class FilesaveController : ControllerBase
     {
         private readonly IWebHostEnvironment env;
-        private readonly UserManager<Users> _userManager;
+        private readonly UserManager<User> _userManager;
         private readonly ApplicationDbContext _context;
-        private readonly SignInManager<Users> _signInManager;
+        private readonly SignInManager<User> _signInManager;
         private readonly IStringLocalizer<Resource> _localizer;
 
-        public FilesaveController(IWebHostEnvironment env, UserManager<Users> userManager, ApplicationDbContext context, SignInManager<Users> signInManager, IStringLocalizer<Resource> localizer)
+        public FilesaveController(IWebHostEnvironment env, UserManager<User> userManager, ApplicationDbContext context, SignInManager<User> signInManager, IStringLocalizer<Resource> localizer)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -102,7 +102,7 @@ namespace Cargotruck.Server.Controllers
                             if (id != "page")
                             {
                                 Dictionary<string, string> claims = new();
-                                Users? user = new();
+                                User? user = new();
                                 string img = "";
 
                                 //change the image

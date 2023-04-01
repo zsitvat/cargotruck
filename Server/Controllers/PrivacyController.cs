@@ -18,13 +18,13 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<PrivaciesDto>>> GetAsync(string lang)
+        public async Task<ActionResult<List<PrivacyDto>>> GetAsync(string lang)
         {
             return Ok(await _privacyService.GetAsync(lang));
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<PrivaciesDto>> GetByIdAsync(int id)
+        public async Task<ActionResult<PrivacyDto>> GetByIdAsync(int id)
         {
             return Ok(await _privacyService.GetByIdAsync(id));
         }
@@ -36,13 +36,13 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpPost]
-        public async Task PostAsync(PrivaciesDto privacy)
+        public async Task PostAsync(PrivacyDto privacy)
         {
             await _privacyService.PostAsync(privacy);
         }
 
         [HttpPut]
-        public async Task PutAsync(PrivaciesDto privacy)
+        public async Task PutAsync(PrivacyDto privacy)
         {
             await _privacyService.PutAsync(privacy);
         }

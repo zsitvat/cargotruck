@@ -14,12 +14,12 @@ namespace Cargotruck.Server.Repositories
     public class AuthRepository : IAuthRepository
     {
 
-        private readonly UserManager<Users> _userManager;
-        private readonly SignInManager<Users> _signInManager;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
         private readonly IStringLocalizer<Resource> _localizer;
         private readonly ApplicationDbContext _context;
 
-        public AuthRepository(ApplicationDbContext context, IStringLocalizer<Resource> localizer, UserManager<Users> userManager, SignInManager<Users> signInManager)
+        public AuthRepository(ApplicationDbContext context, IStringLocalizer<Resource> localizer, UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -32,7 +32,7 @@ namespace Cargotruck.Server.Repositories
             //if no user found, create admin
             if (!_userManager.Users.Any())
             {
-                var admin = new Users
+                var admin = new User
                 {
                     UserName = "admin",
                     Email = "admin@cargotruck.com",
@@ -56,7 +56,7 @@ namespace Cargotruck.Server.Repositories
             await _signInManager.SignInAsync(user, request.RememberMe);
 
             //save login date
-            Logins login = new()
+            Login login = new()
             {
                 UserName = user.UserName,
                 UserId = user.Id,
@@ -70,7 +70,7 @@ namespace Cargotruck.Server.Repositories
         }
         public async Task<string?> RegisterAsync(RegisterRequest parameters)
         {
-            Users user = new();
+            User user = new();
             user.UserName = parameters.UserName;
             user.PhoneNumber = parameters.PhoneNumber ?? user.PhoneNumber;
             user.Email = parameters.Email ?? user.Email;
@@ -86,7 +86,7 @@ namespace Cargotruck.Server.Repositories
         }
         public async Task<string?> UpdateAsync(UpdateRequest parameters)
         {
-            var user = new Users();
+            var user = new User();
             Dictionary<string, string> claims = new();
             Dictionary<string, string> userRoles = new();
             Dictionary<string, string> roles = new();
@@ -128,7 +128,7 @@ namespace Cargotruck.Server.Repositories
         }
         public async Task<string?> ChangePasswordAsync(ChangePasswordRequest parameters)
         {
-            Users user = _context.Users.FirstOrDefault(a => a.UserName == _signInManager.Context.User.Identity!.Name)!;
+            User user = _context.Users.FirstOrDefault(a => a.UserName == _signInManager.Context.User.Identity!.Name)!;
             var result = await _userManager.ChangePasswordAsync(user!, parameters.PasswordCurrent, parameters.Password);
 
             if (!result.Succeeded)

@@ -31,7 +31,7 @@ namespace Cargotruck.Server.Repositories
             _errorHandler = errorHandler;
         }
 
-        private async Task<List<Trucks>> GetDataAsync(string? searchString, Status? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        private async Task<List<Truck>> GetDataAsync(string? searchString, Status? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var data = await _context.Trucks.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
 
@@ -55,7 +55,7 @@ namespace Cargotruck.Server.Repositories
             return data;
         }
 
-        public async Task<List<Trucks>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, Status? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        public async Task<List<Truck>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, Status? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var data = await GetDataAsync(searchString, filter, dateFilterStartDate, dateFilterEndDate);
 
@@ -85,17 +85,17 @@ namespace Cargotruck.Server.Repositories
             return data.Skip((page - 1) * pageSize).Take(pageSize).ToList();
         }
 
-        public async Task<Trucks?> GetByIdAsync(int id)
+        public async Task<Truck?> GetByIdAsync(int id)
         {
             return await _context.Trucks.FirstOrDefaultAsync(a => a.Id == id);
         }
 
-        public async Task<Trucks?> GetByVRNAsync(string vehicle_registration_number)
+        public async Task<Truck?> GetByVRNAsync(string vehicle_registration_number)
         {
             return await _context.Trucks.FirstOrDefaultAsync(a => a.Vehicle_registration_number == vehicle_registration_number);
         }
 
-        public async Task<List<Trucks>> GetTrucksAsync()
+        public async Task<List<Truck>> GetTrucksAsync()
         {
             return await _context.Trucks.ToListAsync();
         }
@@ -118,13 +118,13 @@ namespace Cargotruck.Server.Repositories
             return data.Count;
         }
 
-        public async Task PostAsync(Trucks data)
+        public async Task PostAsync(Truck data)
         {
             _context.Add(data);
             await _context.SaveChangesAsync();
         }
 
-        public async Task PutAsync(Trucks data)
+        public async Task PutAsync(Truck data)
         {
             _context.Entry(data).State = EntityState.Modified;
             await _context.SaveChangesAsync();
@@ -198,7 +198,7 @@ namespace Cargotruck.Server.Repositories
             Font font1 = FontFactory.GetFont(FontFactory.TIMES_BOLD, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 12);
             Font font2 = FontFactory.GetFont(FontFactory.TIMES_ROMAN, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 10);
 
-            System.Type type = typeof(Trucks);
+            System.Type type = typeof(Truck);
             var column_number = (type.GetProperties().Length) - 1;
             var columnDefinitionSize = new float[column_number];
             for (int i = 0; i < column_number; i++) columnDefinitionSize[i] = 1F;
@@ -242,7 +242,7 @@ namespace Cargotruck.Server.Repositories
                     });
                 }
 
-                foreach (Trucks truck in trucks)
+                foreach (Truck truck in trucks)
                 {
                     var s = "";
                     if (!string.IsNullOrEmpty(truck.Id.ToString())) { s = truck.Id.ToString(); }
@@ -507,7 +507,7 @@ namespace Cargotruck.Server.Repositories
                                             if (lastId != null)
                                             {
                                                 var WithNewIds = await _context.Trucks.Where(x => x.Road_id == lastId.Road_id).ToListAsync();
-                                                Roads? road = await _context.Roads.FirstOrDefaultAsync(x => x.Vehicle_registration_number == lastId.Vehicle_registration_number);
+                                                Road? road = await _context.Roads.FirstOrDefaultAsync(x => x.Vehicle_registration_number == lastId.Vehicle_registration_number);
 
                                                 foreach (var item in WithNewIds)
                                                 {

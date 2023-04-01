@@ -33,7 +33,7 @@ namespace Cargotruck.Server.Repositories
             _errorHandler = errorHandler;
         }
 
-        private async Task<List<Expenses>> GetDataAsync(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        private async Task<List<Expense>> GetDataAsync(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var data = await _context.Expenses.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
 
@@ -64,7 +64,7 @@ namespace Cargotruck.Server.Repositories
             return data;
         }
 
-        public async Task<List<Expenses>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        public async Task<List<Expense>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
 
             var data = await GetDataAsync(searchString, filter, dateFilterStartDate, dateFilterEndDate);
@@ -116,12 +116,12 @@ namespace Cargotruck.Server.Repositories
             return data.Skip((page - 1) * pageSize).Take(pageSize).ToList();
         }
 
-        public async Task<Expenses?> GetByIdAsync(int id)
+        public async Task<Expense?> GetByIdAsync(int id)
         {
             return await _context.Expenses.FirstOrDefaultAsync(a => a.Id == id);
         }
 
-        public async Task<List<Expenses>> GetExpensesAsync()
+        public async Task<List<Expense>> GetExpensesAsync()
         {
             return await _context.Expenses.ToListAsync();
         }
@@ -137,7 +137,7 @@ namespace Cargotruck.Server.Repositories
             return data.Count;
         }
 
-        public async Task PostAsync(Expenses data)
+        public async System.Threading.Tasks.Task PostAsync(Expense data)
         {
             data.Total_amount = GetTotalAmount(data);
             _context?.Add(data);
@@ -155,7 +155,7 @@ namespace Cargotruck.Server.Repositories
             }
         }
 
-        public async Task PutAsync(Expenses data)
+        public async System.Threading.Tasks.Task PutAsync(Expense data)
         {
             data.Total_amount = GetTotalAmount(data);
             _context.Entry(data).State = EntityState.Modified;
@@ -171,7 +171,7 @@ namespace Cargotruck.Server.Repositories
             await _context.SaveChangesAsync();
         }
 
-        private int? GetTotalAmount(Expenses data)
+        private int? GetTotalAmount(Expense data)
         {
             var totalAmount = (data.Fuel != null ? data.Fuel : 0) + (data.Road_fees != null ? data.Road_fees : 0) + (data.Penalty != null ? data.Penalty : 0) +
                 (data.Cost_of_storage != null ? data.Cost_of_storage : 0) + (data.Driver_salary != null ? data.Driver_salary : 0) +
@@ -255,7 +255,7 @@ namespace Cargotruck.Server.Repositories
             Font font1 = FontFactory.GetFont(FontFactory.TIMES_BOLD, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 12);
             Font font2 = FontFactory.GetFont(FontFactory.TIMES_ROMAN, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 10);
 
-            System.Type type = typeof(Expenses);
+            System.Type type = typeof(Expense);
             var column_number = (type.GetProperties().Length) / 2;
             var columnDefinitionSize = new float[column_number];
             for (int i = 0; i < column_number; i++) columnDefinitionSize[i] = 1F;
@@ -302,7 +302,7 @@ namespace Cargotruck.Server.Repositories
                     });
                 }
 
-                foreach (Expenses expense in expenses)
+                foreach (Expense expense in expenses)
                 {
                     var s = "";
                     if (!string.IsNullOrEmpty(expense.Id.ToString())) { s = expense.Id.ToString(); }
@@ -378,7 +378,7 @@ namespace Cargotruck.Server.Repositories
                 table2.HeaderRows = 1;
 
 
-                foreach (Expenses expense in expenses)
+                foreach (Expense expense in expenses)
                 {
                     var s = "";
                     if (!string.IsNullOrEmpty(expense.Id.ToString())) { s = expense.Id.ToString(); }
@@ -666,9 +666,9 @@ namespace Cargotruck.Server.Repositories
                                             if (lastId != null)
                                             {
                                                 var WithNewIds = await _context.Expenses.Where(x => x.Type == lastId.Type && x.Type_id == lastId.Type_id && x.Type != Type.other && x.Type != Type.salary).ToListAsync();
-                                                Roads? road = await _context.Roads.FirstOrDefaultAsync(x => x.Id == lastId.Type_id && lastId.Type == Type.repair);
-                                                Tasks? task = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == lastId.Type_id && lastId.Type == Type.task);
-                                                Cargoes? cargo = await _context.Cargoes.FirstOrDefaultAsync(x => x.Id == lastId.Type_id && lastId.Type == Type.storage);
+                                                Road? road = await _context.Roads.FirstOrDefaultAsync(x => x.Id == lastId.Type_id && lastId.Type == Type.repair);
+                                                Task? task = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == lastId.Type_id && lastId.Type == Type.task);
+                                                Cargo? cargo = await _context.Cargoes.FirstOrDefaultAsync(x => x.Id == lastId.Type_id && lastId.Type == Type.storage);
 
                                                 foreach (var item in WithNewIds)
                                                 {

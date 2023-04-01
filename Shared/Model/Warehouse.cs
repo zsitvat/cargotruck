@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
 
-namespace Cargotruck.Shared.Model.Dto
+namespace Cargotruck.Shared.Model
 {
-    public class WarehousesDto
+    public class Warehouse
     {
         [Required]
         [Key]

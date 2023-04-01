@@ -9,15 +9,15 @@
 @code {
     [Parameter] public int Id { get; set; }
     bool isValidSubmit = true;
-    ExpensesDto? expense = new ExpensesDto();
+    ExpenseDto? expense = new ExpenseDto();
 
-    protected async override Task OnParametersSetAsync()
+    protected async override System.Threading.Tasks.Task OnParametersSetAsync()
     {
-        expense = await http.GetFromJsonAsync<ExpensesDto>($"api/expenses/getById/{Id}");
+        expense = await http.GetFromJsonAsync<ExpenseDto>($"api/expenses/getById/{Id}");
         expense!.Type = null;
     }
 
-    async Task EditExpenseAsync()
+    async System.Threading.Tasks.Task EditExpenseAsync()
     {
         if (isValidSubmit)
         {

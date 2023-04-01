@@ -34,20 +34,20 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<WarehousesDto>>> GetAsync(int page, int pageSize, string sortOrder,
+        public async Task<ActionResult<List<WarehouseDto>>> GetAsync(int page, int pageSize, string sortOrder,
             bool desc, string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             return Ok(await _warehouseService.GetAsync(page, pageSize, sortOrder, desc, searchString, dateFilterStartDate, dateFilterEndDate));
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<WarehousesDto>> GetByIdAsync(int id)
+        public async Task<ActionResult<WarehouseDto>> GetByIdAsync(int id)
         {
             return Ok(await _warehouseService.GetByIdAsync(id));
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<WarehousesDto>>> GetWarehousesAsync()
+        public async Task<ActionResult<List<WarehouseDto>>> GetWarehousesAsync()
         {
             return Ok(await _warehouseService.GetWarehousesAsync());
         }
@@ -65,13 +65,13 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpPost]
-        public async Task PostAsync(WarehousesDto task)
+        public async Task PostAsync(WarehouseDto task)
         {
             await _warehouseService.PostAsync(task);
         }
 
         [HttpPut]
-        public async Task PutAsync(WarehousesDto task)
+        public async Task PutAsync(WarehouseDto task)
         {
             await _warehouseService.PutAsync(task);
         }

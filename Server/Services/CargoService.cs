@@ -18,22 +18,22 @@ namespace Cargotruck.Server.Services
             _cargoRepository = cargoRepository;
             _mapper = mapper;
         }
-        public async Task<List<CargoesDto>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        public async Task<List<CargoDto>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var tasks = await _cargoRepository.GetAsync(page, pageSize, sortOrder, desc, searchString, filter, dateFilterStartDate, dateFilterEndDate);
-            return _mapper.Map<List<CargoesDto>>(tasks);
+            return _mapper.Map<List<CargoDto>>(tasks);
         }
-        public async Task<List<CargoesDto>> GetCargoesAsync()
+        public async Task<List<CargoDto>> GetCargoesAsync()
         {
             var tasks = await _cargoRepository.GetCargoesAsync();
 
-            return _mapper.Map<List<CargoesDto>>(tasks);
+            return _mapper.Map<List<CargoDto>>(tasks);
         }
-        public async Task<CargoesDto?> GetByIdAsync(int id)
+        public async Task<CargoDto?> GetByIdAsync(int id)
         {
             var task = await _cargoRepository.GetByIdAsync(id);
 
-            return _mapper.Map<CargoesDto>(task);
+            return _mapper.Map<CargoDto>(task);
         }
         public async Task<int[]> GetChartDataAsync()
         {
@@ -47,13 +47,13 @@ namespace Cargotruck.Server.Services
         {
             return await _cargoRepository.CountAsync(all);
         }
-        public async Task PostAsync(CargoesDto task)
+        public async Task PostAsync(CargoDto task)
         {
-            await _cargoRepository.PostAsync(_mapper.Map<Cargoes>(task));
+            await _cargoRepository.PostAsync(_mapper.Map<Cargo>(task));
         }
-        public async Task PutAsync(CargoesDto task)
+        public async Task PutAsync(CargoDto task)
         {
-            await _cargoRepository.PutAsync(_mapper.Map<Cargoes>(task));
+            await _cargoRepository.PutAsync(_mapper.Map<Cargo>(task));
         }
         public async Task<bool> DeleteAsync(int id)
         {

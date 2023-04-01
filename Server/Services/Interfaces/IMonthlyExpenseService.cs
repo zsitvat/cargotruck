@@ -16,8 +16,8 @@ namespace Cargotruck.Server.Services.Interfaces
         Task PutAsync(Monthly_expensesDto data);
         Task<bool> DeleteAsync(int id);
         Task CheckDataAsync();
-        Task<List<Monthly_expenses_tasks_expensesDto>> GetConnectionIdsAsync();
-        Task PostConnectionIdsAsync(Monthly_expenses_tasks_expensesDto connectionIds, bool first);
+        Task<List<Monthly_expense_task_expenseDto>> GetConnectionIdsAsync();
+        Task PostConnectionIdsAsync(Monthly_expense_task_expenseDto connectionIds, bool first);
         Task CreateMonthsAsync();
         Task CreateConTableAsync();
         string ExportToExcel(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);

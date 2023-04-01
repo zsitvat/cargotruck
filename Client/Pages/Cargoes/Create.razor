@@ -6,10 +6,10 @@
 <Form ButtonText="Create" cargoes="@cargo" OnValidSubmit="@CreateCargoAsync" TitleText="Create_cargo" checkValidSubmit="@CheckValidSubmit" />
 
 @code {
-    CargoesDto cargo = new CargoesDto();
+    CargoDto cargo = new CargoDto();
     bool isValidSubmit = true;
 
-    async Task CreateCargoAsync()
+    async System.Threading.Tasks.Task CreateCargoAsync()
     {
         if (isValidSubmit)
         {

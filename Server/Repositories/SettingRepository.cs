@@ -25,24 +25,24 @@ namespace Cargotruck.Server.Repositories
             _context = context;
         }
   
-        public async Task<List<Settings>> GetAsync()
+        public async Task<List<Setting>> GetAsync()
         {
             return await _context.Settings.ToListAsync();
         }
 
-        public async Task<Settings?> GetAsync(int id)
+        public async Task<Setting?> GetAsync(int id)
         {
             return await _context.Settings.FirstOrDefaultAsync(a => a.Id == id);
         }
 
       
-        public async Task<Settings> GetWaitTimeAsync()
+        public async Task<Setting> GetWaitTimeAsync()
 {
             var waitTime = await _context.Settings.FirstOrDefaultAsync(x => x.SettingName == "CurrencyExchangeWaitTime");
 
             if (waitTime == null)
             {
-                waitTime = new Settings() { SettingName = "CurrencyExchangeWaitTime", SettingValue = "3600" };
+                waitTime = new Setting() { SettingName = "CurrencyExchangeWaitTime", SettingValue = "3600" };
                 _context.Settings.Add(waitTime);
                 await _context.SaveChangesAsync();
             }
@@ -50,13 +50,13 @@ namespace Cargotruck.Server.Repositories
             return waitTime;
         }
 
-        public async Task PostAsync(Settings data)
+        public async Task PostAsync(Setting data)
         {
             _context.Add(data);
             await _context.SaveChangesAsync();
         }
 
-        public async Task PutAsync(Settings data)
+        public async Task PutAsync(Setting data)
         {
             _context.Entry(data).State = EntityState.Modified;
             await _context.SaveChangesAsync();

@@ -6,13 +6,13 @@ namespace Cargotruck.Server.Services.Interfaces
 {
     public interface IExpenseService
     {
-        Task<List<ExpensesDto>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);
-        Task<List<ExpensesDto>> GetExpensesAsync();
-        Task<ExpensesDto?> GetByIdAsync(int id);
+        Task<List<ExpenseDto>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);
+        Task<List<ExpenseDto>> GetExpensesAsync();
+        Task<ExpenseDto?> GetByIdAsync(int id);
         Task<int> PageCountAsync(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);
         Task<int> CountAsync();
-        Task PostAsync(ExpensesDto data);
-        Task PutAsync(ExpensesDto data);
+        Task PostAsync(ExpenseDto data);
+        Task PutAsync(ExpenseDto data);
         Task<bool> DeleteAsync(int id);
         string ExportToExcel(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);
         Task<string> ExportToPdfAsync(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);

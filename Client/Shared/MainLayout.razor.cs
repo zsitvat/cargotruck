@@ -16,12 +16,12 @@ namespace Cargotruck.Client.Shared
         Task<AuthenticationState>? AuthenticationState { get; set; }
 
         static bool darkmode;
-        protected override async Task OnInitializedAsync()
+        protected override async System.Threading.Tasks.Task OnInitializedAsync()
         {
             await OnParametersSetAsync();
         }
 
-        protected override async Task OnParametersSetAsync()
+        protected override async System.Threading.Tasks.Task OnParametersSetAsync()
         {
             if (!(await AuthenticationState!).User.Identity!.IsAuthenticated)
             {
@@ -42,7 +42,7 @@ namespace Cargotruck.Client.Shared
             }
         }
 
-        async Task GetCurrencyRates()
+        async System.Threading.Tasks.Task GetCurrencyRates()
         {
             if ((await AuthenticationState!).User.Identity!.IsAuthenticated && currencyExchange.GetRates() == null && await currencyExchange.GetNextApiRequestDate(client) <= DateTime.Now)
             {
@@ -62,20 +62,20 @@ namespace Cargotruck.Client.Shared
         }
       
 
-        async Task GetDarkmodeAsync()
+        async System.Threading.Tasks.Task GetDarkmodeAsync()
         {
-            var settings = await client.GetFromJsonAsync<Settings[]>("api/settings/get");
+            var settings = await client.GetFromJsonAsync<Setting[]>("api/settings/get");
             var DarkModeSetting = (settings?.Where(x => x.SettingName == "darkmode" && x.SettingValue == (AuthenticationState!).Result.User.Identity?.Name));
             var darkModeFound = (DarkModeSetting?.Count() > 0 ? true : false);
             
             await sessionStorage.SetItemAsync("darkmode", darkModeFound);
         }
 
-        async Task ChangeDarkModeAsync()
+        async System.Threading.Tasks.Task ChangeDarkModeAsync()
         {
             if ((await AuthenticationState!).User.Identity!.IsAuthenticated)
             {
-                var settings = await client.GetFromJsonAsync<Settings[]>("api/settings/get");
+                var settings = await client.GetFromJsonAsync<Setting[]>("api/settings/get");
                 var darkModeSetting = (settings?.FirstOrDefault(x => x.SettingName == "darkmode" && x.SettingValue == (AuthenticationState!).Result.User.Identity?.Name));
                 
                 if (darkModeSetting != null)
@@ -86,7 +86,7 @@ namespace Cargotruck.Client.Shared
                 }
                 else
                 {
-                    SettingsDto setting = new()
+                    SettingDto setting = new()
                     {
                         SettingValue = (AuthenticationState!).Result.User.Identity?.Name,
                         SettingName = "darkmode"
@@ -103,7 +103,7 @@ namespace Cargotruck.Client.Shared
             await OnParametersSetAsync();
         }
 
-        async Task LogoutClick()
+        async System.Threading.Tasks.Task LogoutClick()
         {
             PageHistoryState.ResetPageToHistory();
             await authStateProvider.LogoutAsync();

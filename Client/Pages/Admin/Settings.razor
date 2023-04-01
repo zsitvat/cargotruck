@@ -82,30 +82,30 @@
     [Parameter] public  EventCallback  OnSettingsChanged { get; set; }
     [Parameter] public  EventCallback  OnSettingsClosed { get; set; }
     [Parameter] public EventCallback<int> OnInputChanged { get; set; }
-    Cargotruck.Shared.Model.Settings? waitTimeSetting;
+    Cargotruck.Shared.Model.Setting? waitTimeSetting;
 
-    protected override async Task OnInitializedAsync()
+    protected override async System.Threading.Tasks.Task OnInitializedAsync()
     {
-        waitTimeSetting = (await client.GetFromJsonAsync<Cargotruck.Shared.Model.Settings>("api/settings/getwaittime"));
+        waitTimeSetting = (await client.GetFromJsonAsync<Cargotruck.Shared.Model.Setting>("api/settings/getwaittime"));
     }
 
-    protected async Task SettingsChangedAsync()
+    protected async System.Threading.Tasks.Task SettingsChangedAsync()
     {
         await OnSettingsChanged.InvokeAsync();
     }
 
-    protected async Task SettingsClosedAsync()
+    protected async System.Threading.Tasks.Task SettingsClosedAsync()
     {
         await OnSettingsClosed.InvokeAsync();
     }
 
-    private async Task InputChangeAsync(ChangeEventArgs e)
+    private async System.Threading.Tasks.Task InputChangeAsync(ChangeEventArgs e)
     {
         pageSize = string.IsNullOrEmpty(e?.Value?.ToString()) ? pageSize : Int32.Parse(e.Value?.ToString()!);
         await OnInputChanged.InvokeAsync(pageSize);
     }
 
-    protected async Task SetWaitTimeAsync(ChangeEventArgs e)
+    protected async System.Threading.Tasks.Task SetWaitTimeAsync(ChangeEventArgs e)
     {
         if (waitTimeSetting != null)
         {

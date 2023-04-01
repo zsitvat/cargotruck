@@ -20,26 +20,26 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<TrucksDto>>> GetAsync(int page, int pageSize, string sortOrder,
+        public async Task<ActionResult<List<TruckDto>>> GetAsync(int page, int pageSize, string sortOrder,
             bool desc, string? searchString, Status? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             return Ok(await _truckService.GetAsync(page, pageSize, sortOrder, desc, searchString, filter, dateFilterStartDate, dateFilterEndDate));
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<TrucksDto>> GetByIdAsync(int id)
+        public async Task<ActionResult<TruckDto>> GetByIdAsync(int id)
         {
             return Ok(await _truckService.GetByIdAsync(id));
         }
 
         [HttpGet("{vehicle_registration_number}")]
-        public async Task<ActionResult<TrucksDto>> GetByVRNAsync(string vehicle_registration_number)
+        public async Task<ActionResult<TruckDto>> GetByVRNAsync(string vehicle_registration_number)
         {
             return Ok(await _truckService.GetByVRNAsync(vehicle_registration_number));
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<TrucksDto>>> GetTrucksAsync()
+        public async Task<ActionResult<List<TruckDto>>> GetTrucksAsync()
         {
             return Ok(await _truckService.GetTrucksAsync());
         }
@@ -57,13 +57,13 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpPost]
-        public async Task PostAsync(TrucksDto task)
+        public async Task PostAsync(TruckDto task)
         {
             await _truckService.PostAsync(task);
         }
 
         [HttpPut]
-        public async Task PutAsync(TrucksDto task)
+        public async Task PutAsync(TruckDto task)
         {
             await _truckService.PutAsync(task);
         }

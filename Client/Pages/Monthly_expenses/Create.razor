@@ -9,7 +9,7 @@
     List<int>? selectedTaskId;
     List<int>? selectedExpenseId;
     Monthly_expensesDto? monthly_expense = new Monthly_expensesDto();
-    Monthly_expenses_tasks_expensesDto? Monthly_expenses_tasks_expenses = new Monthly_expenses_tasks_expensesDto();
+    Monthly_expense_task_expenseDto? Monthly_expenses_tasks_expenses = new Monthly_expense_task_expenseDto();
 
     public void HandleChangeTask(List<int>? selected)
     {
@@ -21,7 +21,7 @@
         selectedExpenseId = selected;
     }
 
-    async Task CreateMonthlyExpenseAsync()
+    async System.Threading.Tasks.Task CreateMonthlyExpenseAsync()
     {
         if (monthly_expense != null)
         {
@@ -61,7 +61,7 @@
             {
                 Monthly_expenses_tasks_expenses.Expense_id = selectedExpenseId[i];
             }
-            //Monthly_expenses_tasks_expenses.Monthly_expenses = monthly_expense;
+            //Monthly_expense_task_expense.Monthly_expenses = monthly_expense;
             await http.PostAsJsonAsync($"api/monthlyexpenses/postconnectionids?first={IsFirstId}", Monthly_expenses_tasks_expenses);
         }
         uriHelper.NavigateTo("/Monthly_expenses");

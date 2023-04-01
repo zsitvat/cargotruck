@@ -48,11 +48,11 @@ namespace Cargotruck.Server.Services
         }
         public async Task PostAsync(Monthly_expensesDto task)
         {
-            await _monthlyExpenseRepository.PostAsync(_mapper.Map<Monthly_expenses>(task));
+            await _monthlyExpenseRepository.PostAsync(_mapper.Map<Monthly_expense>(task));
         }
         public async Task PutAsync(Monthly_expensesDto task)
         {
-            await _monthlyExpenseRepository.PutAsync(_mapper.Map<Monthly_expenses>(task));
+            await _monthlyExpenseRepository.PutAsync(_mapper.Map<Monthly_expense>(task));
         }
         public async Task<bool> DeleteAsync(int id)
         {
@@ -62,16 +62,16 @@ namespace Cargotruck.Server.Services
         {
             await _monthlyExpenseRepository.CheckDataAsync();
         }
-        public async Task<List<Monthly_expenses_tasks_expensesDto>> GetConnectionIdsAsync()
+        public async Task<List<Monthly_expense_task_expenseDto>> GetConnectionIdsAsync()
         {
             var monthlyExpensesConIds =  await _monthlyExpenseRepository.GetConnectionIdsAsync();
 
-            return _mapper.Map<List<Monthly_expenses_tasks_expensesDto>>(monthlyExpensesConIds);
+            return _mapper.Map<List<Monthly_expense_task_expenseDto>>(monthlyExpensesConIds);
         }
 
-        public async Task PostConnectionIdsAsync(Monthly_expenses_tasks_expensesDto connectionIds, bool first)
+        public async Task PostConnectionIdsAsync(Monthly_expense_task_expenseDto connectionIds, bool first)
         {
-            await _monthlyExpenseRepository.PostConnectionIdsAsync(_mapper.Map<Monthly_expenses_tasks_expenses>(connectionIds), first);
+            await _monthlyExpenseRepository.PostConnectionIdsAsync(_mapper.Map<Monthly_expense_task_expense>(connectionIds), first);
         }
         public async Task CreateMonthsAsync()
         {

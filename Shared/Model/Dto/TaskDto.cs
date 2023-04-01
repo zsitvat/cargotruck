@@ -2,9 +2,9 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Cargotruck.Shared.Model
+namespace Cargotruck.Shared.Model.Dto
 {
-    public class Tasks
+    public class TaskDto
     {
         [Required]
         public int Id { get; set; }

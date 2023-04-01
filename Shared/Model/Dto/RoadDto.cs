@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Cargotruck.Shared.Model.Dto
 {
-    public class RoadsDto
+    public class RoadDto
     {
         [Required]
         public int Id { get; set; }

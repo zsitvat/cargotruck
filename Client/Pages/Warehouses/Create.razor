@@ -6,10 +6,10 @@
 <Form ButtonText="Create" warehouses="@warehouse" OnValidSubmit="@CreateWarehouseAsync" TitleText="Create_warehouse"/>
 
 @code {
-    WarehousesDto warehouse = new WarehousesDto();
+    WarehouseDto warehouse = new WarehouseDto();
     bool isValidSubmit = true;
 
-    async Task CreateWarehouseAsync()
+    async System.Threading.Tasks.Task CreateWarehouseAsync()
     {
         if (isValidSubmit)
         {

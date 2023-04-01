@@ -31,7 +31,7 @@ namespace Cargotruck.Server.Repositories
             _errorHandler = errorHandler;
         }
 
-        private async Task<List<Cargoes>> GetDataAsync(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        private async Task<List<Cargo>> GetDataAsync(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var data = await _context.Cargoes.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
 
@@ -62,7 +62,7 @@ namespace Cargotruck.Server.Repositories
             return data;
         }
 
-        public async Task<List<Cargoes>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        public async Task<List<Cargo>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var data = await GetDataAsync(searchString, filter, dateFilterStartDate, dateFilterEndDate);
 
@@ -100,11 +100,11 @@ namespace Cargotruck.Server.Repositories
 
             return data.Skip((page - 1) * pageSize).Take(pageSize).ToList();
         }
-        public async Task<List<Cargoes>> GetCargoesAsync()
+        public async Task<List<Cargo>> GetCargoesAsync()
         {
             return await _context.Cargoes.ToListAsync();
         }
-        public async Task<Cargoes?> GetByIdAsync(int id)
+        public async Task<Cargo?> GetByIdAsync(int id)
         {
             return await _context.Cargoes.FirstOrDefaultAsync(a => a.Id == id);
         }
@@ -166,7 +166,7 @@ namespace Cargotruck.Server.Repositories
                 return count;
             }
         }
-        public async Task PostAsync(Cargoes data)
+        public async System.Threading.Tasks.Task PostAsync(Cargo data)
         {
             _context!.Add(data);
             await _context.SaveChangesAsync();
@@ -179,7 +179,7 @@ namespace Cargotruck.Server.Repositories
                 await _context.SaveChangesAsync();
             }
         }
-        public async Task PutAsync(Cargoes data)
+        public async System.Threading.Tasks.Task PutAsync(Cargo data)
         {
             _context.Entry(data).State = EntityState.Modified;
             var task = _context.Tasks.FirstOrDefault(a => a.Id == data.Task_id);
@@ -257,7 +257,7 @@ namespace Cargotruck.Server.Repositories
             Font font1 = FontFactory.GetFont(FontFactory.TIMES_BOLD, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 12);
             Font font2 = FontFactory.GetFont(FontFactory.TIMES_ROMAN, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 10);
 
-            System.Type type = typeof(Cargoes);
+            System.Type type = typeof(Cargo);
             var column_number = (type.GetProperties().Length) / 2;
             var columnDefinitionSize = new float[column_number];
             for (int i = 0; i < column_number; i++) columnDefinitionSize[i] = 1F;
@@ -303,7 +303,7 @@ namespace Cargotruck.Server.Repositories
                     });
                 }
 
-                foreach (Cargoes cargo in cargoes)
+                foreach (Cargo cargo in cargoes)
                 {
                     var s = "";
                     if (!string.IsNullOrEmpty(cargo.Id.ToString())) { s = cargo.Id.ToString(); }
@@ -376,7 +376,7 @@ namespace Cargotruck.Server.Repositories
                 table2.HeaderRows = 1;
 
 
-                foreach (Cargoes cargo in cargoes)
+                foreach (Cargo cargo in cargoes)
                 {
                     var s = "";
                     if (!string.IsNullOrEmpty(cargo.Id.ToString())) { s = cargo.Id.ToString(); }
@@ -616,9 +616,9 @@ namespace Cargotruck.Server.Repositories
                                             if (lastId != null)
                                             {
                                                 var WithNewIds = await _context.Cargoes.Where(x => x.Task_id == lastId.Task_id || x.Warehouse_id == lastId.Warehouse_id || x.Vehicle_registration_number == lastId.Vehicle_registration_number).ToListAsync();
-                                                Tasks? task = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == lastId.Task_id);
-                                                Warehouses? warehouse = await _context.Warehouses.FirstOrDefaultAsync(x => x.Id == lastId.Warehouse_id);
-                                                Trucks? truck = await _context.Trucks.FirstOrDefaultAsync(x => x.Vehicle_registration_number == lastId.Vehicle_registration_number);
+                                                Task? task = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == lastId.Task_id);
+                                                Warehouse? warehouse = await _context.Warehouses.FirstOrDefaultAsync(x => x.Id == lastId.Warehouse_id);
+                                                Truck? truck = await _context.Trucks.FirstOrDefaultAsync(x => x.Vehicle_registration_number == lastId.Vehicle_registration_number);
 
                                                 foreach (var item in WithNewIds)
                                                 {
@@ -670,7 +670,7 @@ namespace Cargotruck.Server.Repositories
                                                     {
                                                         error += "\n" + _localizer["Deleted_wrong_id"] + " " + lastId?.Id + ".";
 
-                                                        _context.Remove(new Cargoes() { Id = item!.Id });
+                                                        _context.Remove(new Cargo() { Id = item!.Id });
                                                         await _context?.SaveChangesAsync()!;
                                                         return error;
                                                     }

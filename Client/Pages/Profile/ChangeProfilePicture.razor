@@ -16,7 +16,7 @@
 
     protected override bool ShouldRender() => shouldRender;
 
-    private async Task OnInputFileChangeAsync(InputFileChangeEventArgs e)
+    private async System.Threading.Tasks.Task OnInputFileChangeAsync(InputFileChangeEventArgs e)
     {
         shouldRender = false;
         long maxFileSize = 1024 * 3000;

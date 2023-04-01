@@ -6,13 +6,13 @@ namespace Cargotruck.Server.Services.Interfaces
 {
     public interface IWarehouseService
     {
-        Task<List<WarehousesDto>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);
-        Task<List<WarehousesDto>> GetWarehousesAsync();
-        Task<WarehousesDto?> GetByIdAsync(int id);
+        Task<List<WarehouseDto>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);
+        Task<List<WarehouseDto>> GetWarehousesAsync();
+        Task<WarehouseDto?> GetByIdAsync(int id);
         Task<int> PageCountAsync(string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);
         Task<int> CountAsync();
-        Task PostAsync(WarehousesDto data);
-        Task PutAsync(WarehousesDto data);
+        Task PostAsync(WarehouseDto data);
+        Task PutAsync(WarehouseDto data);
         Task<bool> DeleteAsync(int id);
         string ExportToExcel(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);
         Task<string> ExportToPdfAsync(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);

@@ -31,7 +31,7 @@ namespace Cargotruck.Server.Repositories
             _errorHandler = errorHandler;
         }
 
-        private async Task<List<Warehouses>> GetDataAsync(string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        private async Task<List<Warehouse>> GetDataAsync(string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var data = await _context.Warehouses.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
 
@@ -47,7 +47,7 @@ namespace Cargotruck.Server.Repositories
             return data;
         }
 
-        public async Task<List<Warehouses>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        public async Task<List<Warehouse>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var data = await GetDataAsync(searchString, dateFilterStartDate, dateFilterEndDate);
 
@@ -68,12 +68,12 @@ namespace Cargotruck.Server.Repositories
             return data.Skip((page - 1) * pageSize).Take(pageSize).ToList();
         }
 
-        public async Task<Warehouses?> GetByIdAsync(int id)
+        public async Task<Warehouse?> GetByIdAsync(int id)
         {
             return await _context.Warehouses.FirstOrDefaultAsync(a => a.Id == id);
         }
 
-        public async Task<List<Warehouses>> GetWarehousesAsync()
+        public async Task<List<Warehouse>> GetWarehousesAsync()
         {
             return await _context.Warehouses.ToListAsync();
         }
@@ -89,13 +89,13 @@ namespace Cargotruck.Server.Repositories
             return data.Count;
         }
 
-        public async Task PostAsync(Warehouses data)
+        public async Task PostAsync(Warehouse data)
         {
             _context.Add(data);
             await _context.SaveChangesAsync();
         }
 
-        public async Task PutAsync(Warehouses data)
+        public async Task PutAsync(Warehouse data)
         {
             _context.Entry(data).State = EntityState.Modified;
             await _context.SaveChangesAsync();
@@ -142,7 +142,7 @@ namespace Cargotruck.Server.Repositories
                 worksheet.Cell(currentRow, 2).Value = warehouse.Address;
                 worksheet.Cell(currentRow, 3).Value = warehouse.Owner;
 
-                foreach (Cargoes cargo in cargoes)
+                foreach (Cargo cargo in cargoes)
                 {
                     if (cargo.Warehouse_id == warehouse.Id)
                     {
@@ -180,7 +180,7 @@ namespace Cargotruck.Server.Repositories
             Font font1 = FontFactory.GetFont(FontFactory.TIMES_BOLD, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 12);
             Font font2 = FontFactory.GetFont(FontFactory.TIMES_ROMAN, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 10);
 
-            System.Type type = typeof(Warehouses);
+            System.Type type = typeof(Warehouse);
             var column_number = (type.GetProperties().Length);
             var columnDefinitionSize = new float[column_number];
             for (int i = 0; i < column_number; i++) columnDefinitionSize[i] = 1F;
@@ -223,7 +223,7 @@ namespace Cargotruck.Server.Repositories
                     });
                 }
 
-                foreach (Warehouses warehouse in warehouses)
+                foreach (Warehouse warehouse in warehouses)
                 {
                     var s = "";
                     if (!string.IsNullOrEmpty(warehouse.Id.ToString())) { s = warehouse.Id.ToString(); }
@@ -250,7 +250,7 @@ namespace Cargotruck.Server.Repositories
                     s = "";
                     if (cargoes != null)
                     {
-                        foreach (Cargoes cargo in cargoes)
+                        foreach (Cargo cargo in cargoes)
                         {
                             if (cargo.Warehouse_id == warehouse.Id)
                             {
@@ -334,7 +334,7 @@ namespace Cargotruck.Server.Repositories
                 txt.Write((warehouse.Owner ?? ifNull) + separator);
                 if (cargoes.Any())
                 {
-                    foreach (Cargoes cargo in cargoes)
+                    foreach (Cargo cargo in cargoes)
                     {
                         if (cargo.Warehouse_id == warehouse.Id)
                         {

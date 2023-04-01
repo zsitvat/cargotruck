@@ -19,20 +19,20 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ExpensesDto>>> GetAsync(int page, int pageSize, string sortOrder,
+        public async Task<ActionResult<List<ExpenseDto>>> GetAsync(int page, int pageSize, string sortOrder,
             bool desc, string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             return Ok(await _expenseService.GetAsync(page, pageSize, sortOrder, desc, searchString, filter, dateFilterStartDate, dateFilterEndDate));
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ExpensesDto>> GetByIdAsync(int id)
+        public async Task<ActionResult<ExpenseDto>> GetByIdAsync(int id)
         {
             return Ok(await _expenseService.GetByIdAsync(id));
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ExpensesDto>>> GetExpensesAsync()
+        public async Task<ActionResult<List<ExpenseDto>>> GetExpensesAsync()
         {
             return Ok(await _expenseService.GetExpensesAsync());
         }
@@ -50,13 +50,13 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpPost]
-        public async Task PostAsync(ExpensesDto task)
+        public async Task PostAsync(ExpenseDto task)
         {
             await _expenseService.PostAsync(task);
         }
 
         [HttpPut]
-        public async Task PutAsync(ExpensesDto task)
+        public async Task PutAsync(ExpenseDto task)
         {
             await _expenseService.PutAsync(task);
         }

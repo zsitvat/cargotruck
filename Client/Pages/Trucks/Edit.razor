@@ -8,15 +8,15 @@
 
 @code {
     [Parameter] public int Id { get; set; }
-    TrucksDto? truck = new TrucksDto();
+    TruckDto? truck = new TruckDto();
     bool isValidSubmit = true;
 
-    protected async override Task OnParametersSetAsync()
+    protected async override System.Threading.Tasks.Task OnParametersSetAsync()
     {
-        truck = await http.GetFromJsonAsync<TrucksDto>($"api/trucks/getById/{Id}");
+        truck = await http.GetFromJsonAsync<TruckDto>($"api/trucks/getById/{Id}");
     }
 
-    async Task EditCargoAsync()
+    async System.Threading.Tasks.Task EditCargoAsync()
     {
         if (isValidSubmit)
         {

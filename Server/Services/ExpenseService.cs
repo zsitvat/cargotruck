@@ -17,22 +17,22 @@ namespace Cargotruck.Server.Services
             _expenseRepository = expenseRepository;
             _mapper = mapper;
         }
-        public async Task<List<ExpensesDto>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        public async Task<List<ExpenseDto>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var expenses = await _expenseRepository.GetAsync(page, pageSize, sortOrder, desc, searchString, filter, dateFilterStartDate, dateFilterEndDate);
-            return _mapper.Map<List<ExpensesDto>>(expenses);
+            return _mapper.Map<List<ExpenseDto>>(expenses);
         }
-        public async Task<List<ExpensesDto>> GetExpensesAsync()
+        public async Task<List<ExpenseDto>> GetExpensesAsync()
         {
             var expenses = await _expenseRepository.GetExpensesAsync();
 
-            return _mapper.Map<List<ExpensesDto>>(expenses);
+            return _mapper.Map<List<ExpenseDto>>(expenses);
         }
-        public async Task<ExpensesDto?> GetByIdAsync(int id)
+        public async Task<ExpenseDto?> GetByIdAsync(int id)
         {
             var expense = await _expenseRepository.GetByIdAsync(id);
 
-            return _mapper.Map<ExpensesDto>(expense);
+            return _mapper.Map<ExpenseDto>(expense);
         }
         public async Task<int> PageCountAsync(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
@@ -44,13 +44,13 @@ namespace Cargotruck.Server.Services
         {
             return await _expenseRepository.CountAsync();
         }
-        public async Task PostAsync(ExpensesDto expense)
+        public async Task PostAsync(ExpenseDto expense)
         {
-            await _expenseRepository.PostAsync(_mapper.Map<Expenses>(expense));
+            await _expenseRepository.PostAsync(_mapper.Map<Expense>(expense));
         }
-        public async Task PutAsync(ExpensesDto expense)
+        public async Task PutAsync(ExpenseDto expense)
         {
-            await _expenseRepository.PutAsync(_mapper.Map<Expenses>(expense));
+            await _expenseRepository.PutAsync(_mapper.Map<Expense>(expense));
         }
         public async Task<bool> DeleteAsync(int id)
         {

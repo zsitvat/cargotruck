@@ -2,7 +2,7 @@
 
 namespace Cargotruck.Shared.Model.Dto
 {
-    public class LoginsDto
+    public class LoginDto
     {
         [Required]
         public int Id { get; set; }

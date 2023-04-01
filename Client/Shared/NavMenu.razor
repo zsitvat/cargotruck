@@ -154,7 +154,7 @@
         collapseNavMenu = !collapseNavMenu;
     }
 
-    async Task LogoutClick()
+    async System.Threading.Tasks.Task LogoutClick()
     {
         await authStateProvider.LogoutAsync();
         navigationManager.NavigateTo("/login");

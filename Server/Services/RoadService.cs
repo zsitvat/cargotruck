@@ -18,22 +18,22 @@ namespace Cargotruck.Server.Services
             _roadRepository = roadRepository;
             _mapper = mapper;
         }
-        public async Task<List<RoadsDto>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        public async Task<List<RoadDto>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var roads = await _roadRepository.GetAsync(page, pageSize, sortOrder, desc, searchString, filter, dateFilterStartDate, dateFilterEndDate);
-            return _mapper.Map<List<RoadsDto>>(roads);
+            return _mapper.Map<List<RoadDto>>(roads);
         }
-        public async Task<List<RoadsDto>> GetRoadsAsync()
+        public async Task<List<RoadDto>> GetRoadsAsync()
         {
             var roads = await _roadRepository.GetRoadsAsync();
 
-            return _mapper.Map<List<RoadsDto>>(roads);
+            return _mapper.Map<List<RoadDto>>(roads);
         }
-        public async Task<RoadsDto?> GetByIdAsync(int id)
+        public async Task<RoadDto?> GetByIdAsync(int id)
         {
             var road = await _roadRepository.GetByIdAsync(id);
 
-            return _mapper.Map<RoadsDto>(road);
+            return _mapper.Map<RoadDto>(road);
         }
         public async Task<int[]> GetChartDataAsync()
         {
@@ -53,13 +53,13 @@ namespace Cargotruck.Server.Services
 
             return count;
         }
-        public async Task PostAsync(RoadsDto road)
+        public async Task PostAsync(RoadDto road)
         {
-            await _roadRepository.PostAsync(_mapper.Map<Roads>(road));
+            await _roadRepository.PostAsync(_mapper.Map<Road>(road));
         }
-        public async Task PutAsync(RoadsDto road)
+        public async Task PutAsync(RoadDto road)
         {
-            await _roadRepository.PutAsync(_mapper.Map<Roads>(road));
+            await _roadRepository.PutAsync(_mapper.Map<Road>(road));
         }
         public async Task<bool> DeleteAsync(int id)
         {

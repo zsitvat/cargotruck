@@ -30,7 +30,7 @@ namespace Cargotruck.Server.Repositories
             _localizer = localizer;
             _columnNameLists = columnNameLists;
         }
-        private async Task<List<Monthly_expenses>> GetDataAsync(string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        private async Task<List<Monthly_expense>> GetDataAsync(string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var data = await _context.Monthly_Expenses.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
 
@@ -45,7 +45,7 @@ namespace Cargotruck.Server.Repositories
 
             return data;
         }
-        public async Task<List<Monthly_expenses>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate) 
+        public async Task<List<Monthly_expense>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate) 
         {
             await CreateMonthsAsync(); // checks and create the monthly expenses data for the current month
             var data = await GetDataAsync(searchString, dateFilterStartDate, dateFilterEndDate);
@@ -72,11 +72,11 @@ namespace Cargotruck.Server.Repositories
 
             return data.Skip((page - 1) * pageSize).Take(pageSize).ToList();
         }
-        public async Task<List<Monthly_expenses>> GetMonthlyExpensesAsync()
+        public async Task<List<Monthly_expense>> GetMonthlyExpensesAsync()
         {
             return await _context.Monthly_Expenses.ToListAsync();
         }
-        public async Task<Monthly_expenses?> GetByIdAsync(int id)
+        public async Task<Monthly_expense?> GetByIdAsync(int id)
         {
             return await _context.Monthly_Expenses.FirstOrDefaultAsync(a => a.Monthly_expense_id == id);
         }
@@ -120,13 +120,13 @@ namespace Cargotruck.Server.Repositories
         {
             return await _context.Monthly_Expenses.CountAsync();
         }
-        public async Task PostAsync(Monthly_expenses data)
+        public async Task PostAsync(Monthly_expense data)
         {
             data.Profit = (data.Earning != null ? data.Earning : 0) - (data.Expense != null ? data.Expense : 0);
             _context?.Add(data);
             await _context!.SaveChangesAsync();
         }
-        public async Task PutAsync(Monthly_expenses data)
+        public async Task PutAsync(Monthly_expense data)
         {
             _context!.Entry(data).State = EntityState.Modified;
             await _context.SaveChangesAsync();
@@ -188,12 +188,12 @@ namespace Cargotruck.Server.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<Monthly_expenses_tasks_expenses>> GetConnectionIdsAsync()
+        public async Task<List<Monthly_expense_task_expense>> GetConnectionIdsAsync()
         {
             return await _context.Monthly_expenses_tasks_expenses.ToListAsync();
         }
 
-        public async Task PostConnectionIdsAsync(Monthly_expenses_tasks_expenses connectionIds, bool first)
+        public async Task PostConnectionIdsAsync(Monthly_expense_task_expense connectionIds, bool first)
         {
             if (first)
             {
@@ -206,9 +206,9 @@ namespace Cargotruck.Server.Repositories
         }
         public async Task CreateMonthsAsync()
         {
-            Monthly_expenses data = new();
+            Monthly_expense data = new();
             var currentDate = DateTime.Now;
-            Monthly_expenses? hasCurrentMonth = _context.Monthly_Expenses.Where(x => x.Date.Year == currentDate.Year && x.Date.Month == currentDate.Month && x.User_id == "Generated").FirstOrDefault();
+            Monthly_expense? hasCurrentMonth = _context.Monthly_Expenses.Where(x => x.Date.Year == currentDate.Year && x.Date.Month == currentDate.Month && x.User_id == "Generated").FirstOrDefault();
 
             if (hasCurrentMonth == null)
             {
@@ -237,7 +237,7 @@ namespace Cargotruck.Server.Repositories
 
                 for (int i = 0; i < lenght; ++i)
                 {
-                    Monthly_expenses_tasks_expenses connectionIds = new()
+                    Monthly_expense_task_expense connectionIds = new()
                     {
                         Monthly_expense_id = row.Monthly_expense_id
                     };
@@ -327,7 +327,7 @@ namespace Cargotruck.Server.Repositories
             Font font1 = FontFactory.GetFont(FontFactory.TIMES_BOLD, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 12);
             Font font2 = FontFactory.GetFont(FontFactory.TIMES_ROMAN, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 10);
 
-            System.Type type = typeof(Monthly_expenses);
+            System.Type type = typeof(Monthly_expense);
             var column_number = (type.GetProperties().Length) + 1;
             var columnDefinitionSize = new float[column_number];
             for (int i = 0; i < column_number; i++) columnDefinitionSize[i] = 1F;
@@ -371,7 +371,7 @@ namespace Cargotruck.Server.Repositories
                     });
                 }
 
-                foreach (Monthly_expenses monthly_expense in Monthly_Expenses)
+                foreach (Monthly_expense monthly_expense in Monthly_Expenses)
                 {
                     var s = "";
                     if (!string.IsNullOrEmpty(monthly_expense.Monthly_expense_id.ToString())) { s = monthly_expense.Monthly_expense_id.ToString(); }

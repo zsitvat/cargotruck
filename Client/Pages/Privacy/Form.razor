@@ -64,13 +64,13 @@
 
 
 @code {
-    [Parameter] public PrivaciesDto? privacies { get; set; }
+    [Parameter] public PrivacyDto? privacies { get; set; }
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public bool addNewWindow { get; set; }
     [Parameter] public EventCallback OnValidSubmit { get; set; }
     [Parameter] public EventCallback OnWindowClosed { get; set; }
 
-    protected async Task WindowClosedAsync()
+    protected async System.Threading.Tasks.Task WindowClosedAsync()
     {
         await OnWindowClosed.InvokeAsync();
     }

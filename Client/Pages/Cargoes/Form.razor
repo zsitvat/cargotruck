@@ -152,24 +152,24 @@
 
 
 @code {
-    [Parameter] public CargoesDto? cargoes { get; set; }
+    [Parameter] public CargoDto? cargoes { get; set; }
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public string TitleText { get; set; } = "";
     [Parameter] public EventCallback OnValidSubmit { get; set; }
     [Parameter] public EventCallback<bool> checkValidSubmit { get; set; }
     string error = "";
-    WarehousesDto[]? warehouses { get; set; }
-    List<TasksDto>? tasks { get; set; }
-    List<TrucksDto>? trucks { get; set; }
-    List<CargoesDto>? cargoWithIds { get; set; }
+    WarehouseDto[]? warehouses { get; set; }
+    List<TaskDto>? tasks { get; set; }
+    List<TruckDto>? trucks { get; set; }
+    List<CargoDto>? cargoWithIds { get; set; }
 
 
-    protected override async Task OnInitializedAsync()
+    protected override async System.Threading.Tasks.Task OnInitializedAsync()
     {
-        warehouses = await client.GetFromJsonAsync<WarehousesDto[]?>("api/warehouses/getwarehouses");
-        tasks = await client.GetFromJsonAsync < List<TasksDto>?>("api/tasks/gettasks");
-        trucks = await client.GetFromJsonAsync<List<TrucksDto>?>("api/trucks/gettrucks");
-        cargoWithIds = await client.GetFromJsonAsync<List<CargoesDto>>("api/cargoes/getcargoes");
+        warehouses = await client.GetFromJsonAsync<WarehouseDto[]?>("api/warehouses/getwarehouses");
+        tasks = await client.GetFromJsonAsync < List<TaskDto>?>("api/tasks/gettasks");
+        trucks = await client.GetFromJsonAsync<List<TruckDto>?>("api/trucks/gettrucks");
+        cargoWithIds = await client.GetFromJsonAsync<List<CargoDto>>("api/cargoes/getcargoes");
 
         foreach (var cargo in cargoWithIds!)
         {

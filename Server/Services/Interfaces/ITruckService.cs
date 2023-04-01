@@ -7,14 +7,14 @@ namespace Cargotruck.Server.Services.Interfaces
 {
     public interface ITruckService
     {
-        Task<List<TrucksDto>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, Status? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);
-        Task<List<TrucksDto>> GetTrucksAsync();
-        Task<TrucksDto?> GetByIdAsync(int id);
-        Task<TrucksDto> GetByVRNAsync(string vehicle_registration_number);
+        Task<List<TruckDto>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, Status? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);
+        Task<List<TruckDto>> GetTrucksAsync();
+        Task<TruckDto?> GetByIdAsync(int id);
+        Task<TruckDto> GetByVRNAsync(string vehicle_registration_number);
         Task<int> PageCountAsync(string? searchString, Status? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);
         Task<int> CountAsync(bool all);
-        Task PostAsync(TrucksDto data);
-        Task PutAsync(TrucksDto data);
+        Task PostAsync(TruckDto data);
+        Task PutAsync(TruckDto data);
         Task<bool> DeleteAsync(int id);
         string ExportToExcel(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);
         Task<string> ExportToPdfAsync(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);

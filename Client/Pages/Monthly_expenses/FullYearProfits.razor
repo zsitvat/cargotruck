@@ -85,7 +85,7 @@
         public long? profit;
     }
 
-    protected override async Task OnInitializedAsync()
+    protected override async System.Threading.Tasks.Task OnInitializedAsync()
     {
         Monthly_expenses = await client.GetFromJsonAsync<Monthly_expensesDto[]?>("api/Monthlyexpenses/getmonthlyexpenses");
 

@@ -5,11 +5,11 @@ namespace Cargotruck.Server.Repositories.Interfaces
 {
     public interface ISettingRepository
     {
-        Task<List<Settings>> GetAsync();
-        Task<Settings?> GetAsync(int id);
-        Task<Settings> GetWaitTimeAsync();
-        Task PostAsync(Settings data);
-        Task PutAsync(Settings data);
+        Task<List<Setting>> GetAsync();
+        Task<Setting?> GetAsync(int id);
+        Task<Setting> GetWaitTimeAsync();
+        Task PostAsync(Setting data);
+        Task PutAsync(Setting data);
         Task<bool> DeleteAsync(int id);
     }
 }

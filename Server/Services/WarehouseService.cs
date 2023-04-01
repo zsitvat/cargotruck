@@ -17,22 +17,22 @@ namespace Cargotruck.Server.Services
             _warehouseRepository = warehouseRepository;
             _mapper = mapper;
         }
-        public async Task<List<WarehousesDto>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        public async Task<List<WarehouseDto>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var warehouses = await _warehouseRepository.GetAsync(page, pageSize, sortOrder, desc, searchString, dateFilterStartDate, dateFilterEndDate);
-            return _mapper.Map<List<WarehousesDto>>(warehouses);
+            return _mapper.Map<List<WarehouseDto>>(warehouses);
         }
-        public async Task<List<WarehousesDto>> GetWarehousesAsync()
+        public async Task<List<WarehouseDto>> GetWarehousesAsync()
         {
             var warehouses = await _warehouseRepository.GetWarehousesAsync();
 
-            return _mapper.Map<List<WarehousesDto>>(warehouses);
+            return _mapper.Map<List<WarehouseDto>>(warehouses);
         }
-        public async Task<WarehousesDto?> GetByIdAsync(int id)
+        public async Task<WarehouseDto?> GetByIdAsync(int id)
         {
             var warehouse = await _warehouseRepository.GetByIdAsync(id);
 
-            return _mapper.Map<WarehousesDto>(warehouse);
+            return _mapper.Map<WarehouseDto>(warehouse);
         }
         public async Task<int> PageCountAsync(string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
@@ -46,13 +46,13 @@ namespace Cargotruck.Server.Services
 
             return count;
         }
-        public async Task PostAsync(WarehousesDto warehouse)
+        public async Task PostAsync(WarehouseDto warehouse)
         {
-            await _warehouseRepository.PostAsync(_mapper.Map<Warehouses>(warehouse));
+            await _warehouseRepository.PostAsync(_mapper.Map<Warehouse>(warehouse));
         }
-        public async Task PutAsync(WarehousesDto warehouse)
+        public async Task PutAsync(WarehouseDto warehouse)
         {
-            await _warehouseRepository.PutAsync(_mapper.Map<Warehouses>(warehouse));
+            await _warehouseRepository.PutAsync(_mapper.Map<Warehouse>(warehouse));
         }
         public async Task<bool> DeleteAsync(int id)
         {

@@ -22,31 +22,31 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<SettingsDto>>> GetAsync()
+        public async Task<ActionResult<List<SettingDto>>> GetAsync()
         {
             return Ok(await _settingService.GetAsync());
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<SettingsDto>> GetAsync(int id)
+        public async Task<ActionResult<SettingDto>> GetAsync(int id)
         {
             return Ok(await _settingService.GetAsync(id));
         }
 
         [HttpGet]
-        public async Task<ActionResult<SettingsDto>> GetWaitTimeAsync()
+        public async Task<ActionResult<SettingDto>> GetWaitTimeAsync()
         {
             return Ok(await _settingService.GetWaitTimeAsync());
         }
 
         [HttpPost]
-        public async Task PostAsync(SettingsDto data)
+        public async Task PostAsync(SettingDto data)
         {
             await _settingService.PostAsync(data);
         }
 
         [HttpPut]
-        public async Task PutAsync(SettingsDto data)
+        public async Task PutAsync(SettingDto data)
         {
             await _settingService.PostAsync(data);
         }

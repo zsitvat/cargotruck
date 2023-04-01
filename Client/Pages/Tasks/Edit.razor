@@ -8,14 +8,14 @@
 @code {
     [Parameter] public int Id { get; set; }
     bool isValidSubmit = true;
-    TasksDto? task = new TasksDto();
+    TaskDto? task = new TaskDto();
 
-    protected async override Task OnParametersSetAsync()
+    protected async override System.Threading.Tasks.Task OnParametersSetAsync()
     {
-        task = await http.GetFromJsonAsync<TasksDto>($"api/tasks/getById/{Id}");
+        task = await http.GetFromJsonAsync<TaskDto>($"api/tasks/getById/{Id}");
     }
 
-    async Task EditTasksAsync()
+    async System.Threading.Tasks.Task EditTasksAsync()
     {
         if (isValidSubmit)
         {

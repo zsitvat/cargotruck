@@ -10,7 +10,7 @@ namespace Cargotruck.Client.Pages.Cargoes
     {
         public bool settings = false;
         bool expandExportMenu;
-        CargoesDto[]? Cargoes { get; set; }
+        CargoDto[]? Cargoes { get; set; }
         string? IdForGetById { get; set; }
         string? GetByIdType { get; set; }
         readonly List<bool> showColumns = Enumerable.Repeat(true, 9).ToList();
@@ -36,7 +36,7 @@ namespace Cargotruck.Client.Pages.Cargoes
             pageSize = Page.GetPageSize(pageSize, dataRows);
             maxPage = Page.GetMaxPage(pageSize, dataRows);
 
-            Cargoes = await client.GetFromJsonAsync<CargoesDto[]>($"api/cargoes/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
+            Cargoes = await client.GetFromJsonAsync<CargoDto[]>($"api/cargoes/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
             StateHasChanged();
         }
 

@@ -6,10 +6,10 @@
 <Form ButtonText="Create" expenses="@expense" OnValidSubmit="@CreateExpenseAsync" TitleText="Create_expense" checkValidSubmit="@CheckValidSubmit" />
 
 @code {
-    ExpensesDto expense = new ExpensesDto();
+    ExpenseDto expense = new ExpenseDto();
     bool isValidSubmit = true;
 
-    async Task CreateExpenseAsync()
+    async System.Threading.Tasks.Task CreateExpenseAsync()
     {
         if (isValidSubmit)
         {

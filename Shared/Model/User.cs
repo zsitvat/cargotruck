@@ -2,7 +2,7 @@
 
 namespace Cargotruck.Server.Models
 {
-    public class Users : IdentityUser
+    public class User : IdentityUser
     {
     }
 

@@ -6,14 +6,14 @@ namespace Cargotruck.Server.Repositories.Interfaces
 {
     public interface ICargoRepository
     {
-        Task<List<Cargoes>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);
-        Task<List<Cargoes>> GetCargoesAsync();
-        Task<Cargoes?> GetByIdAsync(int id);
+        Task<List<Cargo>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);
+        Task<List<Cargo>> GetCargoesAsync();
+        Task<Cargo?> GetByIdAsync(int id);
         Task<int[]> GetChartDataAsync();
         Task<int> PageCountAsync(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);
         Task<int> CountAsync(bool all);
-        Task PostAsync(Cargoes data);
-        Task PutAsync(Cargoes data);
+        Task PostAsync(Cargo data);
+        Task PutAsync(Cargo data);
         Task<bool> DeleteAsync(int id);
         string ExportToExcel(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);
         Task<string> ExportToPdfAsync(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);

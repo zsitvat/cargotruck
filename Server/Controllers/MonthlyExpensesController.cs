@@ -80,13 +80,13 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<List<Monthly_expenses_tasks_expensesDto>> GetConnectionIdsAsync()
+        public async Task<List<Monthly_expense_task_expenseDto>> GetConnectionIdsAsync()
         {
             return await _monthlyExpenseService.GetConnectionIdsAsync();
         }
 
         [HttpPost]
-        public async Task PostConnectionIdsAsync(Monthly_expenses_tasks_expensesDto connectionIds, bool first)
+        public async Task PostConnectionIdsAsync(Monthly_expense_task_expenseDto connectionIds, bool first)
         {
             await _monthlyExpenseService.PostConnectionIdsAsync(connectionIds, first);
         }

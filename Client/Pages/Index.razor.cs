@@ -88,7 +88,7 @@ namespace Cargotruck.Client.Pages
                 null
             }
         };
-        protected override async Task OnInitializedAsync()
+        protected override async System.Threading.Tasks.Task OnInitializedAsync()
         {
             if ((await AuthenticationState!).User.Identity!.IsAuthenticated)
             {
@@ -109,7 +109,7 @@ namespace Cargotruck.Client.Pages
             }
         }
 
-        protected async Task GetNumbersAsync()
+        protected async System.Threading.Tasks.Task GetNumbersAsync()
         {
             Dictionary<string, int?> numbersDic = new Dictionary<string, int?>()
             {
@@ -157,7 +157,7 @@ namespace Cargotruck.Client.Pages
             await GetNumbersCounterAsync(numbersDic);
         }
 
-        protected async Task GetNumbersCounterAsync(Dictionary<string, int?> MaxNumbers)
+        protected async System.Threading.Tasks.Task GetNumbersCounterAsync(Dictionary<string, int?> MaxNumbers)
         {
             int max = 0;
             foreach (var num in MaxNumbers)
@@ -210,7 +210,7 @@ namespace Cargotruck.Client.Pages
                     counts["numberOfUsers"] = i;
                 }
 
-                await Task.Delay(25);
+                await System.Threading.Tasks.Task.Delay(25);
                 StateHasChanged();
             }
         }

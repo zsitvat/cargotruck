@@ -10,8 +10,8 @@ namespace Cargotruck.Client.Pages.Warehouses
     {
         public bool settings = false;
         bool expandExportMenu;
-        WarehousesDto[]? Warehouses { get; set; }
-        CargoesDto[]? Cargoes { get; set; }
+        WarehouseDto[]? Warehouses { get; set; }
+        CargoDto[]? Cargoes { get; set; }
         int? IdForGetById { get; set; }
         string? GetByIdType { get; set; }
         readonly List<bool> showColumns = Enumerable.Repeat(true, 4).ToList();
@@ -28,7 +28,7 @@ namespace Cargotruck.Client.Pages.Warehouses
         {
             PageHistoryState.AddPageToHistory("/Warehouses");
             dataRows = await client.GetFromJsonAsync<int>($"api/warehouses/pagecount?searchString={searchString}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
-            Cargoes = await client.GetFromJsonAsync<CargoesDto[]?>("api/cargoes/getcargoes");
+            Cargoes = await client.GetFromJsonAsync<CargoDto[]?>("api/cargoes/getcargoes");
             await ShowPageAsync();
         }
 
@@ -37,7 +37,7 @@ namespace Cargotruck.Client.Pages.Warehouses
             pageSize = Page.GetPageSize(pageSize, dataRows);
             maxPage = Page.GetMaxPage(pageSize, dataRows);
 
-            Warehouses = await client.GetFromJsonAsync<WarehousesDto[]>($"api/warehouses/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
+            Warehouses = await client.GetFromJsonAsync<WarehouseDto[]>($"api/warehouses/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
             StateHasChanged();
         }
         async Task DeleteAsync(int Id)

@@ -12,7 +12,7 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
         bool expandExportMenu;
         public bool fullYearProfitWindow = true;
         Monthly_expensesDto[]? Monthly_expenses { get; set; }
-        Monthly_expenses_tasks_expensesDto[]? Connection_ids { get; set; }
+        Monthly_expense_task_expenseDto[]? Connection_ids { get; set; }
         int? IdForGetById { get; set; }
         string? GetByIdType { get; set; }
         readonly List<bool> showColumns = Enumerable.Repeat(true, 6).ToList();
@@ -34,7 +34,7 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
             await client.PostAsync("api/monthlyexpenses/createcontable", null);
             dataRows = await client.GetFromJsonAsync<int>($"api/monthlyexpenses/pagecount?searchString={searchString}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
             var checkData = await client.PostAsync("api/monthlyexpenses/checkdata", null);
-            Connection_ids = await client.GetFromJsonAsync<Monthly_expenses_tasks_expensesDto[]?>("api/monthlyexpenses/getconnectionids");
+            Connection_ids = await client.GetFromJsonAsync<Monthly_expense_task_expenseDto[]?>("api/monthlyexpenses/getconnectionids");
 
             if (checkData.IsSuccessStatusCode)
             {

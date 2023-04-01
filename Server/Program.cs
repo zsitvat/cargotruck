@@ -50,30 +50,30 @@ builder.Services.AddAutoMapper(typeof(Program));
 var configuration = new MapperConfiguration(cfg =>
 {
     //Entity to  Dto
-    cfg.CreateMap<Cargoes, CargoesDto>();
-    cfg.CreateMap<Expenses, ExpensesDto>();
-    cfg.CreateMap<Logins, LoginsDto>();
-    cfg.CreateMap<Monthly_expenses, Monthly_expensesDto>();
-    cfg.CreateMap<Monthly_expenses_tasks_expenses, Monthly_expenses_tasks_expensesDto>();
-    cfg.CreateMap<Privacies, PrivaciesDto>();
-    cfg.CreateMap<Roads, RoadsDto>();
-    cfg.CreateMap<Settings, SettingsDto>();
-    cfg.CreateMap<Tasks, TasksDto>();
-    cfg.CreateMap<Trucks, TrucksDto>();
-    cfg.CreateMap<Warehouses, WarehousesDto>();
+    cfg.CreateMap<Cargo, CargoDto>();
+    cfg.CreateMap<Expense, ExpenseDto>();
+    cfg.CreateMap<Login, LoginDto>();
+    cfg.CreateMap<Monthly_expense, Monthly_expensesDto>();
+    cfg.CreateMap<Monthly_expense_task_expense, Monthly_expense_task_expenseDto>();
+    cfg.CreateMap<Privacies, PrivacyDto>();
+    cfg.CreateMap<Road, RoadDto>();
+    cfg.CreateMap<Setting, SettingDto>();
+    cfg.CreateMap<Cargotruck.Shared.Model.Task, TaskDto>();
+    cfg.CreateMap<Truck, TruckDto>();
+    cfg.CreateMap<Warehouse, WarehouseDto>();
 
     //Dto to entity
-    cfg.CreateMap<CargoesDto, Cargoes>();
-    cfg.CreateMap<ExpensesDto, Expenses>();
-    cfg.CreateMap<LoginsDto, Logins>();
-    cfg.CreateMap<Monthly_expensesDto, Monthly_expenses>();
-    cfg.CreateMap<Monthly_expenses_tasks_expensesDto, Monthly_expenses_tasks_expenses>();
-    cfg.CreateMap<PrivaciesDto, Privacies>();
-    cfg.CreateMap<RoadsDto, Roads>();
-    cfg.CreateMap<SettingsDto, Settings>();
-    cfg.CreateMap<TasksDto, Tasks>();
-    cfg.CreateMap<TrucksDto, Trucks>();
-    cfg.CreateMap<WarehousesDto, Warehouses>();
+    cfg.CreateMap<CargoDto, Cargo>();
+    cfg.CreateMap<ExpenseDto, Expense>();
+    cfg.CreateMap<LoginDto, Login>();
+    cfg.CreateMap<Monthly_expensesDto, Monthly_expense>();
+    cfg.CreateMap<Monthly_expense_task_expenseDto, Monthly_expense_task_expense>();
+    cfg.CreateMap<PrivacyDto, Privacies>();
+    cfg.CreateMap<RoadDto, Road>();
+    cfg.CreateMap<SettingDto, Setting>();
+    cfg.CreateMap<TaskDto, Cargotruck.Shared.Model.Task>();
+    cfg.CreateMap<TruckDto, Truck>();
+    cfg.CreateMap<WarehouseDto, Warehouse>();
 });
 var mapper = configuration.CreateMapper();
 builder.Services.AddSingleton(mapper);
@@ -85,7 +85,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 //localization service
 builder.Services.AddLocalization();
 
-builder.Services.AddIdentity<Users, IdentityRole>(options => 
+builder.Services.AddIdentity<User, IdentityRole>(options => 
     options.SignIn.RequireConfirmedPhoneNumber = false).AddEntityFrameworkStores<ApplicationDbContext>();
 
 //Services
@@ -125,7 +125,7 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.Events.OnRedirectToLogin = context =>
     {
         context.Response.StatusCode = 401;
-        return Task.CompletedTask;
+        return System.Threading.Tasks.Task.CompletedTask;
     };
 });
 

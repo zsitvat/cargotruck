@@ -11,7 +11,7 @@ namespace Cargotruck.Client.Pages.Trucks
     {
         public bool settings = false;
         bool expandExportMenu;
-        TrucksDto[]? Trucks { get; set; }
+        TruckDto[]? Trucks { get; set; }
         int? IdForGetById { get; set; }
         string? GetByIdType { get; set; }
 
@@ -26,7 +26,7 @@ namespace Cargotruck.Client.Pages.Trucks
         Status? filter;
         readonly DateFilter? dateFilter = new();
 
-        protected override async Task OnInitializedAsync()
+        protected override async System.Threading.Tasks.Task OnInitializedAsync()
         {
             PageHistoryState.AddPageToHistory("/Trucks");
             base.OnInitialized();
@@ -34,16 +34,16 @@ namespace Cargotruck.Client.Pages.Trucks
             await ShowPageAsync();
         }
 
-        protected async Task ShowPageAsync()
+        protected async System.Threading.Tasks.Task ShowPageAsync()
         {
             pageSize = Page.GetPageSize(pageSize, dataRows);
             maxPage = Page.GetMaxPage(pageSize, dataRows);
 
-            Trucks = await client.GetFromJsonAsync<TrucksDto[]>($"api/trucks/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
+            Trucks = await client.GetFromJsonAsync<TruckDto[]>($"api/trucks/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
             StateHasChanged();
         }
 
-        async Task DeleteAsync(int Id)
+        async System.Threading.Tasks.Task DeleteAsync(int Id)
         {
             var data = Trucks?.First(x => x.Id == Id);
             if (await js.InvokeAsync<bool>("confirm", $"{@localizer["DeleteAsync?"]} {data?.Vehicle_registration_number} - {data?.Status} ({data?.Id})"))
@@ -122,13 +122,13 @@ namespace Cargotruck.Client.Pages.Trucks
             await ShowPageAsync();
         }
 
-        protected async Task SearchAsync(ChangeEventArgs args)
+        protected async System.Threading.Tasks.Task SearchAsync(ChangeEventArgs args)
         {
             searchString = args.Value?.ToString();
             await ShowPageAsync();
         }
 
-        protected async Task GetCurrentPageAsync(int CurrentPage)
+        protected async System.Threading.Tasks.Task GetCurrentPageAsync(int CurrentPage)
         {
             currentPage = CurrentPage;
             await ShowPageAsync();

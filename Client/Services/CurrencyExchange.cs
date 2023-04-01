@@ -24,7 +24,7 @@ namespace Cargotruck.Client.Services
             };
 
             /*	ExchangeApiKey	XwSDWGpGqDKu8ZIbOl56Kne74V14oEpC */
-            var settings = await client!.GetFromJsonAsync<Settings[]>("api/settings/get");
+            var settings = await client!.GetFromJsonAsync<Setting[]>("api/settings/get");
             var key = settings?.FirstOrDefault(x => x.SettingName == "ExchangeApiKey");
 
             if (key != null)
@@ -88,7 +88,7 @@ namespace Cargotruck.Client.Services
 
         public async Task<int> GetWaitTimeAsync(HttpClient client)
         {
-            var getWaitTimeSetting = await client?.GetFromJsonAsync<SettingsDto>("api/settings/getwaittime")!;
+            var getWaitTimeSetting = await client?.GetFromJsonAsync<SettingDto>("api/settings/getwaittime")!;
             return getWaitTimeSetting != null ? int.Parse(getWaitTimeSetting?.SettingValue!) : 0;
         }
 
