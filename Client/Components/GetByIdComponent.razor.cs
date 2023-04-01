@@ -9,7 +9,7 @@ namespace Cargotruck.Client.Components
     public partial class GetByIdComponent
     {   
         Cargo? idDataCargo;
-        TaskDto? idDataTask;
+        DeliveryTaskDto? idDataTask;
         Expense? idDataExpense;
         Road? idDataRoad;
         Warehouse? idDataWarehouse;
@@ -20,17 +20,17 @@ namespace Cargotruck.Client.Components
         private string? _previousId;
         private string? _previousIdType;
 
-        protected override async System.Threading.Tasks.Task OnParametersSetAsync()
+        protected override async Task OnParametersSetAsync()
         {
             await GetDataByIdAndType();
         }
 
-        protected async System.Threading.Tasks.Task SetToNullAsync()
+        protected async Task SetToNullAsync()
         {
             await OnSetToNull.InvokeAsync();
         }
 
-        protected async System.Threading.Tasks.Task GetDataByIdAndType() 
+        protected async Task GetDataByIdAndType() 
         {
             if (GetById != null && ( GetById != _previousId || GetByIdType != _previousIdType))
             {
@@ -42,7 +42,7 @@ namespace Cargotruck.Client.Components
                 }
                 else if (GetByIdType == "task")
                 {
-                    idDataTask = await client.GetFromJsonAsync<TaskDto?>($"api/tasks/getbyid/{GetById}");
+                    idDataTask = await client.GetFromJsonAsync<DeliveryTaskDto?>($"api/tasks/getbyid/{GetById}");
                 }
                 else if (GetByIdType == "expense")
                 {

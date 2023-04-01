@@ -19,12 +19,12 @@ namespace Cargotruck.Client.Components
         private BarConfig? _config2;
         private LineConfig? _config3;
         private LineConfig? _config4;
-        protected override async System.Threading.Tasks.Task OnInitializedAsync()
+        protected override async Task OnInitializedAsync()
         {
             await CreateChartsAsync();
         }
 
-        protected async System.Threading.Tasks.Task CreateChartsAsync()
+        protected async Task CreateChartsAsync()
         {
             await TasksChartAsync();
             await CargoesChartAsync();
@@ -32,7 +32,7 @@ namespace Cargotruck.Client.Components
             await ExpensesChartAsync();
         }
 
-        protected async System.Threading.Tasks.Task TasksChartAsync()
+        protected async Task TasksChartAsync()
         {
             //Tasks
             _config1 = new BarConfig
@@ -128,7 +128,7 @@ namespace Cargotruck.Client.Components
             }
         }
 
-        protected async System.Threading.Tasks.Task CargoesChartAsync()
+        protected async Task CargoesChartAsync()
         {
             //Tasks
             _config2 = new BarConfig
@@ -245,7 +245,7 @@ namespace Cargotruck.Client.Components
             }
         }
 
-        protected async System.Threading.Tasks.Task TrucksChartAsync()
+        protected async Task TrucksChartAsync()
         {
             //Tasks
             _config3 = new LineConfig
@@ -354,7 +354,7 @@ namespace Cargotruck.Client.Components
             }
         }
 
-        protected async System.Threading.Tasks.Task ExpensesChartAsync()
+        protected async Task ExpensesChartAsync()
         {
             //Tasks
             _config4 = new LineConfig
@@ -416,7 +416,7 @@ namespace Cargotruck.Client.Components
             await GetExpenseChartData();
         }
 
-        private async System.Threading.Tasks.Task GetExpenseChartData()
+        private async Task GetExpenseChartData()
         {
             var columnHeights = await client.GetFromJsonAsync<float?[]>("api/monthlyexpenses/getchartdata");
 

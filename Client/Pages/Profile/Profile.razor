@@ -80,7 +80,7 @@
 
     CurrentUser? user;
 
-    protected override async System.Threading.Tasks.Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
          user = await authStateProvider.GetCurrentUserAsync();
 

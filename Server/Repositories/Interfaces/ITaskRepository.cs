@@ -6,15 +6,15 @@ namespace Cargotruck.Server.Repositories.Interfaces
 {
     public interface ITaskRepository
     {
-        Task<List<Task>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);
-        Task<List<Task>> GetTasksAsync();
-        Task<Task?> GetByIdAsync(int id);
+        Task<List<DeliveryTask>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);
+        Task<List<DeliveryTask>> GetTasksAsync();
+        Task<DeliveryTask?> GetByIdAsync(int id);
         Task<int[]> GetChartDataAsync();
         Task<int> PageCountAsync(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);
         Task<int> CountAsync(bool all);
-        System.Threading.Tasks.Task ChangeCompletionAsync(Shared.Model.Task t);
-        System.Threading.Tasks.Task PostAsync(Shared.Model.Task t);
-        System.Threading.Tasks.Task PutAsync(Shared.Model.Task t);
+        Task ChangeCompletionAsync(DeliveryTask t);
+        Task PostAsync(DeliveryTask t);
+        Task PutAsync(DeliveryTask t);
         Task<bool> DeleteAsync(int id);
         string ExportToExcel(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);
         Task<string> ExportToPdfAsync(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);

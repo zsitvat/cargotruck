@@ -21,7 +21,7 @@
         selectedExpenseId = selected;
     }
 
-    async System.Threading.Tasks.Task CreateMonthlyExpenseAsync()
+    async Task CreateMonthlyExpenseAsync()
     {
         if (monthly_expense != null)
         {
@@ -61,7 +61,7 @@
             {
                 Monthly_expenses_tasks_expenses.Expense_id = selectedExpenseId[i];
             }
-            //Monthly_expense_task_expense.Monthly_expenses = monthly_expense;
+            //MonthlyExpense_task_expense.Monthly_expenses = monthly_expense;
             await http.PostAsJsonAsync($"api/monthlyexpenses/postconnectionids?first={IsFirstId}", Monthly_expenses_tasks_expenses);
         }
         uriHelper.NavigateTo("/Monthly_expenses");

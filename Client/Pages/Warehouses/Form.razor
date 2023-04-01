@@ -54,7 +54,7 @@
     [Parameter] public EventCallback OnValidSubmit { get; set; }
     CargoDto[]? cargoes { get; set; }
 
-    protected override async System.Threading.Tasks.Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
         cargoes = await client.GetFromJsonAsync<CargoDto[]?>("api/cargoes/getcargoes");
     }

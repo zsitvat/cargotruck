@@ -43,7 +43,7 @@ namespace Cargotruck.Client.Pages.Warehouses
         async Task DeleteAsync(int Id)
         {
             var data = Warehouses?.First(x => x.Id == Id);
-            if (await js.InvokeAsync<bool>("confirm", $"{@localizer["DeleteAsync?"]} {data?.Address} - {data?.Owner} ({data?.Id})"))
+            if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {data?.Address} - {data?.Owner} ({data?.Id})"))
             {
                 await client.DeleteAsync($"api/warehouses/delete/{Id}");
                 var shouldreload = dataRows % ((currentPage == 1 ? currentPage : currentPage - 1) * pageSize);

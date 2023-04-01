@@ -38,7 +38,7 @@ namespace Cargotruck.Client.Pages.Admin
         async Task DeleteAsync(string Id)
         {
             var u = Users?.First(x => x.Id == Id);
-            if (await js.InvokeAsync<bool>("confirm", $"{@localizer["DeleteAsync?"]} {u?.UserName} ({u?.Id})"))
+            if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {u?.UserName} ({u?.Id})"))
             {
                 await client.DeleteAsync($"api/admin/delete/{Id}");
                 await OnInitializedAsync();

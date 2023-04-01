@@ -659,7 +659,7 @@ namespace Cargotruck.Server.Repositories
                                             {
                                                 var WithNewIds = await _context.Roads.Where(x => x.Task_id == lastId.Task_id || x.Id_cargo == lastId.Id_cargo || x.Expenses_id == lastId.Expenses_id).ToListAsync();
                                                 Cargo? cargo = await _context.Cargoes.FirstOrDefaultAsync(x => x.Id == lastId.Id_cargo);
-                                                Task? task = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == lastId.Task_id);
+                                                DeliveryTask? task = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == lastId.Task_id);
                                                 Expense? expense = await _context.Expenses.FirstOrDefaultAsync(x => x.Id == lastId.Expenses_id);
                                                 Truck? truck = await _context.Trucks.FirstOrDefaultAsync(x => x.Vehicle_registration_number == lastId.Vehicle_registration_number);
 

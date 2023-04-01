@@ -10,12 +10,12 @@
     CargoDto? cargo = new CargoDto();
     bool isValidSubmit = true;
 
-    protected async override System.Threading.Tasks.Task OnParametersSetAsync()
+    protected async override Task OnParametersSetAsync()
     {
         cargo = await http.GetFromJsonAsync<CargoDto>($"api/cargoes/getById/{Id}");
     }
 
-    async System.Threading.Tasks.Task EditCargoAsync()
+    async Task EditCargoAsync()
     {
         if (isValidSubmit)
         {

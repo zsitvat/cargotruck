@@ -59,7 +59,7 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
         async Task Delete(int Id)
         {
             var data = Monthly_expenses?.First(x => x.Monthly_expense_id == Id);
-            if (await js.InvokeAsync<bool>("confirm", $"{@localizer["DeleteAsync?"]} {data?.Earning} - {data?.Profit} ({data?.Monthly_expense_id})"))
+            if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {data?.Earning} - {data?.Profit} ({data?.Monthly_expense_id})"))
             {
                 await client.DeleteAsync($"api/monthlyexpenses/delete/{Id}");
                 var shouldreload = dataRows % ((currentPage == 1 ? currentPage : currentPage - 1) * pageSize);

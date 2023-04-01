@@ -356,7 +356,7 @@ namespace Cargotruck.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Monthly_expense_task_expense",
+                name: "MonthlyExpense_task_expense",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -434,7 +434,7 @@ namespace Cargotruck.Server.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Monthly_expenses_tasks_expenses_Monthly_expense_id",
-                table: "Monthly_expense_task_expense",
+                table: "MonthlyExpense_task_expense",
                 column: "Monthly_expense_id");
         }
 
@@ -465,7 +465,7 @@ namespace Cargotruck.Server.Migrations
                 name: "Logins");
 
             migrationBuilder.DropTable(
-                name: "Monthly_expense_task_expense");
+                name: "MonthlyExpense_task_expense");
 
             migrationBuilder.DropTable(
                 name: "Privacies");

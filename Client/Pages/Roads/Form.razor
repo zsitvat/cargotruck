@@ -213,15 +213,15 @@
     [Parameter] public EventCallback OnValidSubmit { get; set; }
     string error = "";
     List<CargoDto>? cargoes { get; set; }
-    TaskDto[]? tasks { get; set; }
+    DeliveryTaskDto[]? tasks { get; set; }
     List<ExpenseDto>? expenses { get; set; }
     List<TruckDto>? trucks { get; set; }
 
 
-    protected override async System.Threading.Tasks.Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
         cargoes = await client.GetFromJsonAsync<List<CargoDto>?>("api/cargoes/getcargoes");
-        tasks = await client.GetFromJsonAsync<TaskDto[]?>("api/tasks/gettasks");
+        tasks = await client.GetFromJsonAsync<DeliveryTaskDto[]?>("api/tasks/gettasks");
         expenses = await client.GetFromJsonAsync<List<ExpenseDto>?>("api/expenses/getexpenses");
         trucks = await client.GetFromJsonAsync<List<TruckDto>?>("api/trucks/gettrucks");
         var roadWithIds = await client.GetFromJsonAsync<List<RoadDto>>("api/roads/getroads");

@@ -70,7 +70,7 @@
     [Parameter] public EventCallback OnValidSubmit { get; set; }
     [Parameter] public EventCallback OnWindowClosed { get; set; }
 
-    protected async System.Threading.Tasks.Task WindowClosedAsync()
+    protected async Task WindowClosedAsync()
     {
         await OnWindowClosed.InvokeAsync();
     }

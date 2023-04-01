@@ -32,7 +32,7 @@ namespace Cargotruck.Server.Repositories
             _errorHandler = errorHandler;
         }
 
-        private async Task<List<Task>> GetDataAsync(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        private async Task<List<DeliveryTask>> GetDataAsync(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var t = await _context.Tasks.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
 
@@ -67,7 +67,7 @@ namespace Cargotruck.Server.Repositories
             return t;
         }
 
-        public async Task<List<Task>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        public async Task<List<DeliveryTask>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
 
             var t = await GetDataAsync(searchString, filter, dateFilterStartDate, dateFilterEndDate);
@@ -128,12 +128,12 @@ namespace Cargotruck.Server.Repositories
             return t.Skip((page - 1) * pageSize).Take(pageSize).ToList();
         }
 
-        public async Task<Task?> GetByIdAsync(int id)
+        public async Task<DeliveryTask?> GetByIdAsync(int id)
         {
             return await _context.Tasks.FirstOrDefaultAsync(a => a.Id == id);
         }
 
-        public async Task<List<Task>> GetTasksAsync()
+        public async Task<List<DeliveryTask>> GetTasksAsync()
         {
             return await _context.Tasks.ToListAsync();
         }
@@ -171,7 +171,7 @@ namespace Cargotruck.Server.Repositories
             return t.Count;
         }
 
-        public async System.Threading.Tasks.Task PostAsync(Shared.Model.Task t)
+        public async System.Threading.Tasks.Task PostAsync(Shared.Model.DeliveryTask t)
         {
             t.Final_Payment = (t.Payment != null ? t.Payment : 0) - (t.Penalty != null ? t.Penalty : 0);
 
@@ -196,7 +196,7 @@ namespace Cargotruck.Server.Repositories
             }
         }
 
-        public async System.Threading.Tasks.Task PutAsync(Shared.Model.Task t)
+        public async System.Threading.Tasks.Task PutAsync(Shared.Model.DeliveryTask t)
         {
             t.Final_Payment = (t.Payment != null ? t.Payment : 0) - (t.Penalty != null ? t.Penalty : 0);
 
@@ -232,7 +232,7 @@ namespace Cargotruck.Server.Repositories
             return false;
         }
 
-        public async System.Threading.Tasks.Task ChangeCompletionAsync(Shared.Model.Task t)
+        public async System.Threading.Tasks.Task ChangeCompletionAsync(Shared.Model.DeliveryTask t)
         {
             t.Completed = !t.Completed;
 
@@ -311,7 +311,7 @@ namespace Cargotruck.Server.Repositories
             Font font1 = FontFactory.GetFont(FontFactory.TIMES_BOLD, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 11);
             Font font2 = FontFactory.GetFont(FontFactory.TIMES_ROMAN, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 10);
 
-            System.Type type = typeof(Shared.Model.Task);
+            System.Type type = typeof(Shared.Model.DeliveryTask);
             var column_number = (type.GetProperties().Length) / 2;
             var columnDefinitionSize = new float[column_number];
             for (int i = 0; i < column_number; i++) columnDefinitionSize[i] = 1F;
@@ -359,7 +359,7 @@ namespace Cargotruck.Server.Repositories
                     });
                 }
 
-                foreach (Shared.Model.Task task in tasks)
+                foreach (Shared.Model.DeliveryTask task in tasks)
                 {
                     var s = "";
                     if (!string.IsNullOrEmpty(task.Id.ToString())) { s = task.Id.ToString(); }
@@ -449,7 +449,7 @@ namespace Cargotruck.Server.Repositories
                 table2.HeaderRows = 1;
 
 
-                foreach (Shared.Model.Task task in tasks)
+                foreach (Shared.Model.DeliveryTask task in tasks)
                 {
                     var s = "";
                     if (!string.IsNullOrEmpty(task.Id.ToString())) { s = task.Id.ToString(); }

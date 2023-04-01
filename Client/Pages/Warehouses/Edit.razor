@@ -10,12 +10,12 @@
     [Parameter] public int Id { get; set; }
     WarehouseDto? warehouse = new WarehouseDto();
 
-    protected async override System.Threading.Tasks.Task OnParametersSetAsync()
+    protected async override Task OnParametersSetAsync()
     {
         warehouse = await http.GetFromJsonAsync<WarehouseDto>($"api/warehouses/getById/{Id}");
     }
 
-    async System.Threading.Tasks.Task EditWarehouseAsync()
+    async Task EditWarehouseAsync()
     {
         if (warehouse != null)
         {

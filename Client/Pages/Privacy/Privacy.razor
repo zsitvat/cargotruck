@@ -67,11 +67,11 @@ else
     PrivacyDto privacy = new PrivacyDto();
     Dictionary<dynamic, bool> showtext = new Dictionary<dynamic, bool>();
 
-    protected override async System.Threading.Tasks.Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
         PageHistoryState.AddPageToHistory("/Privacy");
         base.OnInitialized();
-        privacies = await client.GetFromJsonAsync<PrivacyDto[]>($"api/privacy/get?lang={CultureInfo.CurrentCulture.ToString()}");
+        privacies = await client.GetFromJsonAsync<PrivacyDto[]>($"api/privacies/get?lang={CultureInfo.CurrentCulture.ToString()}");
         showtext.Clear();
         if(privacies != null){
             foreach (var item in privacies)
@@ -84,20 +84,20 @@ else
         }
     }
 
-    async System.Threading.Tasks.Task DeleteAsync(int Id)
+    async Task DeleteAsync(int Id)
     {
         var data = privacies?.First(x => x.Id == Id);
-        if (await js.InvokeAsync<bool>("confirm", $"{@localizer["DeleteAsync?"]} {data?.Name}  {data?.Text} - {data?.Lang}({data?.Id})"))
+        if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {data?.Name}  {data?.Text} - {data?.Lang}({data?.Id})"))
         {
-            await client.DeleteAsync($"api/privacy/delete/{Id}");
+            await client.DeleteAsync($"api/privacies/delete/{Id}");
             await OnInitializedAsync();
         }
     }
 
-    async System.Threading.Tasks.Task CreatePrivacyAsync()
+    async Task CreatePrivacyAsync()
     {
-        await http.PostAsJsonAsync("api/privacy/post", privacy);
-        uriHelper.NavigateTo("/Privacy",true);
+        await http.PostAsJsonAsync("api/privacies/post", privacy);
+         await OnInitializedAsync();
     }
 
     protected void Show(int id)

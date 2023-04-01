@@ -19,20 +19,20 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<TaskDto>>> GetAsync(int page, int pageSize, string sortOrder, 
+        public async Task<ActionResult<List<DeliveryTaskDto>>> GetAsync(int page, int pageSize, string sortOrder, 
             bool desc, string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             return Ok(await _taskService.GetAsync(page, pageSize, sortOrder, desc, searchString, filter, dateFilterStartDate, dateFilterEndDate));
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<TaskDto>> GetByIdAsync(int id)
+        public async Task<ActionResult<DeliveryTaskDto>> GetByIdAsync(int id)
         {
             return Ok(await _taskService.GetByIdAsync(id));
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<TaskDto>>> GetTasksAsync()
+        public async Task<ActionResult<List<DeliveryTaskDto>>> GetTasksAsync()
         {
             return Ok(await _taskService.GetTasksAsync());
         }
@@ -56,13 +56,13 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpPost]
-        public async Task PostAsync(TaskDto task)
+        public async Task PostAsync(DeliveryTaskDto task)
         {
             await _taskService.PostAsync(task);
         }
 
         [HttpPut]
-        public async Task PutAsync(TaskDto task)
+        public async Task PutAsync(DeliveryTaskDto task)
         {
             await _taskService.PutAsync(task);
         }
@@ -74,7 +74,7 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpPut]
-        public async Task ChangeCompletionAsync(TaskDto task)
+        public async Task ChangeCompletionAsync(DeliveryTaskDto task)
         {
             await _taskService.ChangeCompletionAsync(task);
         }

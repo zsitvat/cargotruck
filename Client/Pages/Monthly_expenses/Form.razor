@@ -114,16 +114,16 @@
     [Parameter] public EventCallback OnValidSubmit { get; set; }
     [Parameter] public EventCallback<List<int>?> OnHandleChangeTask { get; set; }
     [Parameter] public EventCallback<List<int>?> OnHandleChangeExpense { get; set; }
-    TaskDto[]? tasks { get; set; }
+    DeliveryTaskDto[]? tasks { get; set; }
     ExpenseDto[]? expenses { get; set; }
     List<int>? SelectedExpenses { get; set; } = new();
     List<int>? SelectedTasks { get; set; } = new();
     bool disabled = false;
 
-    protected override async System.Threading.Tasks.Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
         Disabled();
-        tasks = await client.GetFromJsonAsync<TaskDto[]?>("api/tasks/gettasks");
+        tasks = await client.GetFromJsonAsync<DeliveryTaskDto[]?>("api/tasks/gettasks");
         expenses = await client.GetFromJsonAsync<ExpenseDto[]?>("api/expenses/getexpenses");
     }
 

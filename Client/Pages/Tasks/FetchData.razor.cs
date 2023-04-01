@@ -10,7 +10,7 @@ namespace Cargotruck.Client.Pages.Tasks
     {
         private bool settings = false;
         bool expandExportMenu;
-        List<TaskDto?>?  Tasks { get; set; }
+        List<DeliveryTaskDto?>?  Tasks { get; set; }
         int? IdForGetById { get; set; }
         string? GetByIdType { get; set; }
         private readonly List<bool> showColumns = Enumerable.Repeat(true, 16).ToList();
@@ -32,7 +32,7 @@ namespace Cargotruck.Client.Pages.Tasks
             await ShowPageAsync();
         }
 
-        async Task ChangeCompletionAsync(TaskDto task)
+        async Task ChangeCompletionAsync(DeliveryTaskDto task)
         {
             await client.PutAsJsonAsync($"api/tasks/changecompletion", task);
             await ShowPageAsync();
@@ -41,7 +41,7 @@ namespace Cargotruck.Client.Pages.Tasks
         async Task DeleteAsync(int Id)
         {
             var t = Tasks?.First(x => x?.Id == Id);
-            if (await js.InvokeAsync<bool>("confirm", $"{@localizer["DeleteAsync?"]} {t?.Partner} ({t?.Id})"))
+            if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {t?.Partner} ({t?.Id})"))
             {
                 await client.DeleteAsync($"api/tasks/delete/{Id}");
                 var shouldreload = dataRows % ((currentPage == 1 ? currentPage : currentPage - 1) * pageSize);
@@ -55,7 +55,7 @@ namespace Cargotruck.Client.Pages.Tasks
             pageSize = Page.GetPageSize(pageSize, dataRows);
             maxPage = Page.GetMaxPage(pageSize, dataRows);
 
-            Tasks = await client.GetFromJsonAsync<List<TaskDto?>?>($"api/tasks/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
+            Tasks = await client.GetFromJsonAsync<List<DeliveryTaskDto?>?>($"api/tasks/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
             StateHasChanged();
         }
         async void DateStartInput(ChangeEventArgs e)

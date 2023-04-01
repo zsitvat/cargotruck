@@ -53,12 +53,12 @@ var configuration = new MapperConfiguration(cfg =>
     cfg.CreateMap<Cargo, CargoDto>();
     cfg.CreateMap<Expense, ExpenseDto>();
     cfg.CreateMap<Login, LoginDto>();
-    cfg.CreateMap<Monthly_expense, Monthly_expensesDto>();
-    cfg.CreateMap<Monthly_expense_task_expense, Monthly_expense_task_expenseDto>();
+    cfg.CreateMap<MonthlyExpense, Monthly_expensesDto>();
+    cfg.CreateMap<MonthlyExpense_task_expense, Monthly_expense_task_expenseDto>();
     cfg.CreateMap<Privacies, PrivacyDto>();
     cfg.CreateMap<Road, RoadDto>();
     cfg.CreateMap<Setting, SettingDto>();
-    cfg.CreateMap<Cargotruck.Shared.Model.Task, TaskDto>();
+    cfg.CreateMap<Cargotruck.Shared.Model.DeliveryTask, DeliveryTaskDto>();
     cfg.CreateMap<Truck, TruckDto>();
     cfg.CreateMap<Warehouse, WarehouseDto>();
 
@@ -66,12 +66,12 @@ var configuration = new MapperConfiguration(cfg =>
     cfg.CreateMap<CargoDto, Cargo>();
     cfg.CreateMap<ExpenseDto, Expense>();
     cfg.CreateMap<LoginDto, Login>();
-    cfg.CreateMap<Monthly_expensesDto, Monthly_expense>();
-    cfg.CreateMap<Monthly_expense_task_expenseDto, Monthly_expense_task_expense>();
+    cfg.CreateMap<Monthly_expensesDto, MonthlyExpense>();
+    cfg.CreateMap<Monthly_expense_task_expenseDto, MonthlyExpense_task_expense>();
     cfg.CreateMap<PrivacyDto, Privacies>();
     cfg.CreateMap<RoadDto, Road>();
     cfg.CreateMap<SettingDto, Setting>();
-    cfg.CreateMap<TaskDto, Cargotruck.Shared.Model.Task>();
+    cfg.CreateMap<DeliveryTaskDto, Cargotruck.Shared.Model.DeliveryTask>();
     cfg.CreateMap<TruckDto, Truck>();
     cfg.CreateMap<WarehouseDto, Warehouse>();
 });

@@ -18,22 +18,22 @@ namespace Cargotruck.Server.Services
             _taskRepository = taskRepository;
             _mapper = mapper;
         }
-        public async Task<List<TaskDto>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
+        public async Task<List<DeliveryTaskDto>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var tasks = await _taskRepository.GetAsync(page, pageSize, sortOrder, desc, searchString, filter, dateFilterStartDate, dateFilterEndDate);
-            return _mapper.Map<List<TaskDto>>(tasks);
+            return _mapper.Map<List<DeliveryTaskDto>>(tasks);
         }
-        public async Task<List<TaskDto>> GetTasksAsync()
+        public async Task<List<DeliveryTaskDto>> GetTasksAsync()
         {
             var tasks = await _taskRepository.GetTasksAsync();
 
-            return _mapper.Map<List<TaskDto>>(tasks);
+            return _mapper.Map<List<DeliveryTaskDto>>(tasks);
         }
-        public async Task<TaskDto?> GetByIdAsync(int id)
+        public async Task<DeliveryTaskDto?> GetByIdAsync(int id)
         {
             var task = await _taskRepository.GetByIdAsync(id);
 
-            return _mapper.Map<TaskDto>(task);
+            return _mapper.Map<DeliveryTaskDto>(task);
         }
         public async Task<int[]> GetChartDataAsync()
         {
@@ -47,17 +47,17 @@ namespace Cargotruck.Server.Services
         {
             return await _taskRepository.CountAsync(all);
         }
-        public async System.Threading.Tasks.Task ChangeCompletionAsync(TaskDto task)
+        public async System.Threading.Tasks.Task ChangeCompletionAsync(DeliveryTaskDto task)
         {
-            await _taskRepository.ChangeCompletionAsync(_mapper.Map<Shared.Model.Task>(task));
+            await _taskRepository.ChangeCompletionAsync(_mapper.Map<Shared.Model.DeliveryTask>(task));
         }
-        public async System.Threading.Tasks.Task PostAsync(TaskDto task)
+        public async System.Threading.Tasks.Task PostAsync(DeliveryTaskDto task)
         {
-            await _taskRepository.PostAsync(_mapper.Map<Shared.Model.Task>(task));
+            await _taskRepository.PostAsync(_mapper.Map<Shared.Model.DeliveryTask>(task));
         }
-        public async System.Threading.Tasks.Task PutAsync(TaskDto task)
+        public async System.Threading.Tasks.Task PutAsync(DeliveryTaskDto task)
         {
-            await _taskRepository.PutAsync(_mapper.Map<Shared.Model.Task>(task));
+            await _taskRepository.PutAsync(_mapper.Map<Shared.Model.DeliveryTask>(task));
         }
         public async Task<bool> DeleteAsync(int id)
         {

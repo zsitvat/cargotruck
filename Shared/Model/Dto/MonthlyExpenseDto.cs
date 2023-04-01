@@ -21,7 +21,7 @@ namespace Cargotruck.Shared.Model.Dto
         [Display(Name = "Date", ResourceType = typeof(Resource))]
         public DateTime Date { get; set; } = DateTime.Now;
 
-        public List<Monthly_expense_task_expense>? Monthly_expenses_tasks_expenses { get; set; }
+        public List<MonthlyExpense_task_expense>? Monthly_expenses_tasks_expenses { get; set; }
     }
     public class Monthly_expense_task_expenseDto
     {

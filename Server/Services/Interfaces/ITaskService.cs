@@ -6,15 +6,15 @@ namespace Cargotruck.Server.Services.Interfaces
 {
     public interface ITaskService
     {
-        Task<List<TaskDto>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);
-        Task<List<TaskDto>> GetTasksAsync();
-        Task<TaskDto?> GetByIdAsync(int id);
+        Task<List<DeliveryTaskDto>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);
+        Task<List<DeliveryTaskDto>> GetTasksAsync();
+        Task<DeliveryTaskDto?> GetByIdAsync(int id);
         Task<int[]> GetChartDataAsync();
         Task<int> PageCountAsync(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);
         Task<int> CountAsync(bool all);
-        Task ChangeCompletionAsync(TaskDto task);
-        Task PostAsync(TaskDto task);
-        Task PutAsync(TaskDto task);
+        Task ChangeCompletionAsync(DeliveryTaskDto task);
+        Task PostAsync(DeliveryTaskDto task);
+        Task PutAsync(DeliveryTaskDto task);
         Task<bool> DeleteAsync(int id);
         string ExportToExcel(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);
         Task<string> ExportToPdfAsync(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);

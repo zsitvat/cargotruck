@@ -23,12 +23,12 @@
         selectedExpenseId = selected;
     }
 
-    protected async override System.Threading.Tasks.Task OnParametersSetAsync()
+    protected async override Task OnParametersSetAsync()
     {
         monthly_expense = await http.GetFromJsonAsync<Monthly_expensesDto>($"api/Monthly_expenses/getById/{Id}");
     }
 
-    async System.Threading.Tasks.Task EditMonthlyExpenseAsync()
+    async Task EditMonthlyExpenseAsync()
     {
         if (monthly_expense != null)
         {
@@ -71,7 +71,7 @@
             {
                 Monthly_expenses_tasks_expenses.Expense_id = selectedExpenseId[i];
             }
-            //Monthly_expense_task_expense.Monthly_expenses = monthly_expense;
+            //MonthlyExpense_task_expense.Monthly_expenses = monthly_expense;
             await http.PostAsJsonAsync($"api/monthlyexpenses/postconnectionids?first={IsFirstId}", Monthly_expenses_tasks_expenses);
         }
 

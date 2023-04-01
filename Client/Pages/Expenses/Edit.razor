@@ -11,13 +11,13 @@
     bool isValidSubmit = true;
     ExpenseDto? expense = new ExpenseDto();
 
-    protected async override System.Threading.Tasks.Task OnParametersSetAsync()
+    protected async override Task OnParametersSetAsync()
     {
         expense = await http.GetFromJsonAsync<ExpenseDto>($"api/expenses/getById/{Id}");
         expense!.Type = null;
     }
 
-    async System.Threading.Tasks.Task EditExpenseAsync()
+    async Task EditExpenseAsync()
     {
         if (isValidSubmit)
         {

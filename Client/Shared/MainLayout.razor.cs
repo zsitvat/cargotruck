@@ -16,12 +16,12 @@ namespace Cargotruck.Client.Shared
         Task<AuthenticationState>? AuthenticationState { get; set; }
 
         static bool darkmode;
-        protected override async System.Threading.Tasks.Task OnInitializedAsync()
+        protected override async Task OnInitializedAsync()
         {
             await OnParametersSetAsync();
         }
 
-        protected override async System.Threading.Tasks.Task OnParametersSetAsync()
+        protected override async Task OnParametersSetAsync()
         {
             if (!(await AuthenticationState!).User.Identity!.IsAuthenticated)
             {
@@ -42,7 +42,7 @@ namespace Cargotruck.Client.Shared
             }
         }
 
-        async System.Threading.Tasks.Task GetCurrencyRates()
+        async Task GetCurrencyRates()
         {
             if ((await AuthenticationState!).User.Identity!.IsAuthenticated && currencyExchange.GetRates() == null && await currencyExchange.GetNextApiRequestDate(client) <= DateTime.Now)
             {
@@ -62,7 +62,7 @@ namespace Cargotruck.Client.Shared
         }
       
 
-        async System.Threading.Tasks.Task GetDarkmodeAsync()
+        async Task GetDarkmodeAsync()
         {
             var settings = await client.GetFromJsonAsync<Setting[]>("api/settings/get");
             var DarkModeSetting = (settings?.Where(x => x.SettingName == "darkmode" && x.SettingValue == (AuthenticationState!).Result.User.Identity?.Name));
@@ -71,7 +71,7 @@ namespace Cargotruck.Client.Shared
             await sessionStorage.SetItemAsync("darkmode", darkModeFound);
         }
 
-        async System.Threading.Tasks.Task ChangeDarkModeAsync()
+        async Task ChangeDarkModeAsync()
         {
             if ((await AuthenticationState!).User.Identity!.IsAuthenticated)
             {
@@ -103,7 +103,7 @@ namespace Cargotruck.Client.Shared
             await OnParametersSetAsync();
         }
 
-        async System.Threading.Tasks.Task LogoutClick()
+        async Task LogoutClick()
         {
             PageHistoryState.ResetPageToHistory();
             await authStateProvider.LogoutAsync();

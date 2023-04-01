@@ -11,12 +11,12 @@
     TruckDto? truck = new TruckDto();
     bool isValidSubmit = true;
 
-    protected async override System.Threading.Tasks.Task OnParametersSetAsync()
+    protected async override Task OnParametersSetAsync()
     {
         truck = await http.GetFromJsonAsync<TruckDto>($"api/trucks/getById/{Id}");
     }
 
-    async System.Threading.Tasks.Task EditCargoAsync()
+    async Task EditCargoAsync()
     {
         if (isValidSubmit)
         {

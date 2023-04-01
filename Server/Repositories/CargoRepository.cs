@@ -616,7 +616,7 @@ namespace Cargotruck.Server.Repositories
                                             if (lastId != null)
                                             {
                                                 var WithNewIds = await _context.Cargoes.Where(x => x.Task_id == lastId.Task_id || x.Warehouse_id == lastId.Warehouse_id || x.Vehicle_registration_number == lastId.Vehicle_registration_number).ToListAsync();
-                                                Task? task = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == lastId.Task_id);
+                                                DeliveryTask? task = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == lastId.Task_id);
                                                 Warehouse? warehouse = await _context.Warehouses.FirstOrDefaultAsync(x => x.Id == lastId.Warehouse_id);
                                                 Truck? truck = await _context.Trucks.FirstOrDefaultAsync(x => x.Vehicle_registration_number == lastId.Vehicle_registration_number);
 

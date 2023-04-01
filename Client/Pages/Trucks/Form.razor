@@ -117,7 +117,7 @@
     List<RoadDto>? roads { get; set; }
     List<TruckDto>? trucksOnRoad { get; set; }
 
-    protected override async System.Threading.Tasks.Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
         roads = await client.GetFromJsonAsync<List<RoadDto>?>("api/roads/getroads");
         if (trucks?.Status != null)

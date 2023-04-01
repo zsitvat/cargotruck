@@ -26,7 +26,7 @@ namespace Cargotruck.Client.Pages.Trucks
         Status? filter;
         readonly DateFilter? dateFilter = new();
 
-        protected override async System.Threading.Tasks.Task OnInitializedAsync()
+        protected override async Task OnInitializedAsync()
         {
             PageHistoryState.AddPageToHistory("/Trucks");
             base.OnInitialized();
@@ -34,7 +34,7 @@ namespace Cargotruck.Client.Pages.Trucks
             await ShowPageAsync();
         }
 
-        protected async System.Threading.Tasks.Task ShowPageAsync()
+        protected async Task ShowPageAsync()
         {
             pageSize = Page.GetPageSize(pageSize, dataRows);
             maxPage = Page.GetMaxPage(pageSize, dataRows);
@@ -43,10 +43,10 @@ namespace Cargotruck.Client.Pages.Trucks
             StateHasChanged();
         }
 
-        async System.Threading.Tasks.Task DeleteAsync(int Id)
+        async Task DeleteAsync(int Id)
         {
             var data = Trucks?.First(x => x.Id == Id);
-            if (await js.InvokeAsync<bool>("confirm", $"{@localizer["DeleteAsync?"]} {data?.Vehicle_registration_number} - {data?.Status} ({data?.Id})"))
+            if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {data?.Vehicle_registration_number} - {data?.Status} ({data?.Id})"))
             {
                 await client.DeleteAsync($"api/trucks/delete/{Id}");
                 var shouldreload = dataRows % ((currentPage == 1 ? currentPage : currentPage - 1) * pageSize);
@@ -122,13 +122,13 @@ namespace Cargotruck.Client.Pages.Trucks
             await ShowPageAsync();
         }
 
-        protected async System.Threading.Tasks.Task SearchAsync(ChangeEventArgs args)
+        protected async Task SearchAsync(ChangeEventArgs args)
         {
             searchString = args.Value?.ToString();
             await ShowPageAsync();
         }
 
-        protected async System.Threading.Tasks.Task GetCurrentPageAsync(int CurrentPage)
+        protected async Task GetCurrentPageAsync(int CurrentPage)
         {
             currentPage = CurrentPage;
             await ShowPageAsync();

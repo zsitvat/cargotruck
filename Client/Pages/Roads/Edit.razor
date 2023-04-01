@@ -10,12 +10,12 @@
     bool isValidSubmit = true;
     RoadDto? road = new RoadDto();
 
-    protected async override System.Threading.Tasks.Task OnParametersSetAsync()
+    protected async override Task OnParametersSetAsync()
     {
         road = await http.GetFromJsonAsync<RoadDto>($"api/roads/getById/{Id}");
     }
 
-    async System.Threading.Tasks.Task EditRoadAsync()
+    async Task EditRoadAsync()
     {
         if (isValidSubmit)
         {

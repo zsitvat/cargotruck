@@ -48,11 +48,11 @@ namespace Cargotruck.Server.Services
         }
         public async Task PostAsync(Monthly_expensesDto task)
         {
-            await _monthlyExpenseRepository.PostAsync(_mapper.Map<Monthly_expense>(task));
+            await _monthlyExpenseRepository.PostAsync(_mapper.Map<MonthlyExpense>(task));
         }
         public async Task PutAsync(Monthly_expensesDto task)
         {
-            await _monthlyExpenseRepository.PutAsync(_mapper.Map<Monthly_expense>(task));
+            await _monthlyExpenseRepository.PutAsync(_mapper.Map<MonthlyExpense>(task));
         }
         public async Task<bool> DeleteAsync(int id)
         {
@@ -71,7 +71,7 @@ namespace Cargotruck.Server.Services
 
         public async Task PostConnectionIdsAsync(Monthly_expense_task_expenseDto connectionIds, bool first)
         {
-            await _monthlyExpenseRepository.PostConnectionIdsAsync(_mapper.Map<Monthly_expense_task_expense>(connectionIds), first);
+            await _monthlyExpenseRepository.PostConnectionIdsAsync(_mapper.Map<MonthlyExpense_task_expense>(connectionIds), first);
         }
         public async Task CreateMonthsAsync()
         {

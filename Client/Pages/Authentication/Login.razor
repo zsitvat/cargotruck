@@ -40,7 +40,7 @@
     LoginRequest loginRequest { get; set; } = new LoginRequest();
     string error { get; set; } = "";
 
-    async System.Threading.Tasks.Task OnSubmitAsync()
+    async Task OnSubmitAsync()
     {
         error = "";
         try
