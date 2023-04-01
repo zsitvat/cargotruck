@@ -1,5 +1,4 @@
-﻿@using Cargotruck.Client.Services;
-
+﻿
 <div class="col-md-8 stretch-card mb-2 me-3">
     <div class="form-card mb-1 table-width">
         <div class="card-body mb-3">
@@ -25,7 +24,7 @@
                                         {
                                             @if (currencyExchange.GetCurrencyType() != "HUF" && currencyExchange.GetRates() != null)
                                             {
-                                                @(currencyExchange.GetCurrency(item.earning, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
+                                                @(currencyExchange.GetCurrencyAmount(item.earning, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
                                             }
                                             else
                                             {
@@ -38,7 +37,7 @@
                                         {
                                             @if (currencyExchange.GetCurrencyType() != "HUF" && currencyExchange.GetRates() != null)
                                             {
-                                                @(currencyExchange.GetCurrency(item.expense, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
+                                                @(currencyExchange.GetCurrencyAmount(item.expense, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
                                             }
                                             else
                                             {
@@ -51,7 +50,7 @@
                                         {
                                             @if (currencyExchange.GetCurrencyType() != "HUF" && currencyExchange.GetRates() != null)
                                             {
-                                                @(currencyExchange.GetCurrency(item.profit, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
+                                                @(currencyExchange.GetCurrencyAmount(item.profit, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
                                             }
                                             else
                                             {

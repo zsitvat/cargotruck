@@ -18,7 +18,7 @@
 @using System.Globalization;
 @using System.Threading.Tasks;
 @using Microsoft.AspNetCore.Authorization;
-@using Cargotruck.Client.UtilitiesClasses
+@using Cargotruck.Client.Services
 @using System.Linq
 @using System.Net.Http.Headers
 @using Microsoft.Extensions.Logging
@@ -26,9 +26,12 @@
 @using System.Xml;
 @using Newtonsoft.Json;
 @using RestSharp;
+@using Cargotruck.Shared.Model
 @using Cargotruck.Shared.Model.Dto
 @using Cargotruck.Client.Components
 @using Microsoft.AspNetCore.Identity
+@using Cargotruck.Client.Services.Interfaces;
+@using Cargotruck.Client.Pages.Authentication
 
 @using ChartJs.Blazor;
 @using ChartJs.Blazor.Common
@@ -43,14 +46,14 @@
 @using ChartJs.Blazor.BarChart.Axes;
 @using ChartJs.Blazor.LineChart;
 
+
 @inject PageHistoryState PageHistoryState
 @inject NavigationManager uriHelper
-@inject HttpClient client
 @inject NavigationManager navigationManager
 @inject CustomStateProvider authStateProvider
 @inject HttpClient client
 @inject IJSRuntime js
 @inject IStringLocalizer<Resource> localizer;
 @inject Blazored.SessionStorage.ISessionStorageService sessionStorage
-@inject Cargotruck.Client.Services.ICurrencyExchange currencyExchange
-@inject Cargotruck.Client.Services.IFileDownload fileDownload
+@inject ICurrencyExchange currencyExchange
+@inject IFileDownload fileDownload

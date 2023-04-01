@@ -1,4 +1,4 @@
-﻿namespace Cargotruck.Client.UtilitiesClasses
+﻿namespace Cargotruck.Client.Services
 {
     public static class MouseHoverClass
     {

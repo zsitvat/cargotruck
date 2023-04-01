@@ -1,18 +1,20 @@
-﻿using Microsoft.AspNetCore.Components;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System.Net.Http.Json;
 using Cargotruck.Shared.Model;
+using Cargotruck.Client.Services.Interfaces;
+using Microsoft.AspNetCore.Components;
+using Cargotruck.Shared.Model.Dto;
+using System.Net.Http;
 
 namespace Cargotruck.Client.Services
 {
     public class CurrencyExchange : ICurrencyExchange
     {
         private Dictionary<string, dynamic>? Rates { get; set; }
-        private DateTime CurrencyApiDate = new();
-
+        private DateTime ApiLastRequestDate = new();
         private string currency = "HUF";
 
-        public async Task<dynamic> GetRatesFromApiAsync(HttpClient? client)
+        public async Task<string> RequestRatesFromApiAsync(HttpClient client)
         {
             //the api has only 300 attempts per month - its run every start of the application
             var request = new HttpRequestMessage
@@ -36,16 +38,18 @@ namespace Cargotruck.Client.Services
             {
                 Dictionary<string, dynamic> dict = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(result)!;
                 var ratesJson = dict["rates"].ToString().Trim(new char[] { '\n' }).Replace(" ", "");
-                return JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(ratesJson);
+                SetRates(JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(ratesJson));
+                SetApiLastRequestDate(new(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, 0, 0));
+                return response.IsSuccessStatusCode.ToString();
             }
             else
             {
                 var error = response.Content.ReadAsStringAsync();
-                return error;
+                return error.Result;
             }
         }
 
-        public float? GetCurrency(long? amount, string currency)
+        public float? GetCurrencyAmount(long? amount, string currency)
         {
             float? conversionNum = amount;
             if (Rates != null && currency != "HUF")
@@ -84,23 +88,23 @@ namespace Cargotruck.Client.Services
 
         public async Task<int> GetWaitTimeAsync(HttpClient client)
         {
-            var getWaitTimeSetting = await client.GetFromJsonAsync<Settings>("api/settings/getwaittime");
+            var getWaitTimeSetting = await client?.GetFromJsonAsync<SettingsDto>("api/settings/getwaittime")!;
             return getWaitTimeSetting != null ? int.Parse(getWaitTimeSetting?.SettingValue!) : 0;
         }
 
-        public void SetCurrencyApiDate(DateTime newDate)
+        public void SetApiLastRequestDate(DateTime newDate)
         {
-            CurrencyApiDate = newDate;
+            ApiLastRequestDate = newDate;
         }
 
-        public DateTime GetCurrencyApiDate()
+        public DateTime GetApiLastRequestDate()
         {
-            return CurrencyApiDate;
+            return ApiLastRequestDate;
         }
 
-        public async Task<DateTime> GetNextCurrencyApiDateAsync(HttpClient client)
+        public async Task<DateTime> GetNextApiRequestDate(HttpClient client)
         {
-            return CurrencyApiDate.AddSeconds(await GetWaitTimeAsync(client));
+            return ApiLastRequestDate.AddSeconds(await GetWaitTimeAsync(client));
         }
     }
 }

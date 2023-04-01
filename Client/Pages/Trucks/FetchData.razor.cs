@@ -1,4 +1,4 @@
-﻿using Cargotruck.Client.UtilitiesClasses;
+﻿using Cargotruck.Client.Services;
 using Cargotruck.Shared.Model;
 using Cargotruck.Shared.Model.Dto;
 using Microsoft.AspNetCore.Components;

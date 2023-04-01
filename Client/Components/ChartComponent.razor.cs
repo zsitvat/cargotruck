@@ -422,7 +422,7 @@ namespace Cargotruck.Client.Components
 
             for (int i = 0; i < columnHeights?.Length; i++)
             {     
-                columnHeights[i] = currencyExchange.GetCurrency((int)columnHeights[i]!, currencyExchange.GetCurrencyType());
+                columnHeights[i] = currencyExchange.GetCurrencyAmount((int)columnHeights[i]!, currencyExchange.GetCurrencyType());
             }
 
             if (columnHeights != null)

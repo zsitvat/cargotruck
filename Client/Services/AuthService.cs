@@ -1,8 +1,9 @@
-﻿using Cargotruck.Shared.Model.Dto;
+﻿using Cargotruck.Client.Services.Interfaces;
+using Cargotruck.Shared.Model.Dto;
 using System.Globalization;
 using System.Net.Http.Json;
 
-namespace Cargotruck.Client.UtilitiesClasses
+namespace Cargotruck.Client.Services
 {
     public class AuthService : IAuthService
     {

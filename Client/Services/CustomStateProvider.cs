@@ -1,8 +1,9 @@
-﻿using Cargotruck.Shared.Model.Dto;
+﻿using Cargotruck.Client.Services.Interfaces;
+using Cargotruck.Shared.Model.Dto;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.Security.Claims;
 
-namespace Cargotruck.Client.UtilitiesClasses
+namespace Cargotruck.Client.Services
 {
     public class CustomStateProvider : AuthenticationStateProvider
     {

@@ -1,7 +1,7 @@
 using Blazored.SessionStorage;
 using Cargotruck.Client;
 using Cargotruck.Client.Services;
-using Cargotruck.Client.UtilitiesClasses;
+using Cargotruck.Client.Services.Interfaces;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -23,7 +23,7 @@ builder.Services.AddAuthorizationCore();
 builder.Services.AddScoped<CustomStateProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider>(s => s.GetRequiredService<CustomStateProvider>());
 builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<PageHistoryState>(); //back to prievouse page
+builder.Services.AddScoped <PageHistoryState>(); //back to prievouse page
 builder.Services.AddScoped<IFileDownload, FileDownload>();
 builder.Services.AddSingleton<ICurrencyExchange, CurrencyExchange>();
 

@@ -18,7 +18,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Globalization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Cargotruck.Client.UtilitiesClasses;
+using Cargotruck.Client.Services;
 using System.Linq;
 using System.Net.Http.Headers;
 using Microsoft.Extensions.Logging;

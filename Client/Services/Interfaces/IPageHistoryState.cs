@@ -1,4 +1,4 @@
-﻿namespace Cargotruck.Client.UtilitiesClasses
+﻿namespace Cargotruck.Client.Services.Interfaces
 {
     public interface IPageHistoryState
     {

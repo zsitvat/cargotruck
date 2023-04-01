@@ -1,7 +1,7 @@
 ﻿using Cargotruck.Shared.Model.Dto;
 using Microsoft.JSInterop;
 
-namespace Cargotruck.Client.Services
+namespace Cargotruck.Client.Services.Interfaces
 {
     public interface IFileDownload
     {

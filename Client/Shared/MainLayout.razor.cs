@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Components;
 using System.Net.Http.Json;
 using Microsoft.AspNetCore.Components.Authorization;
 using Cargotruck.Shared.Model;
-using Cargotruck.Client.UtilitiesClasses;
+using Cargotruck.Client.Services;
 using Cargotruck.Shared.Model.Dto;
 
 namespace Cargotruck.Client.Shared
@@ -44,11 +44,11 @@ namespace Cargotruck.Client.Shared
 
         async Task GetCurrencyRates()
         {
-            if ((await AuthenticationState!).User.Identity!.IsAuthenticated && currencyExchange.GetRates() == null && await currencyExchange.GetNextCurrencyApiDateAsync(client) <= DateTime.Now)
+            if ((await AuthenticationState!).User.Identity!.IsAuthenticated && currencyExchange.GetRates() == null && await currencyExchange.GetNextApiRequestDate(client) <= DateTime.Now)
             {
                 try
                 {
-                    currencyExchange.SetRates(await currencyExchange.GetRatesFromApiAsync(client));
+                    await currencyExchange.RequestRatesFromApiAsync(client);
                 }
                 catch (Exception ex)
                 {
@@ -57,11 +57,6 @@ namespace Cargotruck.Client.Shared
                     {
                         currency_api_error = "currency_api_is_exceeded";
                     }
-                }
-
-                if (currencyExchange.GetRates() != null)
-                {
-                    currencyExchange.SetCurrencyApiDate(new(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, 0, 0));
                 }
             }
         }

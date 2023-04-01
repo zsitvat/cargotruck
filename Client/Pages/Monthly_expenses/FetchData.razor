@@ -106,7 +106,7 @@ else
                                             {
                                                 @if (currencyExchange.GetCurrencyType() != "HUF" && currencyExchange.GetRates() != null)
                                                 {
-                                                    @(currencyExchange.GetCurrency(item.Earning, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
+                                                    @(currencyExchange.GetCurrencyAmount(item.Earning, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
                                                 }
                                                 else
                                                 {
@@ -122,7 +122,7 @@ else
                                             {
                                                 @if (currencyExchange.GetCurrencyType() != "HUF" && currencyExchange.GetRates() != null)
                                                 {
-                                                    @(currencyExchange.GetCurrency(item.Expense, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
+                                                    @(currencyExchange.GetCurrencyAmount(item.Expense, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
                                                 }
                                                 else
                                                 {
@@ -138,7 +138,7 @@ else
                                             {
                                                 @if (currencyExchange.GetCurrencyType() != "HUF" && currencyExchange.GetRates() != null)
                                                 {
-                                                    @(currencyExchange.GetCurrency(item.Profit, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
+                                                    @(currencyExchange.GetCurrencyAmount(item.Profit, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
                                                 }
                                                 else
                                                 {

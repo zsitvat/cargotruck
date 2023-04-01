@@ -1,6 +1,6 @@
 ﻿using Cargotruck.Shared.Model.Dto;
 
-namespace Cargotruck.Client.UtilitiesClasses
+namespace Cargotruck.Client.Services.Interfaces
 {
     public interface IAuthService
     {
