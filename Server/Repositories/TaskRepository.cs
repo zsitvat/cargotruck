@@ -51,14 +51,14 @@ namespace Cargotruck.Server.Repositories
                 t = t.Where(s => (
                 s.Partner != null && s.Partner.ToLower()!.Contains(searchString))
             || (s.Description != null && s.Description.ToLower()!.Contains(searchString))
-            || (s.Place_of_receipt != null && s.Place_of_receipt.ToLower()!.Contains(searchString))
-            || (s.Place_of_delivery != null && s.Place_of_delivery.ToLower()!.Contains(searchString))
-            || (s.Time_of_delivery.ToString()!.Contains(searchString))
-            || (s.Id_cargo != null && s.Id_cargo.ToString()!.Contains(searchString))
-            || (s.Storage_time != null && s.Storage_time.ToLower()!.Contains(searchString))
-            || (s.Completion_time != null && s.Completion_time.ToString()!.Contains(searchString))
+            || (s.PlaceOfReceipt != null && s.PlaceOfReceipt.ToLower()!.Contains(searchString))
+            || (s.PlaceOfDelivery != null && s.PlaceOfDelivery.ToLower()!.Contains(searchString))
+            || (s.TimeOfDelivery.ToString()!.Contains(searchString))
+            || (s.Cargo != null && s.CargoId.ToString()!.Contains(searchString))
+            || (s.StorageTime != null && s.StorageTime.ToLower()!.Contains(searchString))
+            || (s.CompletionTime != null && s.CompletionTime.ToString()!.Contains(searchString))
             || (s.Payment != null && s.Payment.ToString()!.Contains(searchString))
-            || (s.Final_Payment != null && s.Final_Payment.ToString()!.Contains(searchString))
+            || (s.FinalPayment != null && s.FinalPayment.ToString()!.Contains(searchString))
             || (s.Penalty != null && s.Penalty.ToString()!.Contains(searchString))
             || (s.Date.ToString()!.Contains(searchString))
             ).ToList();
@@ -74,18 +74,18 @@ namespace Cargotruck.Server.Repositories
 
             sortOrder = sortOrder == "Partner" ? (desc ? "Partner_desc" : "Partner") : (sortOrder);
             sortOrder = sortOrder == "Description " ? (desc ? "Description_desc" : "Description") : (sortOrder);
-            sortOrder = sortOrder == "Place_of_receipt" ? (desc ? "Place_of_receipt_desc" : "Place_of_receipt") : (sortOrder);
-            sortOrder = sortOrder == "Time_of_receipt" ? (desc ? "Time_of_receipt_desc" : "Time_of_receipt") : (sortOrder);
-            sortOrder = sortOrder == "Place_of_delivery" ? (desc ? "Place_of_delivery_desc" : "Place_of_delivery") : (sortOrder);
-            sortOrder = sortOrder == "Time_of_delivery" ? (desc ? "Time_of_delivery_desc" : "Time_of_delivery") : (sortOrder);
-            sortOrder = sortOrder == "Other_stops" ? (desc ? "Other_stops_desc" : "Other_stops") : (sortOrder);
-            sortOrder = sortOrder == "Id_cargo" ? (desc ? "Id_cargo_desc" : "Id_cargo") : (sortOrder);
-            sortOrder = sortOrder == "Storage_time" ? (desc ? "Storage_time_desc" : "Storage_time") : (sortOrder);
+            sortOrder = sortOrder == "PlaceOfReceipt" ? (desc ? "PlaceOfReceipt_desc" : "PlaceOfReceipt") : (sortOrder);
+            sortOrder = sortOrder == "TimeOfReceipt" ? (desc ? "TimeOfReceipt_desc" : "TimeOfReceipt") : (sortOrder);
+            sortOrder = sortOrder == "PlaceOfDelivery" ? (desc ? "PlaceOfDelivery_desc" : "PlaceOfDelivery") : (sortOrder);
+            sortOrder = sortOrder == "TimeOfDelivery" ? (desc ? "TimeOfDelivery_desc" : "TimeOfDelivery") : (sortOrder);
+            sortOrder = sortOrder == "OtherStops" ? (desc ? "OtherStops_desc" : "OtherStops") : (sortOrder);
+            sortOrder = sortOrder == "CargoId" ? (desc ? "CargoId_desc" : "CargoId") : (sortOrder);
+            sortOrder = sortOrder == "StorageTime" ? (desc ? "StorageTime_desc" : "StorageTime") : (sortOrder);
             sortOrder = sortOrder == "Completed" ? (desc ? "Completed_desc" : "Completed") : (sortOrder);
-            sortOrder = sortOrder == "Completion_time" ? (desc ? "Completion_time_desc" : "Completion_time") : (sortOrder);
-            sortOrder = sortOrder == "Time_of_delay" ? (desc ? "Time_of_delay_desc" : "Time_of_delay") : (sortOrder);
+            sortOrder = sortOrder == "CompletionTime" ? (desc ? "CompletionTime_desc" : "CompletionTime") : (sortOrder);
+            sortOrder = sortOrder == "TimeOfDelay" ? (desc ? "TimeOfDelay_desc" : "TimeOfDelay") : (sortOrder);
             sortOrder = sortOrder == "Payment" ? (desc ? "Payment_desc" : "Payment") : (sortOrder);
-            sortOrder = sortOrder == "Final_Payment" ? (desc ? "Final_Payment_desc" : "Final_Payment") : (sortOrder);
+            sortOrder = sortOrder == "FinalPayment" ? (desc ? "FinalPayment_desc" : "FinalPayment") : (sortOrder);
             sortOrder = sortOrder == "Penalty" ? (desc ? "Penalty_desc" : "Penalty") : (sortOrder);
             sortOrder = sortOrder == "Date" || String.IsNullOrEmpty(sortOrder) ? (desc ? "Date_desc" : "") : (sortOrder);
 
@@ -95,30 +95,30 @@ namespace Cargotruck.Server.Repositories
                 "Partner" => t.OrderBy(s => s.Partner).ToList(),
                 "Description_desc" => t.OrderByDescending(s => s.Description).ToList(),
                 "Description" => t.OrderBy(s => s.Description).ToList(),
-                "Place_of_receipt_desc" => t.OrderByDescending(s => s.Place_of_receipt).ToList(),
-                "Place_of_receipt" => t.OrderBy(s => s.Place_of_receipt).ToList(),
-                "Time_of_receipt_desc" => t.OrderByDescending(s => s.Time_of_receipt).ToList(),
-                "Time_of_receipt" => t.OrderBy(s => s.Time_of_receipt).ToList(),
-                "Place_of_delivery_desc" => t.OrderByDescending(s => s.Place_of_delivery).ToList(),
-                "Place_of_delivery" => t.OrderBy(s => s.Place_of_delivery).ToList(),
-                "Time_of_delivery_desc" => t.OrderByDescending(s => s.Time_of_delivery).ToList(),
-                "Time_of_delivery" => t.OrderBy(s => s.Time_of_delivery).ToList(),
-                "Other_stops_desc" => t.OrderByDescending(s => s.Other_stops).ToList(),
-                "Other_stops" => t.OrderBy(s => s.Other_stops).ToList(),
-                "Id_cargo_desc" => t.OrderByDescending(s => s.Id_cargo).ToList(),
-                "Id_cargo" => t.OrderBy(s => s.Id_cargo).ToList(),
-                "Storage_time_desc" => t.OrderByDescending(s => s.Storage_time).ToList(),
-                "Storage_time" => t.OrderBy(s => s.Storage_time).ToList(),
+                "PlaceOfReceipt_desc" => t.OrderByDescending(s => s.PlaceOfReceipt).ToList(),
+                "PlaceOfReceipt" => t.OrderBy(s => s.PlaceOfReceipt).ToList(),
+                "TimeOfReceipt_desc" => t.OrderByDescending(s => s.TimeOfReceipt).ToList(),
+                "TimeOfReceipt" => t.OrderBy(s => s.TimeOfReceipt).ToList(),
+                "PlaceOfDelivery_desc" => t.OrderByDescending(s => s.PlaceOfDelivery).ToList(),
+                "PlaceOfDelivery" => t.OrderBy(s => s.PlaceOfDelivery).ToList(),
+                "TimeOfDelivery_desc" => t.OrderByDescending(s => s.TimeOfDelivery).ToList(),
+                "TimeOfDelivery" => t.OrderBy(s => s.TimeOfDelivery).ToList(),
+                "OtherStops_desc" => t.OrderByDescending(s => s.OtherStops).ToList(),
+                "OtherStops" => t.OrderBy(s => s.OtherStops).ToList(),
+                "CargoId_desc" => t.OrderByDescending(s => s.Cargo).ToList(),
+                "CargoId" => t.OrderBy(s => s.Cargo).ToList(),
+                "StorageTime_desc" => t.OrderByDescending(s => s.StorageTime).ToList(),
+                "StorageTime" => t.OrderBy(s => s.StorageTime).ToList(),
                 "Completed_desc" => t.OrderByDescending(s => s.Completed).ToList(),
                 "Completed" => t.OrderBy(s => s.Completed).ToList(),
-                "Completion_time_desc" => t.OrderByDescending(s => s.Completion_time).ToList(),
-                "Completion_time" => t.OrderBy(s => s.Completion_time).ToList(),
-                "Time_of_delay_desc" => t.OrderByDescending(s => s.Time_of_delay).ToList(),
-                "Time_of_delay" => t.OrderBy(s => s.Time_of_delay).ToList(),
+                "CompletionTime_desc" => t.OrderByDescending(s => s.CompletionTime).ToList(),
+                "CompletionTime" => t.OrderBy(s => s.CompletionTime).ToList(),
+                "TimeOfDelay_desc" => t.OrderByDescending(s => s.TimeOfDelay).ToList(),
+                "TimeOfDelay" => t.OrderBy(s => s.TimeOfDelay).ToList(),
                 "Payment_desc" => t.OrderByDescending(s => s.Payment).ToList(),
                 "Payment" => t.OrderBy(s => s.Payment).ToList(),
-                "Final_Payment_desc" => t.OrderByDescending(s => s.Final_Payment).ToList(),
-                "Final_Payment" => t.OrderBy(s => s.Final_Payment).ToList(),
+                "FinalPayment_desc" => t.OrderByDescending(s => s.FinalPayment).ToList(),
+                "FinalPayment" => t.OrderBy(s => s.FinalPayment).ToList(),
                 "Penalty_desc" => t.OrderByDescending(s => s.Penalty).ToList(),
                 "Penalty" => t.OrderBy(s => s.Penalty).ToList(),
                 "Date_desc" => t.OrderByDescending(s => s.Date).ToList(),
@@ -171,48 +171,42 @@ namespace Cargotruck.Server.Repositories
             return t.Count;
         }
 
-        public async System.Threading.Tasks.Task PostAsync(Shared.Model.DeliveryTask t)
+        public async Task PostAsync(DeliveryTask t)
         {
-            t.Final_Payment = (t.Payment != null ? t.Payment : 0) - (t.Penalty != null ? t.Penalty : 0);
+            t.FinalPayment = (t.Payment != null ? t.Payment : 0) - (t.Penalty != null ? t.Penalty : 0);
 
             if (t.Completed)
             {
-                t.Completion_time = DateTime.Now;
+                t.CompletionTime = DateTime.Now;
             }
             else
             {
-                t.Completion_time = null;
+                t.CompletionTime = null;
             }
+
+            t.Cargo = await _context.Cargoes.FirstOrDefaultAsync(x => x.Id == t.CargoId);
 
             _context.Add(t);
             await _context.SaveChangesAsync();
-
-            var cargo = _context.Cargoes.FirstOrDefault(a => a.Id == t.Id_cargo);
-            if (cargo != null)
-            {
-                cargo.Task_id = t.Id;
-                _context.Entry(cargo).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
-            }
         }
 
-        public async System.Threading.Tasks.Task PutAsync(Shared.Model.DeliveryTask t)
+        public async Task PutAsync(DeliveryTask t)
         {
-            t.Final_Payment = (t.Payment != null ? t.Payment : 0) - (t.Penalty != null ? t.Penalty : 0);
+            t.FinalPayment = (t.Payment != null ? t.Payment : 0) - (t.Penalty != null ? t.Penalty : 0);
 
             if (t.Completed)
             {
-                t.Completion_time = DateTime.Now;
+                t.CompletionTime = DateTime.Now;
             }
-            else { t.Completion_time = null; }
+            else { t.CompletionTime = null; }
 
             _context.Entry(t).State = EntityState.Modified;
 
-            var cargo = _context.Cargoes.FirstOrDefault(a => a.Id == t.Id_cargo);
+            var cargo = _context.Cargoes.FirstOrDefault(a => a.Id == t.CargoId);
 
             if (cargo != null)
             {
-                cargo.Task_id = t.Id;
+                cargo.TaskId = t.Id;
                 _context.Entry(cargo).State = EntityState.Modified;
             }
 
@@ -232,15 +226,15 @@ namespace Cargotruck.Server.Repositories
             return false;
         }
 
-        public async System.Threading.Tasks.Task ChangeCompletionAsync(Shared.Model.DeliveryTask t)
+        public async Task ChangeCompletionAsync(DeliveryTask t)
         {
             t.Completed = !t.Completed;
 
             if (t.Completed)
             {
-                t.Completion_time = DateTime.Now;
+                t.CompletionTime = DateTime.Now;
             }
-            else { t.Completion_time = null; }
+            else { t.CompletionTime = null; }
 
             _context.Entry(t).State = EntityState.Modified;
             await _context.SaveChangesAsync();
@@ -270,18 +264,18 @@ namespace Cargotruck.Server.Repositories
                 worksheet.Cell(currentRow, 1).Value = task.Id;
                 worksheet.Cell(currentRow, 2).Value = task.Partner;
                 worksheet.Cell(currentRow, 3).Value = task.Description;
-                worksheet.Cell(currentRow, 4).Value = task.Place_of_receipt;
-                worksheet.Cell(currentRow, 5).Value = task.Time_of_receipt;
-                worksheet.Cell(currentRow, 6).Value = task.Place_of_delivery;
-                worksheet.Cell(currentRow, 7).Value = task.Time_of_delivery;
-                worksheet.Cell(currentRow, 8).Value = task.Other_stops;
-                worksheet.Cell(currentRow, 9).Value = task.Id_cargo;
-                worksheet.Cell(currentRow, 10).Value = task.Storage_time;
+                worksheet.Cell(currentRow, 4).Value = task.PlaceOfReceipt;
+                worksheet.Cell(currentRow, 5).Value = task.TimeOfReceipt;
+                worksheet.Cell(currentRow, 6).Value = task.PlaceOfDelivery;
+                worksheet.Cell(currentRow, 7).Value = task.TimeOfDelivery;
+                worksheet.Cell(currentRow, 8).Value = task.OtherStops;
+                worksheet.Cell(currentRow, 9).Value = task.Cargo;
+                worksheet.Cell(currentRow, 10).Value = task.StorageTime;
                 worksheet.Cell(currentRow, 11).Value = task.Completed;
-                worksheet.Cell(currentRow, 12).Value = task.Completion_time;
-                worksheet.Cell(currentRow, 13).Value = task.Time_of_delay;
+                worksheet.Cell(currentRow, 12).Value = task.CompletionTime;
+                worksheet.Cell(currentRow, 13).Value = task.TimeOfDelay;
                 worksheet.Cell(currentRow, 14).Value = task.Payment + (task.Payment != null ? " HUF" : "");
-                worksheet.Cell(currentRow, 15).Value = task.Final_Payment + (task.Final_Payment != null ? " HUF" : "");
+                worksheet.Cell(currentRow, 15).Value = task.FinalPayment + (task.FinalPayment != null ? " HUF" : "");
                 worksheet.Cell(currentRow, 16).Value = task.Penalty + (task.Penalty != null ? " HUF" : "");
                 worksheet.Cell(currentRow, 17).Value = task.Date;
             }
@@ -383,42 +377,42 @@ namespace Cargotruck.Server.Repositories
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(task.Place_of_receipt?.ToString())) { s = task.Place_of_receipt.ToString(); }
+                    if (!string.IsNullOrEmpty(task.PlaceOfReceipt?.ToString())) { s = task.PlaceOfReceipt.ToString(); }
                     else { s = "-"; }
                     table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(task.Time_of_receipt.ToString())) { s = task.Time_of_receipt.ToString(); }
+                    if (!string.IsNullOrEmpty(task.TimeOfReceipt.ToString())) { s = task.TimeOfReceipt.ToString(); }
                     else { s = "-"; }
                     table.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(task.Place_of_delivery?.ToString())) { s = task.Place_of_delivery.ToString(); }
+                    if (!string.IsNullOrEmpty(task.PlaceOfDelivery?.ToString())) { s = task.PlaceOfDelivery.ToString(); }
                     else { s = "-"; }
                     table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(task.Time_of_delivery.ToString())) { s = task.Time_of_delivery.ToString(); }
+                    if (!string.IsNullOrEmpty(task.TimeOfDelivery.ToString())) { s = task.TimeOfDelivery.ToString(); }
                     else { s = "-"; }
                     table.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(task.Other_stops)) { s = task.Other_stops.ToString(); }
+                    if (!string.IsNullOrEmpty(task.OtherStops)) { s = task.OtherStops.ToString(); }
                     else { s = "-"; }
                     table.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(task.Id_cargo.ToString())) { s = task.Id_cargo.ToString(); }
+                    if (!string.IsNullOrEmpty(task.CargoId.ToString())) { s = task.CargoId.ToString(); }
                     else { s = "-"; }
                     table.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
@@ -449,7 +443,7 @@ namespace Cargotruck.Server.Repositories
                 table2.HeaderRows = 1;
 
 
-                foreach (Shared.Model.DeliveryTask task in tasks)
+                foreach (DeliveryTask task in tasks)
                 {
                     var s = "";
                     if (!string.IsNullOrEmpty(task.Id.ToString())) { s = task.Id.ToString(); }
@@ -459,7 +453,7 @@ namespace Cargotruck.Server.Repositories
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(task.Storage_time)) { s = task.Storage_time.ToString(); }
+                    if (!string.IsNullOrEmpty(task.StorageTime)) { s = task.StorageTime.ToString(); }
                     else { s = "-"; }
                     table2.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
@@ -473,14 +467,14 @@ namespace Cargotruck.Server.Repositories
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(task.Completion_time.ToString())) { s = task.Completion_time.ToString(); }
+                    if (!string.IsNullOrEmpty(task.CompletionTime.ToString())) { s = task.CompletionTime.ToString(); }
                     else { s = "-"; }
                     table2.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(task.Time_of_delay)) { s = task.Time_of_delay.ToString(); }
+                    if (!string.IsNullOrEmpty(task.TimeOfDelay)) { s = task.TimeOfDelay.ToString(); }
                     else { s = "-"; }
                     table2.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
@@ -494,7 +488,7 @@ namespace Cargotruck.Server.Repositories
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(task.Final_Payment.ToString())) { s = task.Final_Payment.ToString() + " HUF"; }
+                    if (!string.IsNullOrEmpty(task.FinalPayment.ToString())) { s = task.FinalPayment.ToString() + " HUF"; }
                     else { s = "-"; }
                     table2.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
                     {
@@ -578,18 +572,18 @@ namespace Cargotruck.Server.Repositories
                 txt.Write(task.Id + separator);
                 txt.Write((task.Partner ?? ifNull) + separator);
                 txt.Write((task.Description ?? ifNull) + separator);
-                txt.Write((task.Place_of_receipt ?? ifNull) + separator);
-                txt.Write((task.Time_of_receipt != null ? task.Time_of_receipt : ifNull) + separator);
-                txt.Write((task.Place_of_delivery ?? ifNull) + separator);
-                txt.Write((task.Time_of_delivery != null ? task.Time_of_delivery : ifNull) + separator);
-                txt.Write((task.Other_stops ?? ifNull) + separator);
-                txt.Write((task.Id_cargo != null ? task.Id_cargo : ifNull) + separator);
-                txt.Write((task.Storage_time ?? ifNull) + separator);
+                txt.Write((task.PlaceOfReceipt ?? ifNull) + separator);
+                txt.Write((task.TimeOfReceipt != null ? task.TimeOfReceipt : ifNull) + separator);
+                txt.Write((task.PlaceOfDelivery ?? ifNull) + separator);
+                txt.Write((task.TimeOfDelivery != null ? task.TimeOfDelivery : ifNull) + separator);
+                txt.Write((task.OtherStops ?? ifNull) + separator);
+                txt.Write((task.Cargo != null ? task.Cargo : ifNull) + separator);
+                txt.Write((task.StorageTime ?? ifNull) + separator);
                 txt.Write(task.Completed + separator);
-                txt.Write((task.Completion_time != null ? task.Completion_time : ifNull) + separator);
-                txt.Write((task.Time_of_delay ?? ifNull) + separator);
+                txt.Write((task.CompletionTime != null ? task.CompletionTime : ifNull) + separator);
+                txt.Write((task.TimeOfDelay ?? ifNull) + separator);
                 txt.Write((task.Payment + "HUF" ?? ifNull) + separator);
-                txt.Write((task.Final_Payment + "HUF" ?? ifNull) + separator);
+                txt.Write((task.FinalPayment + "HUF" ?? ifNull) + separator);
                 txt.Write((task.Penalty + "HUF" ?? ifNull) + separator);
                 txt.Write(task.Date + separator);
 
@@ -699,33 +693,32 @@ namespace Cargotruck.Server.Repositories
                                     }
                                 }
 
-                                list[l + 12] = new String(list[l + 13]?.ToString()?.Where(Char.IsDigit).ToArray());
-                                list[l + 13] = new String(list[l + 14]?.ToString()?.Where(Char.IsDigit).ToArray());
-                                list[l + 14] = new String(list[l + 15]?.ToString()?.Where(Char.IsDigit).ToArray());
+                                list[l + 12] = new String(list[l + 12]?.ToString()?.Where(Char.IsDigit).ToArray());
+                                list[l + 13] = new String(list[l + 13]?.ToString()?.Where(Char.IsDigit).ToArray());
+                                list[l + 14] = new String(list[l + 14]?.ToString()?.Where(Char.IsDigit).ToArray());
 
                                 try
                                 {
-
                                     if (nulls != list.Count)
                                     {
-                                        var sql = @"Insert Into Tasks (User_id,Partner,Description,Place_of_receipt,Time_of_receipt,Place_of_delivery,Time_of_delivery,Other_stops,Id_cargo,Storage_time,Completed,Completion_time,Time_of_delay,Payment,Final_Payment,Penalty,Date ) 
-                                            Values (@User_id,@Partner,@Description,@Place_of_receipt,@Time_of_receipt, @Place_of_delivery,@Time_of_delivery,@Other_stops,@Id_cargo,@Storage_time,@Completed,@Completion_time,@Time_of_delay,@Payment,@Final_Payment,@Penalty,@Date)";
+                                        var sql = @"Insert Into Tasks (UserId,Partner,Description,PlaceOfReceipt,TimeOfReceipt,PlaceOfDelivery,TimeOfDelivery,OtherStops,CargoId,StorageTime,Completed,CompletionTime,TimeOfDelay,Payment,FinalPayment,Penalty,Date ) 
+                                            Values (@UserId,@Partner,@Description,@PlaceOfReceipt,@TimeOfReceipt, @PlaceOfDelivery,@TimeOfDelivery,@OtherStops,@CargoId,@StorageTime,@Completed,@CompletionTime,@TimeOfDelay,@Payment,@FinalPayment,@Penalty,@Date)";
                                         var insert = await _context.Database.ExecuteSqlRawAsync(sql,
-                                            new SqlParameter("@User_id", "Imported"),
+                                            new SqlParameter("@UserId", "Imported"),
                                             new SqlParameter("@Partner", list[l]),
                                             new SqlParameter("@Description", list[l + 1]),
-                                            new SqlParameter("@Place_of_receipt", list[l + 2]),
-                                            new SqlParameter("@Time_of_receipt", list[l + 3] == System.DBNull.Value || list[l + 3] == null ? System.DBNull.Value : DateTime.Parse(list[l + 3]?.ToString()!)),
-                                            new SqlParameter("@Place_of_delivery", list[l + 4]),
-                                            new SqlParameter("@Time_of_delivery", list[l + 5] == System.DBNull.Value || list[l + 5] == null ? System.DBNull.Value : DateTime.Parse(list[l + 5]?.ToString()!)),
-                                            new SqlParameter("@Other_stops", list[l + 6]),
-                                            new SqlParameter("@Id_cargo", list[l + 7]),
-                                            new SqlParameter("@Storage_time", list[l + 8]),
+                                            new SqlParameter("@PlaceOfReceipt", list[l + 2]),
+                                            new SqlParameter("@TimeOfReceipt", list[l + 3] == System.DBNull.Value || list[l + 3] == null ? System.DBNull.Value : DateTime.Parse(list[l + 3]?.ToString()!)),
+                                            new SqlParameter("@PlaceOfDelivery", list[l + 4]),
+                                            new SqlParameter("@TimeOfDelivery", list[l + 5] == System.DBNull.Value || list[l + 5] == null ? System.DBNull.Value : DateTime.Parse(list[l + 5]?.ToString()!)),
+                                            new SqlParameter("@OtherStops", list[l + 6]),
+                                            new SqlParameter("@CargoId", list[l + 7]),
+                                            new SqlParameter("@StorageTime", list[l + 8]),
                                             new SqlParameter("@Completed", list[l + 9]),
-                                            new SqlParameter("@Completion_time", list[l + 10]),
-                                            new SqlParameter("@Time_of_delay", list[l + 11]),
+                                            new SqlParameter("@CompletionTime", list[l + 10]),
+                                            new SqlParameter("@TimeOfDelay", list[l + 11]),
                                             new SqlParameter("@Payment", list[l + 12]),
-                                            new SqlParameter("@Final_Payment", list[l + 13]),
+                                            new SqlParameter("@FinalPayment", list[l + 13]),
                                             new SqlParameter("@Penalty", list[l + 14]),
                                             new SqlParameter("@Date", DateTime.Now)
                                             );
@@ -735,10 +728,10 @@ namespace Cargotruck.Server.Repositories
                                             error = "";
                                             var lastId = await _context.Tasks.OrderBy(x => x.Id).LastOrDefaultAsync();
 
-                                            if (lastId?.Id_cargo != null)
+                                            if (lastId?.Cargo != null)
                                             {
-                                                var WithNewIds = await _context.Tasks.Where(x => x.Id_cargo == lastId.Id_cargo).ToListAsync();
-                                                Cargo? cargo = await _context.Cargoes.FirstOrDefaultAsync(x => x.Id == lastId.Id_cargo);
+                                                var WithNewIds = await _context.Tasks.Where(x => x.Cargo!.Id == lastId.CargoId).ToListAsync();
+                                                Cargo? cargo = await _context.Cargoes.FirstOrDefaultAsync(x => x.Id == lastId.CargoId);
 
                                                 foreach (var item in WithNewIds)
                                                 {
@@ -746,13 +739,13 @@ namespace Cargotruck.Server.Repositories
                                                     {
                                                         if (item.Id != lastId?.Id)
                                                         {
-                                                            item.Id_cargo = null;
+                                                            item.Cargo = null;
                                                             _context.Entry(item).State = EntityState.Modified;
                                                             await _context.SaveChangesAsync();
                                                         }
                                                         else if (cargo == null)
                                                         {
-                                                            item.Id_cargo = null;
+                                                            item.Cargo = null;
                                                             _context.Entry(item).State = EntityState.Modified;
                                                             await _context.SaveChangesAsync();
                                                         }
@@ -761,7 +754,7 @@ namespace Cargotruck.Server.Repositories
 
                                                 if (cargo != null)
                                                 {
-                                                    cargo.Task_id = lastId.Id;
+                                                    cargo.TaskId = lastId.Id;
                                                     _context.Entry(cargo).State = EntityState.Modified;
                                                     await _context.SaveChangesAsync();
                                                 }

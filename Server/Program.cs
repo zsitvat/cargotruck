@@ -53,25 +53,25 @@ var configuration = new MapperConfiguration(cfg =>
     cfg.CreateMap<Cargo, CargoDto>();
     cfg.CreateMap<Expense, ExpenseDto>();
     cfg.CreateMap<Login, LoginDto>();
-    cfg.CreateMap<MonthlyExpense, Monthly_expensesDto>();
-    cfg.CreateMap<MonthlyExpense_task_expense, Monthly_expense_task_expenseDto>();
+    cfg.CreateMap<MonthlyExpense, MonthlyExpenseDto>();
+    cfg.CreateMap<MonthlyExpense_task_expense, MonthlyExpense_task_expenseDto>();
     cfg.CreateMap<Privacies, PrivacyDto>();
     cfg.CreateMap<Road, RoadDto>();
     cfg.CreateMap<Setting, SettingDto>();
-    cfg.CreateMap<Cargotruck.Shared.Model.DeliveryTask, DeliveryTaskDto>();
+    cfg.CreateMap<DeliveryTask, DeliveryTaskDto>();
     cfg.CreateMap<Truck, TruckDto>();
     cfg.CreateMap<Warehouse, WarehouseDto>();
 
     //Dto to entity
-    cfg.CreateMap<CargoDto, Cargo>();
+    cfg.CreateMap<CargoDto, Cargo>().ForMember(entity => entity.Task, conf => conf.Ignore());
     cfg.CreateMap<ExpenseDto, Expense>();
     cfg.CreateMap<LoginDto, Login>();
-    cfg.CreateMap<Monthly_expensesDto, MonthlyExpense>();
-    cfg.CreateMap<Monthly_expense_task_expenseDto, MonthlyExpense_task_expense>();
+    cfg.CreateMap<MonthlyExpenseDto, MonthlyExpense>().ForMember(entity => entity.Monthly_expenses_tasks_expenses, conf => conf.Ignore());
+    cfg.CreateMap<MonthlyExpense_task_expenseDto, MonthlyExpense_task_expense>();
     cfg.CreateMap<PrivacyDto, Privacies>();
     cfg.CreateMap<RoadDto, Road>();
     cfg.CreateMap<SettingDto, Setting>();
-    cfg.CreateMap<DeliveryTaskDto, Cargotruck.Shared.Model.DeliveryTask>();
+    cfg.CreateMap<DeliveryTaskDto, DeliveryTask>().ForMember(entity => entity.Cargo, conf => conf.Ignore());
     cfg.CreateMap<TruckDto, Truck>();
     cfg.CreateMap<WarehouseDto, Warehouse>();
 });
@@ -125,7 +125,7 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.Events.OnRedirectToLogin = context =>
     {
         context.Response.StatusCode = 401;
-        return System.Threading.Tasks.Task.CompletedTask;
+        return Task.CompletedTask;
     };
 });
 

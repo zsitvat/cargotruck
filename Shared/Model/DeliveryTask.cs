@@ -8,7 +8,7 @@ namespace Cargotruck.Shared.Model
     {
         [Required]
         public int Id { get; set; }
-        public string? User_id { get; set; }
+        public string? UserId { get; set; }
         [Required(ErrorMessageResourceName = "Error_partner", ErrorMessageResourceType = typeof(Resource))]
         [Display(Name = "Partner", ResourceType = typeof(Resource))]
         public string? Partner { get; set; }
@@ -16,39 +16,41 @@ namespace Cargotruck.Shared.Model
         public string? Description { get; set; }
         [Required(ErrorMessageResourceName = "Error_place_of_receipt", ErrorMessageResourceType = typeof(Resource))]
         [Display(Name = "Place_of_receipt", ResourceType = typeof(Resource))]
-        public string? Place_of_receipt { get; set; }
+        public string? PlaceOfReceipt { get; set; }
         [Required(ErrorMessageResourceName = "Error_time_of_receipt", ErrorMessageResourceType = typeof(Resource))]
         [Display(Name = "Time_of_receipt", ResourceType = typeof(Resource))]
-        public DateTime? Time_of_receipt { get; set; }
+        public DateTime? TimeOfReceipt { get; set; }
         [Required(ErrorMessageResourceName = "Error_place_of_delivery", ErrorMessageResourceType = typeof(Resource))]
         [Display(Name = "Place_of_delivery", ResourceType = typeof(Resource))]
-        public string? Place_of_delivery { get; set; }
+        public string? PlaceOfDelivery { get; set; }
         [Required(ErrorMessageResourceName = "Error_time_of_delivery", ErrorMessageResourceType = typeof(Resource))]
         [Display(Name = "Time_of_delivery", ResourceType = typeof(Resource))]
-        public DateTime? Time_of_delivery { get; set; }
+        public DateTime? TimeOfDelivery { get; set; }
         [Display(Name = "Other_stops", ResourceType = typeof(Resource))]
-        public string? Other_stops { get; set; }
-        [Display(Name = "Id_cargo", ResourceType = typeof(Resource))]
-        public int? Id_cargo { get; set; }
+        public string? OtherStops { get; set; }
         [Display(Name = "Storage_time", ResourceType = typeof(Resource))]
-        public string? Storage_time { get; set; }
+        public string? StorageTime { get; set; }
         [Display(Name = "Completed", ResourceType = typeof(Resource))]
         public bool Completed { get; set; } = false;
         [Display(Name = "Completion_time", ResourceType = typeof(Resource))]
-        public DateTime? Completion_time { get; set; }
+        public DateTime? CompletionTime { get; set; }
         [Display(Name = "Time_of_delay", ResourceType = typeof(Resource))]
-        public string? Time_of_delay { get; set; }
+        public string? TimeOfDelay { get; set; }
         [Display(Name = "Payment", ResourceType = typeof(Resource))]
         [Range(0, long.MaxValue, ErrorMessageResourceName = "OnlyPositive", ErrorMessageResourceType = typeof(Resource))]
         public long? Payment { get; set; }
-        [Display(Name = "Final_Payment", ResourceType = typeof(Resource))]
+        [Display(Name = "Final_payment", ResourceType = typeof(Resource))]
         [Range(long.MinValue, long.MaxValue, ErrorMessageResourceName = "OnlyPositive", ErrorMessageResourceType = typeof(Resource))]
-        public long? Final_Payment { get; set; }
+        public long? FinalPayment { get; set; }
         [Display(Name = "Penalty", ResourceType = typeof(Resource))]
         [Range(0, long.MaxValue, ErrorMessageResourceName = "OnlyPositive", ErrorMessageResourceType = typeof(Resource))]
         public long? Penalty { get; set; }
         [Display(Name = "Date", ResourceType = typeof(Resource))]
         public DateTime Date { get; set; } = DateTime.Now;
+        [Display(Name = "Cargo_id", ResourceType = typeof(Resource))]
+        public int? CargoId { get; set; }
+        [Display(Name = "Cargo", ResourceType = typeof(Resource))]
+        public Cargo? Cargo { get; set; } = null;
     }
 
 }

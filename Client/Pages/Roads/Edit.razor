@@ -21,7 +21,7 @@
         {
             if (road != null)
             {
-                road.User_id = authStateProvider.GetCurrentUserAsync().Result.Id;
+                road.UserId = authStateProvider.GetCurrentUserAsync().Result.Id;
             }
             var text = @localizer["Succesfull_update"];
             await http.PutAsJsonAsync("api/roads/put", road);

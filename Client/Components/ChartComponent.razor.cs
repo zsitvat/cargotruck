@@ -308,7 +308,7 @@ namespace Cargotruck.Client.Components
             if (columnHeights != null)
             {
                 var roads = await client.GetFromJsonAsync<Road[]?>("api/roads/getroads");
-                var trucksVRN = roads?.DistinctBy(x => x.Vehicle_registration_number).ToList();
+                var trucksVRN = roads?.DistinctBy(x => x.VehicleRegistrationNumber).ToList();
                 if (roads != null && trucksVRN != null && roads.Length > 0 && trucksVRN.Count > 0)
                 {
                     int NumberOfTrucks = columnHeights.Length / 12;
@@ -343,7 +343,7 @@ namespace Cargotruck.Client.Components
 
                         LineDataset<int> datasetNumberOfRoads = new(datalistItems)
                         {
-                            Label = lang == "hu" ? "Utak száma (Rendszám: " + trucksVRN?[i].Vehicle_registration_number + ")" : "Number of roads (VRN: " + trucksVRN?[i].Vehicle_registration_number + ")",
+                            Label = lang == "hu" ? "Utak száma (Rendszám: " + trucksVRN?[i].VehicleRegistrationNumber + ")" : "Number of roads (VRN: " + trucksVRN?[i].VehicleRegistrationNumber + ")",
                             BorderColor = ColorUtil.ColorHexString(colorChosen[0], colorChosen[1], colorChosen[2]),
                             Fill = false,
                             LineTension = 0

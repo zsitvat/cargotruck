@@ -144,9 +144,9 @@ namespace Cargotruck.Server.Repositories
 
                 foreach (Cargo cargo in cargoes)
                 {
-                    if (cargo.Warehouse_id == warehouse.Id)
+                    if (cargo.WarehouseId == warehouse.Id)
                     {
-                        cellValue = "[" + cargo.Id + (cargo.Warehouse_section != null ? "/" : "") + cargo.Warehouse_section + "]";
+                        cellValue = "[" + cargo.Id + (cargo.WarehouseSection != null ? "/" : "") + cargo.WarehouseSection + "]";
                     }
                 }
 
@@ -252,9 +252,9 @@ namespace Cargotruck.Server.Repositories
                     {
                         foreach (Cargo cargo in cargoes)
                         {
-                            if (cargo.Warehouse_id == warehouse.Id)
+                            if (cargo.WarehouseId == warehouse.Id)
                             {
-                                s = (s + "[" + cargo.Id + (cargo.Warehouse_section != null ? "/" : "") + cargo.Warehouse_section + "]");
+                                s = (s + "[" + cargo.Id + (cargo.WarehouseSection != null ? "/" : "") + cargo.WarehouseSection + "]");
                             }
                         }
                     }
@@ -336,9 +336,9 @@ namespace Cargotruck.Server.Repositories
                 {
                     foreach (Cargo cargo in cargoes)
                     {
-                        if (cargo.Warehouse_id == warehouse.Id)
+                        if (cargo.WarehouseId == warehouse.Id)
                         {
-                            txt.Write("[" + cargo.Id + (cargo.Warehouse_section != null ? "/" : "") + cargo.Warehouse_section + "]");
+                            txt.Write("[" + cargo.Id + (cargo.WarehouseSection != null ? "/" : "") + cargo.WarehouseSection + "]");
                         }
                     }
                 }
@@ -462,10 +462,10 @@ namespace Cargotruck.Server.Repositories
                                     if (nulls != list.Count)
                                     {
 
-                                        var sql = @"Insert Into Warehouses (User_id,Address,Owner,Date) 
-                                            Values (@User_id,@Address,@Owner,@Date)";
+                                        var sql = @"Insert Into Warehouses (UserId,Address,Owner,Date) 
+                                            Values (@UserId,@Address,@Owner,@Date)";
                                         var insert = await _context.Database.ExecuteSqlRawAsync(sql,
-                                            new SqlParameter("@User_id", "Imported"),
+                                            new SqlParameter("@UserId", "Imported"),
                                             new SqlParameter("@Address", list[l]),
                                             new SqlParameter("@Owner", list[l + 1]),
                                             new SqlParameter("@Date", DateTime.Now)
@@ -486,11 +486,11 @@ namespace Cargotruck.Server.Repositories
 
                                                     if (greatestId != null) { 
                                                         var sql2 = @"Update Cargoes 
-                                                                Set Warehouse_id = @Warehouse_id, Warehouse_section = @Warehouse_section
+                                                                Set WarehouseId = @WarehouseId, WarehouseSection = @WarehouseSection
                                                                     Where Id = @Id";
                                                         var insert2 = await _context.Database.ExecuteSqlRawAsync(sql2,
-                                                            new SqlParameter("@Warehouse_id", greatestId),
-                                                            new SqlParameter("@Warehouse_section", warehouseSection),
+                                                            new SqlParameter("@WarehouseId", greatestId),
+                                                            new SqlParameter("@WarehouseSection", warehouseSection),
                                                             new SqlParameter("@Id", CargoId)
                                                             );
                                                     }

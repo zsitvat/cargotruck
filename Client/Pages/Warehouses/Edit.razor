@@ -19,7 +19,7 @@
     {
         if (warehouse != null)
         {
-            warehouse.User_id = authStateProvider.GetCurrentUserAsync().Result.Id;
+            warehouse.UserId = authStateProvider.GetCurrentUserAsync().Result.Id;
         }
         var text = @localizer["Succesfull_update"];
         await http.PutAsJsonAsync("api/warehouses/put", warehouse);

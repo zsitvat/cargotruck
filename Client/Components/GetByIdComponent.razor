@@ -22,11 +22,11 @@
                     <div class="column">
                         <p>@(idDataCargo?.Weight != null ? (idDataCargo.Weight + "kg") : "-")</p>
                         <p>@(idDataCargo?.Description != null ? idDataCargo.Description : "-") </p>
-                        <p>@(idDataCargo?.Delivery_requirements != null ? idDataCargo.Delivery_requirements : "-") </p>
-                        <p>@(idDataCargo?.Vehicle_registration_number != null ? idDataCargo.Vehicle_registration_number : "-")</p>
-                        <p>@(idDataCargo?.Warehouse_id != null ? idDataCargo.Warehouse_id : "-") </p>
-                        <p>@(idDataCargo?.Warehouse_section != null ? idDataCargo.Warehouse_section : "-") </p>
-                        <p>@(idDataCargo?.Storage_starting_time != null ? idDataCargo.Storage_starting_time : "-") </p>
+                        <p>@(idDataCargo?.DeliveryRequirements != null ? idDataCargo.DeliveryRequirements : "-") </p>
+                        <p>@(idDataCargo?.VehicleRegistrationNumber != null ? idDataCargo.VehicleRegistrationNumber : "-")</p>
+                        <p>@(idDataCargo?.WarehouseId != null ? idDataCargo.WarehouseId : "-") </p>
+                        <p>@(idDataCargo?.WarehouseSection != null ? idDataCargo.WarehouseSection : "-") </p>
+                        <p>@(idDataCargo?.StorageStartingTime != null ? idDataCargo.StorageStartingTime : "-") </p>
                         <p>@(idDataCargo?.Date.ToString())</p>
                     </div>
                 </div>
@@ -39,7 +39,7 @@
                 <div id="road" class="row mt-4">
                     <div class="column">
                         <p><b>@localizer["Task_id"]:</b></p>
-                        <p><b>@localizer["Id_cargo"]:</b></p>
+                        <p><b>@localizer["Cargo_id"]:</b></p>
                         <p><b>@localizer["Purpose_of_the_trip"]:</b></p>
                         <p><b>@localizer["Starting_date"]:</b></p>
                         <p><b>@localizer["Ending_date"]:</b></p>
@@ -50,15 +50,15 @@
                         <p><b>@localizer["Date"]:</b></p>
                     </div>
                     <div class="column">
-                        <p>@(idDataRoad?.Task_id != null ? (idDataRoad.Task_id) : "-")</p>
-                        <p>@(idDataRoad?.Id_cargo != null ? idDataRoad.Id_cargo : "-") </p>
-                        <p>@(idDataRoad?.Purpose_of_the_trip != null ? idDataRoad.Purpose_of_the_trip : "-") </p>
-                        <p>@(idDataRoad?.Starting_date != null ? idDataRoad.Starting_date : "-")</p>
-                        <p>@(idDataRoad?.Ending_date != null ? idDataRoad.Ending_date : "-") </p>
-                        <p>@(idDataRoad?.Starting_place != null ? idDataRoad.Starting_place : "-") </p>
-                        <p>@(idDataRoad?.Ending_place != null ? idDataRoad.Ending_place : "-") </p>
+                        <p>@(idDataRoad?.TaskId != null ? (idDataRoad.TaskId) : "-")</p>
+                        <p>@(idDataRoad?.CargoId != null ? idDataRoad.CargoId : "-") </p>
+                        <p>@(idDataRoad?.PurposeOfTheTrip != null ? idDataRoad.PurposeOfTheTrip : "-") </p>
+                        <p>@(idDataRoad?.StartingDate != null ? idDataRoad.StartingDate : "-")</p>
+                        <p>@(idDataRoad?.EndingDate != null ? idDataRoad.EndingDate : "-") </p>
+                        <p>@(idDataRoad?.StartingPlace != null ? idDataRoad.StartingPlace : "-") </p>
+                        <p>@(idDataRoad?.EndingPlace != null ? idDataRoad.EndingPlace : "-") </p>
                         <p>@(idDataRoad?.Direction != null ? (idDataRoad.Direction == "TO" ? @localizer["to"] : @localizer["from"]) : "-") </p>
-                        <p>@(idDataRoad?.Expenses_id != null ? idDataRoad.Expenses_id : "-") </p>
+                        <p>@(idDataRoad?.ExpensesId != null ? idDataRoad.ExpensesId : "-") </p>
                         <p>@(idDataRoad?.Date.ToString())</p>
                     </div>
                 </div>
@@ -78,11 +78,11 @@
                         <p><b>@localizer["Date"]:</b></p>
                     </div>
                     <div class="column">
-                        <p>@(idDataTruck?.Vehicle_registration_number != null ? (idDataTruck.Vehicle_registration_number + "kg") : "-")</p>
+                        <p>@(idDataTruck?.VehicleRegistrationNumber != null ? (idDataTruck.VehicleRegistrationNumber + "kg") : "-")</p>
                         <p>@(idDataTruck?.Brand != null ? idDataTruck.Brand : "-") </p>
                         <p>@(idDataTruck?.Status != null ? localizer[idDataTruck.Status.ToString()] : "-") </p>
-                        <p>@(idDataTruck?.Road_id != null ? idDataTruck.Road_id : "-")</p>
-                        <p>@(idDataTruck?.Max_weight != null ? idDataTruck.Max_weight : "-") </p>
+                        <p>@(idDataTruck?.RoadId != null ? idDataTruck.RoadId : "-")</p>
+                        <p>@(idDataTruck?.MaxWeight != null ? idDataTruck.MaxWeight : "-") </p>
                         <p>@(idDataTruck?.Date.ToString())</p>
                     </div>
                 </div>
@@ -125,29 +125,29 @@
                         <p><b>@localizer["Place_of_delivery"]:</b></p>
                         <p><b>@localizer["Time_of_delivery"]:</b></p>
                         <p><b>@localizer["Other_stops"]:</b></p>
-                        <p><b>@localizer["Id_cargo"]:</b></p>
+                        <p><b>@localizer["Cargo_id"]:</b></p>
                         <p><b>@localizer["Storage_time"]:</b></p>
                         <p><b>@localizer["Completed"]:</b></p>
                         <p><b>@localizer["Completion_time"]:</b></p>
                         <p><b>@localizer["Time_of_delay"]:</b></p>
                         <p><b>@localizer["Payment"]:</b></p>
-                        <p><b>@localizer["Final_Payment"]:</b></p>
+                        <p><b>@localizer["Final_payment"]:</b></p>
                         <p><b>@localizer["Penalty"]:</b></p>
                         <p><b>@localizer["Date"]:</b></p>
                     </div>
                     <div class="column">
                         <p>@(idDataTask?.Partner != null ? (idDataTask.Partner) : "-")</p>
                         <p>@(idDataTask?.Description != null ? idDataTask.Description : "-")</p>
-                        <p>@(idDataTask?.Place_of_receipt != null ? idDataTask.Place_of_receipt : "-")</p>
-                        <p>@(idDataTask?.Time_of_receipt != null ? idDataTask.Time_of_receipt : "-")</p>
-                        <p>@(idDataTask?.Place_of_delivery != null ? idDataTask.Place_of_delivery : "-")</p>
-                        <p>@(idDataTask?.Time_of_delivery != null ? idDataTask.Time_of_delivery : "-")</p>
-                        <p>@(idDataTask?.Other_stops != null ? idDataTask.Other_stops : "-")</p>
-                        <p>@(idDataTask?.Id_cargo != null ? idDataTask.Id_cargo : "-")</p>
-                        <p>@(idDataTask?.Storage_time != null ? idDataTask.Storage_time : "-")</p>
+                        <p>@(idDataTask?.PlaceOfReceipt != null ? idDataTask.PlaceOfReceipt : "-")</p>
+                        <p>@(idDataTask?.TimeOfReceipt != null ? idDataTask.TimeOfReceipt : "-")</p>
+                        <p>@(idDataTask?.PlaceOfDelivery != null ? idDataTask.PlaceOfDelivery : "-")</p>
+                        <p>@(idDataTask?.TimeOfDelivery != null ? idDataTask.TimeOfDelivery : "-")</p>
+                        <p>@(idDataTask?.OtherStops != null ? idDataTask.OtherStops : "-")</p>
+                        <p>@(idDataTask?.CargoId != null ? idDataTask.CargoId : "-")</p>
+                        <p>@(idDataTask?.StorageTime != null ? idDataTask.StorageTime : "-")</p>
                         <p>@(idDataTask?.Completed != null ? (idDataTask.Completed ? localizer["True"] : localizer["False"]) : "-")</p>
-                        <p>@(idDataTask?.Completion_time != null ? idDataTask.Completion_time : "-") </p>
-                        <p>@(idDataTask?.Time_of_delay != null ? idDataTask.Time_of_delay : "-")</p>
+                        <p>@(idDataTask?.CompletionTime != null ? idDataTask.CompletionTime : "-") </p>
+                        <p>@(idDataTask?.TimeOfDelay != null ? idDataTask.TimeOfDelay : "-")</p>
                         <p>
                             @if (idDataTask?.Payment != null)
                             {
@@ -167,15 +167,15 @@
                             }
                         </p>
                         <p>
-                            @if (idDataTask?.Final_Payment != null)
+                            @if (idDataTask?.FinalPayment != null)
                             {
                                 @if (currencyExchange.GetCurrencyType() != "HUF" && currencyExchange.GetRates() != null)
                                 {
-                                    @(currencyExchange.GetCurrencyAmount(idDataTask.Final_Payment, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
+                                    @(currencyExchange.GetCurrencyAmount(idDataTask.FinalPayment, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
                                 }
-                                else if (idDataTask.Final_Payment != 0)
+                                else if (idDataTask.FinalPayment != 0)
                                 {
-                                    @(idDataTask.Final_Payment + " HUF")
+                                    @(idDataTask.FinalPayment + " HUF")
                                 }
 
                             }
@@ -229,12 +229,12 @@
                         <p><b>@localizer["Repair_cost"]:</b></p>
                         <p><b>@localizer["Repair_description"]:</b></p>
                         <p><b>@localizer["Cost_of_storage"]:</b></p>
-                        <p><b>@localizer["other"]:</b></p>
+                        <p><b>@localizer["Other"]:</b></p>
                         <p><b>@localizer["Date"]:</b></p>
                     </div>
                     <div class="column">
                         <p>@(idDataExpense?.Type != null ? @localizer[idDataExpense.Type.ToString()!] : "-")</p>
-                        <p>@(idDataExpense?.Type_id != null ? idDataExpense.Type_id : "-")</p>
+                        <p>@(idDataExpense?.TypeId != null ? idDataExpense.TypeId : "-")</p>
                         <p>
                             @if (idDataExpense?.Fuel != null)
                             {
@@ -254,15 +254,15 @@
                             }
                         </p>
                         <p>
-                            @if (idDataExpense?.Road_fees != null)
+                            @if (idDataExpense?.RoadFees != null)
                             {
                                 @if (currencyExchange.GetCurrencyType() != "HUF" && currencyExchange.GetRates() != null)
                                 {
-                                    @(currencyExchange.GetCurrencyAmount(idDataExpense?.Road_fees, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
+                                    @(currencyExchange.GetCurrencyAmount(idDataExpense?.RoadFees, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
                                 }
-                                else if (idDataExpense?.Road_fees != 0)
+                                else if (idDataExpense?.RoadFees != 0)
                                 {
-                                    @(idDataExpense?.Road_fees + " HUF")
+                                    @(idDataExpense?.RoadFees + " HUF")
                                 }
 
                             }
@@ -290,15 +290,15 @@
                             }
                         </p>
                         <p>
-                            @if (idDataExpense?.Driver_spending != null)
+                            @if (idDataExpense?.DriverSpending != null)
                             {
                                 @if (currencyExchange.GetCurrencyType() != "HUF" && currencyExchange.GetRates() != null)
                                 {
-                                    @(currencyExchange.GetCurrencyAmount(idDataExpense?.Driver_spending, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
+                                    @(currencyExchange.GetCurrencyAmount(idDataExpense?.DriverSpending, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
                                 }
-                                else if (idDataExpense?.Driver_spending != 0)
+                                else if (idDataExpense?.DriverSpending != 0)
                                 {
-                                    @(idDataExpense?.Driver_spending + " HUF")
+                                    @(idDataExpense?.DriverSpending + " HUF")
                                 }
 
                             }
@@ -308,15 +308,15 @@
                             }
                         </p>
                         <p>
-                            @if (idDataExpense?.Driver_salary != null)
+                            @if (idDataExpense?.DriverSalary != null)
                             {
                                 @if (currencyExchange.GetCurrencyType() != "HUF" && currencyExchange.GetRates() != null)
                                 {
-                                    @(currencyExchange.GetCurrencyAmount(idDataExpense?.Driver_salary, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
+                                    @(currencyExchange.GetCurrencyAmount(idDataExpense?.DriverSalary, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
                                 }
-                                else if (idDataExpense?.Driver_salary != 0)
+                                else if (idDataExpense?.DriverSalary != 0)
                                 {
-                                    @(idDataExpense?.Driver_salary + " HUF")
+                                    @(idDataExpense?.DriverSalary + " HUF")
                                 }
 
                             }
@@ -326,15 +326,15 @@
                             }
                         </p>
                         <p>
-                            @if (idDataExpense?.Repair_cost != null)
+                            @if (idDataExpense?.RepairCost != null)
                             {
                                 @if (currencyExchange.GetCurrencyType() != "HUF" && currencyExchange.GetRates() != null)
                                 {
-                                    @(currencyExchange.GetCurrencyAmount(idDataExpense?.Repair_cost, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
+                                    @(currencyExchange.GetCurrencyAmount(idDataExpense?.RepairCost, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
                                 }
-                                else if (idDataExpense?.Repair_cost != 0)
+                                else if (idDataExpense?.RepairCost != 0)
                                 {
-                                    @(idDataExpense?.Repair_cost + " HUF")
+                                    @(idDataExpense?.RepairCost + " HUF")
                                 }
 
                             }
@@ -343,17 +343,17 @@
                                 @("-")
                             }
                         </p>
-                        <p>@(idDataExpense?.Repair_description != null ? idDataExpense.Repair_description : "-")</p>
+                        <p>@(idDataExpense?.RepairDescription != null ? idDataExpense.RepairDescription : "-")</p>
                         <p>
-                            @if (idDataExpense?.Cost_of_storage != null)
+                            @if (idDataExpense?.CostOfStorage != null)
                             {
                                 @if (currencyExchange.GetCurrencyType() != "HUF" && currencyExchange.GetRates() != null)
                                 {
-                                    @(currencyExchange.GetCurrencyAmount(idDataExpense?.Cost_of_storage, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
+                                    @(currencyExchange.GetCurrencyAmount(idDataExpense?.CostOfStorage, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
                                 }
-                                else if (idDataExpense?.Cost_of_storage != 0)
+                                else if (idDataExpense?.CostOfStorage != 0)
                                 {
-                                    @(idDataExpense?.Cost_of_storage + " HUF")
+                                    @(idDataExpense?.CostOfStorage + " HUF")
                                 }
 
                             }

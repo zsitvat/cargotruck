@@ -19,20 +19,20 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Monthly_expensesDto>>> GetAsync(int page, int pageSize, string sortOrder,
+        public async Task<ActionResult<List<MonthlyExpenseDto>>> GetAsync(int page, int pageSize, string sortOrder,
             bool desc, string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             return Ok(await _monthlyExpenseService.GetAsync(page, pageSize, sortOrder, desc, searchString, dateFilterStartDate, dateFilterEndDate));
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Monthly_expensesDto>> GetByIdAsync(int id)
+        public async Task<ActionResult<MonthlyExpenseDto>> GetByIdAsync(int id)
         {
             return Ok(await _monthlyExpenseService.GetByIdAsync(id));
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Monthly_expensesDto>>> GetMonthlyExpensesAsync()
+        public async Task<ActionResult<List<MonthlyExpenseDto>>> GetMonthlyExpensesAsync()
         {
             return Ok(await _monthlyExpenseService.GetMonthlyExpensesAsync());
         }
@@ -56,13 +56,13 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpPost]
-        public async Task PostAsync(Monthly_expensesDto task)
+        public async Task PostAsync(MonthlyExpenseDto task)
         {
             await _monthlyExpenseService.PostAsync(task);
         }
 
         [HttpPut]
-        public async Task PutAsync(Monthly_expensesDto task)
+        public async Task PutAsync(MonthlyExpenseDto task)
         {
             await _monthlyExpenseService.PutAsync(task);
         }
@@ -80,13 +80,13 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<List<Monthly_expense_task_expenseDto>> GetConnectionIdsAsync()
+        public async Task<List<MonthlyExpense_task_expenseDto>> GetConnectionIdsAsync()
         {
             return await _monthlyExpenseService.GetConnectionIdsAsync();
         }
 
         [HttpPost]
-        public async Task PostConnectionIdsAsync(Monthly_expense_task_expenseDto connectionIds, bool first)
+        public async Task PostConnectionIdsAsync(MonthlyExpense_task_expenseDto connectionIds, bool first)
         {
             await _monthlyExpenseService.PostConnectionIdsAsync(connectionIds, first);
         }

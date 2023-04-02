@@ -16,21 +16,21 @@
                             <label>@localizer["Language"]:</label>
                             <div>
                                 <div data-title="@localizer["Filter"]" class="form-group custom-select d-inline-block">
-                                    <div class="form-control filter">@(privacies?.Lang != null && privacies.Lang.ToString() != "" ? localizer[privacies.Lang?.ToString()!] : localizer["Nothing"])</div>
+                                    <div class="form-control filter">@(privacies?.Language != null && privacies.Language.ToString() != "" ? localizer[privacies.Language?.ToString()!] : localizer["Nothing"])</div>
                                     <div class="custom-select-options ">
-                                        <div class="custom-select-option" @onclick='() => {privacies!.Lang = "";}'>
+                                        <div class="custom-select-option" @onclick='() => {privacies!.Language = "";}'>
                                             @localizer["Nothing"]
                                         </div>
                                         @foreach (var culture in supportedCultures)
                                         {
-                                            <div class="custom-select-option" @onclick='() => {privacies!.Lang = culture.DisplayName; }'>
+                                            <div class="custom-select-option" @onclick='() => {privacies!.Language = culture.DisplayName; }'>
                                                 @localizer[culture.DisplayName]
                                             </div>
                                         }
                                     </div>
                                 </div>
                             </div>
-                            <ValidationMessage For="@(() => privacies!.Lang)" />
+                            <ValidationMessage For="@(() => privacies!.Language)" />
                         </div>
                     </div>
                     <div class="form-group">

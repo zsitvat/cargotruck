@@ -72,7 +72,7 @@
 
 
 @code {
-    Monthly_expensesDto[]? Monthly_expenses { get; set; }
+    MonthlyExpenseDto[]? Monthly_expenses { get; set; }
     List<DataPerYear>? DataPerYearList = new();
     
     [Parameter] public string Currency { get; set; } = "HUF";
@@ -87,7 +87,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Monthly_expenses = await client.GetFromJsonAsync<Monthly_expensesDto[]?>("api/Monthlyexpenses/getmonthlyexpenses");
+        Monthly_expenses = await client.GetFromJsonAsync<MonthlyExpenseDto[]?>("api/Monthlyexpenses/getmonthlyexpenses");
 
         if(Monthly_expenses != null){
             @foreach (var item in Monthly_expenses.Where(x => x.Date.Year >= DateTime.Now.Year-2 || x.Date.Year <= DateTime.Now.Year+2))

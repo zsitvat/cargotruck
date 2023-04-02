@@ -3,6 +3,8 @@ using Cargotruck.Server.Repositories.Interfaces;
 using Cargotruck.Server.Services.Interfaces;
 using Cargotruck.Shared.Model;
 using Cargotruck.Shared.Model.Dto;
+using DocumentFormat.OpenXml.Drawing.Charts;
+using DocumentFormat.OpenXml.InkML;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
@@ -47,17 +49,17 @@ namespace Cargotruck.Server.Services
         {
             return await _taskRepository.CountAsync(all);
         }
-        public async System.Threading.Tasks.Task ChangeCompletionAsync(DeliveryTaskDto task)
+        public async Task ChangeCompletionAsync(DeliveryTaskDto task)
         {
-            await _taskRepository.ChangeCompletionAsync(_mapper.Map<Shared.Model.DeliveryTask>(task));
+            await _taskRepository.ChangeCompletionAsync(_mapper.Map<DeliveryTask>(task));
         }
-        public async System.Threading.Tasks.Task PostAsync(DeliveryTaskDto task)
+        public async Task PostAsync(DeliveryTaskDto task)
         {
-            await _taskRepository.PostAsync(_mapper.Map<Shared.Model.DeliveryTask>(task));
+            await _taskRepository.PostAsync(_mapper.Map<DeliveryTask>(task));
         }
-        public async System.Threading.Tasks.Task PutAsync(DeliveryTaskDto task)
+        public async Task PutAsync(DeliveryTaskDto task)
         {
-            await _taskRepository.PutAsync(_mapper.Map<Shared.Model.DeliveryTask>(task));
+            await _taskRepository.PutAsync(_mapper.Map<DeliveryTask>(task));
         }
         public async Task<bool> DeleteAsync(int id)
         {

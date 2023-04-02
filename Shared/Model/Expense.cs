@@ -7,43 +7,42 @@ namespace Cargotruck.Shared.Model
     public class Expense
     {
         [Required]
-        [ForeignKey("Expense_id")]
         public int Id { get; set; }
-        public string? User_id { get; set; }
+        public string? UserId { get; set; }
         [Required(ErrorMessageResourceName = "Error_type", ErrorMessageResourceType = typeof(Resource))]
         [Display(Name = "Type", ResourceType = typeof(Resource))]
         public Type? Type { get; set; }
-        [Display(Name = "Type_id", ResourceType = typeof(Resource))]
-        public int? Type_id { get; set; }
+        [Display(Name = "TypeId", ResourceType = typeof(Resource))]
+        public int? TypeId { get; set; }
         [Display(Name = "Fuel", ResourceType = typeof(Resource))]
         [Range(0, int.MaxValue, ErrorMessageResourceName = "OnlyPositive", ErrorMessageResourceType = typeof(Resource))]
         public int? Fuel { get; set; }
         [Display(Name = "Road_fees", ResourceType = typeof(Resource))]
         [Range(0, int.MaxValue, ErrorMessageResourceName = "OnlyPositive", ErrorMessageResourceType = typeof(Resource))]
-        public int? Road_fees { get; set; }
+        public int? RoadFees { get; set; }
         [Display(Name = "Penalty_expenses", ResourceType = typeof(Resource))]
         [Range(0, int.MaxValue, ErrorMessageResourceName = "OnlyPositive", ErrorMessageResourceType = typeof(Resource))]
         public int? Penalty { get; set; }
         [Display(Name = "Driver_spending", ResourceType = typeof(Resource))]
         [Range(0, int.MaxValue, ErrorMessageResourceName = "OnlyPositive", ErrorMessageResourceType = typeof(Resource))]
-        public int? Driver_spending { get; set; }
+        public int? DriverSpending { get; set; }
         [Display(Name = "Driver_salary", ResourceType = typeof(Resource))]
         [Range(0, int.MaxValue, ErrorMessageResourceName = "OnlyPositive", ErrorMessageResourceType = typeof(Resource))]
-        public int? Driver_salary { get; set; }
+        public int? DriverSalary { get; set; }
         [Display(Name = "Repair_cost", ResourceType = typeof(Resource))]
         [Range(0, int.MaxValue, ErrorMessageResourceName = "OnlyPositive", ErrorMessageResourceType = typeof(Resource))]
-        public int? Repair_cost { get; set; }
+        public int? RepairCost { get; set; }
         [Display(Name = "Repair_description", ResourceType = typeof(Resource))]
-        public string? Repair_description { get; set; }
+        public string? RepairDescription { get; set; }
         [Display(Name = "Cost_of_storage", ResourceType = typeof(Resource))]
         [Range(0, int.MaxValue, ErrorMessageResourceName = "OnlyPositive", ErrorMessageResourceType = typeof(Resource))]
-        public int? Cost_of_storage { get; set; }
-        [Display(Name = "other", ResourceType = typeof(Resource))]
+        public int? CostOfStorage { get; set; }
+        [Display(Name = "Other", ResourceType = typeof(Resource))]
         [Range(0, int.MaxValue, ErrorMessageResourceName = "OnlyPositive", ErrorMessageResourceType = typeof(Resource))]
         public int? Other { get; set; }
         [Display(Name = "Total_amount", ResourceType = typeof(Resource))]
         [Range(0, int.MaxValue, ErrorMessageResourceName = "OnlyPositive", ErrorMessageResourceType = typeof(Resource))]
-        public int? Total_amount { get; set; }
+        public int? TotalAmount { get; set; }
         [Display(Name = "Date", ResourceType = typeof(Resource))]
         public DateTime Date { get; set; } = DateTime.Now;
     }

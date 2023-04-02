@@ -6,18 +6,18 @@ namespace Cargotruck.Server.Services.Interfaces
 {
     public interface IMonthlyExpenseService
     {
-        Task<List<Monthly_expensesDto>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);
-        Task<List<Monthly_expensesDto>> GetMonthlyExpensesAsync();
-        Task<Monthly_expensesDto?> GetByIdAsync(int id);
+        Task<List<MonthlyExpenseDto>> GetAsync(int page, int pageSize, string sortOrder, bool desc, string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);
+        Task<List<MonthlyExpenseDto>> GetMonthlyExpensesAsync();
+        Task<MonthlyExpenseDto?> GetByIdAsync(int id);
         Task<int[]> GetChartDataAsync();
         Task<int> PageCountAsync(string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);
         Task<int> CountAsync();
-        Task PostAsync(Monthly_expensesDto data);
-        Task PutAsync(Monthly_expensesDto data);
+        Task PostAsync(MonthlyExpenseDto data);
+        Task PutAsync(MonthlyExpenseDto data);
         Task<bool> DeleteAsync(int id);
         Task CheckDataAsync();
-        Task<List<Monthly_expense_task_expenseDto>> GetConnectionIdsAsync();
-        Task PostConnectionIdsAsync(Monthly_expense_task_expenseDto connectionIds, bool first);
+        Task<List<MonthlyExpense_task_expenseDto>> GetConnectionIdsAsync();
+        Task PostConnectionIdsAsync(MonthlyExpense_task_expenseDto connectionIds, bool first);
         Task CreateMonthsAsync();
         Task CreateConTableAsync();
         string ExportToExcel(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);

@@ -1,5 +1,7 @@
-﻿using Cargotruck.Shared.Resources;
+﻿using Cargotruck.Server.Models;
+using Cargotruck.Shared.Resources;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cargotruck.Shared.Model
 {
@@ -7,27 +9,30 @@ namespace Cargotruck.Shared.Model
     {
         [Required]
         public int Id { get; set; }
-        public string? User_id { get; set; }
-        [Display(Name = "Task_id", ResourceType = typeof(Resource))]
-        [Required(ErrorMessageResourceName = "Error_task_id", ErrorMessageResourceType = typeof(Resource))]
-        public int? Task_id { get; set; }
+        public string? UserId { get; set; }
         [Required(ErrorMessageResourceName = "Error_weight", ErrorMessageResourceType = typeof(Resource))]
         [Display(Name = "Weight", ResourceType = typeof(Resource))]
         public int? Weight { get; set; }
         [Display(Name = "Description", ResourceType = typeof(Resource))]
         public string? Description { get; set; }
-        [Display(Name = "Shipping_requirements", ResourceType = typeof(Resource))]
-        public string? Delivery_requirements { get; set; }
+        [Display(Name = "Delivery_requirements", ResourceType = typeof(Resource))]
+        public string? DeliveryRequirements { get; set; }
         [Display(Name = "Vehicle_registration_number", ResourceType = typeof(Resource))]
-        public string? Vehicle_registration_number { get; set; }
+        public string? VehicleRegistrationNumber { get; set; }
         [Display(Name = "Warehouse_id", ResourceType = typeof(Resource))]
-        public int? Warehouse_id { get; set; }
+        public int? WarehouseId { get; set; }
         [Display(Name = "Section", ResourceType = typeof(Resource))]
-        public string? Warehouse_section { get; set; }
-        [Display(Name = "Storage_starting_time", ResourceType = typeof(Resource))]
-        public DateTime? Storage_starting_time { get; set; }
-        [Display(Name = "Cost_of_storage", ResourceType = typeof(Resource))]
+        public string? WarehouseSection { get; set; }
+        [Display(Name = "Storage_Starting_Time", ResourceType = typeof(Resource))]
+        public DateTime? StorageStartingTime { get; set; }
+        [Display(Name = "Date", ResourceType = typeof(Resource))]
         public DateTime Date { get; set; } = DateTime.Now;
 
+        [Display(Name = "Task_id", ResourceType = typeof(Resource))]
+        [Required(ErrorMessageResourceName = "Error_task_id", ErrorMessageResourceType = typeof(Resource))]
+        public int? TaskId { get; set; }
+        [Display(Name = "Task", ResourceType = typeof(Resource))]
+        [Required(ErrorMessageResourceName = "Error_task_id", ErrorMessageResourceType = typeof(Resource))]
+        public DeliveryTask? Task { get; set; } = new();
     }
 }

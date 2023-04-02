@@ -44,11 +44,11 @@ namespace Cargotruck.Server.Repositories
             if (searchString != null && searchString != "")
             {
                 data = data.Where(s =>
-               (s.Vehicle_registration_number!.ToString().ToLower().Contains(searchString))
+               (s.VehicleRegistrationNumber!.ToString().ToLower().Contains(searchString))
             || (s.Brand != null && s.Brand.ToString().ToLower()!.Contains(searchString))
             || (s.Status.ToString()!.Contains(searchString))
-            || (s.Road_id != null && s.Road_id.ToString()!.ToLower().Contains(searchString))
-            || (s.Max_weight != null && s.Max_weight.ToString()!.Contains(searchString))
+            || (s.RoadId != null && s.RoadId.ToString()!.ToLower().Contains(searchString))
+            || (s.MaxWeight != null && s.MaxWeight.ToString()!.Contains(searchString))
             ).ToList();
             }
 
@@ -59,25 +59,25 @@ namespace Cargotruck.Server.Repositories
         {
             var data = await GetDataAsync(searchString, filter, dateFilterStartDate, dateFilterEndDate);
 
-            sortOrder = sortOrder == "Vehicle_registration_number" ? (desc ? "Vehicle_registration_number_desc" : "Vehicle_registration_number") : (sortOrder);
+            sortOrder = sortOrder == "VehicleRegistrationNumber" ? (desc ? "VehicleRegistrationNumber_desc" : "VehicleRegistrationNumber") : (sortOrder);
             sortOrder = sortOrder == "Brand" ? (desc ? "Brand_desc" : "Brand") : (sortOrder);
             sortOrder = sortOrder == "Status" ? (desc ? "Status_desc" : "Status") : (sortOrder);
-            sortOrder = sortOrder == "Road_id" ? (desc ? "Road_id_desc" : "Road_id") : (sortOrder);
-            sortOrder = sortOrder == "Max_weight" ? (desc ? "Max_weight_desc" : "Max_weight") : (sortOrder);
+            sortOrder = sortOrder == "RoadId" ? (desc ? "RoadId_desc" : "RoadId") : (sortOrder);
+            sortOrder = sortOrder == "MaxWeight" ? (desc ? "MaxWeight_desc" : "MaxWeight") : (sortOrder);
             sortOrder = sortOrder == "Date" || String.IsNullOrEmpty(sortOrder) ? (desc ? "Date_desc" : "") : (sortOrder);
 
             data = sortOrder switch
             {
-                "Vehicle_registration_number_desc" => data.OrderByDescending(s => s.Vehicle_registration_number).ToList(),
-                "Vehicle_registration_number" => data.OrderBy(s => s.Vehicle_registration_number).ToList(),
+                "VehicleRegistrationNumber_desc" => data.OrderByDescending(s => s.VehicleRegistrationNumber).ToList(),
+                "VehicleRegistrationNumber" => data.OrderBy(s => s.VehicleRegistrationNumber).ToList(),
                 "Brand_desc" => data.OrderByDescending(s => s.Brand).ToList(),
                 "Brand" => data.OrderBy(s => s.Brand).ToList(),
                 "Status_desc" => data.OrderByDescending(s => s.Status).ToList(),
                 "Status" => data.OrderBy(s => s.Status).ToList(),
-                "Road_id_desc" => data.OrderByDescending(s => s.Road_id).ToList(),
-                "Road_id" => data.OrderBy(s => s.Road_id).ToList(),
-                "Max_weight_desc" => data.OrderByDescending(s => s.Max_weight).ToList(),
-                "Max_weight" => data.OrderBy(s => s.Max_weight).ToList(),
+                "RoadId_desc" => data.OrderByDescending(s => s.RoadId).ToList(),
+                "RoadId" => data.OrderBy(s => s.RoadId).ToList(),
+                "MaxWeight_desc" => data.OrderByDescending(s => s.MaxWeight).ToList(),
+                "MaxWeight" => data.OrderBy(s => s.MaxWeight).ToList(),
                 "Date_desc" => data.OrderByDescending(s => s.Date).ToList(),
                 _ => data.OrderBy(s => s.Date).ToList(),
             };
@@ -92,7 +92,7 @@ namespace Cargotruck.Server.Repositories
 
         public async Task<Truck?> GetByVRNAsync(string vehicle_registration_number)
         {
-            return await _context.Trucks.FirstOrDefaultAsync(a => a.Vehicle_registration_number == vehicle_registration_number);
+            return await _context.Trucks.FirstOrDefaultAsync(a => a.VehicleRegistrationNumber == vehicle_registration_number);
         }
 
         public async Task<List<Truck>> GetTrucksAsync()
@@ -165,11 +165,11 @@ namespace Cargotruck.Server.Repositories
             {
                 currentRow++;
                 worksheet.Cell(currentRow, 1).Value = truck.Id;
-                worksheet.Cell(currentRow, 2).Value = truck.Vehicle_registration_number;
+                worksheet.Cell(currentRow, 2).Value = truck.VehicleRegistrationNumber;
                 worksheet.Cell(currentRow, 3).Value = truck.Brand;
                 worksheet.Cell(currentRow, 4).Value = truck.Status;
-                worksheet.Cell(currentRow, 5).Value = truck.Road_id;
-                worksheet.Cell(currentRow, 6).Value = truck.Max_weight;
+                worksheet.Cell(currentRow, 5).Value = truck.RoadId;
+                worksheet.Cell(currentRow, 6).Value = truck.MaxWeight;
                 worksheet.Cell(currentRow, 7).Value = truck.Date;
             }
 
@@ -253,7 +253,7 @@ namespace Cargotruck.Server.Repositories
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
 
-                    if (!string.IsNullOrEmpty(truck.Vehicle_registration_number?.ToString())) { s = truck.Vehicle_registration_number.ToString(); }
+                    if (!string.IsNullOrEmpty(truck.VehicleRegistrationNumber?.ToString())) { s = truck.VehicleRegistrationNumber.ToString(); }
 
                     else { s = "-"; }
                     table.AddCell(new PdfPCell(new Phrase(s.ToString(), font2))
@@ -277,7 +277,7 @@ namespace Cargotruck.Server.Repositories
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(truck.Road_id?.ToString())) { s = truck.Road_id.ToString(); }
+                    if (!string.IsNullOrEmpty(truck.RoadId?.ToString())) { s = truck.RoadId.ToString(); }
                     else { s = "-"; }
                     table.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
@@ -285,7 +285,7 @@ namespace Cargotruck.Server.Repositories
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
 
-                    if (!string.IsNullOrEmpty(truck.Max_weight?.ToString())) { s = truck.Max_weight.ToString(); }
+                    if (!string.IsNullOrEmpty(truck.MaxWeight?.ToString())) { s = truck.MaxWeight.ToString(); }
 
                     else { s = "-"; }
                     table.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
@@ -358,11 +358,11 @@ namespace Cargotruck.Server.Repositories
             foreach (var truck in trucks)
             {
                 txt.Write(truck.Id + separator);
-                txt.Write((truck.Vehicle_registration_number ?? ifNull) + separator);
+                txt.Write((truck.VehicleRegistrationNumber ?? ifNull) + separator);
                 txt.Write((truck.Brand ?? ifNull) + separator);
                 txt.Write((truck.Status + separator));
-                txt.Write((truck.Road_id != null ? truck.Road_id : ifNull) + separator);
-                txt.Write((truck.Max_weight != null ? truck.Max_weight : ifNull) + separator);
+                txt.Write((truck.RoadId != null ? truck.RoadId : ifNull) + separator);
+                txt.Write((truck.MaxWeight != null ? truck.MaxWeight : ifNull) + separator);
                 txt.Write(truck.Date + separator);
                 txt.Write("\n");
             }
@@ -488,15 +488,15 @@ namespace Cargotruck.Server.Repositories
                                 {
                                     if (nulls != list.Count)
                                     {
-                                        var sql = @"Insert Into Trucks (User_id,Vehicle_registration_number,Brand,Status,Road_id,Max_weight,Date) 
-                                        Values (@User_id,@Vehicle_registration_number,@Brand,@Status,@Road_id,@Max_weight,@Date)";
+                                        var sql = @"Insert Into Trucks (UserId,VehicleRegistrationNumber,Brand,Status,RoadId,MaxWeight,Date) 
+                                        Values (@UserId,@VehicleRegistrationNumber,@Brand,@Status,@RoadId,@MaxWeight,@Date)";
                                         var insert = await _context.Database.ExecuteSqlRawAsync(sql,
-                                            new SqlParameter("@User_id", "Imported"),
-                                            new SqlParameter("@Vehicle_registration_number", list[l]),
+                                            new SqlParameter("@UserId", "Imported"),
+                                            new SqlParameter("@VehicleRegistrationNumber", list[l]),
                                             new SqlParameter("@Brand", list[l + 1]),
                                             new SqlParameter("@Status", list[l + 2]),
-                                            new SqlParameter("@Road_id", list[l + 3]),
-                                            new SqlParameter("@Max_weight", list[l + 4]),
+                                            new SqlParameter("@RoadId", list[l + 3]),
+                                            new SqlParameter("@MaxWeight", list[l + 4]),
                                             new SqlParameter("@Date", DateTime.Now)
                                             );
 
@@ -506,8 +506,8 @@ namespace Cargotruck.Server.Repositories
 
                                             if (lastId != null)
                                             {
-                                                var WithNewIds = await _context.Trucks.Where(x => x.Road_id == lastId.Road_id).ToListAsync();
-                                                Road? road = await _context.Roads.FirstOrDefaultAsync(x => x.Vehicle_registration_number == lastId.Vehicle_registration_number);
+                                                var WithNewIds = await _context.Trucks.Where(x => x.RoadId == lastId.RoadId).ToListAsync();
+                                                Road? road = await _context.Roads.FirstOrDefaultAsync(x => x.VehicleRegistrationNumber == lastId.VehicleRegistrationNumber);
 
                                                 foreach (var item in WithNewIds)
                                                 {
@@ -518,7 +518,7 @@ namespace Cargotruck.Server.Repositories
 
                                                             if (road == null)
                                                             {
-                                                                item.Road_id = null;
+                                                                item.RoadId = null;
                                                             }
 
                                                             _context.Entry(item).State = EntityState.Modified;
@@ -529,7 +529,7 @@ namespace Cargotruck.Server.Repositories
 
                                                 if (road != null)
                                                 {
-                                                    road.Vehicle_registration_number = lastId?.Vehicle_registration_number;
+                                                    road.VehicleRegistrationNumber = lastId?.VehicleRegistrationNumber;
                                                     _context.Entry(road).State = EntityState.Modified;
                                                     await _context.SaveChangesAsync();
                                                 }

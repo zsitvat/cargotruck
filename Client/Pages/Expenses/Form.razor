@@ -50,7 +50,7 @@
                 {
                     <div class="form-group custom-select">
                         <label>@localizer["Type_id"]:</label>
-                        <input type="text" class="form-control custom-select-input" @bind="expenses.Type_id" @bind:event="oninput" placeholder="@localizer["Select_placeholder"]" />
+                        <input type="text" class="form-control custom-select-input" @bind="expenses.TypeId" @bind:event="oninput" placeholder="@localizer["Select_placeholder"]" />
                         <div class="custom-select-options">
                             @switch (expenses?.Type.ToString())
                             {
@@ -59,13 +59,13 @@
                                     {
                                         @foreach (var task in tasks)
                                         {
-                                            if (task.Id.ToString().ToLower().Contains((expenses.Type_id != null ? expenses.Type_id?.ToString() : "")!))
+                                            if (task.Id.ToString().ToLower().Contains((expenses.TypeId != null ? expenses.TypeId?.ToString() : "")!))
                                             {
-                                                <div class="custom-select-option" @onclick="() => { expenses.Type_id = task.Id; }">
+                                                <div class="custom-select-option" @onclick="() => { expenses.TypeId = task.Id; }">
                                                     @localizer["Id"]: @task.Id <br>
                                                     @localizer["Partner"]: @task.Partner <br>
-                                                    @localizer["Place_of_receipt"]: @task.Place_of_receipt <br>
-                                                    @localizer["Place_of_delivery"]: @task.Place_of_delivery <br>
+                                                    @localizer["Place_of_receipt"]: @task.PlaceOfReceipt <br>
+                                                    @localizer["Place_of_delivery"]: @task.PlaceOfDelivery <br>
                                                     @localizer["Date"]: @task.Date <br>
                                                     @localizer["Description"]: @task.Description?.Substring(0, task.Description.Length >= 50 ? 50 : task.Description.Length)
                                                 </div>
@@ -78,11 +78,11 @@
                                     {
                                         @foreach (var road in roads)
                                         {
-                                            if (road.Id.ToString().ToLower().Contains((expenses.Type_id != null ? expenses.Type_id?.ToString() : "")!))
+                                            if (road.Id.ToString().ToLower().Contains((expenses.TypeId != null ? expenses.TypeId?.ToString() : "")!))
                                             {
-                                                <div class="custom-select-option" @onclick="() => { expenses.Type_id = road?.Id; }">
+                                                <div class="custom-select-option" @onclick="() => { expenses.TypeId = road?.Id; }">
                                                      @localizer["Id"]: @road.Id  <br>
-                                                     @localizer["Purpose_of_the_trip"]: @road.Purpose_of_the_trip  <br>
+                                                     @localizer["Purpose_of_the_trip"]: @road.PurposeOfTheTrip  <br>
                                                      @localizer["Direction"]: @localizer[road?.Direction?.ToLower()!] <br>
                                                      @localizer["Date"]: @road?.Date 
                                                 </div>
@@ -95,11 +95,11 @@
                                     {
                                         @foreach (var cargo in cargoes)
                                         {
-                                            if (cargo.Id.ToString().ToLower().Contains((expenses.Type_id != null ? expenses.Type_id?.ToString() : "")!))
+                                            if (cargo.Id.ToString().ToLower().Contains((expenses.TypeId != null ? expenses.TypeId?.ToString() : "")!))
                                             {
-                                                <div class="custom-select-option" @onclick="() => { expenses.Type_id = cargo.Id; }">
+                                                <div class="custom-select-option" @onclick="() => { expenses.TypeId = cargo.Id; }">
                                                      @localizer["Id"]: @cargo.Id  <br>
-                                                     @localizer["Task_id"]: @cargo.Task_id <br>
+                                                     @localizer["Task_id"]: @cargo.TaskId <br>
                                                      @localizer["Description"]:@cargo.Description
                                                 </div>
                                             }
@@ -108,7 +108,7 @@
                                 break;
                                 }
                         </div>
-                        <ValidationMessage For="@(() => expenses!.Type_id)" />
+                        <ValidationMessage For="@(() => expenses!.TypeId)" />
                     </div>
                  }
                 @if (expenses?.Type.ToString() == "task" || expenses?.Type.ToString() == "other")
@@ -129,8 +129,8 @@
                         <div>
                             <label>@localizer["Road_fees"]:</label>
                             <div>
-                                <InputNumber min="0"  class="form-control inputs" @bind-Value="@expenses.Road_fees" />
-                                <ValidationMessage For="@(() => expenses.Road_fees)" />
+                                <InputNumber min="0"  class="form-control inputs" @bind-Value="@expenses.RoadFees" />
+                                <ValidationMessage For="@(() => expenses.RoadFees)" />
                             </div>
                         </div>
                     </div>
@@ -153,8 +153,8 @@
                         <div>
                             <label>@localizer["Driver_spending"]:</label>
                             <div>
-                                <InputNumber min="0"  class="form-control inputs" @bind-Value="@expenses.Driver_spending" />
-                                <ValidationMessage For="@(() => expenses.Driver_spending)" />
+                                <InputNumber min="0"  class="form-control inputs" @bind-Value="@expenses.DriverSpending" />
+                                <ValidationMessage For="@(() => expenses.DriverSpending)" />
                             </div>
                         </div>
                     </div>
@@ -165,8 +165,8 @@
                         <div>
                         <label>@localizer["Driver_salary"]:</label>
                             <div>
-                                <InputNumber min="0"  class="form-control inputs" @bind-Value="@expenses.Driver_salary" />
-                                <ValidationMessage For="@(() => expenses.Driver_salary)" />
+                                <InputNumber min="0"  class="form-control inputs" @bind-Value="@expenses.DriverSalary" />
+                                <ValidationMessage For="@(() => expenses.DriverSalary)" />
                             </div>
                         </div>
                     </div>
@@ -176,8 +176,8 @@
                         <div>
                         <label>@localizer["Repair_cost"]:</label>
                             <div>
-                            <InputNumber min="0"  class="form-control inputs" @bind-Value="@expenses.Repair_cost" />
-                            <ValidationMessage For="@(() => expenses.Repair_cost)" />
+                            <InputNumber min="0"  class="form-control inputs" @bind-Value="@expenses.RepairCost" />
+                            <ValidationMessage For="@(() => expenses.RepairCost)" />
                             </div>
                         </div>
                     </div>
@@ -185,8 +185,8 @@
                         <div>
                         <label>@localizer["Repair_description"]:</label>
                             <div>
-                            <InputText class="form-control inputs" @bind-Value="@expenses.Repair_description" />
-                            <ValidationMessage For="@(() => expenses.Repair_description)" />
+                            <InputText class="form-control inputs" @bind-Value="@expenses.RepairDescription" />
+                            <ValidationMessage For="@(() => expenses.RepairDescription)" />
                             </div>
                         </div>
                     </div>
@@ -197,8 +197,8 @@
                         <div>
                         <label>@localizer["Cost_of_storage"]:</label>
                             <div>
-                            <InputNumber min="0"  class="form-control inputs" @bind-Value="@expenses.Cost_of_storage" />
-                            <ValidationMessage For="@(() => expenses.Cost_of_storage)" />
+                            <InputNumber min="0"  class="form-control inputs" @bind-Value="@expenses.CostOfStorage" />
+                            <ValidationMessage For="@(() => expenses.CostOfStorage)" />
                             </div>
                         </div>
                     </div>
@@ -207,7 +207,7 @@
                 {
                     <div class="form-group ">
                         <div>
-                            <label>@localizer["other"]:</label>
+                            <label>@localizer["Other"]:</label>
                             <div>
                             <InputNumber min="0"  class="form-control inputs" @bind-Value="@expenses.Other" />
                             <ValidationMessage For="@(() => expenses.Other)" />
@@ -246,14 +246,14 @@
             {
                 if (expense.Type != null) {
                     var value = expense.Type.Value.ToString();
-                    roads?.RemoveAll(x => x.Id == expense.Type_id && value == "repair" &&
-                        x.Id != expenses?.Type_id);
+                    roads?.RemoveAll(x => x.Id == expense.TypeId && value == "repair" &&
+                        x.Id != expenses?.TypeId);
 
-                    tasks?.RemoveAll(x => x.Id == expense.Type_id && value == "task" &&
-                        x.Id != expenses?.Type_id);
+                    tasks?.RemoveAll(x => x.Id == expense.TypeId && value == "task" &&
+                        x.Id != expenses?.TypeId);
 
-                    cargoes?.RemoveAll(x => x.Id == expense.Type_id && value == "storage" &&
-                        x.Id != expenses?.Type_id);
+                    cargoes?.RemoveAll(x => x.Id == expense.TypeId && value == "storage" &&
+                        x.Id != expenses?.TypeId);
                 }
             }
         }
@@ -291,7 +291,7 @@
 
         }
 
-        if (expenses?.Type_id != null)
+        if (expenses?.TypeId != null)
         {
             invalid = false;
 
@@ -302,7 +302,7 @@
                     {
                         @foreach (var task in tasks)
                         {
-                            if (task.Id != expenses?.Type_id)
+                            if (task.Id != expenses?.TypeId)
                             {
                                 invalid = true;
                             }
@@ -323,7 +323,7 @@
                     {
                         @foreach (var road in roads)
                         {
-                            if (road.Id != expenses?.Type_id)
+                            if (road.Id != expenses?.TypeId)
                             {
                                 invalid = true;
                             }
@@ -344,7 +344,7 @@
                     {
                         @foreach (var cargo in cargoes)
                         {
-                            if (cargo.Id != expenses?.Type_id)
+                            if (cargo.Id != expenses?.TypeId)
                             {
                                 invalid = true;
                             }
@@ -365,7 +365,7 @@
             if (invalid)
             {
                 isValidSubmit = false;
-                expenses!.Type_id = null;
+                expenses!.TypeId = null;
                 await checkValidSubmit.InvokeAsync(false);
                 error += localizer["id_invalid"] + " ";
             }

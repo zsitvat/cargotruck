@@ -22,7 +22,7 @@ namespace Cargotruck.Server.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("Cargotruck.Server.Models.Users", b =>
+            modelBuilder.Entity("Cargotruck.Server.Models.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -87,7 +87,7 @@ namespace Cargotruck.Server.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("Cargotruck.Shared.Model.Cargoes", b =>
+            modelBuilder.Entity("Cargotruck.Shared.Model.Cargo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -98,29 +98,29 @@ namespace Cargotruck.Server.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Delivery_requirements")
+                    b.Property<string>("DeliveryRequirements")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("Storage_starting_time")
+                    b.Property<DateTime?>("StorageStartingTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("Task_id")
+                    b.Property<int?>("TaskId")
                         .IsRequired()
                         .HasColumnType("int");
 
-                    b.Property<string>("User_id")
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Vehicle_registration_number")
+                    b.Property<string>("VehicleRegistrationNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Warehouse_id")
+                    b.Property<int?>("WarehouseId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Warehouse_section")
+                    b.Property<string>("WarehouseSection")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("Weight")
@@ -129,10 +129,13 @@ namespace Cargotruck.Server.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("TaskId")
+                        .IsUnique();
+
                     b.ToTable("Cargoes");
                 });
 
-            modelBuilder.Entity("Cargotruck.Shared.Model.Expenses", b =>
+            modelBuilder.Entity("Cargotruck.Shared.Model.DeliveryTask", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -140,16 +143,85 @@ namespace Cargotruck.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("Cost_of_storage")
+                    b.Property<int?>("CargoId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Completed")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("CompletionTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("FinalPayment")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("OtherStops")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Partner")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("Payment")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("Penalty")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("PlaceOfDelivery")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PlaceOfReceipt")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StorageTime")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TimeOfDelay")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("TimeOfDelivery")
+                        .IsRequired()
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("TimeOfReceipt")
+                        .IsRequired()
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tasks");
+                });
+
+            modelBuilder.Entity("Cargotruck.Shared.Model.Expense", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int?>("CostOfStorage")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("Driver_salary")
+                    b.Property<int?>("DriverSalary")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Driver_spending")
+                    b.Property<int?>("DriverSpending")
                         .HasColumnType("int");
 
                     b.Property<int?>("Fuel")
@@ -161,25 +233,25 @@ namespace Cargotruck.Server.Migrations
                     b.Property<int?>("Penalty")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Repair_cost")
+                    b.Property<int?>("RepairCost")
                         .HasColumnType("int");
 
-                    b.Property<string>("Repair_description")
+                    b.Property<string>("RepairDescription")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Road_fees")
+                    b.Property<int?>("RoadFees")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Total_amount")
+                    b.Property<int?>("TotalAmount")
                         .HasColumnType("int");
 
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Type_id")
+                    b.Property<int?>("TypeId")
                         .HasColumnType("int");
 
-                    b.Property<string>("User_id")
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -187,7 +259,7 @@ namespace Cargotruck.Server.Migrations
                     b.ToTable("Expenses");
                 });
 
-            modelBuilder.Entity("Cargotruck.Shared.Model.Logins", b =>
+            modelBuilder.Entity("Cargotruck.Shared.Model.Login", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -209,13 +281,13 @@ namespace Cargotruck.Server.Migrations
                     b.ToTable("Logins");
                 });
 
-            modelBuilder.Entity("Cargotruck.Shared.Model.Monthly_expenses", b =>
+            modelBuilder.Entity("Cargotruck.Shared.Model.MonthlyExpense", b =>
                 {
-                    b.Property<int>("Monthly_expense_id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Monthly_expense_id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -229,10 +301,10 @@ namespace Cargotruck.Server.Migrations
                     b.Property<long?>("Profit")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("User_id")
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Monthly_expense_id");
+                    b.HasKey("Id");
 
                     b.ToTable("Monthly_Expenses");
                 });
@@ -245,20 +317,20 @@ namespace Cargotruck.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("Expense_id")
+                    b.Property<int?>("ExpenseId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Monthly_expense_id")
+                    b.Property<int>("MonthlyExpenseId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Task_id")
+                    b.Property<int?>("TaskId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Monthly_expense_id");
+                    b.HasIndex("MonthlyExpenseId");
 
-                    b.ToTable("MonthlyExpense_task_expense");
+                    b.ToTable("Monthly_expenses_tasks_expenses");
                 });
 
             modelBuilder.Entity("Cargotruck.Shared.Model.Privacies", b =>
@@ -272,7 +344,7 @@ namespace Cargotruck.Server.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Lang")
+                    b.Property<string>("Language")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -288,13 +360,16 @@ namespace Cargotruck.Server.Migrations
                     b.ToTable("Privacies");
                 });
 
-            modelBuilder.Entity("Cargotruck.Shared.Model.Roads", b =>
+            modelBuilder.Entity("Cargotruck.Shared.Model.Road", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int?>("CargoId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -307,40 +382,37 @@ namespace Cargotruck.Server.Migrations
                         .IsRequired()
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("Ending_date")
+                    b.Property<DateTime?>("EndingDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Ending_place")
+                    b.Property<string>("EndingPlace")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Expenses_id")
+                    b.Property<int?>("ExpensesId")
                         .HasColumnType("int");
 
                     b.Property<int?>("Fuel")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Id_cargo")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Purpose_of_the_trip")
+                    b.Property<string>("PurposeOfTheTrip")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("Starting_date")
+                    b.Property<DateTime?>("StartingDate")
                         .IsRequired()
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Starting_place")
+                    b.Property<string>("StartingPlace")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Task_id")
+                    b.Property<int?>("TaskId")
                         .HasColumnType("int");
 
-                    b.Property<string>("User_id")
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Vehicle_registration_number")
+                    b.Property<string>("VehicleRegistrationNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -348,7 +420,7 @@ namespace Cargotruck.Server.Migrations
                     b.ToTable("Roads");
                 });
 
-            modelBuilder.Entity("Cargotruck.Shared.Model.Settings", b =>
+            modelBuilder.Entity("Cargotruck.Shared.Model.Setting", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -372,76 +444,7 @@ namespace Cargotruck.Server.Migrations
                     b.ToTable("Settings");
                 });
 
-            modelBuilder.Entity("Cargotruck.Shared.Model.Tasks", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<bool>("Completed")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("Completion_time")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long?>("Final_Payment")
-                        .HasColumnType("bigint");
-
-                    b.Property<int?>("Id_cargo")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Other_stops")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Partner")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long?>("Payment")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("Penalty")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Place_of_delivery")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Place_of_receipt")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Storage_time")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Time_of_delay")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("Time_of_delivery")
-                        .IsRequired()
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("Time_of_receipt")
-                        .IsRequired()
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("User_id")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Tasks");
-                });
-
-            modelBuilder.Entity("Cargotruck.Shared.Model.Trucks", b =>
+            modelBuilder.Entity("Cargotruck.Shared.Model.Truck", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -456,20 +459,20 @@ namespace Cargotruck.Server.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("Max_weight")
+                    b.Property<int?>("MaxWeight")
                         .IsRequired()
                         .HasColumnType("int");
 
-                    b.Property<int?>("Road_id")
+                    b.Property<int?>("RoadId")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<string>("User_id")
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Vehicle_registration_number")
+                    b.Property<string>("VehicleRegistrationNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -478,7 +481,7 @@ namespace Cargotruck.Server.Migrations
                     b.ToTable("Trucks");
                 });
 
-            modelBuilder.Entity("Cargotruck.Shared.Model.Warehouses", b =>
+            modelBuilder.Entity("Cargotruck.Shared.Model.Warehouse", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -497,7 +500,7 @@ namespace Cargotruck.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("User_id")
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -534,36 +537,36 @@ namespace Cargotruck.Server.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "0681486d-dca1-47bf-b879-9625b6969e2e",
-                            ConcurrencyStamp = "c7b9ecb6-c58b-42e1-8bb0-608ebe66579f",
+                            Id = "8134658b-2928-463c-b3dc-4dc86fd7859d",
+                            ConcurrencyStamp = "5987292f-5433-4971-8897-cdbd74afa185",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "3356aca3-ab4a-4e69-9a55-2e63ef93402d",
-                            ConcurrencyStamp = "239e8cb3-7251-4fd3-8794-47b094e101c7",
+                            Id = "15cbed15-3054-40f5-8eee-203909890aba",
+                            ConcurrencyStamp = "4305171c-0e22-4b73-8010-3cffcff8c97f",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "0427d085-5566-40f4-a9e8-6a3cfed46b3e",
-                            ConcurrencyStamp = "1952e362-31cb-4081-a6f2-75a122d2d2f9",
+                            Id = "50014528-fba2-4a5b-832c-090f49d773c3",
+                            ConcurrencyStamp = "0258a410-0641-4644-bf4e-d7a5a3fdf867",
                             Name = "Driver",
                             NormalizedName = "DRIVER"
                         },
                         new
                         {
-                            Id = "c05a64d1-8d20-49ab-8e47-ffc2a3708c58",
-                            ConcurrencyStamp = "1d7cf1e2-14c3-4cec-8db2-b6de48fa5088",
+                            Id = "a186fe2d-7290-49c2-987d-f2c0714909e7",
+                            ConcurrencyStamp = "fa884d7f-c477-45ae-8c62-b62019ba9e1e",
                             Name = "Accountant",
                             NormalizedName = "ACCOUNTANT"
                         },
                         new
                         {
-                            Id = "c43d5fef-a348-4b9e-bbd8-d8682c0f8aa8",
-                            ConcurrencyStamp = "428d1d02-c1dc-42d8-8273-fa2f9def71dc",
+                            Id = "26204a4f-099a-4601-8c46-1c43221c04ec",
+                            ConcurrencyStamp = "c33ab5dc-1545-4b1b-aef8-de04768e16d5",
                             Name = "Storageman",
                             NormalizedName = "STORAGEMAN"
                         });
@@ -675,15 +678,26 @@ namespace Cargotruck.Server.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Cargotruck.Shared.Model.MonthlyExpense_task_expense", b =>
+            modelBuilder.Entity("Cargotruck.Shared.Model.Cargo", b =>
                 {
-                    b.HasOne("Cargotruck.Shared.Model.Monthly_expenses", "Monthly_expenses")
-                        .WithMany("MonthlyExpense_task_expense")
-                        .HasForeignKey("Monthly_expense_id")
+                    b.HasOne("Cargotruck.Shared.Model.DeliveryTask", "Task")
+                        .WithOne("Cargo")
+                        .HasForeignKey("Cargotruck.Shared.Model.Cargo", "TaskId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Monthly_expenses");
+                    b.Navigation("Task");
+                });
+
+            modelBuilder.Entity("Cargotruck.Shared.Model.MonthlyExpense_task_expense", b =>
+                {
+                    b.HasOne("Cargotruck.Shared.Model.MonthlyExpense", "MonthlyExpense")
+                        .WithMany("Monthly_expenses_tasks_expenses")
+                        .HasForeignKey("MonthlyExpenseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MonthlyExpense");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -697,7 +711,7 @@ namespace Cargotruck.Server.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Cargotruck.Server.Models.Users", null)
+                    b.HasOne("Cargotruck.Server.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -706,7 +720,7 @@ namespace Cargotruck.Server.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Cargotruck.Server.Models.Users", null)
+                    b.HasOne("Cargotruck.Server.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -721,7 +735,7 @@ namespace Cargotruck.Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Cargotruck.Server.Models.Users", null)
+                    b.HasOne("Cargotruck.Server.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -730,16 +744,21 @@ namespace Cargotruck.Server.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Cargotruck.Server.Models.Users", null)
+                    b.HasOne("Cargotruck.Server.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Cargotruck.Shared.Model.Monthly_expenses", b =>
+            modelBuilder.Entity("Cargotruck.Shared.Model.DeliveryTask", b =>
                 {
-                    b.Navigation("MonthlyExpense_task_expense");
+                    b.Navigation("Cargo");
+                });
+
+            modelBuilder.Entity("Cargotruck.Shared.Model.MonthlyExpense", b =>
+                {
+                    b.Navigation("Monthly_expenses_tasks_expenses");
                 });
 #pragma warning restore 612, 618
         }

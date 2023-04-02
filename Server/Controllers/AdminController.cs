@@ -8,7 +8,6 @@ namespace Cargotruck.Server.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
     public class AdminController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
@@ -18,6 +17,7 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<List<UserDto>>> GetAsync(int page, int pageSize, string? filter)
         {
             var u = await _context.Users.ToListAsync();
@@ -36,6 +36,7 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<UserDto?>> GetAsync(string id)
         {
             var u = await _context.Users.FirstOrDefaultAsync(a => a.Id == id);
@@ -44,6 +45,7 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<bool>> DeleteAsync(string id)
         {
             var userForDelete = _context.Users.FirstOrDefault(a => a.Id == id);
@@ -55,6 +57,7 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<int>> PageCountAsync(string? filter)
         {
             var u = await _context.Users.ToListAsync();
@@ -73,6 +76,7 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<int>> CountAsync()
         {
             var u = await _context.Users.CountAsync();
@@ -81,7 +85,7 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
+        [Authorize]
         public async Task<ActionResult<int>> LoginsCountAsync()
         {
             var u = await _context.Logins.CountAsync();
@@ -90,6 +94,7 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<Dictionary<string, string>?>> ClaimsAsync()
         {
             var Claims = await _context.UserClaims.ToDictionaryAsync(c => c.ClaimType + "/" + c.UserId, c => c.ClaimValue);
@@ -98,6 +103,7 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<Dictionary<string, string>?>> RolesAsync()
 {
             var Roles = await _context.Roles.ToDictionaryAsync(r => r.Id, r => r.Name);

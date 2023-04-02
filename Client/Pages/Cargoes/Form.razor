@@ -52,86 +52,83 @@
                         <div>
                         <label>@localizer["Delivery_requirements"]:</label>
                             <div>
-                                <InputText Type="InputDateType.DateTimeLocal" @bind-Value:format="yyyy.MM.dd. HH:mm" class="form-control inputs" @bind-Value="@cargoes.Delivery_requirements" />
-                                <ValidationMessage For="@(() => cargoes.Delivery_requirements)" />
+                                <InputText Type="InputDateType.DateTimeLocal" @bind-Value:format="yyyy.MM.dd. HH:mm" class="form-control inputs" @bind-Value="@cargoes.DeliveryRequirements" />
+                                <ValidationMessage For="@(() => cargoes.DeliveryRequirements)" />
                             </div>
                         </div>
                     </div>
                 <div class="form-group custom-select">
                     <label>@localizer["Vehicle_registration_number"]:</label>
-                    <input type="text" class="form-control custom-select-input" @bind="cargoes.Vehicle_registration_number" @bind:event="oninput" placeholder="@localizer["Select_placeholder"]" />
+                    <input type="text" class="form-control custom-select-input" @bind="cargoes.VehicleRegistrationNumber" @bind:event="oninput" placeholder="@localizer["Select_placeholder"]" />
                     <div class="custom-select-options">
                         @if (trucks != null)
                         {
                             @foreach (var truck in trucks)
                             {
-                                if (truck.Vehicle_registration_number!.ToString().ToLower().Contains((cargoes?.Vehicle_registration_number != null ? cargoes?.Vehicle_registration_number?.ToString() : "")!))
+                                if (truck.VehicleRegistrationNumber!.ToString().ToLower().Contains((cargoes?.VehicleRegistrationNumber != null ? cargoes?.VehicleRegistrationNumber?.ToString() : "")!))
                                 {
-                                    <div class="custom-select-option" @onclick="() => { cargoes!.Vehicle_registration_number = truck.Vehicle_registration_number; }">
-                                        @localizer["Vehicle_registration_number"]: @truck.Vehicle_registration_number <br>
+                                    <div class="custom-select-option" @onclick="() => { cargoes!.VehicleRegistrationNumber = truck.VehicleRegistrationNumber; }">
+                                        @localizer["Vehicle_registration_number"]: @truck.VehicleRegistrationNumber <br>
                                         @localizer["Brand"]: @truck.Brand <br>
-                                        @localizer["Max_weight"]: @truck.Max_weight <br>
+                                        @localizer["Max_weight"]: @truck.MaxWeight <br>
                                         @localizer["Status"]: @localizer[truck.Status.ToString()]
                                     </div>
                                 }
                             }
                         }
                     </div>
-                    <ValidationMessage For="@(() => cargoes.Vehicle_registration_number)" />
+                    <ValidationMessage For="@(() => cargoes.VehicleRegistrationNumber)" />
                 </div>        
             </div>
                 <div class="d-inline-block forms-margin" >
                     <div class="form-group custom-select">
                         <label>@localizer["Task_id"]:</label>
-                        <input type="text" class="form-control custom-select-input" @bind="cargoes.Task_id" @bind:event="oninput" placeholder="@localizer["Mandatory"]" />
+                        <input type="text" class="form-control custom-select-input" @bind="cargoes.TaskId" @bind:event="oninput" placeholder="@localizer["Mandatory"]" />
                         <div class="custom-select-options">
                             @if (tasks != null)
                             {
                                 @foreach (var task in tasks.Where(x=>x.Completed==false))
                                 {
-                                    if (task.Id.ToString().ToLower().Contains((cargoes?.Task_id != null ? cargoes?.Task_id?.ToString() : "")!))
-                                    {
-                                        <div class="custom-select-option" @onclick="() => { cargoes!.Task_id = task.Id; }">
-                                             @localizer["Id"]: @task.Id <br>
-                                             @localizer["Partner"]: @task.Partner <br>
-                                             @localizer["Place_of_receipt"]: @task.Place_of_receipt <br>
-                                             @localizer["Place_of_delivery"]: @task.Place_of_delivery <br>
-                                             @localizer["Date"]: @task.Date <br>
-                                             @localizer["Description"]: @task.Description?.Substring(0, task.Description.Length >= 50 ? 50 : task.Description.Length)
-                                        </div>
-                                    }
+                                    <div class="custom-select-option" @onclick="() => { cargoes!.TaskId = task.Id; }">
+                                            @localizer["Id"]: @task.Id <br>
+                                            @localizer["Partner"]: @task.Partner <br>
+                                            @localizer["Place_of_receipt"]: @task.PlaceOfReceipt <br>
+                                            @localizer["Place_of_delivery"]: @task.PlaceOfDelivery <br>
+                                            @localizer["Date"]: @task.Date <br>
+                                            @localizer["Description"]: @task.Description?.Substring(0, task.Description.Length >= 50 ? 50 : task.Description.Length)
+                                    </div>
                                 }
                             }
                         </div>
-                        <ValidationMessage For="@(() => cargoes.Task_id)" />
+                        <ValidationMessage For="@(() => cargoes.TaskId)" />
                     </div>
                     <div class="form-group custom-select">
                         <label>@localizer["Warehouse_id"]:</label>
-                        <input type="text" class="form-control custom-select-input" @bind="cargoes.Warehouse_id" @bind:event="oninput" placeholder="@localizer["Select_placeholder"]" />
+                        <input type="text" class="form-control custom-select-input" @bind="cargoes.WarehouseId" @bind:event="oninput" placeholder="@localizer["Select_placeholder"]" />
                         <div class="custom-select-options">
                             @if (warehouses != null)
                             {
                                 @foreach (var warehouse in warehouses)
                                 {
-                                if (warehouse.Id.ToString().ToLower().Contains((cargoes?.Warehouse_id != null ? cargoes?.Warehouse_id?.ToString(): "")!))
+                                if (warehouse.Id.ToString().ToLower().Contains((cargoes?.WarehouseId != null ? cargoes?.WarehouseId?.ToString(): "")!))
                                     {
-                                        <div class="custom-select-option" @onclick="() => { cargoes!.Warehouse_id = warehouse.Id; }">
+                                        <div class="custom-select-option" @onclick="() => { cargoes!.WarehouseId = warehouse.Id; }">
                                              @localizer["Id"]: @warehouse.Id <br>
-                                        @localizer["Address"]: @warehouse.Address <br>
+                                             @localizer["Address"]: @warehouse.Address <br>
                                              @localizer["Owner"]: @warehouse.Owner
                                         </div>
                                     }
                                 }
                             }
                         </div>
-                        <ValidationMessage For="@(() => cargoes.Warehouse_id)" />
+                        <ValidationMessage For="@(() => cargoes.WarehouseId)" />
                     </div>
                     <div class="form-group ">
                         <div>
                             <label>@localizer["Warehouse_section"]:</label>
                             <div>
-                                <InputText class="form-control inputs" @bind-Value="@cargoes.Warehouse_section" />
-                                <ValidationMessage For="@(() => cargoes.Warehouse_section)" />
+                                <InputText class="form-control inputs" @bind-Value="@cargoes.WarehouseSection" />
+                                <ValidationMessage For="@(() => cargoes.WarehouseSection)" />
                             </div>
                         </div>
                     </div>
@@ -139,8 +136,8 @@
                         <div>
                             <label>@localizer["Storage_starting_time"]:</label>
                             <div>
-                                <InputDate Type="InputDateType.DateTimeLocal" class="form-control inputs" @bind-Value="@cargoes.Storage_starting_time" />
-                                <ValidationMessage For="@(() => cargoes.Storage_starting_time)" />
+                                <InputDate Type="InputDateType.DateTimeLocal" class="form-control inputs" @bind-Value="@cargoes.StorageStartingTime" />
+                                <ValidationMessage For="@(() => cargoes.StorageStartingTime)" />
                             </div>
                         </div>
                     </div>
@@ -173,8 +170,8 @@
 
         foreach (var cargo in cargoWithIds!)
         {
-            trucks?.RemoveAll(x => x.Vehicle_registration_number == cargo.Vehicle_registration_number && x.Vehicle_registration_number != cargoes?.Vehicle_registration_number);
-            tasks?.RemoveAll(x => x.Id == cargo.Task_id && x.Id != cargoes?.Task_id);
+            trucks?.RemoveAll(x => x.VehicleRegistrationNumber == cargo.VehicleRegistrationNumber && x.VehicleRegistrationNumber != cargoes?.VehicleRegistrationNumber);
+            tasks?.RemoveAll(x => x.Id == cargo.TaskId && x.Id != cargoes?.TaskId);
         }
     }
 
@@ -186,7 +183,7 @@
 
         if (cargoes != null)
         {
-            if (cargoes?.Task_id != null)
+            if (cargoes?.TaskId != null)
             {
                 invalid = false;
                 if (tasks?.Count > 0)
@@ -195,7 +192,7 @@
                     {
                         if (!task.Completed)
                         {
-                            if (task.Id != cargoes?.Task_id)
+                            if (task.Id != cargoes?.TaskId)
                             {
                                 invalid = true;
                             }
@@ -216,21 +213,21 @@
                 if (invalid)
                 {
                     isValidSubmit = false;
-                    cargoes.Task_id = null;
+                    cargoes.TaskId = null;
                     await checkValidSubmit.InvokeAsync(false);
                     error += localizer["task_id_invalid"] + " ";
                 }
 
             }
 
-            if (cargoes?.Warehouse_id != null)
+            if (cargoes?.WarehouseId != null)
             {
                 invalid = false;
                 if (warehouses?.Count() > 0)
                 {
                     @foreach (var warehouse in warehouses)
                     {
-                        if (warehouse.Id != cargoes?.Warehouse_id)
+                        if (warehouse.Id != cargoes?.WarehouseId)
                         {
                             invalid = true;
                         }
@@ -249,26 +246,26 @@
                 if (invalid)
                 {
                     isValidSubmit = false;
-                    cargoes.Warehouse_id = null;
+                    cargoes.WarehouseId = null;
                     await checkValidSubmit.InvokeAsync(false);
                     error += localizer["warehouse_id_invalid"] + " ";
                 }
 
             }
 
-            if (cargoes?.Vehicle_registration_number != null)
+            if (cargoes?.VehicleRegistrationNumber != null)
             {
                 invalid = false;
                 if (trucks?.Count > 0)
                 {
                     @foreach (var truck in trucks)
                     {
-                        if (truck?.Max_weight < cargoes?.Weight)
+                        if (truck?.MaxWeight < cargoes?.Weight)
                         {
                             invalid = true;
                             error += localizer["Weight_is_height"] + " ";
                         }
-                        if (truck?.Vehicle_registration_number != cargoes?.Vehicle_registration_number)
+                        if (truck?.VehicleRegistrationNumber != cargoes?.VehicleRegistrationNumber)
                         {
                             invalid = true;
                         }
@@ -288,14 +285,14 @@
                 if (invalid)
                 {
                     isValidSubmit = false;
-                    cargoes!.Vehicle_registration_number = null;
+                    cargoes!.VehicleRegistrationNumber = null;
                     await checkValidSubmit.InvokeAsync(false);
                     error += localizer["VRN_invalid"] + " ";
                 }
 
             }
         }
-        if (!invalid && isValidSubmit && (cargoes?.Warehouse_id != null || cargoes?.Task_id != null || cargoes?.Vehicle_registration_number != null))
+        if (!invalid && isValidSubmit && (cargoes?.WarehouseId != null || cargoes?.TaskId != null || cargoes?.VehicleRegistrationNumber != null))
         {
             await checkValidSubmit.InvokeAsync(true);
         }

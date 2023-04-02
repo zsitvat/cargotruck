@@ -34,7 +34,7 @@ else
                             @if (showtext[item.Id] || item.Name == null){
                                 <h1 class="@(item.Name==null ? "ms-2" : "ms-5")">@item.Text</h1>
                             }
-                            <button class="btn fixed-privacy" @onclick="@(() => DeleteAsync(item.Id))"> <span data-title="@localizer["DeleteAsync"]" class="oi oi-trash" aria-hidden="true"></span></button>
+                            <button class="btn fixed-privacy" @onclick="@(() => DeleteAsync(item.Id))"> <span data-title="@localizer["Delete"]" class="oi oi-trash" aria-hidden="true"></span></button>
                         </div>
                     </div>
                 }
@@ -87,7 +87,7 @@ else
     async Task DeleteAsync(int Id)
     {
         var data = privacies?.First(x => x.Id == Id);
-        if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {data?.Name}  {data?.Text} - {data?.Lang}({data?.Id})"))
+        if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {data?.Name}  {data?.Text} - {data?.Language}({data?.Id})"))
         {
             await client.DeleteAsync($"api/privacies/delete/{Id}");
             await OnInitializedAsync();

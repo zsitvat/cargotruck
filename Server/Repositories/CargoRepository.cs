@@ -37,25 +37,25 @@ namespace Cargotruck.Server.Repositories
 
             if (filter == "InWarehouse")
             {
-                data = data.Where(data => data.Warehouse_id != null).ToList();
+                data = data.Where(data => data.WarehouseId != null).ToList();
             }
             else if (filter == "NotInWarehouse")
             {
-                data = data.Where(data => data.Warehouse_id == null).ToList();
+                data = data.Where(data => data.WarehouseId == null).ToList();
             }
 
             searchString = searchString?.ToLower();
             if (searchString != null && searchString != "")
             {
                 data = data.Where(s =>
-               (s.Task_id.ToString()!.ToLower().Contains(searchString))
+               (s.Task!.Id.ToString().ToLower().Contains(searchString))
             || (s.Weight != null && s.Weight.ToString()!.ToLower()!.Contains(searchString))
             || (s.Description != null && s.Description.ToLower()!.Contains(searchString))
-            || (s.Delivery_requirements != null && s.Delivery_requirements.ToString().ToLower()!.Contains(searchString))
-            || (s.Vehicle_registration_number != null && s.Vehicle_registration_number.ToString()!.Contains(searchString))
-            || (s.Warehouse_id != null && s.Warehouse_id.ToString()!.Contains(searchString))
-            || (s.Warehouse_section != null && s.Warehouse_section.ToLower()!.Contains(searchString))
-            || (s.Storage_starting_time != null && s.Storage_starting_time.ToString()!.Contains(searchString))
+            || (s.DeliveryRequirements != null && s.DeliveryRequirements.ToString().ToLower()!.Contains(searchString))
+            || (s.VehicleRegistrationNumber != null && s.VehicleRegistrationNumber.ToString()!.Contains(searchString))
+            || (s.WarehouseId != null && s.WarehouseId.ToString()!.Contains(searchString))
+            || (s.WarehouseSection != null && s.WarehouseSection.ToLower()!.Contains(searchString))
+            || (s.StorageStartingTime != null && s.StorageStartingTime.ToString()!.Contains(searchString))
             ).ToList();
             }
 
@@ -66,34 +66,34 @@ namespace Cargotruck.Server.Repositories
         {
             var data = await GetDataAsync(searchString, filter, dateFilterStartDate, dateFilterEndDate);
 
-            sortOrder = sortOrder == "Task_id" ? (desc ? "Task_id_desc" : "Task_id") : (sortOrder);
+            sortOrder = sortOrder == "TaskId" ? (desc ? "TaskId_desc" : "TaskId") : (sortOrder);
             sortOrder = sortOrder == "Weight" ? (desc ? "Weight_desc" : "Weight") : (sortOrder);
             sortOrder = sortOrder == "Description" ? (desc ? "Description_desc" : "Description") : (sortOrder);
-            sortOrder = sortOrder == "Delivery_requirements" ? (desc ? "Delivery_requirements_desc" : "Delivery_requirements") : (sortOrder);
-            sortOrder = sortOrder == "Vehicle_registration_number" ? (desc ? "Vehicle_registration_number_desc" : "Vehicle_registration_number") : (sortOrder);
-            sortOrder = sortOrder == "Warehouse_id" ? (desc ? "Warehouse_id_desc" : "Warehouse_id") : (sortOrder);
-            sortOrder = sortOrder == "Warehouse_section" ? (desc ? "Warehouse_section_desc" : "Warehouse_section") : (sortOrder);
-            sortOrder = sortOrder == "Storage_starting_time" ? (desc ? "Storage_starting_time_desc" : "Storage_starting_time") : (sortOrder);
+            sortOrder = sortOrder == "DeliveryRequirements" ? (desc ? "DeliveryRequirements_desc" : "DeliveryRequirements") : (sortOrder);
+            sortOrder = sortOrder == "VehicleRegistrationNumber" ? (desc ? "VehicleRegistrationNumber_desc" : "VehicleRegistrationNumber") : (sortOrder);
+            sortOrder = sortOrder == "WarehouseId" ? (desc ? "WarehouseId_desc" : "WarehouseId") : (sortOrder);
+            sortOrder = sortOrder == "WarehouseSection" ? (desc ? "WarehouseSection_desc" : "WarehouseSection") : (sortOrder);
+            sortOrder = sortOrder == "StorageStartingTime" ? (desc ? "StorageStartingTime_desc" : "StorageStartingTime") : (sortOrder);
             sortOrder = sortOrder == "Date" || String.IsNullOrEmpty(sortOrder) ? (desc ? "Date_desc" : "") : (sortOrder);
 
             data = sortOrder switch
             {
-                "Task_id_desc" => data.OrderByDescending(s => s.Task_id).ToList(),
-                "Task_id" => data.OrderBy(s => s.Task_id).ToList(),
+                "TaskId_desc" => data.OrderByDescending(s => s.Task?.Id).ToList(),
+                "TaskId" => data.OrderBy(s => s.Task?.Id).ToList(),
                 "Weight_desc" => data.OrderByDescending(s => s.Weight).ToList(),
                 "Weight" => data.OrderBy(s => s.Weight).ToList(),
                 "Description_desc" => data.OrderByDescending(s => s.Description).ToList(),
                 "Description" => data.OrderBy(s => s.Description).ToList(),
-                "Delivery_requirements_desc" => data.OrderByDescending(s => s.Delivery_requirements).ToList(),
-                "Delivery_requirements" => data.OrderBy(s => s.Delivery_requirements).ToList(),
-                "Vehicle_registration_number_desc" => data.OrderByDescending(s => s.Vehicle_registration_number).ToList(),
-                "Vehicle_registration_number" => data.OrderBy(s => s.Vehicle_registration_number).ToList(),
-                "Warehouse_id_desc" => data.OrderByDescending(s => s.Warehouse_id).ToList(),
-                "Warehouse_id" => data.OrderBy(s => s.Warehouse_id).ToList(),
-                "Warehouse_section_desc" => data.OrderByDescending(s => s.Warehouse_section).ToList(),
-                "Warehouse_section" => data.OrderBy(s => s.Warehouse_section).ToList(),
-                "Storage_starting_time_desc" => data.OrderByDescending(s => s.Storage_starting_time).ToList(),
-                "Storage_starting_time" => data.OrderBy(s => s.Storage_starting_time).ToList(),
+                "DeliveryRequirements_desc" => data.OrderByDescending(s => s.DeliveryRequirements).ToList(),
+                "DeliveryRequirements" => data.OrderBy(s => s.DeliveryRequirements).ToList(),
+                "VehicleRegistrationNumber_desc" => data.OrderByDescending(s => s.VehicleRegistrationNumber).ToList(),
+                "VehicleRegistrationNumber" => data.OrderBy(s => s.VehicleRegistrationNumber).ToList(),
+                "WarehouseId_desc" => data.OrderByDescending(s => s.WarehouseId).ToList(),
+                "WarehouseId" => data.OrderBy(s => s.WarehouseId).ToList(),
+                "WarehouseSection_desc" => data.OrderByDescending(s => s.WarehouseSection).ToList(),
+                "WarehouseSection" => data.OrderBy(s => s.WarehouseSection).ToList(),
+                "StorageStartingTime_desc" => data.OrderByDescending(s => s.StorageStartingTime).ToList(),
+                "StorageStartingTime" => data.OrderBy(s => s.StorageStartingTime).ToList(),
                 "Date_desc" => data.OrderByDescending(s => s.Date).ToList(),
                 _ => data.OrderBy(s => s.Date).ToList(),
             };
@@ -118,7 +118,7 @@ namespace Cargotruck.Server.Repositories
             {
                 foreach (var task in tasks.Where(x => x.Completed == false))
                 {
-                    columnsHeight[i] += data.Where(x => x.Date.Year == DateTime.Now.Year && x.Date.Month == i + 1 && x.Warehouse_id == null && x.Task_id == task.Id).Count();
+                    columnsHeight[i] += data.Where(x => x.Date.Year == DateTime.Now.Year && x.Date.Month == i + 1 && x.WarehouseId == null && x.TaskId == task.Id).Count();
                 }
             }
 
@@ -126,13 +126,13 @@ namespace Cargotruck.Server.Repositories
             {
                 foreach (var task in tasks.Where(x => x.Completed))
                 {
-                    columnsHeight[i + 12] += data.Where(x => x.Date.Year == DateTime.Now.Year && x.Date.Month == i + 1 && x.Task_id == task.Id).Count();
+                    columnsHeight[i + 12] += data.Where(x => x.Date.Year == DateTime.Now.Year && x.Date.Month == i + 1 && x.TaskId == task.Id).Count();
                 }
             }
 
             for (int i = 0; i < 12; i++)
             {
-                columnsHeight[i + 24] = data.Where(x => x.Date.Year == DateTime.Now.Year && x.Date.Month == i + 1 && x.Warehouse_id != null).Count();
+                columnsHeight[i + 24] = data.Where(x => x.Date.Year == DateTime.Now.Year && x.Date.Month == i + 1 && x.WarehouseId != null).Count();
             }
 
             return columnsHeight;
@@ -157,7 +157,7 @@ namespace Cargotruck.Server.Repositories
                 {
                     foreach (var task in tasks)
                     {
-                        if (cargo.Task_id == task.Id)
+                        if (cargo.Task?.Id == task.Id)
                         {
                             count++;
                         }
@@ -166,28 +166,48 @@ namespace Cargotruck.Server.Repositories
                 return count;
             }
         }
-        public async System.Threading.Tasks.Task PostAsync(Cargo data)
+        public async Task PostAsync(Cargo data)
         {
+            var task = await _context.Tasks.FirstOrDefaultAsync(a => a.Id == data.TaskId);
+            data.Task = task!;
             _context!.Add(data);
             await _context.SaveChangesAsync();
 
-            var task = _context.Tasks.FirstOrDefault(a => a.Id == data.Task_id);
             if (task != null)
             {
-                task.Id_cargo = data.Id;
-                _context.Entry(task).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
-            }
-        }
-        public async System.Threading.Tasks.Task PutAsync(Cargo data)
-        {
-            _context.Entry(data).State = EntityState.Modified;
-            var task = _context.Tasks.FirstOrDefault(a => a.Id == data.Task_id);
-            if (task != null)
-            {
-                task.Id_cargo = data.Id;
+                task.CargoId = data.Id;
+                task.Cargo = data;
                 _context.Entry(task).State = EntityState.Modified;
 
+                var idsToDelete = await _context.Tasks.Where(d => d.CargoId == data.Id).ToListAsync();
+                foreach (var row in idsToDelete)
+                {
+                    row.CargoId = null;
+                    row.Cargo = null;
+                    _context.Entry(row).State = EntityState.Modified;
+                }
+            }
+            await _context.SaveChangesAsync();
+        }
+        public async Task PutAsync(Cargo data)
+        {
+            var task = _context.Tasks.FirstOrDefault(a => a.Id == data.TaskId);
+            data.Task = task!;
+            _context.Entry(data).State = EntityState.Modified;
+
+            if (task != null)
+            {
+                task.CargoId = data.Id;
+                task.Cargo = data;
+                _context.Entry(task).State = EntityState.Modified;
+
+                var idsToDelete = await _context.Tasks.Where(d => d.CargoId == data.Id).ToListAsync();
+                foreach (var row in idsToDelete)
+                {
+                    row.CargoId = null;
+                    row.Cargo = null;
+                    _context.Entry(row).State = EntityState.Modified;
+                }
             }
             await _context.SaveChangesAsync();
         }
@@ -223,14 +243,14 @@ namespace Cargotruck.Server.Repositories
             {
                 currentRow++;
                 worksheet.Cell(currentRow, 1).Value = cargo.Id;
-                worksheet.Cell(currentRow, 2).Value = cargo.Task_id;
+                worksheet.Cell(currentRow, 2).Value = cargo.TaskId;
                 worksheet.Cell(currentRow, 3).Value = cargo.Weight;
                 worksheet.Cell(currentRow, 4).Value = cargo.Description;
-                worksheet.Cell(currentRow, 5).Value = cargo.Delivery_requirements;
-                worksheet.Cell(currentRow, 6).Value = cargo.Vehicle_registration_number;
-                worksheet.Cell(currentRow, 7).Value = cargo.Warehouse_id;
-                worksheet.Cell(currentRow, 8).Value = cargo.Warehouse_section;
-                worksheet.Cell(currentRow, 9).Value = cargo.Storage_starting_time;
+                worksheet.Cell(currentRow, 5).Value = cargo.DeliveryRequirements;
+                worksheet.Cell(currentRow, 6).Value = cargo.VehicleRegistrationNumber;
+                worksheet.Cell(currentRow, 7).Value = cargo.WarehouseId;
+                worksheet.Cell(currentRow, 8).Value = cargo.WarehouseSection;
+                worksheet.Cell(currentRow, 9).Value = cargo.StorageStartingTime;
                 worksheet.Cell(currentRow, 10).Value = cargo.Date;
             }
 
@@ -313,7 +333,7 @@ namespace Cargotruck.Server.Repositories
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(cargo.Task_id.ToString())) { s = cargo.Task_id.ToString(); }
+                    if (!string.IsNullOrEmpty(cargo.TaskId.ToString())) { s = cargo.TaskId.ToString(); }
                     else { s = "-"; }
                     table.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
@@ -334,7 +354,7 @@ namespace Cargotruck.Server.Repositories
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(cargo?.Delivery_requirements?.ToString())) { s = cargo.Delivery_requirements.ToString(); }
+                    if (!string.IsNullOrEmpty(cargo?.DeliveryRequirements?.ToString())) { s = cargo.DeliveryRequirements.ToString(); }
                     else { s = "-"; }
                     table.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
@@ -355,7 +375,7 @@ namespace Cargotruck.Server.Repositories
 
                 foreach (var name in columnNames.Skip(column_number).Take(column_number))
                 {
-                    if (name == _localizer["Warehouse_id"])
+                    if (name == _localizer["WarehouseId"])
                     {
                         table2.AddCell(new PdfPCell(new Phrase(name + "/" + _localizer["W_section"], font1))
                         {
@@ -386,21 +406,21 @@ namespace Cargotruck.Server.Repositories
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(cargo?.Vehicle_registration_number?.ToString())) { s = cargo.Vehicle_registration_number.ToString(); }
+                    if (!string.IsNullOrEmpty(cargo?.VehicleRegistrationNumber?.ToString())) { s = cargo.VehicleRegistrationNumber.ToString(); }
                     else { s = "-"; }
                     table2.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(cargo?.Warehouse_id.ToString())) { s = cargo.Warehouse_id.ToString() + "/" + cargo.Warehouse_section; }
+                    if (!string.IsNullOrEmpty(cargo?.WarehouseId.ToString())) { s = cargo.WarehouseId.ToString() + "/" + cargo.WarehouseSection; }
                     else { s = "-"; }
                     table2.AddCell(new PdfPCell(new Phrase(s?.ToString(), font2))
                     {
                         HorizontalAlignment = Element.ALIGN_CENTER,
                         VerticalAlignment = Element.ALIGN_MIDDLE
                     });
-                    if (!string.IsNullOrEmpty(cargo?.Storage_starting_time.ToString())) { s = cargo.Storage_starting_time.ToString(); }
+                    if (!string.IsNullOrEmpty(cargo?.StorageStartingTime.ToString())) { s = cargo.StorageStartingTime.ToString(); }
                     else { s = "-"; }
                     table2.AddCell(new PdfPCell(new Phrase(s?.ToString() == "TO" ? _localizer["to"] : _localizer["from"], font2))
                     {
@@ -470,14 +490,14 @@ namespace Cargotruck.Server.Repositories
             foreach (var cargo in cargoes)
             {
                 txt.Write((cargo.Id + separator));
-                txt.Write((cargo.Task_id != null ? cargo.Task_id : ifNull) + separator);
+                txt.Write(cargo.Task?.Id + separator);
                 txt.Write((cargo.Weight != null ? cargo.Weight :  ifNull) + separator);
                 txt.Write((cargo.Description ?? ifNull) + separator);
-                txt.Write((cargo.Delivery_requirements ?? ifNull) + separator);
-                txt.Write((cargo.Vehicle_registration_number ?? ifNull) + separator);
-                txt.Write((cargo.Warehouse_id != null ? cargo.Warehouse_id : ifNull) + separator);
-                txt.Write((cargo.Warehouse_section ?? ifNull) + separator);
-                txt.Write((cargo.Storage_starting_time != null ? cargo.Storage_starting_time : ifNull) + separator);
+                txt.Write((cargo.DeliveryRequirements ?? ifNull) + separator);
+                txt.Write((cargo.VehicleRegistrationNumber ?? ifNull) + separator);
+                txt.Write((cargo.WarehouseId != null ? cargo.WarehouseId : ifNull) + separator);
+                txt.Write((cargo.WarehouseSection ?? ifNull) + separator);
+                txt.Write((cargo.StorageStartingTime != null ? cargo.StorageStartingTime : ifNull) + separator);
                 txt.Write((cargo.Date + separator));
 
                 txt.Write("\n");
@@ -588,24 +608,22 @@ namespace Cargotruck.Server.Repositories
                                     }
                                 }
 
-
-
                                 try
                                 {
                                     if (nulls != list.Count)
                                     {
-                                        var sql = @"Insert Into Cargoes (User_id,Task_id,Weight,Description,Delivery_requirements,Vehicle_registration_number,Warehouse_id,Warehouse_section,Storage_starting_time,Date) 
-                                            Values (@User_id,@Task_id,@Weight,@Description,@Delivery_requirements,@Vehicle_registration_number,@Warehouse_id,@Warehouse_section,@Storage_starting_time,@Date)";
+                                        var sql = @"Insert Into Cargoes (UserId,TaskId,Weight,Description,DeliveryRequirements,VehicleRegistrationNumber,WarehouseId,WarehouseSection,StorageStartingTime,Date) 
+                                            Values (@UserId,@TaskId,@Weight,@Description,@DeliveryRequirements,@VehicleRegistrationNumber,@WarehouseId,@WarehouseSection,@StorageStartingTime,@Date)";
                                         var insert = await _context.Database.ExecuteSqlRawAsync(sql,
-                                        new SqlParameter("@User_id", "Imported"),
-                                        new SqlParameter("@Task_id", list[l]),
+                                        new SqlParameter("@UserId", "Imported"),
+                                        new SqlParameter("@TaskId", list[l]),
                                         new SqlParameter("@Weight", list[l + 1]),
                                         new SqlParameter("@Description", list[l + 2]),
-                                        new SqlParameter("@Delivery_requirements", list[l + 3]),
-                                        new SqlParameter("@Vehicle_registration_number", list[l + 4]),
-                                        new SqlParameter("@Warehouse_id", list[l + 5]),
-                                        new SqlParameter("@Warehouse_section", list[l + 6]),
-                                        new SqlParameter("@Storage_starting_time", list[l + 7] == System.DBNull.Value || list[l + 7] == null ? System.DBNull.Value : DateTime.Parse(list[l + 7]?.ToString()!)),
+                                        new SqlParameter("@DeliveryRequirements", list[l + 3]),
+                                        new SqlParameter("@VehicleRegistrationNumber", list[l + 4]),
+                                        new SqlParameter("@WarehouseId", list[l + 5]),
+                                        new SqlParameter("@WarehouseSection", list[l + 6]),
+                                        new SqlParameter("@StorageStartingTime", list[l + 7] == System.DBNull.Value || list[l + 7] == null ? System.DBNull.Value : DateTime.Parse(list[l + 7]?.ToString()!)),
                                         new SqlParameter("@Date", DateTime.Now)
                                         );
 
@@ -615,10 +633,10 @@ namespace Cargotruck.Server.Repositories
 
                                             if (lastId != null)
                                             {
-                                                var WithNewIds = await _context.Cargoes.Where(x => x.Task_id == lastId.Task_id || x.Warehouse_id == lastId.Warehouse_id || x.Vehicle_registration_number == lastId.Vehicle_registration_number).ToListAsync();
-                                                DeliveryTask? task = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == lastId.Task_id);
-                                                Warehouse? warehouse = await _context.Warehouses.FirstOrDefaultAsync(x => x.Id == lastId.Warehouse_id);
-                                                Truck? truck = await _context.Trucks.FirstOrDefaultAsync(x => x.Vehicle_registration_number == lastId.Vehicle_registration_number);
+                                                var WithNewIds = await _context.Cargoes.Where(x => x.Task!.Id == lastId.Task!.Id || x.WarehouseId == lastId.WarehouseId || x.VehicleRegistrationNumber == lastId.VehicleRegistrationNumber).ToListAsync();
+                                                DeliveryTask? task = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == lastId.Task!.Id);
+                                                Warehouse? warehouse = await _context.Warehouses.FirstOrDefaultAsync(x => x.Id == lastId.WarehouseId);
+                                                Truck? truck = await _context.Trucks.FirstOrDefaultAsync(x => x.VehicleRegistrationNumber == lastId.VehicleRegistrationNumber);
 
                                                 foreach (var item in WithNewIds)
                                                 {
@@ -626,16 +644,16 @@ namespace Cargotruck.Server.Repositories
                                                     {
                                                         if (item.Id != lastId?.Id)
                                                         {
-                                                            if (item.Task_id == lastId?.Task_id)
+                                                            if (item.Task?.Id == lastId?.Task?.Id)
                                                             {
                                                                 error += "\n" + _localizer["Deleted_wrong_id"] + " " + lastId?.Id + ".";
                                                                 _context.Cargoes.Remove(lastId!);
                                                                 await _context?.SaveChangesAsync()!;
                                                                 return error;
                                                             }
-                                                            if (item.Vehicle_registration_number == lastId?.Vehicle_registration_number)
+                                                            if (item.VehicleRegistrationNumber == lastId?.VehicleRegistrationNumber)
                                                             {
-                                                                item.Vehicle_registration_number = null;
+                                                                item.VehicleRegistrationNumber = null;
                                                             }
 
                                                             _context.Entry(item).State = EntityState.Modified;
@@ -646,12 +664,12 @@ namespace Cargotruck.Server.Repositories
                                                         {
                                                             if (warehouse == null)
                                                             {
-                                                                item.Warehouse_id = null;
-                                                                item.Warehouse_section = null;
+                                                                item.WarehouseId = null;
+                                                                item.WarehouseSection = null;
                                                             }
                                                             if (task == null)
                                                             {
-                                                                item.Task_id = default;
+                                                                item.Task!.Id = default;
                                                                 error += "\n" + _localizer["Deleted_wrong_id"] + " " + lastId?.Id + ".";
                                                                 _context.Cargoes.Remove(lastId!);
                                                                 await _context?.SaveChangesAsync()!;
@@ -659,14 +677,14 @@ namespace Cargotruck.Server.Repositories
                                                             }
                                                             if (truck == null)
                                                             {
-                                                                item.Vehicle_registration_number = null;
+                                                                item.VehicleRegistrationNumber = null;
                                                             }
                                                             _context.Entry(item).State = EntityState.Modified;
                                                             await _context.SaveChangesAsync();
                                                         }
                                                     }
 
-                                                    if (item != null && item?.Task_id == null)
+                                                    if (item != null && item?.Task?.Id == null)
                                                     {
                                                         error += "\n" + _localizer["Deleted_wrong_id"] + " " + lastId?.Id + ".";
 
@@ -676,12 +694,7 @@ namespace Cargotruck.Server.Repositories
                                                     }
                                                 }
 
-                                                if (task != null)
-                                                {
-                                                    task.Id_cargo = lastId?.Id;
-                                                    _context.Entry(task).State = EntityState.Modified;
-                                                    await _context.SaveChangesAsync();
-                                                }
+                                              
 
                                             }
                                         }

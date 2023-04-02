@@ -21,7 +21,7 @@
         {
             if (task != null)
             {
-                task.User_id = authStateProvider.GetCurrentUserAsync().Result.Id;
+                task.UserId = authStateProvider.GetCurrentUserAsync().Result.Id;
             }
             var text = @localizer["Succesfull_update"];
             await http.PutAsJsonAsync("api/tasks/put", task);

@@ -15,7 +15,7 @@
         {
             if (cargo != null)
             {
-                cargo.User_id = authStateProvider.GetCurrentUserAsync().Result.Id;
+                cargo.UserId = authStateProvider.GetCurrentUserAsync().Result.Id;
             }
             await http.PostAsJsonAsync("api/cargoes/post", cargo);
             uriHelper.NavigateTo("/Cargoes");

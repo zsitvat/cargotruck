@@ -1233,9 +1233,9 @@ namespace Cargotruck.Shared.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Végleges összeg.
         /// </summary>
-        public static string Final_Payment {
+        public static string Final_payment {
             get {
-                return ResourceManager.GetString("Final_Payment", resourceCulture);
+                return ResourceManager.GetString("Final_payment", resourceCulture);
             }
         }
         

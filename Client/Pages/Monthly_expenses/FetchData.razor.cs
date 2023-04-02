@@ -11,8 +11,8 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
         public bool settings = false;
         bool expandExportMenu;
         public bool fullYearProfitWindow = true;
-        Monthly_expensesDto[]? Monthly_expenses { get; set; }
-        Monthly_expense_task_expenseDto[]? Connection_ids { get; set; }
+        MonthlyExpenseDto[]? Monthly_expenses { get; set; }
+        MonthlyExpense_task_expenseDto[]? Connection_ids { get; set; }
         int? IdForGetById { get; set; }
         string? GetByIdType { get; set; }
         readonly List<bool> showColumns = Enumerable.Repeat(true, 6).ToList();
@@ -28,13 +28,13 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
 
         protected override async Task OnInitializedAsync()
         {
-            PageHistoryState.AddPageToHistory("/Monthly_expenses");
+            PageHistoryState.AddPageToHistory("/MonthlyExpense");
             base.OnInitialized();
 
             await client.PostAsync("api/monthlyexpenses/createcontable", null);
             dataRows = await client.GetFromJsonAsync<int>($"api/monthlyexpenses/pagecount?searchString={searchString}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
             var checkData = await client.PostAsync("api/monthlyexpenses/checkdata", null);
-            Connection_ids = await client.GetFromJsonAsync<Monthly_expense_task_expenseDto[]?>("api/monthlyexpenses/getconnectionids");
+            Connection_ids = await client.GetFromJsonAsync<MonthlyExpense_task_expenseDto[]?>("api/monthlyexpenses/getconnectionids");
 
             if (checkData.IsSuccessStatusCode)
             {
@@ -52,18 +52,18 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
             pageSize = Page.GetPageSize(pageSize, dataRows);
             maxPage = Page.GetMaxPage(pageSize, dataRows);
 
-            Monthly_expenses = await client.GetFromJsonAsync<Monthly_expensesDto[]>($"api/monthlyexpenses/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
+            Monthly_expenses = await client.GetFromJsonAsync<MonthlyExpenseDto[]>($"api/monthlyexpenses/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
             StateHasChanged();
         }
 
         async Task Delete(int Id)
         {
-            var data = Monthly_expenses?.First(x => x.Monthly_expense_id == Id);
-            if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {data?.Earning} - {data?.Profit} ({data?.Monthly_expense_id})"))
+            var data = Monthly_expenses?.First(x => x.Id == Id);
+            if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {data?.Earning} - {data?.Profit} ({data?.Id})"))
             {
                 await client.DeleteAsync($"api/monthlyexpenses/delete/{Id}");
                 var shouldreload = dataRows % ((currentPage == 1 ? currentPage : currentPage - 1) * pageSize);
-                if (shouldreload == 1 && dataRows > 0) { navigationManager.NavigateTo("/Monthly_expenses", true); }
+                if (shouldreload == 1 && dataRows > 0) { navigationManager.NavigateTo("/MonthlyExpense", true); }
                 await OnInitializedAsync();
             }
         }

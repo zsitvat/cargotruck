@@ -1,6 +1,6 @@
-﻿@page "/Monthly_expenses"
+﻿@page "/MonthlyExpense"
 
-<h3>@localizer["Monthly_expenses"]</h3>
+<h3>@localizer["MonthlyExpense"]</h3>
 <div class="form-group buttons">
     
     <a class="btn btn-success me-4" href="/Monthly_expenses/create"><i class="oi oi-plus"></i> @localizer["Add"]</a>
@@ -88,15 +88,15 @@ else
                         <tbody>
                             @foreach (var item in Monthly_expenses)
                             {
-                                <tr @onclick="@((e) =>MouseHoverClass.MouseOnclick(item.Monthly_expense_id.ToString()))" @onmouseover="@((e) =>MouseHoverClass.MouseOver(item.Monthly_expense_id.ToString()))" @onmouseout="@((e) =>MouseHoverClass.MouseOut())"
-                            class="@(item.Profit <=0 ? "red": "") @(MouseHoverClass.MouseOnHoverClass == item.Monthly_expense_id.ToString() || MouseHoverClass.MouseOnclickClass == item.Monthly_expense_id.ToString() ? "color-on-hover" :"")">
-                                   @if(item.User_id=="Generated") 
+                                <tr @onclick="@((e) =>MouseHoverClass.MouseOnclick(item.Id.ToString()))" @onmouseover="@((e) =>MouseHoverClass.MouseOver(item.Id.ToString()))" @onmouseout="@((e) =>MouseHoverClass.MouseOut())"
+                                    class="@(item.Profit <=0 ? "red": "") @(MouseHoverClass.MouseOnHoverClass == item.Id.ToString() || MouseHoverClass.MouseOnclickClass == item.Id.ToString() ? "color-on-hover" :"")">
+                                   @if(item.UserId=="Generated") 
                                    {
-                                      <td import-data-title="@localizer["Generated"]">@item.Monthly_expense_id</td>    
+                                      <td import-data-title="@localizer["Generated"]">@item.Id</td>    
                                    }
                                    else
                                    {
-                                        <td import-data-title="@localizer["Not_generated"]">@item.Monthly_expense_id*</td>
+                                        <td import-data-title="@localizer["Not_generated"]">@item.Id*</td>
                                    }
                                     <td>@localizer[item.Date.Month.ToString()]</td>
                                     @if (showColumns[0])
@@ -152,10 +152,10 @@ else
                                         <td>
                                             @if (Connection_ids != null)
                                             {
-                                                @foreach (var ConId in Connection_ids.Where(x => x.Monthly_expense_id == item.Monthly_expense_id && x.Expense_id != null))
+                                                @foreach (var ConId in Connection_ids.Where(x => x.MonthlyExpenseId == item.Id && x.ExpenseId != null))
                                                 {
-                                                 
-                                                    <button class="no-button multiselect-list" @onclick="@(()=>GetById(ConId.Expense_id,"expense"))">@ConId.Expense_id</button>
+
+                                                    <button class="no-button multiselect-list" @onclick="@(()=>GetById(ConId.ExpenseId,"expense"))">@ConId.ExpenseId</button>
                                                   
                                                 }
                                             }
@@ -165,10 +165,10 @@ else
                                     {
                                         <td>
                                         @if (Connection_ids != null){
-                                            @foreach (var ConId in Connection_ids.Where(x => x.Monthly_expense_id == item.Monthly_expense_id && x.Task_id != null))
+                                                @foreach (var ConId in Connection_ids.Where(x => x.MonthlyExpenseId == item.Id && x.TaskId != null))
                                             {
-                                             
-                                                <button class="no-button multiselect-list" @onclick="@(()=>GetById(ConId.Task_id,"task"))">@ConId.Task_id</button>
+
+                                                    <button class="no-button multiselect-list" @onclick="@(()=>GetById(ConId.TaskId,"task"))">@ConId.TaskId</button>
                                                 
                                             }
                                         }
@@ -178,9 +178,9 @@ else
                                     {
                                         <td class="last-col">@item.Date</td>
                                     }
-                                    <td class="@(MouseHoverClass.MouseOnHoverClass == item.Monthly_expense_id.ToString() || MouseHoverClass.MouseOnclickClass == item.Monthly_expense_id.ToString() ? "show" :"not-show") ">
-                                        <a class="btn  fixed" href="Monthly_expenses/edit/@item.Monthly_expense_id"> <span data-title="@localizer["Edit"]" class="oi oi-pencil" aria-hidden="true"></span></a>
-                                        <button class="btn fixed2" @onclick="@(() => Delete(item.Monthly_expense_id))"> <span data-title="@localizer["DeleteAsync"]" class="oi oi-trash" aria-hidden="true"></span></button>
+                                    <td class="@(MouseHoverClass.MouseOnHoverClass == item.Id.ToString() || MouseHoverClass.MouseOnclickClass == item.Id.ToString() ? "show" :"not-show") ">
+                                        <a class="btn  fixed" href="Monthly_expenses/edit/@item.Id"> <span data-title="@localizer["Edit"]" class="oi oi-pencil" aria-hidden="true"></span></a>
+                                        <button class="btn fixed2" @onclick="@(() => Delete(item.Id))"> <span data-title="@localizer["Delete"]" class="oi oi-trash" aria-hidden="true"></span></button>
                                     </td>
                                 </tr>
                             }

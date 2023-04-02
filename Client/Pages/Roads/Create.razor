@@ -15,7 +15,7 @@
         {
             if (road != null)
             {
-                road.User_id = authStateProvider.GetCurrentUserAsync().Result.Id;
+                road.UserId = authStateProvider.GetCurrentUserAsync().Result.Id;
             }
             await http.PostAsJsonAsync("api/roads/post", road);
             uriHelper.NavigateTo("/Roads");

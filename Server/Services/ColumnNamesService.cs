@@ -27,13 +27,13 @@ namespace Cargotruck.Server.Services
                 "Place_of_delivery",
                 "Time_of_delivery",
                 "Other_stops",
-                "Id_cargo",
+                "Cargo_id",
                 "Storage_time",
                 "Completed",
                 "Completion_time",
                 "Time_of_delay",
                 "Payment",
-                "Final_Payment",
+                "Final_payment",
                 "Penalty",
                 "Date"
             };
@@ -64,7 +64,7 @@ namespace Cargotruck.Server.Services
                  "Repair_cost",
                  "Repair_description",
                  "Cost_of_storage",
-                 "other",
+                 "Other",
                  "Total_amount",
                  "Date"
             };
@@ -84,7 +84,7 @@ namespace Cargotruck.Server.Services
                 "Id",
                 "Task_id",
                 "Vehicle_registration_number",
-                "Id_cargo",
+                "Cargo_id",
                 "Purpose_of_the_trip",
                 "Starting_date",
                 "Ending_date",
@@ -108,7 +108,7 @@ namespace Cargotruck.Server.Services
             };
             WarehousessColumnNames = new List<string>
             {
-                  "Id",
+                 "Id",
                  "Address",
                  "Owner",
                  "Cargo_id",

@@ -17,7 +17,7 @@ namespace Cargotruck.Server.Repositories
 
         public async Task<List<Privacies>> GetAsync(string lang)
         {
-            return await _context.Privacies.Where(x => x.Lang == lang).ToListAsync();
+            return await _context.Privacies.Where(x => x.Language == lang).ToListAsync();
         }
 
         public async Task<Privacies?> GetByIdAsync(int id)

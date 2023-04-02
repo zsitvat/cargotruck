@@ -51,8 +51,8 @@
                     <div>
                         <label>@localizer["Place_of_receipt"]:</label>
                         <div>
-                            <InputText class="form-control inputs" @bind-Value="@tasks.Place_of_receipt" />
-                            <ValidationMessage For="@(() => tasks.Place_of_receipt)" />
+                            <InputText class="form-control inputs" @bind-Value="@tasks.PlaceOfReceipt" />
+                            <ValidationMessage For="@(() => tasks.PlaceOfReceipt)" />
                         </div>
                     </div>
                 </div>
@@ -60,8 +60,8 @@
                     <div>
                         <label>@localizer["Time_of_receipt"]:</label>
                         <div>
-                            <InputDate Type="InputDateType.DateTimeLocal"  @bind-Value:format="yyyy.MM.dd. HH:mm" class="form-control inputs" @bind-Value="@tasks.Time_of_receipt" />
-                            <ValidationMessage For="@(() => tasks.Time_of_receipt)" />
+                            <InputDate Type="InputDateType.DateTimeLocal"  @bind-Value:format="yyyy.MM.dd. HH:mm" class="form-control inputs" @bind-Value="@tasks.TimeOfReceipt" />
+                            <ValidationMessage For="@(() => tasks.TimeOfReceipt)" />
                         </div>
                     </div>
                 </div>
@@ -69,8 +69,8 @@
                     <div>
                         <label>@localizer["Place_of_delivery"]:</label>
                         <div>
-                            <InputText class="form-control inputs"  @bind-Value="@tasks.Place_of_delivery" />
-                            <ValidationMessage For="@(() => tasks.Place_of_delivery)" />
+                            <InputText class="form-control inputs"  @bind-Value="@tasks.PlaceOfDelivery" />
+                            <ValidationMessage For="@(() => tasks.PlaceOfDelivery)" />
                         </div>
                     </div>
                 </div>
@@ -78,8 +78,8 @@
                     <div>
                         <label>@localizer["Time_of_delivery"]:</label>
                         <div>
-                            <InputDate Type="InputDateType.DateTimeLocal" @bind-Value:format="yyyy.MM.dd. hh:mm" class="form-control inputs" @bind-Value="@tasks.Time_of_delivery" />
-                            <ValidationMessage For="@(() => tasks.Time_of_delivery)" />
+                            <InputDate Type="InputDateType.DateTimeLocal" @bind-Value:format="yyyy.MM.dd. hh:mm" class="form-control inputs" @bind-Value="@tasks.TimeOfDelivery" />
+                            <ValidationMessage For="@(() => tasks.TimeOfDelivery)" />
                         </div>
                     </div>
                 </div>
@@ -90,23 +90,23 @@
                     <div>
                         <label>@localizer["Other_stops"]:</label>
                         <div>
-                            <InputText class="form-control inputs" @bind-Value="@tasks.Other_stops" />
-                            <ValidationMessage For="@(() => tasks.Other_stops)" />
+                            <InputText class="form-control inputs" @bind-Value="@tasks.OtherStops" />
+                            <ValidationMessage For="@(() => tasks.OtherStops)" />
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group custom-select">
-                    <label>@localizer["Id_cargo"]:</label>
-                    <input type="text" class="form-control custom-select-input" @bind="tasks.Id_cargo" @bind:event="oninput" placeholder="@localizer["Select_placeholder"]" />
+                    <label>@localizer["Cargo_id"]:</label>
+                    <input type="text" class="form-control custom-select-input" @bind="tasks.CargoId" @bind:event="oninput" placeholder="@localizer["Select_placeholder"]" />
                     <div class="custom-select-options">
                         @if (cargoes != null)
                         {
                             @foreach (var cargo in cargoes)
                             {
-                                if (cargo.Id.ToString().ToLower().Contains((tasks.Id_cargo != null ? tasks.Id_cargo?.ToString() : "")!))
+                                if (cargo.Id.ToString().ToLower().Contains((tasks.CargoId != null ? tasks.CargoId?.ToString() : "")!))
                                 {
-                                    <div class="custom-select-option" @onclick="() => { tasks.Id_cargo = cargo.Id; }">
+                                    <div class="custom-select-option" @onclick="() => { tasks.CargoId = cargo.Id; }">
                                         @localizer["Id"]: @cargo.Id <br>
                                         @localizer["Description"]: @cargo.Description?.Substring(0, cargo.Description.Length >= 80 ? 80 : cargo.Description.Length)
                                     </div>
@@ -114,14 +114,14 @@
                             }
                         }
                     </div>
-                    <ValidationMessage For="@(() =>tasks.Id_cargo)" />
+                    <ValidationMessage For="@(() =>tasks.CargoId)" />
                 </div>
                   <div class="form-group">
                     <div>
                         <label>@localizer["Storage_time"]:</label>
                         <div>
-                            <InputText class="form-control inputs" @bind-Value="@tasks.Storage_time" />
-                            <ValidationMessage For="@(() => tasks.Storage_time)" />
+                            <InputText class="form-control inputs" @bind-Value="@tasks.StorageTime" />
+                            <ValidationMessage For="@(() => tasks.StorageTime)" />
                         </div>
                     </div>
                 </div>
@@ -129,8 +129,8 @@
                     <div>
                         <label>@localizer["Time_of_delay"]:</label>
                         <div>
-                            <InputText class="form-control inputs" @bind-Value="@tasks.Time_of_delay" />
-                            <ValidationMessage For="@(() => tasks.Time_of_delay)" />
+                            <InputText class="form-control inputs" @bind-Value="@tasks.TimeOfDelay" />
+                            <ValidationMessage For="@(() => tasks.TimeOfDelay)" />
                         </div>
                     </div>
                 </div>
@@ -181,11 +181,11 @@
     {
         cargoes = await client.GetFromJsonAsync<List<CargoDto>>("api/cargoes/getcargoes");
         taskWithCargo = await client.GetFromJsonAsync<List<DeliveryTaskDto>>("api/tasks/gettasks");
-        taskWithCargo = taskWithCargo?.Where(x => x.Id_cargo != null).ToList();
+        taskWithCargo = taskWithCargo?.Where(x => x.CargoId != null).ToList();
         if (taskWithCargo != null) {
             foreach (var task in taskWithCargo)
             {
-                cargoes?.RemoveAll(x => x.Id == task.Id_cargo && x.Id != tasks?.Id_cargo);
+                cargoes?.RemoveAll(x => x.Id == task.CargoId && x.Id != tasks?.CargoId);
             }
         }
     }
@@ -195,13 +195,13 @@
         error = "";
         var invalid = false;
 
-        if (tasks?.Id_cargo != null)
+        if (tasks?.CargoId != null)
         {
             if(cargoes?.Count > 0)
             {
                 @foreach (var cargo in cargoes)
                 {
-                    if (cargo.Id != tasks.Id_cargo)
+                    if (cargo.Id != tasks.CargoId)
                     {
                         invalid = true;
                     }
@@ -219,7 +219,7 @@
 
             if (invalid)
             {
-                tasks.Id_cargo = null;
+                tasks.CargoId = null;
                 await checkValidSubmit.InvokeAsync(false);
                 error += localizer["Id_cargo_not_valid"] + " ";
             }

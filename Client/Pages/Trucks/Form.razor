@@ -44,8 +44,8 @@
                     <div>
                     <label>@localizer["Vehicle_registration_number"]:</label>
                         <div>
-                            <InputText class="form-control inputs" @bind-Value="@trucks.Vehicle_registration_number" />
-                            <ValidationMessage For="@(() => trucks.Vehicle_registration_number)" />
+                            <InputText class="form-control inputs" @bind-Value="@trucks.VehicleRegistrationNumber" />
+                            <ValidationMessage For="@(() => trucks.VehicleRegistrationNumber)" />
                         </div>
                     </div>
                 </div>
@@ -53,8 +53,8 @@
                     <div>
                         <label>@localizer["Max_weight"]:</label>
                         <div>
-                            <InputNumber class="form-control inputs" min="0" @bind-Value="@trucks.Max_weight" />
-                            <ValidationMessage For="@(() => trucks.Max_weight)" />
+                            <InputNumber class="form-control inputs" min="0" @bind-Value="@trucks.MaxWeight" />
+                            <ValidationMessage For="@(() => trucks.MaxWeight)" />
                         </div>
                     </div>
                 </div>
@@ -62,26 +62,26 @@
             <div class="d-inline-block forms-margin second-col mt-3" >
                 <div class="form-group custom-select">
                     <label>@localizer["Road_id"]:</label>
-                    <input type="text" class="form-control custom-select-input" @bind="trucks.Road_id" @bind:event="oninput" placeholder="@localizer["Select_placeholder"]" />
+                    <input type="text" class="form-control custom-select-input" @bind="trucks.RoadId" @bind:event="oninput" placeholder="@localizer["Select_placeholder"]" />
                     <div class="custom-select-options">
                         @if (roads != null)
                         {
                         @foreach (var road in roads)
                             {
-                                if (road.Id.ToString().ToLower().Contains((trucks.Road_id != null ? trucks.Road_id?.ToString() : "")!))
+                                if (road.Id.ToString().ToLower().Contains((trucks.RoadId != null ? trucks.RoadId?.ToString() : "")!))
                                 {
-                                    <div class="custom-select-option" @onclick="() => {trucks.Road_id = road?.Id; }">
+                                    <div class="custom-select-option" @onclick="() => {trucks.RoadId = road?.Id; }">
                                         @localizer["Id"]: @road.Id  <br>
-                                        @localizer["Starting_place"]: @road.Starting_place <br>
-                                        @localizer["Ending_place"]: @road.Ending_place <br>
-                                        @localizer["Purpose_of_the_trip"]: @road.Purpose_of_the_trip <br>
+                                        @localizer["Starting_place"]: @road.StartingPlace <br>
+                                        @localizer["Ending_place"]: @road.EndingPlace <br>
+                                        @localizer["Purpose_of_the_trip"]: @road.PurposeOfTheTrip <br>
                                         @localizer["Direction"]: @localizer[road?.Direction?.ToLower()!]
                                     </div>
                                 }
                             }
                         }
                     </div>
-                    <ValidationMessage For="@(() => trucks.Road_id)" />
+                    <ValidationMessage For="@(() => trucks.RoadId)" />
                 </div>
                 <div class="form-group custom-select">
                     <label>@localizer["Status"]:</label>
@@ -97,7 +97,7 @@
                             }
                         }
                     </div>
-                    <ValidationMessage For="@(() => trucks.Road_id)" />
+                    <ValidationMessage For="@(() => trucks.RoadId)" />
                 </div>
             </div>
         </div>
@@ -125,12 +125,12 @@
             selectedOption = localizer[trucks?.Status.ToString()!];
         }
         trucksOnRoad = await client.GetFromJsonAsync<List<TruckDto>>("api/trucks/gettrucks");
-        trucksOnRoad = trucksOnRoad?.Where(x => x.Road_id != null).ToList();
+        trucksOnRoad = trucksOnRoad?.Where(x => x.RoadId != null).ToList();
         if (trucksOnRoad != null)
         {
             foreach (var truck in trucksOnRoad)
             {
-                roads?.RemoveAll(x => x.Id == truck.Road_id  && x.Id != trucks?.Road_id);
+                roads?.RemoveAll(x => x.Id == truck.RoadId  && x.Id != trucks?.RoadId);
             }
         }
     }
@@ -141,14 +141,14 @@
         var invalid = false;
         bool isValidSubmit = true;
 
-        if (trucks?.Road_id  != null)
+        if (trucks?.RoadId  != null)
         {
             invalid = false;
             if (roads?.Count > 0)
             {
                 @foreach (var road in roads)
                 {
-                    if (road.Id != trucks.Road_id)
+                    if (road.Id != trucks.RoadId)
                     {
                         invalid = true;
                     }
@@ -167,7 +167,7 @@
             if (invalid)
             {
                 isValidSubmit = false;
-                trucks.Road_id = null;
+                trucks.RoadId = null;
                 await checkValidSubmit.InvokeAsync(false);
                 error += localizer["Road_id_invalid"] + " ";
             }

@@ -63,7 +63,7 @@
                                 <div class="custom-select-option @(SelectedTasks!.Contains(task.Id) ? "contains" : "")" @onclick="() => SetSelectedTasks(task.Id)">
                                     @localizer["Id"]: @task.Id <br>
                                     @localizer["Description"]: @task.Description <br>
-                                    @localizer["Final_Payment"]: @task.Final_Payment <br>
+                                    @localizer["Final_payment"]: @task.FinalPayment <br>
                                     @localizer["Date"]: @task.Date
                                 </div>
                             }
@@ -93,7 +93,7 @@
                                 <div class="custom-select-option @(SelectedExpenses!.Contains(expense!.Id) ? "contains" : "")" @onclick="() => SetSelectedExpenses(expense.Id)">
                                     @localizer["Id"]: @expense.Id <br>
                                     @localizer["Type"]: @localizer[expense?.Type?.ToString()!] <br>
-                                    @localizer["Type_id"]: @expense?.Type_id <br>
+                                    @localizer["Type_id"]: @expense?.TypeId <br>
                                     @localizer["Date"]: @expense?.Date
                                 </div>           
                             }
@@ -108,7 +108,7 @@
 
 
 @code {
-    [Parameter] public Monthly_expensesDto? Monthly_expenses { get; set; }
+    [Parameter] public MonthlyExpenseDto? Monthly_expenses { get; set; }
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public string TitleText { get; set; } = "";
     [Parameter] public EventCallback OnValidSubmit { get; set; }

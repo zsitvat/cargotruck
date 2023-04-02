@@ -53,7 +53,7 @@ namespace Cargotruck.Client.Pages
         Task<AuthenticationState>? AuthenticationState { get; set; }
 
         bool greetings = true;
-        Dictionary<string, int?> counts = new Dictionary<string, int?>()
+        Dictionary<string, int?> counts = new()
         {
             {
                 "numberOfTasksUnFinished",
@@ -111,7 +111,7 @@ namespace Cargotruck.Client.Pages
 
         protected async Task GetNumbersAsync()
         {
-            Dictionary<string, int?> numbersDic = new Dictionary<string, int?>()
+            Dictionary<string, int?> numbersDic = new()
             {
                 {
                     "numberOfTasksUnFinished",

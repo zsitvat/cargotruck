@@ -22,7 +22,7 @@
         {
             if (truck != null)
             {
-                truck.User_id = authStateProvider.GetCurrentUserAsync().Result.Id;
+                truck.UserId = authStateProvider.GetCurrentUserAsync().Result.Id;
             }
             var text = @localizer["Succesfull_update"];
             await http.PutAsJsonAsync("api/trucks/put", truck);

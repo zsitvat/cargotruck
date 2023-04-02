@@ -90,7 +90,7 @@ else
                                 }
                                 @if (showColumns[1])
                                 {
-                                    <th><button class="@(sortOrder=="Type_id" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Type_id"))">@localizer["Type_id"]</button></th>
+                                    <th><button class="@(sortOrder=="TypeId" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("TypeId"))">@localizer["Type_id"]</button></th>
                                 }
                                 @if (showColumns[2])
                                 {
@@ -98,7 +98,7 @@ else
                                 }
                                 @if (showColumns[3])
                                 {
-                                    <th><button class="@(sortOrder=="Road_fees" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Road_fees"))">@localizer["Road_fees"]</button></th>
+                                    <th><button class="@(sortOrder=="RoadFees" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("RoadFees"))">@localizer["Road_fees"]</button></th>
                                 }
                                 @if (showColumns[4])
                                 {
@@ -106,31 +106,31 @@ else
                                 }
                                 @if (showColumns[5])
                                 {
-                                    <th><button class="@(sortOrder=="Driver_spending" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Driver_spending"))">@localizer["Driver_spending"]</button></th>
+                                    <th><button class="@(sortOrder=="DriverSpending" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("DriverSpending"))">@localizer["Driver_spending"]</button></th>
                                 }
                                 @if (showColumns[6])
                                 {
-                                    <th><button class="@(sortOrder=="Driver_salary" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Driver_salary"))">@localizer["Driver_salary"]</button></th>
+                                    <th><button class="@(sortOrder=="DriverSalary" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("DriverSalary"))">@localizer["Driver_salary"]</button></th>
                                 }
                                 @if (showColumns[7])
                                 {
-                                    <th><button class="@(sortOrder=="Repair_cost" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Repair_cost"))">@localizer["Repair_cost"]</button></th>
+                                    <th><button class="@(sortOrder=="RepairCost" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("RepairCost"))">@localizer["Repair_cost"]</button></th>
                                 }
                                 @if (showColumns[8])
                                 {
-                                    <th><button class="@(sortOrder=="Repair_description" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Repair_description"))">@localizer["Repair_description"]</button></th>
+                                    <th><button class="@(sortOrder=="RepairDescription" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("RepairDescription"))">@localizer["Repair_description"]</button></th>
                                 }
                                 @if (showColumns[9])
                                 {
-                                    <th><button class="@(sortOrder=="Cost_of_storage" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Cost_of_storage"))">@localizer["Cost_of_storage"]</button></th>
+                                    <th><button class="@(sortOrder=="CostOfStorage" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("CostOfStorage"))">@localizer["Cost_of_storage"]</button></th>
                                 }
                                 @if (showColumns[10])
                                 {
-                                    <th><button class="@(sortOrder=="Other" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Other"))">@localizer["other"]</button></th>
+                                    <th><button class="@(sortOrder=="Other" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Other"))">@localizer["Other"]</button></th>
                                 }
                                 @if (showColumns[11])
                                 {
-                                    <th><button class="@(sortOrder=="Total_amount" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("Total_amount"))">@localizer["Total_amount"]</button></th>
+                                    <th><button class="@(sortOrder=="TotalAmount" ? (desc ? "arrow-down" : "arrow-up") : "arrow-no-sorting")" @onclick="@(() => Sorting("TotalAmount"))">@localizer["Total_amount"]</button></th>
                                 }
                                 @if (showColumns[12])
                                 {
@@ -159,9 +159,9 @@ else
                                     @if (showColumns[1])
                                     {
                                         <td>
-                                            @if (item.Type_id != null)
+                                            @if (item.TypeId != null)
                                             {
-                                                <button class="no-button" @onclick="@(()=>GetById(item.Type_id,item.Type?.ToString()!))">@item.Type_id<span class="icon iconify" data-icon="material-symbols:read-more-rounded"></span></button>
+                                                <button class="no-button" @onclick="@(()=>GetById(item.TypeId,item.Type?.ToString()!))">@item.TypeId<span class="icon iconify" data-icon="material-symbols:read-more-rounded"></span></button>
                                             }
                                             else{
                                                 <span disabled>-</span>
@@ -187,15 +187,15 @@ else
                                     @if (showColumns[3])
                                     {
                                         <td>
-                                            @if (@item.Road_fees != null)
+                                            @if (@item.RoadFees != null)
                                             {
                                                 @if (currencyExchange.GetCurrencyType() != "HUF" && currencyExchange.GetRates() != null)
                                                 {
-                                                    @(currencyExchange.GetCurrencyAmount(item.Road_fees, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
+                                                    @(currencyExchange.GetCurrencyAmount(item.RoadFees, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
                                                 }
                                                 else
                                                 {
-                                                    @(item.Road_fees + " HUF")
+                                                    @(item.RoadFees + " HUF")
                                                 }
                                             }
                                         </td>
@@ -219,15 +219,15 @@ else
                                     @if (showColumns[5])
                                     {
                                         <td>
-                                            @if (@item.Driver_spending != null)
+                                            @if (@item.DriverSpending != null)
                                             {
                                                 @if (currencyExchange.GetCurrencyType() != "HUF" && currencyExchange.GetRates() != null)
                                                 {
-                                                    @(currencyExchange.GetCurrencyAmount(item.Driver_spending, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
+                                                    @(currencyExchange.GetCurrencyAmount(item.DriverSpending, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
                                                 }
                                                 else
                                                 {
-                                                    @(item.Driver_spending + " HUF")
+                                                    @(item.DriverSpending + " HUF")
                                                 }
                                             }
                                         </td>
@@ -235,15 +235,15 @@ else
                                     @if (showColumns[6])
                                     {
                                         <td>
-                                            @if (@item.Driver_salary != null)
+                                            @if (@item.DriverSalary != null)
                                             {
                                                 @if (currencyExchange.GetCurrencyType() != "HUF" && currencyExchange.GetRates() != null)
                                                 {
-                                                    @(currencyExchange.GetCurrencyAmount(item.Driver_salary, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
+                                                    @(currencyExchange.GetCurrencyAmount(item.DriverSalary, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
                                                 }
                                                 else
                                                 {
-                                                    @(item.Driver_salary + " HUF")
+                                                    @(item.DriverSalary + " HUF")
                                                 }
                                             }
                                         </td>
@@ -251,35 +251,35 @@ else
                                     @if (showColumns[7])
                                     {
                                         <td>
-                                            @if (@item.Repair_cost != null)
+                                            @if (@item.RepairCost != null)
                                             {
                                                 @if (currencyExchange.GetCurrencyType() != "HUF" && currencyExchange.GetRates() != null)
                                                 {
-                                                    @(currencyExchange.GetCurrencyAmount(item.Repair_cost, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
+                                                    @(currencyExchange.GetCurrencyAmount(item.RepairCost, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
                                                 }
                                                 else
                                                 {
-                                                    @(item.Repair_cost + " HUF")
+                                                    @(item.RepairCost + " HUF")
                                                 }
                                             }
                                         </td>
                                     }
                                     @if (showColumns[8])
                                     {
-                                        <td>@item.Repair_description</td>
+                                        <td>@item.RepairDescription</td>
                                     }
                                     @if (showColumns[9])
                                     {
                                         <td>
-                                            @if (@item.Cost_of_storage != null)
+                                            @if (@item.CostOfStorage != null)
                                             {
                                                 @if (currencyExchange.GetCurrencyType() != "HUF" && currencyExchange.GetRates() != null)
                                                 {
-                                                    @(currencyExchange.GetCurrencyAmount(item.Cost_of_storage, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
+                                                    @(currencyExchange.GetCurrencyAmount(item.CostOfStorage, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
                                                 }
                                                 else
                                                 {
-                                                    @(item.Cost_of_storage + " HUF")
+                                                    @(item.CostOfStorage + " HUF")
                                                 }
                                             }
                                         </td>
@@ -303,15 +303,15 @@ else
                                     @if (showColumns[11])
                                     {
                                         <td>
-                                            @if (@item.Total_amount != null)
+                                            @if (@item.TotalAmount != null)
                                             {
                                                 @if (currencyExchange.GetCurrencyType() != "HUF" && currencyExchange.GetRates() != null)
                                                 {
-                                                    @(currencyExchange.GetCurrencyAmount(item.Total_amount, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
+                                                    @(currencyExchange.GetCurrencyAmount(item.TotalAmount, currencyExchange.GetCurrencyType())!.Value.ToString("0.##") + " " + currencyExchange.GetCurrencyType())
                                                 }
                                                 else
                                                 {
-                                                    @(item.Total_amount + " HUF")
+                                                    @(item.TotalAmount + " HUF")
                                                 }
                                             }
                                         </td>
@@ -322,7 +322,7 @@ else
                                     }
                                     <td class="@(MouseHoverClass.MouseOnHoverClass == item.Id.ToString() || MouseHoverClass.MouseOnclickClass == item.Id.ToString() ? "show" :"not-show") ">
                                         <a class="btn  fixed" href="Expenses/edit/@item.Id"> <span data-title="@localizer["Edit"]" class="oi oi-pencil" aria-hidden="true"></span></a>
-                                        <button class="btn fixed2" @onclick="@(() => Delete(item.Id))"> <span data-title="@localizer["DeleteAsync"]" class="oi oi-trash" aria-hidden="true"></span></button>
+                                        <button class="btn fixed2" @onclick="@(() => Delete(item.Id))"> <span data-title="@localizer["Delete"]" class="oi oi-trash" aria-hidden="true"></span></button>
                                     </td>
                                 </tr>
                             }

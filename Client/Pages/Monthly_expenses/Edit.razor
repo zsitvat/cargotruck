@@ -1,4 +1,4 @@
-﻿@page "/Monthly_expenses/edit/{Id:int}"
+﻿@page "/MonthlyExpense/edit/{Id:int}"
 @inject HttpClient http
 @inject NavigationManager uriHelper
 @inject IJSRuntime js
@@ -10,8 +10,8 @@
     [Parameter] public int Id { get; set; }
     List<int>? selectedTaskId;
     List<int>? selectedExpenseId;
-    Monthly_expensesDto? monthly_expense = new Monthly_expensesDto();
-    Monthly_expense_task_expenseDto? Monthly_expenses_tasks_expenses = new Monthly_expense_task_expenseDto();
+    MonthlyExpenseDto? monthly_expense = new MonthlyExpenseDto();
+    MonthlyExpense_task_expenseDto? Monthly_expenses_tasks_expenses = new MonthlyExpense_task_expenseDto();
 
     public void HandleChangeTask(List<int>? selected)
     {
@@ -25,14 +25,14 @@
 
     protected async override Task OnParametersSetAsync()
     {
-        monthly_expense = await http.GetFromJsonAsync<Monthly_expensesDto>($"api/Monthly_expenses/getById/{Id}");
+        monthly_expense = await http.GetFromJsonAsync<MonthlyExpenseDto>($"api/MonthlyExpense/getById/{Id}");
     }
 
     async Task EditMonthlyExpenseAsync()
     {
         if (monthly_expense != null)
         {
-            monthly_expense.User_id = authStateProvider.GetCurrentUserAsync().Result.Id;
+            monthly_expense.UserId = authStateProvider.GetCurrentUserAsync().Result.Id;
         }
         var text = @localizer["Succesfull_update"];
         var IsFirstId = true;
@@ -56,32 +56,32 @@
             lenght = 0;
         }
 
-        Monthly_expenses_tasks_expenses!.Monthly_expense_id = Id;
+        Monthly_expenses_tasks_expenses!.MonthlyExpenseId = Id;
 
         for (int i = 0; i < lenght; ++i)
         {
-            Monthly_expenses_tasks_expenses.Task_id = null;
-            Monthly_expenses_tasks_expenses.Expense_id = null;
+            Monthly_expenses_tasks_expenses.TaskId = null;
+            Monthly_expenses_tasks_expenses.ExpenseId = null;
             if (i > 0) { IsFirstId = false; }
             if (selectedTaskId != null && selectedTaskId.Count > i)
             {
-                Monthly_expenses_tasks_expenses.Task_id = selectedTaskId[i];
+                Monthly_expenses_tasks_expenses.TaskId = selectedTaskId[i];
             }
             if (selectedExpenseId != null && selectedExpenseId.Count > i)
             {
-                Monthly_expenses_tasks_expenses.Expense_id = selectedExpenseId[i];
+                Monthly_expenses_tasks_expenses.ExpenseId = selectedExpenseId[i];
             }
-            //MonthlyExpense_task_expense.Monthly_expenses = monthly_expense;
+            //MonthlyExpense_task_expense.MonthlyExpense = monthly_expense;
             await http.PostAsJsonAsync($"api/monthlyexpenses/postconnectionids?first={IsFirstId}", Monthly_expenses_tasks_expenses);
         }
 
         await js.InvokeVoidAsync("alert", $"{text}");
-        uriHelper.NavigateTo("/Monthly_expenses");
+        uriHelper.NavigateTo("/MonthlyExpense");
     }
 
     protected override void OnInitialized()
     {
-        PageHistoryState.AddPageToHistory("/Monthly_expenses/edit/{Id:int}");
+        PageHistoryState.AddPageToHistory("/MonthlyExpense/edit/{Id:int}");
         base.OnInitialized();
     }
 }

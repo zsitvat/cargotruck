@@ -7,7 +7,7 @@ namespace Cargotruck.Shared.Model
         [Required]
         public int Id { get; set; }
         [Required]
-        public string Lang { get; set; } = "hu";
+        public string Language { get; set; } = "hu";
         public string? Name { get; set; }
         [Required]
         public string? Text { get; set; }

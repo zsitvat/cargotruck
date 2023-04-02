@@ -21,7 +21,7 @@
         {
             if (cargo != null)
             {
-                cargo.User_id = authStateProvider.GetCurrentUserAsync().Result.Id;
+                cargo.UserId = authStateProvider.GetCurrentUserAsync().Result.Id;
             }
             var text = @localizer["Succesfull_update"];
             await http.PutAsJsonAsync("api/cargoes/put", cargo);

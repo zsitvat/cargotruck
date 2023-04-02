@@ -2,6 +2,7 @@
 using Cargotruck.Shared.Model;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.Metrics;
 
 namespace Cargotruck.Server.Data
 {
@@ -31,6 +32,12 @@ namespace Cargotruck.Server.Data
             base.OnModelCreating(builder);
 
             builder.ApplyConfiguration(new RoleConfiguration());
+
+            builder.Entity<DeliveryTask>()
+            .HasOne(a => a.Cargo)
+            .WithOne(a => a.Task)
+            .HasForeignKey<Cargo>(c => c.TaskId);
+
         }
     }
 }

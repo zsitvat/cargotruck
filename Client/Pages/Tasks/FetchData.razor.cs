@@ -10,7 +10,7 @@ namespace Cargotruck.Client.Pages.Tasks
     {
         private bool settings = false;
         bool expandExportMenu;
-        List<DeliveryTaskDto?>?  Tasks { get; set; }
+        List<DeliveryTaskDto>? Tasks { get; set; }
         int? IdForGetById { get; set; }
         string? GetByIdType { get; set; }
         private readonly List<bool> showColumns = Enumerable.Repeat(true, 16).ToList();
@@ -55,7 +55,7 @@ namespace Cargotruck.Client.Pages.Tasks
             pageSize = Page.GetPageSize(pageSize, dataRows);
             maxPage = Page.GetMaxPage(pageSize, dataRows);
 
-            Tasks = await client.GetFromJsonAsync<List<DeliveryTaskDto?>?>($"api/tasks/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
+            Tasks = await client.GetFromJsonAsync<List<DeliveryTaskDto>>($"api/tasks/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");
             StateHasChanged();
         }
         async void DateStartInput(ChangeEventArgs e)

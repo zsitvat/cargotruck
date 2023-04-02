@@ -9,7 +9,7 @@ namespace Cargotruck.Shared.Model
         [Required]
         [Key]
         public int Id { get; set; }
-        public string? User_id { get; set; }
+        public string? UserId { get; set; }
         [Required(ErrorMessageResourceName = "Error_Warehouse_address", ErrorMessageResourceType = typeof(Resource))]
         [Display(Name = "Warehouse_address", ResourceType = typeof(Resource))]
         public string? Address { get; set; }

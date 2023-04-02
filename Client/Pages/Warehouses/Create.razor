@@ -15,7 +15,7 @@
         {
             if (warehouse != null)
             {
-                warehouse.User_id = authStateProvider.GetCurrentUserAsync().Result.Id;
+                warehouse.UserId = authStateProvider.GetCurrentUserAsync().Result.Id;
             }
             await http.PostAsJsonAsync("api/warehouses/post", warehouse);
             uriHelper.NavigateTo("/Warehouses");
