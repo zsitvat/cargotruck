@@ -1461,6 +1461,11 @@ tr td:first-child {
     background-color: rgba(255,255,255,0.1) !important;
 }
 
+.darkmode .date-filter input:focus {
+    box-shadow: unset;
+    border: 1px solid #243140;
+}
+
 .darkmode .green {
     background: rgba(129, 238, 136,.2) !important;
 }

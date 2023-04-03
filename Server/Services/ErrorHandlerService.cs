@@ -1,5 +1,6 @@
 ﻿using Cargotruck.Server.Services.Interfaces;
 using Cargotruck.Shared.Resources;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Localization;
 using System.Linq.Dynamic.Core;
 
@@ -19,6 +20,10 @@ namespace Cargotruck.Server.Services
             if (ex.Message.Contains("datetime to int"))
             {
                 return _localizer["Cant_convert_datetime_to_int"];
+            }
+            else if (ex.Message.Contains("duplicate"))
+            {
+                return _localizer["Cant_save_duplicate"];
             }
             else if (ex.Message.Contains("string to int"))
             {
@@ -63,6 +68,10 @@ namespace Cargotruck.Server.Services
             else if (ex is IOException)
             {
                 return _localizer["IOException"];
+            }
+            else if (ex is SqlException)
+            {
+                return _localizer["SqlException"];
             }
             else
             {

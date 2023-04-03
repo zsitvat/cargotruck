@@ -204,6 +204,9 @@
   <data name="Cant_convert_string_to_int" xml:space="preserve">
     <value>Can't convert string to int!</value>
   </data>
+  <data name="Cant_save_duplicate" xml:space="preserve">
+    <value>Cannot insert duplicate into the database table.</value>
+  </data>
   <data name="cargo" xml:space="preserve">
     <value>Cargo</value>
   </data>
@@ -290,6 +293,9 @@
   </data>
   <data name="Deleted_wrong_id" xml:space="preserve">
     <value>Because of wrong Id the row is deleted:</value>
+  </data>
+  <data name="Deleted_wrong_id_task" xml:space="preserve">
+    <value>Because of wrong task Id the row is deleted:</value>
   </data>
   <data name="Delete_tasks" xml:space="preserve">
     <value>Delete the task</value>
@@ -836,6 +842,9 @@
   </data>
   <data name="Shipping_requirements" xml:space="preserve">
     <value>Shipping requirements</value>
+  </data>
+  <data name="SqlException" xml:space="preserve">
+    <value>Problem with the SQL action.</value>
   </data>
   <data name="StackOverflowException" xml:space="preserve">
     <value>Stack overflow</value>

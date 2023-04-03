@@ -2,6 +2,7 @@
 using Cargotruck.Server.Repositories.Interfaces;
 using Cargotruck.Server.Services.Interfaces;
 using Cargotruck.Shared.Model;
+using Cargotruck.Shared.Model.Dto;
 using Cargotruck.Shared.Resources;
 using ClosedXML.Excel;
 using iTextSharp.text;
@@ -78,8 +79,8 @@ namespace Cargotruck.Server.Repositories
 
             data = sortOrder switch
             {
-                "TaskId_desc" => data.OrderByDescending(s => s.Task?.Id).ToList(),
-                "TaskId" => data.OrderBy(s => s.Task?.Id).ToList(),
+                "TaskId_desc" => data.OrderByDescending(s => s.TaskId).ToList(),
+                "TaskId" => data.OrderBy(s => s.TaskId).ToList(),
                 "Weight_desc" => data.OrderByDescending(s => s.Weight).ToList(),
                 "Weight" => data.OrderBy(s => s.Weight).ToList(),
                 "Description_desc" => data.OrderByDescending(s => s.Description).ToList(),
@@ -277,7 +278,7 @@ namespace Cargotruck.Server.Repositories
             Font font1 = FontFactory.GetFont(FontFactory.TIMES_BOLD, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 12);
             Font font2 = FontFactory.GetFont(FontFactory.TIMES_ROMAN, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 10);
 
-            System.Type type = typeof(Cargo);
+            System.Type type = typeof(CargoDto);
             var column_number = (type.GetProperties().Length) / 2;
             var columnDefinitionSize = new float[column_number];
             for (int i = 0; i < column_number; i++) columnDefinitionSize[i] = 1F;
@@ -375,7 +376,7 @@ namespace Cargotruck.Server.Repositories
 
                 foreach (var name in columnNames.Skip(column_number).Take(column_number))
                 {
-                    if (name == _localizer["WarehouseId"])
+                    if (name == _localizer["Warehouse_id"])
                     {
                         table2.AddCell(new PdfPCell(new Phrase(name + "/" + _localizer["W_section"], font1))
                         {
@@ -633,8 +634,8 @@ namespace Cargotruck.Server.Repositories
 
                                             if (lastId != null)
                                             {
-                                                var WithNewIds = await _context.Cargoes.Where(x => x.Task!.Id == lastId.Task!.Id || x.WarehouseId == lastId.WarehouseId || x.VehicleRegistrationNumber == lastId.VehicleRegistrationNumber).ToListAsync();
-                                                DeliveryTask? task = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == lastId.Task!.Id);
+                                                var WithNewIds = await _context.Cargoes.Where(x => x.TaskId == lastId.TaskId || x.WarehouseId == lastId.WarehouseId || x.VehicleRegistrationNumber == lastId.VehicleRegistrationNumber).ToListAsync();
+                                                DeliveryTask? task = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == lastId.TaskId);
                                                 Warehouse? warehouse = await _context.Warehouses.FirstOrDefaultAsync(x => x.Id == lastId.WarehouseId);
                                                 Truck? truck = await _context.Trucks.FirstOrDefaultAsync(x => x.VehicleRegistrationNumber == lastId.VehicleRegistrationNumber);
 
@@ -644,7 +645,7 @@ namespace Cargotruck.Server.Repositories
                                                     {
                                                         if (item.Id != lastId?.Id)
                                                         {
-                                                            if (item.Task?.Id == lastId?.Task?.Id)
+                                                            if (item.TaskId == lastId?.TaskId)
                                                             {
                                                                 error += "\n" + _localizer["Deleted_wrong_id"] + " " + lastId?.Id + ".";
                                                                 _context.Cargoes.Remove(lastId!);
@@ -669,8 +670,8 @@ namespace Cargotruck.Server.Repositories
                                                             }
                                                             if (task == null)
                                                             {
-                                                                item.Task!.Id = default;
-                                                                error += "\n" + _localizer["Deleted_wrong_id"] + " " + lastId?.Id + ".";
+                                                                item.TaskId = default;
+                                                                error += "\n" + _localizer["Deleted_wrong_id_task"] + " " + lastId?.Id + ".";
                                                                 _context.Cargoes.Remove(lastId!);
                                                                 await _context?.SaveChangesAsync()!;
                                                                 return error;
@@ -684,9 +685,9 @@ namespace Cargotruck.Server.Repositories
                                                         }
                                                     }
 
-                                                    if (item != null && item?.Task?.Id == null)
+                                                    if (item != null && item?.TaskId == null)
                                                     {
-                                                        error += "\n" + _localizer["Deleted_wrong_id"] + " " + lastId?.Id + ".";
+                                                        error += "\n" + _localizer["Deleted_wrong_id_task"] + " " + lastId?.Id + ".";
 
                                                         _context.Remove(new Cargo() { Id = item!.Id });
                                                         await _context?.SaveChangesAsync()!;
@@ -694,8 +695,18 @@ namespace Cargotruck.Server.Repositories
                                                     }
                                                 }
 
-                                              
+                                                if (lastId != null) { 
 
+                                                    var SaveCargoToTask = _context.Tasks.FirstOrDefault(a => a.Id == lastId.TaskId);
+
+                                                    if (SaveCargoToTask != null)
+                                                    {
+                                                        SaveCargoToTask.CargoId = lastId.Id;
+                                                        SaveCargoToTask.Cargo = lastId;
+                                                        _context.Entry(SaveCargoToTask).State = EntityState.Modified;
+                                                        await _context.SaveChangesAsync();
+                                                    }
+                                                }
                                             }
                                         }
                                         else if (insert <= 0)

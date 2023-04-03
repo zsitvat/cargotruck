@@ -73,7 +73,7 @@ namespace Cargotruck.Server.Repositories
             var t = await GetDataAsync(searchString, filter, dateFilterStartDate, dateFilterEndDate);
 
             sortOrder = sortOrder == "Partner" ? (desc ? "Partner_desc" : "Partner") : (sortOrder);
-            sortOrder = sortOrder == "Description " ? (desc ? "Description_desc" : "Description") : (sortOrder);
+            sortOrder = sortOrder == "Description" ? (desc ? "Description_desc" : "Description") : (sortOrder);
             sortOrder = sortOrder == "PlaceOfReceipt" ? (desc ? "PlaceOfReceipt_desc" : "PlaceOfReceipt") : (sortOrder);
             sortOrder = sortOrder == "TimeOfReceipt" ? (desc ? "TimeOfReceipt_desc" : "TimeOfReceipt") : (sortOrder);
             sortOrder = sortOrder == "PlaceOfDelivery" ? (desc ? "PlaceOfDelivery_desc" : "PlaceOfDelivery") : (sortOrder);
@@ -105,8 +105,8 @@ namespace Cargotruck.Server.Repositories
                 "TimeOfDelivery" => t.OrderBy(s => s.TimeOfDelivery).ToList(),
                 "OtherStops_desc" => t.OrderByDescending(s => s.OtherStops).ToList(),
                 "OtherStops" => t.OrderBy(s => s.OtherStops).ToList(),
-                "CargoId_desc" => t.OrderByDescending(s => s.Cargo).ToList(),
-                "CargoId" => t.OrderBy(s => s.Cargo).ToList(),
+                "CargoId_desc" => t.OrderByDescending(s => s.CargoId).ToList(),
+                "CargoId" => t.OrderBy(s => s.CargoId).ToList(),
                 "StorageTime_desc" => t.OrderByDescending(s => s.StorageTime).ToList(),
                 "StorageTime" => t.OrderBy(s => s.StorageTime).ToList(),
                 "Completed_desc" => t.OrderByDescending(s => s.Completed).ToList(),

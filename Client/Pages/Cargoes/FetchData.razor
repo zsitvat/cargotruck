@@ -163,9 +163,13 @@ else
                                     @if (showColumns[6])
                                     {
                                         <td>
-                                            @if (item.WarehouseSection != null)
+                                            @if (item.WarehouseSection != null && item.WarehouseId != null)
                                             {
                                                 <button class="no-button" @onclick="@(()=>GetById(item.WarehouseId.ToString(),"warehouse"))">@item.WarehouseSection <span class="icon iconify" data-icon="material-symbols:read-more-rounded"></span></button>
+                                            }
+                                            else if (item.WarehouseSection != null)
+                                            {
+                                                @item.WarehouseSection
                                             }
                                         </td>
                                     }

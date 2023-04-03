@@ -19,6 +19,10 @@ namespace Cargotruck.Client.Shared
         protected override async Task OnInitializedAsync()
         {
             await OnParametersSetAsync();
+            if ((await AuthenticationState!).User.Identity!.IsAuthenticated)
+            {
+                await GetCurrencyRates();
+            }
         }
 
         protected override async Task OnParametersSetAsync()
@@ -35,11 +39,6 @@ namespace Cargotruck.Client.Shared
                 await GetDarkmodeAsync();
             }
             darkmode = await sessionStorage.GetItemAsync<bool>("darkmode");
-
-            if ((await AuthenticationState!).User.Identity!.IsAuthenticated)
-            {
-                await GetCurrencyRates();
-            }
         }
 
         async Task GetCurrencyRates()

@@ -480,9 +480,10 @@ namespace Cargotruck.Server.Repositories
                                                 if (substrings[s] != "") {
 
                                                     int CargoId = Int32.Parse(substrings[s][0..substrings[s].IndexOf("/")].Replace("[",""));
-                                                    var warehouseSection = substrings[s].Substring(substrings[s].IndexOf("/") + 1);
+                                                    var warehouseSection = substrings[s][(substrings[s].IndexOf("/") + 1)..];
 
-                                                    int? greatestId = _context.Warehouses.OrderBy(s => s.Id).LastOrDefaultAsync().Id;
+                                                    var lastWarehouse = await _context.Warehouses.OrderBy(s => s.Id).LastOrDefaultAsync();
+                                                    int? greatestId = lastWarehouse?.Id;
 
                                                     if (greatestId != null) { 
                                                         var sql2 = @"Update Cargoes 

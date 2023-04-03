@@ -32,7 +32,7 @@ namespace Cargotruck.Server.Repositories
         }
         private async Task<List<MonthlyExpense>> GetDataAsync(string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
-            var data = await _context.Monthly_Expenses.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
+            var data = await _context.MonthlyExpenses.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
 
             searchString = searchString?.ToLower();
             if (searchString != null && searchString != "")
@@ -74,15 +74,15 @@ namespace Cargotruck.Server.Repositories
         }
         public async Task<List<MonthlyExpense>> GetMonthlyExpensesAsync()
         {
-            return await _context.Monthly_Expenses.ToListAsync();
+            return await _context.MonthlyExpenses.ToListAsync();
         }
         public async Task<MonthlyExpense?> GetByIdAsync(int id)
         {
-            return await _context.Monthly_Expenses.FirstOrDefaultAsync(a => a.Id == id);
+            return await _context.MonthlyExpenses.FirstOrDefaultAsync(a => a.Id == id);
         }
         public async Task<int[]> GetChartDataAsync()
         {
-            var data = await _context.Monthly_Expenses.ToListAsync();
+            var data = await _context.MonthlyExpenses.ToListAsync();
             int[] columnsHeight = new int[36];
 
             for (int i = 0; i < 12; i++)
@@ -118,7 +118,7 @@ namespace Cargotruck.Server.Repositories
         }
         public async Task<int> CountAsync()
         {
-            return await _context.Monthly_Expenses.CountAsync();
+            return await _context.MonthlyExpenses.CountAsync();
         }
         public async Task PostAsync(MonthlyExpense data)
         {
@@ -133,10 +133,10 @@ namespace Cargotruck.Server.Repositories
         }
         public async Task<bool> DeleteAsync(int id)
         {
-            var data = _context.Monthly_Expenses.FirstOrDefault(x => x.Id == id);
+            var data = _context.MonthlyExpenses.FirstOrDefault(x => x.Id == id);
             if (data != null)
             {
-                _context.Monthly_Expenses.Remove(data);
+                _context.MonthlyExpenses.Remove(data);
                 await _context.SaveChangesAsync();
                 return true;
             }
@@ -145,8 +145,8 @@ namespace Cargotruck.Server.Repositories
         }
         public async Task CheckDataAsync()
         {
-            var monthly_Expenses = await _context.Monthly_Expenses.ToListAsync();
-            var conIds = await _context.Monthly_expenses_tasks_expenses.ToListAsync();
+            var monthly_Expenses = await _context.MonthlyExpenses.ToListAsync();
+            var conIds = await _context.MonthlyExpensesTasksExpenses.ToListAsync();
             foreach (var data in monthly_Expenses)
             {
                 if (conIds.Where(x => x.MonthlyExpenseId == data.Id && (x.TaskId != null || x.ExpenseId != null)).Any())
@@ -190,14 +190,14 @@ namespace Cargotruck.Server.Repositories
 
         public async Task<List<MonthlyExpense_task_expense>> GetConnectionIdsAsync()
         {
-            return await _context.Monthly_expenses_tasks_expenses.ToListAsync();
+            return await _context.MonthlyExpensesTasksExpenses.ToListAsync();
         }
 
         public async Task PostConnectionIdsAsync(MonthlyExpense_task_expense connectionIds, bool first)
         {
             if (first)
             {
-                var itemsToDelete = _context.Monthly_expenses_tasks_expenses.Where(x => x.MonthlyExpenseId == connectionIds.MonthlyExpenseId);
+                var itemsToDelete = _context.MonthlyExpensesTasksExpenses.Where(x => x.MonthlyExpenseId == connectionIds.MonthlyExpenseId);
                 _context.RemoveRange(itemsToDelete);
             }
 
@@ -208,7 +208,7 @@ namespace Cargotruck.Server.Repositories
         {
             MonthlyExpense data = new();
             var currentDate = DateTime.Now;
-            MonthlyExpense? hasCurrentMonth = _context.Monthly_Expenses.Where(x => x.Date.Year == currentDate.Year && x.Date.Month == currentDate.Month && x.UserId == "Generated").FirstOrDefault();
+            MonthlyExpense? hasCurrentMonth = _context.MonthlyExpenses.Where(x => x.Date.Year == currentDate.Year && x.Date.Month == currentDate.Month && x.UserId == "Generated").FirstOrDefault();
 
             if (hasCurrentMonth == null)
             {
@@ -221,11 +221,11 @@ namespace Cargotruck.Server.Repositories
         }
         public async Task CreateConTableAsync()
         {
-            var monthly_expenses = await _context.Monthly_Expenses.Where(x => x.UserId == "Generated").ToListAsync();
+            var monthly_expenses = await _context.MonthlyExpenses.Where(x => x.UserId == "Generated").ToListAsync();
 
             foreach (var row in monthly_expenses)
             {
-                var itemsToDelete = _context.Monthly_expenses_tasks_expenses.Where(x => x.MonthlyExpenseId == row.Id);
+                var itemsToDelete = _context.MonthlyExpensesTasksExpenses.Where(x => x.MonthlyExpenseId == row.Id);
                 _context.RemoveRange(itemsToDelete);
             }
 
@@ -253,8 +253,8 @@ namespace Cargotruck.Server.Repositories
         }
         public string ExportToExcel(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
-            var Monthly_Expenses = _context.Monthly_Expenses.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
-            var Monthly_expenses_tasks_expenses = _context.Monthly_expenses_tasks_expenses.OrderBy(x => x.Id);
+            var Monthly_Expenses = _context.MonthlyExpenses.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
+            var Monthly_expenses_tasks_expenses = _context.MonthlyExpensesTasksExpenses.OrderBy(x => x.Id);
 
             using var workbook = new XLWorkbook();
             var worksheet = workbook.Worksheets.Add("MonthlyExpenses");
@@ -310,8 +310,8 @@ namespace Cargotruck.Server.Repositories
         }
         public async Task<string> ExportToPdfAsync(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
-            var Monthly_Expenses = _context.Monthly_Expenses.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
-            var Monthly_expenses_tasks_expenses = _context.Monthly_expenses_tasks_expenses.OrderBy(x => x.Id);
+            var Monthly_Expenses = _context.MonthlyExpenses.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
+            var Monthly_expenses_tasks_expenses = _context.MonthlyExpensesTasksExpenses.OrderBy(x => x.Id);
 
             int pdfRowIndex = 1;
             Random rnd = new();
@@ -482,8 +482,8 @@ namespace Cargotruck.Server.Repositories
         }
         public async Task<string> ExportToCSVAsync(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate, bool isTextDocument)
         {
-            var Monthly_Expenses = _context.Monthly_Expenses.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
-            var Monthly_expenses_tasks_expenses = _context.Monthly_expenses_tasks_expenses.OrderBy(x => x.Id);
+            var Monthly_Expenses = _context.MonthlyExpenses.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
+            var Monthly_expenses_tasks_expenses = _context.MonthlyExpensesTasksExpenses.OrderBy(x => x.Id);
 
             Random rnd = new();
             int random = rnd.Next(1000000, 9999999);

@@ -322,6 +322,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Duplikáció történt, ezért nem került elmentésre az adatsor..
+        /// </summary>
+        public static string Cant_save_duplicate {
+            get {
+                return ResourceManager.GetString("Cant_save_duplicate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rakomány.
         /// </summary>
         public static string cargo {
@@ -588,6 +597,15 @@ namespace Cargotruck.Shared.Resources {
         public static string Deleted_wrong_id {
             get {
                 return ResourceManager.GetString("Deleted_wrong_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A következő azonosítóval rendelkező sor törölve lett, mert nem létezik a megadott megbízás azonosító:.
+        /// </summary>
+        public static string Deleted_wrong_id_task {
+            get {
+                return ResourceManager.GetString("Deleted_wrong_id_task", resourceCulture);
             }
         }
         
@@ -2217,6 +2235,15 @@ namespace Cargotruck.Shared.Resources {
         public static string Shipping_requirements {
             get {
                 return ResourceManager.GetString("Shipping_requirements", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hiba történt SQL művelet során..
+        /// </summary>
+        public static string SqlException {
+            get {
+                return ResourceManager.GetString("SqlException", resourceCulture);
             }
         }
         

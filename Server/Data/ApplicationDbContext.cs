@@ -15,11 +15,11 @@ namespace Cargotruck.Server.Data
             Database.Migrate();
         }
         public override DbSet<User> Users { get; set; } = default!;
-        public DbSet<Shared.Model.DeliveryTask> Tasks { get; set; } = default!;
+        public DbSet<DeliveryTask> Tasks { get; set; } = default!;
         public DbSet<Cargo> Cargoes { get; set; } = default!;
         public DbSet<Expense> Expenses { get; set; } = default!;
-        public DbSet<MonthlyExpense> Monthly_Expenses { get; set; } = default!;
-        public DbSet<MonthlyExpense_task_expense> Monthly_expenses_tasks_expenses { get; set; } = default!;
+        public DbSet<MonthlyExpense> MonthlyExpenses { get; set; } = default!;
+        public DbSet<MonthlyExpense_task_expense> MonthlyExpensesTasksExpenses { get; set; } = default!;
         public DbSet<Road> Roads { get; set; } = default!;
         public DbSet<Truck> Trucks { get; set; } = default!;
         public DbSet<Warehouse> Warehouses { get; set; } = default!;

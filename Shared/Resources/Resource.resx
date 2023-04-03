@@ -204,6 +204,9 @@
   <data name="Cant_convert_string_to_int" xml:space="preserve">
     <value>Szöveg nem kerülhet szám adat helyére!</value>
   </data>
+  <data name="Cant_save_duplicate" xml:space="preserve">
+    <value>Duplikáció történt, ezért nem került elmentésre az adatsor.</value>
+  </data>
   <data name="cargo" xml:space="preserve">
     <value>Rakomány</value>
   </data>
@@ -290,6 +293,9 @@
   </data>
   <data name="Deleted_wrong_id" xml:space="preserve">
     <value>A következő azonosítóval rendelkező sor törölve lett, mert nem létezik a megadott típus azonosító:</value>
+  </data>
+  <data name="Deleted_wrong_id_task" xml:space="preserve">
+    <value>A következő azonosítóval rendelkező sor törölve lett, mert nem létezik a megadott megbízás azonosító:</value>
   </data>
   <data name="Delete_tasks" xml:space="preserve">
     <value>Megbízás törlése</value>
@@ -836,6 +842,9 @@
   </data>
   <data name="Shipping_requirements" xml:space="preserve">
     <value>Szállítási követelmények</value>
+  </data>
+  <data name="SqlException" xml:space="preserve">
+    <value>Hiba történt SQL művelet során.</value>
   </data>
   <data name="StackOverflowException" xml:space="preserve">
     <value>Verem túlcsordulás történt.</value>
