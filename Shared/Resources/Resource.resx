@@ -711,7 +711,10 @@
   <data name="on_road" xml:space="preserve">
     <value>Úton</value>
   </data>
-  <data name="other" xml:space="preserve">
+  <data name="Other" xml:space="preserve">
+    <value>Egyéb</value>
+  </data>
+  <data name="othertype" xml:space="preserve">
     <value>Egyéb</value>
   </data>
   <data name="Other_stops" xml:space="preserve">

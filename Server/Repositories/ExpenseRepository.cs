@@ -665,7 +665,7 @@ namespace Cargotruck.Server.Repositories
 
                                             if (lastId != null)
                                             {
-                                                var WithNewIds = await _context.Expenses.Where(x => x.Type == lastId.Type && x.TypeId == lastId.TypeId && x.Type != Type.other && x.Type != Type.salary).ToListAsync();
+                                                var WithNewIds = await _context.Expenses.Where(x => x.Type == lastId.Type && x.TypeId == lastId.TypeId && x.Type != Type.othertype && x.Type != Type.salary).ToListAsync();
                                                 Road? road = await _context.Roads.FirstOrDefaultAsync(x => x.Id == lastId.TypeId && lastId.Type == Type.repair);
                                                 DeliveryTask? task = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == lastId.TypeId && lastId.Type == Type.task);
                                                 Cargo? cargo = await _context.Cargoes.FirstOrDefaultAsync(x => x.Id == lastId.TypeId && lastId.Type == Type.storage);

@@ -176,7 +176,16 @@ namespace Cargotruck.Server.Repositories
                 expense.TypeId = data.Id;
                 expense.Type = Shared.Model.Type.repair;
                 _context.Entry(expense).State = EntityState.Modified;
-               
+
+            }
+
+            var truck = _context.Trucks.FirstOrDefault(a => a.VehicleRegistrationNumber == data.VehicleRegistrationNumber);
+            if (truck != null && data.EndingDate > DateTime.Now)
+            {
+                truck.RoadId = data.Id;
+                truck.Status = data.TaskId == null ? Status.on_road : Status.delivering;
+                _context.Entry(truck).State = EntityState.Modified;
+
             }
 
             await _context.SaveChangesAsync();
@@ -192,6 +201,15 @@ namespace Cargotruck.Server.Repositories
                 expense.TypeId = data.Id;
                 expense.Type = Shared.Model.Type.repair;
                 _context.Entry(expense).State = EntityState.Modified;
+            }
+
+            var truck = _context.Trucks.FirstOrDefault(a => a.VehicleRegistrationNumber == data.VehicleRegistrationNumber);
+            if (truck != null && data.EndingDate > DateTime.Now)
+            {
+                truck.RoadId = data.Id;
+                truck.Status = data.TaskId == null ? Status.on_road : Status.delivering;
+                _context.Entry(truck).State = EntityState.Modified;
+
             }
 
             await _context.SaveChangesAsync();
@@ -296,7 +314,7 @@ namespace Cargotruck.Server.Repositories
 
             //copy column names to a list based on language
             CultureInfo.CurrentUICulture = lang;
-            List<string> columnNames = _columnNameLists.GetRoadsColumnNames().Where(x => x != "ExpensesId").Select(x => _localizer[x].Value).ToList();
+            List<string> columnNames = _columnNameLists.GetRoadsColumnNames().Where(x => x != "Expenses_id").Select(x => _localizer[x].Value).ToList();
 
             var title = new Paragraph(15, _localizer["Roads"].Value)
             {

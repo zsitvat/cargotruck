@@ -40,7 +40,7 @@ namespace Cargotruck.Shared.Model.Dto
         [Display(Name = "Other", ResourceType = typeof(Resource))]
         [Range(0, int.MaxValue, ErrorMessageResourceName = "OnlyPositive", ErrorMessageResourceType = typeof(Resource))]
         public int? Other { get; set; }
-        [Display(Name = "Total_Amount", ResourceType = typeof(Resource))]
+        [Display(Name = "Total_amount", ResourceType = typeof(Resource))]
         [Range(0, int.MaxValue, ErrorMessageResourceName = "OnlyPositive", ErrorMessageResourceType = typeof(Resource))]
         public int? TotalAmount { get; set; }
         [Display(Name = "Date", ResourceType = typeof(Resource))]

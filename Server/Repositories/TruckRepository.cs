@@ -121,12 +121,31 @@ namespace Cargotruck.Server.Repositories
         public async Task PostAsync(Truck data)
         {
             _context.Add(data);
+
+            var road = _context.Roads.FirstOrDefault(a => a.Id == data.RoadId);
+            if (road != null)
+            {
+                road.VehicleRegistrationNumber = data.VehicleRegistrationNumber;
+                _context.Entry(road).State = EntityState.Modified;
+
+            }
+
             await _context.SaveChangesAsync();
         }
 
         public async Task PutAsync(Truck data)
         {
             _context.Entry(data).State = EntityState.Modified;
+
+            var road = _context.Roads.FirstOrDefault(a => a.Id == data.RoadId);
+            if (road != null)
+            {
+                road.VehicleRegistrationNumber = data.VehicleRegistrationNumber;
+                _context.Entry(road).State = EntityState.Modified;
+
+            }
+
+
             await _context.SaveChangesAsync();
         }
 

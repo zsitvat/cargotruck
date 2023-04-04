@@ -1845,9 +1845,9 @@ namespace Cargotruck.Shared.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Egyéb.
         /// </summary>
-        public static string other {
+        public static string Other {
             get {
-                return ResourceManager.GetString("other", resourceCulture);
+                return ResourceManager.GetString("Other", resourceCulture);
             }
         }
         
@@ -1857,6 +1857,15 @@ namespace Cargotruck.Shared.Resources {
         public static string Other_stops {
             get {
                 return ResourceManager.GetString("Other_stops", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Egyéb.
+        /// </summary>
+        public static string othertype {
+            get {
+                return ResourceManager.GetString("othertype", resourceCulture);
             }
         }
         

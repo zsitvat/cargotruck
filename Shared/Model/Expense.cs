@@ -48,6 +48,6 @@ namespace Cargotruck.Shared.Model
     }
     public enum Type
     {
-        task, repair, storage, salary, other
+        task, repair, storage, salary, othertype
     }
 }

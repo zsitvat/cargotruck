@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System.Net.Http.Json;
 
-namespace Cargotruck.Client.Pages.Monthly_expenses
+namespace Cargotruck.Client.Pages.MonthlyExpenses
 {
     public partial class FetchData
     {
@@ -24,11 +24,10 @@ namespace Cargotruck.Client.Pages.Monthly_expenses
         private bool desc = true;
         private string? searchString = "";
         DateFilter? dateFilter = new();
-        
-
+       
         protected override async Task OnInitializedAsync()
         {
-            PageHistoryState.AddPageToHistory("/MonthlyExpense");
+            PageHistoryState.AddPageToHistory("/MonthlyExpenses");
             base.OnInitialized();
 
             await client.PostAsync("api/monthlyexpenses/createcontable", null);

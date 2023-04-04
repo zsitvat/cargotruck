@@ -25,7 +25,7 @@
 
     <!--Filter icon-->
     @if (filter == Cargotruck.Shared.Model.Type.salary || filter == Cargotruck.Shared.Model.Type.storage || 
-    filter == Cargotruck.Shared.Model.Type.repair || filter == Cargotruck.Shared.Model.Type.task || filter == Cargotruck.Shared.Model.Type.other)
+    filter == Cargotruck.Shared.Model.Type.repair || filter == Cargotruck.Shared.Model.Type.task || filter == Cargotruck.Shared.Model.Type.othertype)
     {
         <button @onclick="@(()=>OnChangeResetFilter())" class="filter-button"><span class="icon iconify filter-icon" data-icon="material-symbols:filter-alt-off"></span></button>
     }
