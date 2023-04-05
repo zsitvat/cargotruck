@@ -291,11 +291,14 @@
   <data name="Delete?" xml:space="preserve">
     <value>Biztosan törölni szeretnéd?</value>
   </data>
+  <data name="Deleted_duplicate_id" xml:space="preserve">
+    <value>A következő sor törölve lett, mert már létezik ilyen azonosító.</value>
+  </data>
   <data name="Deleted_wrong_id" xml:space="preserve">
-    <value>A következő azonosítóval rendelkező sor törölve lett, mert nem létezik a megadott típus azonosító:</value>
+    <value>A következő sor törölve lett, mert nem létezik a megadott típus azonosító:</value>
   </data>
   <data name="Deleted_wrong_id_task" xml:space="preserve">
-    <value>A következő azonosítóval rendelkező sor törölve lett, mert nem létezik a megadott megbízás azonosító:</value>
+    <value>A következő sor törölve lett, mert nem létezik a megadott megbízás azonosító:</value>
   </data>
   <data name="Delete_tasks" xml:space="preserve">
     <value>Megbízás törlése</value>

@@ -4,6 +4,7 @@ using Cargotruck.Server.Services.Interfaces;
 using Cargotruck.Shared.Model;
 using Cargotruck.Shared.Resources;
 using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Bibliography;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using Microsoft.AspNetCore.Authorization;
@@ -305,7 +306,7 @@ namespace Cargotruck.Server.Repositories
             Font font1 = FontFactory.GetFont(FontFactory.TIMES_BOLD, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 11);
             Font font2 = FontFactory.GetFont(FontFactory.TIMES_ROMAN, BaseFont.CP1250, BaseFont.NOT_EMBEDDED, 10);
 
-            System.Type type = typeof(Shared.Model.DeliveryTask);
+            System.Type type = typeof(DeliveryTask);
             var column_number = (type.GetProperties().Length) / 2;
             var columnDefinitionSize = new float[column_number];
             for (int i = 0; i < column_number; i++) columnDefinitionSize[i] = 1F;
@@ -529,16 +530,12 @@ namespace Cargotruck.Server.Repositories
             fs.Close();
             fs.Dispose();
 
-            FileStream sourceFile = new(filepath, FileMode.Open);
-            MemoryStream memoryStream = new();
-            await sourceFile.CopyToAsync(memoryStream);
-            var buffer = memoryStream.ToArray();
-            var pdf = Convert.ToBase64String(buffer);
-            sourceFile.Dispose();
-            sourceFile.Close();
-            System.IO.File.Delete(filepath); // delete the file in the app folder
+            //read the file as base64
+            byte[] fileBytes = await File.ReadAllBytesAsync(filepath);
+            string base64String = Convert.ToBase64String(fileBytes);
+            File.Delete(filepath);
 
-            return pdf;
+            return base64String;
         }
 
         public async Task<string> ExportToCSVAsync(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate, bool isTextDocument)
@@ -594,28 +591,18 @@ namespace Cargotruck.Server.Repositories
             txt.Close();
             txt.Dispose();
 
-            //change the encoding of the file content
-            string csvFileContents = System.IO.File.ReadAllText(filepath);
-            Encoding utf8Encoding = Encoding.UTF8;
-            byte[] csvFileContentsAsBytes = Encoding.Default.GetBytes(csvFileContents);
-            byte[] convertedCsvFileContents = Encoding.Convert(Encoding.Default, utf8Encoding, csvFileContentsAsBytes);
-            string convertedCsvFileContentsAsString = utf8Encoding.GetString(convertedCsvFileContents);
-            System.IO.File.WriteAllText(filepath, convertedCsvFileContentsAsString, utf8Encoding);
+            //change the encoding of the file
+            string csvFileContents = await File.ReadAllTextAsync(filepath);
+            byte[] buffer = Encoding.Convert(Encoding.Default, Encoding.UTF8, Encoding.Default.GetBytes(csvFileContents));
+            string convertedCsvFileContents = Encoding.UTF8.GetString(buffer);
+            await File.WriteAllTextAsync(filepath, convertedCsvFileContents, Encoding.UTF8);
 
-            FileStream sourceFile = new(filepath, FileMode.Open);
-            MemoryStream memoryStream = new();
-            await sourceFile.CopyToAsync(memoryStream);
-            var buffer = memoryStream.ToArray();
-            var file = Convert.ToBase64String(buffer);
-            sourceFile.Dispose();
-            sourceFile.Close();
+            //read the file as base64
+            byte[] fileBytes = await File.ReadAllBytesAsync(filepath);
+            string base64String = Convert.ToBase64String(fileBytes);
+            File.Delete(filepath);
 
-            if (!sourceFile.CanWrite)
-            {
-                System.IO.File.Delete(filepath); // delete the file in the app folder
-            }
-
-            return file;
+            return base64String;
         }
 
         public async Task<string?> ImportAsync([FromBody] string file, CultureInfo lang)
@@ -641,6 +628,7 @@ namespace Cargotruck.Server.Repositories
                     if (worksheet.Row(2).CellsUsed().Count() > 1 && worksheet.Row(2).Cell(worksheet.Row(1).CellsUsed().Count()) != null)
                     {
                         int l = 0;
+                        int rowNumber = 0;
                         foreach (IXLRow row in worksheet.Rows())
                         {
 
@@ -651,21 +639,17 @@ namespace Cargotruck.Server.Repositories
                                 CultureInfo.CurrentUICulture = lang;
                                 List<string> columnNames = _columnNameLists.GetTasksColumnNames().Select(x => _localizer[x].Value).ToList();
 
-                                foreach (IXLCell cell in row.Cells())
+                                var cellValues = row.Cells().Select(c => c.Value.ToString()).ToList();
+                                if (!columnNames.SequenceEqual(cellValues))
                                 {
-                                    if (columnNames.Contains(cell.Value.ToString()!))
-                                    {
-                                        columnNames.Remove(cell.Value.ToString()!);
-                                        dt.Columns.Add(cell.Value.ToString());
-                                    }
-                                    else
-                                    {
-                                        error = _localizer["Not_match_col"].Value;
-                                        System.IO.File.Delete(path); // delete the file
-                                        return error;
-                                    }
-
+                                    error = _localizer["Not_match_col"].Value;
+                                    File.Delete(path); // delete the file
+                                    return error;
                                 }
+                                dt.Columns.AddRange(cellValues.Select(c => new DataColumn(c)).ToArray());
+                                columnNames.Clear();
+
+
                                 firstRow = false;
                                 if (columnNames.Count == 0)
                                 {
@@ -679,16 +663,16 @@ namespace Cargotruck.Server.Repositories
                             }
                             else if (haveColumns)
                             {
-                                List<object?> list = new();
+                                List<string?> list = new();
                                 int nulls = 0;
                                 //Add rows to DataTable.
                                 dt.Rows.Add();
                                 foreach (IXLCell cell in row.Cells(1, dt.Columns.Count))
                                 {
-                                    if (cell.Value != null && cell.Value.ToString() != "") { list.Add(cell.Value); }
+                                    if (cell.Value != null && cell.Value.ToString() != "") { list.Add(cell.Value.ToString()); }
                                     else
                                     {
-                                        list.Add(System.DBNull.Value);
+                                        list.Add(null);
                                         nulls += 1;
                                     }
                                 }
@@ -701,68 +685,63 @@ namespace Cargotruck.Server.Repositories
                                 {
                                     if (nulls != list.Count)
                                     {
-                                        var sql = @"Insert Into Tasks (UserId,Partner,Description,PlaceOfReceipt,TimeOfReceipt,PlaceOfDelivery,TimeOfDelivery,OtherStops,CargoId,StorageTime,Completed,CompletionTime,TimeOfDelay,Payment,FinalPayment,Penalty,Date ) 
-                                            Values (@UserId,@Partner,@Description,@PlaceOfReceipt,@TimeOfReceipt, @PlaceOfDelivery,@TimeOfDelivery,@OtherStops,@CargoId,@StorageTime,@Completed,@CompletionTime,@TimeOfDelay,@Payment,@FinalPayment,@Penalty,@Date)";
-                                        var insert = await _context.Database.ExecuteSqlRawAsync(sql,
-                                            new SqlParameter("@UserId", "Imported"),
-                                            new SqlParameter("@Partner", list[l]),
-                                            new SqlParameter("@Description", list[l + 1]),
-                                            new SqlParameter("@PlaceOfReceipt", list[l + 2]),
-                                            new SqlParameter("@TimeOfReceipt", list[l + 3] == System.DBNull.Value || list[l + 3] == null ? System.DBNull.Value : DateTime.Parse(list[l + 3]?.ToString()!)),
-                                            new SqlParameter("@PlaceOfDelivery", list[l + 4]),
-                                            new SqlParameter("@TimeOfDelivery", list[l + 5] == System.DBNull.Value || list[l + 5] == null ? System.DBNull.Value : DateTime.Parse(list[l + 5]?.ToString()!)),
-                                            new SqlParameter("@OtherStops", list[l + 6]),
-                                            new SqlParameter("@CargoId", list[l + 7]),
-                                            new SqlParameter("@StorageTime", list[l + 8]),
-                                            new SqlParameter("@Completed", list[l + 9]),
-                                            new SqlParameter("@CompletionTime", list[l + 10]),
-                                            new SqlParameter("@TimeOfDelay", list[l + 11]),
-                                            new SqlParameter("@Payment", list[l + 12]),
-                                            new SqlParameter("@FinalPayment", list[l + 13]),
-                                            new SqlParameter("@Penalty", list[l + 14]),
-                                            new SqlParameter("@Date", DateTime.Now)
-                                            );
+                                        ++rowNumber;
 
-                                        if (insert > 0)
+                                        var task = new DeliveryTask
                                         {
-                                            error = "";
-                                            var lastId = await _context.Tasks.OrderBy(x => x.Id).LastOrDefaultAsync();
+                                            UserId = "Imported",
+                                            Partner = list[l],
+                                            Description = list[l + 1],
+                                            PlaceOfReceipt = list[l + 2],
+                                            TimeOfReceipt =  !string.IsNullOrWhiteSpace(list[l + 3]) ? DateTime.Parse(list[l + 3] ?? "0") : null,
+                                            PlaceOfDelivery = list[l + 4],
+                                            TimeOfDelivery = !string.IsNullOrWhiteSpace(list[l + 5]) ? DateTime.Parse(list[l + 5] ?? "0") : null,
+                                            OtherStops = list[l + 6],
+                                            CargoId = !string.IsNullOrWhiteSpace(list[l + 7]) ? int.Parse(list[l + 7] ?? "0") : null,
+                                            StorageTime = list[l + 8],
+                                            Completed = bool.Parse(list[l + 9] ?? "False"),
+                                            CompletionTime = !string.IsNullOrWhiteSpace(list[l + 10]) ? DateTime.Parse(list[l + 10] ?? "0") : null,
+                                            TimeOfDelay = list[l + 11],
+                                            Payment = !string.IsNullOrWhiteSpace(list[l + 12]) ? long.Parse(list[l + 12] ?? "0") : null,
+                                            FinalPayment = !string.IsNullOrWhiteSpace(list[l + 13]) ? long.Parse(list[l + 13] ?? "0") : null,
+                                            Penalty = !string.IsNullOrWhiteSpace(list[l + 14]) ? long.Parse(list[l + 14] ?? "0") : null,
+                                            Date = DateTime.Now
+                                        };
 
-                                            if (lastId?.Cargo != null)
+                                        if (task != null)
+                                        {
+                                            if (task?.CargoId != null)
                                             {
-                                                var WithNewIds = await _context.Tasks.Where(x => x.Cargo!.Id == lastId.CargoId).ToListAsync();
-                                                Cargo? cargo = await _context.Cargoes.FirstOrDefaultAsync(x => x.Id == lastId.CargoId);
+                                                Cargo? cargo = await _context.Cargoes.FirstOrDefaultAsync(x => x.Id == task.CargoId);
+                                                
+                                                if (cargo != null)
+                                                { 
+                                                    var WithNewId = await _context.Tasks.Where(x => x.CargoId == task.CargoId).ToListAsync();
 
-                                                foreach (var item in WithNewIds)
-                                                {
-                                                    if (item != null)
+                                                    if (WithNewId.Count == 0)
                                                     {
-                                                        if (item.Id != lastId?.Id)
-                                                        {
-                                                            item.Cargo = null;
-                                                            _context.Entry(item).State = EntityState.Modified;
-                                                            await _context.SaveChangesAsync();
-                                                        }
-                                                        else if (cargo == null)
-                                                        {
-                                                            item.Cargo = null;
-                                                            _context.Entry(item).State = EntityState.Modified;
-                                                            await _context.SaveChangesAsync();
-                                                        }
+                                                        task.Cargo = cargo;
+                                                        await _context.Tasks.AddAsync(task);
+
+                                                        cargo.TaskId = task.Id;
+                                                        _context.Entry(cargo).State = EntityState.Modified;
+                                                        await _context.SaveChangesAsync();
+                                                    }
+                                                    else
+                                                    {
+                                                        error += "\n " + _localizer["Deleted_duplicate_id"] + " " + rowNumber + ".";
                                                     }
                                                 }
-
-                                                if (cargo != null)
+                                                else
                                                 {
-                                                    cargo.TaskId = lastId.Id;
-                                                    _context.Entry(cargo).State = EntityState.Modified;
-                                                    await _context.SaveChangesAsync();
+                                                    error += "\n " + _localizer["Deleted_wrong_id"] + " " + rowNumber + ".";
                                                 }
                                             }
-                                        }
-                                        else if (insert <= 0)
-                                        {
-                                            System.IO.File.Delete(path); // delete the file
+                                            else
+                                            {
+                                                await _context.Tasks.AddAsync(task!);
+                                                await _context.SaveChangesAsync();
+                                            }
                                         }
                                     }
                                 }
@@ -806,7 +785,7 @@ namespace Cargotruck.Server.Repositories
                 error = _localizer["No_excel"];
                 return error;
             }
-            return null;
+            return error;
         }
     }
 }

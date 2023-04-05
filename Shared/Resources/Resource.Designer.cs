@@ -592,7 +592,16 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A következő azonosítóval rendelkező sor törölve lett, mert nem létezik a megadott típus azonosító:.
+        ///   Looks up a localized string similar to A következő sor törölve lett, mert már létezik ilyen azonosító..
+        /// </summary>
+        public static string Deleted_duplicate_id {
+            get {
+                return ResourceManager.GetString("Deleted_duplicate_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A következő sor törölve lett, mert nem létezik a megadott típus azonosító:.
         /// </summary>
         public static string Deleted_wrong_id {
             get {
@@ -601,7 +610,7 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A következő azonosítóval rendelkező sor törölve lett, mert nem létezik a megadott megbízás azonosító:.
+        ///   Looks up a localized string similar to A következő sor törölve lett, mert nem létezik a megadott megbízás azonosító:.
         /// </summary>
         public static string Deleted_wrong_id_task {
             get {

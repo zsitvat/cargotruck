@@ -289,16 +289,11 @@ namespace Cargotruck.Server.Repositories
             fs.Close();
             fs.Dispose();
 
-            FileStream sourceFile = new(filepath, FileMode.Open);
-            MemoryStream memoryStream = new();
-            await sourceFile.CopyToAsync(memoryStream);
-            var buffer = memoryStream.ToArray();
-            var pdf = Convert.ToBase64String(buffer);
-            sourceFile.Dispose();
-            sourceFile.Close();
-            System.IO.File.Delete(filepath); // delete the file in the app folder
+            byte[] fileBytes = await File.ReadAllBytesAsync(filepath);
+            string base64String = Convert.ToBase64String(fileBytes);
+            File.Delete(filepath);
 
-            return pdf;
+            return base64String;
         }
 
         public async Task<string> ExportToCSVAsync(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate, bool isTextDocument)
@@ -353,30 +348,18 @@ namespace Cargotruck.Server.Repositories
             txt.Close();
             txt.Dispose();
 
+            //change the encoding of the file
+            string csvFileContents = await File.ReadAllTextAsync(filepath);
+            byte[] buffer = Encoding.Convert(Encoding.Default, Encoding.UTF8, Encoding.Default.GetBytes(csvFileContents));
+            string convertedCsvFileContents = Encoding.UTF8.GetString(buffer);
+            await File.WriteAllTextAsync(filepath, convertedCsvFileContents, Encoding.UTF8);
 
-            //change the encoding of the file content
-            string csvFileContents = System.IO.File.ReadAllText(filepath);
-            Encoding utf8Encoding = Encoding.UTF8;
-            byte[] csvFileContentsAsBytes = Encoding.Default.GetBytes(csvFileContents);
-            byte[] convertedCsvFileContents = Encoding.Convert(Encoding.Default, utf8Encoding, csvFileContentsAsBytes);
-            string convertedCsvFileContentsAsString = utf8Encoding.GetString(convertedCsvFileContents);
-            System.IO.File.WriteAllText(filepath, convertedCsvFileContentsAsString, utf8Encoding);
+            //read the file as base64
+            byte[] fileBytes = await File.ReadAllBytesAsync(filepath);
+            string base64String = Convert.ToBase64String(fileBytes);
+            File.Delete(filepath);
 
-            //filestream for download
-            FileStream sourceFile = new(filepath, FileMode.Open);
-            MemoryStream memoryStream = new();
-            await sourceFile.CopyToAsync(memoryStream);
-            var buffer = memoryStream.ToArray();
-            var file = Convert.ToBase64String(buffer);
-            sourceFile.Dispose();
-            sourceFile.Close();
-
-            if (!sourceFile.CanWrite)
-            {
-                System.IO.File.Delete(filepath); // delete the file in the app folder
-            }
-
-            return file;
+            return base64String;
         }
 
         public async Task<string?> ImportAsync([FromBody] string file, CultureInfo lang)

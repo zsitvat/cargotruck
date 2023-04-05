@@ -291,6 +291,9 @@
   <data name="Delete?" xml:space="preserve">
     <value>Are you sure you want to delete it?</value>
   </data>
+  <data name="Deleted_duplicate_id" xml:space="preserve">
+    <value>Because of Id duplication the row is deleted:</value>
+  </data>
   <data name="Deleted_wrong_id" xml:space="preserve">
     <value>Because of wrong Id the row is deleted:</value>
   </data>
