@@ -292,7 +292,13 @@
     <value>Biztosan törölni szeretnéd?</value>
   </data>
   <data name="Deleted_duplicate_id" xml:space="preserve">
-    <value>A következő sor törölve lett, mert már létezik ilyen azonosító.</value>
+    <value>A következő sor törölve lett, mert már létezik az azonosító.</value>
+  </data>
+  <data name="Deleted_id_duplicate_id" xml:space="preserve">
+    <value>Az azonosító nem menthető el, mert már létezik.</value>
+  </data>
+  <data name="Deleted_id_wrong_id" xml:space="preserve">
+    <value>A következő azonosító törölve lett, mert nem létezik hozzá tartozó adat.</value>
   </data>
   <data name="Deleted_wrong_id" xml:space="preserve">
     <value>A következő sor törölve lett, mert nem létezik a megadott típus azonosító:</value>

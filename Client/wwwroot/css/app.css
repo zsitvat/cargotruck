@@ -205,6 +205,7 @@ a:active {
 .page-error .p-error {
     max-width: 20rem;
     word-wrap: break-word;
+    white-space: pre-line;
 }
 
 

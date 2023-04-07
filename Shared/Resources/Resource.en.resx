@@ -294,6 +294,12 @@
   <data name="Deleted_duplicate_id" xml:space="preserve">
     <value>Because of Id duplication the row is deleted:</value>
   </data>
+  <data name="Deleted_id_duplicate_id" xml:space="preserve">
+    <value>The Id can't be saved because of duplication.</value>
+  </data>
+  <data name="Deleted_id_wrong_id" xml:space="preserve">
+    <value>The Id can't be saved because the data not found.</value>
+  </data>
   <data name="Deleted_wrong_id" xml:space="preserve">
     <value>Because of wrong Id the row is deleted:</value>
   </data>

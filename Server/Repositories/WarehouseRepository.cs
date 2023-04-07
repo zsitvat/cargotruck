@@ -394,36 +394,29 @@ namespace Cargotruck.Server.Repositories
                                 CultureInfo.CurrentUICulture = lang;
                                 List<string> columnNames = _columnNameLists.GetWarehousesColumnNames().Select(x => _localizer[x].Value).ToList();
 
-                                foreach (IXLCell cell in row.Cells())
+                                var cellValues = row.Cells().Select(c => c.Value.ToString()).ToList();
+                                if (!columnNames.SequenceEqual(cellValues))
                                 {
-                                    if (columnNames.Contains(cell.Value.ToString()!))
-                                    {
-                                        columnNames.Remove(cell.Value.ToString()!);
-                                        dt.Columns.Add(cell.Value.ToString());
-                                    }
-                                    else
-                                    {
-                                        error = _localizer["Not_match_col"].Value;
-                                        System.IO.File.Delete(path); // delete the file
-                                        return error;
-                                    }
-
+                                    error = _localizer["Not_match_col"].Value;
+                                    File.Delete(path); // delete the file
+                                    return error;
                                 }
+                                dt.Columns.AddRange(cellValues.Select(c => new DataColumn(c)).ToArray());
+                                columnNames.Clear();
+
                                 firstRow = false;
-                                if (columnNames.Count == 0)
+                                if (columnNames.Count == 0 || (columnNames.Count == 1 && columnNames.Contains("Id")))
                                 {
                                     haveColumns = true;
-                                    l += 1;
-                                }
-                                else if (columnNames.Count == 1 && columnNames.Contains("Id"))
-                                {
-                                    haveColumns = true;
-
+                                    if (columnNames.Count == 0)
+                                    {
+                                        l += 1;
+                                    }
                                 }
                             }
                             else if (haveColumns)
                             {
-                                List<object?> list = new();
+                                List<string?> list = new();
                                 int nulls = 0;
                                 //Add rows to DataTable.
                                 dt.Rows.Add();
@@ -431,11 +424,11 @@ namespace Cargotruck.Server.Repositories
                                 {
                                     if (cell.Value != null && cell.Value.ToString() != "")
                                     {
-                                        list.Add(cell.Value);
+                                        list.Add(cell.Value.ToString());
                                     }
                                     else
                                     {
-                                        list.Add(System.DBNull.Value);
+                                        list.Add(null);
                                         nulls += 1;
                                     }
                                 }
@@ -445,49 +438,51 @@ namespace Cargotruck.Server.Repositories
                                     if (nulls != list.Count)
                                     {
 
-                                        var sql = @"Insert Into Warehouses (UserId,Address,Owner,Date) 
-                                            Values (@UserId,@Address,@Owner,@Date)";
-                                        var insert = await _context.Database.ExecuteSqlRawAsync(sql,
-                                            new SqlParameter("@UserId", "Imported"),
-                                            new SqlParameter("@Address", list[l]),
-                                            new SqlParameter("@Owner", list[l + 1]),
-                                            new SqlParameter("@Date", DateTime.Now)
-                                            );
-
-                                        string[]? substrings = list[l + 2]?.ToString()?.Split("]");
-
-                                        if (substrings != null)
+                                        var warehouse = new Warehouse
                                         {
-                                            for (int s = 0; s < (substrings.Length > 0 ? substrings.Length - 1 : 0); ++s)
+                                            UserId = "Imported",
+                                            Address = list[l],
+                                            Owner = list[l + 1],
+                                            Date = DateTime.Now
+                                        };
+
+                                        if (warehouse != null)
+                                        {
+                                            error = "";
+                                            await _context.Warehouses.AddAsync(warehouse);
+                                            await _context.SaveChangesAsync();
+                                        }
+
+                                        string[]? substrings = list[l + 2]?.ToString()?.Split("]").Where(x => x != "").ToArray();
+
+                                        if (substrings != null && warehouse != null)
+                                        {
+                                            for (int s = 0; s < (substrings.Length > 0 ? (substrings.Length - 1) : 0); s++)
                                             {
                                                 if (substrings[s] != "") {
 
-                                                    int CargoId = Int32.Parse(substrings[s][0..substrings[s].IndexOf("/")].Replace("[",""));
-                                                    var warehouseSection = substrings[s][(substrings[s].IndexOf("/") + 1)..];
+                                                    int CargoId = Int32.Parse(substrings[s][0..substrings[s].IndexOf("/")].Replace("[", ""));
+                                                    string? warehouseSection = substrings[s][(substrings[s].IndexOf("/") + 1)..];
 
-                                                    var lastWarehouse = await _context.Warehouses.OrderBy(s => s.Id).LastOrDefaultAsync();
-                                                    int? greatestId = lastWarehouse?.Id;
+                                                    Cargo? cargo = await _context.Cargoes.FirstOrDefaultAsync(x => x.Id == CargoId);
 
-                                                    if (greatestId != null) { 
-                                                        var sql2 = @"Update Cargoes 
-                                                                Set WarehouseId = @WarehouseId, WarehouseSection = @WarehouseSection
-                                                                    Where Id = @Id";
-                                                        var insert2 = await _context.Database.ExecuteSqlRawAsync(sql2,
-                                                            new SqlParameter("@WarehouseId", greatestId),
-                                                            new SqlParameter("@WarehouseSection", warehouseSection),
-                                                            new SqlParameter("@Id", CargoId)
-                                                            );
+                                                    if (cargo != null) {
+
+                                                        cargo.WarehouseId = warehouse.Id;
+                                                        cargo.WarehouseSection = warehouseSection;
+                                                        cargo.Date = DateTime.Now;
+                                                        _context.Entry(cargo).State = EntityState.Modified;
+                                                        await _context.SaveChangesAsync();
+                                                    }
+                                                    else
+                                                    {
+                                                        error += "\n " + _localizer["Deleted_id_wrong_id"] + " " + CargoId + ".";
                                                     }
                                                 }
                                             }
                                         }
 
-                                        if (insert > 0)
-                                        {
-                                            error = "";
-                                            await _context.SaveChangesAsync();
-                                        }
-                                        else if (insert <= 0)
+                                        else if (warehouse == null)
                                         {
                                             System.IO.File.Delete(path); // delete the file
                                         }
@@ -533,7 +528,7 @@ namespace Cargotruck.Server.Repositories
                 error = _localizer["No_excel"];
                 return error;
             }
-            return null;
+            return error.TrimStart('\r', '\n');
         }
     }
 }

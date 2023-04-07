@@ -4,6 +4,7 @@ using Cargotruck.Server.Services.Interfaces;
 using Cargotruck.Shared.Model;
 using Cargotruck.Shared.Resources;
 using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Bibliography;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using Microsoft.AspNetCore.Authorization;
@@ -538,6 +539,7 @@ namespace Cargotruck.Server.Repositories
                     if (worksheet.Row(2).CellsUsed().Count() > 1 && worksheet.Row(2).Cell(worksheet.Row(1).CellsUsed().Count()) != null)
                     {
                         int l = 0;
+                        int rowNumber = 0;
                         foreach (IXLRow row in worksheet.Rows())
                         {
                             //Use the first row to add columns to DataTable with column names check.
@@ -547,36 +549,29 @@ namespace Cargotruck.Server.Repositories
                                 CultureInfo.CurrentUICulture = lang;
                                 List<string> columnNames = _columnNameLists.GetExpensesColumnNames().Select(x => _localizer[x].Value).ToList();
 
-                                foreach (IXLCell cell in row.Cells())
+                                var cellValues = row.Cells().Select(c => c.Value.ToString()).ToList();
+                                if (!columnNames.SequenceEqual(cellValues))
                                 {
-                                    if (columnNames.Contains(cell.Value.ToString()!))
-                                    {
-                                        columnNames.Remove(cell.Value.ToString()!);
-                                        dt.Columns.Add(cell.Value.ToString());
-                                    }
-                                    else
-                                    {
-                                        error = _localizer["Not_match_col"].Value;
-                                        System.IO.File.Delete(path); // delete the file
-                                        return error;
-                                    }
-
+                                    error = _localizer["Not_match_col"].Value;
+                                    File.Delete(path); // delete the file
+                                    return error;
                                 }
+                                dt.Columns.AddRange(cellValues.Select(c => new DataColumn(c)).ToArray());
+                                columnNames.Clear();
+
                                 firstRow = false;
-                                if (columnNames.Count == 0)
+                                if (columnNames.Count == 0 || (columnNames.Count == 1 && columnNames.Contains("Id")))
                                 {
                                     haveColumns = true;
-                                    l += 1;
-                                }
-                                else if (columnNames.Count == 1 && columnNames.Contains("Id"))
-                                {
-                                    haveColumns = true;
-
+                                    if (columnNames.Count == 0)
+                                    {
+                                        l += 1;
+                                    }
                                 }
                             }
                             else if (haveColumns)
                             {
-                                List<object?> list = new();
+                                List<string?> list = new();
                                 int nulls = 0;
 
                                 //Add rows to DataTable.
@@ -586,111 +581,133 @@ namespace Cargotruck.Server.Repositories
                                 {
                                     if (cell.Value != null && cell.Value.ToString() != "")
                                     {
-                                        list.Add(cell.Value);
+                                        list.Add(cell.Value.ToString());
                                     }
                                     else
                                     {
-                                        list.Add(System.DBNull.Value);
+                                        list.Add(null);
                                         nulls += 1;
                                     }
                                 }
-
-                                list[l] = list[l] switch
-                                {
-                                    "task" => 0,
-                                    "repair" => 1,
-                                    "storage" => 2,
-                                    "salary" => 3,
-                                    "other" => 4,
-                                    _ => System.DBNull.Value,
-                                };
-
-                                var totalAmount = 0;
-                                for (int i = l + 2; i < list.Count - 1; i++)
-                                {
-                                    if (i != (l + 8) && list[i] != null && list[i] != System.DBNull.Value)
-                                    {
-                                        list[i] = new String(list[i]?.ToString()?.Where(Char.IsDigit).ToArray());
-                                        if (list[i] != null && i < l + 11)
-                                        {
-                                            totalAmount += Int32.Parse(list[i]?.ToString()!);
-                                        }
-                                    }
-                                }
-
 
                                 try
                                 {
                                     if (nulls != list.Count)
                                     {
 
-                                        var sql = @"Insert Into Expenses (UserId,Type,TypeId,Fuel,RoadFees,Penalty,DriverSpending,DriverSalary,RepairCost,RepairDescription,CostOfStorage,TotalAmount,other,Date) 
-                                        Values (@UserId,@Type,@TypeId,@Fuel,@RoadFees,@Penalty,@DriverSpending,@DriverSalary,@RepairCost,@RepairDescription,@CostOfStorage,@TotalAmount,@other,@Date)";
-                                        var insert = await _context.Database.ExecuteSqlRawAsync(sql,
-                                            new SqlParameter("@UserId", "Imported"),
-                                            new SqlParameter("@Type", list[l]),
-                                            new SqlParameter("@TypeId", list[l + 1]),
-                                            new SqlParameter("@Fuel", list[l + 2]),
-                                            new SqlParameter("@RoadFees", list[l + 3]),
-                                            new SqlParameter("@Penalty", list[l + 4]),
-                                            new SqlParameter("@DriverSpending", list[l + 5]),
-                                            new SqlParameter("@DriverSalary", list[l + 6]),
-                                            new SqlParameter("@RepairCost", list[l + 7]),
-                                            new SqlParameter("@RepairDescription", list[l + 8]),
-                                            new SqlParameter("@CostOfStorage", list[l + 9]),
-                                            new SqlParameter("@other", list[l + 10]),
-                                            new SqlParameter("@TotalAmount", totalAmount),
-                                            new SqlParameter("@Date", DateTime.Now)
-                                            );
-
-                                        if (insert > 0)
+                                        list[l] = list[l] switch
                                         {
-                                            var lastId = await _context.Expenses.OrderBy(x => x.Date).LastOrDefaultAsync();
+                                            "task" => "0",
+                                            "repair" => "1",
+                                            "storage" => "2",
+                                            "salary" => "3",
+                                            "othertype" => "4",
+                                            _ => throw new ArgumentNullException(_localizer["Error_type"])
+                                        };
 
-                                            if (lastId != null)
+                                        //count the totalamount
+                                        var totalAmount = 0;
+                                        for (int i = l + 2; i < list.Count - 1; i++)
+                                        {
+                                            if (i != (l + 8) && list[i] != null && list[i] != null)
                                             {
-                                                var WithNewIds = await _context.Expenses.Where(x => x.Type == lastId.Type && x.TypeId == lastId.TypeId && x.Type != Type.othertype && x.Type != Type.salary).ToListAsync();
-                                                Road? road = await _context.Roads.FirstOrDefaultAsync(x => x.Id == lastId.TypeId && lastId.Type == Type.repair);
-                                                DeliveryTask? task = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == lastId.TypeId && lastId.Type == Type.task);
-                                                Cargo? cargo = await _context.Cargoes.FirstOrDefaultAsync(x => x.Id == lastId.TypeId && lastId.Type == Type.storage);
-
-                                                foreach (var item in WithNewIds)
+                                                list[i] = new String(list[i]?.ToString()?.Where(Char.IsDigit).ToArray());
+                                                if (list[i] != null && i < l + 11)
                                                 {
-                                                    if (item != null)
-                                                    {
-                                                        if (item.Id == lastId?.Id)
-                                                        {
-                                                            if (cargo == null && lastId.Type == Type.storage)
-                                                            {
-                                                                item.TypeId = null;
-                                                            }
-                                                            if (task == null && lastId.Type == Type.task)
-                                                            {
-                                                                item.TypeId = null;
-                                                            }
-                                                            if (road == null && lastId.Type == Type.repair)
-                                                            {
-                                                                item.TypeId = null;
-                                                            }
-                                                            if (item.TypeId == null)
-                                                            {
-                                                                _context.Remove(item);
-                                                                await _context.SaveChangesAsync();
-                                                                error += "\n" + _localizer["Deleted_wrong_id"] + " " + lastId.Id + ".";
-                                                            }
-                                                        }
-                                                    }
-                                                }
-
-                                                if (road != null && lastId.Type == Type.repair)
-                                                {
-                                                    road.ExpensesId = lastId?.Id;
-                                                    _context.Entry(road).State = EntityState.Modified;
-                                                    await _context.SaveChangesAsync();
+                                                    totalAmount += Int32.Parse(list[i]?.ToString()!);
                                                 }
                                             }
                                         }
-                                        else if (insert <= 0)
+
+                                        ++rowNumber;
+
+                                        var expense = new Expense
+                                        {
+                                            UserId = "Imported",
+                                            Type = !string.IsNullOrWhiteSpace(list[l]) ? (Type)Enum.Parse(typeof(Type), list[l]!) : Type.othertype,
+                                            TypeId = !string.IsNullOrWhiteSpace(list[l + 1]) ? int.Parse(list[l + 1] ?? "0") : null,
+                                            Fuel = !string.IsNullOrWhiteSpace(list[l + 2]) ? int.Parse(list[l + 2] ?? "0") : null,
+                                            RoadFees = !string.IsNullOrWhiteSpace(list[l + 3]) ? int.Parse(list[l + 3] ?? "0") : null,
+                                            Penalty = !string.IsNullOrWhiteSpace(list[l + 4]) ? int.Parse(list[l + 4] ?? "0") : null,
+                                            DriverSpending = !string.IsNullOrWhiteSpace(list[l + 5]) ? int.Parse(list[l + 5] ?? "0") : null,
+                                            DriverSalary = !string.IsNullOrWhiteSpace(list[l + 6]) ? int.Parse(list[l + 6] ?? "0") : null,
+                                            RepairCost = !string.IsNullOrWhiteSpace(list[l + 7]) ? int.Parse(list[l + 7] ?? "0") : null,
+                                            RepairDescription = list[l + 8],
+                                            CostOfStorage = !string.IsNullOrWhiteSpace(list[l + 9]) ? int.Parse(list[l + 9] ?? "0") : null,
+                                            Other = !string.IsNullOrWhiteSpace(list[l + 10]) ? int.Parse(list[l + 10] ?? "0") : null,
+                                            TotalAmount = totalAmount,
+                                            Date = DateTime.Now
+                                        };
+                                      
+
+                                        if (expense != null && expense.Type != null)
+                                        {
+                                            bool saveable = true;
+                                            DeliveryTask? task = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == expense.TypeId && expense.Type == Type.task);
+                                            Road? road = await _context.Roads.FirstOrDefaultAsync(x => x.Id == expense.TypeId && expense.Type == Type.repair);
+                                            Cargo? cargo = await _context.Cargoes.FirstOrDefaultAsync(x => x.Id == expense.TypeId && expense.Type == Type.storage);
+
+                                            if (saveable && expense?.Type == Type.task && expense?.TypeId != null)
+                                            {
+                                                var withNewId = await _context.Expenses.Where(x => x.Type == Type.task && x.TypeId == expense.TypeId).ToListAsync();
+
+                                                if (withNewId.Count != 0)
+                                                {
+                                                    saveable = false;
+                                                    error += "\n " + _localizer["Deleted_duplicate_id"] + " " + rowNumber + ".";
+                                                }
+                                                else if (task == null)
+                                                {
+                                                    saveable = false;
+                                                    error += "\n " + _localizer["Deleted_wrong_id"] + " " + rowNumber + ".";
+                                                }
+                                            }
+
+                                            if (saveable && expense?.Type == Type.repair && expense.TypeId != null)
+                                            {
+                                                var withNewId = await _context.Expenses.Where(x => x.Type == Type.repair && x.Id == expense.TypeId).ToListAsync();
+
+                                                if (withNewId.Count != 0)
+                                                {
+                                                    saveable = false;
+                                                    error += "\n " + _localizer["Deleted_duplicate_id"] + " " + rowNumber + ".";
+                                                }
+                                                else if (road == null)
+                                                {
+                                                    saveable = false;
+                                                    error += "\n " + _localizer["Deleted_wrong_id"] + " " + rowNumber + ".";
+                                                }
+                                            }
+
+                                            if (saveable && expense?.Type == Type.storage && expense?.TypeId != null)
+                                            {
+                                                var withNewId = await _context.Expenses.Where(x => x.Type == Type.storage && x.Id == expense.TypeId).ToListAsync();
+
+                                                if (withNewId.Count != 0)
+                                                {
+                                                    saveable = false;
+                                                    error += "\n " + _localizer["Deleted_duplicate_id"] + " " + rowNumber + ".";
+                                                }
+                                                else if (cargo == null)
+                                                {
+                                                    saveable = false;
+                                                    error += "\n " + _localizer["Deleted_wrong_id"] + " " + rowNumber + ".";
+                                                }
+                                            }
+
+                                            if (saveable)
+                                            {
+                                                if (expense?.TypeId != null && road != null)
+                                                {
+                                                    road.ExpensesId = expense.Id;
+                                                    _context.Entry(road).State = EntityState.Modified;
+                                                }
+
+                                                await _context.Expenses.AddAsync(expense!);
+                                                await _context.SaveChangesAsync();
+                                            }
+                                        }
+                                        else if (expense == null)
                                         {
                                             System.IO.File.Delete(path); // delete the file
                                         }
@@ -736,7 +753,7 @@ namespace Cargotruck.Server.Repositories
                 error = _localizer["No_excel"];
                 return error;
             }
-            return null;
+            return error.TrimStart('\r', '\n');
         }
     }
 }

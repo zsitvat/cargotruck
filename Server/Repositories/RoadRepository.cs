@@ -5,6 +5,8 @@ using Cargotruck.Server.Services.Interfaces;
 using Cargotruck.Shared.Model;
 using Cargotruck.Shared.Resources;
 using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Bibliography;
+using DocumentFormat.OpenXml.Drawing.Diagrams;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using Microsoft.AspNetCore.Authorization;
@@ -555,6 +557,7 @@ namespace Cargotruck.Server.Repositories
             CultureInfo.CurrentUICulture = lang;
             var error = "";
             var haveColumns = false;
+            int rowNumber = 0;
 
             if (file != null)
             {
@@ -582,36 +585,29 @@ namespace Cargotruck.Server.Repositories
                                 CultureInfo.CurrentUICulture = lang;
                                 List<string> columnNames = _columnNameLists.GetRoadsColumnNames().Where(x => x != "UserId").Select(x => _localizer[x].Value).ToList();
 
-                                foreach (IXLCell cell in row.Cells())
+                                var cellValues = row.Cells().Select(c => c.Value.ToString()).ToList();
+                                if (!columnNames.SequenceEqual(cellValues))
                                 {
-                                    if (columnNames.Contains(cell.Value.ToString()!))
-                                    {
-                                        columnNames.Remove(cell.Value.ToString()!);
-                                        dt.Columns.Add(cell.Value.ToString());
-                                    }
-                                    else
-                                    {
-                                        error = _localizer["Not_match_col"].Value;
-                                        System.IO.File.Delete(path); // delete the file
-                                        return error;
-                                    }
-
+                                    error = _localizer["Not_match_col"].Value;
+                                    File.Delete(path); // delete the file
+                                    return error;
                                 }
+                                dt.Columns.AddRange(cellValues.Select(c => new DataColumn(c)).ToArray());
+                                columnNames.Clear();
+
                                 firstRow = false;
-                                if (columnNames.Count == 0)
+                                if (columnNames.Count == 0 || (columnNames.Count == 1 && columnNames.Contains("Id")))
                                 {
                                     haveColumns = true;
-                                    l += 1;
-                                }
-                                else if (columnNames.Count == 1 && columnNames.Contains("Id"))
-                                {
-                                    haveColumns = true;
-
+                                    if (columnNames.Count == 0)
+                                    {
+                                        l += 1;
+                                    }
                                 }
                             }
                             else if (haveColumns)
                             {
-                                List<object?> list = new();
+                                List<string?> list = new();
                                 int nulls = 0;
                                 //Add rows to DataTable.
                                 dt.Rows.Add();
@@ -620,11 +616,11 @@ namespace Cargotruck.Server.Repositories
                                 {
                                     if (cell.Value != null && cell.Value.ToString() != "")
                                     {
-                                        list.Add(cell.Value);
+                                        list.Add(cell.Value.ToString());
                                     }
                                     else
                                     {
-                                        list.Add(System.DBNull.Value);
+                                        list.Add(null);
                                         nulls += 1;
                                     }
                                 }
@@ -633,94 +629,58 @@ namespace Cargotruck.Server.Repositories
                                 {
                                     if (nulls != list.Count)
                                     {
+                                        ++rowNumber;
 
-                                        var sql = @"Insert Into Roads (UserId,TaskId,VehicleRegistrationNumber,CargoId,PurposeOfTheTrip,StartingDate,EndingDate,StartingPlace,EndingPlace,Direction,Distance,Fuel,ExpensesId,Date) 
-                                        Values (@UserId,@TaskId,@VehicleRegistrationNumber,@CargoId,@PurposeOfTheTrip,@StartingDate,@EndingDate,@StartingPlace,@EndingPlace,@Direction,@Distance,@Fuel,@ExpensesId,@Date)";
-                                        var insert = await _context.Database.ExecuteSqlRawAsync(sql,
-                                            new SqlParameter("@UserId", "Imported"),
-                                            new SqlParameter("@TaskId", list[l]),
-                                            new SqlParameter("@VehicleRegistrationNumber", list[l + 1]),
-                                            new SqlParameter("@CargoId", list[l + 2]),
-                                            new SqlParameter("@PurposeOfTheTrip", list[l + 3]),
-                                            new SqlParameter("@StartingDate", list[l + 4] == System.DBNull.Value ? System.DBNull.Value : DateTime.Parse(list[l + 4]?.ToString()!)),
-                                            new SqlParameter("@EndingDate", list[l + 5] == System.DBNull.Value ? System.DBNull.Value : DateTime.Parse(list[l + 5]?.ToString()!)),
-                                            new SqlParameter("@StartingPlace", list[l + 6]),
-                                            new SqlParameter("@EndingPlace", list[l + 7]),
-                                            new SqlParameter("@Direction", (list[l + 8]?.ToString() == _localizer["to"] ? "TO" : "FROM")),
-                                            new SqlParameter("@Distance", list[l + 9]),
-                                            new SqlParameter("@Fuel", list[l + 10]),
-                                            new SqlParameter("@ExpensesId", list[l + 11]),
-                                            new SqlParameter("@Date", DateTime.Now)
-                                            );
-
-                                        if (insert > 0)
+                                        var road = new Road
                                         {
-                                            error = "";
-                                            var lastId = await _context.Roads.OrderBy(x => x.Date).LastOrDefaultAsync();
+                                            UserId = "Imported",
+                                            TaskId = !string.IsNullOrWhiteSpace(list[l]) ? int.Parse(list[l] ?? "0") : null,
+                                            VehicleRegistrationNumber = list[l + 1],
+                                            CargoId = !string.IsNullOrWhiteSpace(list[l + 2]) ? int.Parse(list[l + 2] ?? "0") : null,
+                                            PurposeOfTheTrip = list[l + 3],
+                                            StartingDate = !string.IsNullOrWhiteSpace(list[l + 4]) ? DateTime.Parse(list[l + 4] ?? "0") : null,
+                                            EndingDate = !string.IsNullOrWhiteSpace(list[l + 5]) ? DateTime.Parse(list[l + 5] ?? "0") : null,
+                                            StartingPlace = list[l + 6],
+                                            EndingPlace = list[l + 7],
+                                            Direction = (list[l + 8]?.ToString() == _localizer["to"] ? "TO" : "FROM"),
+                                            Distance = !string.IsNullOrWhiteSpace(list[l + 9]) ? int.Parse(list[l + 9] ?? "0") : null,
+                                            Fuel = !string.IsNullOrWhiteSpace(list[l + 10]) ? int.Parse(list[l + 10] ?? "0") : null,
+                                            ExpensesId = !string.IsNullOrWhiteSpace(list[l + 11]) ? int.Parse(list[l + 11] ?? "0") : null,
+                                            Date = DateTime.Now
+                                        };
 
-                                            if (lastId != null)
+                                        if (road != null)
+                                        {
+                                            bool saveable = true;
+                                            DeliveryTask? task = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == road.TaskId);
+                                            Cargo? cargo = await _context.Cargoes.FirstOrDefaultAsync(x => x.Id == road.CargoId);
+                                            Expense? expense = await _context.Expenses.FirstOrDefaultAsync(x => x.Id == road.ExpensesId);
+                                            Truck? truck = await _context.Trucks.FirstOrDefaultAsync(x => x.VehicleRegistrationNumber == road.VehicleRegistrationNumber);
+
+
+                                            if (saveable && road?.CargoId != null)
                                             {
-                                                var WithNewIds = await _context.Roads.Where(x => x.TaskId == lastId.TaskId || x.TaskId == lastId.TaskId || x.ExpensesId == lastId.ExpensesId).ToListAsync();
-                                                Cargo? cargo = await _context.Cargoes.FirstOrDefaultAsync(x => x.Id == lastId.TaskId);
-                                                DeliveryTask? task = await _context.Tasks.FirstOrDefaultAsync(x => x.Id == lastId.TaskId);
-                                                Expense? expense = await _context.Expenses.FirstOrDefaultAsync(x => x.Id == lastId.ExpensesId);
-                                                Truck? truck = await _context.Trucks.FirstOrDefaultAsync(x => x.VehicleRegistrationNumber == lastId.VehicleRegistrationNumber);
+                                                var withNewId = await _context.Roads.Where(x => x.CargoId == road.CargoId).ToListAsync();
 
-                                                foreach (var item in WithNewIds)
+                                                if (withNewId.Count != 0)
                                                 {
-                                                    if (item != null)
-                                                    {
-                                                        if (item.Id != lastId?.Id)
-                                                        {
-                                                            if (item.TaskId == lastId?.CargoId)
-                                                            {
-                                                                item.TaskId = null;
-                                                            }
-                                                            if (item.TaskId == lastId?.TaskId)
-                                                            {
-                                                                item.TaskId = null;
-                                                            }
-                                                            if (item.ExpensesId == lastId?.ExpensesId)
-                                                            {
-                                                                item.ExpensesId = null;
-                                                            }
-                                                            _context.Entry(item).State = EntityState.Modified;
-                                                            await _context.SaveChangesAsync();
-                                                        }
-                                                        else
-                                                        {
-                                                            if (cargo == null)
-                                                            {
-                                                                item.TaskId = null;
-                                                            }
-                                                            if (task == null)
-                                                            {
-                                                                item.TaskId = null;
-                                                            }
-                                                            if (expense == null)
-                                                            {
-                                                                item.ExpensesId = null;
-                                                            }
-                                                            if (truck == null)
-                                                            {
-                                                                item.VehicleRegistrationNumber = null;
-                                                            }
-                                                            _context.Entry(item).State = EntityState.Modified;
-                                                            await _context.SaveChangesAsync();
-                                                        }
-                                                    }
+                                                    saveable = false;
+                                                    error += "\n " + _localizer["Deleted_duplicate_id"] + " " + rowNumber + ".";
                                                 }
-
-                                                if (expense != null)
+                                                else if (cargo == null)
                                                 {
-                                                    expense.TypeId = lastId?.Id;
-                                                    expense.Type = Shared.Model.Type.repair;
-                                                    _context.Entry(expense).State = EntityState.Modified;
-                                                    await _context.SaveChangesAsync();
+                                                    saveable = false;
+                                                    error += "\n " + _localizer["Deleted_wrong_id"] + " " + rowNumber + ".";
                                                 }
                                             }
+
+                                            if (saveable)
+                                            {
+                                                await _context.Roads.AddAsync(road!);
+                                                await _context.SaveChangesAsync();
+                                            }
                                         }
-                                        else if (insert <= 0)
+                                        else if (road == null)
                                         {
                                             System.IO.File.Delete(path); // delete the file
                                         }
@@ -766,7 +726,7 @@ namespace Cargotruck.Server.Repositories
                 error = _localizer["No_excel"];
                 return error;
             }
-            return null;
+            return error.TrimStart('\r', '\n');
         }
     }
 }

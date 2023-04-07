@@ -651,14 +651,13 @@ namespace Cargotruck.Server.Repositories
 
 
                                 firstRow = false;
-                                if (columnNames.Count == 0)
+                                if (columnNames.Count == 0 || (columnNames.Count == 1 && columnNames.Contains("Id")))
                                 {
                                     haveColumns = true;
-                                    l += 1;
-                                }
-                                else if (columnNames.Count == 1 && columnNames.Contains(_localizer["Id"].Value))
-                                {
-                                    haveColumns = true;
+                                    if (columnNames.Count == 0)
+                                    {
+                                        l += 1;
+                                    }
                                 }
                             }
                             else if (haveColumns)
@@ -669,7 +668,10 @@ namespace Cargotruck.Server.Repositories
                                 dt.Rows.Add();
                                 foreach (IXLCell cell in row.Cells(1, dt.Columns.Count))
                                 {
-                                    if (cell.Value != null && cell.Value.ToString() != "") { list.Add(cell.Value.ToString()); }
+                                    if (cell.Value != null && cell.Value.ToString() != "") 
+                                    { 
+                                        list.Add(cell.Value.ToString()); 
+                                    }
                                     else
                                     {
                                         list.Add(null);
@@ -743,6 +745,10 @@ namespace Cargotruck.Server.Repositories
                                                 await _context.SaveChangesAsync();
                                             }
                                         }
+                                        else if (task == null)
+                                        {
+                                            System.IO.File.Delete(path); // delete the file
+                                        }
                                     }
                                 }
                                 catch (Exception ex)
@@ -785,7 +791,7 @@ namespace Cargotruck.Server.Repositories
                 error = _localizer["No_excel"];
                 return error;
             }
-            return error;
+            return error.TrimStart('\r', '\n');
         }
     }
 }

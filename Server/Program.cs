@@ -129,6 +129,16 @@ builder.Services.ConfigureApplicationCookie(options =>
     };
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin", builder =>
+    {
+        builder.WithOrigins("https://api.apilayer.com/exchangerates_data/")
+               .AllowAnyHeader()
+               .WithMethods("GET");
+    });
+});
+
 builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddControllersWithViews();
 
@@ -157,10 +167,7 @@ else
 
 StaticWebAssetsLoader.UseStaticWebAssets(builder.Environment, builder.Configuration);
 
-app.UseCookiePolicy(new CookiePolicyOptions
-{
-    MinimumSameSitePolicy = SameSiteMode.None
-});
+app.UseCors("AllowSpecificOrigin");
 
 app.UseAuthentication();
 app.UseHttpsRedirection();
