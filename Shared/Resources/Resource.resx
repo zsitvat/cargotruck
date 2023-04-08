@@ -306,8 +306,35 @@
   <data name="Deleted_wrong_id_task" xml:space="preserve">
     <value>A következő sor törölve lett, mert nem létezik a megadott megbízás azonosító:</value>
   </data>
+  <data name="Delete_cargo" xml:space="preserve">
+    <value>Rakomány törlése</value>
+  </data>
+  <data name="Delete_Expense" xml:space="preserve">
+    <value>Kiadás törlése</value>
+  </data>
+  <data name="Delete_monthly_expense" xml:space="preserve">
+    <value>Kiadás törlése</value>
+  </data>
+  <data name="Delete_Privacy" xml:space="preserve">
+    <value>Szabály törlése</value>
+  </data>
+  <data name="Delete_road" xml:space="preserve">
+    <value>Út törlése</value>
+  </data>
+  <data name="Delete_task" xml:space="preserve">
+    <value>Megbízás törlése</value>
+  </data>
   <data name="Delete_tasks" xml:space="preserve">
     <value>Megbízás törlése</value>
+  </data>
+  <data name="Delete_truck" xml:space="preserve">
+    <value>Jármű törlése</value>
+  </data>
+  <data name="Delete_user" xml:space="preserve">
+    <value>Felhasználó törlése</value>
+  </data>
+  <data name="Delete_warehouse" xml:space="preserve">
+    <value>Raktár törlése</value>
   </data>
   <data name="delivering" xml:space="preserve">
     <value>Szállít</value>
@@ -407,6 +434,9 @@
   </data>
   <data name="Error_max_weight" xml:space="preserve">
     <value>A jármű teherbírását kötelező megadni!</value>
+  </data>
+  <data name="Error_on_delete" xml:space="preserve">
+    <value>A törlés során probléma lépett fel.</value>
   </data>
   <data name="Error_on_upload" xml:space="preserve">
     <value>Hiba történt a feltöltésnél:</value>

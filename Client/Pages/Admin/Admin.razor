@@ -151,4 +151,8 @@ else
     {
         <Settings OnSettingsClosed="SettingsClosed" OnInputChanged="InputChanged" OnSettingsChanged="SettingsChanged" showColumns="@showColumns" settings="@settings" pageSize="@pageSize" />
     }
+    @if (showDeleteConfirmationWindow && idForDelete != null)
+    {
+        <DeleteConfirmationWindow Id="@idForDelete" OnCloseDeleteConfirmationWindow="CloseDeleteConfirmationWindow" OnRenderParent="RowIsDeleted" Controller="@controller" />
+    }
 }

@@ -172,4 +172,9 @@ else
             <GetByIdComponent GetById="@IdForGetById.ToString()" GetByIdType="@GetByIdType" OnSetToNull="SetToNull" />
         }
     </div>
+
+    @if (showDeleteConfirmationWindow && idForDelete != null)
+    {
+        <DeleteConfirmationWindow Id="@idForDelete" OnCloseDeleteConfirmationWindow="CloseDeleteConfirmationWindow" OnRenderParent="RowIsDeleted" Controller="@controller" />
+    }
 }

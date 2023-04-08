@@ -1,8 +1,11 @@
-﻿using Cargotruck.Client.Services;
+﻿using Cargotruck.Client.Components;
+using Cargotruck.Client.Services;
 using Cargotruck.Shared.Model.Dto;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using System.Data.Entity.Infrastructure;
 using System.Net.Http.Json;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Cargotruck.Client.Pages.Tasks
 {
@@ -23,7 +26,9 @@ namespace Cargotruck.Client.Pages.Tasks
         private string? searchString = "";
         string? filter = "";
         DateFilter? dateFilter = new();
-
+        private bool showDeleteConfirmationWindow = false;
+        private string? idForDelete;
+        private readonly string controller = "tasks";
         protected override async Task OnInitializedAsync()
         {
             PageHistoryState.AddPageToHistory("/Tasks");
@@ -38,15 +43,27 @@ namespace Cargotruck.Client.Pages.Tasks
             await ShowPageAsync();
         }
 
-        async Task DeleteAsync(int Id)
+        void DeleteAsync(int Id)
         {
-            var t = Tasks?.First(x => x?.Id == Id);
-            if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {t?.Partner} ({t?.Id})"))
+           idForDelete = Id.ToString();
+            showDeleteConfirmationWindow = true;
+        }
+
+        public void CloseDeleteConfirmationWindow()
+        {
+            idForDelete = null;
+            showDeleteConfirmationWindow = false;
+        }
+
+        public async Task RowIsDeleted(bool deleted)
+        {
+            if (deleted)
             {
-                await client.DeleteAsync($"api/tasks/delete/{Id}");
-                var shouldreload = dataRows % ((currentPage == 1 ? currentPage : currentPage - 1) * pageSize);
-                if (shouldreload == 1 && dataRows > 0) { navigationManager.NavigateTo("/Tasks", true); }
-                await OnInitializedAsync();
+                await ShowPageAsync();
+            }
+            else
+            {
+                throw new Exception(localizer["Error_on_delete"]);
             }
         }
 
@@ -141,6 +158,5 @@ namespace Cargotruck.Client.Pages.Tasks
             pageSize = 10;
             await OnInitializedAsync();
         }
-
     }
 }

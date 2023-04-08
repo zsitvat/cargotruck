@@ -306,8 +306,35 @@
   <data name="Deleted_wrong_id_task" xml:space="preserve">
     <value>Because of wrong task Id the row is deleted:</value>
   </data>
+  <data name="Delete_cargo" xml:space="preserve">
+    <value>Delete a cargo</value>
+  </data>
+  <data name="Delete_Expense" xml:space="preserve">
+    <value>Delete an expense</value>
+  </data>
+  <data name="Delete_monthly_expense" xml:space="preserve">
+    <value>Delete a monthly expense</value>
+  </data>
+  <data name="Delete_Privacy" xml:space="preserve">
+    <value>Delete a privacy rule</value>
+  </data>
+  <data name="Delete_road" xml:space="preserve">
+    <value>Delete a road</value>
+  </data>
+  <data name="Delete_task" xml:space="preserve">
+    <value>Delete a task</value>
+  </data>
   <data name="Delete_tasks" xml:space="preserve">
     <value>Delete the task</value>
+  </data>
+  <data name="Delete_truck" xml:space="preserve">
+    <value>Delete a truck</value>
+  </data>
+  <data name="Delete_user" xml:space="preserve">
+    <value>Delete an user</value>
+  </data>
+  <data name="Delete_warehouse" xml:space="preserve">
+    <value>Delete a warehouse</value>
   </data>
   <data name="delivering" xml:space="preserve">
     <value>Delivering</value>
@@ -404,6 +431,9 @@
   </data>
   <data name="Error_max_weight" xml:space="preserve">
     <value>The vehicle's weight capacity is required!</value>
+  </data>
+  <data name="Error_on_delete" xml:space="preserve">
+    <value>Error on delete.</value>
   </data>
   <data name="Error_on_upload" xml:space="preserve">
     <value>Error on upload: </value>

@@ -23,6 +23,9 @@ namespace Cargotruck.Client.Pages.Cargoes
         private string? searchString = "";
         string? filter = "";
         DateFilter? dateFilter = new();
+        private bool showDeleteConfirmationWindow = false;
+        private string? idForDelete;
+        private readonly string controller = "cargoes";
 
         protected override async Task OnInitializedAsync()
         {
@@ -40,15 +43,27 @@ namespace Cargotruck.Client.Pages.Cargoes
             StateHasChanged();
         }
 
-        async Task DeleteAsync(int Id)
+        void DeleteAsync(int Id)
         {
-            var data = Cargoes?.First(x => x.Id == Id);
-            if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {data?.TaskId} - {data?.Description} ({data?.Id})"))
+           idForDelete = Id.ToString();
+            showDeleteConfirmationWindow = true;
+        }
+
+        public void CloseDeleteConfirmationWindow()
+        {
+            idForDelete = null;
+            showDeleteConfirmationWindow = false;
+        }
+
+        public async Task RowIsDeleted(bool deleted)
+        {
+            if (deleted)
             {
-                await client.DeleteAsync($"api/cargoes/delete/{Id}");
-                var shouldreload = dataRows % ((currentPage == 1 ? currentPage : currentPage - 1) * pageSize);
-                if (shouldreload == 1 && dataRows > 0) { navigationManager.NavigateTo("/Cargoes", true); }
-                await OnInitializedAsync();
+                await ShowPageAsync();
+            }
+            else
+            {
+                throw new Exception(localizer["Error_on_delete"]);
             }
         }
 

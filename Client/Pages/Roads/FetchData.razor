@@ -218,7 +218,7 @@ else
                                     }
                                     <td class="@(MouseHoverClass.MouseOnHoverClass == item.Id.ToString() || MouseHoverClass.MouseOnclickClass == item.Id.ToString() ? "show" :"not-show") ">
                                         <a class="btn  fixed" href="Roads/edit/@item.Id"> <span data-title="@localizer["Edit"]" class="oi oi-pencil" aria-hidden="true"></span></a>
-                                        <button class="btn fixed2" @onclick="@(() => Delete(item.Id))"> <span data-title="@localizer["Delete"]" class="oi oi-trash" aria-hidden="true"></span></button>
+                                        <button class="btn fixed2" @onclick="@(() => DeleteAsync(item.Id))"> <span data-title="@localizer["Delete"]" class="oi oi-trash" aria-hidden="true"></span></button>
                                     </td>
                                 </tr>
                             }
@@ -240,4 +240,9 @@ else
             <GetByIdComponent GetById="@IdForGetById.ToString()" GetByIdType="@GetByIdType" OnSetToNull="SetToNull" />
         }
     </div>
+
+    @if (showDeleteConfirmationWindow && idForDelete != null)
+    {
+        <DeleteConfirmationWindow Id="@idForDelete" OnCloseDeleteConfirmationWindow="CloseDeleteConfirmationWindow" OnRenderParent="RowIsDeleted" Controller="@controller" />
+    }
 }

@@ -23,6 +23,9 @@ namespace Cargotruck.Client.Pages.Expenses
         private string? searchString = "";
         Cargotruck.Shared.Model.Type? filter;
         DateFilter dateFilter = new();
+        private bool showDeleteConfirmationWindow = false;
+        private string? idForDelete;
+        private readonly string controller = "expenses";
 
         protected override async Task OnInitializedAsync()
         {
@@ -41,15 +44,27 @@ namespace Cargotruck.Client.Pages.Expenses
             expenses = await client.GetFromJsonAsync<ExpenseDto[]>($"api/expenses/get?page={currentPage}&pageSize={pageSize}&sortOrder={sortOrder}&desc={desc}&searchString={searchString}&filter={filter}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}");            StateHasChanged();
         }
 
-        async Task Delete(int Id)
+        void DeleteAsync(int Id)
         {
-            var data = expenses?.First(x => x.Id == Id);
-            if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {data?.Type} - {data?.TypeId} - {data?.Date}"))
+           idForDelete = Id.ToString();
+            showDeleteConfirmationWindow = true;
+        }
+
+        public void CloseDeleteConfirmationWindow()
+        {
+            idForDelete = null;
+            showDeleteConfirmationWindow = false;
+        }
+
+        public async Task RowIsDeleted(bool deleted)
+        {
+            if (deleted)
             {
-                await client.DeleteAsync($"api/expenses/delete/{Id}");
-                var shouldreload = dataRows % ((currentPage == 1 ? currentPage : currentPage - 1) * pageSize);
-                if (shouldreload == 1 && dataRows > 0) { navigationManager.NavigateTo("/Expenses", true); }
-                await OnInitializedAsync();
+                await ShowPageAsync();
+            }
+            else
+            {
+                throw new Exception(localizer["Error_on_delete"]);
             }
         }
 

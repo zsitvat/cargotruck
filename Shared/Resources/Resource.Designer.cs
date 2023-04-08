@@ -583,11 +583,92 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rakomány törlése.
+        /// </summary>
+        public static string Delete_cargo {
+            get {
+                return ResourceManager.GetString("Delete_cargo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kiadás törlése.
+        /// </summary>
+        public static string Delete_Expense {
+            get {
+                return ResourceManager.GetString("Delete_Expense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kiadás törlése.
+        /// </summary>
+        public static string Delete_monthly_expense {
+            get {
+                return ResourceManager.GetString("Delete_monthly_expense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Szabály törlése.
+        /// </summary>
+        public static string Delete_Privacy {
+            get {
+                return ResourceManager.GetString("Delete_Privacy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Út törlése.
+        /// </summary>
+        public static string Delete_road {
+            get {
+                return ResourceManager.GetString("Delete_road", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Megbízás törlése.
+        /// </summary>
+        public static string Delete_task {
+            get {
+                return ResourceManager.GetString("Delete_task", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Megbízás törlése.
         /// </summary>
         public static string Delete_tasks {
             get {
                 return ResourceManager.GetString("Delete_tasks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jármű törlése.
+        /// </summary>
+        public static string Delete_truck {
+            get {
+                return ResourceManager.GetString("Delete_truck", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Felhasználó törlése.
+        /// </summary>
+        public static string Delete_user {
+            get {
+                return ResourceManager.GetString("Delete_user", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Raktár törlése.
+        /// </summary>
+        public static string Delete_warehouse {
+            get {
+                return ResourceManager.GetString("Delete_warehouse", resourceCulture);
             }
         }
         
@@ -930,6 +1011,15 @@ namespace Cargotruck.Shared.Resources {
         public static string Error_max_weight {
             get {
                 return ResourceManager.GetString("Error_max_weight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A törlés során probléma lépett fel..
+        /// </summary>
+        public static string Error_on_delete {
+            get {
+                return ResourceManager.GetString("Error_on_delete", resourceCulture);
             }
         }
         

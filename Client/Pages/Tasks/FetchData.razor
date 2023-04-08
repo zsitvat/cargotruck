@@ -298,4 +298,8 @@ else
         }
     </div>
 
+    @if (showDeleteConfirmationWindow && idForDelete != null)
+    {
+        <DeleteConfirmationWindow Id="@idForDelete" OnCloseDeleteConfirmationWindow="CloseDeleteConfirmationWindow" OnRenderParent="RowIsDeleted" Controller="@controller" />
+    }
 }

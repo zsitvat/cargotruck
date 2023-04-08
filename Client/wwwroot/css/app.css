@@ -1768,3 +1768,46 @@ input:checked + .slider:before {
 .darkmode .multiselect-list {
     background-color: rgba(255,255,255,0.1) !important;
 }
+
+
+.delete-modal {
+    position: absolute;
+    top: 45%;
+    margin: auto;
+    width: 25rem;
+    left: 50%;
+    margin-left: -150px;
+    margin-top: -150px;
+}
+
+.modal-content {
+    border: 3px solid grey;
+}
+
+.darkmode .modal-content {
+    background-color: #19222D;
+    color: #89A7B3;
+    border: 3px solid #243140;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(128,128,128,0.5);
+}
+
+.darkmode .modal-header, .darkmode .modal-footer {
+    border-color: #243140;
+}
+
+.darkmode .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(25,35,45,0.5);
+}

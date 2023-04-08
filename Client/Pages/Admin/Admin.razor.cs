@@ -17,6 +17,9 @@ namespace Cargotruck.Client.Pages.Admin
         int pageSize = 10;
         int dataRows;
         float maxPage;
+        private bool showDeleteConfirmationWindow = false;
+        private string? idForDelete;
+        private readonly string controller = "admin";
 
         protected override async Task OnInitializedAsync()
         {
@@ -35,13 +38,27 @@ namespace Cargotruck.Client.Pages.Admin
             StateHasChanged();
         }
 
-        async Task DeleteAsync(string Id)
+        void DeleteAsync(string Id)
         {
-            var u = Users?.First(x => x.Id == Id);
-            if (await js.InvokeAsync<bool>("confirm", $"{@localizer["Delete?"]} {u?.UserName} ({u?.Id})"))
+           idForDelete = Id;
+           showDeleteConfirmationWindow = true;
+        }
+
+        public void CloseDeleteConfirmationWindow()
+        {
+            idForDelete = null;
+            showDeleteConfirmationWindow = false;
+        }
+
+        public async Task RowIsDeleted(bool deleted)
+        {
+            if (deleted)
             {
-                await client.DeleteAsync($"api/admin/delete/{Id}");
-                await OnInitializedAsync();
+                await ShowPageAsync();
+            }
+            else
+            {
+                throw new Exception(localizer["Error_on_delete"]);
             }
         }
 
