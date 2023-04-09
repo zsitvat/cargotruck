@@ -5,10 +5,16 @@
 
 <Form ButtonText="Update" roads="@road" OnValidSubmit="@EditRoadAsync" TitleText="Edit_road" checkValidSubmit="@CheckValidSubmit"/>
 
+@if (window)
+{
+    <SavedWindow OnClose="CloseWindow" />
+}
+
 @code {
     [Parameter] public int Id { get; set; }
     bool isValidSubmit = true;
     RoadDto? road = new RoadDto();
+    bool window = false;
 
     protected async override Task OnParametersSetAsync()
     {
@@ -23,11 +29,19 @@
             {
                 road.UserId = authStateProvider.GetCurrentUserAsync().Result.Id;
             }
-            var text = @localizer["Succesfull_update"];
-            await http.PutAsJsonAsync("api/roads/put", road);
-            await js.InvokeVoidAsync("alert", $"{text}");
-            uriHelper.NavigateTo("/Roads");
+            var IsSaved = await http.PutAsJsonAsync("api/roads/put", road);
+
+            if (IsSaved.IsSuccessStatusCode)
+            {
+                window = true;
+            }
         }
+    }
+
+    public void CloseWindow()
+    {
+        window = false;
+        uriHelper.NavigateTo("/Roads");
     }
 
     protected override void OnInitialized()

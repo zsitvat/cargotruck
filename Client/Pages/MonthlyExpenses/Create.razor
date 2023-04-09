@@ -1,4 +1,4 @@
-﻿@page "/MonthlyExpense/create"
+﻿@page "/MonthlyExpenses/create"
 @inject HttpClient http
 @inject NavigationManager uriHelper
 @inject IJSRuntime js
@@ -9,7 +9,7 @@
     List<int>? selectedTaskId;
     List<int>? selectedExpenseId;
     MonthlyExpenseDto? monthly_expense = new MonthlyExpenseDto();
-    MonthlyExpense_task_expenseDto? Monthly_expenses_tasks_expenses = new MonthlyExpense_task_expenseDto();
+    MonthlyExpense_task_expenseDto Monthly_expenses_tasks_expenses = new MonthlyExpense_task_expenseDto();
 
     public void HandleChangeTask(List<int>? selected)
     {
@@ -27,7 +27,7 @@
         {
             monthly_expense.UserId = authStateProvider.GetCurrentUserAsync().Result.Id;
         }
-        var result = await http.PostAsJsonAsync("api/MonthlyExpense/post", monthly_expense);
+        var result = await http.PostAsJsonAsync("api/monthlyexpenses/post", monthly_expense);
         var IsFirstId = true;
 
         int lenght = 0;
@@ -47,7 +47,8 @@
         {
             lenght = 0;
         }
-        Monthly_expenses_tasks_expenses!.MonthlyExpenseId = Int32.Parse(result.Content.ReadAsStringAsync().Result.ToString());
+
+        Monthly_expenses_tasks_expenses.MonthlyExpenseId = Int32.Parse(result.Content.ReadAsStringAsync().Result.ToString());
         for (int i = 0; i < lenght; ++i)
         {
             Monthly_expenses_tasks_expenses.TaskId = null;
@@ -61,15 +62,16 @@
             {
                 Monthly_expenses_tasks_expenses.ExpenseId = selectedExpenseId[i];
             }
+
             //MonthlyExpense_task_expense.MonthlyExpense = monthly_expense;
             await http.PostAsJsonAsync($"api/monthlyexpenses/postconnectionids?first={IsFirstId}", Monthly_expenses_tasks_expenses);
         }
-        uriHelper.NavigateTo("/MonthlyExpense");
+        uriHelper.NavigateTo("/MonthlyExpenses");
     }
 
     protected override void OnInitialized()
     {
-        PageHistoryState.AddPageToHistory("/MonthlyExpense/create");
+        PageHistoryState.AddPageToHistory("/MonthlyExpenses/create");
         base.OnInitialized();
     }
 }

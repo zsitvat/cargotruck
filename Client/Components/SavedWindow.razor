@@ -1,0 +1,23 @@
+﻿<div class="overlay">
+    <div class="delete-modal justify-content-center">
+        <div class="modal-dialog">
+            <div class="modal-content modal-shadow">
+                <div class="modal-body">
+                     <h5 class="modal-title">@localizer["Succesfully_saved"]</h5>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" @onclick="@(()=> CloseWindow())">@localizer["OK"]</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public EventCallback OnClose { get; set; }
+
+    protected async Task CloseWindow()
+    {
+        await OnClose.InvokeAsync();
+    }
+}

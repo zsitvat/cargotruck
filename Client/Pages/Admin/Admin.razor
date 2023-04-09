@@ -115,7 +115,7 @@ else
                                             @if (showColumns[5])
                                             {
                                                 @if (Roles!=null) { 
-                                                    <td>@Roles[item.Id]</td>
+                                                    <td>@localizer[Roles[item.Id]]</td>
                                                 }
                                             }
                                             <td class="@(MouseHoverClass.MouseOnHoverClass == item.Id.ToString() || MouseHoverClass.MouseOnclickClass == item.Id.ToString() ? "show" :"not-show") ">

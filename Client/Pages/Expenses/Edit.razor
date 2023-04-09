@@ -3,13 +3,18 @@
 @inject NavigationManager uriHelper
 @inject IJSRuntime js
 
-
 <Form ButtonText="Update" expenses="@expense" OnValidSubmit="@EditExpenseAsync" TitleText="Edit_expense" checkValidSubmit="@CheckValidSubmit" />
+
+@if (window)
+{
+    <SavedWindow OnClose="CloseWindow" />
+}
 
 @code {
     [Parameter] public int Id { get; set; }
     bool isValidSubmit = true;
     ExpenseDto? expense = new ExpenseDto();
+    bool window = false;
 
     protected async override Task OnParametersSetAsync()
     {
@@ -25,11 +30,19 @@
             {
                 expense.UserId = authStateProvider.GetCurrentUserAsync().Result.Id;
             }
-            var text = @localizer["Succesfull_update"];
-            await http.PutAsJsonAsync("api/expenses/put", expense);
-            await js.InvokeVoidAsync("alert", $"{text}");
-            uriHelper.NavigateTo("/Expenses");
+            var IsSaved = await http.PutAsJsonAsync("api/expenses/put", expense);
+            
+            if (IsSaved.IsSuccessStatusCode)
+            {
+                window = true;
+            }
         }
+    }
+
+    public void CloseWindow()
+    {
+        window = false;
+        uriHelper.NavigateTo("/Expenses");
     }
 
     protected override void OnInitialized()

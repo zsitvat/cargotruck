@@ -3,7 +3,7 @@
 <h3>@localizer["Monthly_expenses"]</h3>
 <div class="form-group buttons">
     
-    <a class="btn btn-success me-4" href="/Monthly_expenses/create"><i class="oi oi-plus"></i> @localizer["Add"]</a>
+    <a class="btn btn-success me-4" href="/MonthlyExpenses/create"><i class="oi oi-plus"></i> @localizer["Add"]</a>
     <a data-title="@localizer["Settings"]" class="btn btn-light" @onclick="@(() => settings=!settings)"><i class="oi oi-cog"></i></a>
     
      <li class="d-inline-block" data-title="@localizer["export"]" @onclick="() => expandExportMenu = !expandExportMenu">
@@ -178,10 +178,14 @@ else
                                     {
                                         <td class="last-col">@item.Date</td>
                                     }
-                                    <td class="@(MouseHoverClass.MouseOnHoverClass == item.Id.ToString() || MouseHoverClass.MouseOnclickClass == item.Id.ToString() ? "show" :"not-show") ">
-                                        <a class="btn  fixed" href="Monthly_expenses/edit/@item.Id"> <span data-title="@localizer["Edit"]" class="oi oi-pencil" aria-hidden="true"></span></a>
-                                        <button class="btn fixed2" @onclick="@(() => DeleteAsync(item.Id))"> <span data-title="@localizer["Delete"]" class="oi oi-trash" aria-hidden="true"></span></button>
-                                    </td>
+
+                                    @if (item.UserId != "Generated")
+                                    {
+                                        <td class="@(MouseHoverClass.MouseOnHoverClass == item.Id.ToString() || MouseHoverClass.MouseOnclickClass == item.Id.ToString() ? "show" :"not-show") ">
+                                            <a class="btn  fixed" href="MonthlyExpenses/edit/@item.Id"> <span data-title="@localizer["Edit"]" class="oi oi-pencil" aria-hidden="true"></span></a>
+                                            <button class="btn fixed2" @onclick="@(() => DeleteAsync(item.Id))"> <span data-title="@localizer["Delete"]" class="oi oi-trash" aria-hidden="true"></span></button>
+                                        </td>
+                                    }
                                 </tr>
                             }
                         </tbody>

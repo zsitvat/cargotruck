@@ -6,9 +6,15 @@
 
 <Form ButtonText="Update" warehouses="@warehouse" OnValidSubmit="@EditWarehouseAsync" TitleText="Edit_warehouse"/>
 
+@if (window)
+{
+    <SavedWindow OnClose="CloseWindow" />
+}
+
 @code {
     [Parameter] public int Id { get; set; }
     WarehouseDto? warehouse = new WarehouseDto();
+    bool window = false;
 
     protected async override Task OnParametersSetAsync()
     {
@@ -21,9 +27,16 @@
         {
             warehouse.UserId = authStateProvider.GetCurrentUserAsync().Result.Id;
         }
-        var text = @localizer["Succesfull_update"];
-        await http.PutAsJsonAsync("api/warehouses/put", warehouse);
-        await js.InvokeVoidAsync("alert", $"{text}");
+        var IsSaved = await http.PutAsJsonAsync("api/warehouses/put", warehouse);
+        if (IsSaved.IsSuccessStatusCode)
+        {
+            window = true;
+        }
+    }
+
+    public void CloseWindow()
+    {
+        window = false;
         uriHelper.NavigateTo("/Warehouses");
     }
 

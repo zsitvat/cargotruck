@@ -195,6 +195,7 @@ namespace Cargotruck.Server.Repositories
         {
             var task = _context.Tasks.FirstOrDefault(a => a.Id == data.TaskId);
             data.Task = task!;
+
             _context.Entry(data).State = EntityState.Modified;
 
             if (task != null)
@@ -203,7 +204,7 @@ namespace Cargotruck.Server.Repositories
                 task.Cargo = data;
                 _context.Entry(task).State = EntityState.Modified;
 
-                var idsToDelete = await _context.Tasks.Where(d => d.CargoId == data.Id).ToListAsync();
+                var idsToDelete = await _context.Tasks.Where(d => d.CargoId == data.Id && d.Id != task.Id).ToListAsync();
                 foreach (var row in idsToDelete)
                 {
                     row.CargoId = null;

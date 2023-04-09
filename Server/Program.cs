@@ -61,6 +61,17 @@ var configuration = new MapperConfiguration(cfg =>
     cfg.CreateMap<DeliveryTask, DeliveryTaskDto>();
     cfg.CreateMap<Truck, TruckDto>();
     cfg.CreateMap<Warehouse, WarehouseDto>();
+    cfg.CreateMap<User, UserDto>()
+        .ForMember(entity => entity.PasswordHash, conf => conf.Ignore())
+        .ForMember(entity => entity.PhoneNumberConfirmed, conf => conf.Ignore())
+        .ForMember(entity => entity.AccessFailedCount, conf => conf.Ignore())
+        .ForMember(entity => entity.EmailConfirmed, conf => conf.Ignore())
+        .ForMember(entity => entity.ConcurrencyStamp, conf => conf.Ignore())
+        .ForMember(entity => entity.SecurityStamp, conf => conf.Ignore())
+        .ForMember(entity => entity.LockoutEnabled, conf => conf.Ignore())
+        .ForMember(entity => entity.LockoutEnd, conf => conf.Ignore())
+        .ForMember(entity => entity.TwoFactorEnabled, conf => conf.Ignore());
+
 
     //Dto to entity
     cfg.CreateMap<CargoDto, Cargo>().ForMember(entity => entity.Task, conf => conf.Ignore());
@@ -74,6 +85,16 @@ var configuration = new MapperConfiguration(cfg =>
     cfg.CreateMap<DeliveryTaskDto, DeliveryTask>().ForMember(entity => entity.Cargo, conf => conf.Ignore());
     cfg.CreateMap<TruckDto, Truck>();
     cfg.CreateMap<WarehouseDto, Warehouse>();
+    cfg.CreateMap<UserDto, User>()
+        .ForMember(entity => entity.PasswordHash, conf => conf.Ignore())
+        .ForMember(entity => entity.PhoneNumberConfirmed, conf => conf.Ignore())
+        .ForMember(entity => entity.AccessFailedCount, conf => conf.Ignore())
+        .ForMember(entity => entity.EmailConfirmed, conf => conf.Ignore())
+        .ForMember(entity => entity.ConcurrencyStamp, conf => conf.Ignore())
+        .ForMember(entity => entity.SecurityStamp, conf => conf.Ignore())
+        .ForMember(entity => entity.LockoutEnabled, conf => conf.Ignore())
+        .ForMember(entity => entity.LockoutEnd, conf => conf.Ignore())
+        .ForMember(entity => entity.TwoFactorEnabled, conf => conf.Ignore());
 });
 var mapper = configuration.CreateMapper();
 builder.Services.AddSingleton(mapper);

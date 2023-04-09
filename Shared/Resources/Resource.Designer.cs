@@ -1942,6 +1942,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rendben.
+        /// </summary>
+        public static string OK {
+            get {
+                return ResourceManager.GetString("OK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Úton.
         /// </summary>
         public static string on_road {
@@ -2451,6 +2460,15 @@ namespace Cargotruck.Shared.Resources {
         public static string Succesfull_update {
             get {
                 return ResourceManager.GetString("Succesfull_update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mentés sikeresen megtörtént!.
+        /// </summary>
+        public static string Succesfully_saved {
+            get {
+                return ResourceManager.GetString("Succesfully_saved", resourceCulture);
             }
         }
         

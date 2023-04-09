@@ -1,4 +1,4 @@
-﻿@page "/MonthlyExpense/edit/{Id:int}"
+﻿@page "/MonthlyExpenses/edit/{Id:int}"
 @inject HttpClient http
 @inject NavigationManager uriHelper
 @inject IJSRuntime js
@@ -6,12 +6,18 @@
 
 <Form ButtonText="Update" OnHandleChangeTask="@HandleChangeTask" OnHandleChangeExpense="@HandleChangeExpense" Monthly_expenses="@monthly_expense" OnValidSubmit="@EditMonthlyExpenseAsync" TitleText="Edit_monthly_expense" />
 
+@if (window)
+{
+    <SavedWindow OnClose="CloseWindow" />
+}
+
 @code {
     [Parameter] public int Id { get; set; }
     List<int>? selectedTaskId;
     List<int>? selectedExpenseId;
     MonthlyExpenseDto? monthly_expense = new MonthlyExpenseDto();
     MonthlyExpense_task_expenseDto? Monthly_expenses_tasks_expenses = new MonthlyExpense_task_expenseDto();
+    bool window = false;
 
     public void HandleChangeTask(List<int>? selected)
     {
@@ -25,7 +31,7 @@
 
     protected async override Task OnParametersSetAsync()
     {
-        monthly_expense = await http.GetFromJsonAsync<MonthlyExpenseDto>($"api/MonthlyExpense/getById/{Id}");
+        monthly_expense = await http.GetFromJsonAsync<MonthlyExpenseDto>($"api/monthlyexpenses/getById/{Id}");
     }
 
     async Task EditMonthlyExpenseAsync()
@@ -34,9 +40,8 @@
         {
             monthly_expense.UserId = authStateProvider.GetCurrentUserAsync().Result.Id;
         }
-        var text = @localizer["Succesfull_update"];
         var IsFirstId = true;
-        await http.PutAsJsonAsync("api/monthlyexpenses/put", monthly_expense);
+        var IsSaved = await http.PutAsJsonAsync("api/monthlyexpenses/put", monthly_expense);
 
         int lenght = 0;
         if (selectedTaskId != null && selectedExpenseId != null)
@@ -75,13 +80,21 @@
             await http.PostAsJsonAsync($"api/monthlyexpenses/postconnectionids?first={IsFirstId}", Monthly_expenses_tasks_expenses);
         }
 
-        await js.InvokeVoidAsync("alert", $"{text}");
-        uriHelper.NavigateTo("/MonthlyExpense");
+        if (IsSaved.IsSuccessStatusCode)
+        {
+            window = true;
+        }
+    }
+
+    public void CloseWindow()
+    {
+        window = false;
+        uriHelper.NavigateTo("/MonthlyExpenses");
     }
 
     protected override void OnInitialized()
     {
-        PageHistoryState.AddPageToHistory("/MonthlyExpense/edit/{Id:int}");
+        PageHistoryState.AddPageToHistory("/MonthlyExpenses/edit/{Id:int}");
         base.OnInitialized();
     }
 }

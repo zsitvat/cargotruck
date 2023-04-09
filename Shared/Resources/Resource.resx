@@ -744,6 +744,9 @@
   <data name="NullReferenceException" xml:space="preserve">
     <value>Null hiba történt.</value>
   </data>
+  <data name="OK" xml:space="preserve">
+    <value>Rendben</value>
+  </data>
   <data name="OnlyPositive" xml:space="preserve">
     <value>Nem lehet negatív szám!</value>
   </data>
@@ -911,6 +914,9 @@
   </data>
   <data name="Storage_time" xml:space="preserve">
     <value>Raktározás ideje</value>
+  </data>
+  <data name="Succesfully_saved" xml:space="preserve">
+    <value>Mentés sikeresen megtörtént!</value>
   </data>
   <data name="Succesfull_update" xml:space="preserve">
     <value>Sikeresen frissítve!</value>

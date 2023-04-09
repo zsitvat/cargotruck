@@ -5,10 +5,15 @@
 
 <Form ButtonText="Update" tasks="@task" OnValidSubmit="@EditTasksAsync" TitleText="Edit_task" checkValidSubmit="@CheckValidSubmit" />
 
+@if(window){
+    <SavedWindow  OnClose="CloseWindow"/>
+}
+
 @code {
     [Parameter] public int Id { get; set; }
     bool isValidSubmit = true;
     DeliveryTaskDto? task = new DeliveryTaskDto();
+    bool window = false;
 
     protected async override Task OnParametersSetAsync()
     {
@@ -23,11 +28,19 @@
             {
                 task.UserId = authStateProvider.GetCurrentUserAsync().Result.Id;
             }
-            var text = @localizer["Succesfull_update"];
-            await http.PutAsJsonAsync("api/tasks/put", task);
-            await js.InvokeVoidAsync("alert", $"{text}");
-            uriHelper.NavigateTo("/Tasks");
+            var IsSaved = await http.PutAsJsonAsync("api/tasks/put", task);
+
+            if (IsSaved.IsSuccessStatusCode)
+            {
+                window = true;
+            }
         }
+    }
+
+    public void CloseWindow()
+    {
+        window = false;
+        uriHelper.NavigateTo("/Tasks");
     }
 
     protected override void OnInitialized()

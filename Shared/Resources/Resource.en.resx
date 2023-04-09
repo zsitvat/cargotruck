@@ -741,6 +741,9 @@
   <data name="NullReferenceException" xml:space="preserve">
     <value>The error is generated from referencing a null object.</value>
   </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
   <data name="OnlyPositive" xml:space="preserve">
     <value>Only positive number allowed.</value>
   </data>
@@ -917,6 +920,9 @@
   </data>
   <data name="String2" xml:space="preserve">
     <value />
+  </data>
+  <data name="Succesfully_saved" xml:space="preserve">
+    <value>It's succesfully saved!</value>
   </data>
   <data name="Succesfull_update" xml:space="preserve">
     <value>Update successful!</value>

@@ -46,9 +46,11 @@ namespace Cargotruck.Server.Services
         {
             return await _monthlyExpenseRepository.CountAsync();
         }
-        public async Task PostAsync(MonthlyExpenseDto task)
+        public async Task<int> PostAsync(MonthlyExpenseDto task)
         {
-            await _monthlyExpenseRepository.PostAsync(_mapper.Map<MonthlyExpense>(task));
+            var result = await _monthlyExpenseRepository.PostAsync(_mapper.Map<MonthlyExpense>(task));
+
+            return result;
         }
         public async Task PutAsync(MonthlyExpenseDto task)
         {

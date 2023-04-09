@@ -6,10 +6,16 @@
 
 <Form ButtonText="Update" trucks="@truck" OnValidSubmit="@EditCargoAsync" TitleText="Edit_truck" checkValidSubmit="@CheckValidSubmit" />
 
+@if (window)
+{
+    <SavedWindow OnClose="CloseWindow" />
+}
+
 @code {
     [Parameter] public int Id { get; set; }
     TruckDto? truck = new TruckDto();
     bool isValidSubmit = true;
+    bool window = false;
 
     protected async override Task OnParametersSetAsync()
     {
@@ -24,12 +30,20 @@
             {
                 truck.UserId = authStateProvider.GetCurrentUserAsync().Result.Id;
             }
-            var text = @localizer["Succesfull_update"];
-            await http.PutAsJsonAsync("api/trucks/put", truck);
-            await js.InvokeVoidAsync("alert", $"{text}");
-            uriHelper.NavigateTo("/Trucks");
+            var IsSaved = await http.PutAsJsonAsync("api/trucks/put", truck);
+           
+            if (IsSaved.IsSuccessStatusCode)
+            {
+                window = true;
+            }
         }
 
+    }
+
+    public void CloseWindow()
+    {
+        window = false;
+        uriHelper.NavigateTo("/Trucks");
     }
 
     protected override void OnInitialized()

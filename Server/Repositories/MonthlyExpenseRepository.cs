@@ -120,11 +120,13 @@ namespace Cargotruck.Server.Repositories
         {
             return await _context.MonthlyExpenses.CountAsync();
         }
-        public async Task PostAsync(MonthlyExpense data)
+        public async Task<int> PostAsync(MonthlyExpense data)
         {
             data.Profit = (data.Earning != null ? data.Earning : 0) - (data.Expense != null ? data.Expense : 0);
             _context?.Add(data);
             await _context!.SaveChangesAsync();
+
+            return data.Id;
         }
         public async Task PutAsync(MonthlyExpense data)
         {

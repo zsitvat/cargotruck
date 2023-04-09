@@ -12,7 +12,7 @@ namespace Cargotruck.Server.Services.Interfaces
         Task<int[]> GetChartDataAsync();
         Task<int> PageCountAsync(string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate);
         Task<int> CountAsync();
-        Task PostAsync(MonthlyExpenseDto data);
+        Task<int> PostAsync(MonthlyExpenseDto data);
         Task PutAsync(MonthlyExpenseDto data);
         Task<bool> DeleteAsync(int id);
         Task CheckDataAsync();

@@ -56,9 +56,10 @@ namespace Cargotruck.Server.Controllers
         }
 
         [HttpPost]
-        public async Task PostAsync(MonthlyExpenseDto task)
+        public async Task<int> PostAsync(MonthlyExpenseDto task)
         {
-            await _monthlyExpenseService.PostAsync(task);
+            var result = await _monthlyExpenseService.PostAsync(task);
+            return result;
         }
 
         [HttpPut]
