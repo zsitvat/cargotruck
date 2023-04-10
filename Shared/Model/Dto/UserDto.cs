@@ -3,23 +3,13 @@ using System.Text.Json.Serialization;
 
 namespace Cargotruck.Shared.Model.Dto
 {
-    public class UserDto : IdentityUser
+    public class UserDto
     {
-        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
-        public override string PasswordHash { get; set; } = string.Empty;
-        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
-        public override string SecurityStamp { get; set; } = string.Empty;
-        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
-        public override string ConcurrencyStamp { get; set; } = string.Empty;
-        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
-        public override bool PhoneNumberConfirmed { get; set; } = false;
-        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
-        public override bool TwoFactorEnabled { get; set; } = false;
-        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
-        public override DateTimeOffset? LockoutEnd { get; set; } = null;
-        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
-        public override bool LockoutEnabled { get; set; } = false;
-        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
-        public override int AccessFailedCount { get; set; } = 0;
+        public string Id { get; set; } = string.Empty;
+        public string UserName { get; set; } = string.Empty;
+        public string NormalizedUserName { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string NormalizedEmail { get; set; } = string.Empty;
+        public string PhoneNumber { get; set; } = string.Empty;
     }
 }

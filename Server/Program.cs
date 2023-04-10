@@ -61,16 +61,7 @@ var configuration = new MapperConfiguration(cfg =>
     cfg.CreateMap<DeliveryTask, DeliveryTaskDto>();
     cfg.CreateMap<Truck, TruckDto>();
     cfg.CreateMap<Warehouse, WarehouseDto>();
-    cfg.CreateMap<User, UserDto>()
-        .ForMember(entity => entity.PasswordHash, conf => conf.Ignore())
-        .ForMember(entity => entity.PhoneNumberConfirmed, conf => conf.Ignore())
-        .ForMember(entity => entity.AccessFailedCount, conf => conf.Ignore())
-        .ForMember(entity => entity.EmailConfirmed, conf => conf.Ignore())
-        .ForMember(entity => entity.ConcurrencyStamp, conf => conf.Ignore())
-        .ForMember(entity => entity.SecurityStamp, conf => conf.Ignore())
-        .ForMember(entity => entity.LockoutEnabled, conf => conf.Ignore())
-        .ForMember(entity => entity.LockoutEnd, conf => conf.Ignore())
-        .ForMember(entity => entity.TwoFactorEnabled, conf => conf.Ignore());
+    cfg.CreateMap<User, UserDto>();
 
 
     //Dto to entity

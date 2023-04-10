@@ -105,7 +105,7 @@ namespace Cargotruck.Server.Controllers
         [HttpGet]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<Dictionary<string, string>?>> RolesAsync()
-{
+        {
             var Roles = await _context.Roles.ToDictionaryAsync(r => r.Id, r => r.Name);
             var UsersRoles = await _context.UserRoles.ToDictionaryAsync(r => r.UserId, r => Roles[r.RoleId]);
             

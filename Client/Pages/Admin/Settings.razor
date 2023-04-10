@@ -56,7 +56,7 @@
                 <div>
                     <label>
                         @localizer["PageSize"]:
-                        <input class="number-input" value="@pageSize" @oninput="@InputChangeAsync" type="number" />   
+                        <input class="number-input" value="@pageSize" @oninput="@InputChangeAsync" type="number" disabled="@(dataRows<=1)" />
                     </label>
                 </div>
             </div>
@@ -79,6 +79,7 @@
     [Parameter] public List<bool> showColumns { get; set; } = new();
     [Parameter] public bool settings { get; set; }
     [Parameter] public int pageSize { get; set; }
+    [Parameter] public int dataRows { get; set; }
     [Parameter] public  EventCallback  OnSettingsChanged { get; set; }
     [Parameter] public  EventCallback  OnSettingsClosed { get; set; }
     [Parameter] public EventCallback<int> OnInputChanged { get; set; }
@@ -87,6 +88,7 @@
     protected override async Task OnInitializedAsync()
     {
         waitTimeSetting = (await client.GetFromJsonAsync<Cargotruck.Shared.Model.Setting>("api/settings/getwaittime"));
+        dataRows = await client.GetFromJsonAsync<int>("api/admin/count");
     }
 
     protected async Task SettingsChangedAsync()

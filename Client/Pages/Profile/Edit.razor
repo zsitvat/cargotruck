@@ -98,6 +98,8 @@
                 navigationManager.NavigateTo("/Admin",true);
             }
             else{
+                var roles = await  client.GetFromJsonAsync<Dictionary<string, string>?>("api/admin/roles");
+                updateRequest.Role = roles?.FirstOrDefault(x=>x.Key == User?.Id).Value;
                 await authStateProvider.UpdateAsync(updateRequest);
                 navigationManager.NavigateTo("/Profile", true);
             }
