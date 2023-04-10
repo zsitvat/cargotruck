@@ -22,7 +22,7 @@ namespace Cargotruck.Client.Pages.Expenses
         private bool desc = true;
         private string? searchString = "";
         Cargotruck.Shared.Model.Type? filter;
-        DateFilter dateFilter = new();
+        readonly DateFilter dateFilter = new();
         private bool showDeleteConfirmationWindow = false;
         private string? idForDelete;
         private readonly string controller = "expenses";

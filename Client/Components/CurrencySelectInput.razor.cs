@@ -10,7 +10,7 @@ namespace Cargotruck.Client.Components
         [Parameter]
         public EventCallback OnCurrencyChanged { get; set; }
 
-        private List<string> items = new()
+        private readonly List<string> items = new()
         {
             ("HUF"),
             ("EUR"),

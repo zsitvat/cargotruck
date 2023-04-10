@@ -22,7 +22,7 @@ namespace Cargotruck.Client.Pages.Cargoes
         private bool desc = true;
         private string? searchString = "";
         string? filter = "";
-        DateFilter? dateFilter = new();
+        readonly DateFilter? dateFilter = new();
         private bool showDeleteConfirmationWindow = false;
         private string? idForDelete;
         private readonly string controller = "cargoes";

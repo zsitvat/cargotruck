@@ -22,7 +22,7 @@ namespace Cargotruck.Client.Pages.Warehouses
         private string sortOrder = "Date";
         private bool desc = true;
         private string? searchString = "";
-        DateFilter? dateFilter = new();
+        readonly DateFilter? dateFilter = new();
         private bool showDeleteConfirmationWindow = false;
         private string? idForDelete;
         private readonly string controller = "warehouses";

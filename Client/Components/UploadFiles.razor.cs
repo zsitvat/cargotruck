@@ -17,9 +17,9 @@ namespace Cargotruck.Client.Components
         public EventCallback StateChanged { get; set; }
 
         string? error = "";
-        private List<File> files = new();
+        private readonly List<File> files = new();
         private List<UploadResult> uploadResults = new();
-        private int maxAllowedFiles = 1;
+        private readonly int maxAllowedFiles = 1;
         private async Task OnInputFileChangeAsync(InputFileChangeEventArgs e)
         {
             long maxFileSize = 1024 * 5000;

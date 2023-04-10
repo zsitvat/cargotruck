@@ -53,7 +53,7 @@ namespace Cargotruck.Client.Pages
         Task<AuthenticationState>? AuthenticationState { get; set; }
 
         bool greetings = true;
-        Dictionary<string, int?> counts = new()
+        readonly Dictionary<string, int?> counts = new()
         {
             {
                 "numberOfTasksUnFinished",

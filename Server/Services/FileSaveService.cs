@@ -68,7 +68,7 @@ namespace Cargotruck.Server.Services
                             //file upload part
                             if (id == "page")
                             {
-                                rootpath = env.ContentRootPath + "";
+                                rootpath = env.ContentRootPath;
                                 var extension = Path.GetExtension(uploadResult.FileName);
                                 trustedFileNameForFileStorage = Path.GetRandomFileName();
                                 trustedFileNameForFileStorage = Path.ChangeExtension(trustedFileNameForFileStorage, extension);
@@ -87,8 +87,10 @@ namespace Cargotruck.Server.Services
                             {
                                 return _localizer["Not_an_image"].Value + " " + uploadResult.FileName;
                             }
-                            var image = folder + "/" + trustedFileNameForFileStorage;
+
+                            var image = Path.Combine(folder, trustedFileNameForFileStorage);
                             path = Path.Combine(rootpath, folder, trustedFileNameForFileStorage);
+
                             await using FileStream fs = new(path, FileMode.Create);
                             await file.CopyToAsync(fs);
 
@@ -98,7 +100,7 @@ namespace Cargotruck.Server.Services
                             //image upload part
                             if (id != "page")
                             {
-                                Dictionary<string, string> claims = new();
+                                
                                 User? user = new();
                                 string img = "";
 
@@ -110,20 +112,23 @@ namespace Cargotruck.Server.Services
                                     {
 
                                         user = _context.Users.FirstOrDefault(a => a.UserName == _signInManager.Context.User.Identity!.Name);
-
-                                        claims = _context.UserClaims.ToDictionary(c => c.ClaimType, c => c.ClaimValue);
-                                        img = claims["img"];
+                                        if (user != null)
+                                        {
+                                            img = _context.UserClaims.FirstOrDefault(c => c.UserId == user.Id && c.ClaimType == "img")?.ClaimValue ?? "";
+                                        }
                                     }
                                     else
                                     {
                                         user = _context.Users.FirstOrDefault(a => a.Id == id);
-                                        claims = _context.UserClaims.ToDictionary(c => c.UserId, c => c.ClaimValue);
-                                        img = claims[id];
+                                        if (user != null)
+                                        {
+                                            img = _context.UserClaims.FirstOrDefault(c => c.UserId == id && c.ClaimType == "img")?.ClaimValue ?? "";
+                                        }
                                     }
 
                                     await _userManager.ReplaceClaimAsync(user!, new Claim("img", img), new Claim("img", image));
 
-                                    var deleteold = rootpath + img;
+                                    var deleteold = Path.Combine(rootpath, img);
 
                                     //delete the old one
                                     if (System.IO.File.Exists(deleteold) && deleteold.Contains("/profiles/"))
@@ -155,5 +160,5 @@ namespace Cargotruck.Server.Services
 
             return new CreatedResult(path!, uploadResults);
         }
-}
+    }
 }

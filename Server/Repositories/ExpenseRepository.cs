@@ -491,7 +491,7 @@ namespace Cargotruck.Server.Repositories
                 txt.Write(expense.DriverSpending + (expense.DriverSpending != null ? " HUF" : ifNull) + separator);
                 txt.Write(expense.DriverSalary + (expense.DriverSalary != null ? " HUF" : ifNull) + separator);
                 txt.Write(expense.RepairCost + (expense.RepairCost != null ? " HUF" : ifNull) + separator);
-                txt.Write((expense.RepairDescription != null ? expense.RepairDescription : ifNull) + separator);
+                txt.Write((expense.RepairDescription ?? ifNull) + separator);
                 txt.Write(expense.CostOfStorage + (expense.CostOfStorage != null ? " HUF" : ifNull) + separator);
                 txt.Write(expense.Other + (expense.Other != null ? " HUF" : ifNull) + separator);
                 txt.Write(expense.Other + (expense.TotalAmount != null ? " HUF" : ifNull) + separator);
