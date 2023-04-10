@@ -102,6 +102,7 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
 
 //Services
 builder.Services.AddSingleton<IColumnNamesService, ColumnNamesService>();
+builder.Services.AddScoped<IFileSaveService, FileSaveService>();
 builder.Services.AddScoped<ITaskService, TaskService>();
 builder.Services.AddScoped<IWarehouseService, WarehouseService>();
 builder.Services.AddScoped<ITruckService, TruckService>();
