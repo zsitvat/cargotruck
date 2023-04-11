@@ -391,12 +391,20 @@
         z-index: 1000;
     }
 
-        .mobile-top-row-items .culture-selector {
-            position: absolute;
-            top: -0.8rem;
-            right: -4.5rem;
-            margin-left: 0;
-        }
+    .mobile-top-row-items .culture-selector {
+        position: absolute;
+        top: -0.8rem;
+        right: -4.5rem;
+        margin-left: 0;
+    }
+
+    .delete-modal{
+        left:40%;
+    }
+
+    .overlay {
+        z-index: 1000;
+    }
 
     .content h3 {
         text-align: center;
@@ -628,9 +636,9 @@
         width: 85%;
     }
 
-        .privacy-form input {
-            min-width: 90% !important;
-        }
+    .privacy-form input {
+        min-width: 90% !important;
+    }
 
     .hideandshow-cards p, .hideandshow-cards b, .hideandshow-cards, .hideandshow-cards h2 {
         font-size: 90%;
@@ -671,13 +679,12 @@
 
     .card {
         min-width: 20rem;
-        max-width: 20rem;
         min-height: fit-content;
     }
 
-        .card:last-child {
-            margin-bottom: 1rem;
-        }
+    .card:last-child {
+        margin-bottom: 1rem;
+    }
 
     #inputimg {
         margin-left: -2%;

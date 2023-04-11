@@ -40,6 +40,7 @@ namespace Cargotruck.Client.Components
                 Options = new BarOptions
                 {
                     Responsive = true,
+                    MaintainAspectRatio = false,
                     Title = new OptionsTitle
                     {
                         Display = true,
@@ -135,6 +136,7 @@ namespace Cargotruck.Client.Components
             {
                 Options = new BarOptions
                 {
+                    MaintainAspectRatio = false,
                     Responsive = true,
                     Title = new OptionsTitle
                     {
@@ -252,6 +254,7 @@ namespace Cargotruck.Client.Components
             {
                 Options = new LineOptions
                 {
+                    MaintainAspectRatio = false,
                     Responsive = true,
                     Title = new OptionsTitle
                     {
@@ -361,6 +364,7 @@ namespace Cargotruck.Client.Components
             {
                 Options = new LineOptions
                 {
+                    MaintainAspectRatio = false,
                     Responsive = true,
                     Title = new OptionsTitle
                     {

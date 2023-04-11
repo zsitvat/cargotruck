@@ -16,26 +16,16 @@ namespace Cargotruck.Client.Services
         public async Task ExportAsync(string page, string documentExtension, DateFilter? dateFilter, HttpClient? client, IJSRuntime? js)
         {
             //get base64 string from web api call
-            string action;
-            switch (documentExtension)
+            string action = documentExtension switch
             {
-                case "xlsx":
-                    action = "exporttoexcel";
-                    break;
-                case "txt":
-                    action = "exporttocsv";
-                    break;
-                case "csv":
-                    action = "exporttocsv";
-                    break;
-                case "pdf":
-                    action = "exporttopdf";
-                    break;
-                default:
-                    return;
-            }
+                "xlsx" => "exporttoexcel",
+                "txt" => "exporttocsv",
+                "csv" => "exporttocsv",
+                "pdf" => "exporttopdf",
+                _ => throw new ArgumentException(Localizer!["Invalid_document"])
+            };
 
-            var Response = await client!.GetAsync($"api/{page.ToLower()}/{action}?lang={CultureInfo.CurrentCulture.Name}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}&isTextDocument={(documentExtension == "txt" ? true : false)}");
+        var Response = await client!.GetAsync($"api/{page.ToLower()}/{action}?lang={CultureInfo.CurrentCulture.Name}&dateFilterStartDate={dateFilter?.StartDate}&dateFilterEndDate={dateFilter?.EndDate}&isTextDocument={(documentExtension == "txt" ? true : false)}");
 
             if (Response.IsSuccessStatusCode)
             {

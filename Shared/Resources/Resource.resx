@@ -639,6 +639,9 @@
   <data name="InvalidCastException" xml:space="preserve">
     <value>Típus váltás nem lehetséges.</value>
   </data>
+  <data name="Invalid_document" xml:space="preserve">
+    <value>Nem megfelelő dokumentum kiterjesztés.</value>
+  </data>
   <data name="InWarehouse" xml:space="preserve">
     <value>Raktárban</value>
   </data>

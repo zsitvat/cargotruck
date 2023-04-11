@@ -1618,6 +1618,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nem megfelelő dokumentum kiterjesztés..
+        /// </summary>
+        public static string Invalid_document {
+            get {
+                return ResourceManager.GetString("Invalid_document", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Típus váltás nem lehetséges..
         /// </summary>
         public static string InvalidCastException {

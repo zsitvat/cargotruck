@@ -6,7 +6,7 @@
         DateTime GetApiLastRequestDate();
         string GetCurrencyType();
         Task<DateTime> GetNextApiRequestDate(HttpClient client);
-        Task<string> RequestRatesFromApiAsync(HttpClient client);
+        Task<string?> RequestRatesFromApiAsync(HttpClient client);
         Task<int> GetWaitTimeAsync(HttpClient client);
         void SetApiLastRequestDate(DateTime newDate);
         void SetCurrencyType(string newCurrency);

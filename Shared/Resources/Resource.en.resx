@@ -636,6 +636,9 @@
   <data name="InvalidCastException" xml:space="preserve">
     <value>Error is generated during typecasting.</value>
   </data>
+  <data name="Invalid_document" xml:space="preserve">
+    <value>Invalid document extension.</value>
+  </data>
   <data name="InWarehouse" xml:space="preserve">
     <value>In warehouse</value>
   </data>
