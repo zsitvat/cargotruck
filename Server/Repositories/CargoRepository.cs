@@ -33,6 +33,7 @@ namespace Cargotruck.Server.Repositories
             _errorHandler = errorHandler;
         }
 
+        //this method gets the data from db and filter it
         private async Task<List<Cargo>> GetDataAsync(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var data = await _context.Cargoes.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
@@ -110,6 +111,8 @@ namespace Cargotruck.Server.Repositories
         {
             return await _context.Cargoes.FirstOrDefaultAsync(a => a.Id == id);
         }
+
+        //gets the data of the charts
         public async Task<int[]> GetChartDataAsync()
         {
             var data = await _context.Cargoes.ToListAsync();

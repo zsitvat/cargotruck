@@ -35,7 +35,7 @@ namespace Cargotruck.Server.Repositories
             return await _context.Settings.FirstOrDefaultAsync(a => a.Id == id);
         }
 
-      
+        // gets the wait time for the next currency exchange rate request
         public async Task<Setting> GetWaitTimeAsync()
 {
             var waitTime = await _context.Settings.FirstOrDefaultAsync(x => x.SettingName == "CurrencyExchangeWaitTime");

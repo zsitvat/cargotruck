@@ -29,10 +29,12 @@ namespace Cargotruck.Server.Repositories
 
             return  u.Skip((page - 1) * pageSize).Take(pageSize).ToList();
         }
+
         public async Task<User?> GetAsync(string id)
         {
             return await _context.Users.FirstOrDefaultAsync(a => a.Id == id);
         }
+
         public async Task<bool> DeleteAsync(string id)
         {
             var userForDelete = _context.Users.FirstOrDefault(x => x.Id == id);
@@ -45,6 +47,8 @@ namespace Cargotruck.Server.Repositories
 
             return false;
         }
+
+        //counts how many page will be displayed
         public async Task<int> PageCountAsync(string? filter)
         {
             var u = await _context.Users.ToListAsync();
@@ -59,18 +63,24 @@ namespace Cargotruck.Server.Repositories
             
             return  u.Count;
         }
+
+        //counts the users
         public async Task<int> CountAsync()
         {
             return await _context.Users.CountAsync();
         }
+
+        //counts the user logins
         public async Task<int> LoginsCountAsync()
         {
             return await _context.Logins.CountAsync();
         }
+
         public async Task<Dictionary<string, string>?> ClaimsAsync()
         {
             return await _context.UserClaims.ToDictionaryAsync(c => c.ClaimType + "/" + c.UserId, c => c.ClaimValue);
         }
+
         public async Task<Dictionary<string, string>?> RolesAsync()
         {
             var Roles = await _context.Roles.ToDictionaryAsync(r => r.Id, r => r.Name);

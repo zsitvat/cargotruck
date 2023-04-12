@@ -5,6 +5,7 @@ using Cargotruck.Shared.Model;
 using Cargotruck.Shared.Model.Dto;
 using Cargotruck.Shared.Resources;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Localization;
 using System.Globalization;
 using System.Security.Claims;
@@ -42,6 +43,7 @@ namespace Cargotruck.Server.Repositories
                 await _userManager.AddToRoleAsync(admin, "Admin");
                 await _userManager.AddClaimAsync(admin, new Claim("img", "img/profile.jpg"));
             }
+            //save client language
             CultureInfo.CurrentUICulture = lang;
             var password_error = _localizer["Password_error"].Value;
             var user = await _userManager.FindByNameAsync(request.UserName);
@@ -68,13 +70,16 @@ namespace Cargotruck.Server.Repositories
 
             return null;
         }
+
         public async Task<string?> RegisterAsync(RegisterRequest parameters)
         {
+            //from request create user object
             User user = new();
             user.UserName = parameters.UserName;
             user.PhoneNumber = parameters.PhoneNumber ?? user.PhoneNumber;
             user.Email = parameters.Email ?? user.Email;
 
+            //create user, add roles and claims
             var result = await _userManager.CreateAsync(user, parameters.Password);
             await _userManager.AddToRoleAsync(user, parameters.Role);
             await _userManager.AddClaimAsync(user, new Claim("img", parameters.Img));
@@ -84,6 +89,7 @@ namespace Cargotruck.Server.Repositories
 
             return null;
         }
+
         public async Task<string?> UpdateAsync(UpdateRequest parameters)
         {
             var user = new User();
@@ -94,6 +100,7 @@ namespace Cargotruck.Server.Repositories
 
             if (parameters.Id != null)
             {
+                //if method gets the user id -> search user by id
                 user = _context.Users.FirstOrDefault(a => a.Id == parameters.Id);
                 roles = _context.Roles.ToDictionary(r => r.Id, r => r.Name);
                 userRoles = _context.UserRoles.ToDictionary(r => r.UserId, r => roles[r.RoleId]);
@@ -101,6 +108,7 @@ namespace Cargotruck.Server.Repositories
             }
             else
             {
+                //if no id found -> search current user (when admin change his own data)
                 user = _context.Users.FirstOrDefault(a => a.UserName == _signInManager.Context.User.Identity!.Name);
                 claims = _signInManager.Context.User.Claims.ToDictionary(c => c.Type, c => c.Value);
                 role = claims["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
@@ -112,8 +120,10 @@ namespace Cargotruck.Server.Repositories
                 user.UserName = parameters.UserName ?? user.UserName;
                 user.PhoneNumber = parameters.PhoneNumber ?? user.PhoneNumber;
                 user.Email = parameters.Email ?? user.Email;
+                //update the user
                 var result = await _userManager.UpdateAsync(user);
 
+                //change role, but first must be removed
                 await _userManager.RemoveFromRoleAsync(user, role);
                 await _userManager.AddToRoleAsync(user, parameters.Role);
 
@@ -126,6 +136,7 @@ namespace Cargotruck.Server.Repositories
                 return _localizer["Not_found"].Value;
             } 
         }
+
         public async Task<string?> ChangePasswordAsync(ChangePasswordRequest parameters)
         {
             User user = _context.Users.FirstOrDefault(a => a.UserName == _signInManager.Context.User.Identity!.Name)!;
@@ -135,12 +146,15 @@ namespace Cargotruck.Server.Repositories
                 return result.Errors.FirstOrDefault()?.Description;
             return null;
         }
+
         public async Task LogoutAsync()
         {
             await _signInManager.SignOutAsync();
         }
+
         public CurrentUser CurrentUserInfo()
         {
+            //gets the current user info
             var u = _context.Users.FirstOrDefault(a => a.UserName == _signInManager.Context.User.Identity!.Name);
 
             if (_signInManager.Context.User.Identity!.IsAuthenticated && u != null)

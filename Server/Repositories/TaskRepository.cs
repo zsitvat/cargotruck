@@ -33,6 +33,7 @@ namespace Cargotruck.Server.Repositories
             _errorHandler = errorHandler;
         }
 
+        //this method gets the data from db and filter it
         private async Task<List<DeliveryTask>> GetDataAsync(string? searchString, string? filter, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var t = await _context.Tasks.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
@@ -139,6 +140,7 @@ namespace Cargotruck.Server.Repositories
             return await _context.Tasks.ToListAsync();
         }
 
+        //gets the data of the charts
         public async Task<int[]> GetChartDataAsync()
         {
             var data = await _context.Tasks.ToListAsync();
@@ -227,6 +229,7 @@ namespace Cargotruck.Server.Repositories
             return false;
         }
 
+        //change task completion to the opposite
         public async Task ChangeCompletionAsync(DeliveryTask t)
         {
             t.Completed = !t.Completed;

@@ -36,6 +36,8 @@ namespace Cargotruck.Client.Components
             {
                 _previousId = GetById;
                 _previousIdType = GetByIdType;
+
+                // Retrieve data from web API based on GetByIdType value
                 if (GetByIdType == "cargo" || GetByIdType == "storage")
                 {
                     idDataCargo = await client.GetFromJsonAsync<Cargo?>($"api/cargoes/getbyid/{GetById}");

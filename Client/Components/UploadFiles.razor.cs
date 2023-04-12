@@ -31,6 +31,7 @@ namespace Cargotruck.Client.Components
                 {
                     try
                     {
+                        //read the file and create file content for filesaving to the server (we will save the file for later)
                         var fileContent = new StreamContent(file.OpenReadStream(maxFileSize));
                         fileContent.Headers.ContentType = new MediaTypeHeaderValue(file.ContentType);
                         files.Add(new() { Name = file.Name });
@@ -46,6 +47,7 @@ namespace Cargotruck.Client.Components
 
             if (upload)
             {
+                //if uplodable, call the filesave controller
                 HttpResponseMessage response = await Http.PostAsync($"api/filesave/page?lang={CultureInfo.CurrentCulture.Name}", content);
                 var newUploadResults = await response.Content.ReadFromJsonAsync<IList<UploadResult>>();
                 if (newUploadResults is not null)
@@ -53,8 +55,10 @@ namespace Cargotruck.Client.Components
                     uploadResults = uploadResults.Concat(newUploadResults).ToList();
                     foreach (var file in uploadResults)
                     {
+                        //import request
                         var datasaved = await Http.PostAsJsonAsync<string?>($"api/{Page}/import?&lang={CultureInfo.CurrentCulture.Name}", file.StoredFileName);
                         error = await datasaved.Content.ReadAsStringAsync();
+
                         if (datasaved.IsSuccessStatusCode && error == "")
                         {
                             navigationManager.NavigateTo($"/{Page}", true);

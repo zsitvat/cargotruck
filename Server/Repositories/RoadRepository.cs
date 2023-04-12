@@ -134,6 +134,7 @@ namespace Cargotruck.Server.Repositories
             return t;
         }
 
+        //gets the data of the charts
         public async Task<int[]> GetChartDataAsync()
         {
             var data = await _context.Roads.ToListAsync();

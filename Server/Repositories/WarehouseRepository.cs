@@ -31,6 +31,7 @@ namespace Cargotruck.Server.Repositories
             _errorHandler = errorHandler;
         }
 
+        //this method gets the data from db and filter it
         private async Task<List<Warehouse>> GetDataAsync(string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var data = await _context.Warehouses.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();

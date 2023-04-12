@@ -13,11 +13,4 @@
     </div>
 </div>
 
-@code {
-    [Parameter] public EventCallback OnClose { get; set; }
 
-    protected async Task CloseWindow()
-    {
-        await OnClose.InvokeAsync();
-    }
-}

@@ -30,6 +30,8 @@ namespace Cargotruck.Server.Repositories
             _localizer = localizer;
             _columnNameLists = columnNameLists;
         }
+
+        //this method gets the data from db and filter it
         private async Task<List<MonthlyExpense>> GetDataAsync(string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var data = await _context.MonthlyExpenses.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true)).ToListAsync();
@@ -72,14 +74,18 @@ namespace Cargotruck.Server.Repositories
 
             return data.Skip((page - 1) * pageSize).Take(pageSize).ToList();
         }
+
         public async Task<List<MonthlyExpense>> GetMonthlyExpensesAsync()
         {
             return await _context.MonthlyExpenses.ToListAsync();
         }
+
         public async Task<MonthlyExpense?> GetByIdAsync(int id)
         {
             return await _context.MonthlyExpenses.FirstOrDefaultAsync(a => a.Id == id);
         }
+
+        //gets the data of the charts
         public async Task<int[]> GetChartDataAsync()
         {
             var data = await _context.MonthlyExpenses.ToListAsync();
@@ -111,15 +117,18 @@ namespace Cargotruck.Server.Repositories
 
             return columnsHeight;
         }
+
         public async Task<int> PageCountAsync(string? searchString, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var data = await GetDataAsync(searchString, dateFilterStartDate, dateFilterEndDate);
             return data.Count;
         }
+
         public async Task<int> CountAsync()
         {
             return await _context.MonthlyExpenses.CountAsync();
         }
+
         public async Task<int> PostAsync(MonthlyExpense data)
         {
             data.Profit = (data.Earning != null ? data.Earning : 0) - (data.Expense != null ? data.Expense : 0);
@@ -128,11 +137,13 @@ namespace Cargotruck.Server.Repositories
 
             return data.Id;
         }
+
         public async Task PutAsync(MonthlyExpense data)
         {
             _context!.Entry(data).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
+
         public async Task<bool> DeleteAsync(int id)
         {
             var data = _context.MonthlyExpenses.FirstOrDefault(x => x.Id == id);
@@ -145,6 +156,8 @@ namespace Cargotruck.Server.Repositories
 
             return false;
         }
+
+        //checks task and expenses and sum the expenses, profit and earning from them
         public async Task CheckDataAsync()
         {
             var monthly_Expenses = await _context.MonthlyExpenses.ToListAsync();
@@ -190,11 +203,13 @@ namespace Cargotruck.Server.Repositories
             await _context.SaveChangesAsync();
         }
 
+        //get the data from MonthlyExpensesTasksExpenses table
         public async Task<List<MonthlyExpense_task_expense>> GetConnectionIdsAsync()
         {
             return await _context.MonthlyExpensesTasksExpenses.ToListAsync();
         }
 
+        //save the data to MonthlyExpensesTasksExpenses table
         public async Task PostConnectionIdsAsync(MonthlyExpense_task_expense connectionIds, bool first)
         {
             if (first)
@@ -206,6 +221,8 @@ namespace Cargotruck.Server.Repositories
             _context.Add(connectionIds);
             await _context.SaveChangesAsync();
         }
+
+        //create the months automatically to the monthly expenses page
         public async Task CreateMonthsAsync()
         {
             MonthlyExpense data = new();
@@ -221,6 +238,8 @@ namespace Cargotruck.Server.Repositories
                 await _context.SaveChangesAsync();
             }
         }
+
+        //recreate the data for MonthlyExpensesTasksExpenses table for every month
         public async Task CreateConTableAsync()
         {
             var monthly_expenses = await _context.MonthlyExpenses.Where(x => x.UserId == "Generated").ToListAsync();
@@ -253,6 +272,7 @@ namespace Cargotruck.Server.Repositories
                 await _context.SaveChangesAsync();
             }
         }
+
         public string ExportToExcel(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate)
         {
             var Monthly_Expenses = _context.MonthlyExpenses.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
@@ -477,6 +497,7 @@ namespace Cargotruck.Server.Repositories
 
             return base64String;
         }
+
         public async Task<string> ExportToCSVAsync(CultureInfo lang, DateTime? dateFilterStartDate, DateTime? dateFilterEndDate, bool isTextDocument)
         {
             var Monthly_Expenses = _context.MonthlyExpenses.Where(s => (dateFilterStartDate != null ? (s.Date >= dateFilterStartDate) : true) && (dateFilterEndDate != null ? (s.Date <= dateFilterEndDate) : true));
