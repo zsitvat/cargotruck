@@ -8,11 +8,9 @@ using Cargotruck.Server.Services.Interfaces;
 using Cargotruck.Shared.Model;
 using Cargotruck.Shared.Model.Dto;
 using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
 
 
 /*
@@ -94,11 +92,11 @@ builder.Services.AddSingleton(mapper);
 builder.Services.AddDbContext<ApplicationDbContext>(options => 
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddIdentity<User, IdentityRole>(options =>
+    options.SignIn.RequireConfirmedPhoneNumber = false).AddEntityFrameworkStores<ApplicationDbContext>();
+
 //localization service
 builder.Services.AddLocalization();
-
-builder.Services.AddIdentity<User, IdentityRole>(options => 
-    options.SignIn.RequireConfirmedPhoneNumber = false).AddEntityFrameworkStores<ApplicationDbContext>();
 
 //Services
 builder.Services.AddSingleton<IColumnNamesService, ColumnNamesService>();
@@ -129,12 +127,15 @@ builder.Services.AddScoped<IRoadRepository, RoadRepository>();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<IAdminRepository, AdminRepository>();
 
+
 builder.Services.ConfigureApplicationCookie(options =>
 {
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
-    options.Cookie.HttpOnly = false;
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(0.1);
+    options.Cookie.HttpOnly = true;
     options.Cookie.SameSite = SameSiteMode.None;
     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+    options.LoginPath = "/login";
+    options.Events.OnRedirectToAccessDenied =
     options.Events.OnRedirectToLogin = context =>
     {
         context.Response.StatusCode = 401;
@@ -177,6 +178,7 @@ else
     app.UseExceptionHandler("/Error");
     app.UseHsts();
 }
+
 
 StaticWebAssetsLoader.UseStaticWebAssets(builder.Environment, builder.Configuration);
 

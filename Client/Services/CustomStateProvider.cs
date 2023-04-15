@@ -35,7 +35,11 @@ namespace Cargotruck.Client.Services
 
         public async Task<CurrentUser> GetCurrentUserAsync()
         {
-            if (_currentUser != null && _currentUser.IsAuthenticated) return _currentUser;
+            if (_currentUser != null && _currentUser.IsAuthenticated)
+            {
+                return _currentUser;
+            }
+                
             _currentUser = await api.CurrentUserInfoAsync();
             return _currentUser;
         }

@@ -92,7 +92,6 @@ namespace Cargotruck.Server.Controllers
             }
         }
 
-        [Authorize]
         [HttpPost]
         public async Task<ActionResult> LogoutAsync()
         {

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Cargotruck.Shared.Model;
 using Cargotruck.Client.Services;
 using Cargotruck.Shared.Model.Dto;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Cargotruck.Client.Shared
 {
@@ -13,7 +14,7 @@ namespace Cargotruck.Client.Shared
         bool expandSubMenu;
         string currency_api_error = "";
         [CascadingParameter]
-        Task<AuthenticationState>? AuthenticationState { get; set; }
+        Task<AuthenticationState>? AuthenticationState { get; set; } = null;
 
         static bool darkmode;
         protected override async Task OnInitializedAsync()
@@ -32,6 +33,14 @@ namespace Cargotruck.Client.Shared
                 if (!navigationManager.Uri.ToString().Contains("login") && !navigationManager.Uri.ToString().Contains("Privacy"))
                 {
                     navigationManager.NavigateTo("/login");
+                }
+            }
+            else if (authStateProvider.GetCurrentUserAsync().Result.ExpirationDate < DateTime.Now)
+            {
+                await authStateProvider.LogoutAsync();
+                if (!navigationManager.Uri.ToString().Contains("login") && !navigationManager.Uri.ToString().Contains("Privacy"))
+                {
+                    navigationManager.NavigateTo("/login", true);
                 }
             }
             else

@@ -8,6 +8,7 @@
         public string? Email { get; set; }
         public string? Name { get; set; }
         public string? Id { get; set; }
+        public DateTime? ExpirationDate { get; set; }
         public Dictionary<string, string> Claims { get; set; } = new Dictionary<string, string>();
     }
 }

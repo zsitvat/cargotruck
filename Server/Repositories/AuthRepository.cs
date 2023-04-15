@@ -168,6 +168,7 @@ namespace Cargotruck.Server.Repositories
                     PhoneNumber = u.PhoneNumber,
                     Claims = _signInManager.Context.User.Claims.ToDictionary(c => c.Type, c => c.Value),
                     Id = u.Id,
+                    ExpirationDate = DateTime.Now.AddMinutes(0.1)
                 };
 
             }
