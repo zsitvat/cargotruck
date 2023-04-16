@@ -720,7 +720,11 @@ input[type=number] {
 
 .privacy-card {
     min-width: 20rem;
-    width: fit-content;
+    min-height: 3rem !important;
+    height: fit-content !important;
+    width: 40vw;
+    box-shadow: 0 0 1px rgb(0 0 0 / 15%) !important;
+    border: none;
     border-radius: initial;
 }
 
@@ -1429,7 +1433,7 @@ tr td:first-child {
 }
 
 .darkmode .box, .darkmode .form-card, .darkmode .login-card, .darkmode .card,
-.darkmode .card2, .darkmode .settings-card, .darkmode .getbyid-card {
+.darkmode .card2,.darkmode .privacy-card, .darkmode .settings-card, .darkmode .getbyid-card {
     background-color: rgb(36, 49, 64) !important;
     color: rgba(160,180,200,.85) !important;
     border-color: #243140 !important;

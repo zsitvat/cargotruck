@@ -175,7 +175,7 @@
 
     .privacy-form {
         position: fixed;
-        left: 20rem;
+        left: 30rem;
         bottom: 3.5rem;
     }
 
@@ -200,6 +200,7 @@
 }
 
 @media (max-width: 1024px) {
+
     .about {
         position: absolute;
         left: 14rem;
@@ -272,6 +273,12 @@
             right: -10rem;
         }
     }
+
+    .privacy-form {
+        position: fixed;
+        left: 25rem;
+        bottom: 3.5rem;
+    }
 }
 
 @media (max-width: 930px) {
@@ -292,6 +299,10 @@
         100% {
             right: -10rem;
         }
+    }
+
+    .privacy-form {
+        left: 22rem;
     }
 }
 
@@ -473,7 +484,7 @@
     }
 
     .privacy-form {
-        position: fixed;
+        position: initial;
         left: 1rem;
         bottom: 3.5rem;
     }
@@ -482,10 +493,10 @@
         display: initial;
     }
 
-        .hideandshow-cards .getbyid-card, .hideandshow-cards .settings-card {
-            max-width: 100%;
-            width: 100%;
-        }
+    .hideandshow-cards .getbyid-card, .hideandshow-cards .settings-card {
+        max-width: 100%;
+        width: 100%;
+    }
 
     .date-filter {
         left: 0rem;
@@ -535,13 +546,38 @@
     }
 
     .forms-margin {
-        margin-left: 10%;
+        margin-left: 0%;
+    }
+
+    .privacy-card {
+       margin-left:10% !important;
+       min-width:80vw!important;
+    }
+
+    .privacy-form {
+        margin-left: 15%;
     }
 }
 
 @media (max-width: 560px) {
     .forms-margin {
         margin-left: 30%;
+    }
+
+    .privacy-card {
+        margin-left: 1% !important;
+        min-width: 92vw !important;
+    }
+
+    .privacy-form {
+        margin-left: 10%;
+    }
+}
+
+@media (max-width: 540px) {
+    .privacy-form {
+        width: 92vw;
+        margin-left: 0%;
     }
 }
 
@@ -627,13 +663,6 @@
 
     .forms-margin {
         margin-left: 20%;
-    }
-
-    .privacy-form {
-        position: fixed;
-        left: 1rem;
-        bottom: 3.5rem;
-        width: 85%;
     }
 
     .privacy-form input {
