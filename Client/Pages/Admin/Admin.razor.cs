@@ -20,7 +20,6 @@ namespace Cargotruck.Client.Pages.Admin
         private bool showDeleteConfirmationWindow = false;
         private string? idForDelete;
         private readonly string controller = "admin";
-
         protected override async Task OnInitializedAsync()
         {
             await ShowPageAsync();

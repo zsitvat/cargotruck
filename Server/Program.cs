@@ -130,7 +130,7 @@ builder.Services.AddScoped<IAdminRepository, AdminRepository>();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(0.1);
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
     options.Cookie.HttpOnly = true;
     options.Cookie.SameSite = SameSiteMode.None;
     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;

@@ -82,9 +82,9 @@ else
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @{int i = 0; }
                                     @foreach (UserDto item in Users)
                                     {
-                                        int i = 0;
                                         i += 1;
                                         <tr @onclick="@((e) =>MouseHoverClass.MouseOnclick(item.Id))" @onmouseover="@((e) =>MouseHoverClass.MouseOver(item.Id))" @onmouseout="@((e) =>MouseHoverClass.MouseOut())"
                                     class="@(MouseHoverClass.MouseOnHoverClass == item.Id || MouseHoverClass.MouseOnclickClass == item.Id ? "color-on-hover" :"")">
