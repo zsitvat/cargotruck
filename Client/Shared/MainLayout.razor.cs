@@ -52,7 +52,7 @@ namespace Cargotruck.Client.Shared
 
         async Task GetCurrencyRates()
         {
-            if ((await AuthenticationState!).User.Identity!.IsAuthenticated && currencyExchange.GetRates() == null && await currencyExchange.GetNextApiRequestDate(client) <= DateTime.Now)
+            if ((await AuthenticationState!).User.Identity!.IsAuthenticated && currencyExchange.GetRates() == null || await currencyExchange.GetNextApiRequestDate(client) <= DateTime.Now)
             {
                 try
                 {
