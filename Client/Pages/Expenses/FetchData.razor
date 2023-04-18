@@ -54,8 +54,8 @@
     <!--Date Filter-->
     <div class="date-filter" data-title="@localizer["date-filter-info"]">
         <div class="date-filter-icon-div d-inline-block"><span class="icon iconify date-filter-icon" data-icon="carbon:arrows-vertical" /></div>
-        <Input class="form-control" style="border-bottom-right-radius:unset;border-bottom:unset;" type="datetime-local" value="@dateFilter?.StartDate.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm", CultureInfo.CurrentCulture)" @oninput="@((e)=>{DateStartInput(e);})">
-        <Input class="form-control" style="border-top-right-radius:unset;border-top:unset;" type="datetime-local" value="@dateFilter?.EndDate.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm", CultureInfo.CurrentCulture)" @oninput="@((e)=>{DateEndInput(e);})">
+        <Input class="form-control" max="@DateTime.Now.ToString("yyyy-MM-ddThh:mm")" style="border-bottom-right-radius:unset;border-bottom:unset;" type="datetime-local" value="@dateFilter?.StartDate.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm", CultureInfo.CurrentCulture)" @oninput="@((e)=>{DateStartInput(e);})">
+        <Input class="form-control" max="@DateTime.Now.ToString("yyyy-MM-ddThh:mm")" style="border-top-right-radius:unset;border-top:unset;" type="datetime-local" value="@dateFilter?.EndDate.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm", CultureInfo.CurrentCulture)" @oninput="@((e)=>{DateEndInput(e);})">
     </div>
 
 </div>

@@ -24,6 +24,15 @@
             <div class="d-inline-block forms-margin-col ">
                 <div class="form-group">
                     <div>
+                        <label>@localizer["Month"]:</label>
+                        <div>
+                            <InputDate Type="InputDateType.Month" max="@DateTime.Now.ToString("yyyy-MM")" class="form-control inputs align-center month-input" @bind-Value="@Monthly_expenses!.Date" disabled="@disabled" />
+                            <ValidationMessage For="@(() => Monthly_expenses.Date)" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
                         <label>@localizer["Earning"]:</label>
                         <div>
                             <InputNumber min="0"  class="form-control inputs" @bind-Value="@Monthly_expenses!.Earning" disabled="@disabled"/>

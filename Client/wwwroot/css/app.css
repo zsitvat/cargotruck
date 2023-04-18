@@ -155,8 +155,13 @@ a:active {
 .validation-message {
     color: red;
     white-space:nowrap;
-    top:36px;
-    left:35px;
+}
+
+.form-signin .validation-message {
+    color: red;
+    white-space: nowrap;
+    top: 36px;
+    left: 35px;
 }
 
 .error-message {
@@ -1192,6 +1197,10 @@ input[type=number] {
     position: absolute;
     left: 1px;
     top:1.3rem;
+}
+
+.month-input{
+    width:12.5rem;
 }
 
 .currency {

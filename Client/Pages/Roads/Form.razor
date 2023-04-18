@@ -44,7 +44,7 @@
                     <div>
                         <label>@localizer["Starting_date"]:</label>
                         <div>
-                            <InputDate Type="InputDateType.DateTimeLocal"  class="form-control inputs" @bind-Value="@roads.StartingDate" />
+                            <InputDate Type="InputDateType.DateTimeLocal" max="@DateTime.Now.ToString("yyyy-MM-ddThh:mm")"  class="form-control inputs" @bind-Value="@roads.StartingDate" />
                             <ValidationMessage For="@(() => roads.StartingDate)" />
                         </div>
                     </div>
@@ -53,7 +53,7 @@
                     <div>
                         <label>@localizer["Ending_date"]:</label>
                         <div>
-                            <InputDate Type="InputDateType.DateTimeLocal" @bind-Value:format="yyyy.MM.dd. HH:mm" class="form-control inputs" @bind-Value="@roads.EndingDate" />
+                            <InputDate Type="InputDateType.DateTimeLocal" max="@DateTime.Now.ToString("yyyy-MM-ddThh:mm")" @bind-Value:format="yyyy.MM.dd. HH:mm" class="form-control inputs" @bind-Value="@roads.EndingDate" />
                             <ValidationMessage For="@(() => roads.EndingDate)" />
                         </div>
                     </div>
