@@ -21,7 +21,7 @@ namespace Cargotruck.Client.Pages.MonthlyExpenses
         int dataRows;
         float maxPage;
         private string sortOrder = "Date";
-        private bool desc = true;
+        private bool desc = false;
         private string? searchString = "";
         readonly DateFilter? dateFilter = new();
         private bool showDeleteConfirmationWindow = false;
@@ -30,6 +30,8 @@ namespace Cargotruck.Client.Pages.MonthlyExpenses
 
         protected override async Task OnInitializedAsync()
         {
+            dateFilter!.StartDate = new DateTime(DateTime.Today.Year, 1, 1, 0, 0, 0);
+
             PageHistoryState.AddPageToHistory("/MonthlyExpenses");
             base.OnInitialized();
 
@@ -40,6 +42,7 @@ namespace Cargotruck.Client.Pages.MonthlyExpenses
 
             if (checkData.IsSuccessStatusCode)
             {
+
                 await ShowPageAsync();
                 fileDownload.DocumentError = "";
             }
@@ -88,7 +91,7 @@ namespace Cargotruck.Client.Pages.MonthlyExpenses
             {
                 dateFilter!.StartDate = DateTime.Parse(e?.Value?.ToString()!);
                 pageSize = 10;
-                await OnInitializedAsync();
+                await ShowPageAsync();
             }
         }
 
@@ -98,7 +101,7 @@ namespace Cargotruck.Client.Pages.MonthlyExpenses
             {
                 dateFilter!.EndDate = DateTime.Parse(e?.Value?.ToString()!);
                 pageSize = 10;
-                await OnInitializedAsync();
+                await ShowPageAsync();
             }
         }
 

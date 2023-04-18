@@ -224,19 +224,23 @@ namespace Cargotruck.Server.Repositories
 
         //create the months automatically to the monthly expenses page
         public async Task CreateMonthsAsync()
-        {
-            MonthlyExpense data = new();
+        {       
             var currentDate = DateTime.Now;
-            MonthlyExpense? hasCurrentMonth = _context.MonthlyExpenses.Where(x => x.Date.Year == currentDate.Year && x.Date.Month == currentDate.Month && x.UserId == "Generated").FirstOrDefault();
-
-            if (hasCurrentMonth == null)
+            for(int i = 1; i <= currentDate.Month; i++) 
             {
-                data.UserId = "Generated";
-                data.Date = DateTime.Now;
+                MonthlyExpense data = new();
+                MonthlyExpense? hasCurrentMonth = _context.MonthlyExpenses.Where(x => x.Date.Year == currentDate.Year && x.Date.Month == i && x.UserId == "Generated").FirstOrDefault();
 
-                _context.Add(data);
-                await _context.SaveChangesAsync();
+                if (hasCurrentMonth == null)
+                {
+                    data.UserId = "Generated";
+                    data.Date = new DateTime(currentDate.Year, i, currentDate.Day);
+
+                    _context.Add(data);
+                   
+                }
             }
+            await _context.SaveChangesAsync();
         }
 
         //recreate the data for MonthlyExpensesTasksExpenses table for every month

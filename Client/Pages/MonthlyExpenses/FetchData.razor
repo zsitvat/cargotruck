@@ -89,7 +89,7 @@ else
                             @foreach (var item in Monthly_expenses)
                             {
                                 <tr @onclick="@((e) =>MouseHoverClass.MouseOnclick(item.Id.ToString()))" @onmouseover="@((e) =>MouseHoverClass.MouseOver(item.Id.ToString()))" @onmouseout="@((e) =>MouseHoverClass.MouseOut())"
-                                    class="@(item.Profit <=0 ? "red": "") @(MouseHoverClass.MouseOnHoverClass == item.Id.ToString() || MouseHoverClass.MouseOnclickClass == item.Id.ToString() ? "color-on-hover" :"")">
+                                    class="@(item.Profit <0 ? "red": "") @(MouseHoverClass.MouseOnHoverClass == item.Id.ToString() || MouseHoverClass.MouseOnclickClass == item.Id.ToString() ? "color-on-hover" :"")">
                                    @if(item.UserId=="Generated") 
                                    {
                                       <td import-data-title="@localizer["Generated"]">@item.Id</td>    
