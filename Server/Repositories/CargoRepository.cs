@@ -5,12 +5,9 @@ using Cargotruck.Shared.Model;
 using Cargotruck.Shared.Model.Dto;
 using Cargotruck.Shared.Resources;
 using ClosedXML.Excel;
-using DocumentFormat.OpenXml.Bibliography;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using System.Data;
@@ -555,17 +552,17 @@ namespace Cargotruck.Server.Repositories
                                 List<string> columnNames = _columnNameLists.GetCargoesColumnNames().Select(x => _localizer[x].Value).ToList();
 
                                 var cellValues = row.Cells().Select(c => c.Value.ToString()).ToList();
-                                if (!columnNames.SequenceEqual(cellValues))
+                                if (!columnNames.Where(cname => cname != _localizer["Id"]).SequenceEqual(cellValues.Where(cname => cname != _localizer["Id"])))
                                 {
                                     error = _localizer["Not_match_col"].Value;
                                     File.Delete(path); // delete the file
                                     return error;
                                 }
-                                dt.Columns.AddRange(cellValues.Select(c => new DataColumn(c)).ToArray());
-                                columnNames.Clear();
+                                dt.Columns.AddRange(cellValues.Select(cname => new DataColumn(cname)).ToArray());
+                                columnNames.RemoveAll(cname => cellValues.Contains(cname));
 
                                 firstRow = false;
-                                if (columnNames.Count == 0 || (columnNames.Count == 1 && columnNames.Contains("Id")))
+                                if (columnNames.Count == 0 || (columnNames.Count == 1 && columnNames.Contains(_localizer["Id"])))
                                 {
                                     haveColumns = true;
                                     if (columnNames.Count == 0)

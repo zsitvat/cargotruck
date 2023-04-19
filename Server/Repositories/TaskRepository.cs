@@ -650,17 +650,18 @@ namespace Cargotruck.Server.Repositories
                                     return error;
                                 }
                                 dt.Columns.AddRange(cellValues.Select(cname => new DataColumn(cname)).ToArray());
-                                columnNames.RemoveAll(cname => cname != _localizer["Id"]);
+                                columnNames.RemoveAll(cname => cellValues.Contains(cname));
 
                                 firstRow = false;
                                 if (columnNames.Count == 0 || (columnNames.Count == 1 && columnNames.Contains(_localizer["Id"])))
                                 {
                                     haveColumns = true;
-                                    if (columnNames.Contains(_localizer["Id"]))
+                                    if (columnNames.Count == 0)
                                     {
                                         l += 1;
                                     }
                                 }
+
                             }
                             else if (haveColumns)
                             {

@@ -396,17 +396,17 @@ namespace Cargotruck.Server.Repositories
                                 List<string> columnNames = _columnNameLists.GetWarehousesColumnNames().Select(x => _localizer[x].Value).ToList();
 
                                 var cellValues = row.Cells().Select(c => c.Value.ToString()).ToList();
-                                if (!columnNames.SequenceEqual(cellValues))
+                                if (!columnNames.Where(cname => cname != _localizer["Id"]).SequenceEqual(cellValues.Where(cname => cname != _localizer["Id"])))
                                 {
                                     error = _localizer["Not_match_col"].Value;
                                     File.Delete(path); // delete the file
                                     return error;
                                 }
-                                dt.Columns.AddRange(cellValues.Select(c => new DataColumn(c)).ToArray());
-                                columnNames.Clear();
+                                dt.Columns.AddRange(cellValues.Select(cname => new DataColumn(cname)).ToArray());
+                                columnNames.RemoveAll(cname => cellValues.Contains(cname));
 
                                 firstRow = false;
-                                if (columnNames.Count == 0 || (columnNames.Count == 1 && columnNames.Contains("Id")))
+                                if (columnNames.Count == 0 || (columnNames.Count == 1 && columnNames.Contains(_localizer["Id"])))
                                 {
                                     haveColumns = true;
                                     if (columnNames.Count == 0)
@@ -414,6 +414,7 @@ namespace Cargotruck.Server.Repositories
                                         l += 1;
                                     }
                                 }
+
                             }
                             else if (haveColumns)
                             {
