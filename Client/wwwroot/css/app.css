@@ -282,6 +282,10 @@ a:active {
     top:1rem;
 }
 
+.id-buttons-max-range{
+    max-width:18rem;
+}
+
 .currency-api-error {
     font-size: 14px;
     position: relative;

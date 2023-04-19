@@ -149,7 +149,7 @@ else
                                     }
                                     @if (showColumns[3])
                                     {
-                                        <td>
+                                        <td class="id-buttons-max-range">
                                             @if (Connection_ids != null)
                                             {
                                                 @foreach (var ConId in Connection_ids.Where(x => x.MonthlyExpenseId == item.Id && x.ExpenseId != null))
@@ -163,7 +163,7 @@ else
                                     }
                                     @if (showColumns[4])
                                     {
-                                        <td>
+                                        <td class="id-buttons-max-range">
                                         @if (Connection_ids != null){
                                                 @foreach (var ConId in Connection_ids.Where(x => x.MonthlyExpenseId == item.Id && x.TaskId != null))
                                             {
