@@ -16,10 +16,18 @@ namespace Cargotruck.Client.Components
         [Parameter]
         public EventCallback StateChanged { get; set; }
 
-        string? error = "";
+        string? error = string.Empty;
         private readonly List<File> files = new();
         private List<UploadResult> uploadResults = new();
         private readonly int maxAllowedFiles = 1;
+        private int inputFileId = 0;
+
+        private void InputFieldRenderHelper()
+        {
+            error = string.Empty;
+            inputFileId++;
+        }
+
         private async Task OnInputFileChangeAsync(InputFileChangeEventArgs e)
         {
             long maxFileSize = 1024 * 5000;
@@ -27,7 +35,7 @@ namespace Cargotruck.Client.Components
             using var content = new MultipartFormDataContent();
             foreach (var file in e.GetMultipleFiles(maxAllowedFiles))
             {
-                if (uploadResults.SingleOrDefault(f => f.FileName == file.Name)is null)
+                if (uploadResults.SingleOrDefault(f => f.FileName == file.Name) == null)
                 {
                     try
                     {
@@ -42,6 +50,10 @@ namespace Cargotruck.Client.Components
                     {
                         error = file.Name + " " + localizer["Not_uploaded"] + " " + ex.Message;
                     }
+                }
+                else if (uploadResults.SingleOrDefault(f => f.FileName == file.Name) != null)
+                {
+                    error = localizer["Same_file"] + " " + file.Name;
                 }
             }
 

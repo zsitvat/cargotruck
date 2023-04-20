@@ -873,6 +873,9 @@
   <data name="salary" xml:space="preserve">
     <value>Salary</value>
   </data>
+  <data name="Same_file" xml:space="preserve">
+    <value>You can't upload the same file:</value>
+  </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
   </data>
@@ -917,12 +920,6 @@
   </data>
   <data name="Storage_time" xml:space="preserve">
     <value>Storage time</value>
-  </data>
-  <data name="String11" xml:space="preserve">
-    <value />
-  </data>
-  <data name="String2" xml:space="preserve">
-    <value />
   </data>
   <data name="Succesfully_saved" xml:space="preserve">
     <value>It's succesfully saved!</value>

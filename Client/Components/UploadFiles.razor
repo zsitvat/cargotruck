@@ -1,7 +1,7 @@
 ﻿@inject HttpClient Http
 
 
-<InputFile id="inputfile" class="btn btn-light file-upload custom-file-input" OnChange="@OnInputFileChangeAsync" />
+<InputFile @key=@(inputFileId) id="inputfile" class="btn btn-light file-upload custom-file-input" OnChange="@(async (e) => {InputFieldRenderHelper();await OnInputFileChangeAsync(e);})" />
 
 @if(error != null && error != "" ){
     <div class="mb-3 input-group page-error">

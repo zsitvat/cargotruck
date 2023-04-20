@@ -2329,6 +2329,15 @@ namespace Cargotruck.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ezt a fájlt már egyszer feltöltötted:.
+        /// </summary>
+        public static string Same_file {
+            get {
+                return ResourceManager.GetString("Same_file", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mentés.
         /// </summary>
         public static string Save {

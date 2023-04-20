@@ -873,6 +873,9 @@
   <data name="salary" xml:space="preserve">
     <value>Fizetés</value>
   </data>
+  <data name="Same_file" xml:space="preserve">
+    <value>Ezt a fájlt már egyszer feltöltötted:</value>
+  </data>
   <data name="Save" xml:space="preserve">
     <value>Mentés</value>
   </data>

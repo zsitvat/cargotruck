@@ -105,7 +105,7 @@ namespace Cargotruck.Server.Controllers
         public async Task<ActionResult<string?>> ImportAsync([FromBody] string file, CultureInfo lang)
         {
             var result = await _taskService.ImportAsync(file, lang);
-            return (result != null ? BadRequest(result) : Ok());
+            return (!string.IsNullOrEmpty(result) ? BadRequest(result) : Ok());
         }
     }
 }
