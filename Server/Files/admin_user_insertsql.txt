@@ -1,0 +1,9 @@
+INSERT INTO [dbo].[AspNetUsers] ([Id], [UserName], [NormalizedUserName], [Email], [NormalizedEmail], [EmailConfirmed], [PasswordHash], [SecurityStamp], [ConcurrencyStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEnd], [LockoutEnabled], [AccessFailedCount]) VALUES (N'5e2d3884-cde9-4463-b9ec-6e50701424a2', N'admin', N'ADMIN', NULL, NULL, 0, N'AQAAAAEAACcQAAAAEDT0Sh0QU+UJjyLWraPz3tAqqrbOWTEBflE08oMC56SAf1SmN+Qv2Q5w4HbHmKCLOQ==', N'SCQVY4GUZKCZT4DA5KTUGQUTRKWYYRZ6', N'f49fee8c-39fa-47c5-99ca-6eb16d6d2f45', NULL, 0, 0, NULL, 1, 0)
+
+
+
+ EntityFramework6\Add-Migration
+EntityFramework6\Update-database
+
+   //add settings for currency api
+            migrationBuilder.Sql("SET IDENTITY_INSERT [dbo].[Settings] ON\r\nINSERT INTO [dbo].[Settings] ([Id], [SettingName], [SettingValue], [Date]) VALUES (1, N'CurrencyExchangeWaitTime', N'3600', N'2023-02-25 00:00:00')\r\nINSERT INTO [dbo].[Settings] ([Id], [SettingName], [SettingValue], [Date]) VALUES (3, N'ExchangeApiKey', N'XwSDWGpGqDKu8ZIbOl56Kne74V14oEpC', N'2023-02-25 00:00:00')\r\nSET IDENTITY_INSERT [dbo].[Settings] OFF\r\n");
