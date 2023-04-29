@@ -69,9 +69,5 @@
     <ProjectReference Include="..\Shared\Cargotruck.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Files\" />
-  </ItemGroup>
-
 
 </Project>
